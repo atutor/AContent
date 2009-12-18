@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 ?>
 </div>
 <div style="margin-top: 20px; height: 30px; background-color: #354A81; padding: 10px">&nbsp;</div>

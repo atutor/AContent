@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,12 +10,12 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LangCodesDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/Language/LanguageUtility.class.php');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LangCodesDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/Language/LanguageUtility.class.php');
 
 if (isset($_GET["id"])) 
 {
@@ -53,7 +53,7 @@ else if (isset($_POST['save']))
 	else  // create a new guideline
 	{
 		if (isset($_POST['locale']) && $_POST['locale'] <> '')
-			$language_code = $_POST['lang_code'] . AF_LANGUAGE_LOCALE_SEP. $_POST['locale'];
+			$language_code = $_POST['lang_code'] . TR_LANGUAGE_LOCALE_SEP. $_POST['locale'];
 		else
 			$language_code = $_POST['lang_code'];
 

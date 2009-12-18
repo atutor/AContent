@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-require (AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../include/');
+require (TR_INCLUDE_PATH.'vitals.inc.php');
 
 // URL called by form action
 $savant->assign('url', dirname($_SERVER['PHP_SELF']) . "/patch_creator.php");

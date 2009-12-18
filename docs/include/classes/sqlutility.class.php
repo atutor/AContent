@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -148,7 +148,7 @@ class SqlUtility
 	function queryFromFile($sql_file_path, $table_prefix){
 		global $db, $progress, $errors;
 		
-		include_once(AF_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		$dao = new DAO();
 		
 		$tables = array();

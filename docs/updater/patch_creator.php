@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-require_once (AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../include/');
+require_once (TR_INCLUDE_PATH.'vitals.inc.php');
 
 if ($_POST['create'] || $_POST['save'])
 {
@@ -22,8 +22,8 @@ if ($_POST['create'] || $_POST['save'])
 	if (!isset($_POST["system_patch_id"]) || trim($_POST["system_patch_id"]) == "")
 		$missing_fields[] = _AT("system_update_id");
 
-	if (!isset($_POST["aframe_version_to_apply"]) || trim($_POST["aframe_version_to_apply"]) == "")
-		$missing_fields[] = _AT("aframe_version_to_apply");
+	if (!isset($_POST["transformable_version_to_apply"]) || trim($_POST["transformable_version_to_apply"]) == "")
+		$missing_fields[] = _AT("transformable_version_to_apply");
 
 	// only check missing upload file when creating a update. don't check when save
 	if (is_array($_POST['rb_action']) && $_POST['create'])
@@ -50,7 +50,7 @@ if ($_POST['create'] || $_POST['save'])
 	if (!$msg->containsErrors()) 
 	{
 		$patch_info = array("system_patch_id"=>$_POST["system_patch_id"],
-	                      "aframe_version_to_apply"=>$_POST["aframe_version_to_apply"],
+	                      "transformable_version_to_apply"=>$_POST["transformable_version_to_apply"],
 	                      "description"=>$_POST["description"],
 	                      "sql_statement"=>$_POST["sql_statement"]);
 

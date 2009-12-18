@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 global $languageManager, $_my_uri;
 
@@ -85,7 +85,7 @@ $mtime = $mtime[1] + $mtime[0];
 $endtime = $mtime; 
 $totaltime = ($endtime - $starttime); 
 
-if (defined('AF_DEVEL') && AF_DEVEL) 
+if (defined('TR_DEVEL') && TR_DEVEL) 
 {
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');

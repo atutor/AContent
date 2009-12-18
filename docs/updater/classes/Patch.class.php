@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -18,11 +18,11 @@
 * @package	Patch
 */
 
-define('AF_INCLUDE_PATH', '../../');
+define('TR_INCLUDE_PATH', '../../');
 
-require_once(AF_INCLUDE_PATH. "classes/DAO/PatchesDAO.class.php");
-require_once(AF_INCLUDE_PATH. "classes/DAO/PatchesFilesDAO.class.php");
-require_once(AF_INCLUDE_PATH. "classes/DAO/PatchesFilesActionsDAO.class.php");
+require_once(TR_INCLUDE_PATH. "classes/DAO/PatchesDAO.class.php");
+require_once(TR_INCLUDE_PATH. "classes/DAO/PatchesFilesDAO.class.php");
+require_once(TR_INCLUDE_PATH. "classes/DAO/PatchesFilesActionsDAO.class.php");
 
 class Patch {
 
@@ -63,7 +63,7 @@ class Patch {
 	*/
 	function Patch($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder) 
 	{
-		// add relative path to move to AFrame root folder
+		// add relative path to move to Transformable root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)
 		{
 			$patch_array[files][$i]['location'] = $this->relative_to_root . $patch_array[files][$i]['location'];
@@ -77,7 +77,7 @@ class Patch {
 		$this ->patch_suffix = $patch_array['system_patch_id'];
 		$this->skipFilesModified = $skipFilesModified;
 		
-		$this->module_content_dir = AF_TEMP_DIR . "updater";
+		$this->module_content_dir = TR_TEMP_DIR . "updater";
 		$this->patchesDAO = new PatchesDAO();
 		$this->patchesFilesDAO = new PatchesFilesDAO();
 		$this->patchesFilesActionsDAO = new PatchesFilesActionsDAO();
@@ -295,7 +295,7 @@ class Patch {
 	}
 	
 	/**
-	* Check if AFrame version is same as "applied version" defined in the patch.
+	* Check if Transformable version is same as "applied version" defined in the patch.
 	* @access  private
 	* @return  true  if versions match
 	*          false if versions don't match
@@ -435,8 +435,8 @@ class Patch {
 	}
 
 	/**
-	* Compare user's local file with SVN backup for user's AFrame version,
-	* if different, check table AF_patches_files to see if user's local file
+	* Compare user's local file with SVN backup for user's Transformable version,
+	* if different, check table TR_patches_files to see if user's local file
 	* was altered by previous patch installation. If it is, return false 
 	* (not modified), otherwise, return true (modified).
 	* @access  private
@@ -452,7 +452,7 @@ class Patch {
 
 		if (!$this->svn_server_connected) return true;
 		
-		$svn_file = SVN_TAG_FOLDER . 'aframe_' . str_replace('.', '_', VERSION) .
+		$svn_file = SVN_TAG_FOLDER . 'transformable_' . str_replace('.', '_', VERSION) .
 		            str_replace(substr($this->relative_to_root, 0, -1), '' , $folder) .$file;
 		$local_file = $folder.$file;
 
@@ -483,7 +483,7 @@ class Patch {
 		fwrite($fp, trim($this->patch_array['sql']));
 		fclose($fp);
 
-		require(AF_INCLUDE_PATH . 'classes/sqlutility.class.php');
+		require(TR_INCLUDE_PATH . 'classes/sqlutility.class.php');
 		$sqlUtility = new SqlUtility();
 	
 		$sqlUtility->queryFromFile($patch_sql_file, TABLE_PREFIX);

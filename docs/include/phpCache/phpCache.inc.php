@@ -31,7 +31,7 @@ if (!defined('CACHE_DIR')) {
 
 	$CACHE_DEBUG = 0;			/* Default: 0 - Turn debugging on/off */
 
-	define('THIS_CACHE_DIR', CACHE_DIR . '/aframe_cache_' . DB_NAME);
+	define('THIS_CACHE_DIR', CACHE_DIR . '/transformable_cache_' . DB_NAME);
 
 	define('CACHE_GC', .10);	/* Default: .10 - Probability of garbage collection */
 	define('CACHE_USE_STORAGE_HASH', 0);	/* Default: 1 - Use storage hashing.  This will increase peformance if you are caching many pages. */ 

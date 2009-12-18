@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,9 +17,9 @@
 * @package	DAO
 */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
 class ThemesDAO extends DAO {
 
@@ -59,7 +59,7 @@ class ThemesDAO extends DAO {
 	*/
 	function getDefaultTheme()
 	{
-    $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE status=".AF_STATUS_DEFAULT;
+    $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE status=".TR_STATUS_DEFAULT;
     return $this->execute($sql);
   }
 
@@ -72,7 +72,7 @@ class ThemesDAO extends DAO {
 	*/
 	function getEnabledTheme()
 	{
-    $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE status in (".AF_STATUS_ENABLED.", ".AF_STATUS_DEFAULT.")";
+    $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE status in (".TR_STATUS_ENABLED.", ".TR_STATUS_DEFAULT.")";
     return $this->execute($sql);
   }
 

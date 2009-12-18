@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,12 +10,12 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH."../oauth/lib/OAuth.php");
-require_once(AF_INCLUDE_PATH.'classes/DAO/OAuthServerConsumersDAO.class.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/OAuthServerTokensDAO.class.php');
-require_once(AF_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH."../oauth/lib/OAuth.php");
+require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthServerConsumersDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthServerTokensDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 
 class MyOAuthServer extends OAuthServer {
   public function get_signature_methods() {

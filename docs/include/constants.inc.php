@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 /**
  * constants, some more constants are loaded from table 'config' @ include/vitals.inc.php
@@ -29,34 +29,43 @@ $_config_defaults['pref_defaults']      = 'a:1:{s:10:"PREF_THEME";s:7:"default";
 $_config = $_config_defaults;
 
 define('VERSION',		'0.1');
+
 define('UPDATE_SERVER', 'http://update.atutor.ca');
 define('SVN_TAG_FOLDER', 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/');
+define('RESULTS_PER_PAGE', 10);
 
 // language constants
 define('DEFAULT_LANGUAGE_CODE', 'eng');
 define('DEFAULT_CHARSET', 'utf-8');
-define('AF_LANGUAGE_LOCALE_SEP', '-');
+define('TR_LANGUAGE_LOCALE_SEP', '-');
 //$_config['default_language'] = DEFAULT_LANGUAGE_CODE;
 
-/* User group type */
-define('AF_USER_GROUP_ADMIN', 1);
-define('AF_USER_GROUP_USER', 2);
+// User group type
+define('TR_USER_GROUP_ADMIN', 1);
+define('TR_USER_GROUP_USER', 2);
 
-/* User status */
-define('AF_STATUS_DISABLED', 0);
-define('AF_STATUS_ENABLED', 1);
-define('AF_STATUS_DEFAULT', 2);
-define('AF_STATUS_UNCONFIRMED', 3);
+// User status
+define('TR_STATUS_DISABLED', 0);
+define('TR_STATUS_ENABLED', 1);
+define('TR_STATUS_DEFAULT', 2);
+define('TR_STATUS_UNCONFIRMED', 3);
+
+// content type
+define('CONTENT_TYPE_CONTENT',  0);
+define('CONTENT_TYPE_FOLDER', 1);
+define('CONTENT_TYPE_WEBLINK', 2);
+
+define('TR_KBYTE_SIZE', 1024);
 
 function get_status_by_code($status_code)
 {
-	if ($status_code == AF_STATUS_DISABLED)
+	if ($status_code == TR_STATUS_DISABLED)
 		 return _AT('disabled');
-	else if ($status_code == AF_STATUS_ENABLED)
+	else if ($status_code == TR_STATUS_ENABLED)
 		 return _AT('enabled');
-	else if ($status_code == AF_STATUS_DEFAULT)
+	else if ($status_code == TR_STATUS_DEFAULT)
 		 return _AT('default');
-	else if ($status_code == AF_STATUS_UNCONFIRMED)
+	else if ($status_code == TR_STATUS_UNCONFIRMED)
 		 return _AT('unconfirmed');
 	else
 		return '';
@@ -64,7 +73,7 @@ function get_status_by_code($status_code)
 
 /* User status */
 /* how many days until the password reminder link expires */
-define('AF_PASSWORD_REMINDER_EXPIRY', 2);
+define('TR_PASSWORD_REMINDER_EXPIRY', 2);
 
 /* how long cache objects can persist	*/
 /* in seconds. should be low initially, but doesn't really matter. */
@@ -85,7 +94,7 @@ if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 	$server_protocol = 'http://';
 }
 
-$dir_deep	 = substr_count(AF_INCLUDE_PATH, '..');
+$dir_deep	 = substr_count(TR_INCLUDE_PATH, '..');
 $url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 $_base_href	 = array_slice($url_parts, 0, count($url_parts) - $dir_deep-1);
 $_base_href	 = $server_protocol . implode('/', $_base_href).'/';
@@ -95,8 +104,8 @@ $endpos = strlen($_base_href);
 $_base_href	 = substr($_base_href, 0, $endpos);
 $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
 
-define('AF_BASE_HREF', $_base_href);
-define('AF_GUIDES_PATH', $_base_path . 'documentation/');
+define('TR_BASE_HREF', $_base_href);
+define('TR_GUIDES_PATH', $_base_path . 'documentation/');
 
 /* relative uri */
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));

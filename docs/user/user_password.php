@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,9 +10,9 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-include_once(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+include_once(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -43,9 +43,9 @@ if (isset($_POST['submit'])) {
 
 		if (!$usersDAO->setPassword($_GET['id'], $password)) 
 		{
-			require(AF_INCLUDE_PATH.'header.inc.php');
+			require(TR_INCLUDE_PATH.'header.inc.php');
 			$msg->printErrors('DB_NOT_UPDATED');
-			require(AF_INCLUDE_PATH.'footer.inc.php');
+			require(TR_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 
@@ -53,11 +53,11 @@ if (isset($_POST['submit'])) {
 		$user_row = $usersDAO->getUserByID($_GET['id']);
 
 		$tmp_message  = _AT('password_change_msg')."\n\n";
-		$tmp_message .= _AT('web_site').' : '.AF_BASE_HREF."\n";
+		$tmp_message .= _AT('web_site').' : '.TR_BASE_HREF."\n";
 		$tmp_message .= _AT('login_name').' : '.$user_row['login']."\n";
 		
-		require(AF_INCLUDE_PATH . 'classes/phpmailer/aframemailer.class.php');
-		$mail = new AFrameMailer;
+		require(TR_INCLUDE_PATH . 'classes/phpmailer/transformablemailer.class.php');
+		$mail = new TransformableMailer;
 		$mail->From     = $_config['contact_email'];
 		$mail->AddAddress($user_row['email']);
 		$mail->Subject = $_config['site_name'] . ': ' . _AT('password_changed');

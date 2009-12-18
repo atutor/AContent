@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
-require(AF_INCLUDE_PATH . 'classes/DAO/LanguageTextDAO.class.php');
+if (!defined('TR_INCLUDE_PATH')) { exit; }
+require(TR_INCLUDE_PATH . 'classes/DAO/LanguageTextDAO.class.php');
 
 /**********************************************************************************/
 /* Output functions found in this file, in order:
@@ -45,7 +45,7 @@ function _AT() {
 	// a feedback msg
 	if (!is_array($args[0])) {
 		/**
-		 * Added functionality for translating language code String (AF_ERROR|AF_INFOS|AF_WARNING|AF_FEEDBACK).*
+		 * Added functionality for translating language code String (TR_ERROR|TR_INFOS|TR_WARNING|TR_FEEDBACK).*
 		 * to its text and returning the result. No caching needed.
 		 * @author Jacek Materna
 		 */
@@ -53,8 +53,8 @@ function _AT() {
 		// Check for specific language prefix, extendible as needed
 		// 0002767:  a substring+in_array test should be faster than a preg_match test.
 		// replaced the preg_match with a test of the substring.
-		$sub_arg = substr($args[0], 0, 7); // 7 is the shortest type of msg (AF_INFO)
-		if (in_array($sub_arg, array('AF_ERRO','AF_INFO','AF_WARN','AF_FEED','AF_CONF'))) {
+		$sub_arg = substr($args[0], 0, 7); // 7 is the shortest type of msg (TR_INFO)
+		if (in_array($sub_arg, array('TR_ERRO','TR_INFO','TR_WARN','TR_FEED','TR_CONF'))) {
 			global $_base_path, $addslashes;
 
 			$args[0] = $addslashes($args[0]);
@@ -68,7 +68,7 @@ function _AT() {
 				$row = $rows[0];
 				// do not cache key as a digit (no contstant(), use string)
 				$msgs = str_replace('SITE_URL/', $_base_path, $row['text']);
-				if (defined('AF_DEVEL') && AF_DEVEL) {
+				if (defined('TR_DEVEL') && TR_DEVEL) {
 					$msgs .= ' <small><small>('. $args[0] .')</small></small>';
 				}
 			}
@@ -79,7 +79,7 @@ function _AT() {
 	
 	// a template variable
 	if (!isset($_template)) {
-		$url_parts = parse_url(AF_BASE_HREF);
+		$url_parts = parse_url(TR_BASE_HREF);
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
 		if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
@@ -160,13 +160,13 @@ function _AT() {
 	?? %a: Lowercase Ante meridiem and Post meridiem am or pm 
 	?? %A: Uppercase Ante meridiem and Post meridiem AM or PM 
 
-	valid formAF_types:
-	AF_DATE_MYSQL_DATETIME:		YYYY-MM-DD HH:MM:SS
-	AF_DATE_MYSQL_TIMESTAMP_14:	YYYYMMDDHHMMSS
-	AF_DATE_UNIX_TIMESTAMP:		seconds since epoch
-	AF_DATE_INDEX_VALUE:		0-x, index into a date array
+	valid formTR_types:
+	TR_DATE_MYSQL_DATETIME:		YYYY-MM-DD HH:MM:SS
+	TR_DATE_MYSQL_TIMESTAMP_14:	YYYYMMDDHHMMSS
+	TR_DATE_UNIX_TIMESTAMP:		seconds since epoch
+	TR_DATE_INDEX_VALUE:		0-x, index into a date array
 */
-function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL_DATETIME) {	
+function TR_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL_DATETIME) {	
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 	global $_config;
 
@@ -214,7 +214,7 @@ function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL
 								'date_dec');
 	}
 
-	if ($formAF_type == AF_DATE_INDEX_VALUE) {
+	if ($formTR_type == TR_DATE_INDEX_VALUE) {
 		// apply timezone offset
 		apply_timezone($timestamp);
 	
@@ -231,11 +231,11 @@ function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL
 
 	if ($timestamp == '') {
 		$timestamp = time();
-		$formAF_type = AF_DATE_UNIX_TIMESTAMP;
+		$formTR_type = TR_DATE_UNIX_TIMESTAMP;
 	}
 
 	/* convert the date to a Unix timestamp before we do anything with it */
-	if ($formAF_type == AF_DATE_MYSQL_DATETIME) {
+	if ($formTR_type == TR_DATE_MYSQL_DATETIME) {
 		$year	= substr($timestamp,0,4);
 		$month	= substr($timestamp,5,2);
 		$day	= substr($timestamp,8,2);
@@ -244,7 +244,7 @@ function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL
 		$sec	= substr($timestamp,17,2);
 	    $timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
 
-	} else if ($formAF_type == AF_DATE_MYSQL_TIMESTAMP_14) {
+	} else if ($formTR_type == TR_DATE_MYSQL_TIMESTAMP_14) {
 	    $year		= substr($timestamp,0,4);
 	    $month		= substr($timestamp,4,2);
 	    $day		= substr($timestamp,6,2);
@@ -302,10 +302,10 @@ function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL
 	/**
 	* 	Transforms text based on formatting preferences.  Original $input is also changed (passed by reference).
 	*	Can be called as:
-	*	1) $output = AF_print($input, $name);
+	*	1) $output = TR_print($input, $name);
 	*	   echo $output;
 	*
-	*	2) echo AF_print($input, $name); // prefered method
+	*	2) echo TR_print($input, $name); // prefered method
 	*
 	* @access	public
 	* @param	string $input			text being transformed
@@ -313,11 +313,11 @@ function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL
 	* @param	boolean $runtime_html	forcefully disables html formatting for $input (only used by fields that 
 	*									have the 'formatting' option
 	* @return	string					transformed $input
-	* @see		AF_FORMAT constants		in include/lib/constants.inc.php
+	* @see		TR_FORMAT constants		in include/lib/constants.inc.php
 	* @see		query_bit()				in include/vitals.inc.php
 	* @author	Joel Kronenberg
 	*/
-	function AF_print($input, $name, $runtime_html = true) {
+	function TR_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
 
 		if (!isset($_field_formatting[$name])) {
@@ -329,44 +329,44 @@ function AF_date($format='%Y-%M-%d', $timestamp = '', $formAF_type=AF_DATE_MYSQL
 				$name = $parts[0].'.*';
 			} else {
 				/* field not set, and there's no global setting */
-				/* same as AF_FORMAF_NONE */
+				/* same as TR_FORMTR_NONE */
 				return $input;
 			}
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_QUOTES)) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_QUOTES)) {
 			$input = str_replace('"', '&quot;', $input);
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_CONTENT_DIR)) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_CONTENT_DIR)) {
 			$input = str_replace('CONTENT_DIR/', '', $input);
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_HTML) && $runtime_html) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_HTML) && $runtime_html) {
 			/* what special things do we have to do if this is HTML ? remove unwanted HTML? validate? */
 		} else {
 			$input = str_replace('<', '&lt;', $input);
 			$input = nl2br($input);
 		}
 
-		/* this has to be here, only because AF_FORMAF_HTML is the only check that has an else-block */
-		if ($_field_formatting[$name] === AF_FORMAF_NONE) {
+		/* this has to be here, only because TR_FORMTR_HTML is the only check that has an else-block */
+		if ($_field_formatting[$name] === TR_FORMTR_NONE) {
 			return $input;
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_EMOTICONS)) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_EMOTICONS)) {
 			$input = smile_replace($input);
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_ATCODES)) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_ATCODES)) {
 			$input = trim(myCodes(' ' . $input . ' '));
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_LINKS)) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_LINKS)) {
 			$input = trim(make_clickable(' ' . $input . ' '));
 		}
 
-		if (query_bit($_field_formatting[$name], AF_FORMAF_IMAGES)) {
+		if (query_bit($_field_formatting[$name], TR_FORMTR_IMAGES)) {
 			$input = trim(image_replace(' ' . $input . ' '));
 		}
 
@@ -693,7 +693,7 @@ function image_replace($text) {
 	return $text;
 }
 
-function formAF_final_output($text, $nl2br = true) {
+function formTR_final_output($text, $nl2br = true) {
 	global $_base_path;
 
 	$text = str_replace('CONTENT_DIR/', '', $text);
@@ -733,7 +733,7 @@ function highlight($input, $var) {//$input is the string, $var is the text to be
 
 
 /* @See: ./index.php */
-function formAF_content($input, $html = 0, $glossary, $simple = false) {
+function formTR_content($input, $html = 0, $glossary, $simple = false) {
 	global $_base_path, $_config_defaults;
 
 	if (!$html) {
@@ -785,11 +785,11 @@ function formAF_content($input, $html = 0, $glossary, $simple = false) {
 	}
 
 	if ($html) {
-		$x = formAF_final_output($input, false);
+		$x = formTR_final_output($input, false);
 		return $x;
 	}
 
-	$output = formAF_final_output($input);
+	$output = formTR_final_output($input);
 
 	$output = '<p>'.$output.'</p>';
 
@@ -828,7 +828,7 @@ function getTranslatedCodeStr($codes) {
 			while ($row = @mysql_fetch_assoc($result)) {
 				// do not cache key as a digit (no contstant(), use string)
 				$_cache_msgs_new[$row['term']] = str_replace('SITE_URL/', $_base_path, $row['text']);
-				if (AF_DEVEL) {
+				if (TR_DEVEL) {
 					$_cache_msgs_new[$row['term']] .= ' <small><small>('.$row['term'].')</small></small>';
 				}
 			}
@@ -887,12 +887,16 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 	$num_pages = ceil($num_rows / $rows_per_page);
 	$request_args = '?'.$request_args;
 
-    if ($num_rows) {
+	if ($num_pages == 1) return;
+	if ($num_rows) {
 		echo '<div class="paging">';
 	    echo '<ul>';
 		
 		$i=max($current_page-$window - max($window-$num_pages+$current_page,0), 1);
 
+	    if ($current_page > 1)
+			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.($current_page-1).'">'._AT('prev').'</a>&nbsp;&nbsp;&nbsp;</li>';
+    
 		if ($i > 1) {
 			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p=1">1</a></li>';
 			if ($i > 2) {
@@ -913,6 +917,10 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 	        }
 			echo '<li><a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.$num_pages.'">'.$num_pages.'</a></li>';
 		}
+		
+		if ($current_page < $num_pages)
+			echo '<li>&nbsp;&nbsp;&nbsp;<a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.($current_page+1).'">'._AT('next').'</a></li>';
+		
 		echo '</ul>';
 		echo '</div>';
 	}

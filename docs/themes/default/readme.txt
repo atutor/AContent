@@ -1,5 +1,5 @@
 
-Theme:	AFrame Default Theme
+Theme:	Transformable Default Theme
 Date:		December 2008
 
 Installing:	 See section "Installing a New Theme" in the themes_readme.txt file located in the themes/ top directory.

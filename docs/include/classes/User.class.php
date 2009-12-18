@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,8 +17,9 @@
  * @package	User
  */
 
-define('AF_INCLUDE_PATH', '../../include/');
-require_once(AF_INCLUDE_PATH. 'classes/DAO/UsersDAO.class.php');
+if (!defined('TR_INCLUDE_PATH')) exit;
+
+require_once(TR_INCLUDE_PATH. 'classes/DAO/UsersDAO.class.php');
 
 class User {
 
@@ -65,6 +66,20 @@ class User {
 	}
 
 	/**
+	 * Check if user is an author 
+	 * @access  public
+	 * @param   none
+	 * @return  true : if is an author
+	 *          false : if not an author
+	 * @author  Cindy Qi Li
+	 */
+	public function isAuthor()
+	{
+		$row = $this->userDAO->getUserByID($this->userID);
+		return $row['is_author'];
+	}
+
+	/**
 	 * Check if user is admin 
 	 * @access  public
 	 * @param   none
@@ -76,7 +91,7 @@ class User {
 	{
 		$row = $this->userDAO->getUserByID($this->userID);
 		
-		if ($row['user_group_id'] == AF_USER_GROUP_ADMIN)
+		if ($row['user_group_id'] == TR_USER_GROUP_ADMIN)
 			return true;
 		else
 			return false;

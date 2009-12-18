@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -19,13 +19,13 @@
 * @package	PatchCreator
 */
 
-define('AF_INCLUDE_PATH', '../../include/');
-require_once (AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../../include/');
+require_once (TR_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(AF_INCLUDE_PATH. "../updater/include/patch_xml_template.inc.php");
-require_once(AF_INCLUDE_PATH."classes/DAO/MyownPatchesDAO.class.php");
-require_once(AF_INCLUDE_PATH."classes/DAO/MyownPatchesDependentDAO.class.php");
-require_once(AF_INCLUDE_PATH."classes/DAO/MyownPatchesFilesDAO.class.php");
+require_once(TR_INCLUDE_PATH. "../updater/include/patch_xml_template.inc.php");
+require_once(TR_INCLUDE_PATH."classes/DAO/MyownPatchesDAO.class.php");
+require_once(TR_INCLUDE_PATH."classes/DAO/MyownPatchesDependentDAO.class.php");
+require_once(TR_INCLUDE_PATH."classes/DAO/MyownPatchesFilesDAO.class.php");
 
 class PatchCreator {
 
@@ -48,7 +48,7 @@ class PatchCreator {
 	* Array
 	* (
 	*     [system_patch_id] => Patch001
-	*     [aframe_version_to_apply] => 1.6
+	*     [transformable_version_to_apply] => 1.6
 	*     [description] => this is a sample patch info array
 	*     [sql_statement] => 
 	*     [dependent_patches] => Array
@@ -97,9 +97,9 @@ class PatchCreator {
 		$this->patch_info_array = $patch_info_array; 
 		$this->current_patch_id = $patch_id;
 		
-		$this->patch_xml_file = AF_TEMP_DIR . "updater/patch.xml";
+		$this->patch_xml_file = TR_TEMP_DIR . "updater/patch.xml";
 
-		$this->version_folder = AF_TEMP_DIR . "updater/" . str_replace('.', '_', $this->patch_info_array["aframe_version_to_apply"]) . "/";
+		$this->version_folder = TR_TEMP_DIR . "updater/" . str_replace('.', '_', $this->patch_info_array["transformable_version_to_apply"]) . "/";
 		$this->patch_folder = $this->version_folder . $this->patch_info_array["system_patch_id"] . "/";
 		
 		$this->myownPatchesDAO = new MyownPatchesDAO();
@@ -147,7 +147,7 @@ class PatchCreator {
 		{
 			$this->current_patch_id = $this->myownPatchesDAO->Create(
 			        $this->patch_info_array["system_patch_id"], 
-			        $this->patch_info_array["aframe_version_to_apply"], 
+			        $this->patch_info_array["transformable_version_to_apply"], 
 			        $this->patch_info_array["description"], 
 			        $this->patch_info_array["sql_statement"]);
 		}
@@ -155,7 +155,7 @@ class PatchCreator {
 		{
 			$this->myownPatchesDAO->Update($this->current_patch_id, 
 			            $this->patch_info_array["system_patch_id"],
-			            $this->patch_info_array["aframe_version_to_apply"],
+			            $this->patch_info_array["transformable_version_to_apply"],
 			            $this->patch_info_array["description"],
 			            $this->patch_info_array["sql_statement"]);
 		}
@@ -268,7 +268,7 @@ class PatchCreator {
 		                         '{DEPENDENT_PATCHES}',
 		                         '{FILES}'), 
 							         array($this->patch_info_array["system_patch_id"], 
-							               $this->patch_info_array["aframe_version_to_apply"], 
+							               $this->patch_info_array["transformable_version_to_apply"], 
 							               htmlspecialchars(stripslashes($this->htmlNewLine($this->patch_info_array["description"])), ENT_QUOTES), 
 							               htmlspecialchars(stripslashes($this->patch_info_array["sql_statement"]), ENT_QUOTES), 
 							               $dependent_patches,
@@ -310,7 +310,7 @@ class PatchCreator {
 	*/
 	function createZIP() 
 	{
-		require_once(AF_INCLUDE_PATH . '/classes/zipfile.class.php');
+		require_once(TR_INCLUDE_PATH . '/classes/zipfile.class.php');
 
 		$zipfile = new zipfile();
 	

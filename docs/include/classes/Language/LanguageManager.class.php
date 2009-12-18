@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -12,10 +12,10 @@
 
 require_once(dirname(__FILE__) . '/Language.class.php');
 
-//define('AF_LANG_STATUS_EMPTY',       0);
-//define('AF_LANG_STATUS_INCOMPLETE',  1);
-//define('AF_LANG_STATUS_COMPLETE',    2);
-//define('AF_LANG_STATUS_PUBLISHED',   3);
+//define('TR_LANG_STATUS_EMPTY',       0);
+//define('TR_LANG_STATUS_INCOMPLETE',  1);
+//define('TR_LANG_STATUS_COMPLETE',    2);
+//define('TR_LANG_STATUS_PUBLISHED',   3);
 
 /**
 * LanguageManager
@@ -57,7 +57,7 @@ class LanguageManager {
 	* Initializes availableLanguages and numLanguages.
 	*/
 	function LanguageManager() {
-		require_once(AF_INCLUDE_PATH. 'classes/DAO/LanguagesDAO.class.php');
+		require_once(TR_INCLUDE_PATH. 'classes/DAO/LanguagesDAO.class.php');
 		$languagesDAO = new LanguagesDAO();
 		
 		// initialize available lanuguages. Available languages are the ones with status "enabled"
@@ -209,7 +209,7 @@ class LanguageManager {
 
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
-			if ($language->getStatus() == AF_STATUS_ENABLED) {
+			if ($language->getStatus() == TR_STATUS_ENABLED) {
 				echo '<option value="'.$language->getCode().'"';
 				if ($language->getCode() == $current_language) {
 					echo ' selected="selected"';
@@ -227,7 +227,7 @@ class LanguageManager {
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
 
-			if ($language->getStatus() == AF_STATUS_ENABLED) {
+			if ($language->getStatus() == TR_STATUS_ENABLED) {
 
 				if ($delim){
 					echo ' | ';
@@ -258,12 +258,12 @@ class LanguageManager {
 	// public
 	// import language pack from specified file
 	function import($filename) {
-		require_once(AF_INCLUDE_PATH . 'lib/pclzip.lib.php');
-		require_once(AF_INCLUDE_PATH . 'classes/Language/LanguageParser.class.php');
+		require_once(TR_INCLUDE_PATH . 'lib/pclzip.lib.php');
+		require_once(TR_INCLUDE_PATH . 'classes/Language/LanguageParser.class.php');
 
 		global $languageManager, $msg;
 
-		$import_path = AF_TEMP_DIR . 'import/';
+		$import_path = TR_TEMP_DIR . 'import/';
 
 		$archive = new PclZip($filename);
 		if ($archive->extract(PCLZIP_OPT_PATH,	$import_path) == 0) {
@@ -276,7 +276,7 @@ class LanguageManager {
 		$languageParser->parse($language_xml);
 		$languageEditor =& $languageParser->getLanguageEditor(0);
 
-		if ($languageEditor->getAFrameVersion() != VERSION) 
+		if ($languageEditor->getTransformableVersion() != VERSION) 
 		{
 				$msg->addError('LANG_WRONG_VERSION');
 		}
@@ -298,16 +298,16 @@ class LanguageManager {
 	}
 
 	// public
-	// imports LIVE language from the AFrame language database
+	// imports LIVE language from the Transformable language database
 	function liveImport($language_code) {
 		global $db;
 
-		$tmp_lang_db = mysql_connect(AF_LANG_DB_HOST, AF_LANG_DB_USER, AF_LANG_DB_PASS);
+		$tmp_lang_db = mysql_connect(TR_LANG_DB_HOST, TR_LANG_DB_USER, TR_LANG_DB_PASS);
 		// set database connection using utf8
 		mysql_query("SET NAMES 'utf8'", $tmp_lang_db);
 		
 		if (!$tmp_lang_db) {
-			/* AF_ERROR_NO_DB_CONNECT */
+			/* TR_ERROR_NO_DB_CONNECT */
 			echo 'Unable to connect to db.';
 			exit;
 		}

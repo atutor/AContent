@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,17 +10,17 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-require(AF_INCLUDE_PATH.'vitals.inc.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
 global $_current_user;
 
 if (!isset($_current_user))
 {
-	require(AF_INCLUDE_PATH.'header.inc.php');
+	require(TR_INCLUDE_PATH.'header.inc.php');
 	$msg->printInfos('INVALID_USER');
-	require(AF_INCLUDE_PATH.'footer.inc.php');
+	require(TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -31,43 +31,30 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
-	$missing_fields = array();
-
-	if (!$_POST['first_name']) {
-		$missing_fields[] = _AT('first_name');
-	}
-
-	if (!$_POST['last_name']) {
-		$missing_fields[] = _AT('last_name');
-	}
-
-	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
-	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
-
+	if (isset($_POST['is_author'])) $is_author = 1;
+	else $is_author = 0;
+		
 	$usersDAO = new UsersDAO();
-	if ($usersDAO->getUserByName($_POST['first_name'], $_POST['last_name']))
+	$user_row = $usersDAO->getUserByID($_SESSION['user_id']);
+	
+	if ($usersDAO->Update($_SESSION['user_id'], 
+	                  $user_row['user_group_id'],
+                      $user_row['login'],
+	                  $user_row['email'],
+	                  $_POST['first_name'],
+	                  $_POST['last_name'],
+                      $is_author,
+                      $_POST['organization'],
+                      $_POST['phone'],
+                      $_POST['address'],
+                      $_POST['city'],
+                      $_POST['province'],
+                      $_POST['country'],
+                      $_POST['postal_code'],
+	                  $_POST['status']))
+	
 	{
-		$msg->addError('FIRST_LAST_NAME_UNIQUE');
-	}
-
-	if ($missing_fields) {
-		$missing_fields = implode(', ', $missing_fields);
-		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
-	}
-	$login = strtolower($_POST['login']);
-
-	if (!$msg->containsErrors()) {
-		// insert into the db.
-		if (!$_current_user->setName($addslashes($_POST['first_name']), $addslashes($_POST['last_name']))) 
-		{
-			$msg->printErrors('DB_NOT_UPDATED');
-			exit;
-		}
-
 		$msg->addFeedback('PROFILE_UPDATED');
-
-		header('Location: index.php');
-		exit;
 	}
 }
 
@@ -78,7 +65,6 @@ if (!isset($_POST['submit'])) {
 }
 
 /* template starts here */
-
 $savant->assign('row', $row);
 
 global $onload;

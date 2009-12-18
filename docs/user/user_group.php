@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,10 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-include_once(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/UserGroupsDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/PrivilegesDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+include_once(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/UserGroupsDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/PrivilegesDAO.class.php');
 
 // handle submit
 if ( isset($_GET['edit']) && isset($_GET['id']) && count($_GET['id']) > 1) {
@@ -25,7 +25,7 @@ if ( isset($_GET['edit']) && isset($_GET['id']) && count($_GET['id']) > 1) {
 	// cannot delete "admin" and "user" groups
 	foreach ($_GET['id'] as $id)
 	{
-		if ($id == AF_USER_GROUP_ADMIN || $id == AF_USER_GROUP_USER)
+		if ($id == TR_USER_GROUP_ADMIN || $id == TR_USER_GROUP_USER)
 		{
 			$msg->addError('USER_GROUP_CANNOT_DELETE');
 			break;

@@ -2,9 +2,9 @@
 // Modified from http://oauth.googlecode.com/svn/code/php/
 
 // vim: foldmethod=marker
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/OAuthServerConsumersDAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/OAuthServerConsumersDAO.class.php');
 
 /* Generic exception class
  */

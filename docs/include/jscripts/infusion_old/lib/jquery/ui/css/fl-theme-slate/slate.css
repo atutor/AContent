@@ -11,7 +11,7 @@
 .fl-theme-slate .ui-widget-overlay{position:absolute;top:0;left:0;width:100%;height:100%;}
 .fl-theme-slate .ui-widget{font-family:Verdana,Arial,sans-serif;font-size:1em;}
 .fl-theme-slate .ui-widget input,.fl-theme-slate .ui-widget select,.fl-theme-slate .ui-widget textarea,.fl-theme-slate .ui-widget button{font-family:Verdana,Arial,sans-serif;font-size:1em;}
-.fl-theme-slate .ui-widget-content{border:1px solid #999;background:#ebebeb url(images/ui-bg_flAF_0_ebebeb_40x100.png) 50% 50% repeat-x;color:#000;}
+.fl-theme-slate .ui-widget-content{border:1px solid #999;background:#ebebeb url(images/ui-bg_flTR_0_ebebeb_40x100.png) 50% 50% repeat-x;color:#000;}
 .fl-theme-slate .ui-widget-content a{color:#000;}
 .fl-theme-slate .ui-widget-header{border:1px solid #666;background:#666 url(images/ui-bg_glass_75_666666_1x400.png) 50% 50% repeat-x;color:#fff;font-weight:bold;}
 .fl-theme-slate .ui-widget-header a{color:#fff;}
@@ -21,9 +21,9 @@
 .fl-theme-slate .ui-state-hover a,.fl-theme-slate .ui-state-hover a:hover{color:#ebebeb;text-decoration:none;outline:none;}
 .fl-theme-slate .ui-state-active,.fl-theme-slate .ui-widget-content .ui-state-active{border:1px solid #ccc;background:#ebebeb url(images/ui-bg_highlight-hard_100_ebebeb_1x100.png) 50% 50% repeat-x;font-weight:normal;color:#000;outline:none;}
 .fl-theme-slate .ui-state-active a,.fl-theme-slate .ui-state-active a:link,.fl-theme-slate .ui-state-active a:visited{color:#000;outline:none;text-decoration:none;}
-.fl-theme-slate .ui-state-highlight,.fl-theme-slate .ui-widget-content .ui-state-highlight{border:1px solid #ccc;background:#fff url(images/ui-bg_flAF_0_ffffff_40x100.png) 50% 50% repeat-x;color:#666;}
+.fl-theme-slate .ui-state-highlight,.fl-theme-slate .ui-widget-content .ui-state-highlight{border:1px solid #ccc;background:#fff url(images/ui-bg_flTR_0_ffffff_40x100.png) 50% 50% repeat-x;color:#666;}
 .fl-theme-slate .ui-state-highlight a,.fl-theme-slate .ui-widget-content .ui-state-highlight a{color:#666;}
-.fl-theme-slate .ui-state-error,.fl-theme-slate .ui-widget-content .ui-state-error{border:1px solid #000;background:#666 url(images/ui-bg_flAF_0_666666_40x100.png) 50% 50% repeat-x;color:#fff;}
+.fl-theme-slate .ui-state-error,.fl-theme-slate .ui-widget-content .ui-state-error{border:1px solid #000;background:#666 url(images/ui-bg_flTR_0_666666_40x100.png) 50% 50% repeat-x;color:#fff;}
 .fl-theme-slate .ui-state-error a,.fl-theme-slate .ui-widget-content .ui-state-error a{color:#fff;}
 .fl-theme-slate .ui-state-error-text,.fl-theme-slate .ui-widget-content .ui-state-error-text{color:#fff;}
 .fl-theme-slate .ui-state-disabled,.fl-theme-slate .ui-widget-content .ui-state-disabled{opacity:.35;filter:Alpha(Opacity=35);background-image:none;}
@@ -219,8 +219,8 @@
 .fl-theme-slate .ui-corner-right{-moz-border-radius-topright:5px;-webkit-border-top-right-radius:5px;-moz-border-radius-bottomright:5px;-webkit-border-bottom-right-radius:5px;}
 .fl-theme-slate .ui-corner-left{-moz-border-radius-topleft:5px;-webkit-border-top-left-radius:5px;-moz-border-radius-bottomleft:5px;-webkit-border-bottom-left-radius:5px;}
 .fl-theme-slate .ui-corner-all{-moz-border-radius:5px;-webkit-border-radius:5px;}
-.fl-theme-slate .ui-widget-overlay{background:#ccc url(images/ui-bg_flAF_0_cccccc_40x100.png) 50% 50% repeat-x;opacity:.50;filter:Alpha(Opacity=50);}
-.fl-theme-slate .ui-widget-shadow{margin:-5px 0 0 -5px;padding:5px;background:#999 url(images/ui-bg_flAF_0_999999_40x100.png) 50% 50% repeat-x;opacity:.50;filter:Alpha(Opacity=50);-moz-border-radius:5px;-webkit-border-radius:5px;}
+.fl-theme-slate .ui-widget-overlay{background:#ccc url(images/ui-bg_flTR_0_cccccc_40x100.png) 50% 50% repeat-x;opacity:.50;filter:Alpha(Opacity=50);}
+.fl-theme-slate .ui-widget-shadow{margin:-5px 0 0 -5px;padding:5px;background:#999 url(images/ui-bg_flTR_0_999999_40x100.png) 50% 50% repeat-x;opacity:.50;filter:Alpha(Opacity=50);-moz-border-radius:5px;-webkit-border-radius:5px;}
 .fl-theme-slate .ui-accordion .ui-accordion-header{cursor:pointer;position:relative;margin-top:1px;zoom:1;}
 .fl-theme-slate .ui-accordion .ui-accordion-li-fix{display:inline;}
 .fl-theme-slate .ui-accordion .ui-accordion-header-active{border-bottom:0!important;}

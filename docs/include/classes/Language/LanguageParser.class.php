@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -51,7 +51,7 @@ class LanguageParser {
 
 	// public
 	function getLanguageEditor($row_num) {
-		require_once(AF_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/Language/LanguageEditor.class.php');
 		return new LanguageEditor($this->language_rows[$row_num]);
 	}
 
@@ -68,7 +68,7 @@ class LanguageParser {
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
-		if ($this->element_path == array('language', 'aframe-version')) {
+		if ($this->element_path == array('language', 'transformable-version')) {
 			$this->language_rows[$this->row_num]['version'] = trim($this->character_data);
 
 		} else if ($this->element_path === array('language', 'charset')) {

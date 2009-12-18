@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -19,7 +19,7 @@
 * @see		LanguageManager::getMyLanguage()
 * @package	Language
 */
-include_once(AF_INCLUDE_PATH.'classes/DAO/LangCodesDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LangCodesDAO.class.php');
 
 class Language {
 	// all private
@@ -30,7 +30,7 @@ class Language {
 	var $nativeName;
 	var $englishName;
 	var $status;
-	var $aframe_version;
+	var $transformable_version;
 
 	// constructor
 	function Language($language_row) {
@@ -42,7 +42,7 @@ class Language {
 			$this->nativeName        = $language_row['native_name'];
 			$this->englishName       = $language_row['english_name'];
 			$this->status            = $language_row['status'];
-			$this->aframe_version    = isset($language_row['version']) ? $language_row['version'] : VERSION;
+			$this->transformable_version    = isset($language_row['version']) ? $language_row['version'] : VERSION;
 
 			$langCodesDAO = new LangCodesDAO();
 			$row_langCodes = $langCodesDAO->GetLangCodeBy3LetterCode($this->getParentCode($language_row['language_code']));
@@ -90,8 +90,8 @@ class Language {
 		return $this->regularExpression;
 	}
 
-	function getAFrameVersion() {
-		return $this->aframe_version;
+	function getTransformableVersion() {
+		return $this->transformable_version;
 	}
 
 	function getTranslatedName() {
@@ -157,7 +157,7 @@ class Language {
 		if (!$code && isset($this)) {
 			$code = $this->code;
 		}
-		$peices = explode(AF_LANGUAGE_LOCALE_SEP, $code, 2);
+		$peices = explode(TR_LANGUAGE_LOCALE_SEP, $code, 2);
 		return $peices[0];
 	}
 
@@ -167,17 +167,17 @@ class Language {
 		if (!$code && isset($this)) {
 			$code = $this->code;
 		}
-		$peices = explode(AF_LANGUAGE_LOCALE_SEP, $code, 2);
+		$peices = explode(TR_LANGUAGE_LOCALE_SEP, $code, 2);
 		return $peices[1];
 	}
 	
 	function getXML($part=FALSE) {
 		if (!$part) {
 			$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
-			<!-- This is an AFrame language pack -->
+			<!-- This is an Transformable language pack -->
 
 			<!DOCTYPE language [
-			   <!ELEMENT aframe-version (#PCDATA)>
+			   <!ELEMENT transformable-version (#PCDATA)>
 			   <!ELEMENT charset (#PCDATA)>
 			   <!ELEMENT reg-exp (#PCDATA)>
 			   <!ELEMENT native-name (#PCDATA)>
@@ -189,7 +189,7 @@ class Language {
 		} 
 
 		$xml .= '<language code="'.$this->code.'">
-			<aframe-version>'.VERSION.'</aframe-version>
+			<transformable-version>'.VERSION.'</transformable-version>
 			<charset>'.$this->characterSet.'</charset>
 			<reg-exp>'.$this->regularExpression.'</reg-exp>
 			<native-name>'.$this->nativeName.'</native-name>

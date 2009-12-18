@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; } 
-include(AF_INCLUDE_PATH.'handbook_pages.inc.php');
+if (!defined('TR_INCLUDE_PATH')) { exit; } 
+include(TR_INCLUDE_PATH.'handbook_pages.inc.php');
 
 global $handbook_pages;
 global $merged_array;
@@ -60,7 +60,7 @@ if (isset($next_page)) $savant->assign('next_page', $next_page);
 
 $savant->assign('pages', $_pages);
 $savant->assign('this_page', $this_page);
-$savant->assign('base_path', AF_BASE_HREF);
+$savant->assign('base_path', TR_BASE_HREF);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
 $savant->display('include/handbook_header.tmpl.php');

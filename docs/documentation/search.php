@@ -1,6 +1,6 @@
 <?php 
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,17 +10,17 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'handbook_pages.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'handbook_pages.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
 
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="<?php if ($missing_lang) { echo DEFAULT_LANGUAGE_CODE; } else { echo $req_lang; } ?>">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title><?php echo _AT('AFrame_documentation'); ?></title>
+	<title><?php echo _AT('Transformable_documentation'); ?></title>
 	<base target="body" />
 <style>
 body { font-family: Verdana,Arial,sans-serif; font-size: x-small; margin: 0px; padding: 0px; background: #fafafa; margin-left: -5px; }

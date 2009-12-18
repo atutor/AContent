@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', 'include/');
+define('TR_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
 
 require('../include/constants.inc.php');
@@ -28,15 +28,15 @@ $session_error = ob_get_contents();
 ob_end_clean();
 error_reporting(E_ALL ^ E_NOTICE);
 
-require(AF_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="Bad" title="Bad" />';
 $good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="Good" title="Good" />';
 
 $no_good = FALSE;
 $not_as_good = FALSE;
 ?>
-<h3>Welcome to the AFrame Installation</h3>
-<p>This process will step you through your AFrame installation or upgrade.</p>
+<h3>Welcome to the Transformable Installation</h3>
+<p>This process will step you through your Transformable installation or upgrade.</p>
 <p>During this process be sure not to use your browser's <em>Refresh</em> or <em>Reload</em> feature as it may complicate the installation process.</p>
 
 <h4>Requirements</h4>
@@ -227,8 +227,8 @@ $not_as_good = FALSE;
 <?php elseif ($not_as_good): ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
-		<td class="row1"><strong>AFrame has indicated that the 'mbstring' library is missing from the PHP.  <br />
-						We strongly encourage you to install the 'mbstring' library before continuing, however, if you choose not to install the library from PHP, a third party library within AFrame will be used.  <br/><br/>
+		<td class="row1"><strong>Transformable has indicated that the 'mbstring' library is missing from the PHP.  <br />
+						We strongly encourage you to install the 'mbstring' library before continuing, however, if you choose not to install the library from PHP, a third party library within Transformable will be used.  <br/><br/>
 						For production systems, we strongly encourage you to install the PHP with <a href="http://ca.php.net/manual/en/ref.mbstring.php" target="php_site">mbstring</a> support.  <br/><br/>
 						You may choose to by pass the mbstring check for the installation at your own risk by clicking <a href="javascript:void(0);" onclick="javascript:document.form.next.disabled=false;">continue</a>.</strong></td>
 		<td class="row1"></td>
@@ -252,7 +252,7 @@ $not_as_good = FALSE;
 	</table>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
-		<td class="row1"><strong>Upgrading from previous AFrame must have mbstring library installed.</strong></td>
+		<td class="row1"><strong>Upgrading from previous Transformable must have mbstring library installed.</strong></td>
 		<td class="row1"></td>
 	</tr>
 	<tr>
@@ -290,4 +290,4 @@ $not_as_good = FALSE;
 	
 <?php endif; ?>
 
-<?php require(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -1,6 +1,6 @@
 <?php
-define('AF_INCLUDE_PATH', '../include/');
-require_once(AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../include/');
+require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once("common.inc.php");
 
 try {

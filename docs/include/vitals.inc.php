@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,10 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
-define('AF_DEVEL', 0);
-define('AF_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
+define('TR_DEVEL', 1);
+define('TR_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -49,27 +49,27 @@ function unregister_GLOBALS() {
 
 /**** 0. start system configuration options block ****/
 error_reporting(0);
-include_once(AF_INCLUDE_PATH.'config.inc.php');
-error_reporting(AF_ERROR_REPORTING);
+include_once(TR_INCLUDE_PATH.'config.inc.php');
+error_reporting(TR_ERROR_REPORTING);
 
-if (!defined('AF_INSTALL') || !AF_INSTALL) {
+if (!defined('TR_INSTALL') || !TR_INSTALL) {
 	header('Cache-Control: no-store, no-cache, must-revalidate');
 	header('Pragma: no-cache');
 
-	$relative_path = substr(AF_INCLUDE_PATH, 0, -strlen('include/'));
+	$relative_path = substr(TR_INCLUDE_PATH, 0, -strlen('include/'));
 	header('Location: ' . $relative_path . 'install/not_installed.php');
 	exit;
 }
 /*** end system config block ****/
 
 /***** 1. database connection *****/
-//if (!defined('AF_REDIRECT_LOADED')){
-//	require_once(AF_INCLUDE_PATH.'lib/mysql_connect.inc.php');
+//if (!defined('TR_REDIRECT_LOADED')){
+//	require_once(TR_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 //}
 /***** end database connection ****/
 
 /*** 2. constants ***/
-require_once(AF_INCLUDE_PATH.'constants.inc.php');
+require_once(TR_INCLUDE_PATH.'constants.inc.php');
 
 /*** 3. initilize session ***/
 	@set_time_limit(0);
@@ -77,7 +77,7 @@ require_once(AF_INCLUDE_PATH.'constants.inc.php');
 	@session_cache_limiter('private, must-revalidate');
 
 	session_name('CheckerID');
-	error_reporting(AF_ERROR_REPORTING);
+	error_reporting(TR_ERROR_REPORTING);
 
 	ob_start();
 	session_set_cookie_params(0, $_base_path);
@@ -89,9 +89,9 @@ require_once(AF_INCLUDE_PATH.'constants.inc.php');
 /***** end session initilization block ****/
 	
 /***** 4. load $_config from table 'config' *****/
-require(AF_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
-require(AF_INCLUDE_PATH.'classes/DAO/ThemesDAO.class.php');
-require(AF_INCLUDE_PATH.'classes/DAO/ConfigDAO.class.php');
+require(TR_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
+require(TR_INCLUDE_PATH.'classes/DAO/ThemesDAO.class.php');
+require(TR_INCLUDE_PATH.'classes/DAO/ConfigDAO.class.php');
 
 $configDAO = new ConfigDAO();
 $rows = $configDAO->getAll();
@@ -112,10 +112,10 @@ $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 
 /***** 5. start language block *****/
 	// set current language
-	require(AF_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
+	require(TR_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
 	$languageManager = new LanguageManager();
 
-	$myLang =& $languageManager->getMyLanguage();
+	$myLang = $languageManager->getMyLanguage();
 
 	if ($myLang === FALSE) {
 		echo 'There are no languages installed!';
@@ -132,18 +132,18 @@ $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 /***** end language block ****/
 
 /***** 6. load common libraries *****/
-	require(AF_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
+	require(TR_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
 /***** end load common libraries ****/
 
 /***** 7. initialize theme and template management *****/
-	require(AF_INCLUDE_PATH.'classes/Savant2/Savant2.php');
+	require(TR_INCLUDE_PATH.'classes/Savant2/Savant2.php');
 
 	// set default template paths:
 	$savant = new Savant2();
 
-	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AF_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && $_SESSION['user_id']>0) 
+	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && $_SESSION['user_id']>0) 
 	{
-		if (!is_dir(AF_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']))
+		if (!is_dir(TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']))
 		{
 			$_SESSION['prefs']['PREF_THEME'] = 'default';
 		} 
@@ -164,11 +164,11 @@ $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 		$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 	}
 
-	$savant->addPath('template', AF_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+	$savant->addPath('template', TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 
-	require(AF_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
+	require(TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
-	require(AF_INCLUDE_PATH.'classes/Message/Message.class.php');
+	require(TR_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg = new Message($savant);
 
 /***** end of initialize theme and template management *****/
@@ -178,7 +178,7 @@ $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
 {
 	// check if $_SESSION['user_id'] is valid
-	include_once(AF_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+	include_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 	$usersDAO = new UsersDAO();
 	$user = $usersDAO->getUserByID($_SESSION['user_id']);
 	
@@ -186,14 +186,14 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
 		unset($_SESSION['user_id']);
 	else
 	{
-		include_once(AF_INCLUDE_PATH.'classes/User.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/User.class.php');
 		$_current_user = new User($_SESSION['user_id']);
 	}
 }
 /***** end of initialize user instance *****/
 
 /*** 9. register pages based on user's priviledge ***/
-require_once(AF_INCLUDE_PATH.'page_constants.inc.php');
+require_once(TR_INCLUDE_PATH.'page_constants.inc.php');
 
 /**
  * This function is used for printing variables for debugging.
@@ -203,7 +203,7 @@ require_once(AF_INCLUDE_PATH.'page_constants.inc.php');
  * @author  Joel Kronenberg
  */
 function debug($var, $title='') {
-	if (!defined('AF_DEVEL') || !AF_DEVEL) {
+	if (!defined('TR_DEVEL') || !TR_DEVEL) {
 		return;
 	}
 	
@@ -235,11 +235,11 @@ function debug($var, $title='') {
 * @author  Cindy Qi Li
 */
 function debug_to_log($var, $log='') {
-	if (!defined('AF_DEVEL') || !AF_DEVEL) {
+	if (!defined('TR_DEVEL') || !TR_DEVEL) {
 		return;
 	}
 	
-	if ($log == '') $log = AF_TEMP_DIR. 'debug.log';
+	if ($log == '') $log = TR_TEMP_DIR. 'debug.log';
 	$handle = fopen($log, 'a');
 	fwrite($handle, "\n\n");
 	fwrite($handle, date("F j, Y, g:i a"));
@@ -303,9 +303,71 @@ function get_default_theme() {
 	
 	$rows = $themesDAO->getDefaultTheme();
 
-	if (!is_dir(AF_INCLUDE_PATH . '../themes/' . $rows[0]['dir_name']))
+	if (!is_dir(TR_INCLUDE_PATH . '../themes/' . $rows[0]['dir_name']))
 		return 'default';
 	else
 		return $rows[0]['dir_name'];
 }
+
+/**
+* This function cuts out requested tag information from html head
+* @access  public
+* @param   $text  html text
+* @param   $tags  a string or an array of requested tags
+* @author  Cindy Qi Li
+*/
+function get_html_head_by_tag($text, $tags)
+{
+	$head = get_html_head($text);
+	$rtn_text = "";
+	
+	if (!is_array($tags) && strlen(trim($tags)) > 0)
+	{
+		$tags = array(trim($tags));
+	}
+	
+	foreach ($tags as $tag)
+	{
+		$tag = strtolower($tag);
+
+		/* strip everything before <{tag}> */
+		$start_pos	= strpos($head, '<'.$tag);
+		$temp_head = $head;
+		
+		while ($start_pos !== false) 
+		{
+			$temp_text = substr($temp_head, $start_pos);
+	
+			/* strip everything after </{tag}> or />*/
+			$end_pos	= strpos($temp_text, '</' . $tag . '>');
+	
+			if ($end_pos !== false) 
+			{
+				$end_pos += strlen('</' . $tag . '>');
+				
+				// add an empty line after each tag information
+				$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
+	
+';
+			}
+			else  // match /> as ending tag if </tag> is not found
+			{
+				$end_pos	= strpos($temp_text, '/>');
+				$end_pos += strlen('/>');
+				
+				// add an empty line after each tag information
+				$rtn_text .= trim(substr($temp_text, 0, $end_pos)) . '
+	
+';
+			}
+			
+			// initialize vars for next round of matching
+			$temp_head = substr($temp_text, $end_pos);
+			$start_pos = strpos($temp_head, '<'.$tag);
+		}
+	}
+	
+	return $rtn_text;
+}
+
 ?>

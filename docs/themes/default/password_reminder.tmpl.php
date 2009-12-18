@@ -1,6 +1,6 @@
 <?php 
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -13,10 +13,10 @@
 global $onload;
 $onload = 'document.form.form_email.focus();';
 
-require(AF_INCLUDE_PATH.'header.inc.php'); 
+require(TR_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
-<div class="center-input-form">
+<div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('password_reminder'); ?></legend>
 
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -53,4 +53,4 @@ require(AF_INCLUDE_PATH.'header.inc.php');
 </fieldset>
 </div>
 
-<?php require(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

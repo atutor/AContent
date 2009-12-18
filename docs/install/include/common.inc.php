@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,16 +10,16 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
 
-/* aframe default configuration options */
+/* transformable default configuration options */
 /* used on: step3.php, step4.php, step5.php */
 $_defaults['admin_username'] = 'admin';
 $_defaults['admin_password'] = '';
 $_defaults['admin_email'] = '';
 
-$_defaults['site_name'] = 'AFrame';
+$_defaults['site_name'] = 'Transformable';
 $_defaults['header_img'] = '';
 $_defaults['header_logo'] = '';
 $_defaults['home_url'] = '';

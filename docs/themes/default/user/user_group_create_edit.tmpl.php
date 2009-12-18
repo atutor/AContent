@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -13,7 +13,7 @@
 global $onload;
 $onload = "initial();";
 
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form name="input_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?><?php if (isset($_GET["id"])) echo '?id='.$_GET["id"]; ?>" >
@@ -170,4 +170,4 @@ function togglerowhighlight(obj, boxid) {
 //-->
 </script>
 
-<?php include(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>

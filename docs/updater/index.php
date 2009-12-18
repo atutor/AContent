@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,12 +10,12 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-require (AF_INCLUDE_PATH.'vitals.inc.php');
+require (TR_INCLUDE_PATH.'vitals.inc.php');
 require_once('classes/PatchListParser.class.php');
-require_once(AF_INCLUDE_PATH. 'classes/Utility.class.php');
-require_once(AF_INCLUDE_PATH. 'classes/DAO/PatchesDAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/PatchesDAO.class.php');
 require_once('include/common.inc.php');
 
 set_time_limit(0);
@@ -74,7 +74,7 @@ if ($_POST['no'])
 	exit;
 }
 
-require (AF_INCLUDE_PATH.'header.inc.php');
+require (TR_INCLUDE_PATH.'header.inc.php');
 
 if (trim($_POST['who']) != '') $who = trim($_POST['who']);
 elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
@@ -108,12 +108,12 @@ if ($server_connected)
 }
 // end of get patch list
 
-$module_content_folder = AF_TEMP_DIR . "updater/temp";
+$module_content_folder = TR_TEMP_DIR . "updater/temp";
 if (!is_dir($module_content_folder)) mkdir($module_content_folder);
 
 if ($_POST['install_upload'] && $_POST['uploading'])
 {
-	include_once(AF_INCLUDE_PATH . 'lib/pclzip.lib.php');
+	include_once(TR_INCLUDE_PATH . 'lib/pclzip.lib.php');
 	
 	// clean up module content folder
 	Utility::clearDir($module_content_folder);

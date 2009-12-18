@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -18,8 +18,8 @@ if ($step < 5) {
 	error_reporting(0);
 	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
-	if (defined('AF_INSTALL')) {
-		include_once(AF_INCLUDE_PATH.'common.inc.php');
+	if (defined('TR_INSTALL')) {
+		include_once(TR_INCLUDE_PATH.'common.inc.php');
 		echo print_meta_redirect();
 		exit;
 	}

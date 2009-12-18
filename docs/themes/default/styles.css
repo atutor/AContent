@@ -1,5 +1,5 @@
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto			    */
@@ -16,14 +16,13 @@ html,body{
 
 /* main body attributes */
 body {
-	font-family: Verdana, Helevetica, Arial, sans-serif;
+	font-family: Arial, sans-serif;
 	margin:0px;
-	font-size: small;
 	background-color: white;
 }
 
 p {
-    text-align: justify;
+    /*text-align: justify;*/
     line-height: 150%;
 	font-size: 1em;
 }
@@ -218,33 +217,26 @@ div.paging {
    width: 100%;
    text-align: center;
    margin: 0.5em auto;
+  font-size: smaller;
 }
 div.paging ul {
    list-style: none;
    display: inline;
    padding: 0px;
-   border: 1px solid #000;
 }
 div.paging li { 
 	display: inline; 
-	padding-left: 2px; 
-	padding-right: 2px;
-	padding-top: 0px;
-	padding-bottom: 0px;
+	padding-left: 1px; 
+	padding-right: 1px;
 }
 
 div.paging li a {
-	text-decoration: none;
 	padding-left: 4px;
 	padding-right: 4px;
-	border-left: 1px solid white;
-	border-right: 1px solid white;
 }
 
 div.paging li a:hover, div.paging li a.current {
-   background-color: #F7F3ED;
-   border-left: 1px solid #000;
-   border-right: 1px solid #000;
+   color: #FFA20C;
 }
 
 /***************************************************************/
@@ -330,7 +322,7 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 	color: white; background-color: #365D95
 }
 #banner #logininfo {
-	font-size: 8pt; 
+	font-size: small; 
 	font-weight:bold;
 	margin-left: 10px; 
 	margin-top: 2px; 
@@ -344,7 +336,7 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 }
 #banner #versioninfo {
 	font-size: 8pt; 
-	margin-right: 10px; 
+	margin-right: 500px; 
 	margin-top: 2px; 
 	position: absolute; 
 	right: 0px; 
@@ -901,7 +893,7 @@ ul.topnavlist li a.selected {
 fieldset.group_form{
 	margin:.5em;
 	border:thin #6D7B8D solid;
-   	min-height: 170px;
+   	min-height: 100px;
 	padding:.5em;
 	background-color:#F8F8F8;;
 
@@ -1008,7 +1000,7 @@ pre.badgeSnippet {
 /* Liquid Round theme elements */
 
 #liquid-round {
-        width:85em;
+    /*width:85em;*/
 	margin:0px auto;
 	background:#fff url(images/leftside.gif) repeat-y left top;
 }
@@ -1116,3 +1108,28 @@ ul.navigation li a.active span{
 	padding-right: 10px;
 }
 
+/* course search result display */
+.results {
+	margin: 0 16px;
+	padding-right: 1em;
+}
+
+li.course {
+	font-family:arial,sans-serif;
+	font-size:small;
+	margin:1em 0;
+}
+
+ol li {
+	list-style-image:none;
+	list-style-position:outside;
+	list-style-type:none;
+}
+
+.results h3 {
+	display:inline;
+	font-size:medium;
+	font-weight:normal;
+	margin:0;
+	padding:0;
+}

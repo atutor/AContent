@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,9 +17,9 @@
  * @package	DAO
  */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
 class MyownPatchesDAO extends DAO {
 
@@ -101,7 +101,7 @@ class MyownPatchesDAO extends DAO {
 
 		// check if the required fields are filled
 		if (($fieldName == 'system_patch_id' || $fieldName == 'applied_version') && $fieldValue == '')
-			return array(_AT('AF_ERROR_EMPTY_FIELD'));
+			return array(_AT('TR_ERROR_EMPTY_FIELD'));
 
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
 		           SET ".$fieldName."='".$addslashes($fieldValue)."'

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 //Timer, to display "Time Spent" in footer, debug information
 $mtime = microtime(); 
@@ -29,7 +29,7 @@ global $_pages;
 global $_current_user;
 global $validate_content;
 
-include_once(AF_INCLUDE_PATH.'classes/Menu.class.php');
+include_once(TR_INCLUDE_PATH.'classes/Menu.class.php');
 
 $menu =new Menu();
 $_top_level_pages = $menu->getTopPages();
@@ -46,6 +46,7 @@ $_sub_menus = $menu->getSubMenus();
 $back_to_page = $menu->getBackToPage();
 
 //debug($_base_path.$current_page);
+//debug($back_to_page);
 //debug($_sub_menus);
 //exit;
 
@@ -58,7 +59,7 @@ $back_to_page = $menu->getBackToPage();
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('current_top_level_page', $_current_root_page);
 $savant->assign('sub_menus', $_sub_menus);
-$savant->assign('back_to_page', $back_to_page);
+if ($back_to_page <> '') $savant->assign('back_to_page', $back_to_page);
 $savant->assign('current_page', $_base_path.$current_page);
 
 $savant->assign('page_title', _AT($_all_pages[$current_page]['title_var']));
@@ -76,7 +77,7 @@ if ($myLang->isRTL()) {
 
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
-$savant->assign('base_path', AF_BASE_HREF);
+$savant->assign('base_path', TR_BASE_HREF);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
@@ -87,6 +88,8 @@ if (isset($validate_content))
 	$savant->assign('show_jump_to_report', 1);
 }
 
+// get custom head
+$custom_head = '';
 if (isset($_custom_css)) {
 	$custom_head = '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
 }
@@ -99,7 +102,7 @@ if (isset($_custom_head)) {
 if (isset($_pages[$current_page]['guide'])) 
 {
 	$script_name = substr($_SERVER['PHP_SELF'], strlen($_base_path));
-	$savant->assign('guide', AF_GUIDES_PATH .'index.php?p='. htmlentities($script_name));
+	$savant->assign('guide', TR_GUIDES_PATH .'index.php?p='. htmlentities($script_name));
 }
 
 $savant->assign('custom_head', $custom_head);

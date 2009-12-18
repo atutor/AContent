@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,9 +17,9 @@
 * @package	DAO
 */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
 class LanguagesDAO extends DAO {
 
@@ -138,7 +138,7 @@ class LanguagesDAO extends DAO {
 	function getAllEnabled()
 	{
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages l
-	             WHERE status = ".AF_STATUS_ENABLED."
+	             WHERE status = ".TR_STATUS_ENABLED."
 	             ORDER BY l.native_name";
 	    return $this->execute($sql);
 	}

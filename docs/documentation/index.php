@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,9 +10,9 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include(AF_INCLUDE_PATH.'handbook_pages.inc.php');
+define('TR_INCLUDE_PATH', '../include/');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include(TR_INCLUDE_PATH.'handbook_pages.inc.php');
 
 global $handbook_pages;
 
@@ -42,7 +42,7 @@ if (isset($_GET['p'])) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<title><?php echo _AT('AFrame_handbook'); ?></title>
+	<title><?php echo _AT('Transformable_handbook'); ?></title>
 
 <script type="text/javascript">
 
@@ -98,7 +98,7 @@ function hide() {
 	</frameset>
 
 	<noframes>
-		<h1><?php echo _AT('AFrame_handbook'); ?></h1>
+		<h1><?php echo _AT('Transformable_handbook'); ?></h1>
 		<p><a href="frame_toc.html">Table of Contents</a></p>
 	 </noframes>
 </frameset>

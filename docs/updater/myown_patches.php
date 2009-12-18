@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,10 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-require (AF_INCLUDE_PATH.'vitals.inc.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/MyownPatchesDAO.class.php');
+require (TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/MyownPatchesDAO.class.php');
 
 if (isset($_POST['remove'], $_POST['myown_patch_id'])) 
 {

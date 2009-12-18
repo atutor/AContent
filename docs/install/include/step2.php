@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 if(isset($_POST['submit'])) {
 	unset($errors);
@@ -27,7 +27,7 @@ if(isset($_POST['submit'])) {
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. AFrame requires version 4.1.10 or later.';
+			$errors[] = 'MySQL version '.$row['version'].' was detected. Transformable requires version 4.1.10 or later.';
 		}
 
 		if (!isset($errors)){
@@ -123,14 +123,14 @@ if (isset($errors)) {
 	</tr>
 	<tr>
 		<td class="row1"><div class="required" title="Required Field">*</div><b><label for="name">Database Name:</label></b><br />
-			The name of the database to use. It will be created if it does not exist.<br />Default: <kbd>aframe</kbd></td>
-		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo stripslashes(htmlspecialchars($_POST['db_name'])); } else { echo 'aframe'; } ?>" class="formfield" /></td>
+			The name of the database to use. It will be created if it does not exist.<br />Default: <kbd>transformable</kbd></td>
+		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo stripslashes(htmlspecialchars($_POST['db_name'])); } else { echo 'transformable'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="prefix">Table Prefix:</label></b><br />
 			The prefix to add to table names to avoid conflicts with existing tables.<br />
-			Default: <kbd>AF_</kbd></td>
-		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo stripslashes(htmlspecialchars($_POST['tb_prefix'])); } else { echo 'AF_'; } ?>" class="formfield" /></td>
+			Default: <kbd>TR_</kbd></td>
+		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo stripslashes(htmlspecialchars($_POST['tb_prefix'])); } else { echo 'TR_'; } ?>" class="formfield" /></td>
 	</tr>
 	</table>
 

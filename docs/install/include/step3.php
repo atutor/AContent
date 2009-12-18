@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
@@ -100,7 +100,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 }
 
 ?>
-<script language="JavaScript" src="<?php echo AF_INCLUDE_PATH; ?>../../include/jscripts/sha-1factory.js" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo TR_INCLUDE_PATH; ?>../../include/jscripts/sha-1factory.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 function encrypt_password()
@@ -131,7 +131,7 @@ function encrypt_password()
 			<th colspan="2">Super Administrator Account</th>
 		</tr>
 		<tr>
-			<td colspan="2" class="row1">The Super Administrator account is used for managing AFrame. The Super Administrator can also create additional Administrators each with their own privileges and roles. </td>
+			<td colspan="2" class="row1">The Super Administrator account is used for managing Transformable. The Super Administrator can also create additional Administrators each with their own privileges and roles. </td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="username">Administrator Username:</label></b><br />

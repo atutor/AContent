@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -13,7 +13,7 @@
 ignore_user_abort(true); 
 @set_time_limit(0); 
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 function update_one_ver($up_file) {
 	global $progress;
@@ -48,7 +48,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. AFrame requires version 4.0.2 or later.';
+			$errors[] = 'MySQL version '.$row['version'].' was detected. Transformable requires version 4.0.2 or later.';
 		}
 
 		if (!$errors) {
@@ -136,7 +136,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 ?>
 <table width="60%" class="tableborder" cellspacing="0" cellpadding="1" border="0" align="center">
 <tr>
-	<td colspan="2" class="row1"><p><small>All installed language packs and changes made to the default English language will be deleted. You will have to re-install any language packs by downloading the latest versions from aframe.ca. Some language packs may not currently be available.</small></p></td>
+	<td colspan="2" class="row1"><p><small>All installed language packs and changes made to the default English language will be deleted. You will have to re-install any language packs by downloading the latest versions from transformable.ca. Some language packs may not currently be available.</small></p></td>
 </tr>
 <tr>
 	<td class="row1"><small><b><label for="dir">Continue with the upgrade?</label></b></small></td>

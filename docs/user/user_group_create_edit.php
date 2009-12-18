@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,12 +10,12 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/UserGroupsDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/UserGroupPrivilegeDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/PrivilegesDAO.class.php');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/UserGroupsDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/UserGroupPrivilegeDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/PrivilegesDAO.class.php');
 
 unset($id);  // clean up the temporary id values set by vitals.inc.php
 

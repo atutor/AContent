@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,30 +10,30 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 require(dirname(__FILE__) . '/class.phpmailer.php');
 
 /**
-* AFrameMailer is modified from AFrameMailer
+* TransformableMailer is modified from TransformableMailer
 *
-* AFrameMailer extends PHPMailer and sets all the default values
-* that are common for AFrame.
+* TransformableMailer extends PHPMailer and sets all the default values
+* that are common for Transformable.
 * @access  public
 * @see     include/classes/phpmailer/class.phpmailer.php
-* @since   AFrame 0.1
+* @since   Transformable 0.1
 * @author  Cindy Li
 */
-class AFrameMailer extends PHPMailer {
+class TransformableMailer extends PHPMailer {
 
 	/**
 	* The constructor sets whether to use SMTP or Sendmail depending
 	* on the value of MAIL_USE_SMTP defined in the config.inc.php file.
 	* @access  public
-	* @since   AFrame 0.2
+	* @since   Transformable 0.2
 	* @author  Joel Kronenberg
 	*/
-	function AFrameMailer() {
+	function TransformableMailer() {
 		if (MAIL_USE_SMTP) {
 			$this->IsSMTP(); // set mailer to use SMTP
 			$this->Host = ini_get('SMTP');  // specify main and backup server
@@ -51,7 +51,7 @@ class AFrameMailer extends PHPMailer {
 	}
 
 	/**
-	* Appends a custom AFrame footer to all outgoing email then sends the email.
+	* Appends a custom Transformable footer to all outgoing email then sends the email.
 	* If mail_queue is enabled then instead of sending the mail out right away, it 
 	* places it in the database and waits for the cron to send it using SendQueue().
 	* The mail queue does not support reply-to, or attachments, and converts all BCCs
@@ -59,15 +59,15 @@ class AFrameMailer extends PHPMailer {
 	* @access  public
 	* @return  boolean	whether or not the mail was sent (or queued) successfully.
 	* @see     parent::send()
-	* @since   AFrame 0.1
+	* @since   Transformable 0.1
 	* @author  Joel Kronenberg
 	*/
 	function Send() {
 		global $_config;
 
-		// attach the AFrame footer to the body first:
+		// attach the Transformable footer to the body first:
 		$this->Body .= 	"\n\n".'----------------------------------------------'."\n";
-		$this->Body .= _AT('sent_via_AFrame', AF_BASE_HREF);
+		$this->Body .= _AT('sent_via_Transformable', TR_BASE_HREF);
 
 		$this->Body .= "\n"._AT('home').': http://atutor.ca';
 
@@ -75,7 +75,7 @@ class AFrameMailer extends PHPMailer {
 		// for each bcc or to or cc
 		if ($_config['enable_mail_queue'] && !$this->attachment) 
 		{
-			require_once(AF_INCLUDE_PATH.'classes/DAO/MailQueueDAO.class.php');
+			require_once(TR_INCLUDE_PATH.'classes/DAO/MailQueueDAO.class.php');
 			$mailQueueDAO = new MailQueueDAO();
 			
 			for ($i = 0; $i < count($this->to); $i++) {
@@ -97,13 +97,13 @@ class AFrameMailer extends PHPMailer {
 	* Sends all the queued mail. Called by ./admin/cron.php.
 	* @access public
 	* @return void
-	* @since AFrame 0.2
+	* @since Transformable 0.2
 	* @author Joel Kronenberg
 	*/
 	function SendQueue() {
 		global $db;
 
-		require_once(AF_INCLUDE_PATH.'classes/DAO/MailQueueDAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/MailQueueDAO.class.php');
 		$mailQueueDAO = new MailQueueDAO();
 		$rows = $mailQueueDAO->getAll();
 
@@ -128,7 +128,7 @@ class AFrameMailer extends PHPMailer {
 			}
 			if ($mail_ids) 
 			{
-				include(AF_INCLUDE_PATH.'classes/DAO/MailQueueDAO.class.php');
+				include(TR_INCLUDE_PATH.'classes/DAO/MailQueueDAO.class.php');
 				$mailQueueDAO = new MailQueueDAO();
 	
 				$mail_ids = substr($mail_ids, 0, -1); // remove the last comma

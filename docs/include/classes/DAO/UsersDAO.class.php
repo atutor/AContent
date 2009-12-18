@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,10 +17,10 @@
  * @package	DAO
  */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
-require_once(AF_INCLUDE_PATH. 'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/Utility.class.php');
 
 class UsersDAO extends DAO {
 
@@ -63,7 +63,9 @@ class UsersDAO extends DAO {
 	 *          false and add error into global var $msg, if unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	public function Create($user_group_id, $login, $pwd, $email, $first_name, $last_name, $status)
+	public function Create($user_group_id, $login, $pwd, $email, $first_name, $last_name, 
+	                       $is_author, $organization, $phone, $address, $city,
+	                       $province, $country, $postal_code, $status)
 	{
 		global $addslashes;
 
@@ -72,17 +74,26 @@ class UsersDAO extends DAO {
 		$email = $addslashes(trim($email));
 		$first_name = $addslashes(str_replace('<', '', trim($first_name)));
 		$last_name = $addslashes(str_replace('<', '', trim($last_name)));
+		$organization = $addslashes(trim($organization));
+		$phone = $addslashes(trim($phone));
+		$address = $addslashes(trim($address));
+		$city = $addslashes(trim($city));
+		$province = $addslashes(trim($province));
+		$country = $addslashes(trim($country));
+		$postal_code = $addslashes(trim($postal_code));
 
-		if ($this->isFieldsValid('new', $user_group_id,$login, $email,$first_name, $last_name))
+		if ($this->isFieldsValid('new', $user_group_id, $login, $email,$first_name, $last_name,
+		                         $is_author, $organization, $phone, $address, $city,
+	                             $province, $country, $postal_code))
 		{
 			if ($status == "")
 			{
-				if (defined('AF_EMAIL_CONFIRMATION') && AF_EMAIL_CONFIRMATION)
+				if (defined('TR_EMAIL_CONFIRMATION') && TR_EMAIL_CONFIRMATION)
 				{
-					$status = AF_STATUS_UNCONFIRMED;
+					$status = TR_STATUS_UNCONFIRMED;
 				} else
 				{
-					$status = AF_STATUS_ENABLED;
+					$status = TR_STATUS_ENABLED;
 				}
 			}
 
@@ -94,6 +105,14 @@ class UsersDAO extends DAO {
 			               first_name,
 			               last_name,
 			               email,
+			               is_author,
+			               organization,
+			               phone,
+			               address,
+			               city,
+			               province,
+			               country,
+			               postal_code,
 			               web_service_id,
 			               status,
 			               create_date
@@ -104,6 +123,14 @@ class UsersDAO extends DAO {
 			               '".$first_name."',
 			               '".$last_name."', 
 			               '".$email."',
+			               ".$is_author.",
+			               '".$organization."',
+			               '".$phone."',
+			               '".$address."',
+			               '".$city."',
+			               '".$province."',
+			               '".$country."',
+			               '".$postal_code."',
 			               '".Utility::getRandomStr()."',
 			               ".$status.", 
 			               now()
@@ -139,7 +166,9 @@ class UsersDAO extends DAO {
 	 *          false and add error into global var $msg, if unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	public function Update($userID, $user_group_id, $login, $email, $first_name, $last_name, $status)
+	public function Update($userID, $user_group_id, $login, $email, $first_name, $last_name, 
+	                       $is_author, $organization, $phone, $address, $city,
+	                       $province, $country, $postal_code, $status)
 	{
 		global $addslashes, $msg;
 
@@ -148,8 +177,17 @@ class UsersDAO extends DAO {
 		$email = $addslashes(trim($email));
 		$first_name = $addslashes(str_replace('<', '', trim($first_name)));
 		$last_name = $addslashes(str_replace('<', '', trim($last_name)));
-
-		if ($this->isFieldsValid('update', $user_group_id,$login, $email,$first_name, $last_name))
+		$organization = $addslashes(trim($organization));
+		$phone = $addslashes(trim($phone));
+		$address = $addslashes(trim($address));
+		$city = $addslashes(trim($city));
+		$province = $addslashes(trim($province));
+		$country = $addslashes(trim($country));
+		$postal_code = $addslashes(trim($postal_code));
+		
+		if ($this->isFieldsValid('update', $user_group_id,$login, $email,$first_name, $last_name,
+		                         $is_author, $organization, $phone, $address, $city,
+	                             $province, $country, $postal_code))
 		{
 			/* insert into the db */
 			$sql = "UPDATE ".TABLE_PREFIX."users
@@ -158,6 +196,14 @@ class UsersDAO extends DAO {
 			               first_name = '".$first_name."',
 			               last_name = '".$last_name."',
 			               email = '".$email."',
+			               is_author = ".$is_author.",
+			               organization = '".$organization."',
+			               phone = '".$phone."',
+			               address = '".$address."',
+			               city = '".$city."',
+			               province = '".$province."',
+			               country = '".$country."',
+			               postal_code = '".$postal_code."',
 			               status = '".$status."'
 			         WHERE user_id = ".$userID;
 
@@ -180,17 +226,17 @@ class UsersDAO extends DAO {
 		global $addslashes;
 		
 		// check if the required fields are filled
-		if ($fieldValue == '') return array(_AT('AF_ERROR_EMPTY_FIELD'));
+		if ($fieldValue == '') return array(_AT('TR_ERROR_EMPTY_FIELD'));
 		
 		if ($fieldName == 'login')
 		{
 			if (!$this->isLoginValid($fieldValue))
 			{
-				return array(_AT('AF_ERROR_LOGIN_CHARS'));
+				return array(_AT('TR_ERROR_LOGIN_CHARS'));
 			}
 			else if ($this->isLoginExists($fieldValue))
 			{
-				return array(_AT('AF_ERROR_LOGIN_EXISTS'));
+				return array(_AT('TR_ERROR_LOGIN_EXISTS'));
 			}
 		}
 				
@@ -198,11 +244,11 @@ class UsersDAO extends DAO {
 		{
 			if (!$this->isEmailValid($fieldValue))
 			{
-				return array(_AT('AF_ERROR_EMAIL_INVALID'));
+				return array(_AT('TR_ERROR_EMAIL_INVALID'));
 			}
 			else if ($this->isEmailExists($fieldValue))
 			{
-				return array(_AT('AF_ERROR_EMAIL_EXISTS'));
+				return array(_AT('TR_ERROR_EMAIL_EXISTS'));
 			}
 		}
 						
@@ -458,7 +504,9 @@ class UsersDAO extends DAO {
 	 *          false   if update unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	private function isFieldsValid($validate_type, $user_group_id, $login, $email, $first_name, $last_name)
+	private function isFieldsValid($validate_type, $user_group_id, $login, $email, $first_name, $last_name,
+	                               $is_author, $organization, $phone, $address, $city,
+	                               $province, $country, $postal_code)
 	{
 		global $msg;
 		
@@ -507,6 +555,23 @@ class UsersDAO extends DAO {
 			$missing_fields[] = _AT('last_name');
 		}
 
+		// when user requests to be an author, author information is necessary
+		if ($is_author <> 0 && $is_author <> 1)
+		{
+			$msg->addError('INVALID_CHECKBOX_STATUS');
+		}
+		
+		if ($is_author == 1)
+		{
+			if (!$organization) $missing_fields[] = _AT('organization');
+			if (!$phone) $missing_fields[] = _AT('phone');
+			if (!$address) $missing_fields[] = _AT('address');
+			if (!$city) $missing_fields[] = _AT('city');
+			if (!$province) $missing_fields[] = _AT('province');
+			if (!$country) $missing_fields[] = _AT('country');
+			if (!$postal_code) $missing_fields[] = _AT('postal_code');
+		}
+		
 		if ($missing_fields)
 		{
 			$missing_fields = implode(', ', $missing_fields);
@@ -574,5 +639,6 @@ class UsersDAO extends DAO {
 
 		return is_array($this->execute($sql));
 	}
+
 }
 ?>

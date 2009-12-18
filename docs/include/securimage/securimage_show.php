@@ -1,7 +1,7 @@
 <?php
 $_user_location	= 'public';
-define('AF_INCLUDE_PATH', '../');
-require (AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../');
+require (TR_INCLUDE_PATH.'vitals.inc.php');
 session_start();
 
 include 'securimage.php';

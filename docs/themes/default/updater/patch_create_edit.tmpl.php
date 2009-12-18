@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -11,7 +11,7 @@
 /************************************************************************/
 
 require ('include/json.inc.php');
-require (AF_INCLUDE_PATH.'header.inc.php');
+require (TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <h2 align="center"><?php echo _AT("create_edit_update"); ?></h2>
@@ -38,8 +38,8 @@ require (AF_INCLUDE_PATH.'header.inc.php');
 		<tr><th align="left" colspan="2"><small>&middot; <?php echo _AT('contain_only'); ?></small></th></tr>
 
 		<tr>
-			<th align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="aframe_version_to_apply"><?php echo _AT('aframe_version_to_apply'); ?>:</label></th>
-			<td align="left"><input id="aframe_version_to_apply" name="aframe_version_to_apply" type="text" maxlength="100" size="30" value="<?php echo $this->patch_row['applied_version']; ?>" /></td>
+			<th align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="transformable_version_to_apply"><?php echo _AT('transformable_version_to_apply'); ?>:</label></th>
+			<td align="left"><input id="transformable_version_to_apply" name="transformable_version_to_apply" type="text" maxlength="100" size="30" value="<?php echo $this->patch_row['applied_version']; ?>" /></td>
 		</tr>
 
 		<tr>
@@ -341,4 +341,4 @@ window.onload = function() {
 //-->
 </script>
 	
-<?php require (AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (TR_INCLUDE_PATH.'footer.inc.php'); ?>

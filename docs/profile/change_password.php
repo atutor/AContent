@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,15 +10,15 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-require(AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
 
 global $_current_user;
 
 if (!isset($_current_user)) {
-	require(AF_INCLUDE_PATH.'header.inc.php');
+	require(TR_INCLUDE_PATH.'header.inc.php');
 	$msg->printInfos('INVALID_USER');
-	require(AF_INCLUDE_PATH.'footer.inc.php');
+	require(TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -69,9 +69,9 @@ if (isset($_POST['submit'])) {
 
 		if (!$_current_user->setPassword($password)) 
 		{
-			require(AF_INCLUDE_PATH.'header.inc.php');
+			require(TR_INCLUDE_PATH.'header.inc.php');
 			$msg->printErrors('DB_NOT_UPDATED');
-			require(AF_INCLUDE_PATH.'footer.inc.php');
+			require(TR_INCLUDE_PATH.'footer.inc.php');
 			exit;
 		}
 

@@ -1,5 +1,5 @@
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -8,24 +8,6 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-
-div.center-input-form {
-	width: 95%; 
-	/* border: thin #CCCCCC solid; */
-	margin: 1em;
-	line-height:100%;
-	/* background-color: #F8F8F8; */
-	padding:1em;
-}
-
-div.center-input-form div.row {
-	background-color: #F8F8F8;
-}
-
-div.center-input-form p.submit_button
-{
-	text-align: center;
-}
 
 div.left-col {
 	width: 65%; 
@@ -112,27 +94,4 @@ div.input-form div.buttons input {
 }
 .formfield:focus{
 	background-color: #FFDAB9;
-}
-
-div.validator-output-form {
-	width: 95%; 
-	margin-left:1em; 
-	margin-right:auto;
-	padding: 10px 10px 20px 10px;
-	/* border: thin #CCCCCC solid; */
-	margin-bottom: 30px;
-	line-height:100%;
-	/*background-color: #F8F8F8; */
-	float: left; 
-	clear:left;
-}
-
-div.output-form {
-	width: 95%; 
-	margin-left:auto; 
-	margin-right:auto;
-	/* border: thin #CCCCCC solid; */
-	margin-bottom: 30px;
-	line-height:100%;
-	/* background-color: #F8F8F8; */
 }

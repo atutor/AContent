@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -13,7 +13,7 @@
 global $onload;
 $onload = "initial();";
 
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form name="input_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?><?php if (isset($_GET["id"])) echo '?id='.$_GET["id"]; ?>" >
@@ -22,7 +22,7 @@ include(AF_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="charset" value="<?php echo $this->row["charset"]; ?>" />
 <?php }?>
 
-<div class="center-input-form">
+<div class="input-form">
 
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_edit_language'); ?></legend>
 	<table class="form-data" align="center">
@@ -133,4 +133,4 @@ function togglerowhighlight(obj, boxid) {
 //-->
 </script>
 
-<?php include(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>

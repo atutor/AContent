@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -13,7 +13,7 @@
 global $onload;
 $onload = 'document.form.form_login.focus();';
 
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <script language="JavaScript" src="include/jscripts/sha-1factory.js" type="text/javascript"></script>
@@ -38,7 +38,7 @@ function encrypt_password() {
 <?php }?>
 <input type="hidden" name="form_password_hidden" value="" />
 
-	<div class="center-input-form">
+	<div class="input-form">
 		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
 			<table  align="center" width="90%">
 				<tr>
@@ -55,7 +55,7 @@ function encrypt_password() {
 					<td><input type="password" class="formfield" name="form_password" size="50" id="pass" style="max-width:70%;width:70%;"/></td>
 				</tr>
 
-				<tr>
+				<tr align="center">
 					<td colspan="2">
 					<p class="submit_button">
 						<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="submit" onclick="return encrypt_password();" /> 
@@ -67,4 +67,4 @@ function encrypt_password() {
 	</div>
 </form>
 
-<?php include(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>

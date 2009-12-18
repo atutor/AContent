@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,23 +10,23 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', 'include/');
-require_once(AF_INCLUDE_PATH.'vitals.inc.php');
-require_once(AF_INCLUDE_PATH.'classes/Utility.class.php');
+define('TR_INCLUDE_PATH', 'include/');
+require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 require_once("oauth/lib/OAuth.php");
 
-require_once(AF_INCLUDE_PATH.'classes/DAO/OAuthClientServersDAO.class.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/OAuthClientTokensDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthClientServersDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthClientTokensDAO.class.php');
 
 // This part should be moved into include/constants.inc.php
-$oauth_server_url = "http://localhost/aframe/";
+$oauth_server_url = "http://localhost/transformable/";
 
 $register_consumer_url = $oauth_server_url.'oauth/register_consumer.php';
 $request_token_url = $oauth_server_url.'oauth/request_token.php';
 $authorization_url = $oauth_server_url.'oauth/authorization.php';
 $access_token_url = $oauth_server_url.'oauth/access_token.php';
 
-//$client_callback_url = AF_BASE_HREF.'index.php';
+//$client_callback_url = TR_BASE_HREF.'index.php';
 $client_callback_url = 'http://www.google.ca';
 
 // initialize oauth client
@@ -38,8 +38,8 @@ $expire_threshold = 0;
 $sig_method = new OAuthSignatureMethod_HMAC_SHA1(); // use HMAC signature method as default
 
 // 1. register consumer
-$oauth_server_response = file_get_contents($register_consumer_url.'?consumer='.urlencode(AF_BASE_HREF).'&expire='.$expire_threshold);
-debug('register consumer - request: '.$register_consumer_url.'?consumer='.urlencode(AF_BASE_HREF).'&expire='.$expire_threshold);
+$oauth_server_response = file_get_contents($register_consumer_url.'?consumer='.urlencode(TR_BASE_HREF).'&expire='.$expire_threshold);
+debug('register consumer - request: '.$register_consumer_url.'?consumer='.urlencode(TR_BASE_HREF).'&expire='.$expire_threshold);
 debug('register consumer - OAUTH response'.$oauth_server_response);
 
 // handle OAUTH response on register consumer

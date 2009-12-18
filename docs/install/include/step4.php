@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 if (isset($_POST['submit'])) {
 	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
@@ -133,7 +133,7 @@ else
 		}
 	
 		if (strlen($content) == 0) {
-			$headers[] = 'AFrame-Get: OK';
+			$headers[] = 'Transformable-Get: OK';
 		} else {
 			$headers[] = '';
 		}
@@ -151,7 +151,7 @@ else
 		}
 	}
 	
-	if (in_array('AFrame-Get: OK', $headers)) {
+	if (in_array('Transformable-Get: OK', $headers)) {
 		$get_file = 'TRUE';
 	} else {
 		$get_file = 'FALSE';
@@ -180,7 +180,7 @@ else
 	<tr>
 		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Temporary Directory</label></strong>
 		<p>It has been detected that your webserver does not support the protected temporary directory feature. The temporary directory stores all of the temporary files.</p>
-		<p>Due to that restriction your temporary directory must exist within your AFrame installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
+		<p>Due to that restriction your temporary directory must exist within your Transformable installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
 		<br /><br />
 		<input type="text" name="content_dir_disabled" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" disabled="disabled" /></td>
 	</tr>
@@ -189,7 +189,7 @@ else
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
 		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Temporary Directory</label></strong>
-		<p>Please specify where the temporary directory should be. The temporary directory stores all of the temporary files. As a security measure, the temporary directory should be placed <em>outside</em> of your AFrame installation (for example, to a non-web-accessible location that is not publically available).</p>
+		<p>Please specify where the temporary directory should be. The temporary directory stores all of the temporary files. As a security measure, the temporary directory should be placed <em>outside</em> of your Transformable installation (for example, to a non-web-accessible location that is not publically available).</p>
 		
 		<p>On a Windows machine, the path should look like <kbd>C:\temp</kbd>, while on Unix it should look like <kbd>/var/temp</kbd>.</p>
 		

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,13 +10,13 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-//include(AF_INCLUDE_PATH.'header.inc.php');
+//include(TR_INCLUDE_PATH.'header.inc.php');
 global $dependent_patches;
 
 if (isset($this->javascript_run_now)) echo $this->javascript_run_now;
 ?>
 
-<div class="center-input-form">
+<div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("updates"); ?></legend>
 
@@ -107,7 +107,7 @@ if (isset($this->javascript_run_now)) echo $this->javascript_run_now;
 </form>
 </div>
 
-<div class="center-input-form">
+<div class="input-form">
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT("upload"); ?></legend>
 	
@@ -152,4 +152,4 @@ function validate_filename() {
 //-->
 </script>
 
-<?php require (AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (TR_INCLUDE_PATH.'footer.inc.php'); ?>

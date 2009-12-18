@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -11,9 +11,9 @@
 /************************************************************************/
 
 global $_custom_css;
-$_custom_css = AF_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
+$_custom_css = TR_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
 
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <div id="editable_table">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form1">
@@ -109,7 +109,7 @@ jQuery(document).ready(function () {
 		listeners: {
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue)
-					rtn = jQuery.post("<?php echo AF_BASE_HREF; ?>language/index_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
+					rtn = jQuery.post("<?php echo TR_BASE_HREF; ?>language/index_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
 						          function(data) {handleResponse(data, viewNode, oldValue); }, "json");
 			}
 		}
@@ -122,5 +122,5 @@ jQuery(document).ready(function () {
 
 <?php 
 // display footer
-include(AF_INCLUDE_PATH.'footer.inc.php');
+include(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

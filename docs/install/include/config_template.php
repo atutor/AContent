@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 function write_config_file($filename, $comments) {
 	global $config_template;
@@ -51,7 +51,7 @@ function write_config_file($filename, $comments) {
 
 $config_template = "<"."?php 
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -79,17 +79,17 @@ define('DB_PORT',                      '{PORT}');
 define('DB_NAME',                      '{DBNAME}');
 
 /* The prefix to add to table names to avoid conflicts with existing    */
-/* tables. Default: AF_                                                 */
+/* tables. Default: TR_                                                 */
 define('TABLE_PREFIX',                 '{TABLE_PREFIX}');
 
 /* Where the temporary files are located.  This includes all file       */
 /* manager and imported files.  If security is a concern, it is         */
 /* recommended that the temporary directory be moved outside of the web	*/
 /* accessible area.														*/
-define('AF_TEMP_DIR', '{TEMP_DIR}');
+define('TR_TEMP_DIR', '{TEMP_DIR}');
 
 /* DO NOT ALTER THIS LAST LINE                                          */
-define('AF_INSTALL', TRUE);
+define('TR_INSTALL', TRUE);
 
 ?".">";
 

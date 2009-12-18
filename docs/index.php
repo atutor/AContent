@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,12 +10,12 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', 'include/');
+define('TR_INCLUDE_PATH', 'include/');
 
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 
 // display footer
-include(AF_INCLUDE_PATH.'footer.inc.php');
+include(TR_INCLUDE_PATH.'footer.inc.php');
 
 ?>

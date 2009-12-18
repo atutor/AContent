@@ -13,6 +13,56 @@ CREATE TABLE `config` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # --------------------------------------------------------
+# Table structure for table `content`
+# since 0.1
+
+CREATE TABLE `content` (
+  `content_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `content_parent_id` mediumint(8) unsigned NOT NULL default '0',
+  `ordering` mediumint(8) NOT NULL default '0',
+  `last_modified` TIMESTAMP NOT NULL,
+  `revision` tinyint(3) unsigned NOT NULL default '0',
+  `formatting` tinyint(4) NOT NULL default '0',
+  `keywords` TEXT NOT NULL ,
+  `content_path` TEXT NOT NULL ,
+  `title` VARCHAR(255) NOT NULL ,
+  `text` TEXT NOT NULL ,
+  `head` TEXT NOT NULL,
+  `use_customized_head` TINYINT(4) NOT NULL,
+  `test_message` TEXT NOT NULL,
+  `allow_test_export` TINYINT(1) UNSIGNED NOT NULL,
+  `content_type` TINYINT(1) UNSIGNED NOT NULL,
+  PRIMARY KEY  (`content_id`),
+  KEY `course_id` (`course_id`),
+  FULLTEXT(keywords, title, text)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
+# Table structure for table `courses`
+# since 0.1
+
+CREATE TABLE `courses` (
+  `course_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `user_id` mediumint(8) unsigned NOT NULL default '0',
+  `content_packaging` enum('none','top','all') NOT NULL default 'top',
+  `access` enum('public','protected','private') NOT NULL default 'public',
+  `title` VARCHAR(255) NOT NULL ,
+  `description` TEXT NOT NULL ,
+  `course_dir_name` VARCHAR(255) NOT NULL,
+  `max_quota` varchar(30) NOT NULL default '',
+  `max_file_size` varchar(30) NOT NULL default '',
+  `copyright` text NOT NULL ,
+  `primary_language` varchar(5) NOT NULL default '',
+  `icon` varchar(75) NOT NULL default '',
+  `side_menu` VARCHAR( 255 ) NOT NULL default '',
+  `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `modified_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`course_id`),
+  FULLTEXT(`title`, `description`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
 # Table structure for table `languages`
 # since 0.1
 
@@ -794,7 +844,7 @@ INSERT INTO `lang_codes` (`code_3letters`, `direction`, `code_2letters`, `descri
 ('zxx', 'ltr', '', 'Nolinguisticcontent');
 
 # insert the default theme
-INSERT INTO `themes` VALUES ('AFrame', '0.1', 'default', NOW(), 'This is the default AFrame theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
+INSERT INTO `themes` VALUES ('Transformable', '0.1', 'default', NOW(), 'This is the default Transformable theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
 
 # insert privileges, user groups and user group privileges
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (1, 'home', 'Home', NOW(), 'home/index.php', 10, 1);
@@ -807,7 +857,7 @@ INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_da
 
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (1, 'Administrator', 'Administrate users, user groups, languages and updates.', now());
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (2, 'User', 'Regular user.', now());
-INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (3, 'Translator', 'Translate AFrame terms into a foreign lanugage.', now());
+INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (3, 'Translator', 'Translate Transformable terms into a foreign lanugage.', now());
 
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 1);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 2);

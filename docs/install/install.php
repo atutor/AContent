@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', 'include/');
-require(AF_INCLUDE_PATH.'common.inc.php');
+define('TR_INCLUDE_PATH', 'include/');
+require(TR_INCLUDE_PATH.'common.inc.php');
 
 if (!$new_version = $_POST['new_version']) {
 	$new_version = $_POST['step2']['new_version'];
@@ -27,42 +27,42 @@ if ($_POST['submit'] == 'I Disagree'){
 	Header ("Location: index.php");
 }
 
-require(AF_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 
 /* agree to terms of use */
 if ($step == 1) {
-	require(AF_INCLUDE_PATH.'step1.php');
+	require(TR_INCLUDE_PATH.'step1.php');
 }
 
 /* db */
 if ($step == 2) {
-	require(AF_INCLUDE_PATH.'step2.php');
+	require(TR_INCLUDE_PATH.'step2.php');
 }
 
 /* create admin accounts and sytem preference */
 if ($step == 3) {	
-	require(AF_INCLUDE_PATH.'step3.php');
+	require(TR_INCLUDE_PATH.'step3.php');
 }
 
 /* accounts & preferences */
 if ($step == 4) {	
-	require(AF_INCLUDE_PATH.'step4.php');
+	require(TR_INCLUDE_PATH.'step4.php');
 }
 
 /* directory permissions and generating the config.inc.php file */
 if ($step == 5) {	
-	require(AF_INCLUDE_PATH.'step5.php');
+	require(TR_INCLUDE_PATH.'step5.php');
 }
 
 /* anonymous data collection */
 if ($step == 6) {	
-	require(AF_INCLUDE_PATH.'step6.php');
+	require(TR_INCLUDE_PATH.'step6.php');
 }
 
 /* done! */
 if ($step == 7) {	
-	require(AF_INCLUDE_PATH.'step7.php');
+	require(TR_INCLUDE_PATH.'step7.php');
 }
 
-require(AF_INCLUDE_PATH.'footer.inc.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

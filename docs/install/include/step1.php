@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 //clear session before using it
 unset($_SESSION['user_id']);
@@ -33,9 +33,9 @@ if (isset($_POST['submit'])) {
 
 print_progress($step);
 ?>
-<p>AFrame is licensed under the terms of the <a href="http://aframe.ca/services/licensing_gpl.php" target="_new">GNU General Public License (GPL)</a>, which essentially allows for the free distribution and modification of AFrame. AFrame has its own license that governs its use outside the bounds of the GPL.</p>
+<p>Transformable is licensed under the terms of the <a href="http://transformable.ca/services/licensing_gpl.php" target="_new">GNU General Public License (GPL)</a>, which essentially allows for the free distribution and modification of Transformable. Transformable has its own license that governs its use outside the bounds of the GPL.</p>
 
-<p>If you do not agree to the Terms of Use then you may not install and use AFrame.</p>
+<p>If you do not agree to the Terms of Use then you may not install and use Transformable.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="action" value="process" />

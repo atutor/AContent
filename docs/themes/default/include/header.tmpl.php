@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 /* available header.tmpl.php variables:
  * $this->lang_code			the ISO language code
  * SITE_NAME				the site name from the config file
@@ -122,7 +122,7 @@ $starttime = $mtime;
 <div id="liquid-round"><div class="top"><span></span></div>
 <div class="center-content">
 		<div id="logo">
-			<a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="AFrame Logo" style="border:none;" /></a>
+			<a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="Transformable Logo" style="border:none;" /></a>
 		</div>
 	<div id="banner">
 
@@ -133,20 +133,26 @@ $starttime = $mtime;
           echo _AT('welcome'). ' '.$this->user_name;
         ?>
 				&nbsp;&nbsp;
-				<a href="<?php echo AF_BASE_HREF; ?>logout.php" ><?php echo _AT('logout'); ?></a>
+				<a href="<?php echo TR_BASE_HREF; ?>logout.php" ><?php echo _AT('logout'); ?></a>
         <?php
         }
         else
         {
         ?>
-				<a href="<?php echo AF_BASE_HREF; ?>login.php" ><?php echo _AT('login'); ?></a>
+				<a href="<?php echo TR_BASE_HREF; ?>login.php" ><?php echo _AT('login'); ?></a>
 				&nbsp;&nbsp;
-				<a href="<?php echo AF_BASE_HREF; ?>register.php" ><?php echo _AT('register'); ?></a>
+				<a href="<?php echo TR_BASE_HREF; ?>register.php" ><?php echo _AT('register'); ?></a>
         <?php
         }
         ?>
 	</span>
 		
+	<div id="versioninfo">
+		<form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
+		<input type="text" name="search_text" id="search_text" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="30" />
+		<input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
+		</form>
+	</div>
 	</div>
 
 	<div class="topnavlistcontainer">

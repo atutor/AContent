@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -16,12 +16,12 @@
 * @author	Cindy Qi Li
 */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
 class LanguageUtility {
 
 	/**
-	* return language code from given AFrame language code
+	* return language code from given Transformable language code
 	* @access  public
 	* @param   $code
 	* @return  language code
@@ -31,12 +31,12 @@ class LanguageUtility {
 		if (!$code && isset($this)) {
 			$code = $this->code;
 		}
-		$peices = explode(AF_LANGUAGE_LOCALE_SEP, $code, 2);
+		$peices = explode(TR_LANGUAGE_LOCALE_SEP, $code, 2);
 		return $peices[0];
 	}
 
 	/**
-	* return charset from given AFrame language code
+	* return charset from given Transformable language code
 	* @access  public
 	* @param   $code
 	* @return  charset
@@ -46,7 +46,7 @@ class LanguageUtility {
 		if (!$code && isset($this)) {
 			$code = $this->code;
 		}
-		$peices = explode(AF_LANGUAGE_LOCALE_SEP, $code, 2);
+		$peices = explode(TR_LANGUAGE_LOCALE_SEP, $code, 2);
 		return $peices[1];
 	}
 }

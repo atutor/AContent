@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -11,9 +11,9 @@
 /************************************************************************/
 
 global $_custom_css;
-$_custom_css = AF_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
+$_custom_css = TR_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
 
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -104,7 +104,7 @@ jQuery(document).ready(function () {
 			{
 				if (newValue != oldValue)
 				{
-					rtn = jQuery.post("<?php echo AF_BASE_HREF; ?>user/user_group_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
+					rtn = jQuery.post("<?php echo TR_BASE_HREF; ?>user/user_group_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
 				          function(data) 
 				          {
 					        if (data.status=="fail")
@@ -125,4 +125,4 @@ jQuery(document).ready(function () {
 });
 //-->
 </script>
-<?php require(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

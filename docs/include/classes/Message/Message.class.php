@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -46,12 +46,12 @@ class Message {
 	* @see /include/lib/lang_constant.inc.php
 	* @var array	
 	*/
-	var $prefix = array( 'error'  =>'AF_ERROR_',
-						'feedback' => 'AF_FEEDBACK_',
-						'warning' => 'AF_WARNING_',
-						'info' => 'AF_INFOS_',
-						'help' => 'AF_HELP_',
-						'confirm' => 'AF_CONFIRM_'
+	var $prefix = array( 'error'  =>'TR_ERROR_',
+						'feedback' => 'TR_FEEDBACK_',
+						'warning' => 'TR_WARNING_',
+						'info' => 'TR_INFOS_',
+						'help' => 'TR_HELP_',
+						'confirm' => 'TR_CONFIRM_'
 				  );
 	
 	/**

@@ -1,6 +1,6 @@
 <?php 
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -32,12 +32,12 @@
 global $onload;
 $onload = 'document.form.site_name.focus();';
 
-require(AF_INCLUDE_PATH.'header.inc.php'); 
+require(TR_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 
-<div class="center-input-form">
+<div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 
 	<table class="form-data" align="center">
@@ -95,8 +95,8 @@ require(AF_INCLUDE_PATH.'header.inc.php');
 		<tr>
 			<td align="left"><?php echo _AT('use_captcha'); ?>:</td>
 			<td align="left">
-				<input type="radio" name="use_captcha" id="statusD" value="<?php echo AF_STATUS_DISABLED; ?>" <?php if ((isset($_POST['use_captcha']) && $_POST['use_captcha']==AF_STATUS_DISABLED) || (!isset($_POST['use_captcha']) && $this->config['use_captcha']==AF_STATUS_DISABLED)) echo 'checked="checked"'; ?> /><label for="statusD"><?php echo _AT('disabled'); ?></label> 
-				<input type="radio" name="use_captcha" id="statusE" value="<?php echo AF_STATUS_ENABLED; ?>" <?php if ((isset($_POST['use_captcha']) && $_POST['use_captcha']==AF_STATUS_ENABLED) || (!isset($_POST['use_captcha']) && $this->config['use_captcha']==AF_STATUS_ENABLED)) echo 'checked="checked"'; ?> /><label for="statusE"><?php echo _AT('enabled'); ?></label>
+				<input type="radio" name="use_captcha" id="statusD" value="<?php echo TR_STATUS_DISABLED; ?>" <?php if ((isset($_POST['use_captcha']) && $_POST['use_captcha']==TR_STATUS_DISABLED) || (!isset($_POST['use_captcha']) && $this->config['use_captcha']==TR_STATUS_DISABLED)) echo 'checked="checked"'; ?> /><label for="statusD"><?php echo _AT('disabled'); ?></label> 
+				<input type="radio" name="use_captcha" id="statusE" value="<?php echo TR_STATUS_ENABLED; ?>" <?php if ((isset($_POST['use_captcha']) && $_POST['use_captcha']==TR_STATUS_ENABLED) || (!isset($_POST['use_captcha']) && $this->config['use_captcha']==TR_STATUS_ENABLED)) echo 'checked="checked"'; ?> /><label for="statusE"><?php echo _AT('enabled'); ?></label>
 			</td>
 		</tr>
 		
@@ -148,4 +148,4 @@ require(AF_INCLUDE_PATH.'header.inc.php');
 </div>
 </form>
 
-<?php require(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

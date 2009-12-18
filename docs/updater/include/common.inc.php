@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -41,7 +41,7 @@ function print_feedback( $feedback, $notes='' ) {
 	<div class="input-form">
 	<table style="align:center; padding: 3px; background-color: #F8F8F8; border: 0">
 	<tr>
-	<td><h3><img src="images/feedback.gif" align="top" alt="" class="img" /> <?php echo _AT('AF_FEEDBACK_UPDATE_INSTALLED_SUCCESSFULLY')?></h3>
+	<td><h3><img src="images/feedback.gif" align="top" alt="" class="img" /> <?php echo _AT('TR_FEEDBACK_UPDATE_INSTALLED_SUCCESSFULLY')?></h3>
 		<?php
 			echo '<ul>';
 			foreach ($feedback as $p) {

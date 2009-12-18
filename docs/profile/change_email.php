@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,17 +10,17 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-require(AF_INCLUDE_PATH.'vitals.inc.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
 global $_current_user;
 
 if (!isset($_current_user)) 
 {
-	require(AF_INCLUDE_PATH.'header.inc.php');
+	require(TR_INCLUDE_PATH.'header.inc.php');
 	$msg->printInfos('INVALID_USER');
-	require(AF_INCLUDE_PATH.'footer.inc.php');
+	require(TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -78,18 +78,18 @@ if (isset($_POST['submit']))
 
 	if (!$msg->containsErrors()) 
 	{
-		if (defined('AF_EMAIL_CONFIRMATION') && AF_EMAIL_CONFIRMATION) 
+		if (defined('TR_EMAIL_CONFIRMATION') && TR_EMAIL_CONFIRMATION) 
 		{
 			//send confirmation email
 			$row    = $_current_user->getInfo();
 
 			if ($row['email'] != $_POST['email']) {
 				$code = substr(md5($_POST['email'] . $row['creation_date'] . $_SESSION['user_id']), 0, 10);
-				$confirmation_link = AF_BASE_HREF . 'confirm.php?id='.$_SESSION['user_id'].SEP .'e='.urlencode($_POST['email']).SEP.'m='.$code;
+				$confirmation_link = TR_BASE_HREF . 'confirm.php?id='.$_SESSION['user_id'].SEP .'e='.urlencode($_POST['email']).SEP.'m='.$code;
 
 				/* send the email confirmation message: */
-				require(AF_INCLUDE_PATH . 'classes/phpmailer/aframemailer.class.php');
-				$mail = new AFrameMailer();
+				require(TR_INCLUDE_PATH . 'classes/phpmailer/transformablemailer.class.php');
+				$mail = new TransformableMailer();
 
 				$mail->From     = $_config['contact_email'];
 				$mail->AddAddress($_POST['email']);

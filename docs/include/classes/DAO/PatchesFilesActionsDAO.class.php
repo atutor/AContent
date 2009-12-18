@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,9 +17,9 @@
  * @package	DAO
  */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
 class PatchesFilesActionsDAO extends DAO {
 

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,12 +10,12 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-include_once(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/DAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
+include_once(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
 
 global $msg, $addslashes;
 
@@ -89,7 +89,7 @@ if (isset($_REQUEST["save"]))
 //$rows_lang = $languagesDAO->getAllExceptLangCode(DEFAULT_LANGUAGE_CODE);				
 $rows_lang = $languagesDAO->getAll();				
 
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -284,5 +284,5 @@ if ($num_results > 0)
 	echo '</div>'."\n";
 }
 
-include(AF_INCLUDE_PATH.'footer.inc.php'); 
+include(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>

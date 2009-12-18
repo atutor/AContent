@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,25 +10,25 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include(AF_INCLUDE_PATH.'header.inc.php');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <div class="output-form" style="line-height:150%">
 
 <h1>OAuth Server API</h1>
-<p>AFrame implements the OAuth Core 1.0 specification.</p>
+<p>Transformable implements the OAuth Core 1.0 specification.</p>
 <p>The <a href="http://oauth.net/documentation/getting-started" target="_blank">OAuth</a> protocol enables web services consumers to access protected resources via an API without requiring users to supply the service credentials to the consumers. It's a generic methodology for unobtrusive, wire protocol level authenticated data access over HTTP.</p>
 
-<p>AFrame exposes the following API endpoints:</p>
+<p>Transformable exposes the following API endpoints:</p>
 
     <div id="toc">
       <ul>
-        <li><a href="<?php echo AF_BASE_HREF.'documentation/oauth_server_api.php'; ?>#register_consumer">Register consumer</a></li>
-        <li><a href="<?php echo AF_BASE_HREF.'documentation/oauth_server_api.php'; ?>#request_token">Request token</a></li>
-        <li><a href="<?php echo AF_BASE_HREF.'documentation/oauth_server_api.php'; ?>#authorization">Authorization</a></li>
-        <li><a href="<?php echo AF_BASE_HREF.'documentation/oauth_server_api.php'; ?>#access_token">Access token</a></li>
+        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#register_consumer">Register consumer</a></li>
+        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#request_token">Request token</a></li>
+        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#authorization">Authorization</a></li>
+        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#access_token">Access token</a></li>
       </ul>
     </div>
     
@@ -62,9 +62,9 @@ include(AF_INCLUDE_PATH.'header.inc.php');
 <h3>Example</h3><br />
 <span style="font-weight: bold">Request</span>
 <pre style="background-color:#F7F3ED;"> 
-<?php echo AF_BASE_HREF; ?>oauth/register_consumer.php?consumer=http%3A%2F%2Flocalhost%2Faframe%2F&expire=300<br />
+<?php echo TR_BASE_HREF; ?>oauth/register_consumer.php?consumer=http%3A%2F%2Flocalhost%2Ftransformable%2F&expire=300<br />
 </pre>
-<p>Goal: Registers consumer http://localhost/aframe/ and requests that the assigned access token expires in 5 minutes.</p>
+<p>Goal: Registers consumer http://localhost/transformable/ and requests that the assigned access token expires in 5 minutes.</p>
 
 <span style="font-weight:bold">Success response</span>
 <pre style="background-color:#F7F3ED;"> 
@@ -131,7 +131,7 @@ error=Empty+parameter+%22consumer%22.<br />
 <h3>Example</h3><br />
 <span style="font-weight: bold">Request</span>
 <pre style="background-color:#F7F3ED;"> 
-<?php echo AF_BASE_HREF; ?>oauth/request_token.php?oauth_consumer_key=8862a51faa12c1b1&<br />oauth_signature_method=HMAC-SHA1&oauth_signature=tVWpcskRSY34wxhv%2BP9NcgXuuGk%3D&<br />oauth_timestamp=1255524495&oauth_nonce=3e43dd6ce0e09614e79e2a4b53e124c8&oauth_version=1.0<br />
+<?php echo TR_BASE_HREF; ?>oauth/request_token.php?oauth_consumer_key=8862a51faa12c1b1&<br />oauth_signature_method=HMAC-SHA1&oauth_signature=tVWpcskRSY34wxhv%2BP9NcgXuuGk%3D&<br />oauth_timestamp=1255524495&oauth_nonce=3e43dd6ce0e09614e79e2a4b53e124c8&oauth_version=1.0<br />
 </pre>
 
 <span style="font-weight:bold">Success response</span>
@@ -177,7 +177,7 @@ error=Consumer+is+not+registered.<br />
 <h3>Example</h3><br />
 <span style="font-weight: bold">Request</span>
 <pre style="background-color:#F7F3ED;"> 
-<?php echo AF_BASE_HREF; ?>oauth/authorization.php?oauth_token=086cbfe90b41a7fdf9&oauth_callback=<?php echo urlencode(AF_BASE_HREF);?><br />
+<?php echo TR_BASE_HREF; ?>oauth/authorization.php?oauth_token=086cbfe90b41a7fdf9&oauth_callback=<?php echo urlencode(TR_BASE_HREF);?><br />
 </pre>
 
 <span style="font-weight:bold">Success response</span>
@@ -248,7 +248,7 @@ error=Empty+oauth+token.<br />
 <h3>Example</h3><br />
 <span style="font-weight: bold">Request</span>
 <pre style="background-color:#F7F3ED;"> 
-<?php echo AF_BASE_HREF; ?>oauth/access_token.php?oauth_consumer_key=8862a51faa12c1b1&oauth_token=086cbfe90b41a7fdf9&
+<?php echo TR_BASE_HREF; ?>oauth/access_token.php?oauth_consumer_key=8862a51faa12c1b1&oauth_token=086cbfe90b41a7fdf9&
 oauth_signature_method=HMAC-SHA1&oauth_signature=tVWpcskRSY34wxhv%2BP9NcgXuuGk%3D&oauth_timestamp=1255524495&
 oauth_nonce=3e43dd6ce0e09614e79e2a4b53e124c8&oauth_version=1.0<br />
 </pre>
@@ -265,4 +265,4 @@ error=Invalid+oauth+request+token.<br />
 </pre>
 <p>A fail response returns error message.</p> 
 
-<?php include(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>

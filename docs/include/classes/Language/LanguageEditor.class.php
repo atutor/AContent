@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -18,8 +18,8 @@
 * @author	Joel Kronenberg
 * @package	Language
 */
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
 
 class LanguageEditor extends Language {
 
@@ -226,7 +226,7 @@ class LanguageEditor extends Language {
 
 		// check if this language exists before calling this method
 
-		require_once(AF_INCLUDE_PATH . 'classes/sqlutility.class.php');
+		require_once(TR_INCLUDE_PATH . 'classes/sqlutility.class.php');
 		$sqlUtility = new SqlUtility();
 
 		$sqlUtility->queryFromFile($language_sql_file, TABLE_PREFIX);
@@ -266,9 +266,9 @@ class LanguageEditor extends Language {
 		}
 		$sql_dump = substr($sql_dump, 0, -3) . ";";
 
-		$readme = 'This is an AFrame language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct AFrame table prefix as defined in ./include/config.inc.php .';
+		$readme = 'This is an Transformable language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct Transformable table prefix as defined in ./include/config.inc.php .';
 
-		require(AF_INCLUDE_PATH . 'classes/zipfile.class.php');
+		require(TR_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile = new zipfile();
 
 		$zipfile->add_file($sql_dump, 'language_text.sql');
@@ -281,7 +281,7 @@ class LanguageEditor extends Language {
 		} else {
 			$version = str_replace('.','_',VERSION);
 
-			$zipfile->send_file('AFrame_' . $version . '_' . $this->code);
+			$zipfile->send_file('Transformable_' . $version . '_' . $this->code);
 		}
 	}
 

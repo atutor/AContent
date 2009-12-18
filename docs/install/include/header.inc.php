@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,15 +10,15 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
 
 if ($step < 3) {
 	error_reporting(0);
 	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
-	if (defined('AF_INSTALL')) {
-		echo 'AFrame appears to have been installed already.';
+	if (defined('TR_INSTALL')) {
+		echo 'Transformable appears to have been installed already.';
 		exit;
 	}
 }
@@ -35,13 +35,13 @@ $install_steps[7] = array('name' => 'Done!');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8"> 
 <head>
-	<title>AFrame Installation</title>
+	<title>Transformable Installation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 </head>
 <body>
 <div style="height: 70px; vertical-align: bottom; background-color: #354A81">
-	<h1 id="header">AFrame <?php echo $new_version; ?> Installation</h1>
+	<h1 id="header">Transformable <?php echo $new_version; ?> Installation</h1>
 	<img src="../images/logo.png" height="29" width="84" alt="Logo" id="logo" />
 </div>
 <div style="clear: all"></div>

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,10 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
+define('TR_INCLUDE_PATH', '../include/');
 
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
 
 if (isset($_REQUEST['id']))
 {
@@ -45,10 +45,10 @@ $row = $languagesDAO->getByLangCodeAndCharset($lang_code, $charset);
 unset($hidden_vars);
 $hidden_vars['id'] = $_REQUEST['id'];
 
-require(AF_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 
 $msg->addConfirm(array('DELETE_LANG', $row['native_name']), $hidden_vars);
 $msg->printConfirm();
 
-require(AF_INCLUDE_PATH.'footer.inc.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

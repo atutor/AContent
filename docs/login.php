@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,10 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', 'include/');
-require (AF_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', 'include/');
+require (TR_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/UsersDAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/UsersDAO.class.php');
 
 $usersDAO = new UsersDAO();
 
@@ -31,7 +31,7 @@ if (isset($_POST['submit']))
 	}
 	else
 	{
-		if ($usersDAO->getStatus($user_id) == AF_STATUS_DISABLED)
+		if ($usersDAO->getStatus($user_id) == TR_STATUS_DISABLED)
 		{
 			$msg->addError('ACCOUNT_DISABLED');
 		}

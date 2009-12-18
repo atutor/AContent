@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -23,9 +23,9 @@
  * @package	Menu
  */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/PrivilegesDAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/PrivilegesDAO.class.php');
 
 class Menu {
 
@@ -47,14 +47,14 @@ class Menu {
 	 */
 	function Menu()
 	{
-		$this->pages[AF_NAV_TOP] = array();        // top tab pages
+		$this->pages[TR_NAV_TOP] = array();        // top tab pages
 
-		$this->init();           // Initialize $this->pages[AF_NAV_PUBLIC] & $this->pages
+		$this->init();           // Initialize $this->pages[TR_NAV_PUBLIC] & $this->pages
 		$this->setTopPages();    // set top pages based on user id
 
 		// decide current page.
 		// if the page that user tries to access is from one of the public link
-		// but not define in user's priviledge pages, re-direct to the first $this->pages[AF_NAV_TOP]
+		// but not define in user's priviledge pages, re-direct to the first $this->pages[TR_NAV_TOP]
 		$this->setCurrentPage();
 		$this->sub_menus = $this->setSubMenus($this->current_page);   // loop recursively to set $this->submenus to the top parent of $this->current_page
 		$this->root_page = $this->setRootPage($this->current_page);  
@@ -63,7 +63,7 @@ class Menu {
 	}
 
 	/**
-	 * initialize: public accessible items ($this->pages[AF_NAV_PUBLIC]); all accessible pages ($this->pages)
+	 * initialize: public accessible items ($this->pages[TR_NAV_PUBLIC]); all accessible pages ($this->pages)
 	 * @access  private
 	 * @param   user id
 	 * @return  true
@@ -85,10 +85,10 @@ class Menu {
 		{
 			foreach ($rows as $id => $row)
 			{
-				$this->pages[AF_NAV_PUBLIC][] = array($row['link'] => array('title_var'=>$row['title_var'], 'parent'=>AF_NAV_TOP));
+				$this->pages[TR_NAV_PUBLIC][] = array($row['link'] => array('title_var'=>$row['title_var'], 'parent'=>TR_NAV_TOP));
 			}
 		}
-		// end of initializing $this->pages[AF_NAV_PUBLIC]
+		// end of initializing $this->pages[TR_NAV_PUBLIC]
 
 		return true;
 	}
@@ -119,13 +119,13 @@ class Menu {
 		{
 			foreach ($rows as $id => $row)
 			{
-				$this->pages[AF_NAV_TOP][] = array('url' => $_base_path.$row['link'], 'title' => _AT($row['title_var']));
+				$this->pages[TR_NAV_TOP][] = array('url' => $_base_path.$row['link'], 'title' => _AT($row['title_var']));
 
 				// add section pages if it has not been defined in $this->pages
 				if (!isset($this->pages[$row['link']]))
 				{
 					$this->pages = array_merge($this->pages, 
-				                           array($row['link'] => array('title_var'=>$row['title_var'], 'parent'=>AF_NAV_TOP)));
+				                           array($row['link'] => array('title_var'=>$row['title_var'], 'parent'=>TR_NAV_TOP)));
 				}
 			}
 		}
@@ -136,7 +136,7 @@ class Menu {
 	/**
 	 * Decide current page.
 	 * if the page that user tries to access is from one of the public link
-	 * but not define in user's priviledge pages, re-direct to the first $this->pages[AF_NAV_TOP]
+	 * but not define in user's priviledge pages, re-direct to the first $this->pages[TR_NAV_TOP]
 	 * @access  private
 	 * @return  true
 	 * @author  Cindy Qi Li
@@ -155,7 +155,7 @@ class Menu {
 			}
 
 			// re-direct to first $_pages URL
-			foreach ($this->pages[AF_NAV_TOP] as $page)
+			foreach ($this->pages[TR_NAV_TOP] as $page)
 			{
 				if ($_base_path.$this->current_page != $page['url'])
 				{
@@ -214,12 +214,16 @@ class Menu {
 	*/
 	private function setBackToPage() 
 	{
+		$back_to_page = '';
+		
 		unset($this->path[0]);
 		if (isset($this->path[2]['url'], $this->sub_menus[0]['url']) && $this->path[2]['url'] == $this->sub_menus[0]['url']) {
 			$back_to_page = $this->path[3];
-		} else if (isset($this->path[1]['url'], $this->sub_menus[0]['url']) && $this->path[1]['url'] == $this->sub_menus[0]['url']) {
+		} 
+		else if (isset($this->path[1]['url'], $this->sub_menus[0]['url']) && $this->path[1]['url'] == $this->sub_menus[0]['url']) {
 			$back_to_page = isset($this->path[2]) ? $this->path[2] : null;
-		} else if (isset($this->path[1])) {
+		} 
+		else if (isset($this->path[1])) {
 			$back_to_page = $this->path[1];
 		}
 		
@@ -236,7 +240,7 @@ class Menu {
 	 */
 	private function isPublicLink($url)
 	{
-		foreach ($this->pages[AF_NAV_PUBLIC] as $page => $garbage)
+		foreach ($this->pages[TR_NAV_PUBLIC] as $page => $garbage)
 		{
 			if ($page == $url) return true;
 		}
@@ -285,7 +289,7 @@ class Menu {
 	 */
 	public function getTopPages()
 	{
-		return $this->pages[AF_NAV_TOP];
+		return $this->pages[TR_NAV_TOP];
 	}
 
 	/**

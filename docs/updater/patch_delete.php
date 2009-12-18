@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,11 +10,11 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-require(AF_INCLUDE_PATH.'vitals.inc.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/MyownPatchesDAO.class.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/MyownPatchesDependentDAO.class.php');
-require_once(AF_INCLUDE_PATH.'classes/DAO/MyownPatchesFilesDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/MyownPatchesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/MyownPatchesDependentDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/MyownPatchesFilesDAO.class.php');
 
 $myownPatchesDAO = new MyownPatchesDAO();
 
@@ -39,7 +39,7 @@ if (isset($_POST['submit_no'])) {
 }
 
 //require('../../include/header.inc.php');
-require(AF_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 
 $_GET['myown_patch_id'] = intval($_GET['myown_patch_id']); 
 $row = $myownPatchesDAO->getByID($_GET[myown_patch_id]);
@@ -56,6 +56,6 @@ if (!$row) {
 	$msg->printConfirm();
 }
 
-require(AF_INCLUDE_PATH.'footer.inc.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 
 ?>

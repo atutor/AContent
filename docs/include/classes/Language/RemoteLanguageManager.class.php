@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -19,17 +19,17 @@
 * @package	Language
 */
 
-require_once(AF_INCLUDE_PATH.'classes/Language/LanguageParser.class.php');
-require_once(AF_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
+require_once(TR_INCLUDE_PATH.'classes/Language/LanguageParser.class.php');
+require_once(TR_INCLUDE_PATH.'classes/Language/LanguagesParser.class.php');
 
 class RemoteLanguageManager extends LanguageManager {
 
 	function RemoteLanguageManager() {
 		$version = str_replace('.','_',VERSION);
-		$language_xml = @file_get_contents('http://update.aframe.ca/languages/'.$version.'/languages.xml');
+		$language_xml = @file_get_contents('http://update.transformable.ca/languages/'.$version.'/languages.xml');
 		if ($language_xml === FALSE) {
 			// fix for bug #2896
-			$language_xml = @file_get_contents('http://update.aframe.ca/languages/1_5_3/languages.xml');
+			$language_xml = @file_get_contents('http://update.transformable.ca/languages/1_5_3/languages.xml');
 		}
 		if ($language_xml !== FALSE) {
 
@@ -53,7 +53,7 @@ class RemoteLanguageManager extends LanguageManager {
 	function fetchLanguage($language_code, $filename) {
 		$version = str_replace('.','_',VERSION);
 
-		$language_pack = @file_get_contents('http://update.aframe.ca/languages/' . $version . '/aframe_' . $version . '_' . $language_code . '.zip');
+		$language_pack = @file_get_contents('http://update.transformable.ca/languages/' . $version . '/transformable_' . $version . '_' . $language_code . '.zip');
 
 		if ($language_pack) {
 			$fp = fopen($filename, 'wb+');
@@ -65,7 +65,7 @@ class RemoteLanguageManager extends LanguageManager {
 	}
 
 	function import($language_code) {
-		$filename = tempnam(AF_TEMP_DIR . 'import', $language_code);
+		$filename = tempnam(TR_TEMP_DIR . 'import', $language_code);
 		if ($this->fetchLanguage($language_code, $filename)) {
 			parent::import($filename);
 		}

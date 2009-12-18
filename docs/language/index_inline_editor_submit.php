@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,14 +10,14 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include_once(AF_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
+define('TR_INCLUDE_PATH', '../include/');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
 
 if ($_POST['value'] == '')
 {
 	$rtn['status'] = 'fail';
-	$rtn['error'][] = _AT('AF_ERROR_EMPTY_FIELD');
+	$rtn['error'][] = _AT('TR_ERROR_EMPTY_FIELD');
 }
 
 if (isset($_POST['field']) && isset($_POST['value']) && $_POST['value'] <> '')

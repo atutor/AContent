@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 session_unset();	//clear session before using it
 $_SESSION = array();
 print_progress($step);
@@ -20,7 +20,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 		if ( file_exists('../../'.$_POST['old_path'] . '/include/config.inc.php') ) {
 			
 			require('../../'.$_POST['old_path'] . '/include/constants.inc.php');
-			$progress[] = 'Found AFrame version <kbd><b>'.VERSION . '</b></kbd> in path <kbd><b>'.$_POST['old_path'].'</b></kbd>.';
+			$progress[] = 'Found Transformable version <kbd><b>'.VERSION . '</b></kbd> in path <kbd><b>'.$_POST['old_path'].'</b></kbd>.';
 
 			if (!version_compare(VERSION, $new_version, '<')) {
 				$errors[] = 'The version upgrading (<kbd><b>'.VERSION.'</b></kbd>) is not older than the new version (<kbd><b>'.$new_version.'</b></kbd>).';
@@ -77,8 +77,8 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 				} else {
 					echo '<input type="hidden" name="smtp" value="FALSE" />';
 				}
-				if (defined('AF_FORCE_GET_FILE')) {
-					echo '<input type="hidden" name="get_file" value="'.(AF_FORCE_GET_FILE ? 'TRUE' : 'FALSE').'" />';
+				if (defined('TR_FORCE_GET_FILE')) {
+					echo '<input type="hidden" name="get_file" value="'.(TR_FORCE_GET_FILE ? 'TRUE' : 'FALSE').'" />';
 				} else {
 					echo '<input type="hidden" name="get_file" value="FALSE" />';
 				}
@@ -103,8 +103,8 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="contact_email" value="'.$_defaults['admin_email'].'" />';
 				}
 
-				if (defined('AF_EMAIL_CONFIRMATION')) {
-					echo '<input type="hidden" name="email_confirmation" value="'.(AF_EMAIL_CONFIRMATION ? 'TRUE' : 'FALSE').'" />';
+				if (defined('TR_EMAIL_CONFIRMATION')) {
+					echo '<input type="hidden" name="email_confirmation" value="'.(TR_EMAIL_CONFIRMATION ? 'TRUE' : 'FALSE').'" />';
 				} else {
 					echo '<input type="hidden" name="email_confirmation" value="FALSE" />';
 				}
@@ -123,8 +123,8 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="cache_dir" value="' . $_defaults['cache_dir'] . '" />';
 				}
 
-				if (defined('AF_TEMP_DIR')) {
-					echo '<input type="hidden" name="content_dir" value="'.AF_TEMP_DIR.'" />';
+				if (defined('TR_TEMP_DIR')) {
+					echo '<input type="hidden" name="content_dir" value="'.TR_TEMP_DIR.'" />';
 				} else {
 					echo '<input type="hidden" name="content_dir" value="'.$_defaults['content_dir'].'" />';
 				}
@@ -150,7 +150,7 @@ if (isset($errors)) {
 }
 
 ?>
-<p>Please specify the location of the old AFrame installation.</p>
+<p>Please specify the location of the old Transformable installation.</p>
 
 <ol>
 	<li>Release Candidate (RC) installations cannot be upgraded.</li>
@@ -160,7 +160,7 @@ if (isset($errors)) {
 	<li>All extra modules will have to be reinstalled before they can be enabled again.</li>
 </ol>
 
-<p>Select the old AFrame installation directory below.</p>
+<p>Select the old Transformable installation directory below.</p>
 
 <?php
 	$dirs = scandir('../../');

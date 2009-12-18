@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('AF_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 require('../svn.php');
 
@@ -74,10 +74,10 @@ if (isset($_POST['submit'])) {
 		}
 
 //		$header = "POST /install_log.php HTTP/1.1\r\n";
-//		$header .= "Host: aframe.ca\r\n";
+//		$header .= "Host: transformable.ca\r\n";
 //		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 //		$header .= "Content-Length: " . strlen($request) . "\r\n\r\n";
-//		$fp = fsockopen('www.aframe.ca', 80, $errno, $errstr, 30);
+//		$fp = fsockopen('www.transformable.ca', 80, $errno, $errstr, 30);
 //
 //		if ($fp) {
 //			fputs($fp, $header . $request . "\r\n\r\n");
@@ -106,10 +106,10 @@ print_progress($step);
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2">Submit the following information to the aframe.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your AFrame installation.</td>
+		<td class="row1" colspan="2">Submit the following information to the transformable.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your Transformable installation.</td>
 	</tr>
 	<tr>
-		<td class="row1" width="20%"><b>AFrame Version:</b></td>
+		<td class="row1" width="20%"><b>Transformable Version:</b></td>
 		<td class="row1"><?php echo $new_version; ?> (build <?php echo $build . ' - '.$build_date; ?>)</td>
 	</tr>
 	<tr>

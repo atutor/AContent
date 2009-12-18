@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,9 +17,9 @@
 * @package	DAO
 */
 
-if (!defined('AF_INCLUDE_PATH')) exit;
+if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(AF_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
 class LanguageTextDAO extends DAO {
 
@@ -148,7 +148,7 @@ class LanguageTextDAO extends DAO {
 	function getHelpByMatchingText($text, $lang)
 	{
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."language_text 
-						WHERE term like 'AF_HELP_%'
+						WHERE term like 'TR_HELP_%'
 						AND lower(cast(text as char)) like '%".strtolower($text)."%' 
 						AND language_code='".$lang."' 
 						ORDER BY variable";

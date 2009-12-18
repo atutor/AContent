@@ -1,6 +1,6 @@
 <?php 
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -10,9 +10,9 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AF_INCLUDE_PATH', '../include/');
-include(AF_INCLUDE_PATH.'vitals.inc.php');
-include(AF_INCLUDE_PATH.'handbook_pages.inc.php');
+define('TR_INCLUDE_PATH', '../include/');
+include(TR_INCLUDE_PATH.'vitals.inc.php');
+include(TR_INCLUDE_PATH.'handbook_pages.inc.php');
 
 global $handbook_pages, $_pages;
 

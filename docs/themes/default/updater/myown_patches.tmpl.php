@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* AFrame                                                               */
+/* Transformable                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -11,12 +11,12 @@
 /************************************************************************/
 
 global $_custom_css;
-$_custom_css = AF_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
+$_custom_css = TR_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
 
-require(AF_INCLUDE_PATH.'header.inc.php'); 
+require(TR_INCLUDE_PATH.'header.inc.php'); 
 ?>
 
-<div class="center-input-form">
+<div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("myown_updates"); ?></legend>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -26,7 +26,7 @@ require(AF_INCLUDE_PATH.'header.inc.php');
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('system_update_id'); ?></th>
-	<th scope="col"><?php echo _AT('aframe_version_to_apply'); ?></th>
+	<th scope="col"><?php echo _AT('transformable_version_to_apply'); ?></th>
 	<th scope="col"><?php echo _AT('description'); ?></th>
 	<th scope="col"><?php echo _AT('last_modified'); ?></th>
 </tr>
@@ -81,7 +81,7 @@ jQuery(document).ready(function () {
 		listeners: {
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue)
-					rtn = jQuery.post("<?php echo AF_BASE_HREF; ?>updater/myown_patches_inline_editor_submit.php", 
+					rtn = jQuery.post("<?php echo TR_BASE_HREF; ?>updater/myown_patches_inline_editor_submit.php", 
 				          { "field":viewNode.id, "value":newValue }, 
 		                  function(data) { handleResponse(data, viewNode, oldValue); }, 
 		                  "json");
@@ -92,4 +92,4 @@ jQuery(document).ready(function () {
 //-->
 </script>
 
-<?php require(AF_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>
