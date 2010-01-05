@@ -66,6 +66,7 @@ if (is_array($courses))
 	}	
 	$savant->assign('courses', $courses);
 	$savant->assign('curr_page_num', $curr_page_num);
+	$savant->assign('title', _AT('my_courses'));
 	
 	$savant->display('home/index_course.tmpl.php');
 }

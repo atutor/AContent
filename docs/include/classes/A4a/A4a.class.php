@@ -1,17 +1,14 @@
 <?php
-/********************************************************************/
-/* ATutor															*/
-/********************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Cindy Qi Li, & Harris Wong	*/
-/* Adaptive Technology Resource Centre / University of Toronto		*/
-/* http://atutor.ca													*/
-/*																	*/
-/* This program is free software. You can redistribute it and/or	*/
-/* modify it under the terms of the GNU General Public License		*/
-/* as published by the Free Software Foundation.					*/
-/********************************************************************/
-// $Id: A4a.class.php 8077 2008-10-23 18:32:31Z hwong $
-
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
 /**
  * Accessforall General class.

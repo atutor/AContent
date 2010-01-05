@@ -10,10 +10,9 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-if (!defined('TR_INCLUDE_PATH')) exit;
-
-require(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
-require(TR_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+define('AT_INCLUDE_PATH', '../../');
+require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
+require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 
 /**
 * QTIImport
@@ -94,6 +93,10 @@ class QTIImport {
 					$msg->addError('QTI_WRONG_PACKAGE');
 					break;
 				}
+
+				//set test title
+				$this->title = $xml->title;
+
 //if ($attrs[href] =='56B1BEDC-A820-7AA8-A21D-F32017189445/56B1BEDC-A820-7AA8-A21D-F32017189445.xml'){
 //	debug($xml, 'attributes');
 //}
@@ -196,7 +199,7 @@ class QTIImport {
 		global $msg, $db;
 
 		$missing_fields				= array();
-		$test_obj['title']			= $title;
+		$test_obj['title']			= ($title=='')?$this->title:$title;
 		$test_obj['description']	= '';
 		$test_obj['num_questions']	= 0;
 		$test_obj['num_takes']		= 0;
@@ -331,7 +334,7 @@ class QTIImport {
 									$test_obj['allow_guests'], 
 									$test_obj['display']);
 
-			$sql = vsprintf(TR_SQL_TEST, $sql_params);
+			$sql = vsprintf(AT_SQL_TEST, $sql_params);
 			$result = mysql_query($sql, $db);
 			$tid = mysql_insert_id($db);
 		//debug($qti_import->weights, 'weights');			
@@ -368,7 +371,7 @@ class QTIImport {
 						//check if there is just one level of directory in this extra path.
 						//based on the assumption that most installation are just using 'resources/' or '{FOLDER_NAME}/'
 						$shortened = substr($file_loc, 0, $pos);
-						$num_of_occurrences = split('/', $shortened);
+						$num_of_occurrences = explode('/', $shortened);
 						if (sizeof($num_of_occurrences) == 2){
 							$new_file_loc = $xv;
 							break;
@@ -385,18 +388,18 @@ class QTIImport {
 			//we only want to touch the files that the test/surveys use
 			if ($new_file_loc!=$file_loc){
 				//check if new folder is there, if not, create it.
-				createDir(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
+				createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
 				
 				//copy files over
-		//			if (rename(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-		//				TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
+		//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
+		//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
 				//overwrite files
-				if (file_exists(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
-					unlink(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
+				if (file_exists(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
+					unlink(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
 				}
-				if (file_exists(TR_CONTENT_DIR.'import/'.$_SESSION['course_id'].'/'.$file_loc)){
-					if (copy(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-						TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
+				if (file_exists(AT_CONTENT_DIR.'import/'.$_SESSION['course_id'].'/'.$file_loc)){
+					if (copy(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
+						AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
 						//TODO: Print out file already exist error.
 						if (!$msg->containsErrors()) {
 			//				$msg->addError('FILE_EXISTED');

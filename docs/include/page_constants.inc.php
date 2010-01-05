@@ -82,6 +82,9 @@ if (in_array(TR_PRIV_HOME, $privs))
 	$_pages['home/index.php']['parent']    = TR_NAV_PUBLIC;
 	$_pages['home/index.php']['guide']    = 'TR_HELP_INDEX';
 	
+	$_pages['home/search.php']['title_var'] = 'search_results';
+	$_pages['home/search.php']['parent']    = TR_NAV_PUBLIC;
+	
 	if (isset($_current_user) && $_current_user->isAuthor())
 	{
 		$_pages['home/index.php']['children']  = array_merge(array('home/create_course.php'), isset($_pages['home/index.php']['children']) ? $_pages['home/index.php']['children'] : array());
