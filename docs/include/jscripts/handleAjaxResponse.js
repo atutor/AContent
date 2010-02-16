@@ -9,14 +9,16 @@
 //* as published by the Free Software Foundation.                        */
 //************************************************************************/
 
-// Parse returned data from ajax php script and display messages in div
-// with id "rtn-msg".
+// Parse the returned data array from php script and display messages in div #rtn-msg
 // @parameter: data   - array
-//  data array structure
-//  data['status'] = 'fail';  // fail or success
-//  data['num_of_errors'] = 3;
-//  data['num_of_feedbacks'] = 2;
-//  data['num_of_warnings'] = 1;
+//  success data array structure
+//  data['status'] = 'success';
+//  data['success'][] = 'success 1';
+//  data['success'][] = 'success 2';
+//  data['success'][] = 'success 3';
+
+//  fail data array structure
+//  data['status'] = 'fail';
 //  data['error'][] = 'error 1';
 //  data['error'][] = 'error 2';
 //  data['error'][] = 'error 3';
@@ -25,19 +27,36 @@
 //  data['feedback'][] = 'feedback 2';
 //
 //  data['warning'][] = 'warning 1';
-function handleResponse(data)
+function handleAjaxResponse(data)
 {
 	var msg='';
 	
 	if (data == null) return;
 	
-	if (typeof(data.status) == "undefined" || data.status == "success") 
+	if (typeof(data.status) == "undefined") 
 	{
 		jQuery('#rtn-msg').empty();
 		return;
 	}
 	
-	// data.status == "fail", handle messages
+	// handle success message
+	if (typeof(data.status) == "undefined" || data.status == "success") 
+	{
+		msg += template_feedback_prefix;
+		
+//		if (typeof(data.success) == "undefined") {
+//			msg += "<li>Action completed successfully.</li>";
+//		}
+//		else {
+			for(i=0; i<data.success.length; i++)
+			{
+				if (data.success[i] != "") msg += "<li>"+data.success[i]+"</li>";
+			}
+//		}
+		msg += template_suffix;
+	}
+	
+	// handle fail messages
 	if (typeof(data.error) != "undefined")
 	{
 		msg += template_error_prefix;

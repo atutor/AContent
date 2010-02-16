@@ -1,0 +1,68 @@
+<?php 
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
+global $languageManager;
+
+?>
+
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$this->course_id; ?>" name="form">
+<input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
+
+<div class="input-form">
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('course_property'); ?></legend>
+
+	<table class="form-data" align="center">
+		<tr>
+			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?></td>
+		</tr>
+
+		<tr>
+			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<label for="title"><?php echo _AT('title'); ?></label>:</td>
+			<td align="left"><input id="title" name="title" type="text" maxlength="255" size="45" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['title'])); else echo stripslashes(htmlspecialchars($this->course_row['title'])); ?>" /></td>
+		</tr>
+
+		<tr>
+			<td align="left"><label for="pri_lang"><?php  echo _AT('primary_language'); ?></label></td>
+			<td align="left"><?php $languageManager->printDropdown($this->course_row['primary_language'], 'pri_lang', 'pri_lang'); ?></td>
+		</tr>
+
+		<tr>
+			<td align="left"><label for="description"><?php echo _AT('description'); ?></label></td>
+			<td align="left"><textarea id="description" cols="45" rows="2" name="description"><?php if (isset($_POST['description'])) echo stripslashes(htmlspecialchars($_POST['description'])); else echo stripslashes(htmlspecialchars($this->course_row['description'])); ?></textarea></td>
+		</tr>
+		
+		<tr>
+			<td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>
+			<td align="left"><textarea name="copyright" rows="2" cols="65" id="copyright"><?php if (isset($_POST['copyright'])) echo stripslashes(htmlspecialchars($_POST['copyright'])); else echo $this->course_row['copyright']; ?></textarea></td>
+		</tr>
+
+		<tr>
+			<td colspan="2" align="left">
+			  <input type="checkbox" name="hide_course" id="hide_course" value="1" <?php if ($this->course_row['access']=='private') echo "checked"; ?> />
+			  <label for="hide_course"><?php echo _AT('hide_course'); ?></label>
+			</td>
+		</tr>
+
+		<tr>
+			<td colspan="2">
+			<p class="submit_button">
+				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" class="submit" /> 
+				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="submit" />
+			</p>
+			</td>
+		</tr>
+	</table>
+
+</fieldset>
+</div>
+</form>

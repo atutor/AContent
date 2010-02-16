@@ -32,16 +32,17 @@ class A4a {
 
 	// Return resources type hash mapping.
 	function getResourcesType($type_id=0){
-		global $db;
-
 		$type_id = intval($type_id);
 
 		//if this is the first time calling this function, grab the list from db
 		if (empty($resource_types)){
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'resource_types';
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)){
-				$this->resource_types[$row['type_id']] = $row['type'];
+			include(TR_INCLUDE_PATH.'classes/DAO/ResourceTypesDAO.class.php');
+			$resourceTypesDAO = new ResourceTypesDAO();
+			$rows = $resourceTypesDAO->getAll();
+			
+			if (is_array($rows))
+			{
+				foreach ($rows as $row) $this->resource_types[$row['type_id']] = $row['type'];
 			}
 		}
 
@@ -54,13 +55,14 @@ class A4a {
 	
 	// Get primary resources
 	function getPrimaryResources(){
-		global $db;
-
 		$pri_resources = array(); // cid=>[resource, language code]
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$this->cid;
-		$result = mysql_query($sql, $db);
-		if (mysql_numrows($result) > 0){
-			while ($row = mysql_fetch_assoc($result)){
+
+		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		$primaryResourcesDAO = new PrimaryResourcesDAO();
+		$rows = $primaryResourcesDAO->getByContent($this->cid);
+		
+		if (is_array($rows)){
+			foreach ($rows as $row) {
 				$pri_resources[$row['primary_resource_id']]['resource'] = $row['resource'];
 				if ($row['language_code'] != ''){
 					$pri_resources[$row['primary_resource_id']]['language_code'] = $row['language_code'];
@@ -73,8 +75,6 @@ class A4a {
 
 	// Get primary resources types
 	function getPrimaryResourcesTypes($pri_resource_id=0){
-		global $db;
-
 		$pri_resource_id = intval($pri_resource_id);
 
 		//quit if id not specified
@@ -83,10 +83,13 @@ class A4a {
 		}
 
 		$pri_resources_types = array();	// cid=>[type id]+
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources_types WHERE primary_resource_id='.$pri_resource_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		
+		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
+		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
+		$rows = $primaryResourcesTypesDAO->getByResourceID($pri_resource_id);
+		
+		if (is_array($rows)){
+			foreach ($rows as $row) {
 				$pri_resources_types[$pri_resource_id][] = $row['type_id'];
 			}
 		}
@@ -106,10 +109,12 @@ class A4a {
 		}
 
 		$sec_resources = array(); // cid=>[resource, language code]
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources WHERE primary_resource_id='.$pri_resource_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
+		$secondaryResourcesDAO = new SecondaryResourcesDAO();
+		$rows = $secondaryResourcesDAO->getByPrimaryResourceID($pri_resource_id);
+		
+		if (is_array($rows)){
+			foreach ($rows as $row) {
 				$sec_resources[$row['secondary_resource_id']]['resource'] = $row['secondary_resource'];
 				if ($row['language_code'] != ''){
 					$sec_resources[$row['secondary_resource_id']]['language_code'] = $row['language_code'];
@@ -122,8 +127,6 @@ class A4a {
 
 	// Get secondary resources types
 	function getSecondaryResourcesTypes($sec_resource_id=0){
-		global $db;
-
 		$sec_resource_id = intval($sec_resource_id);
 
 		//quit if id not specified
@@ -132,10 +135,12 @@ class A4a {
 		}
 
 		$sec_resources_types = array();	// cid=>[type id]+
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources_types WHERE secondary_resource_id='.$sec_resource_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesTypesDAO.class.php');
+		$secondaryResourcesTypesDAO = new SecondaryResourcesTypesDAO();
+		$rows = $secondaryResourcesTypesDAO->getByResourceID($sec_resource_id);
+		
+		if (is_array($rows)){
+			foreach ($rows as $row) {
 				$sec_resources_types[] = $row['type_id'];
 			}
 		}
@@ -146,15 +151,10 @@ class A4a {
 	// Insert primary resources into the db
 	// @return primary resource id.
 	function setPrimaryResource($content_id, $file_name, $lang){
-		global $addslashes, $db; 
-
-		$content_id = intval($content_id);
-		$file_name = $addslashes($file_name);
-		$lang = $addslashes($lang);
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources SET content_id=$content_id, resource='$file_name', language_code='$lang'";
-		$result = mysql_query($sql, $db);
-		if ($result){
+		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		$primaryResourcesDAO = new PrimaryResourcesDAO();
+		
+		if ($primaryResourcesDAO->Create($content_id, $file_name, $lang)){
 			return mysql_insert_id();
 		}
 		return false;
@@ -162,27 +162,17 @@ class A4a {
 
 	// Insert primary resource type
 	function setPrimaryResourceType($primary_resource_id, $type_id){
-		global $db; 
-
-		$primary_resource_id= intval($primary_resource_id);
-		$type_id = intval($type_id);
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types SET primary_resource_id=$primary_resource_id, type_id=$type_id";
-		$result = mysql_query($sql, $db);
+		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
+		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
+		$primaryResourcesTypesDAO->Create($primary_resource_id, $type_id);
 	}
 
 	// Insert secondary resource
 	// @return secondary resource id
 	function setSecondaryResource($primary_resource_id, $file_name, $lang){
-		global $addslashes, $db; 
-
-		$primary_resource_id = intval($primary_resource_id);
-		$file_name = $addslashes($file_name);
-		$lang = $addslashes($lang);
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources SET primary_resource_id=$primary_resource_id, secondary_resource='$file_name', language_code='$lang'";
-		$result = mysql_query($sql, $db);
-		if ($result){
+		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
+		$secondaryResourcesDAO = new SecondaryResourcesDAO();
+		if ($secondaryResourcesDAO->Create($primary_resource_id, $file_name, $lang)){
 			return mysql_insert_id();
 		}
 		return false;
@@ -190,13 +180,9 @@ class A4a {
 
 	// Insert secondary resource
 	function setSecondaryResourceType($secondary_resource, $type_id){
-		global $db;
-
-		$secondary_resource = intval($secondary_resource);
-		$type_id = intval($type_id);
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types SET secondary_resource_id=$secondary_resource, type_id=$type_id";
-		$result = mysql_query($sql, $db);
+		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesTypesDAO.class.php');
+		$secondaryResourcesTypesDAO = new SecondaryResourcesTypesDAO();
+		$secondaryResourcesTypesDAO->Create($secondary_resource, $type_id);
 	}
 
 	
@@ -208,32 +194,9 @@ class A4a {
 
 	// Delete all materials associated with this content
 	function deleteA4a(){
-		global $db; 
-
-		$pri_resource_ids = array();
-
-		// Get all primary resources ID out that're associated with this content
-		$sql = 'SELECT a.primary_resource_id FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE content_id='.$this->cid;
-		$result = mysql_query($sql);
-
-		while($row=mysql_fetch_assoc($result)){
-			$pri_resource_ids[] = $row['primary_resource_id'];
-		}
-
-		//If the are primary resources found
-		if (!empty($pri_resource_ids)){
-			$glued_pri_ids = implode(",", $pri_resource_ids);
-
-			// Delete all secondary a4a
-			$sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX.'secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id IN ('.$glued_pri_ids.')';
-			$result = mysql_query($sql);
-
-			// If successful, remove all primary resources
-			if ($result){
-				$sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE content_id='.$this->cid;
-				mysql_query($sql);
-			}
-		}
+		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		$primaryResourcesDAO = new PrimaryResourcesDAO();
+		$rows = $primaryResourcesDAO->Delete($this->cid);
 	}
 }
 

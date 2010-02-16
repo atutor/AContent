@@ -18,11 +18,11 @@ if (isset($_POST['submit'])) {
 	unset($errors);
 
 	if (!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
-		$errors[] = '<strong>Temporary Directory</strong> entered does not exist.';
+		$errors[] = '<strong>Content Directory</strong> entered does not exist.';
 	} else if (!is_dir($_POST['content_dir'])) {
-		$errors[] = '<strong>Temporary Directory</strong> is not a directory.';
+		$errors[] = '<strong>Content Directory</strong> is not a directory.';
 	} else if (!is_writable($_POST['content_dir'])){
-		$errors[] = 'The Temporary Directory is not writable.';
+		$errors[] = 'The Content Directory is not writable.';
 	} else {
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
@@ -170,7 +170,7 @@ else
 	<input type="hidden" name="content_dir" value="<?php echo $_defaults['content_dir']; ?>" />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1">The temporary directory at <strong><?php echo $_defaults['content_dir']; ?> </strong> will be used for this installation. Please create it if it does not already exist.</td>
+		<td class="row1">The content directory at <strong><?php echo $_defaults['content_dir']; ?> </strong> will be used for this installation. Please create it if it does not already exist.</td>
 	</tr>
 	</table>
 <?php elseif ($get_file == 'FALSE') : ?>
@@ -178,9 +178,9 @@ else
 
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Temporary Directory</label></strong>
-		<p>It has been detected that your webserver does not support the protected temporary directory feature. The temporary directory stores all of the temporary files.</p>
-		<p>Due to that restriction your temporary directory must exist within your Transformable installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
+		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Content Directory</label></strong>
+		<p>It has been detected that your webserver does not support the protected content directory feature. The content directory stores all of the content files.</p>
+		<p>Due to that restriction your content directory must exist within your Transformable installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
 		<br /><br />
 		<input type="text" name="content_dir_disabled" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" disabled="disabled" /></td>
 	</tr>
@@ -188,12 +188,12 @@ else
 <?php else: ?>
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Temporary Directory</label></strong>
-		<p>Please specify where the temporary directory should be. The temporary directory stores all of the temporary files. As a security measure, the temporary directory should be placed <em>outside</em> of your Transformable installation (for example, to a non-web-accessible location that is not publically available).</p>
+		<td class="row1"><div class="required" title="Required Field">*</div><strong><label for="contentdir">Content Directory</label></strong>
+		<p>Please specify where the content directory should be. The content directory stores all of the content files. As a security measure, the content directory should be placed <em>outside</em> of your Transformable installation (for example, to a non-web-accessible location that is not publically available).</p>
 		
-		<p>On a Windows machine, the path should look like <kbd>C:\temp</kbd>, while on Unix it should look like <kbd>/var/temp</kbd>.</p>
+		<p>On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>.</p>
 		
-		<p>The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod a+rwx temp</kbd>, additionally the path may not contain any symbolic links.</p>
+		<p>The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod a+rwx content</kbd>, additionally the path may not contain any symbolic links.</p>
 
 		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
 	</tr>

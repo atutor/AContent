@@ -10,8 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-require_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
-//require(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
+require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+//require(TR_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
 
 /**
  * Accessforall Export class.
@@ -74,11 +74,15 @@ class A4aExport extends A4a {
 		global $db;
 		$secondary_files = array();
 
-		$sql = "SELECT DISTINCT secondary_resource FROM ".TABLE_PREFIX."primary_resources a LEFT JOIN ".TABLE_PREFIX."secondary_resources s
-				ON a.primary_resource_id = s.primary_resource_id WHERE content_id=".$this->cid;
-		$result = mysql_query ($sql);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
+		$secondaryResourcesDAO = new SecondaryResourcesDAO();
+		$rows = $secondaryResourcesDAO->getByContent($this->cid);
+//		$sql = "SELECT DISTINCT secondary_resource FROM ".TABLE_PREFIX."primary_resources a LEFT JOIN ".TABLE_PREFIX."secondary_resources s
+//				ON a.primary_resource_id = s.primary_resource_id WHERE content_id=".$this->cid;
+//		$result = mysql_query ($sql);
+
+		if (is_array($rows)){
+			foreach ($rows as $row) {
 				if (!empty($row['secondary_resource'])){
 					$secondary_files[] = $row['secondary_resource'];
 				}
@@ -128,12 +132,12 @@ class A4aExport extends A4a {
 						$orig_access_mode[] = $this->getResourceNameById($type_id);
 					}
 					$savant->assign('orig_access_mode', $orig_access_mode);
-					$xml_array[$id.' to '.$uri] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
+					$xml_array[$id.' to '.$uri] = $savant->fetch(TR_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 				}
 			} else {
 				$savant->assign('primary_resource_uri', '');
 				$savant->assign('primary_resources', '');
-				$xml_array[$id] = $savant->fetch(AT_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
+				$xml_array[$id] = $savant->fetch(TR_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 			}
 		}
 		return $xml_array;

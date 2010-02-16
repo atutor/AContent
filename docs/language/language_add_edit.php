@@ -36,7 +36,7 @@ if (isset($_POST['cancel']))
 } 
 else if (isset($_POST['save']))
 {
-	if (isset($_GET["id"]))  // edit existing guideline
+	if (isset($_GET["id"]))  // edit existing language
 	{
 		if ($languagesDAO->Update($lang_code, 
 		                      $charset,
@@ -50,7 +50,7 @@ else if (isset($_POST['save']))
 			exit;
 		}
 	}
-	else  // create a new guideline
+	else  // create a new language
 	{
 		if (isset($_POST['locale']) && $_POST['locale'] <> '')
 			$language_code = $_POST['lang_code'] . TR_LANGUAGE_LOCALE_SEP. $_POST['locale'];

@@ -85,6 +85,10 @@ if (in_array(TR_PRIV_HOME, $privs))
 	$_pages['home/search.php']['title_var'] = 'search_results';
 	$_pages['home/search.php']['parent']    = TR_NAV_PUBLIC;
 	
+	// $_pages['home/course/search.php']['title_var'] is defined in home/course/outline.php with current course title
+	$_pages['home/course/outline.php']['parent']    = 'home/index.php';
+	$_pages['home/course/outline.php']['title_var'] = 'outline';
+	
 	if (isset($_current_user) && $_current_user->isAuthor())
 	{
 		$_pages['home/index.php']['children']  = array_merge(array('home/create_course.php'), isset($_pages['home/index.php']['children']) ? $_pages['home/index.php']['children'] : array());
@@ -92,6 +96,13 @@ if (in_array(TR_PRIV_HOME, $privs))
 		$_pages['home/create_course.php']['title_var'] = 'create_course';
 		$_pages['home/create_course.php']['parent']    = 'home/index.php';
 		$_pages['home/create_course.php']['guide']    = 'TR_HELP_CREATE_COURSE';
+
+		$_pages['home/course/del_course.php']['title_var'] = 'del_course';
+		$_pages['home/course/del_course.php']['parent']    = 'home/index.php';
+		
+		$_pages['home/course/course_property.php']['title_var'] = 'course_property';
+		$_pages['home/course/course_property.php']['parent']    = 'home/index.php';
+		$_pages['home/course/course_property.php']['guide']    = 'TR_HELP_COURSE_PROPERTY';
 	}
 }
 

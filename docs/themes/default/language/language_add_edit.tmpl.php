@@ -27,9 +27,9 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_edit_language'); ?></legend>
 	<table class="form-data" align="center">
 		<tr>
-			<td colspan="2" align="left"><?php echo _AT('required_field_text') ;?><br /><br /></td>
+			<td colspan="2" align="left"><?php echo _AT('required_field_text') ;?></td>
 		</tr>
-
+<!-- 
 		<tr align="left">
 			<th><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<label for="lang_code"><?php echo _AT('lang_code'); ?></label></th>
@@ -46,6 +46,15 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 	}
 ?>
 			</select>
+<?php }?>
+			</td>
+		</tr>
+ -->
+		<tr align="left">
+			<th><label for="lang_code">&nbsp;&nbsp;&nbsp;<?php echo _AT('lang_code'); ?></label></th>
+			<td>
+<?php if (isset($this->row['language_code'])) echo $this->row['language_code']; else {?>
+				<input id="lang_code" name="lang_code" type="text" size="2" maxlength="2" value="<?php if (isset($_POST['lang_code'])) echo $_POST['lang_code']; else echo $this->row['language_code']; ?>" />
 <?php }?>
 			</td>
 		</tr>
@@ -90,9 +99,9 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		</tr>
 
 		<tr>
-			<td colspan="2">
+			<td colspan="2" align="center">
 			<p class="submit_button">
-			<input type="submit" name="save" value="<?php echo _AT('save'); ?>" />
+			<input type="submit" name="save" value="<?php echo _AT('save'); ?>" />&nbsp;&nbsp;
 			<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 			</p>
 			</td>

@@ -11,9 +11,9 @@
 /************************************************************************/
 
 //Constances
-define('AT_QTI_REPONSE_GRP',    1);
-define('AT_QTI_REPONSE_LID',    2);
-define('AT_QTI_REPONSE_STR',    3);
+define('TR_QTI_REPONSE_GRP',    1);
+define('TR_QTI_REPONSE_LID',    2);
+define('TR_QTI_REPONSE_STR',    3);
 
 /**
 * QTIParser
@@ -94,17 +94,17 @@ class QTIParser {
 				break;
 			case 'response_lid':
 				if ($this->response_type[$this->item_num] <= 0) {
-					$this->response_type[$this->item_num] = AT_QTI_REPONSE_LID;
+					$this->response_type[$this->item_num] = TR_QTI_REPONSE_LID;
 				}
 			case 'response_grp':
 				if ($this->response_type[$this->item_num] <= 0) {
-					$this->response_type[$this->item_num] = AT_QTI_REPONSE_GRP;
+					$this->response_type[$this->item_num] = TR_QTI_REPONSE_GRP;
 				}
 			case 'response_str':
 				$this->attributes[$this->item_num][$name]['ident'] = $attributes['ident'];
 				$this->attributes[$this->item_num][$name]['rcardinality'] = $attributes['rcardinality'];
 				if ($this->response_type[$this->item_num] <= 0) {
-					$this->response_type[$this->item_num] = AT_QTI_REPONSE_STR;
+					$this->response_type[$this->item_num] = TR_QTI_REPONSE_STR;
 				}
 				break;
 			case 'response_label':
@@ -377,13 +377,13 @@ class QTIParser {
 		//Check if this is an ordering, or matching
 		$response_obj;
 		switch ($this->response_type[$item_num]){
-			case AT_QTI_REPONSE_LID:
+			case TR_QTI_REPONSE_LID:
 				$response_obj = $this->attributes[$item_num]['response_lid'];
 				break;
-			case AT_QTI_REPONSE_GRP:
+			case TR_QTI_REPONSE_GRP:
 				$response_obj = $this->attributes[$item_num]['response_grp'];
 				break;
-			case AT_QTI_REPONSE_STR:
+			case TR_QTI_REPONSE_STR:
 				$response_obj = $this->attributes[$item_num]['response_str'];
 				return 3;	//no need to parse the rcardinality?
 				break;

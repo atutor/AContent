@@ -21,8 +21,10 @@ $_config_defaults = array();
 $_config_defaults['site_name']          = '';
 $_config_defaults['contact_email']      = '';
 $_config_defaults['max_file_size']      = 1048576;  // 1MB
+$_config_defaults['max_course_size']    = 10485760; // 10 MB
+$_config_defaults['max_file_size']      = 1048576;  // 1MB
 $_config_defaults['illegal_extentions'] = 'exe|asp|php|php3|bat|cgi|pl|com|vbs|reg|pcd|pif|scr|bas|inf|vb|vbe|wsc|wsf|wsh';
-$_config_defaults['default_language']   = 'eng';
+$_config_defaults['default_language']   = 'en';
 $_config_defaults['use_captcha']		= 0;	//use captcha?
 $_config_defaults['latex_server']       = 'http://www.atutor.ca/cgi/mimetex.cgi?'; // the full URL to an external LaTeX parse
 $_config_defaults['pref_defaults']      = 'a:1:{s:10:"PREF_THEME";s:7:"default";}';
@@ -35,7 +37,7 @@ define('SVN_TAG_FOLDER', 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/')
 define('RESULTS_PER_PAGE', 10);
 
 // language constants
-define('DEFAULT_LANGUAGE_CODE', 'eng');
+define('DEFAULT_LANGUAGE_CODE', 'en');
 define('DEFAULT_CHARSET', 'utf-8');
 define('TR_LANGUAGE_LOCALE_SEP', '-');
 //$_config['default_language'] = DEFAULT_LANGUAGE_CODE;
@@ -50,12 +52,31 @@ define('TR_STATUS_ENABLED', 1);
 define('TR_STATUS_DEFAULT', 2);
 define('TR_STATUS_UNCONFIRMED', 3);
 
+// User role
+define('TR_USERROLE_AUTHOR', 1);
+define('TR_USERROLE_VIEWER', 2);
+
+// User privilege
+define('TR_PRIV_ISAUTHOR', 1);
+define('TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE', 2);
+
+// course size
+define('TR_COURSESIZE_UNLIMITED',	   -1); 
+define('TR_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
+
 // content type
 define('CONTENT_TYPE_CONTENT',  0);
 define('CONTENT_TYPE_FOLDER', 1);
 define('CONTENT_TYPE_WEBLINK', 2);
 
 define('TR_KBYTE_SIZE', 1024);
+
+/* valid date format_types:						*/
+/* @see ./include/lib/output.inc.php	*/
+define('TR_DATE_MYSQL_DATETIME',		1); /* YYYY-MM-DD HH:MM:SS	*/
+define('TR_DATE_MYSQL_TIMESTAMP_14',	2); /* YYYYMMDDHHMMSS		*/
+define('TR_DATE_UNIX_TIMESTAMP',		3); /* seconds since epoch	*/
+define('TR_DATE_INDEX_VALUE',			4); /* index to the date arrays */
 
 function get_status_by_code($status_code)
 {

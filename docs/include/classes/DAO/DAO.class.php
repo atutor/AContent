@@ -48,7 +48,6 @@ class DAO {
 	*/
 	function execute($sql)
 	{
-//		debug($sql);
 		$sql = trim($sql);
 		$result = mysql_query($sql, $this->db) or die($sql . "<br />". mysql_error());
 

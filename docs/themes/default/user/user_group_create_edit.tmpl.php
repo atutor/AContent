@@ -26,7 +26,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_edit_user_group'); ?></legend>
 	<table class="form-data">
 		<tr>
-			<td colspan="2" align="left"><?php echo _AT('required_field_text') ;?><br /><br /></td>
+			<td colspan="2" align="left"><?php echo _AT('required_field_text') ;?></td>
 		</tr>
 
 		<tr>

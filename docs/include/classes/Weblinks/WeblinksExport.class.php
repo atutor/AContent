@@ -48,7 +48,7 @@ class WeblinksExport {
 		//$savant->assign('url_window_features', $url['window_features']);
 
 		//generates xml
-		$xml = $savant->fetch(AT_INCLUDE_PATH.'classes/Weblinks/Weblinks.tmpl.php');
+		$xml = $savant->fetch(TR_INCLUDE_PATH.'classes/Weblinks/Weblinks.tmpl.php');
 
 		return $xml;
 	}

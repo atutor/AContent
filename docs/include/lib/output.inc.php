@@ -166,7 +166,7 @@ function _AT() {
 	TR_DATE_UNIX_TIMESTAMP:		seconds since epoch
 	TR_DATE_INDEX_VALUE:		0-x, index into a date array
 */
-function TR_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL_DATETIME) {	
+function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL_DATETIME) {	
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 	global $_config;
 
@@ -242,7 +242,7 @@ function TR_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 		$hour	= substr($timestamp,11,2);
 		$min	= substr($timestamp,14,2);
 		$sec	= substr($timestamp,17,2);
-	    $timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
+		$timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
 
 	} else if ($formTR_type == TR_DATE_MYSQL_TIMESTAMP_14) {
 	    $year		= substr($timestamp,0,4);
@@ -270,6 +270,7 @@ function TR_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 	$num_tokens = count($tokens);
 
 	$output = $format;
+	
 	for ($i=0; $i<$num_tokens; $i++) {
 		$tokens[$i] = substr($tokens[$i],0,1);
 
@@ -286,7 +287,6 @@ function TR_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 			$output = str_replace('%M', _AT($month_name_con[date('n', $timestamp)-1]),$output);
 
 		} else {
-
 			/* this token doesn't need translating */
 			$value = date($tokens[$i], $timestamp);
 			if ($value != $tokens[$i]) {

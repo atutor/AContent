@@ -26,8 +26,10 @@ global $_custom_css;
 global $_custom_head;
 global $_base_path;
 global $_pages;
-global $_current_user;
+global $_current_user, $_course_id, $_sequence_links;
 global $validate_content;
+global $contentManager;
+global $course_base_href, $content_base_href;
 
 include_once(TR_INCLUDE_PATH.'classes/Menu.class.php');
 
@@ -38,7 +40,7 @@ $_all_pages =  $menu->getAllPages();
 
 $_current_root_page = $menu->getRootPage();
 
-//$_breadcrumb_path = $menu->getPath();
+$_breadcrumb_path = $menu->getPath();
 
 $current_page = $menu->getCurrentPage();
 
@@ -55,18 +57,29 @@ $back_to_page = $menu->getBackToPage();
 //debug($_current_root_page);
 //debug($_current_page);
 
-//$savant->assign('path', $_breadcrumb_path);
+$savant->assign('path', $_breadcrumb_path);
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('current_top_level_page', $_current_root_page);
 $savant->assign('sub_menus', $_sub_menus);
 if ($back_to_page <> '') $savant->assign('back_to_page', $back_to_page);
 $savant->assign('current_page', $_base_path.$current_page);
 
-$savant->assign('page_title', _AT($_all_pages[$current_page]['title_var']));
+if (isset($_pages[$current_page]['title'])) {
+	$_page_title = $_all_pages[$current_page]['title'];
+} else {
+	$_page_title = _AT($_all_pages[$current_page]['title_var']);
+}
+$savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
+
+if ($_course_id > 0) {
+	$sequence_links = $contentManager->generateSequenceCrumbs($cid);
+	$savant->assign('sequence_links', $sequence_links);
+}
 
 if (isset($_current_user))
 {
   $savant->assign('user_name', $_current_user->getUserName());
+  if ($_course_id > 0) $savant->assign('isAuthor', $_current_user->isAuthor($_course_id));
 }
 
 if ($myLang->isRTL()) {
@@ -75,6 +88,15 @@ if ($myLang->isRTL()) {
 	$savant->assign('rtl_css', '');
 }
 
+$_tmp_base_href = TR_BASE_HREF;
+if (isset($course_base_href) || isset($content_base_href)) {
+	$_tmp_base_href .= $course_base_href;
+	if ($content_base_href) {
+		$_tmp_base_href .= $content_base_href;
+	}
+}
+
+$savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
 $savant->assign('base_path', TR_BASE_HREF);
@@ -83,19 +105,14 @@ $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
 
-if (isset($validate_content))
-{
-	$savant->assign('show_jump_to_report', 1);
-}
-
-// get custom head
-$custom_head = '';
+// get custom css
+$custom_css = '';
 if (isset($_custom_css)) {
-	$custom_head = '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
+	$custom_css = '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
 }
 
 if (isset($_custom_head)) {
-	$custom_head .= '
+	$custom_css .= '
 ' . $_custom_head;
 }
 
@@ -105,9 +122,10 @@ if (isset($_pages[$current_page]['guide']))
 	$savant->assign('guide', TR_GUIDES_PATH .'index.php?p='. htmlentities($script_name));
 }
 
-$savant->assign('custom_head', $custom_head);
+$savant->assign('custom_css', $custom_css);
 
-if ($onload)	$savant->assign('onload', $onload);
+if ($onload) $savant->assign('onload', $onload);
+$savant->assign('course_id', $_course_id);
 
 $savant->display('include/header.tmpl.php');
 

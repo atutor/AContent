@@ -37,6 +37,7 @@ if (isset($_POST['field']) && isset($_POST['value']) && $_POST['value'] <> '')
 	else
 	{
 		$rtn['status'] = 'success';
+		$rtn['success'][] = _AT('TR_FEEDBACK_ACTION_COMPLETED_SUCCESSFULLY');
 	}
 }
 

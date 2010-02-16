@@ -205,7 +205,7 @@ jQuery(document).ready(function () {
 			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
 				if (newValue != oldValue)
 					rtn = jQuery.post("<?php echo TR_BASE_HREF; ?>user/index_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
-				          function(data) { handleResponse(data, viewNode, oldValue); }, "json");
+				          function(data) { handleAjaxResponse(data, viewNode, oldValue); }, "json");
 			}
 		}
 	});

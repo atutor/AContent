@@ -97,9 +97,9 @@ class PatchCreator {
 		$this->patch_info_array = $patch_info_array; 
 		$this->current_patch_id = $patch_id;
 		
-		$this->patch_xml_file = TR_TEMP_DIR . "updater/patch.xml";
+		$this->patch_xml_file = TR_CONTENT_DIR . "updater/patch.xml";
 
-		$this->version_folder = TR_TEMP_DIR . "updater/" . str_replace('.', '_', $this->patch_info_array["transformable_version_to_apply"]) . "/";
+		$this->version_folder = TR_CONTENT_DIR . "updater/" . str_replace('.', '_', $this->patch_info_array["transformable_version_to_apply"]) . "/";
 		$this->patch_folder = $this->version_folder . $this->patch_info_array["system_patch_id"] . "/";
 		
 		$this->myownPatchesDAO = new MyownPatchesDAO();

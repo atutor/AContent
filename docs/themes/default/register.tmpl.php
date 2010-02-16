@@ -32,7 +32,12 @@ $default_user_group_id = TR_USER_GROUP_USER;
 
 // show or hide the author information based on the status of the checkbox "author content" 
 global $onload;
-$onload = "if (jQuery('#is_author').attr('checked')) jQuery('#table_is_author').show(); else jQuery('#table_is_author').hide();";
+$onload = "
+document.form.login.focus(); 
+
+if (jQuery('#is_author').attr('checked')) jQuery('#table_is_author').show(); 
+else jQuery('#table_is_author').hide();
+";
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 ?>
@@ -70,7 +75,7 @@ function encrypt_password()
 	<tr align="center"><td>
 		<table>
 		<tr>
-			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?><br /><br /><br/></td>
+			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?><br/></td>
 		</tr>
 
 		<tr>

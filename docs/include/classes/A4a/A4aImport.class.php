@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-require_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 
 /**
  * Accessforall Import  class.

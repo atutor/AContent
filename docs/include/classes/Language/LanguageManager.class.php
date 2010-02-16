@@ -96,7 +96,11 @@ class LanguageManager {
 	function getLanguage($code, $charset = '') {
 		if (!$charset) {
 			if (isset($this->allLanguages[$code])) {
-				return current($this->allLanguages[$code]);
+				// return the first language object
+				if (is_array($this->allLanguages[$code]))
+					foreach ($this->allLanguages[$code] as $language)
+						return $language;
+//				return current($this->allLanguages[$code]);
 			} else {
 				return FALSE;
 			}
@@ -263,7 +267,7 @@ class LanguageManager {
 
 		global $languageManager, $msg;
 
-		$import_path = TR_TEMP_DIR . 'import/';
+		$import_path = TR_CONTENT_DIR . 'import/';
 
 		$archive = new PclZip($filename);
 		if ($archive->extract(PCLZIP_OPT_PATH,	$import_path) == 0) {

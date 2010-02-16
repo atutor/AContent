@@ -40,11 +40,12 @@ class LanguagesDAO extends DAO {
 		// check if the language already exists
 		if ($languageManager->exists($langCode)) $msg->addError('LANG_EXISTS');
 		
-		if ($msg->containsErrors()) return false;
-		
-		$sql = "INSERT INTO ".TABLE_PREFIX."languages (language_code, charset, reg_exp, native_name, english_name, status) 
-		        VALUES ('".$langCode."', '".$charset."', '".$regExp."', '".$nativeName."', '".$englishName."', ".$status.")";
-		return $this->execute($sql);
+		if (!$msg->containsErrors())
+		{
+			$sql = "INSERT INTO ".TABLE_PREFIX."languages (language_code, charset, reg_exp, native_name, english_name, status) 
+			        VALUES ('".$langCode."', '".$charset."', '".$regExp."', '".$nativeName."', '".$englishName."', ".$status.")";
+			return $this->execute($sql);
+		}
 	}
 
 	/**

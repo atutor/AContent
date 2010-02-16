@@ -123,8 +123,8 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 					echo '<input type="hidden" name="cache_dir" value="' . $_defaults['cache_dir'] . '" />';
 				}
 
-				if (defined('TR_TEMP_DIR')) {
-					echo '<input type="hidden" name="content_dir" value="'.TR_TEMP_DIR.'" />';
+				if (defined('TR_CONTENT_DIR')) {
+					echo '<input type="hidden" name="content_dir" value="'.TR_CONTENT_DIR.'" />';
 				} else {
 					echo '<input type="hidden" name="content_dir" value="'.$_defaults['content_dir'].'" />';
 				}

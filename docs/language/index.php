@@ -38,7 +38,6 @@ else if ($_POST['delete'])
 	
 	if (!$msg->containsErrors())
 	{
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: language_delete.php?id='.$_POST['id']);
 		exit;
 	}

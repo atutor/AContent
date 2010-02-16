@@ -31,6 +31,7 @@ if (isset($_POST['field']))
 	else
 	{
 		$rtn['status'] = 'success';
+		$rtn['success'][] = _AT('TR_FEEDBACK_ACTION_COMPLETED_SUCCESSFULLY');
 	}
 	echo json_encode($rtn);
 }

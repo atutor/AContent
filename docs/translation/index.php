@@ -99,8 +99,6 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 			<label for="lang_code"><?php echo _AT('choose_lang'); ?></label>:
 			<select name="lang_code" id="lang_code"> 
 <?php 
-debug($rows_lang);
-debug($_REQUEST["lang_code"]);	
 foreach ($rows_lang as $row_lang)
 	{
 ?>

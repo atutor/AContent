@@ -28,6 +28,7 @@ if (isset($_POST['field']) && isset($_POST['value']) && $_POST['value'] <> '')
 	$pieces = explode(':', $_POST['field']);
 	$languagesDAO->UpdateField($pieces[1], $pieces[2], $pieces[0], $_POST['value']);
 	$rtn['status'] = 'success';
+	$rtn['success'][] = _AT('TR_FEEDBACK_ACTION_COMPLETED_SUCCESSFULLY');
 }
 
 echo json_encode($rtn);

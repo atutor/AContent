@@ -64,7 +64,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 //				}
 //			}
 
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'eng'";
+			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";
 			@mysql_query($sql, $db);
 
 			//get list of all update scripts minus sql extension
@@ -85,7 +85,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			}
 			
 			/* reset all the accounts to English */
-//			$sql = "UPDATE ".$_POST['tb_prefix']."users SET language='eng', creation_date=creation_date, last_login=last_login";
+//			$sql = "UPDATE ".$_POST['tb_prefix']."users SET language='en', creation_date=creation_date, last_login=last_login";
 //			@mysql_query($sql, $db);
 
 			queryFromFile('db/language_text.sql');

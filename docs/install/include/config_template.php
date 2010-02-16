@@ -21,7 +21,7 @@ function write_config_file($filename, $comments) {
 					'{PORT}',
 					'{DBNAME}',
 					'{TABLE_PREFIX}',
-					'{TEMP_DIR}',
+					'{CONTENT_DIR}',
 					'{GENERATED_COMMENTS}',
 				);
 
@@ -82,11 +82,11 @@ define('DB_NAME',                      '{DBNAME}');
 /* tables. Default: TR_                                                 */
 define('TABLE_PREFIX',                 '{TABLE_PREFIX}');
 
-/* Where the temporary files are located.  This includes all file       */
+/* Where the content files are located.  This includes all file       */
 /* manager and imported files.  If security is a concern, it is         */
-/* recommended that the temporary directory be moved outside of the web	*/
+/* recommended that the content directory be moved outside of the web	*/
 /* accessible area.														*/
-define('TR_TEMP_DIR', '{TEMP_DIR}');
+define('TR_CONTENT_DIR', '{CONTENT_DIR}');
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('TR_INSTALL', TRUE);

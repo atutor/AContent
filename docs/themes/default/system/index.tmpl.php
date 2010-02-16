@@ -42,7 +42,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 
 	<table class="form-data" align="center">
 		<tr>
-			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?><br /><br /><br/></td>
+			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?></td>
 		</tr>
 
 		<tr>

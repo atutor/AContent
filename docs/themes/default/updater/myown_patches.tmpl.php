@@ -83,7 +83,7 @@ jQuery(document).ready(function () {
 				if (newValue != oldValue)
 					rtn = jQuery.post("<?php echo TR_BASE_HREF; ?>updater/myown_patches_inline_editor_submit.php", 
 				          { "field":viewNode.id, "value":newValue }, 
-		                  function(data) { handleResponse(data, viewNode, oldValue); }, 
+		                  function(data) { handleAjaxResponse(data, viewNode, oldValue); }, 
 		                  "json");
 			}
 		}

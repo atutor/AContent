@@ -68,15 +68,28 @@ class User {
 	/**
 	 * Check if user is an author 
 	 * @access  public
-	 * @param   none
+	 * @param   $course_id: optional. 
+	 *          if > 0, check whether the user is the author of the course with $course_id
+	 *          else if = 0 or is not given, check whether the user has author privilege 
 	 * @return  true : if is an author
 	 *          false : if not an author
 	 * @author  Cindy Qi Li
 	 */
-	public function isAuthor()
+	public function isAuthor($course_id = 0)
 	{
-		$row = $this->userDAO->getUserByID($this->userID);
-		return $row['is_author'];
+		if ($course_id == 0)
+		{
+			$row = $this->userDAO->getUserByID($this->userID);
+			return $row['is_author'];
+		}
+		else
+		{
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$course_row = $coursesDAO->get($course_id);
+			
+			return ($course_row['user_id'] == $this->userID);
+		}
 	}
 
 	/**

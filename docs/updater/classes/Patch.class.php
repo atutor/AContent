@@ -77,7 +77,7 @@ class Patch {
 		$this ->patch_suffix = $patch_array['system_patch_id'];
 		$this->skipFilesModified = $skipFilesModified;
 		
-		$this->module_content_dir = TR_TEMP_DIR . "updater";
+		$this->module_content_dir = TR_CONTENT_DIR . "updater";
 		$this->patchesDAO = new PatchesDAO();
 		$this->patchesFilesDAO = new PatchesFilesDAO();
 		$this->patchesFilesActionsDAO = new PatchesFilesActionsDAO();

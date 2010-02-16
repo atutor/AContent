@@ -108,7 +108,7 @@ if ($server_connected)
 }
 // end of get patch list
 
-$module_content_folder = TR_TEMP_DIR . "updater/temp";
+$module_content_folder = TR_CONTENT_DIR . "updater/temp";
 if (!is_dir($module_content_folder)) mkdir($module_content_folder);
 
 if ($_POST['install_upload'] && $_POST['uploading'])

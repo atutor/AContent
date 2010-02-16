@@ -65,7 +65,7 @@ class RemoteLanguageManager extends LanguageManager {
 	}
 
 	function import($language_code) {
-		$filename = tempnam(TR_TEMP_DIR . 'import', $language_code);
+		$filename = tempnam(TR_CONTENT_DIR . 'import', $language_code);
 		if ($this->fetchLanguage($language_code, $filename)) {
 			parent::import($filename);
 		}

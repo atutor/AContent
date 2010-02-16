@@ -31,7 +31,7 @@ $install_steps[0] = array('name' => 'Introduction');
 $install_steps[1] = array('name' => 'Locate Old Version');
 $install_steps[2] = array('name' => 'Database');
 $install_steps[3] = array('name' => 'New '.$new_version.' Configuration Options');
-$install_steps[4] = array('name' => 'Temporary Directory');
+$install_steps[4] = array('name' => 'Content Directory');
 $install_steps[5] = array('name' => 'Save Configuration');
 $install_steps[6] = array('name' => 'Anonymous Usage Collection');
 $install_steps[7] = array('name' => 'Done!');

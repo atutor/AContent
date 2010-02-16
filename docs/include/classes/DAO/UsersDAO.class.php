@@ -131,7 +131,7 @@ class UsersDAO extends DAO {
 			               '".$province."',
 			               '".$country."',
 			               '".$postal_code."',
-			               '".Utility::getRandomStr()."',
+			               '".Utility::getRandomStr(32)."',
 			               ".$status.", 
 			               now()
 										)";

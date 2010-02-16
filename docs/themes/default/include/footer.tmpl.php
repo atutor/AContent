@@ -14,65 +14,63 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 global $languageManager, $_my_uri;
 
+if ($this->course_id > 0) { ?>
+        <div style="clear:both;text-align:right;" id="gototop">		
+          <br />
+          <span style="font-size:smaller;padding-right:3px;">
+            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" title="<?php echo _AT('goto_top'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
+              <img src="<?php echo $this->base_path; ?>themes/<?php echo $this->theme; ?>/images/goto_top.gif" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0"/> 
+			</a>
+          </span>
+        </div>  
+<?php 
+} // end of goto top
+?>
+      </div> <!-- end of contentcolumn -->
+    </div> <!-- end of contentwrapper -->
+	
+	<div id="footer">
+<?php 
 if($languageManager->getNumEnabledLanguages() > 1)
 {
 ?>
-
-<div align="center" id="lang" style="clear: left"><br />
+      <div align="center" id="lang" style="clear: left"><br />
 <?php
-
 	if ($languageManager->getNumEnabledLanguages() > 5) {
-		echo '<form method="get" action="'.htmlspecialchars($_my_uri, ENT_QUOTES).'">';
-		echo '<label for="lang" style="display:none;">'._AT('translate_to').' </label>';
+		echo '        <form method="get" action="'.htmlspecialchars($_my_uri, ENT_QUOTES).'">';
+		echo '          <label for="lang" style="display:none;">'._AT('translate_to').' </label>';
 		$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
-		echo ' <input type="submit" name="submit_language" class="button" value="'._AT('translate').'" />';
-		echo '</form>';
+		echo '          <input type="submit" name="submit_language" class="button" value="'._AT('translate').'" />';
+		echo '        </form>';
 	} else {
-		echo '<small><label for="lang">'._AT('translate_to').' </label></small>';
+		echo '        <small><label for="lang">'._AT('translate_to').' </label></small>';
 		$languageManager->printList($_SESSION['lang'], 'lang', 'lang', htmlspecialchars($_my_uri));
 	}
 ?>
-<br/><br/><br/>
-</div>
-<?php } ?>
+        <br/><br/>
+      </div>
+<?php } // end of displaying language selection ?>
+		
+      <div align="center" style="clear:both;margin-left:auto; width:30em;margin-right:auto;">
+        <a href="documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
+        <br /><br />
+      </div>
 
-<div style="margin-left:auto; margin-right:auto; width:20em;">
-	<small><?php echo _AT("copyright"); ?></small><br />
-</div>
-
-</div> <!--  end center-content div -->
-<div class="bottom"><span></span></div><!--  bottom for liquid-round theme -->
+      <div style="margin-left: auto; margin-right: auto; width: 6em;">
+        <a href="http://atrc.utoronto.ca/"><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/atrclogo.gif" width="84" height="52" alt="Adaptive Technology Resource Centre" title="Adaptive Technology Resource Centre" border="0" /></a>
+      </div>
+		
+      <div style="margin-left:auto; margin-right:auto; width:20em;">
+        <small><?php if (isset($this->course_copyright)) echo $this->course_copyright.'<br />'; echo _AT("copyright"); ?></small><br />
+      </div>
+		
+    </div>
+  </div> <!--  end center-content div -->
+  
+  <div class="bottom"><span></span></div><!--  bottom for liquid-round theme -->
 </div> <!-- end liquid-round div -->
-
-<div style="margin-left: auto; margin-right: auto; width: 6em;">
-	<a href="http://atrc.utoronto.ca/"><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/atrclogo.gif" width="84" height="52" alt="Adaptive Technology Resource Centre" title="Adaptive Technology Resource Centre" border="0" /></a>
-</div>
-
-<script language="javascript" type="text/javascript">
-//<!--
-var selected;
-function rowselect(obj) {
-	obj.className = 'selected';
-	if (selected && selected != obj.id)
-		document.getElementById(selected).className = '';
-	selected = obj.id;
-}
-function rowselectbox(obj, checked, handler) {
-	var functionDemo = new Function(handler + ";");
-	functionDemo();
-
-	if (checked)
-		obj.className = 'selected';
-	else
-		obj.className = '';
-}
-//-->
-</script>
-<div align="center" style="clear:both;margin-left:auto; width:30em;margin-right:auto;">
-	<a href="documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
-	&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
-</div>
 </body>
 </html>
 
@@ -80,7 +78,7 @@ function rowselectbox(obj, checked, handler) {
 // Timer, calculate how much time to load the page
 // starttime is in include/header.inc.php
 $mtime = microtime(); 
-$mtime = explode(" ", $mtime); 
+$mtime = explode(" ", $mtime);
 $mtime = $mtime[1] + $mtime[0]; 
 $endtime = $mtime; 
 $totaltime = ($endtime - $starttime); 

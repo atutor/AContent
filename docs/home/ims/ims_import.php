@@ -1,38 +1,45 @@
 <?php
 /************************************************************************/
-/* ATutor                                                               */
+/* Transformable                                                        */
 /************************************************************************/
-/* Copyright (c) 2002 - 2009                                            */
+/* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: ims_import.php 9031 2009-12-14 17:33:34Z hwong $
-define('AT_INCLUDE_PATH', '../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require_once(TR_INCLUDE_PATH.'classes/Utility.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require_once(TR_INCLUDE_PATH.'classes/ContentUtility.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
+/** Commented by Cindy Li on Feb 2, 2010
+ * Modified from ATutor mods/_core/imscp/ims_import.php, SVN revision 9126
+ */
 
-require(AT_INCLUDE_PATH.'lib/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
-require(AT_INCLUDE_PATH.'lib/qti.inc.php'); 
-//require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
-require(AT_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
-require(AT_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
-require(AT_INCLUDE_PATH.'../tools/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
-require(AT_INCLUDE_PATH.'classes/Weblinks/WeblinksParser.class.php');
-require(AT_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsParser.class.php');
-require(AT_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsImport.class.php');
+define('TR_INCLUDE_PATH', '../../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
 
+require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
 
-/* make sure we own this course that we're exporting */
-authenticate(AT_PRIV_CONTENT);
+require_once(TR_INCLUDE_PATH.'lib/pclzip.lib.php');
+require_once(TR_INCLUDE_PATH.'lib/pclzip_callback.lib.php');
+require_once(TR_INCLUDE_PATH.'lib/qti.inc.php'); 
+//require(TR_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+require_once(TR_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
+require_once(TR_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
+require(TR_INCLUDE_PATH.'../home/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
+require_once(TR_INCLUDE_PATH.'classes/Weblinks/WeblinksParser.class.php');
+//require(TR_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsParser.class.php');
+//require(TR_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsImport.class.php');
+
+// make sure the user has author privilege
+Utility::authenticate(TR_PRIV_ISAUTHOR);
 
 /* to avoid timing out on large files */
 @set_time_limit(0);
@@ -54,6 +61,46 @@ $skip_ims_validation = false;
 $added_dt = array();	//the mapping of discussion tools that are added
 $avail_dt = array();	//list of discussion tools that have not been handled
 
+function check_available_size($course_id)
+{
+	global $coursesDAO, $MaxCourseSize, $import_path, $msg;
+
+	$q_row = $coursesDAO->get($course_id);
+	
+	//$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+	//$result = mysql_query($sql, $db);
+	//$q_row	= mysql_fetch_assoc($result);
+	
+	if ($q_row['max_quota'] == AT_COURSESIZE_UNLIMITED) {debug('return');return;}
+	else $zip_size_limit = $MaxCourseSize;
+
+	$totalBytes   = FileUtility::dirsize($import_path);
+	
+	$total_after  = $zip_size_limit - $totalBytes;
+	
+	if (is_dir(TR_CONTENT_DIR . $course_id.'/')) 
+	{
+		$course_total = FileUtility::dirsize(TR_CONTENT_DIR . $course_id.'/');
+		$total_after  -= $course_total;
+	}
+	
+	if ($total_after < 0) {
+		/* remove the content dir, since there's no space for it */
+		$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/TR_KBYTE_SIZE), 2 ) );
+		$msg->addError($errors);
+		
+		// Clean up import path and inserted course row
+		FileUtility::clr_dir($import_path);
+		$coursesDAO->Delete($course_id);
+
+		if (isset($_GET['tile'])) {
+			header('Location: '.$_base_path.'tools/tile/index.php');
+		} else {
+			header('Location: ../create_course.php');
+		}
+		exit;
+	}
+}
 
 /*
  * return the error messages represented by the given array 
@@ -307,7 +354,8 @@ function rehash($items){
 		global $element_path, $import_path;
 		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg, $ns, $ns_cp;
-
+		global $course_primary_lang;
+		
 		//check if the xml is valid
 /*
 		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
@@ -325,7 +373,11 @@ function rehash($items){
 		}
 */
 
-
+		// get language from CONTENT PACKAGE
+		if (substr($element_path[count($element_path)-1], -6) == ':title' && substr($name, -11) == ':langstring') {
+			$course_primary_lang = trim($attrs['xml:lang']);
+		}
+		
 		//validate namespaces
 		if(isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
 			$schema_location = array();
@@ -358,7 +410,6 @@ function rehash($items){
 		} else {
 			//throw error		
 		}
-
 
 		if ($name == 'manifest' && isset($attrs['xml:base']) && $attrs['xml:base']) {
 			$xml_base_path = $attrs['xml:base'];
@@ -516,12 +567,35 @@ function rehash($items){
 		global $path, $element_path, $my_data, $items;
 		global $current_identifier, $skip_ims_validation;
 		global $msg, $content_type;		
+		global $course_title, $course_description, $course_primary_lang;  // added by Cindy Li
 		static $resource_num = 0;
 		
 		if ($name == 'item') {
 			array_pop($path);
 		} 
 
+		// added by Cindy Li on Jan 10, 2010
+		// Extract course title, description and primary language for a newly-created course
+		if (substr($element_path[count($element_path)-2], -6) == ':title') {
+			if (substr($element_path[count($element_path)-1], -7) == ':string' ||
+			    substr($element_path[count($element_path)-1], -11) == ':langstring') {
+				$course_title = trim($my_data);
+			}
+		}
+		
+		if (substr($element_path[count($element_path)-2], -12) == ':description') {
+			if (substr($element_path[count($element_path)-1], -7) == ':string' ||
+			    substr($element_path[count($element_path)-1], -11) == ':langstring') {
+				$course_description = trim($my_data);
+			}
+		}
+		
+		// get language from COMMON CARTRIDGE
+		if (substr($element_path[count($element_path)-1], -9) == ':language') {
+			$course_primary_lang = trim($my_data);
+		}
+		// end of added by Cindy Li on Jan 10, 2010
+		
 		//check if this is a test import
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){
@@ -577,7 +651,7 @@ function rehash($items){
 		global $current_identifier;
 
 		$str_trimmed_data = trim($data);
-				
+		
 		if (!empty($str_trimmed_data)) {
 			$size = count($path);
 			if ($size > 0) {
@@ -657,12 +731,12 @@ if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 	$errors = array('FILE_MAX_SIZE', ini_get('post_max_size'));
 	$msg->addError($errors);
 
-	header('Location: ./index.php');
+	header('Location: ../create_course.php');
 	exit;
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('IMPORT_CANCELLED');
 
-	header('Location: ./index.php');
+	header('Location: ../create_course.php');
 	exit;
 }
 
@@ -673,7 +747,7 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 
 		// save file to /content/
 		$filename = substr(time(), -6). '.zip';
-		$full_filename = AT_CONTENT_DIR . $filename;
+		$full_filename = TR_CONTENT_DIR . $filename;
 
 		if (!$fp = fopen($full_filename, 'w+b')) {
 			echo "Cannot open file ($filename)";
@@ -711,14 +785,14 @@ if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
-		header('Location: index.php');
+		header('Location: ../create_course.php');
 	}
 	exit;
 }
 
 /* check if ../content/import/ exists */
-$import_path = AT_CONTENT_DIR . 'import/';
-$content_path = AT_CONTENT_DIR;
+$import_path = TR_CONTENT_DIR . 'import/';
+$content_path = TR_CONTENT_DIR;
 
 if (!is_dir($import_path)) {
 	if (!@mkdir($import_path, 0700)) {
@@ -726,9 +800,11 @@ if (!is_dir($import_path)) {
 	}
 }
 
-$import_path .= $_SESSION['course_id'].'/';
+if (isset($_SESSION['course_id'])) $import_path .= $_SESSION['course_id'].'/';
+else $import_path .= Utility::getRandomStr(16).'/';
+
 if (is_dir($import_path)) {
-	clr_dir($import_path);
+	FileUtility::clr_dir($import_path);
 }
 
 if (!@mkdir($import_path, 0700)) {
@@ -739,7 +815,7 @@ if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
-		header('Location: index.php');
+		header('Location: ../create_course.php');
 	}
 	exit;
 }
@@ -747,46 +823,28 @@ if ($msg->containsErrors()) {
 /* extract the entire archive into AT_COURSE_CONTENT . import/$course using the call back function to filter out php files */
 error_reporting(0);
 $archive = new PclZip($_FILES['file']['tmp_name']);
+
 if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
 	$msg->addError('IMPORT_FAILED');
 	echo 'Error : '.$archive->errorInfo(true);
-	clr_dir($import_path);
-	header('Location: index.php');
+	FileUtility::clr_dir($import_path);
+	header('Location: ../create_course.php');
 	exit;
 }
 error_reporting(AT_ERROR_REPORTING);
 
-/* get the course's max_quota */
-$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$q_row	= mysql_fetch_assoc($result);
+/* initialize DAO objects */
+$coursesDAO = new CoursesDAO();
+$contentDAO = new ContentDAO();
+$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
+$contentTestsAssocDAO = new ContentTestsAssocDAO();
 
-if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
-
-	if ($q_row['max_quota'] == AT_COURSESIZE_DEFAULT) {
-		$q_row['max_quota'] = $MaxCourseSize;
-	}
-	$totalBytes   = dirsize($import_path);
-	$course_total = dirsize(AT_CONTENT_DIR . $_SESSION['course_id'].'/');
-	$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
-
-	if ($total_after < 0) {
-		/* remove the content dir, since there's no space for it */
-		$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/AT_KBYTE_SIZE), 2 ) );
-		$msg->addError($errors);
-		
-		clr_dir($import_path);
-
-		if (isset($_GET['tile'])) {
-			header('Location: '.$_base_path.'tools/tile/index.php');
-		} else {
-			header('Location: index.php');
-		}
-		exit;
-	}
+// get the course's max_quota
+if (isset($_SESSION['course_id']))
+{
+	check_available_size($_SESSION['course_id']);
 }
-
 
 $items = array(); /* all the content pages */
 $order = array(); /* keeps track of the ordering for each content page */
@@ -832,12 +890,12 @@ if ($ims_manifest_xml === false) {
 	if (file_exists($import_path . 'atutor_backup_version')) {
 		$msg->addError('NO_IMS_BACKUP');
 	}
-	clr_dir($import_path);
+	FileUtility::clr_dir($import_path);
 
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
-		header('Location: index.php');
+		header('Location: ../create_course.php');
 	}
 	exit;
 }
@@ -855,6 +913,7 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 xml_parser_free($xml_parser);
 /* check if the glossary terms exist */
+/* Commented by Cindy Li on Jan 7, 2010. Transformable does not include glossary
 $glossary_path = '';
 if ($content_type == 'IMS Common Cartridge'){
 	$glossary_path = 'resources/GlossaryItem/';
@@ -865,9 +924,9 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	$element_path = array();
 	$xml_parser = xml_parser_create();
 
-	/* insert the glossary terms into the database (if they're not in there already) */
-	/* parse the glossary.xml file and insert the terms */
-	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); /* conform to W3C specs */
+	// insert the glossary terms into the database (if they're not in there already)
+	// parse the glossary.xml file and insert the terms
+	xml_parser_set_option($xml_parser, XML_OPTION_CASE_FOLDING, false); // conform to W3C specs
 	xml_set_element_handler($xml_parser, 'glossaryStartElement', 'glossaryEndElement');
 	xml_set_character_data_handler($xml_parser, 'glossaryCharacterData');
 
@@ -885,7 +944,7 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 		}
 	}
 }
-
+*/
 // Check if all the files exists in the manifest, iff it's a IMS CC package.
 if ($content_type == 'IMS Common Cartridge') {
 	checkResources($import_path);
@@ -896,10 +955,38 @@ if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else {
-		header('Location: index.php');
+		header('Location: ../create_course.php');
 	}
 	exit;
 }
+
+// added by Cindy Li on Jan 10, 2010
+// generate a course_id if the import is not into an existing course
+if (!isset($_SESSION['course_id']))
+{
+	if (isset($_POST['hide_course']))
+		$access = 'private';
+	else
+		$access = 'public';
+	
+	if (isset($course_primary_lang))
+	{
+		$langcode_and_charset = explode('-', $course_primary_lang);
+//		$course_primary_lang = Utility::get3LetterLangCode($langcode_and_charset[0]);
+		$course_primary_lang = $langcode_and_charset[0];
+	}
+	
+	$course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $course_title, $course_description, 
+	             '', '', '', '', $course_primary_lang, '', '');
+	
+	check_available_size($course_id);
+
+	// insert author role into table "user_courses"
+	$userCoursesDAO = new UserCoursesDAO();
+	$userCoursesDAO->Create($_SESSION['user_id'], $course_id, TR_USERROLE_AUTHOR, 0);
+}
+else $course_id = $_SESSION['course_id'];
+// end of added by Cindy Li on Jan 10, 2010
 
 /* generate a unique new package base path based on the package file name and date as needed. */
 /* the package name will be the dir where the content for this package will be put, as a result */
@@ -915,7 +1002,7 @@ $package_base_name = strtolower($package_base_name);
 $package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
 $package_base_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $package_base_name);
 
-if (is_dir(AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$package_base_name)) {
+if (is_dir($import_path.$package_base_name)) {
 	$package_base_name .= '_'.date('ymdHis');
 }
 
@@ -928,19 +1015,20 @@ if ($package_base_path) {
 if ($xml_base_path) {
 	$package_base_path = $xml_base_path . $package_base_path;
 
-	mkdir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$xml_base_path);
+	mkdir($import_path.$xml_base_path);
 	$package_base_name = $xml_base_path . $package_base_name;
 }
 
 /* get the top level content ordering offset */
-$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_assoc($result);
-$order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
+//$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
+//$result = mysql_query($sql, $db);
+//$row	= mysql_fetch_assoc($result);
+//$order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
+$order_offset = $contentDAO->getMaxOrdering($course_id, 0);
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
 $items = rehash($items);
-//debug($items);exit;
+//debug($items);
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1
@@ -1037,13 +1125,13 @@ foreach ($items as $item_id => $content_info)
 			$ext = '';
 			$last_modified = date('Y-m-d H:i:s');
 		} else {
-			//$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$file_info = @stat(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			$file_info = @stat($import_path.$content_info['href']);
 			if ($file_info === false) {
 				continue;
 			}
 		
-			//$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$path_parts = pathinfo(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			$path_parts = pathinfo($import_path.$content_info['href']);
 			$ext = strtolower($path_parts['extension']);
 
@@ -1091,7 +1179,7 @@ foreach ($items as $item_id => $content_info)
 			}
 
 			/* this is a plain text file */
-			//$content = file_get_contents(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$content = file_get_contents(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			$content = file_get_contents($import_path.$content_info['href']);
 			if ($content === false) {
 				/* if we can't stat() it then we're unlikely to be able to read it */
@@ -1100,7 +1188,7 @@ foreach ($items as $item_id => $content_info)
 			}
 
 			// get the contents of the 'head' element
-			$head .= get_html_head_by_tag($content, $html_head_tags);
+			$head .= ContentUtility::getHtmlHeadByTag($content, $html_head_tags);
 			
 			// Specifically handle eXe package
 			// NOTE: THIS NEEDS WORK! TO FIND A WAY APPLY EXE .CSS FILES ONLY ON COURSE CONTENT PART.
@@ -1121,7 +1209,7 @@ foreach ($items as $item_id => $content_info)
 
 			// end of specifically handle eXe package
 
-			$content = get_html_body($content);
+			$content = ContentUtility::getHtmlBody($content);
 			if ($contains_glossary_terms) 
 			{
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
@@ -1131,10 +1219,11 @@ foreach ($items as $item_id => $content_info)
 
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false && !preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])) {
-//				@unlink(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+//				@unlink(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
 
-			/* overwrite content if this is discussion tool. */
+			/** Commented by Cindy Qi Li on Jan 6, 2010. Ignore discussion tools
+			// overwrite content if this is discussion tool.
 			if ($content_info['type']=='imsdt_xmlv1p0'){
 				$dt_parser = new DiscussionToolsParser();
 				$xml_content = @file_get_contents($import_path . $content_info['href']);
@@ -1144,6 +1233,7 @@ foreach ($items as $item_id => $content_info)
 				unset($forum_obj);
 				$dt_parser->close();
 			}
+			*/
 		} else if ($ext) {
 			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
@@ -1204,43 +1294,48 @@ foreach ($items as $item_id => $content_info)
 		$content_folder_type = (!isset($content_info['type'])?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
 
-	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
-	      . '(course_id, 
-	          content_parent_id, 
-	          ordering,
-	          last_modified, 
-	          revision, 
-	          formatting, 
-	          release_date,
-	          head,
-	          use_customized_head,
-	          keywords, 
-	          content_path, 
-	          title, 
-	          text,
-			  test_message,
-			  content_type) 
-	       VALUES 
-			     ('.$_SESSION['course_id'].','															
-			     .intval($content_parent_id).','		
-			     .($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1).','
-			     .'"'.$last_modified.'",													
-			      0,'
-			     .$content_formatting.' ,
-			      NOW(),"'
-			     . $head .'",
-			     1,
-			      "",'
-			     .'"'.$content_info['new_path'].'",'
-			     .'"'.$content_info['title'].'",'
-			     .'"'.$content.'",'
-				 .'"'.$content_info['test_message'].'",'
-				 .$content_folder_type.')';
-
-	$result = mysql_query($sql, $db) or die(mysql_error());
-
-	/* get the content id and update $items */
-	$items[$item_id]['real_content_id'] = mysql_insert_id($db);
+	$items[$item_id]['real_content_id'] = $contentDAO->Create($course_id, intval($content_parent_id), 
+	                    ($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1),
+	                    $last_modified, 0, $content_formatting, "", $content_info['new_path'], $content_info['title'],
+	                    $content, $head, 1, $content_info['test_message'], 0, $content_folder_type);
+	
+//	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
+//	      . '(course_id, 
+//	          content_parent_id, 
+//	          ordering,
+//	          last_modified, 
+//	          revision, 
+//	          formatting, 
+//	          release_date,
+//	          head,
+//	          use_customized_head,
+//	          keywords, 
+//	          content_path, 
+//	          title, 
+//	          text,
+//			  test_message,
+//			  content_type) 
+//	       VALUES 
+//			     ('.$_SESSION['course_id'].','															
+//			     .intval($content_parent_id).','		
+//			     .($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1).','
+//			     .'"'.$last_modified.'",													
+//			      0,'
+//			     .$content_formatting.' ,
+//			      NOW(),"'
+//			     . $head .'",
+//			     1,
+//			      "",'
+//			     .'"'.$content_info['new_path'].'",'
+//			     .'"'.$content_info['title'].'",'
+//			     .'"'.$content.'",'
+//				 .'"'.$content_info['test_message'].'",'
+//				 .$content_folder_type.')';
+//
+//	$result = mysql_query($sql, $db) or die(mysql_error());
+//
+//	/* get the content id and update $items */
+//	$items[$item_id]['real_content_id'] = mysql_insert_id($db);
 
 	/* get the tests associated with this content */
 	if (!empty($items[$item_id]['tests']) || strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
@@ -1277,17 +1372,19 @@ foreach ($items as $item_id => $content_info)
 					$weight = 0;
 				}
 				$new_order = $order + 1;
-				$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
-						"(test_id, question_id, weight, ordering, required) " .
-						"VALUES ($tid, $qid, $weight, $new_order, 0)";
-				$result = mysql_query($sql, $db);
+				$testsQuestionsAssocDAO->Create($tid, $qid, $weight, $new_order, 0);
+//				$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
+//						"(test_id, question_id, weight, ordering, required) " .
+//						"VALUES ($tid, $qid, $weight, $new_order, 0)";
+//				$result = mysql_query($sql, $db);
 			}
 
 			//associate content and test
-			$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
-					'(content_id, test_id) ' .
-					'VALUES (' . $items[$item_id]['real_content_id'] . ", $tid)";
-			$result = mysql_query($sql, $db);
+			$contentTestsAssocDAO->Create($items[$item_id]['real_content_id'], $tid);
+//			$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
+//					'(content_id, test_id) ' .
+//					'VALUES (' . $items[$item_id]['real_content_id'] . ", $tid)";
+//			$result = mysql_query($sql, $db);
 		
 //			if (!$msg->containsErrors()) {
 //				$msg->addFeedback('IMPORT_SUCCEEDED');
@@ -1302,7 +1399,8 @@ foreach ($items as $item_id => $content_info)
 		$a4a_import->importA4a($items[$item_id]['a4a']);
 	}
 
-	/* get the discussion tools (dependent to content)*/
+	/** Commented by Cindy Qi Li on Jan 6, 2010. Ignore discussion tools
+	// get the discussion tools (dependent to content)
 	if (isset($items[$item_id]['forum']) && !empty($items[$item_id]['forum'])){
 		foreach($items[$item_id]['forum'] as $forum_ref => $forum_link){
 			$dt_parser = new DiscussionToolsParser();
@@ -1332,19 +1430,29 @@ foreach ($items as $item_id => $content_info)
 		//associate the fid and content id
 		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
 	}
+	*/
 }
+
 //exit;//harris
 if ($package_base_path == '.') {
 	$package_base_path = '';
 }
 
+// create course directory
+$course_dir = TR_CONTENT_DIR.$course_id.'/';
+if (!is_dir($course_dir)) {
+	if (!@mkdir($course_dir, 0700)) {
+		$msg->addError('IMPORTDIR_FAILED');
+	}
+}
+
 // loop through the files outside the package folder, and copy them to its relative path
-if (is_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources')) {
-	$handler = opendir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources');
+if (is_dir($import_path.'resources')) {
+	$handler = opendir($import_path.'resources');
 	while ($file = readdir($handler)){
-		$filename = AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/resources/'.$file;
+		$filename = $import_path.'resources/'.$file;
 		if(is_file($filename)){
-			@rename($filename, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$file);
+			@rename($filename, $course_dir.$package_base_name.'/'.$file);
 		}
 	}
 	closedir($handler);
@@ -1354,7 +1462,7 @@ if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 }
 
-if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name) === false) {
+if (@rename($import_path.$all_package_base_path, $course_dir.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
 		$msg->addError('IMPORT_FAILED');
 	}
@@ -1362,31 +1470,38 @@ if (@rename($import_path.$all_package_base_path, AT_CONTENT_DIR .$_SESSION['cour
 //check if there are still resources missing
 foreach($items as $idetails){
 	$temp_path = pathinfo($idetails['href']);
-	@rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$temp_path['dirname'], AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name . '/' . $temp_path['dirname']);
+	@rename($import_path.$temp_path['dirname'], $course_dir.$package_base_name . '/' . $temp_path['dirname']);
 }
-clr_dir(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
+FileUtility::clr_dir($import_path);
 
 if (isset($_POST['url'])) {
 	@unlink($full_filename);
 }
 
 
-if ($_POST['s_cid']){
-	if (!$msg->containsErrors()) {
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	}
-	header('Location: ../../editor/edit_content.php?cid='.intval($_POST['cid']));
-	exit;
-} else {
-	if (!$msg->containsErrors()) {
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	}
-	if ($_GET['tile']) {
-		header('Location: '.AT_BASE_HREF.'tools/tile/index.php');
-	} else {
-		header('Location: ./index.php?cid='.intval($_POST['cid']));
-	}
-	exit;
+if (!$msg->containsErrors()) {
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
+
+header('Location: ../course/index.php?_course_id='.$course_id);
+exit;
+
+//	if ($_POST['s_cid']){
+//	if (!$msg->containsErrors()) {
+//		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+//	}
+//	header('Location: ../../editor/edit_content.php?cid='.intval($_POST['cid']));
+//	exit;
+//} else {
+//	if (!$msg->containsErrors()) {
+//		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+//	}
+//	if ($_GET['tile']) {
+//		header('Location: '.AT_BASE_HREF.'tools/tile/index.php');
+//	} else {
+//		header('Location: ../index.php?cid='.intval($_POST['cid']));
+//	}
+//	exit;
+//}
 
 ?>

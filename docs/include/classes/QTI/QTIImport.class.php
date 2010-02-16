@@ -10,9 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AT_INCLUDE_PATH', '../../');
-require(AT_INCLUDE_PATH.'classes/testQuestions.class.php');
-require(AT_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+define('TR_INCLUDE_PATH', '../../');
+require_once(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
+require_once(TR_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 
 /**
 * QTIImport
@@ -227,31 +228,10 @@ class QTIImport {
 			if ($this->title != '') {
 				$test_obj['title'] = $this->title;
 			} else {
-//				$test_obj['title'] = 'random title';
-				
 				//set marks to 0 if no title? 
 				$this->weights = array();
 			}
 		}
-
-		/*
-		if ($test_obj['random'] && !$test_obj['num_questions']) {
-			$missing_fields[] = _AT('num_questions_per_test');
-		}
-
-		if ($test_obj['pass_score']==1 && !$test_obj['passpercent']) {
-			$missing_fields[] = _AT('percentage_score');
-		}
-
-		if ($test_obj['pass_score']==2 && !$test_obj['passscore']) {
-			$missing_fields[] = _AT('points_score');
-		}
-
-		if ($missing_fields) {
-			$missing_fields = implode(', ', $missing_fields);
-			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
-		}
-		*/
 
 		$day_start	= intval(date('j'));
 		$month_start= intval(date('n'));
@@ -310,8 +290,9 @@ class QTIImport {
 
 			//If title exceeded database defined length, truncate it.
 			$test_obj['title'] = validate_length($test_obj['title'], 100);
-
-			$sql_params = array (	$_SESSION['course_id'], 
+			
+			$testsDAO = new TestsDAO();
+			$tid = $testsDAO->Create(	$_SESSION['course_id'], 
 									$test_obj['title'], 
 									$test_obj['description'], 
 									$test_obj['format'], 
@@ -334,9 +315,32 @@ class QTIImport {
 									$test_obj['allow_guests'], 
 									$test_obj['display']);
 
-			$sql = vsprintf(AT_SQL_TEST, $sql_params);
-			$result = mysql_query($sql, $db);
-			$tid = mysql_insert_id($db);
+//			$sql_params = array (	$_SESSION['course_id'], 
+//									$test_obj['title'], 
+//									$test_obj['description'], 
+//									$test_obj['format'], 
+//									$start_date, 
+//									$end_date, 
+//									$test_obj['order'], 
+//									$test_obj['num_questions'], 
+//									$test_obj['instructions'], 
+//									$test_obj['content_id'], 
+//									$test_obj['passscore'], 
+//									$test_obj['passpercent'], 
+//									$test_obj['passfeedback'], 
+//									$test_obj['failfeedback'], 
+//									$test_obj['result_release'], 
+//									$test_obj['random'], 
+//									$test_obj['difficulty'], 
+//									$test_obj['num_takes'], 
+//									$test_obj['anonymous'], 
+//									'', 
+//									$test_obj['allow_guests'], 
+//									$test_obj['display']);
+//
+//			$sql = vsprintf(AT_SQL_TEST, $sql_params);
+//			$result = mysql_query($sql, $db);
+//			$tid = mysql_insert_id($db);
 		//debug($qti_import->weights, 'weights');			
 		}
 		return $tid;
@@ -388,18 +392,15 @@ class QTIImport {
 			//we only want to touch the files that the test/surveys use
 			if ($new_file_loc!=$file_loc){
 				//check if new folder is there, if not, create it.
-				createDir(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
+				createDir(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
 				
-				//copy files over
-		//			if (rename(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-		//				AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$package_base_name.'/'.$new_file_loc) === false) {
 				//overwrite files
-				if (file_exists(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
-					unlink(AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
+				if (file_exists(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
+					unlink(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
 				}
-				if (file_exists(AT_CONTENT_DIR.'import/'.$_SESSION['course_id'].'/'.$file_loc)){
-					if (copy(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$file_loc, 
-						AT_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
+				if (file_exists($this->import_path.$file_loc)){
+					if (copy($this->import_path.$file_loc, 
+						TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
 						//TODO: Print out file already exist error.
 						if (!$msg->containsErrors()) {
 			//				$msg->addError('FILE_EXISTED');

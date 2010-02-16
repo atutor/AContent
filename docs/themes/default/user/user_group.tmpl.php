@@ -116,7 +116,7 @@ jQuery(document).ready(function () {
 					          }
 						    }
 				        	
-			                handleResponse(data); 
+			                handleAjaxResponse(data); 
 				          }, "json");
 				}
 			}

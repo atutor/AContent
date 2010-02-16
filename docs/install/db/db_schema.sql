@@ -39,6 +39,15 @@ CREATE TABLE `content` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # --------------------------------------------------------
+# Table structure for table `course_tests_assoc`
+# since 0.1
+CREATE TABLE `content_tests_assoc` (
+  `content_id` INTEGER UNSIGNED NOT NULL,
+  `test_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`content_id`, `test_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
 # Table structure for table `courses`
 # since 0.1
 
@@ -269,6 +278,155 @@ CREATE TABLE `privileges` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 # --------------------------------------------------------
+# Table structure for table `tests`
+# since 0.1
+
+CREATE TABLE `tests` (
+  `test_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` VARCHAR(255) NOT NULL ,
+  `format` tinyint(4) NOT NULL default '0',
+  `start_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `randomize_order` tinyint(4) NOT NULL default '0',
+  `num_questions` tinyint(3) unsigned NOT NULL default '0',
+  `instructions` TEXT ,
+  `content_id` mediumint(8) NOT NULL default '0',
+  `result_release` tinyint(4) unsigned NOT NULL default '0',
+  `random` tinyint(4) unsigned NOT NULL default '0',
+  `difficulty` tinyint(4) unsigned NOT NULL default '0',
+  `num_takes` tinyint(4) unsigned NOT NULL default '0',
+  `anonymous` tinyint(4) NOT NULL default '0',
+  `out_of` varchar(4) NOT NULL default '',
+  `guests` TINYINT NOT NULL DEFAULT '0',
+  `display` TINYINT NOT NULL DEFAULT '0',
+  `description` TEXT,
+  `passscore` MEDIUMINT NOT NULL default '0',
+  `passpercent` MEDIUMINT NOT NULL default '0',
+  `passfeedback` TEXT,
+  `failfeedback` TEXT,
+  `show_guest_form` TINYINT(1) UNSIGNED NOT NULL default '0',
+  PRIMARY KEY  (`test_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+# --------------------------------------------------------
+# Table structure for table `tests_answers`
+# since 0.1
+
+CREATE TABLE `tests_answers` (
+  `result_id` mediumint(8) unsigned NOT NULL default '0',
+  `question_id` mediumint(8) unsigned NOT NULL default '0',
+  `member_id` mediumint(8) unsigned NOT NULL default '0',
+  `answer` TEXT ,
+  `score` varchar(5) NOT NULL default '',
+  `notes` TEXT ,
+  PRIMARY KEY  (`result_id`,`question_id`,`member_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+# --------------------------------------------------------
+# Table structure for table `tests_groups`
+# since 0.1
+
+CREATE TABLE `tests_groups` (
+  `test_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  PRIMARY KEY (`test_id`,`group_id`),
+  KEY `test_id` (`test_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+# --------------------------------------------------------
+# Table structure for table `tests_questions`
+# since 0.1
+
+CREATE TABLE `tests_questions` (
+  `question_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `category_id` mediumint(8) unsigned NOT NULL default '0',
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `type` tinyint(3) unsigned NOT NULL default '0',
+  `feedback` TEXT ,
+  `question` TEXT ,
+  `choice_0` TEXT ,
+  `choice_1` TEXT ,
+  `choice_2` TEXT ,
+  `choice_3` TEXT ,
+  `choice_4` TEXT ,
+  `choice_5` TEXT ,
+  `choice_6` TEXT ,
+  `choice_7` TEXT ,
+  `choice_8` TEXT ,
+  `choice_9` TEXT ,
+  `answer_0` tinyint(4) NOT NULL default '0',
+  `answer_1` tinyint(4) NOT NULL default '0',
+  `answer_2` tinyint(4) NOT NULL default '0',
+  `answer_3` tinyint(4) NOT NULL default '0',
+  `answer_4` tinyint(4) NOT NULL default '0',
+  `answer_5` tinyint(4) NOT NULL default '0',
+  `answer_6` tinyint(4) NOT NULL default '0',
+  `answer_7` tinyint(4) NOT NULL default '0',
+  `answer_8` tinyint(4) NOT NULL default '0',
+  `answer_9` tinyint(4) NOT NULL default '0',
+  `option_0` TEXT ,
+  `option_1` TEXT ,
+  `option_2` TEXT ,
+  `option_3` TEXT ,
+  `option_4` TEXT ,
+  `option_5` TEXT ,
+  `option_6` TEXT ,
+  `option_7` TEXT ,
+  `option_8` TEXT ,
+  `option_9` TEXT ,
+  `properties` tinyint(4) NOT NULL default '0',
+  `content_id` mediumint(8) NOT NULL,  
+  PRIMARY KEY  (`question_id`),
+  KEY `category_id` (category_id)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
+# Table structure for table `tests_questions_assoc`
+# since 0.1
+
+CREATE TABLE `tests_questions_assoc` (
+  `test_id` mediumint(8) unsigned NOT NULL default '0',
+  `question_id` mediumint(8) unsigned NOT NULL default '0',
+  `weight` varchar(4) NOT NULL default '',
+  `ordering` mediumint(8) unsigned NOT NULL default '0',
+  `required` tinyint(3) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`test_id`,`question_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
+# Table structure for table `tests_questions_categories`
+# since 0.1
+
+CREATE TABLE `tests_questions_categories` (
+  `category_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `course_id` mediumint(8) unsigned NOT NULL default '0',
+  `title` char(200) NOT NULL default '',
+  PRIMARY KEY  (`category_id`),
+  KEY `course_id` (`course_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
+# Table structure for table `tests_results`
+# since 0.1
+
+CREATE TABLE `tests_results` (
+  `result_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `test_id` mediumint(8) unsigned NOT NULL default '0',
+  `member_id` VARCHAR(10) NOT NULL default '',
+  `date_taken` TIMESTAMP NOT NULL,
+  `final_score` char(5) NOT NULL default '',
+  `status` TINYINT NOT NULL DEFAULT '0',
+  `end_time` TIMESTAMP NOT NULL ,
+  `max_pos` TINYINT UNSIGNED NOT NULL DEFAULT '0',
+  PRIMARY KEY  (`result_id`),
+  KEY `test_id` (`test_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
 # Table structure for table `themes`
 # since 0.1
 
@@ -299,6 +457,18 @@ CREATE TABLE `users` (
   `last_login` datetime,
   `preferences` text,
   PRIMARY KEY  (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+# --------------------------------------------------------
+# Table structure for table `user_courses`
+# since 0.1
+
+CREATE TABLE `user_courses` (
+  `user_id` mediumint(8) unsigned NOT NULL,
+  `course_id` mediumint(8) unsigned NOT NULL,
+  `role` mediumint(8) unsigned NOT NULL,
+  `last_cid` mediumint(8) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`user_id`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 # --------------------------------------------------------
@@ -337,10 +507,61 @@ CREATE TABLE `user_links` (
   PRIMARY KEY  (`user_link_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
+#Setup Table for Access4All
+CREATE TABLE `primary_resources` (
+  `primary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `content_id` mediumint(8) unsigned NOT NULL default '0',
+  `resource` TEXT,
+  `language_code` varchar(20) default NULL,
+  PRIMARY KEY  (`primary_resource_id`)
+) TYPE = MYISAM;
+
+CREATE TABLE `primary_resources_types` (
+  `primary_resource_id` mediumint(8) unsigned NOT NULL,
+  `type_id` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY  (`primary_resource_id`,`type_id`)
+) TYPE = MYISAM;
+
+CREATE TABLE `resource_types` (
+  `type_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `type` TEXT,
+  PRIMARY KEY  (`type_id`)
+) TYPE = MYISAM;
+
+CREATE TABLE `secondary_resources` (
+  `secondary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `primary_resource_id` mediumint(8) unsigned NOT NULL,
+  `secondary_resource` TEXT,
+  `language_code` varchar(20) default NULL,
+  PRIMARY KEY  (`secondary_resource_id`)
+) TYPE = MYISAM;
+
+CREATE TABLE `secondary_resources_types` (
+  `secondary_resource_id` mediumint(8) unsigned NOT NULL,
+  `type_id` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY  (`secondary_resource_id`,`type_id`)
+) TYPE = MYISAM;
+
+INSERT INTO `resource_types` VALUES
+(1, 'auditory'),
+(2, 'sign_language'),
+(3, 'textual'),
+(4, 'visual');
+
+INSERT INTO `config` (`name`, `value`) VALUES('encyclopedia', 'http://www.wikipedia.org');
+INSERT INTO `config` (`name`, `value`) VALUES('dictionary', 'http://dictionary.reference.com/');
+INSERT INTO `config` (`name`, `value`) VALUES('thesaurus', 'http://thesaurus.reference.com/');
+INSERT INTO `config` (`name`, `value`) VALUES('atlas', 'http://maps.google.ca/');
+INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculateforfree.com/');
+INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
+INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
+
+#End Access4All setup 
+
 -- Dumping data for table `languages`
 
 INSERT INTO `languages` (`language_code`, `charset`, `reg_exp`, `native_name`, `english_name`, `status`) VALUES
-('eng', 'utf-8', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 1);
+('en', 'utf-8', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 1);
 
 -- Dumping data for table `lang_codes`
 
@@ -873,3 +1094,5 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 5);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 7);
 
+# insert default atutor account
+INSERT INTO `users` (`user_id`, `login`, `password`, `user_group_id`, `first_name`, `last_name`, `web_service_id`, `status`, `create_date`) VALUES (1, 'ATutor', '0cbab2aec26a53b0107487d43b1b8eb29384ad10', 2, 'ATutor', 'ATutor', '90c3cd6f656739969847f3a99ac0f3c7', 1, now());

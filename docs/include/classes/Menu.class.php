@@ -59,7 +59,7 @@ class Menu {
 		$this->sub_menus = $this->setSubMenus($this->current_page);   // loop recursively to set $this->submenus to the top parent of $this->current_page
 		$this->root_page = $this->setRootPage($this->current_page);  
 		$this->path = $this->setPath($this->current_page);
-		$this->back_to_page = $this->setBackToPage();  
+		$this->back_to_page = $this->setBackToPage();
 	}
 
 	/**
