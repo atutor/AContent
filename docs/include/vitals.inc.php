@@ -73,22 +73,25 @@ if (!defined('TR_INSTALL') || !TR_INSTALL) {
 require_once(TR_INCLUDE_PATH.'constants.inc.php');
 
 /*** 3. initilize session ***/
-	@set_time_limit(0);
-	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
-	@session_cache_limiter('private, must-revalidate');
+@set_time_limit(0);
+@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
+@session_cache_limiter('private, must-revalidate');
 
-	session_name('CheckerID');
-	error_reporting(TR_ERROR_REPORTING);
+session_name('CheckerID');
+error_reporting(TR_ERROR_REPORTING);
 
-	ob_start();
-	session_set_cookie_params(0, $_base_path);
-	session_start();
-	$str = ob_get_contents();
-	ob_end_clean();
-	unregister_GLOBALS();
+ob_start();
+session_set_cookie_params(0, $_base_path);
+session_start();
+$str = ob_get_contents();
+ob_end_clean();
+unregister_GLOBALS();
 
+// $_user_id could be set in home/ims/ims_import.php
+// @see home/ims/ims_import.php
+if (isset($_user_id) && $_user_id > 0) $_SESSION['user_id'] = $_user_id;
 /***** end session initilization block ****/
-	
+
 /***** 4. load $_config from table 'config' *****/
 require(TR_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
 require(TR_INCLUDE_PATH.'classes/DAO/ThemesDAO.class.php');

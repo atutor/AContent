@@ -65,9 +65,9 @@ $_pages['password_reminder.php']['title_var'] = 'password_reminder';
 $_pages['password_reminder.php']['parent']    = 'login.php';
 $_pages['password_reminder.php']['guide']    = 'TR_HELP_PASSWORD_REMINDER';
 
-$_pages['oauth/oauth_authenticate.php']['title_var'] = 'oauth_authenticate';
-$_pages['login.php']['parent']    = TR_NAV_PUBLIC;
-$_pages['login.php']['guide']    = 'TR_HELP_OAUTH_AUTHENTICATE';
+$_pages['oauth/authorization.php']['title_var'] = 'oauth_authenticate';
+$_pages['oauth/authorization.php']['parent']    = TR_NAV_PUBLIC;
+$_pages['oauth/authorization.php']['guide']    = 'TR_HELP_OAUTH_AUTHENTICATE';
 
 // The scripts below need to be accessible by public. 
 $_pages['guideline/view_guideline.php']['title_var'] = 'view_guideline';   // used in web service validation response

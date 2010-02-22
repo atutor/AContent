@@ -66,7 +66,7 @@ function isQTIFileExist($attributes){
 
 				if (in_array($file_pathinfo['extension'], $supported_media_type)){
 					//check media
-					if (file_exists(AT_CONTENT_DIR . $_SESSION['course_id'] . '/' . $file_name)){
+					if (file_exists(TR_CONTENT_DIR . $_SESSION['course_id'] . '/' . $file_name)){
 						$existing_files[] = $file_name;
 					}
 				}

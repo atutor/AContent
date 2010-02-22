@@ -341,10 +341,10 @@ class ContentUtility {
 					$file .= $file_location;
 					
 					if ($row['content_path'] <> '') {
-						$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$row['content_path'].'/'.$file_location;
+						$file = TR_CONTENT_DIR.$_SESSION['course_id'] . '/'.$row['content_path'].'/'.$file_location;
 					}
 					else {
-						$file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
+						$file = TR_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
 					}
 					$target = file_get_contents($file);
 					
@@ -352,13 +352,13 @@ class ContentUtility {
 					if (preg_match('/.*\<html.*\<\/html\>.*/s', $target))
 					{ // is a html file, use iframe to display
 						// get real path to the text file
-						if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+						if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 							$course_base_href = 'get.php/';
 						} else {
 							$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
 						}
 		
-						$file = AT_BASE_HREF . $course_base_href.$file_location;
+						$file = TR_BASE_HREF . $course_base_href.$file_location;
 							
 						$target = '<iframe width="100%" frameborder="0" class="autoHeight" scrolling="auto" src="'.$file.'"></iframe>';
 					}

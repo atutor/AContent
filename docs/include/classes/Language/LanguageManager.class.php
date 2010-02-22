@@ -96,7 +96,6 @@ class LanguageManager {
 	function getLanguage($code, $charset = '') {
 		if (!$charset) {
 			if (isset($this->allLanguages[$code])) {
-				// return the first language object
 				if (is_array($this->allLanguages[$code]))
 					foreach ($this->allLanguages[$code] as $language)
 						return $language;

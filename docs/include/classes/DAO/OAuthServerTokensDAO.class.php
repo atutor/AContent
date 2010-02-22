@@ -173,5 +173,28 @@ class OAuthServerTokensDAO extends DAO {
 	    return $this->execute($sql);
   	}
 
+  	/**
+	* Check whether the given token is expired. If expired, return true, otherwise, return false.
+	* @access  public
+	* @param   $token
+	* @return  true if expired, otherwise, return false
+	* @author  Cindy Qi Li
+	*/
+	function isTokenExpired($token)
+	{
+		$sql = "SELECT unix_timestamp(now()) now_timestamp, 
+		               unix_timestamp(addtime(ost.assign_date, osc.expire_threshold)) expire_timestamp
+		          FROM ".TABLE_PREFIX."oauth_server_consumers osc, ".TABLE_PREFIX."oauth_server_tokens ost
+		         WHERE osc.consumer_id=ost.consumer_id
+		           AND ost.token='".$token."'
+		           AND ost.token_type='access'
+		         ORDER BY ost.assign_date DESC";
+		$row = $this->execute($sql);
+
+		if (!is_array($row) || $row['now_timestamp'] > $row['expire_timestamp'])
+			return true;
+		else
+			return false;
+  	}
 }
 ?>

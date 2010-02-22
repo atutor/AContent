@@ -42,7 +42,7 @@ function encrypt_password() {
 		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
 			<table  align="center" width="90%">
 				<tr>
-					<td colspan="2" align="left"><br /><?php echo _AT('login_text'). _AT('required_field_text') ;?><br /><br /><br /><br /></td>
+					<td colspan="2" align="left"><?php echo _AT('login_text'). _AT('required_field_text') ;?><br /><br /></td>
 				</tr>
 
 				<tr>

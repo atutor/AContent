@@ -63,7 +63,12 @@ if (isset($_POST['submit']))
 			$oAuthServerTokensDAO->updateUserIDByToken($_REQUEST['oauth_token'], $user_id);
 			
 			if (isset($_REQUEST['oauth_callback']))
-				header('Location: '.$_REQUEST['oauth_callback']);
+			{
+				if (strpos($_REQUEST['oauth_callback'], '?') > 0)
+					header('Location: '.$_REQUEST['oauth_callback'].'&oauth_token='.$_REQUEST['oauth_token']);
+				else
+					header('Location: '.$_REQUEST['oauth_callback'].'?oauth_token='.$_REQUEST['oauth_token']);
+			}
 			else
 				echo 'User is authenticated successfully.';
 			

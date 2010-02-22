@@ -60,9 +60,6 @@ class OAuthClientServersDAO extends DAO {
 		if (!$msg->containsErrors())
 		{
 			/* insert into the db */
-			$oauth_server_key = Utility::getRandomStr(16);
-			$oauth_server_secret = Utility::getRandomStr(16);
-			
 			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
 			              (oauth_server,
 			               consumer_key,
@@ -128,10 +125,6 @@ class OAuthClientServersDAO extends DAO {
 
 		if (!$msg->containsErrors())
 		{
-			/* insert into the db */
-			$oauth_server_key = Utility::getRandomStr(16);
-			$oauth_server_secret = Utility::getRandomStr(16);
-			
 			$sql = "UPDATE ".TABLE_PREFIX."oauth_client_servers
 			           SET consumer_key = '".$consumer_key."',
 			               consumer_secret = '".$consumer_secret."',

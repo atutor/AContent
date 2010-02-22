@@ -15,6 +15,45 @@
  */
 
 define('TR_INCLUDE_PATH', '../../include/');
+
+// Validate OAuth token and set $SESSION['user_id']
+// Must come before require(vitals.inc.php) because vitals redirects to index page 
+// when $SESSION['user_id'] is not set
+$oauth_import = false;  // whether the import request is from oauth web service
+
+// the import request is from oauth web service, find the user id from the given token
+if (isset($_GET['oauth_token']))
+{
+	require_once(TR_INCLUDE_PATH.'config.inc.php');
+	require_once(TR_INCLUDE_PATH.'constants.inc.php');
+	
+	if ($_GET['oauth_token'] == '')
+	{
+		echo "error=".urlencode('Empty OAuth token.');
+		exit;
+	}
+	else
+	{
+		$oauth_import = true;
+		require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthServerTokensDAO.class.php');
+		$oAuthServerTokensDAO = new OAuthServerTokensDAO();
+		$token_row = $oAuthServerTokensDAO->getByTokenAndType($_GET['oauth_token'], 'access');
+
+		if (!is_array($token_row))
+		{
+			echo "error=".urlencode('Invalid OAuth token.');
+			exit;
+		}
+		else if ($oAuthServerTokensDAO->isTokenExpired($_GET['oauth_token']))
+		{
+			echo "error=".urlencode('OAuth token expired.');
+			exit;
+		}
+		
+		$_user_id = $token_row[0]['user_id'];
+	}
+}
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
@@ -63,7 +102,7 @@ $avail_dt = array();	//list of discussion tools that have not been handled
 
 function check_available_size($course_id)
 {
-	global $coursesDAO, $MaxCourseSize, $import_path, $msg;
+	global $coursesDAO, $MaxCourseSize, $import_path, $msg, $oauth_import;
 
 	$q_row = $coursesDAO->get($course_id);
 	
@@ -71,7 +110,7 @@ function check_available_size($course_id)
 	//$result = mysql_query($sql, $db);
 	//$q_row	= mysql_fetch_assoc($result);
 	
-	if ($q_row['max_quota'] == AT_COURSESIZE_UNLIMITED) {debug('return');return;}
+	if ($q_row['max_quota'] == TR_COURSESIZE_UNLIMITED) return;
 	else $zip_size_limit = $MaxCourseSize;
 
 	$totalBytes   = FileUtility::dirsize($import_path);
@@ -95,7 +134,11 @@ function check_available_size($course_id)
 
 		if (isset($_GET['tile'])) {
 			header('Location: '.$_base_path.'tools/tile/index.php');
-		} else {
+		} 
+		else if ($oauth_import) {
+			echo "error=".urlencode('Empty OAuth token.');
+		}
+		else {
 			header('Location: ../create_course.php');
 		}
 		exit;
@@ -725,12 +768,9 @@ function rehash($items){
 		$my_data .= $data;
 	}
 
-if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
+if (!isset($_POST['submit']) && !isset($_POST['cancel']) && !isset($_GET['oauth_token'])) {
 	/* just a catch all */
-	
-	$errors = array('FILE_MAX_SIZE', ini_get('post_max_size'));
-	$msg->addError($errors);
-
+	$msg->addError('NO_PRIV');
 	header('Location: ../create_course.php');
 	exit;
 } else if (isset($_POST['cancel'])) {
@@ -742,10 +782,8 @@ if (!isset($_POST['submit']) && !isset($_POST['cancel'])) {
 
 $cid = intval($_POST['cid']);
 
-if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
-	if ($content = @file_get_contents($_POST['url'])) {
-
-		// save file to /content/
+if (isset($_REQUEST['url']) && ($_REQUEST['url'] != 'http://') ) {
+	if ($content = @file_get_contents($_REQUEST['url'])) {
 		$filename = substr(time(), -6). '.zip';
 		$full_filename = TR_CONTENT_DIR . $filename;
 
@@ -764,26 +802,32 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 	$_FILES['file']['tmp_name'] = $full_filename;
 	$_FILES['file']['size']     = strlen($content);
 	unset($content);
-	$url_parts = pathinfo($_POST['url']);
+	$url_parts = pathinfo($_REQUEST['url']);
 	$package_base_name_url = $url_parts['basename'];
 }
 $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
 if ($ext != 'zip') {
+	debug($ext);debug('not zip');exit;
 	$msg->addError('IMPORTDIR_IMS_NOTVALID');
 } else if ($_FILES['file']['error'] == 1) {
+	debug('file error is 1');exit;
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 	$msg->addError($errors);
-} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_POST['url'])) {
+} else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_REQUEST['url'])) {
+	debug('file not selected');exit;
 	$msg->addError('FILE_NOT_SELECTED');
 } else if ($_FILES['file']['size'] == 0) {
+	debug('file size 0');exit;
 	$msg->addError('IMPORTFILE_EMPTY');
 } 
-
+$msg->printAll();
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else if ($oauth_import) {
+		echo "error=".urlencode('Invalid imported file.');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -814,13 +858,15 @@ if (!@mkdir($import_path, 0700)) {
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else if ($oauth_import) {
+		echo "error=".urlencode('Cannot create import directory.');
 	} else {
 		header('Location: ../create_course.php');
 	}
 	exit;
 }
 
-/* extract the entire archive into AT_COURSE_CONTENT . import/$course using the call back function to filter out php files */
+/* extract the entire archive into TR_COURSE_CONTENT . import/$course using the call back function to filter out php files */
 error_reporting(0);
 $archive = new PclZip($_FILES['file']['tmp_name']);
 
@@ -832,7 +878,7 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 	header('Location: ../create_course.php');
 	exit;
 }
-error_reporting(AT_ERROR_REPORTING);
+//error_reporting(AT_ERROR_REPORTING);
 
 /* initialize DAO objects */
 $coursesDAO = new CoursesDAO();
@@ -894,6 +940,8 @@ if ($ims_manifest_xml === false) {
 
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else if ($oauth_import) {
+		echo "error=".urlencode('IMS manifest file does not appear to be valid.');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -954,6 +1002,8 @@ if ($content_type == 'IMS Common Cartridge') {
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
+	} else if ($oauth_import) {
+		echo "error=".urlencode('Error at parsing IMS manifest file.');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -1474,7 +1524,7 @@ foreach($items as $idetails){
 }
 FileUtility::clr_dir($import_path);
 
-if (isset($_POST['url'])) {
+if (isset($_REQUEST['url'])) {
 	@unlink($full_filename);
 }
 
@@ -1483,7 +1533,11 @@ if (!$msg->containsErrors()) {
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
 
-header('Location: ../course/index.php?_course_id='.$course_id);
+if ($oauth_import) {
+	echo 'course_id='.$course_id;
+} else {
+	header('Location: ../course/index.php?_course_id='.$course_id);
+}
 exit;
 
 //	if ($_POST['s_cid']){
@@ -1497,7 +1551,7 @@ exit;
 //		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 //	}
 //	if ($_GET['tile']) {
-//		header('Location: '.AT_BASE_HREF.'tools/tile/index.php');
+//		header('Location: '.TR_BASE_HREF.'tools/tile/index.php');
 //	} else {
 //		header('Location: ../index.php?cid='.intval($_POST['cid']));
 //	}
