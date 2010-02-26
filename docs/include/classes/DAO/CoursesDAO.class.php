@@ -215,7 +215,7 @@ class CoursesDAO extends DAO {
 	 *                    for example '+a -b' means find all courses with keyword 'a', without 'b'
 	 *          start: start receiving from this record number, 0 if not specified
 	 *          maxResults: Number of results desired. If 0, returns all
-	 * @return  course row
+	 * @return  course row if successful, otherwise, return false
 	 * @author  Cindy Qi Li
 	 */
 	public function getSearchResult($keywords, $start=0, $maxResults=0)
@@ -232,22 +232,26 @@ class CoursesDAO extends DAO {
 //		                    OR MATCH(ct.keywords, ct.title, ct.text) AGAINST ('".$keywords."' in boolean mode))
 //		                 ORDER BY score1+score2 desc) a";
         
+		// if the keywords is not given, return false
+		$keywords = trim($keywords);
+		if ($keywords == '') return false;
+		
+		$all_keywords = Utility::removeEmptyItemsFromArray(explode(' ', $keywords));
+		
+		if (!is_array($all_keywords) || count($all_keywords) == 0) return false;
+		
+		list($sql_where, $sql_order) = $this->getSearchSqlParams($all_keywords);
+		
 		// sql search
 		$sql = "SELECT DISTINCT cs.course_id, cs.title, cs.description, cs.created_date
 		          FROM ".TABLE_PREFIX."courses cs, ".TABLE_PREFIX."content ct, ".TABLE_PREFIX."users u
 		         WHERE cs.access='public'
 		           AND cs.course_id = ct.course_id
 		           AND cs.user_id = u.user_id
-		           AND (cs.title like '%".$keywords."%'
-		                OR cs.description like '%".$keywords."%'
-		                OR ct.keywords like '%".$keywords."%'
-		                OR ct.title like '%".$keywords."%'
-		                OR ct.text like '%".$keywords."%'
-		                OR u.first_name like '%".$keywords."%'
-		                OR u.last_name like '%".$keywords."%')";
+		           AND ".$sql_where."
+		         ORDER BY ".$sql_order;
 		
 		if ($maxResults > 0) $sql .= " LIMIT ".$start.", ".$maxResults;
-		
 		return $this->execute($sql);
 	}
 
@@ -286,5 +290,92 @@ class CoursesDAO extends DAO {
 			return false;
 	}
 
+	/**
+	 * Based on the pass-in keywords array, return the WHERE and ORDER BY part in the search SQL
+	 * @access  private
+	 * @param   $all_keywords   the array of all the keywords including "OR"
+	 * @return  the array of (sql_where, sql_order) if successful
+	 *          otherwise, return empty array
+	 * @author  Cindy Qi Li
+	 */
+	private function getSearchSqlParams($all_keywords)
+	{
+		if (!is_array($all_keywords) || count($all_keywords) == 0) return array();
+		
+		$sql_search_template = "(cs.title like '%{KEYWORD}%' ".
+		                "OR cs.description like '%{KEYWORD}%' ".
+		                "OR ct.keywords like '%{KEYWORD}%' ".
+		                "OR ct.title like '%{KEYWORD}%' ".
+		                "OR ct.text like '%{KEYWORD}%' ".
+		                "OR u.first_name like '%{KEYWORD}%' ".
+		                "OR u.last_name like '%{KEYWORD}%')";
+		$sql_order_template = " 15* ((LENGTH(cs.title) - LENGTH(REPLACE(lower(cs.title),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) + ".
+		                      " 12* ((LENGTH(cs.description) - LENGTH(REPLACE(lower(cs.description),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) + ".
+		                      " 10* ((LENGTH(u.first_name) - LENGTH(REPLACE(lower(u.first_name),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) + ".
+		                      " 10* ((LENGTH(u.last_name) - LENGTH(REPLACE(lower(u.last_name),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) + ".
+		                      " 8* ((LENGTH(ct.keywords) - LENGTH(REPLACE(lower(ct.keywords),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) + ".
+		                      " 4* ((LENGTH(ct.title) - LENGTH(REPLACE(lower(ct.title),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) + ".
+		                      " 1* ((LENGTH(ct.text) - LENGTH(REPLACE(lower(ct.text),lower('{KEYWORD}'), ''))) / LENGTH(lower('{KEYWORD}'))) ";
+		
+		// get all OR conditions
+		$found_first_or_item = false;
+		foreach ($all_keywords as $i => $keyword)
+		{
+			if ($keyword == 'OR')
+			{
+				// if the first keyword is "OR" without the leading keyword,
+				// OR, the last keyword is "OR" without the following keyword,
+				// remove this "OR"
+				if ((!isset($all_keywords[$i-1]) && !$found_first_or_item) ||
+				    !isset($all_keywords[$i+1]))
+				{
+					unset($all_keywords[$i]);
+					continue;
+				}
+				
+				// The first "OR" joins the 2 keywords around it, 
+				// the following "OR" only needs to join the keyword followed.
+				// Removed the keywords that have been pushed into OR sql from 
+				// the keywords array. 
+				if (!$found_first_or_item)
+				{
+					$found_first_or_item = true;
+					$sql_where_or .= str_replace('{KEYWORD}', $all_keywords[$i-1], $sql_search_template) .
+					                 ' OR '. 
+					                 str_replace('{KEYWORD}', $all_keywords[$i+1], $sql_search_template);
+					$sql_order_or .= str_replace('{KEYWORD}', $all_keywords[$i-1], $sql_order_template) .
+					              ' + '.
+					              str_replace('{KEYWORD}', $all_keywords[$i+1], $sql_order_template);
+					unset($all_keywords[$i-1]);  // the keyword before "OR"
+					unset($all_keywords[$i]);    // "OR"
+					unset($all_keywords[$i+1]);  // the keyword after "OR"
+				}
+				else
+				{
+					$sql_where_or .= ' OR '.str_replace('{KEYWORD}', $all_keywords[$i+1], $sql_search_template);
+					$sql_order_or .= ' + '.str_replace('{KEYWORD}', $all_keywords[$i+1], $sql_order_template);
+					unset($all_keywords[$i]);   // "OR"
+					unset($all_keywords[$i+1]); // the keyword after "OR"
+				}
+			}
+		}
+		
+		// the left-over in $all_keywords array is "AND" condition
+		if (count($all_keywords) > 0)
+		{
+			foreach ($all_keywords as $keyword)
+			{
+				$sql_where .= str_replace('{KEYWORD}', $keyword, $sql_search_template). ' AND ';
+				$sql_order .= str_replace('{KEYWORD}', $keyword, $sql_order_template). ' + ';
+			}
+		} 
+		if ($sql_where_or == '') $sql_where = substr($sql_where, 0, -5);
+		else $sql_where .= "(".$sql_where_or.")";
+		
+		if ($sql_order_or == '') $sql_order = substr($sql_order, 0, -3);
+		else $sql_order .= $sql_order_or;
+		
+		return array($sql_where, $sql_order);
+	}
 }
 ?>

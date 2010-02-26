@@ -263,6 +263,9 @@ class Utility {
 		
 		foreach($keywords as $keyword)
 		{	 
+			// skip "OR"
+			if ($keyword == 'OR') continue;
+			
 			$textLen = strlen($keyword);
 	
 			$textArray = array();
@@ -285,5 +288,23 @@ class Utility {
 		}
 		return $text;
  	}
+ 	
+	/**
+	 * This function removes all the items that are NULL or only spaces from the given array
+	 * @access public
+	 * @param  $in_array    array
+	 * @return if successful, return the array without the NULL or all-space items
+	 *         if the in_array is not an array or failed, return $in_array itself 
+	 * @author Cindy Qi Li
+	 */
+	public static function removeEmptyItemsFromArray($in_array)
+	{
+		if (!is_array($in_array)) return $in_array;
+		
+		foreach ($in_array as $key => $value)
+			if (is_null($value) || trim($value) == '') unset($in_array[$key]);
+		
+		return array_values($in_array);
+	}
 }
 ?>
