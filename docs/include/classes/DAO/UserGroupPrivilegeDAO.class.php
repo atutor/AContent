@@ -46,6 +46,29 @@ class UserGroupPrivilegeDAO extends DAO {
 	}
 
 	/**
+	 * Update an existing user group privilege record
+	 * @access  public
+	 * @param   userGroupID: user group ID
+	 *          privilegeID: privilege ID
+	 *          fieldName: the name of the table field to update
+	 *          fieldValue: the value to update
+	 * @return  true if successful
+	 *          error message array if failed; false if update db failed
+	 * @author  Cindy Qi Li
+	 */
+	public function UpdateField($userGroupID, $privilegeID, $fieldName, $fieldValue)
+	{
+		global $addslashes;
+
+		$sql = "UPDATE ".TABLE_PREFIX."user_group_privilege
+		           SET ".$fieldName."='".$addslashes($fieldValue)."'
+		         WHERE user_group_id = ".$userGroupID."
+		           AND privilege_id = ".$privilegeID;
+		
+		return $this->execute($sql);
+	}
+	
+	/**
 	 * Delete a row
 	 * @access  public
 	 * @param   userGroupID
@@ -77,6 +100,27 @@ class UserGroupPrivilegeDAO extends DAO {
 		         WHERE user_group_id = ".$userGroupID;
 
 		return $this->execute($sql);
+	}
+
+	/**
+	 * Get a row by userGroupID and privilegeID
+	 * @access  public
+	 * @param   userGroupID
+	 *          privilegeID
+	 * @return  a table row, if successful
+	 *          false, if the row is not found
+	 * @author  Cindy Qi Li
+	 */
+	public function Get($userGroupID, $privilegeID)
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."user_group_privilege
+		         WHERE user_group_id = ".$userGroupID."
+		           AND privilege_id = ".$privilegeID;
+	
+		$rows = $this->execute($sql);
+		
+		if (is_array($rows)) return $rows[0];
+		else return false;
 	}
 
 }

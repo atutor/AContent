@@ -198,10 +198,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
 }
 /***** end of initialize user instance *****/
 
-/*** 9. register pages based on user's priviledge ***/
-require_once(TR_INCLUDE_PATH.'page_constants.inc.php');
-
-/* 10. initialize course information if $course_id or $cid is set 
+/* 9. initialize course information if $course_id or $cid is set 
  * This section generates global variables: 
  * $_content_id if set, 
  * $_course_id if set or $cid is set
@@ -261,6 +258,9 @@ if ($_course_id > 0)
 	$contentManager = new ContentManager($_course_id);
 	$_sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
 }
+
+/*** 10. register pages based on user's priviledge ***/
+require_once(TR_INCLUDE_PATH.'page_constants.inc.php');
 
 /**
  * This function is used for printing variables for debugging.

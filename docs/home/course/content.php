@@ -22,7 +22,6 @@ if ($cid == 0) {
 	header('Location: '.$_base_href.'index.php');
 	exit;
 }
-
 /* show the content page */
 $content_row = $contentManager->getContentPage($cid);
 
@@ -162,7 +161,7 @@ $_custom_head .= '
 	</script>
 ';
 
-ContentUtility::saveLastCid($cid);
+if (isset($_SESSION['user_id'])) ContentUtility::saveLastCid($cid);
 
 if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));

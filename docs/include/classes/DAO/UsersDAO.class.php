@@ -170,7 +170,7 @@ class UsersDAO extends DAO {
 	                       $is_author, $organization, $phone, $address, $city,
 	                       $province, $country, $postal_code, $status)
 	{
-		global $addslashes, $msg;
+		global $addslashes;
 
 		/* email check */
 		$login = $addslashes(strtolower(trim($login)));
@@ -492,7 +492,7 @@ class UsersDAO extends DAO {
 	}
 
 	/**
-	 * Validate fields preparing for insert and update
+	 * Validates fields preparing for insert and update
 	 * @access  private
 	 * @param   $validate_type : new/update. When validating for update, don't check if the login, email, name are unique
 	 *          $user_group_id : user ID

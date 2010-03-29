@@ -428,7 +428,7 @@ class ContentUtility {
 	{
 		global $_course_id;
 		
-		if (!$content_id) return;
+		if (!$content_id || !isset($_SESSION['user_id'])) return;
 		
 		include_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 		

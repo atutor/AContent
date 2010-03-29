@@ -220,6 +220,7 @@ class CoursesDAO extends DAO {
 	 */
 	public function getSearchResult($keywords, $start=0, $maxResults=0)
 	{
+		require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 		// full-text search
 //		$sql = "SELECT DISTINCT course_id, title, description, created_date
 //		          FROM (SELECT cs.course_id as course_id, cs.title as title, cs.description as description
@@ -249,7 +250,7 @@ class CoursesDAO extends DAO {
 		           AND cs.course_id = ct.course_id
 		           AND cs.user_id = u.user_id
 		           AND ".$sql_where."
-		         ORDER BY ".$sql_order;
+		         ORDER BY ".$sql_order." DESC ";
 		
 		if ($maxResults > 0) $sql .= " LIMIT ".$start.", ".$maxResults;
 		return $this->execute($sql);

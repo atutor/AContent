@@ -55,13 +55,22 @@ else if (isset($_POST['save']))
 			                       
 		if (!$msg->containsErrors())
 		{
+			$userGroupPrivilegeDAO = new UserGroupPrivilegeDAO();
 			// add checks
 			if (is_array($_POST['add_privileges_id'])) 
 			{
-				$userGroupPrivilegeDAO = new UserGroupPrivilegeDAO();
-
 				foreach ($_POST['add_privileges_id'] as $add_priv_id)
 					$userGroupPrivilegeDAO->Create($id, $add_priv_id);
+			}
+			
+			if (is_array($_POST['user_requirement']))
+			{
+				foreach ($_POST['user_requirement'] as $priv_id => $user_requirement)
+				{
+					$user_group_priv_row = $userGroupPrivilegeDAO->Get($id, $priv_id);
+					if ($user_group_priv_row && $user_group_priv_row['user_requirement'] <> $user_requirement)
+						$userGroupPrivilegeDAO->UpdateField($id, $priv_id, 'user_requirement', $user_requirement);
+				}
 			}
 			
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

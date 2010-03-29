@@ -26,6 +26,7 @@
 if (!defined('TR_INCLUDE_PATH')) exit;
 
 require_once(TR_INCLUDE_PATH. 'classes/DAO/PrivilegesDAO.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/Utility.class.php');
 
 class Menu {
 
@@ -102,7 +103,7 @@ class Menu {
 	 */
 	private function setTopPages()
 	{
-		global $_base_path;
+		global $_base_path, $_course_id, $_content_id;
 
 		$priviledgesDAO = new PrivilegesDAO();
 
@@ -114,22 +115,33 @@ class Menu {
 		{
 			$rows = $priviledgesDAO->getPublicPrivileges();
 		}
-
 		if (is_array($rows))
 		{
 			foreach ($rows as $id => $row)
 			{
-				$this->pages[TR_NAV_TOP][] = array('url' => $_base_path.$row['link'], 'title' => _AT($row['title_var']));
-
+				// replace the required constants in link
+				$row['link'] = Utility::replaceConstants($row['link']);
+				
+				list($url, $param) = Utility::separateURLAndParam($row['link']);
+				if (Utility::authenticate($row['user_requirement'], false)) {
+					$this->pages[TR_NAV_TOP][] = array('url' => $_base_path.$row['link'], 
+				                                   'title' => _AT($row['title_var']),
+					                               'param' => $param);
+				}
+				
 				// add section pages if it has not been defined in $this->pages
-				if (!isset($this->pages[$row['link']]))
+				if (!isset($this->pages[$url]))
 				{
-					$this->pages = array_merge($this->pages, 
-				                           array($row['link'] => array('title_var'=>$row['title_var'], 'parent'=>TR_NAV_TOP)));
+				    $this->pages = array_merge($this->pages, 
+				                           array($url => array('title_var'=>$row['title_var'], 'parent'=>TR_NAV_TOP, 'param' => $param)));
+				}
+				else
+				{
+					$this->pages[$url]['param'] = $param;
 				}
 			}
 		}
-
+		
 		return true;
 	}
 
@@ -179,7 +191,7 @@ class Menu {
 	* @author  Cindy Qi Li
 	*/
 	private function setSubMenus($page) {
-		global $_base_path;
+		global $_base_path, $_course_id;
 
 		if (isset($page) && defined($page)) 
 		{
@@ -188,13 +200,16 @@ class Menu {
 		} 
 		else if (isset($this->pages[$page]['children'])) 
 		{
-			$sub_menus[] = array('url' => $_base_path . $page, 'title' => $this->getPageTitle($page));
+			$param = $this->getParam($page);
+//			$sub_menus[] = array('url' => $_base_path . $page.$param, 'title' => $this->getPageTitle($page), 'param' => $param);
 
 			foreach ($this->pages[$page]['children'] as $child) 
 			{
-				$sub_menus[] = array('url' => $_base_path . $child, 
+				$this->pages[$child]['param'] = $param;
+				$sub_menus[] = array('url' => $_base_path . $child.$param, 
 				                    'title' => $this->getPageTitle($child), 
-				                    'has_children' => isset($this->pages[$child]['children']));
+				                    'has_children' => isset($this->pages[$child]['children']),
+				                    'param' => $param);
 			}
 		} 
 		else if (isset($this->pages[$page]['parent'])) 
@@ -202,7 +217,7 @@ class Menu {
 			// no children
 			return $this->setSubMenus($this->pages[$page]['parent']);
 		}
-		
+
 		return $sub_menus;
 	}
 
@@ -373,20 +388,22 @@ class Menu {
 	{
 		global $_base_path;
 
+		// all children pages inherit URL parameter of the parent page
 		$parent_page = $this->pages[$page]['parent'];
+		$parent_page_param = $this->getParam($page);
 
 		$page_title = $this->getPageTitle($page);
 
 		if (isset($parent_page) && defined($parent_page))
 		{
-			$path[] = array('url' => $_base_path . $page, 'title' => $page_title);
+			$path[] = array('url' => $_base_path . $page.$parent_page_param, 'title' => $page_title, 'param' => $parent_page_param);
 		}
 		else if (isset($parent_page))
 		{
-			$path[] = array('url' => $_base_path . $page, 'title' => $page_title);
+			$path[] = array('url' => $_base_path . $page.$parent_page_param, 'title' => $page_title, 'param' => $parent_page_param);
 			$path = array_merge((array) $path, $this->setPath($parent_page));
 		} else {
-			$path[] = array('url' => $_base_path . $page, 'title' => $page_title);
+			$path[] = array('url' => $_base_path . $page.$parent_page_param, 'title' => $page_title, 'param' => $parent_page_param);
 		}
 
 		return $path;
@@ -403,5 +420,21 @@ class Menu {
 		return $this->path;
 	}
 	
+	/**
+	 * return "param" element of the given page or the parents of the given page
+	 * @param $page
+	 * @return "param" element value
+	 */
+	private function getParam($page)
+	{
+		if (isset($this->pages[$page]['param'])) return $this->pages[$page]['param'];
+		
+		if ($page == TR_NAV_TOP) return '';
+		
+		if (isset($this->pages[$this->pages[$page]['parent']]['param']))
+			return $this->pages[$this->pages[$page]['parent']]['param'];
+		else
+			return $this->getParam($this->pages[$page]['parent']);
+	}
 }
 ?>

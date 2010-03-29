@@ -29,6 +29,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
         <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#request_token">Request token</a></li>
         <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#authorization">Authorization</a></li>
         <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#access_token">Access token</a></li>
+        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#import">Import Common Cartridge or Content Package into Transformable</a></li>
       </ul>
     </div>
     
@@ -78,7 +79,7 @@ error=Empty+parameter+%22consumer%22.<br />
 </pre>
 <p>A fail response returns error message.</p> 
 
-<h2 id="register_consumer">Request token</h2>
+<h2 id="request_token">Request token</h2>
 
 <h3>Endpoint: </h3><p>http://server-cname/oauth/request_token.php</p>
 <h3>Parameters</h3><br />
@@ -165,9 +166,10 @@ error=Consumer+is+not+registered.<br />
 <tr>
   <th>oauth_callback</th>
   <td>Optional. The Consumer MAY specify a URL the Service Provider will use to redirect the User 
-  back to the Consumer when <a href="http://oauth.net/core/1.0#auth_step2">Obtaining User Authorization</a> 
+  back to the Consumer along with the request token when 
+  <a href="http://oauth.net/core/1.0#auth_step2">Obtaining User Authorization</a> 
   is complete. If this parameter was not given or empty, the message "User is authenticated successfully" 
-  will be displayed as success response.</td>
+  will be returned as success response.</td>
   <td>0</td>
 </tr>
 
@@ -181,8 +183,8 @@ error=Consumer+is+not+registered.<br />
 </pre>
 
 <span style="font-weight:bold">Success response</span>
-<p>Redirect the User back to the URL specified in oauth_callback. If oauth_callback is not given or empty, the message 
-"User is authenticated successfully" will be displayed.</p> 
+<p>Redirect the User back to the URL specified in oauth_callback along with the send-in request token "oauth_token". 
+If oauth_callback is not given or empty, the message "User is authenticated successfully" will be returned.</p> 
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
@@ -190,7 +192,7 @@ error=Empty+oauth+token.<br />
 </pre>
 <p>A fail response returns error message.</p> 
 
-<h2 id="register_consumer">Access token</h2>
+<h2 id="access_token">Access token</h2>
 
 <h3>Endpoint: </h3><p>http://server-cname/oauth/access_token.php</p>
 <h3>Parameters</h3><br />
@@ -264,5 +266,59 @@ oauth_token=086cbfe90b41a7fdf9&oauth_token_secret=55e2bd8454b2f75a21<br />
 error=Invalid+oauth+request+token.<br />
 </pre>
 <p>A fail response returns error message.</p> 
+<p>Note that the access token can be reused during the expire threshold is reached. Expire threshold is defined in the 
+<a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php#register_consumer">register consumer request</a>.</p>
+
+<h2 id="import">Import Common Cartridge or Content Package into Transformable</h2>
+<p>Till here, with a set of token credentials, the client is now able to import common cartridge or content package into
+Transformable as a new course. The generated course ID is returned at success. Or, an error message is returned at fail.</p>
+<h3>Endpoint: </h3><p>http://server-cname/home/ims/ims_import.php</p>
+<h3>Parameters</h3><br />
+
+<table class="data" rules="all">
+<tbody><tr>
+<th>Parameter</th><th>Description</th><th>Default value</th>
+</tr>
+
+<tr>
+  <th>oauth_token</th>
+  <td>Required. The Access Token obtained previously.</td>
+  <td>None.</td>
+</tr>
+
+<tr>
+  <th>url</th>
+  <td>Required. The URL pointing to a zip file of the common cartridge or content package.</td>
+  <td>None.</td>
+</tr>
+</tbody></table>
+<br />
+
+<h3>Example</h3><br />
+<span style="font-weight: bold">Request</span>
+<pre style="background-color:#F7F3ED;"> 
+<?php echo TR_BASE_HREF; ?>home/ims/ims_import.php?oauth_token=9941b13ebc574a62d0&
+url=http%3A%2F%2Fatutor.ca%2Fdemo%2Fmods%2F_core%2Fimscp%2Fims_export.php%3Fcid%3D0%26c%3D15%26m%3D7478785009a6629d0a5d5b5ff5850eb8<br />
+</pre>
+
+<span style="font-weight:bold">Success response</span>
+<pre style="background-color:#F7F3ED;"> 
+course_id=20<br />
+</pre>
+<p>course_id is the number ID of the newly-imported course. This ID can be used to view and download the imported course. 
+Refer to <a href="<?php echo TR_BASE_HREF;?>documentation/web_service_api.php">Web Service API</a> for details.</p> 
+
+<span style="font-weight:bold">Fail response</span>
+<pre style="background-color:#F7F3ED;"> 
+error=User+has+no+author+privilege.<br />
+error=Empty+OAuth+token.<br />
+error=Invalid+OAuth+token.<br />
+error=OAuth+token+expired.<br />
+error=Invalid+imported+file.<br />
+error=Cannot+create+import+directory.<br />
+error=IMS+manifest+file+does+not+appear+to+be+valid.<br />
+error=Error+at+parsing+IMS+manifest+file.<br />
+</pre>
+<p>A fail response returns error message. Could be any of the above.</p> 
 
 <?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -285,55 +285,8 @@ CREATE TABLE `tests` (
   `test_id` mediumint(8) unsigned NOT NULL auto_increment,
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `title` VARCHAR(255) NOT NULL ,
-  `format` tinyint(4) NOT NULL default '0',
-  `start_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `randomize_order` tinyint(4) NOT NULL default '0',
-  `num_questions` tinyint(3) unsigned NOT NULL default '0',
-  `instructions` TEXT ,
-  `content_id` mediumint(8) NOT NULL default '0',
-  `result_release` tinyint(4) unsigned NOT NULL default '0',
-  `random` tinyint(4) unsigned NOT NULL default '0',
-  `difficulty` tinyint(4) unsigned NOT NULL default '0',
-  `num_takes` tinyint(4) unsigned NOT NULL default '0',
-  `anonymous` tinyint(4) NOT NULL default '0',
-  `out_of` varchar(4) NOT NULL default '',
-  `guests` TINYINT NOT NULL DEFAULT '0',
-  `display` TINYINT NOT NULL DEFAULT '0',
   `description` TEXT,
-  `passscore` MEDIUMINT NOT NULL default '0',
-  `passpercent` MEDIUMINT NOT NULL default '0',
-  `passfeedback` TEXT,
-  `failfeedback` TEXT,
-  `show_guest_form` TINYINT(1) UNSIGNED NOT NULL default '0',
   PRIMARY KEY  (`test_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-# --------------------------------------------------------
-# Table structure for table `tests_answers`
-# since 0.1
-
-CREATE TABLE `tests_answers` (
-  `result_id` mediumint(8) unsigned NOT NULL default '0',
-  `question_id` mediumint(8) unsigned NOT NULL default '0',
-  `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `answer` TEXT ,
-  `score` varchar(5) NOT NULL default '',
-  `notes` TEXT ,
-  PRIMARY KEY  (`result_id`,`question_id`,`member_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-
-# --------------------------------------------------------
-# Table structure for table `tests_groups`
-# since 0.1
-
-CREATE TABLE `tests_groups` (
-  `test_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-  `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
-  PRIMARY KEY (`test_id`,`group_id`),
-  KEY `test_id` (`test_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
@@ -410,23 +363,6 @@ CREATE TABLE `tests_questions_categories` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # --------------------------------------------------------
-# Table structure for table `tests_results`
-# since 0.1
-
-CREATE TABLE `tests_results` (
-  `result_id` mediumint(8) unsigned NOT NULL auto_increment,
-  `test_id` mediumint(8) unsigned NOT NULL default '0',
-  `member_id` VARCHAR(10) NOT NULL default '',
-  `date_taken` TIMESTAMP NOT NULL,
-  `final_score` char(5) NOT NULL default '',
-  `status` TINYINT NOT NULL DEFAULT '0',
-  `end_time` TIMESTAMP NOT NULL ,
-  `max_pos` TINYINT UNSIGNED NOT NULL DEFAULT '0',
-  PRIMARY KEY  (`result_id`),
-  KEY `test_id` (`test_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
-# --------------------------------------------------------
 # Table structure for table `themes`
 # since 0.1
 
@@ -456,6 +392,14 @@ CREATE TABLE `users` (
   `create_date` datetime NOT NULL,
   `last_login` datetime,
   `preferences` text,
+  `is_author` tinyint(3) NOT NULL default '0',
+  `organization` varchar(100),
+  `phone` varchar(30),
+  `address` varchar(100),
+  `city` varchar(100),
+  `province` varchar(100),
+  `country` varchar(30),
+  `postal_code` varchar(10),
   PRIMARY KEY  (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -491,6 +435,7 @@ CREATE TABLE `user_groups` (
 CREATE TABLE `user_group_privilege` (
   `user_group_id` mediumint(8) unsigned NOT NULL,
   `privilege_id` mediumint(8) unsigned NOT NULL,
+  `user_requirement` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`user_group_id`, `privilege_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1074,25 +1019,29 @@ INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_da
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (4, 'language', 'Language management: Create, edit, delete, enable, disable languages.', NOW(), 'language/index.php', 40, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (5, 'translation', 'Translation: Translate all Transformable terms into other languages.', NOW(), 'translation/index.php', 50, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (6, 'updater', 'Updater: Install, create, edit updates.', NOW(), 'updater/index.php', 60, 0);
-INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (7, 'profile', 'Profile management: Edit profile, change password or email.', NOW(), 'profile/index.php', 70, 0);
+INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (7, 'manage_tests', 'Tests management: Create, edit, delete test questions and tests.', NOW(), 'tests/index.php?_course_id={COURSE_ID}', 70, 0);
+INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (8, 'my_tests', 'My Tests: Take available test and view test results.', NOW(), 'tests/my_tests.php', 80, 0);
+INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (9, 'profile', 'Profile management: Edit profile, change password or email.', NOW(), 'profile/index.php', 90, 0);
 
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (1, 'Administrator', 'Administrate users, user groups, languages and updates.', now());
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (2, 'User', 'Regular user.', now());
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (3, 'Translator', 'Translate Transformable terms into a foreign lanugage.', now());
 
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 1);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 2);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 3);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 4);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 5);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 6);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (1, 7);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (2, 1);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (2, 7);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 1);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 4);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 5);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`) VALUES (3, 7);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 1, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 2, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 3, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 4, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 5, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 6, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 9, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 1, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 7, 2);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 8, 3);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 9, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 1, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 4, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 5, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 9, 0);
 
 # insert default atutor account
 INSERT INTO `users` (`user_id`, `login`, `password`, `user_group_id`, `first_name`, `last_name`, `web_service_id`, `status`, `create_date`) VALUES (1, 'ATutor', '0cbab2aec26a53b0107487d43b1b8eb29384ad10', 2, 'ATutor', 'ATutor', '90c3cd6f656739969847f3a99ac0f3c7', 1, now());

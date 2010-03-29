@@ -112,6 +112,27 @@ function toggleToc(objId) {
 	setcookie(objId, hidelink.style.display, 1);
 }
 
+// toggle a div, for example "create user group" => "add privileges" section
+function toggleDiv(objId) {
+	var toc = document.getElementById(objId);
+	if (toc == null) return;
+
+	if (toc.style.display == 'none')
+	{
+		toc.style.display = '';
+		document.getElementById("toggle_image").src = "images/arrow-open.png";
+		document.getElementById("toggle_image").alt = "Collapse";
+		document.getElementById("toggle_image").title = "Collapse";
+	}
+	else
+	{
+		toc.style.display = 'none';
+		document.getElementById("toggle_image").src = "images/arrow-closed.png";
+		document.getElementById("toggle_image").alt = "Expand";
+		document.getElementById("toggle_image").title = "Expand";
+	}
+}
+
 // toggle content folder in side menu "content navigation"
 function toggleFolder(cid, expand_text, collapse_text)
 {

@@ -21,26 +21,39 @@ $caller_url_parts = explode('/', $_SERVER['PHP_SELF']);
 $caller_script = $caller_url_parts[count($caller_url_parts)-1];
 
 // construct the caller query string
+//if (count($_GET) > 0)
+//{
+////	$url_param = '?';
+//	$counter = 0;
+//	foreach ($_GET as $param => $value)
+//	{
+//		$counter++;
+//		if ($param == 'action' || $param == 'cid') 
+//		{
+//			$counter--;
+//			continue;
+//		}
+//		else if ($counter > 1)
+//		{
+//			$url_param .= '&';
+//		}
+//		$url_param .= $param.'='.urlencode($value);
+//	}
+//}
+
 if (count($_GET) > 0)
 {
-	$url_param = '?';
-	$counter = 0;
 	foreach ($_GET as $param => $value)
 	{
-		$counter++;
 		if ($param == 'action' || $param == 'cid') 
-		{
-			$counter--;
 			continue;
-		}
-		else if ($counter > 1)
-		{
-			$url_param .= '&';
-		}
-		$url_param .= $param.'='.$value;
+		else
+			$url_param .= $param.'='.urlencode($value).'&';
 	}
 }
-$caller_url = $caller_script. (isset($url_param) ? $url_param.'&' : '?');
+
+$caller_url = $caller_script. (isset($url_param) ? $url_param : '?');
+$url_param = substr($url_param, 0, -1);
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 
@@ -102,7 +115,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
       </li>				
 <?php } // end of foreach; ?>
     </ol>
-<?php 	print_paginator($this->curr_page_num, $num_results, '', RESULTS_PER_PAGE);?>
+<?php 	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE);?>
   </div>
 <?php } // end of if
 else {

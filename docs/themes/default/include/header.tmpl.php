@@ -53,6 +53,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * back_to_page              array('url', 'title')            the link back to the part of the current page, if needed.
  */
 
+include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 $lang_charset = "UTF-8";
 
 //Timer
@@ -118,7 +119,7 @@ $starttime = $mtime;
 		
     <div id="versioninfo">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
-        <input type="text" name="search_text" id="search_text" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="30" />
+        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="30" />
         <input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
       </form>
     </div>
@@ -154,15 +155,16 @@ foreach ($this->top_level_pages as $page) {
 -->
 	<!-- the sub navigation and guide -->
   <div id="sub-menu">
+    <div id="course-tools">
     <!-- guide -->
     <?php if (isset($this->guide)) {?>
-    <div>
-      <a href="<?php echo $this->guide; ?>" onclick="popup('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>
-    </div>
+    <!-- <div> -->
+      <a href="<?php echo $this->guide; ?>" onclick="popup('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
+    <!-- </div> -->
     <?php }?>
 
 	<?php if (isset($this->course_id) && $this->course_id > 0) {?>
-    <div id="course-tools">
+    <!--  <div id="course-tools">-->
       <?php if ($this->isAuthor) { // only for authors ?>
       <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0" />
@@ -174,19 +176,20 @@ foreach ($this->top_level_pages as $page) {
       <a href="<?php echo $this->base_path; ?>home/index.php">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0" />
       </a>
-    </div>
     <?php }?>
+    </div>
 
     <!-- the sub navigation -->
     <div id="sub-navigation">
       <?php if ($this->sub_menus): ?>
       <?php if (isset($this->back_to_page)): ?>
-      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
+      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<strong>'._AT('back_to').'</strong>'.' '.$this->back_to_page['title']; ?></a> | 
       <?php endif; ?>
 	
       <?php $num_pages = count($this->sub_menus); ?>
       <?php for ($i=0; $i<$num_pages; $i++): ?>
-      <?php if ($this->sub_menus[$i]['url'] == $this->current_page): ?>
+      <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
+      if ($sub_menu_url == $this->current_page): ?>
       <strong><?php echo $this->sub_menus[$i]['title']; ?></strong>
       <?php else: ?>
       <a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a>

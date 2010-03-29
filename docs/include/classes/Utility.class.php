@@ -220,10 +220,17 @@ class Utility {
 	* This function authenticate user privilege
 	* @access  public
 	* @param   privilege constants
+	*          $printMsg: true or false. 
+	*                     When it's true, the function prints "NO_PRIV" error msg if the user does not have $privilegeToValidate
+	*                     When it's fales, the function returns true if the user has $privilegeToValidate, or false if the user has no $privilegeToValidate
+	* @return  If the caller is oauth, echo error msg.
+	*          Otherwise, the return is based on the value of $printMsg, @see @param $printMsg
 	* @author  Cindy Qi Li
 	*/
-	public static function authenticate($privilegeToValidate) {
-		global $_current_user, $_course_id, $msg;
+	public static function authenticate($privilegeToValidate, $printMsg=true) {
+		global $_current_user, $_course_id, $msg, $oauth_import;
+		
+		if ($privilegeToValidate == '' || $privilegeToValidate == 0) return true;
 		
 		$authenticated = true; // default
 		/* make sure the user is the author of the current course */
@@ -239,14 +246,32 @@ class Utility {
 			$authenticated = false;
 		}
 		
+		if ($privilegeToValidate == TR_PRIV_IN_A_COURSE &&
+		    (!isset($_course_id) || $_course_id == 0))
+		{
+			$authenticated = false;
+		}
+		
 		if (!$authenticated)
 		{
-			$msg->addError('NO_PRIV');
-			include(TR_INCLUDE_PATH.'header.inc.php');
-			$msg->printAll(); 
-			include(TR_INCLUDE_PATH.'footer.inc.php');
-			exit;
+			if ($oauth_import)
+			{
+				echo "error=".urlencode('User has no author privilege.');
+				exit;
+			}
+			else if ($printMsg)
+			{
+				$msg->addError('NO_PRIV');
+				include(TR_INCLUDE_PATH.'header.inc.php');
+				$msg->printAll(); 
+				include(TR_INCLUDE_PATH.'footer.inc.php');
+				exit;
+			}
+			else
+				return false;
 		}
+		
+		if (!$printMsg) return true;
 	}
 	
 	/**
@@ -260,32 +285,35 @@ class Utility {
 	public static function highlightKeywords($text, $keywords)
 	{
 		if (!is_array($keywords)) return $text;
+		// remove empty and "OR" element from the keywords array
+		$keywords = array_diff($keywords, array('OR', '', NULL));
 		
-		foreach($keywords as $keyword)
-		{	 
-			// skip "OR"
-			if ($keyword == 'OR') continue;
-			
-			$textLen = strlen($keyword);
-	
-			$textArray = array();
-			$pos					= 0;
-			$count			 = 0;
-	
-			while($pos !== FALSE) {
-					$pos = stripos($text,$keyword,$pos);
-					if($pos !== FALSE) {
-							$textArray[$count]['kwic'] = substr($text,$pos,$textLen);
-							$textArray[$count++]['pos']	= $pos;
-							$pos++;
-					}
+		// strip html tags from input text
+		$text = strip_tags($text);
+		
+		$i = 0;
+		$highlight_start_tag = '<strong class="highlight">';
+		$highlight_end_tag = '</strong>';
+		
+		$strlen_highlight_start_tag = strlen($highlight_start_tag);
+		$strlen_highlight_end_tag = strlen($highlight_end_tag);
+		
+		// Read the text character one by one and highlight from the reading point
+		// This is to avoid the highlight on highlight html tags.
+		while ($i < strlen($text))
+		{
+			foreach ($keywords as $keyword)
+			{
+				if (strtolower(substr($text, $i, strlen($keyword))) == strtolower($keyword))
+				{
+					$text = substr($text, 0, $i).$highlight_start_tag.substr($text, $i, strlen($keyword)).$highlight_end_tag.substr($text, $i+strlen($keyword));
+					$i += strlen($keyword) + $strlen_highlight_start_tag + $strlen_highlight_end_tag;
+					continue 2;
+				}
 			}
-	
-			for($i=count($textArray)-1;$i>=0;$i--) {
-					$replace = '<strong class="highlight">'.$textArray[$i]['kwic'].'</strong>';
-					$text = substr_replace($text,$replace,$textArray[$i]['pos'],$textLen);
-			}
+			$i++;
 		}
+		
 		return $text;
  	}
  	
@@ -305,6 +333,36 @@ class Utility {
 			if (is_null($value) || trim($value) == '') unset($in_array[$key]);
 		
 		return array_values($in_array);
+	}
+	
+	/**
+	 * This funciton replace the reserved constants with the real values
+	 * @access public
+	 * @param $str
+	 * @return a replaced string
+	 * @author Cindy Qi Li
+	 */
+	public static function replaceConstants($str)
+	{
+		global $_course_id, $_content_id;
+		
+		return str_replace(array('{COURSE_ID}', '{CONTENT_ID}'), array($_course_id, $_content_id), $str);
+	}
+
+	/**
+	 * This funciton returns a pair of (URL, URL parameters). 
+	 * For example, if input "tests/index.php?a=1&b=2", returns array ("tests/index.php", '?a=1&b=2"');
+	 * @access public
+	 * @param $str
+	 * @return array of (URL, URL parameters)
+	 * @author Cindy Qi Li
+	 */
+	public static function separateURLAndParam($str)
+	{
+		$pos = strpos($str, '?');
+		
+		if (!$pos) return array($str, '');
+		else return array(substr($str, 0, $pos), substr($str, $pos));
 	}
 }
 ?>

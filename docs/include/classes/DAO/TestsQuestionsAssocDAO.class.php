@@ -39,31 +39,35 @@ class TestsQuestionsAssocDAO extends DAO {
 	}
 	
 	/**
-	* Delete a row
+	* Delete rows by question id
 	* @access  public
-	* @param   name
+	* @param   questionID
 	* @return  true or false
 	* @author  Cindy Qi Li
-	function Delete($name)
+	*/
+	function DeleteByQuestionID($questionID)
 	{
-	    $sql = "DELETE FROM ".TABLE_PREFIX."config 
-	             WHERE name = '".$name."'";
+	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
+	             WHERE question_id = '".$questionID."'";
 	    return $this->execute($sql);
 	}
-	*/
 	
 	/**
-	* Return a config row by name
+	* Return all associated questions of the given test
 	* @access  public
-	* @param   name
-	* @return  table rows
+	* @param   testID
+	* @return  table rows if successful. false if unsuccessful
 	* @author  Cindy Qi Li
-	function get($name)
-	{
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."config WHERE name = '".$name."'";
-	    $rows = $this->execute($sql);
-	    return $rows[0];
-	}
 	*/
+	function getByTestID($testID)
+	{
+	    $sql = "SELECT TQ.*, TQA.weight, TQA.ordering, TQA.required 
+	              FROM ".TABLE_PREFIX."tests_questions TQ 
+	             INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA 
+	             USING (question_id) 
+	             WHERE TQA.test_id=".$testID."
+	             ORDER BY TQA.ordering, TQA.question_id";
+	    return $this->execute($sql);
+	}
 }
 ?>

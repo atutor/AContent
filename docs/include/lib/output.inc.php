@@ -302,10 +302,10 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 	/**
 	* 	Transforms text based on formatting preferences.  Original $input is also changed (passed by reference).
 	*	Can be called as:
-	*	1) $output = TR_print($input, $name);
+	*	1) $output = AT_print($input, $name);
 	*	   echo $output;
 	*
-	*	2) echo TR_print($input, $name); // prefered method
+	*	2) echo AT_print($input, $name); // prefered method
 	*
 	* @access	public
 	* @param	string $input			text being transformed
@@ -317,7 +317,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 	* @see		query_bit()				in include/vitals.inc.php
 	* @author	Joel Kronenberg
 	*/
-	function TR_print($input, $name, $runtime_html = true) {
+	function AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting;
 
 		if (!isset($_field_formatting[$name])) {

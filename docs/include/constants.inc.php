@@ -59,6 +59,7 @@ define('TR_USERROLE_VIEWER', 2);
 // User privilege
 define('TR_PRIV_ISAUTHOR', 1);
 define('TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE', 2);
+define('TR_PRIV_IN_A_COURSE', 3);
 
 // course size
 define('TR_COURSESIZE_UNLIMITED',	   -1); 
@@ -68,6 +69,11 @@ define('TR_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 define('CONTENT_TYPE_CONTENT',  0);
 define('CONTENT_TYPE_FOLDER', 1);
 define('CONTENT_TYPE_WEBLINK', 2);
+
+/* ways of releasing a test */
+//define('TR_RELEASE_NEVER',		   0); // do not release 
+define('TR_RELEASE_IMMEDIATE',	   1); // release after submitted
+//define('TR_RELEASE_MARKED',		   2); // release after all q's marked
 
 define('TR_KBYTE_SIZE', 1024);
 

@@ -430,10 +430,20 @@ div#sub-navigation {
   float:left;
 }
 
+a#guide {
+  background-image: url(images/guide.jpg); 
+  background-repeat: no-repeat;
+  background-color: #e6e6e6;
+  padding: 0px 10px 2px 26px;
+/**  border: 1px solid #ccc;
+  float:right;**/
+  font-size:0.85em;
+}
+
 div#course-tools {
   float: right; 
   padding-right: 1em; 
-  text-transform: lowercase;
+  text-decoration:none;
 }
 
 div#guide {
@@ -794,16 +804,6 @@ fieldset {
   margin-bottom: 10pt;
 }
 
-a#guide {
-  background-image: url(images/guide.jpg); background-repeat: no-repeat; background-position: 0px 0px;
-  background-color: #eee;
-  padding: 2px 10px 2px 26px;
-  border: 1px solid #ccc;
-  float:right;
-  text-decoration:none;
-  font-size:0.85em;
-}
-
 div#container {
   text-align: left;
   margin: 0px auto;
@@ -876,10 +876,9 @@ ul.topnavlist li a.selected {
 fieldset.group_form{
   margin:.5em;
   border:thin #6D7B8D solid;
-     min-height: 100px;
+  min-height: 100px;
   padding:.5em;
   background-color:#F8F8F8;;
-
 }
 
 legend.group_form{

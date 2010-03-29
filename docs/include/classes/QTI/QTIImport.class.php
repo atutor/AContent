@@ -11,7 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../');
-require_once(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
+require_once(TR_INCLUDE_PATH.'../tests/classes/testQuestions.class.php');
 require_once(TR_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 

@@ -18,7 +18,9 @@ define('TR_PRIV_USER_MANAGEMENT', 3);
 define('TR_PRIV_LANGUAGE_MANAGEMENT', 4);
 define('TR_PRIV_TRANSLATION', 5);
 define('TR_PRIV_UPDATER', 6);
-define('TR_PRIV_PROFILE', 7);
+define('TR_PRIV_MANAGE_TESTS', 7);
+define('TR_PRIV_MY_TESTS', 8);
+define('TR_PRIV_PROFILE', 9);
 
 /* constants used for menu item generation. Used in class Menu (include/classes/Menu.class.php) */
 define('TR_NAV_PUBLIC', 'TR_NAV_PUBLIC');  // public menus, when no user login
@@ -26,6 +28,7 @@ define('TR_NAV_TOP', 'TR_NAV_TOP');        // top tab menus
 
 global $_current_user;
 
+include_once('classes/Utility.class.php');
 include_once('classes/DAO/PrivilegesDAO.class.php');
 $priviledgesDAO = new PrivilegesDAO();
 
@@ -39,7 +42,7 @@ else
 }
 
 foreach ($rows as $row)
-	$privs[] = $row['privilege_id'];
+	$privs[$row['privilege_id']] = $row['user_requirement'];
 
 /* initialize pages accessed by public */
 //$_pages[TR_NAV_PUBLIC] = array('index.php' => array('parent'=>TR_NAV_PUBLIC));
@@ -76,7 +79,7 @@ $_pages['documentation/web_service_api.php']['title_var'] = 'web_service_api';
 $_pages['documentation/oauth_server_api.php']['title_var'] = 'oauth_server_api';
 
 // home pages
-if (in_array(TR_PRIV_HOME, $privs))
+if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PRIV_HOME]))
 {
 	$_pages['home/index.php']['title_var'] = 'home';
 	$_pages['home/index.php']['parent']    = TR_NAV_PUBLIC;
@@ -107,7 +110,7 @@ if (in_array(TR_PRIV_HOME, $privs))
 }
 
 // system pages
-if (in_array(TR_PRIV_SYSTEM, $privs))
+if (array_key_exists(TR_PRIV_SYSTEM, $privs) && Utility::authenticate($privs[TR_PRIV_SYSTEM], false))
 {
 	$_pages['system/index.php']['title_var'] = 'system';
 	$_pages['system/index.php']['parent']    = TR_NAV_PUBLIC;
@@ -115,7 +118,7 @@ if (in_array(TR_PRIV_SYSTEM, $privs))
 }
 
 // user pages
-if (in_array(TR_PRIV_USER_MANAGEMENT, $privs))
+if (array_key_exists(TR_PRIV_USER_MANAGEMENT, $privs) && Utility::authenticate($privs[TR_PRIV_USER_MANAGEMENT], false))
 {
 	$_pages['user/index.php']['title_var'] = 'users';
 	$_pages['user/index.php']['parent']    = TR_NAV_TOP;
@@ -150,7 +153,7 @@ if (in_array(TR_PRIV_USER_MANAGEMENT, $privs))
 }
 
 // language pages
-if (in_array(TR_PRIV_LANGUAGE_MANAGEMENT, $privs))
+if (array_key_exists(TR_PRIV_LANGUAGE_MANAGEMENT, $privs) && Utility::authenticate($privs[TR_PRIV_LANGUAGE_MANAGEMENT], false))
 {
 	$_pages['language/index.php']['title_var'] = 'language';
 	$_pages['language/index.php']['parent']    = TR_NAV_TOP;
@@ -167,7 +170,7 @@ if (in_array(TR_PRIV_LANGUAGE_MANAGEMENT, $privs))
 }
 
 // translation
-if (in_array(TR_PRIV_TRANSLATION, $privs))
+if (array_key_exists(TR_PRIV_TRANSLATION, $privs) && Utility::authenticate($privs[TR_PRIV_TRANSLATION], false))
 {
 	$_pages['translation/index.php']['title_var'] = 'translation';
 	$_pages['translation/index.php']['parent']    = TR_NAV_TOP;
@@ -175,7 +178,7 @@ if (in_array(TR_PRIV_TRANSLATION, $privs))
 }
 
 // profile pages
-if (in_array(TR_PRIV_PROFILE, $privs))
+if (array_key_exists(TR_PRIV_PROFILE, $privs) && Utility::authenticate($privs[TR_PRIV_PROFILE], false))
 {
 	$_pages['profile/index.php']['title_var'] = 'profile';
 	$_pages['profile/index.php']['parent']    = TR_NAV_TOP;
@@ -194,7 +197,7 @@ if (in_array(TR_PRIV_PROFILE, $privs))
 }
 
 // updater pages
-if (in_array(TR_PRIV_UPDATER, $privs))
+if (array_key_exists(TR_PRIV_UPDATER, $privs) && Utility::authenticate($privs[TR_PRIV_UPDATER], false))
 {
 	$_pages['updater/index.php']['title_var'] = 'updater';
 	$_pages['updater/index.php']['parent']    = TR_NAV_TOP;
@@ -216,5 +219,136 @@ if (in_array(TR_PRIV_UPDATER, $privs))
 
 	$_pages['updater/patch_delete.php']['title_var'] = 'delete_update';
 	$_pages['updater/patch_delete.php']['parent']    = 'updater/index.php';
+}
+
+// "manage tests" & "my tests" pages
+if (array_key_exists(TR_PRIV_MY_TESTS, $privs) && Utility::authenticate($privs[TR_PRIV_MY_TESTS], false))
+{
+	$_pages['tests/take_test.php']['title_var'] = 'take_test';
+	$_pages['tests/take_test.php']['parent']    = 'tests/my_tests.php';
+	
+	$_pages['tests/take_test_q.php']['title_var'] = 'take_test';
+	$_pages['tests/take_test_q.php']['parent']    = 'tests/my_tests.php';
+	
+	$_pages['tests/test_intro.php']['title_var'] = 'take_test';
+	$_pages['tests/test_intro.php']['parent']    = 'tests/my_tests.php';
+
+	//student page
+	$_pages['tests/my_tests.php']['title_var'] = 'my_tests';
+	$_pages['tests/my_tests.php']['img']       = 'images/home-tests.png';
+	$_pages['tests/my_tests.php']['icon']       = 'images/home-tests_sm.png';	
+	
+	$_pages['tests/view_results.php']['title_var'] = 'view_results';
+	$_pages['tests/view_results.php']['parent']    = 'tests/my_tests.php';
+	$_pages['tests/view_results.php']['children']  = array(); // to create the "back to tests" link
+}
+
+// manage tests
+if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($privs[TR_PRIV_MANAGE_TESTS], false))
+{
+	$_pages['tests/index.php']['title_var'] = 'manage_tests';
+	$_pages['tests/index.php']['parent']    = TR_NAV_TOP;
+	$_pages['tests/index.php']['guide']     = 'TR_HELP_TESTS_SURVEYS';
+	$_pages['tests/index.php']['children']  = array('tests/create_test.php', 'tests/question_db.php', 'tests/question_cats.php');
+	
+	$_pages['tests/create_test.php']['title_var'] = 'create_test';
+	$_pages['tests/create_test.php']['parent']    = 'tests/index.php';
+	$_pages['tests/create_test.php']['guide']     = 'TR_HELP_CREATE_TEST';
+	
+	$_pages['tests/import_test.php']['title_var'] = 'import_test';
+	$_pages['tests/import_test.php']['parent']    = 'tests/index.php';
+	
+	$_pages['tests/question_import.php']['title_var'] = 'import_question';
+	$_pages['tests/question_import.php']['parent']    = 'tests/index.php';
+	
+	$_pages['tests/question_db.php']['title_var'] = 'question_database';
+	$_pages['tests/question_db.php']['parent']    = 'tests/index.php';
+	$_pages['tests/question_db.php']['guide']     = 'TR_HELP_QUESTION_DB';
+	
+	$_pages['tests/question_cats.php']['title_var'] = 'question_categories';
+	$_pages['tests/question_cats.php']['parent']    = 'tests/index.php';
+	$_pages['tests/question_cats.php']['children']  = array('tests/question_cats_manage.php');
+	$_pages['tests/question_cats.php']['guide']     = 'TR_HELP_QUESTION_CATEGORIES';
+	
+	$_pages['tests/question_cats_manage.php']['title_var'] = 'create_category';
+	$_pages['tests/question_cats_manage.php']['parent']    = 'tests/question_cats.php';
+	
+	$_pages['tests/question_cats_delete.php']['title_var'] = 'delete_category';
+	$_pages['tests/question_cats_delete.php']['parent']    = 'tests/question_cats.php';
+	
+	$_pages['tests/edit_test.php']['title_var'] = 'edit_test';
+	$_pages['tests/edit_test.php']['parent']    = 'tests/index.php';
+	$_pages['tests/edit_test.php']['guide']     = 'TR_HELP_CREATE_TEST';
+	
+	$_pages['tests/preview.php']['title_var'] = 'preview_questions';
+	$_pages['tests/preview.php']['parent']    = 'tests/index.php';
+	$_pages['tests/preview.php']['guide']     = 'TR_HELP_PREVIEW';
+	
+	$_pages['tests/preview_question.php']['title_var'] = 'preview';
+	$_pages['tests/preview_question.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/results.php']['title_var'] = 'submissions';
+	$_pages['tests/results.php']['parent']    = 'tests/index.php';
+	
+	$_pages['tests/results_all.php']['guide'] = 'TR_HELP_STUDENT_SUBMISSIONS';
+	
+	//$_pages['tests/results_all_quest.php']['title_var']  =  _AT('question')." "._AT('statistics');
+	//$_pages['tests/results_all_quest.php']['parent'] = 'tests/index.php';
+	$_pages['tests/results_all_quest.php']['guide']     = 'TR_HELP_TEST_STATISTICS';
+	
+	$_pages['tests/delete_test.php']['title_var'] = 'delete_test';
+	$_pages['tests/delete_test.php']['parent']    = 'tests/index.php';
+	
+	// test questions
+	$_pages['tests/create_question_truefalse.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_truefalse.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_multichoice.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_multichoice.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_multianswer.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_multianswer.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_long.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_long.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_likert.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_likert.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_matching.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_matching.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_matchingdd.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_matchingdd.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/create_question_ordering.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_ordering.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_truefalse.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_truefalse.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_multichoice.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_multichoice.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_multianswer.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_multianswer.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_long.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_long.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_likert.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_likert.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_matching.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_matching.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_matchingdd.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_matchingdd.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/edit_question_ordering.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_ordering.php']['parent']    = 'tests/question_db.php';
+	
+	$_pages['tests/delete_question.php']['title_var'] = 'delete';
+	$_pages['tests/delete_question.php']['parent'] = 'tests/question_db.php';
 }
 ?>

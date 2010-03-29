@@ -46,6 +46,7 @@ $current_page = $menu->getCurrentPage();
 
 $_sub_menus = $menu->getSubMenus();
 $back_to_page = $menu->getBackToPage();
+$_pages = $menu->getAllPages();   // add "param" element into $_pages items
 
 //debug($_base_path.$current_page);
 //debug($back_to_page);
