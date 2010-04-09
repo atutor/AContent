@@ -121,7 +121,6 @@ class Menu {
 			{
 				// replace the required constants in link
 				$row['link'] = Utility::replaceConstants($row['link']);
-				
 				list($url, $param) = Utility::separateURLAndParam($row['link']);
 				if (Utility::authenticate($row['user_requirement'], false)) {
 					$this->pages[TR_NAV_TOP][] = array('url' => $_base_path.$row['link'], 
@@ -169,9 +168,11 @@ class Menu {
 			// re-direct to first $_pages URL
 			foreach ($this->pages[TR_NAV_TOP] as $page)
 			{
+//				debug($_base_path.$this->current_page);debug($page);
 				if ($_base_path.$this->current_page != $page['url'])
 				{
-					header('location: '.$page['url']);
+//					debug('here');exit;
+					header('Location: '.$page['url']);
 						
 					// reset current_page after re-direction
 					$this->current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
@@ -206,7 +207,7 @@ class Menu {
 			foreach ($this->pages[$page]['children'] as $child) 
 			{
 				$this->pages[$child]['param'] = $param;
-				$sub_menus[] = array('url' => $_base_path . $child.$param, 
+				$sub_menus[] = array('url' => $this->addUrlParam($_base_path . $child, $param), 
 				                    'title' => $this->getPageTitle($child), 
 				                    'has_children' => isset($this->pages[$child]['children']),
 				                    'param' => $param);
@@ -283,6 +284,46 @@ class Menu {
 		}
 		
 		return $page_title;
+	}
+	
+	/**
+	 * Return the URL with the given parameter attached. $param can have multiple parameters.
+	 * The repetitive parameter is skipped
+	 * @access  private
+	 * @param   $url: URL, can be completed or not completed. For example: tests/index.php?a=1
+	 *          $param: URL parameters. For example: ?a=3&b=4
+	 * @return  the URL with the given parameter attached at the end. The repetitive parameter is skipped.
+	 * @author  Cindy Qi Li
+	 */
+	private function addUrlParam($url, $param)
+	{
+		// remove '?'
+		$param = str_replace('?', '', trim($param));
+		if ($param == '') return $url;
+		
+		$has_question_mark = false;
+		if (strpos($url, '?') > 0) $has_question_mark = true;
+		else $counter = 0;
+		
+		$all_params = explode('&', $param);
+		if (is_array($all_params)) {
+			foreach ($all_params as $each_param)
+			{
+				$pair = explode('=', $each_param);
+				// check if the parameter is already in the url
+				if (strpos($url, $pair[0].'=') > 0) continue;
+				else {
+					if ($has_question_mark || $counter > 0)
+						$url .= '&'.$each_param;
+					else {
+						$url .= '?'.$each_param;
+						$counter++;
+					}
+				}
+			}
+		}
+		
+		return $url;
 	}
 	
 	/**
@@ -429,7 +470,7 @@ class Menu {
 	{
 		if (isset($this->pages[$page]['param'])) return $this->pages[$page]['param'];
 		
-		if ($page == TR_NAV_TOP) return '';
+		if ($page == TR_NAV_TOP || $page == TR_NAV_PUBLIC) return '';
 		
 		if (isset($this->pages[$this->pages[$page]['parent']]['param']))
 			return $this->pages[$this->pages[$page]['parent']]['param'];

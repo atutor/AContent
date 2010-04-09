@@ -50,7 +50,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 </tfoot>
 <tbody>
 <?php foreach ($this->patch_rows as $row) { ?>
-		<tr onmousedown="document.form['m<?php echo $row['myown_patch_id']; ?>'].checked = true; rowselect(this);" onkeydown="document.form['m<?php echo $row['myown_patch_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['myown_patch_id']; ?>">
+		<tr onmousedown="document.form['m<?php echo $row['myown_patch_id']; ?>'].checked = true; trans.utility.rowselect(this);" onkeydown="document.form['m<?php echo $row['myown_patch_id']; ?>'].checked = true; trans.utility.rowselect(this);" id="r_<?php echo $row['myown_patch_id']; ?>">
 			<td width="10"><input type="radio" name="myown_patch_id" value="<?php echo $row['myown_patch_id']; ?>" id="m<?php echo $row['myown_patch_id']; ?>" <?php if ($row['myown_patch_id']==$_POST['myown_patch_id']) echo 'checked'; ?> /></td>
 			<td><label for="m<?php echo $row['myown_patch_id']; ?>"><span id="<?php echo 'system_patch_id-'.$row['myown_patch_id']; ?>" class="inlineEdits"><?php echo $row['system_patch_id']; ?></span></label></td>
 			<td><span id="<?php echo 'applied_version-'.$row['myown_patch_id']; ?>" class="inlineEdits"><?php echo $row['applied_version']; ?></span></td>

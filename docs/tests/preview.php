@@ -12,14 +12,20 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_INCLUDE_PATH.'../tests/classes/testQuestions.class.php');
+require_once(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsAssocDAO.class.php');
 
+global $_course_id;
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
-$_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
+$testsDAO = new TestsDAO();
+$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
+
+$_letters = array(_AT('a'), _AT('b'), _AT('c'), _AT('d'), _AT('e'), _AT('f'), _AT('g'), _AT('h'), _AT('i'), _AT('j'));
 
 if ($_POST['back']) {
-	header('Location: index.php');
+	header('Location: index.php?_course_id='.$_course_id);
 	exit;
 } 
 
@@ -33,74 +39,19 @@ require_once(TR_INCLUDE_PATH.'header.inc.php');
 
 $tid = intval($_GET['tid']);
 
-/* Retrieve the content_id of this test */
-$sql = "SELECT title, random, num_questions, instructions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db); 
-if (!($test_row = mysql_fetch_assoc($result))) {
+// check that the test_id is correct
+if (!($test_row = $testsDAO->get($tid))) {
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$num_questions = $test_row['num_questions'];
-$rand_err = false;
 
-if ($row['random']) {
-	/* !NOTE! this is a really awful way of randomizing questions !NOTE! */
-
-	/* Retrieve 'num_questions' question_id randomly choosed from  
-	those who are related to this content_id*/
-	$sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db); 
-	$i = 0;
-	$row2 = mysql_fetch_assoc($result);
-	/* Store all related question in cr_questions */
-	while ($row2['question_id'] != '') {
-		$cr_questions[$i] = $row2['question_id'];
-		$row2 = mysql_fetch_assoc($result);
-		$i++;
-	}
-	if ($i < $num_questions) {
-		/* this if-statement is misleading. */
-		/* one should still be able to preview a test before all its questions have been added. */
-		/* ie. preview as questions are added. */
-		/* bug # 0000615 */
-		$rand_err = true;
-	} else {
-		/* Randomly choose only 'num_question' question */
-		$random_idx = rand(0, $i-1);
-		$random_id_string = $cr_questions[$random_idx];
-		$j = 0;
-		$extracted[$j] = $random_idx;
-		$j++;
-		$num_questions--;
-		while ($num_questions > 0) {
-			$done = false;
-			while (!$done) {
-				$random_idx = rand(0, $i-1);
-				$done = true;
-				for ($k=0;$k<$j;$k++) {
-					if ($extracted[$k]== $random_idx) {
-						$done = false;
-						break;
-					}
-				}
-			}
-			$extracted[$j] = $random_idx;
-			$j++;
-			$random_id_string = $random_id_string.','.$cr_questions[$random_idx];
-			$num_questions--;
-		}
-		$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQA.question_id";
-	}
-} else {
-	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-}
-$result	= mysql_query($sql, $db);
+$rows = $testsQuestionsAssocDAO->getByTestID($tid);
 $count = 1;
-echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="preview">';
+?>
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$_course_id; ?>" name="preview">
 
-if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
-	?>
+<?php if (is_array($rows)) {?>
 	<div class="input-form" style="width:80%">
 	<div class="row"><h2><?php echo $test_row['title']; ?></h2></div>
 
@@ -113,17 +64,17 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 	<?php endif; ?>
 	
 	<?php
-	do {
+	foreach ($rows as $row) {
 		$o = TestQuestions::getQuestion($row['type']);
 		$o->display($row);
-	} while ($row = mysql_fetch_assoc($result));
+	}
 	?>
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('back'); ?>" name="back" />
 	</div>
 
 	</div>
-	</form>
+</form>
 <script type="text/javascript">
 //<!--
 function iframeSetHeight(id, height) {

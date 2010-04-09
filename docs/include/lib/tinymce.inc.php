@@ -43,7 +43,7 @@ function load_editor($simple = TRUE, $name = FALSE, $mode="textareas") {
 //insert predefined template: template
 //insert page break: pagebreak
 
-echo '<script language="javascript" type="text/javascript" src="'.TR_BASE_HREF.'include/jscripts/tiny_mce/tiny_mce.js"></script>
+echo '<script language="javascript" type="text/javascript" src="'.TR_BASE_HREF.'include/jscripts/tiny_mce/tiny_mce_src.js"></script>
 <script language="javascript" type="text/javascript">';
 
 echo 'var ATutor = ATutor || {};

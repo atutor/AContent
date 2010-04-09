@@ -21,7 +21,6 @@ if (!isset($_GET['category_id'])) {
 	// Suppress warnings
 	$_GET['category_id'] = -1;
 }
-//require_once(TR_INCLUDE_PATH.'../tests/lib/test_result_functions.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsCategoriesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
@@ -32,11 +31,9 @@ $testsQuestionsCategoriesDAO = new TestsQuestionsCategoriesDAO();
 
 $cats = array();
 if ($_GET['category_id'] >= 0) {
-	$row = $testsQuestionsCategoriesDAO->get($_GET[category_id]);
-//	$sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[category_id] ORDER BY title";
+	$category_row = $testsQuestionsCategoriesDAO->get($_GET[category_id]);
 } else {
-	$rows = $testsQuestionsCategoriesDAO->getByCourseID($_course_id);
-//	$sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
+	$category_rows = $testsQuestionsCategoriesDAO->getByCourseID($_course_id);
 }
 
 //$result	= mysql_query($sql, $db);
@@ -44,14 +41,14 @@ if ($_GET['category_id'] <= 0) {
 	$cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
 }
 
-if (is_array($rows)) {
-	foreach ($rows as $row) $cats[] = $row;
+if (is_array($category_rows)) {
+	foreach ($category_rows as $row) $cats[] = $row;
 }
-else if (isset($row)) {
-	$cats[] = $row;
+else if (isset($category_row)) {
+	$cats[] = $category_row;
 }
 
-	$cols = 3;
+$cols = 3;
 ?>
 
 	<div class="input-form" style="width:90%;">
@@ -76,7 +73,7 @@ else if (isset($row)) {
 	</div>
 
 <?php if ($tid): ?>
-	<form method="post" action="tests/add_test_questions_confirm.php" name="form">
+	<form method="post" action="tests/add_test_questions_confirm.php?_course_id=<?php echo $_course_id; ?>" name="form">
 <?php else: ?>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php endif; ?>

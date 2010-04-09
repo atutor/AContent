@@ -29,14 +29,14 @@ $oAuthServerTokensDAO = new OAuthServerTokensDAO();
 // Validation input parameters
 if ($_REQUEST['oauth_token'] == '')
 {
-	echo 'error='.urlencode('Empty oauth token.');
+	echo 'error='.urlencode('Empty oauth token');
 	exit;
 }
 
 $token_row = $oAuthServerTokensDAO->getByTokenAndType($_REQUEST['oauth_token'], 'request');
 if (!is_array($token_row))
 {
-	echo 'error='.urlencode('Invalid oauth token.');
+	echo 'error='.urlencode('Invalid oauth token');
 	exit;
 }
 

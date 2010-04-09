@@ -7,7 +7,7 @@ $compact_title = str_replace(' ', '', $this->title);
 
 <br />
 <script language="javascript" type="text/javascript">
-	printSubmenuHeader("<?php echo $this->title; ?>", "<?php echo $_base_path; ?>", "<?php echo _AT('show'); ?>", "<?php echo _AT('hide'); ?>");
+  trans.utility.printSubmenuHeader("<?php echo $this->title; ?>", "<?php echo $_base_path; ?>", "<?php echo _AT('show'); ?>", "<?php echo _AT('hide'); ?>");
 </script>
 
 <div class="box" id="menu_<?php echo $compact_title ?>">
@@ -15,7 +15,7 @@ $compact_title = str_replace(' ', '', $this->title);
 </div>
 
 <script language="javascript" type="text/javascript">
-if (getcookie("m_<?php echo $this->title; ?>") == "0")
+if (trans.utility.getcookie("m_<?php echo $this->title; ?>") == "0")
 {
 	jQuery("#menu_<?php echo $compact_title; ?>").hide();
 }

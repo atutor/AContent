@@ -39,18 +39,32 @@ class ContentTestsAssocDAO extends DAO {
 	}
 	
 	/**
-	* Delete a row
+	* Delete row by content ID
 	* @access  public
-	* @param   name
+	* @param   contentID
 	* @return  true or false
 	* @author  Cindy Qi Li
-	function Delete($name)
+	*/
+	function DeleteByContentID($contentID)
 	{
-	    $sql = "DELETE FROM ".TABLE_PREFIX."config 
-	             WHERE name = '".$name."'";
+	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
+	             WHERE content_id = ".$contentID."";
 	    return $this->execute($sql);
 	}
+	
+	/**
+	* Delete row by test ID
+	* @access  public
+	* @param   testID
+	* @return  true or false
+	* @author  Cindy Qi Li
 	*/
+	function DeleteByTestID($testID)
+	{
+	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
+	             WHERE test_id = ".$testID."";
+	    return $this->execute($sql);
+	}
 	
 	/**
 	* Return rows by content ID

@@ -58,6 +58,7 @@ if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<base href="<?php echo TR_BASE_HREF; ?>" />
 	<script src="<?php echo $_base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	<script src="<?php echo $_base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 </head>
 
 <body <?php echo $onload; ?> >
@@ -104,17 +105,17 @@ function init() {
 <script type="text/javascript">
 <!--
 function insertTo(field) {
-		if (window.opener.document.getElementById(field)) {
-			//use the following if we want to apply absolute path.	-harris.
-			//window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent({format : 'raw'});
-			window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent();
-		}
+  if (window.opener.document.getElementById(field)) {
+    //use the following if we want to apply absolute path.	-harris.
+    alert(tinyMCE.activeEditor.getContent());
+    //window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent({format : 'raw'});
+    window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent();
+  }
 }
 -->
 </script>
 
-
-<iframe src="<?php echo $_base_path; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1" name="filemanager" width="98%" height="480">
+<iframe src="<?php echo $_base_path; ?>file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>_course_id=<?php echo $_course_id; ?>" name="filemanager" width="98%" height="480">
 </iframe>
 
 </body>

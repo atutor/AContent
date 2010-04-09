@@ -20,8 +20,6 @@ global $_course_id;
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 $testsQuestionsDAO = new TestsQuestionsDAO();
 
-require_once(TR_INCLUDE_PATH.'../tests/lib/test_result_functions.inc.php');
-
 // for matching test questions
 $_letters = array(_AT('a'), _AT('b'), _AT('c'), _AT('d'), _AT('e'), _AT('f'), _AT('g'), _AT('h'), _AT('i'), _AT('j'));
 

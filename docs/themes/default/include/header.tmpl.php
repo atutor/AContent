@@ -213,7 +213,7 @@ foreach ($this->top_level_pages as $page) {
 	</div>
 
 	<?php if (isset($this->guide)) {?>
-		<a href="<?php echo $this->guide; ?>" id="guide" onclick="poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+		<a href="<?php echo $this->guide; ?>" id="guide" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
 	<?php } ?>
 </div>
 !-->
@@ -229,7 +229,7 @@ foreach ($this->top_level_pages as $page) {
     <div id="leftcolumn">
       <script type="text/javascript">
       //<![CDATA[
-      var state = getcookie("side-menu");
+      var state = trans.utility.getcookie("side-menu");
       if (state && (state == 'none')) {
           document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
       } else {
@@ -259,12 +259,12 @@ foreach ($this->top_level_pages as $page) {
         <?php if ($this->course_id > 0): ?>
         <script type="text/javascript" language="javascript">
         //<![CDATA[
-        var state = getcookie("side-menu");
+        var state = trans.utility.getcookie("side-menu");
         if (state && (state == 'none')) {
-            showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
+        	trans.utility.showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "show");
         } else {
             document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-            showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
+            trans.utility.showTocToggle("side-menu", "<?php echo _AT('show'); ?>","<?php echo _AT('hide'); ?>", "", "hide");
         }
         //]]>
         </script>

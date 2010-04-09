@@ -12,7 +12,7 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_INCLUDE_PATH.'../tests/classes/testQuestions.class.php');
+require_once(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 
 global $_course_id;

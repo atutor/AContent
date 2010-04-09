@@ -12,11 +12,14 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() and preImportCallBack and dirsize() */
-require_once(TR_INCLUDE_PATH.'../mods/imsqti/lib/qti.inc.php');
-require_once(TR_INCLUDE_PATH.'classes/pclzip.lib.php');
-//require_once(TR_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
-require_once(TR_INCLUDE_PATH.'../mods/imsqti/classes/QTIImport.class.php');
+require_once(TR_INCLUDE_PATH.'lib/pclzip.lib.php');
+require_once(TR_INCLUDE_PATH.'lib/pclzip_callback.lib.php');
+require_once(TR_INCLUDE_PATH.'lib/qti.inc.php'); 
+require_once(TR_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+
+global $_course_id;
 
 /* to avoid timing out on large files */
 @set_time_limit(0);
@@ -32,7 +35,7 @@ if (isset($_POST['submit_yes'])){
 	$overwrite = true;
 } elseif (isset($_POST['submit_no'])){
 	$msg->addFeedback('IMPORT_CANCELLED');
-	header('Location: question_db.php');
+	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 }
 
@@ -89,7 +92,7 @@ if (!$overwrite){
 		$errors = array('FILE_MAX_SIZE', ini_get('post_max_size'));
 		$msg->addError($errors);
 
-		header('Location: ./question_db.php');
+		header('Location: ./question_db.php?_course_id='.$_course_id);
 		exit;
 	} 
 
@@ -138,11 +141,7 @@ if (!$overwrite){
 }
 
 if ($msg->containsErrors()) {
-	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tile/index.php');
-	} else {
-		header('Location: question_db.php');
-	}
+	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 }
 
@@ -156,10 +155,10 @@ if (!is_dir($import_path)) {
 	}
 }
 
-$import_path .= $_SESSION['course_id'].'/';
+$import_path .= $_course_id.'/';
 if (!$overwrite){
 	if (is_dir($import_path)) {
-		clr_dir($import_path);
+		FileUtility::clr_dir($import_path);
 	}
 
 	if (!@mkdir($import_path, 0700)) {
@@ -173,39 +172,39 @@ if (!$overwrite){
 							PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
 		$msg->addError('IMPORT_FAILED');
 		echo 'Error : '.$archive->errorInfo(true);
-		clr_dir($import_path);
-		header('Location: question_db.php');
+		FileUtility::clr_dir($import_path);
+		header('Location: question_db.php?_course_id='.$_course_id);
 		exit;
 	}
 	error_reporting(TR_ERROR_REPORTING);
 }
 
 /* get the course's max_quota */
-$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$q_row	= mysql_fetch_assoc($result);
+$coursesDAO = new CoursesDAO();
+$q_row	= $coursesDAO->get($_course_id);
 
 if ($q_row['max_quota'] != TR_COURSESIZE_UNLIMITED) {
-
-	if ($q_row['max_quota'] == TR_COURSESIZE_DEFAULT) {
-		$q_row['max_quota'] = $MaxCourseSize;
+	$zip_size_limit = $MaxCourseSize;
+	
+	$totalBytes   = FileUtility::dirsize($import_path);
+	
+	$total_after  = $zip_size_limit - $totalBytes;
+	
+	if (is_dir(TR_CONTENT_DIR . $_course_id.'/')) 
+	{
+		$course_total = FileUtility::dirsize(TR_CONTENT_DIR . $_course_id.'/');
+		$total_after  -= $course_total;
 	}
-	$totalBytes   = dirsize($import_path);
-	$course_total = dirsize(TR_CONTENT_DIR . $_SESSION['course_id'].'/');
-	$total_after  = $q_row['max_quota'] - $course_total - $totalBytes + $MaxCourseFloat;
-
+	
 	if ($total_after < 0) {
 		/* remove the content dir, since there's no space for it */
 		$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/TR_KBYTE_SIZE), 2 ) );
 		$msg->addError($errors);
 		
-		clr_dir($import_path);
-
-		if (isset($_GET['tile'])) {
-			header('Location: '.$_base_path.'tile/index.php');
-		} else {
-			header('Location: question_db.php');
-		}
+		// Clean up import path and inserted course row
+		FileUtility::clr_dir($import_path);
+	
+		header('Location: question_db.php?_course_id='.$_course_id);
 		exit;
 	}
 }
@@ -219,13 +218,9 @@ if ($ims_manifest_xml === false) {
 		$msg->addError('NO_IMS_BACKUP');
 	}
 
-	clr_dir($import_path);
+	FileUtility::clr_dir($import_path);
 
-	if (isset($_GET['tile'])) {
-		header('Location: '.$_base_path.'tile/index.php');
-	} else {
-		header('Location: question_db.php');
-	}
+	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 }
 
@@ -277,8 +272,6 @@ $existing_files = isQTIFileExist($attributes);
 if (!$overwrite && !empty($existing_files)){
 	$existing_files = implode('<br/>', $existing_files);
 	require_once(TR_INCLUDE_PATH.'header.inc.php');
-//	$msg->addConfirm(array('MEDIA_FILE_EXISTED', $existing_files));
-//	$msg->printConfirm();
 	echo '<form action="" method="POST">';
 	echo '<div class="input-form">';
 	echo '<div class="row">';
@@ -305,11 +298,11 @@ $qti_import = new QTIImport($import_path);
 $qti_import->importQuestions($attributes);
 
 //debug('done');
-clr_dir(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id']);
+FileUtility::clr_dir(TR_CONTENT_DIR . 'import/'.$_course_id);
 if (!$msg->containsErrors()) {
 	$msg->addFeedback('IMPORT_SUCCEEDED');
 }
 
-header('Location: question_db.php');
+header('Location: question_db.php?_course_id='.$_course_id);
 exit;
 ?>

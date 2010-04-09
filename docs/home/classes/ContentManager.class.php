@@ -754,7 +754,7 @@ function initContentMenu() {
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				echo '
-  if (getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
+  if (trans.utility.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
   {
     jQuery("#folder"+'.$row['content_id'].').show();
     jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
@@ -781,7 +781,7 @@ function initContentMenu() {
   jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
   jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
   jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
-  setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
+  trans.utility.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
 		}
 		echo '}'; // end of javascript function initContentMenu()
@@ -1060,7 +1060,7 @@ initContentMenu();
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-//						$link .= '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
+//						$link .= '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
 						
 						$full_title = $content['title'];
 						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
@@ -1068,7 +1068,7 @@ initContentMenu();
 							$link .= '<a href="editor/edit_content_folder.php?_cid='.$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
-							$link .= '<span style="cursor:pointer" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); ">'."\n";
+							$link .= '<span style="cursor:pointer" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); ">'."\n";
 						}
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
@@ -1137,22 +1137,22 @@ initContentMenu();
 
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
-//							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
-							echo '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+//							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); " />'."\n";
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
 						if ($on) {
 //							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" />'."\n";
-							echo '<a href="javascript:void(0)" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); " />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); " />';
 							echo '</a>'."\n";
 						}
 					}
@@ -1392,128 +1392,6 @@ initContentMenu();
 				$counter++;
 			}
 		}
-	}
-
-	/* returns the timestamp of release if this page has not yet been released, or is under a page that has not been released, true otherwise */
-	/* finds the max(timestamp) of all parents and returns that, true if less than now */
-	/* Access: public */
-/* Transformable does not have content.release_date 
-	function isReleased($cid) {
-		if ($this->_menu_info[$cid]['content_parent_id'] == 0) {
-			// this $cid has no parent, so we check its release date directly
-			if ($this->_menu_info[$cid]['u_release_date'] <= time()) {	
-				// yup! it's released
-				return true;
-			} else {
-				// nope! not released
-				return $this->_menu_info[$cid]['u_release_date'];
-			}
-		}
-		// this is a sub page, need to check ALL its parents
-		$parent = $this->isReleased($this->_menu_info[$cid]['content_parent_id']); // recursion
-
-		if ($parent !== TRUE && $parent > $this->_menu_info[$cid]['u_release_date']) {
-			return $parent;
-		} else if ($this->_menu_info[$cid]['u_release_date'] <= time()) {
-			return true;
-		} else {
-			return $this->_menu_info[$cid]['u_release_date'];
-		}
-	}
-*/
-	
-	/* returns the first test_id if this page has pre-test(s) to be passed, 
-	 * or is under a page that has pre-test(s) to be passed, 
-	 * 0 if has no pre-test(s) to be passed
-	 * -1 if one of the pre-test(s) has expired, the content should not be displayed in this case
-	 * Access: public 
-	 */
-	function getPretest($cid) {
-		$this_pre_test_id = $this->getOnePretest($cid);
-		
-		if ($this->_menu_info[$cid]['content_parent_id'] == 0) {
-			// this $cid has no parent, so we check its release date directly
-			return $this_pre_test_id;
-		}
-		
-		// this is a sub page, need to check ALL its parents
-		$parent_pre_test_id = $this->getOnePretest($this->_menu_info[$cid]['content_parent_id']);
-		
-		if ($this_pre_test_id > 0 || $this_pre_test_id == -1)
-			return $this_pre_test_id;
-		else if ($parent_pre_test_id > 0 || $parent_pre_test_id == -1)
-			return $parent_pre_test_id;
-		else
-			return 0;
-	}
-
-	/* returns the first test_id if this content has pre-test(s) to be passed, 
-	 * 0 if has no pre-test(s) to be passed
-	 * -1 if one of the pre-test(s) has expired, the content should not be displayed in this case
-	 * Access: public 
-	 */
-	function getOnePretest($cid) {
-		global $db, $msg;
-		include_once(TR_INCLUDE_PATH.'../home/lib/test_result_functions.inc.php');
-		
-		$sql = "SELECT *, UNIX_TIMESTAMP(t.start_date) AS start_date, UNIX_TIMESTAMP(t.end_date) AS end_date 
-		          FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."content_prerequisites cp
-		         WHERE cp.content_id=".$cid."
-		           AND cp.type = '".CONTENT_PRE_TEST."'
-		           AND cp.item_id=t.test_id";
-		$result= mysql_query($sql, $db);
-		
-		while ($row = mysql_fetch_assoc($result))
-		{
-			// check to make sure we can access this test
-//			if (!$row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
-//				$msg->addInfo('NOT_ENROLLED');
-//			}
-			
-			if (!$row['guests'] && !authenticate_test($row['test_id'])) {
-				$msg->addInfo(array('PRETEST_NO_PRIV',$row['title']));
-			}
-			
-			// if the test is not release, not allow student to view the content
-			if ($row['start_date'] > time() || $row['end_date'] < time()) {
-				$msg->addInfo(array('PRETEST_EXPIRED',$row['title']));
-				return -1;
-			}
-			
-			$sql = "SELECT tr.result_id, count(*) num_of_questions, sum(ta.score) score, sum(tqa.weight) total_weight
-			          FROM ".TABLE_PREFIX."tests_results tr, ".TABLE_PREFIX."tests_answers ta, ".TABLE_PREFIX."tests_questions_assoc tqa 
-			         WHERE tr.test_id = ".$row['test_id']."
-			           AND tr.member_id = ".$_SESSION['user_id']."
-			           AND tr.result_id = ta.result_id
-			           AND tr.test_id = tqa.test_id
-			           AND ta.question_id = tqa.question_id
-			         GROUP BY tr.result_id";
-			$result_score = mysql_query($sql, $db);
-			
-			$num_of_attempts = 0;
-			while ($row_score = mysql_fetch_assoc($result_score))
-			{
-				// skip the test when:
-				// 1. no pass score is defined. this is a survey.
-				// 2. the student has passed the test 
-				// 3. the test has no question
-				if (($row['passscore'] == 0 && $row['passpercent'] == 0) ||
-				    $row_score['num_of_questions'] == 0 ||
-				    ($row['passscore']<>0 && $row_score['score']>=$row['passscore']) || 
-				    ($row['passpercent']<>0 && ($row_score['score']/$row_score['total_weight']*100)>=$row['passpercent']))
-				    continue 2;
-				
-				$num_of_attempts++;
-			}
-			
-			if ($row['num_takes'] != TR_TESTS_TAKE_UNLIMITED && $num_of_attempts >= $row['num_takes'])
-			{
-				$msg->addInfo(array('PRETEST_FAILED',$row['title']));
-			}
-			else
-				return $row['test_id'];
-		}
-		return 0;
 	}
 
 	/** 

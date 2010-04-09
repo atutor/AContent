@@ -30,7 +30,7 @@ class SecondaryResourcesDAO extends DAO {
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function Create($primary_resource_id, $file_name, $lang)
+	public function Create($primary_resource_id, $file_name, $lang)
 	{
 		global $addslashes;
 		
@@ -46,13 +46,30 @@ class SecondaryResourcesDAO extends DAO {
 	}
 	
 	/**
-	* Return a config row by content_id
+	* Delete rows that primary or secondary resource name is the given $resourceName
+	* @access  public
+	* @param   $resourceName: primary or secondary resource name
+	* @return  true or false
+	* @author  Cindy Qi Li
+	*/
+	function DeleteByResourceName($resourceName)
+	{
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
+		         WHERE secondary_resource = '".$resourceName."'
+		            OR primary_resource_id in (SELECT primary_resource_id
+		                     FROM ".TABLE_PREFIX."primary_resources
+		                    WHERE resource='".$resourceName."')";
+		return $this->execute($sql);
+	}
+	
+	/**
+	* Return distinct rows by content_id
 	* @access  public
 	* @param   content_id
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function getByContent($content_id)
+	public function getByContent($content_id)
 	{
 		$sql = "SELECT DISTINCT secondary_resource_id, secondary_resource FROM ".TABLE_PREFIX."primary_resources a 
 		          LEFT JOIN ".TABLE_PREFIX."secondary_resources s
@@ -61,13 +78,13 @@ class SecondaryResourcesDAO extends DAO {
 		return $this->execute($sql);
 	}
 	/**
-	* Return a config row by content_id
+	* Return rows by primary resource id
 	* @access  public
 	* @param   name
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function getByPrimaryResourceID($primary_resource_id)
+	public function getByPrimaryResourceID($primary_resource_id)
 	{
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources WHERE primary_resource_id='.$primary_resource_id;
 	    return $this->execute($sql);

@@ -17,7 +17,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthServerConsumersDAO.class.php');
 
 if (!isset($_GET['consumer']))
 {
-	echo "error=".urlencode('Empty parameter: consumer.');
+	echo "error=".urlencode('Empty parameter: consumer');
 	return;
 }
 else

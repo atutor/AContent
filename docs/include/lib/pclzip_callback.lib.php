@@ -41,4 +41,29 @@ function preImportCallBack($p_event, &$p_header) {
 	return 1;
 }
 
+/**
+* This function gets used by PclZip when extracting a zip archive.
+* @see file_manager/zip.php
+* @access  public
+* @return  int				whether or not to include the file
+* @author  Joel Kronenberg
+*/
+function preExtractCallBack($p_event, &$p_header) {
+	global $translated_file_names;
+
+	if ($p_header['folder'] == 1) {
+		return 1;
+	}
+
+	if ($translated_file_names[$p_header['index']] == '') {
+		return 0;
+	}
+
+	if ($translated_file_names[$p_header['index']]) {
+		$p_header['filename'] = substr($p_header['filename'], 0, -strlen($p_header['stored_filename']));
+		$p_header['filename'] .= $translated_file_names[$p_header['index']];
+	}
+	return 1;
+}
+
 ?>

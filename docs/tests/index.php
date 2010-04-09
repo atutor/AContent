@@ -17,34 +17,25 @@ require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 
 global $_course_id;
-
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 
 if (isset($_GET['edit'], $_GET['id'])) {
 	header('Location: edit_test.php?tid='.$_GET['id'].'&_course_id='.$_course_id);
 	exit;
 } else if (isset($_GET['preview'], $_GET['id'])) {
-	header('Location: preview.php?tid='.$_GET['id'].'_course_id='.$_course_id);
+	header('Location: preview.php?tid='.$_GET['id'].'&_course_id='.$_course_id);
 	exit;
 } else if (isset($_GET['questions'], $_GET['id'])) {
-	header('Location: questions.php?tid='.$_GET['id'].'_course_id='.$_course_id);
-	exit;
-} else if (isset($_GET['submissions'], $_GET['id'])) {
-	header('Location: results.php?tid='.$_GET['id'].'_course_id='.$_course_id);
-	exit;
-} else if (isset($_GET['statistics'], $_GET['id'])) {
-	header('Location: results_all_quest.php?tid='.$_GET['id'].'_course_id='.$_course_id);
+	header('Location: questions.php?tid='.$_GET['id'].'&_course_id='.$_course_id);
 	exit;
 } else if (isset($_GET['delete'], $_GET['id'])) {
-	header('Location: delete_test.php?tid='.$_GET['id'].'_course_id='.$_course_id);
+	header('Location: delete_test.php?tid='.$_GET['id'].'&_course_id='.$_course_id);
 	exit;
 } else if (isset($_GET['export'], $_GET['id'])){
-	header('Location: export_test.php?tid='.$_GET['id'].'_course_id='.$_course_id);
+	header('Location: export_test.php?tid='.$_GET['id'].'&_course_id='.$_course_id);
 } else if (isset($_GET['edit']) 
 		|| isset($_GET['preview']) 
 		|| isset($_GET['questions']) 
-		|| isset($_GET['submissions']) 
-		|| isset($_GET['statistics']) 
 		|| isset($_GET['delete'])
 		|| isset($_GET['export'])) {
 

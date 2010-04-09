@@ -125,30 +125,6 @@ class FileUtility {
 		return $size;
 	}
 	
-	/**
-	* This function gets used by PclZip when extracting a zip archive.
-	* @access  private
-	* @return  int				whether or not to include the file
-	* @author  Joel Kronenberg
-	*/
-	public static function preExtractCallBack($p_event, &$p_header) {
-		global $translated_file_names;
-
-		if ($p_header['folder'] == 1) {
-			return 1;
-		}
-
-		if ($translated_file_names[$p_header['index']] == '') {
-			return 0;
-		}
-
-		if ($translated_file_names[$p_header['index']]) {
-			$p_header['filename'] = substr($p_header['filename'], 0, -strlen($p_header['stored_filename']));
-			$p_header['filename'] .= $translated_file_names[$p_header['index']];
-		}
-		return 1;
-	}
-
 	/* prints the <options> out of $cats which is an array of course categories where */
 	/* $cats[parent_cat_id][] = $row */
 	public static function print_course_cats($parent_cat_id, &$cats, $cat_row, $depth=0) {
@@ -175,9 +151,9 @@ class FileUtility {
 		$abs_num_bytes = abs($num_bytes);
 	
 		if ($abs_num_bytes >= TR_KBYTE_SIZE * TR_KBYTE_SIZE) {
-			return round(bytes_to_megabytes($num_bytes), 2) .' '. _AT('mb');
+			return round(FileUtility::bytes_to_megabytes($num_bytes), 2) .' '. _AT('mb');
 		} else if ($abs_num_bytes >= TR_KBYTE_SIZE) {
-			return round(bytes_to_kilobytes($num_bytes), 2) .' '._AT('kb') ;
+			return round(FileUtility::bytes_to_kilobytes($num_bytes), 2) .' '._AT('kb') ;
 		}
 		// else:
 	
@@ -303,7 +279,7 @@ class FileUtility {
 	
 					$dir_option .= '<ul><li class="folders'.$class.'">';
 					$dir_option .= '<label><input type="radio" name="dir_name" value="'.$cur_dir.$file.'" '.$check. '/>'. $file . $here. '</label>';
-					$dir_option .= ''.display_tree($current_path,$cur_dir.$file.'/', $pathext, $ignore_children).'';
+					$dir_option .= ''.FileUtility::display_tree($current_path,$cur_dir.$file.'/', $pathext, $ignore_children).'';
 					$dir_option .= '</li></ul>';
 	
 					if (($cur_dir == $pathext) && in_array($file, $list_array)) {
@@ -321,11 +297,11 @@ class FileUtility {
 	}
 	
 	public static function course_realpath($file) {
-		if (!$_SESSION['course_id']) {
-			return FALSE;
-		}
+		global $_course_id;
 		
-		$course_path = TR_CONTENT_DIR . $_SESSION['course_id'];
+		if (!$_course_id) return FALSE;
+		
+		$course_path = TR_CONTENT_DIR . $_course_id;
 		
 		$path_parts = pathinfo($file);
 		

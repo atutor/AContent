@@ -30,7 +30,7 @@ class PrimaryResourcesDAO extends DAO {
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function Create($content_id, $file_name, $lang)
+	public function Create($content_id, $file_name, $lang)
 	{
 		global $addslashes;
 		
@@ -47,13 +47,13 @@ class PrimaryResourcesDAO extends DAO {
 	}
 	
 	/**
-	* Delete a config row
+	* Delete rows by content_id
 	* @access  public
 	* @param   content_id
 	* @return  true or false
 	* @author  Cindy Qi Li
 	*/
-	function Delete($cid)
+	public function Delete($cid)
 	{
 		$pri_resource_ids = array();
 		
@@ -86,13 +86,27 @@ class PrimaryResourcesDAO extends DAO {
 	}
 	
 	/**
+	* Delete rows that primary resource name is the given $resourceName
+	* @access  public
+	* @param   $resourceName: primary resource name
+	* @return  true or false
+	* @author  Cindy Qi Li
+	*/
+	function DeleteByResourceName($resourceName)
+	{
+		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources
+		         WHERE resource = '".$resourceName."'";
+		return $this->execute($sql);
+	}
+	
+	/**
 	* Return a config row by content_id
 	* @access  public
 	* @param   name
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function getByContent($cid)
+	public function getByContent($cid)
 	{
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$cid;
 	    return $this->execute($sql);

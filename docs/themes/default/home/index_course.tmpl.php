@@ -124,17 +124,4 @@ else {
 </fieldset>
 </div>
 
-<script type="text/javascript">
-//var Trans = Trans || {};
-//Trans.course = Trans.course || {};
-namespace('Trans.course'); 
-/**
-* Add the course into "My Courses" list
-*/
-Trans.course.addCourse = function (course_id) {
-	alert(course_id);
-	return false;
-};
-</script>
-
 <?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

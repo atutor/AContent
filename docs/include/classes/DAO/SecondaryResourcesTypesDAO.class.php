@@ -30,7 +30,7 @@ class SecondaryResourcesTypesDAO extends DAO {
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function Create($secondary_resource, $type_id)
+	public function Create($secondary_resource, $type_id)
 	{
 		$secondary_resource = intval($secondary_resource);
 		$type_id = intval($type_id);
@@ -42,13 +42,32 @@ class SecondaryResourcesTypesDAO extends DAO {
 	}
 	
 	/**
+	* Delete rows that primary or secondary resource name is the given $resourceName
+	* @access  public
+	* @param   $resourceName: primary or secondary resource name
+	* @return  true or false
+	* @author  Cindy Qi Li
+	*/
+	public function DeleteByResourceName($resourceName)
+	{
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types
+		         WHERE secondary_resource_id in (SELECT secondary_resource_id 
+		                      FROM ".TABLE_PREFIX."secondary_resources
+		                     WHERE secondary_resource = '".$resourceName."'
+		                        OR primary_resource_id in (SELECT primary_resource_id
+		                                      FROM ".TABLE_PREFIX."primary_resources
+		                                     WHERE resource='".$resourceName."'))";
+		return $this->execute($sql);
+	}
+	
+	/**
 	* Return a config row by content_id
 	* @access  public
 	* @param   name
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function getByResourceID($resource_id)
+	public function getByResourceID($resource_id)
 	{
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources_types WHERE secondary_resource_id='.$resource_id;
 	    return $this->execute($sql);

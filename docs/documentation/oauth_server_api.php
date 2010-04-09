@@ -75,7 +75,7 @@ consumer_key=8862a51faa12c1b1&consumer_secret=79d591810c803167&expire=300<br />
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
-error=Empty+parameter+%22consumer%22.<br />
+error=Empty+parameter+%22consumer%22<br />
 </pre>
 <p>A fail response returns error message.</p> 
 
@@ -143,7 +143,7 @@ oauth_token=086cbfe90b41a7fdf9&oauth_token_secret=55e2bd8454b2f75a21<br />
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
-error=Consumer+is+not+registered.<br />
+error=Consumer+is+not+registered<br />
 </pre>
 <p>A fail response returns error message.</p> 
 
@@ -188,7 +188,7 @@ If oauth_callback is not given or empty, the message "User is authenticated succ
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
-error=Empty+oauth+token.<br />
+error=Empty+oauth+token<br />
 </pre>
 <p>A fail response returns error message.</p> 
 
@@ -263,7 +263,7 @@ oauth_token=086cbfe90b41a7fdf9&oauth_token_secret=55e2bd8454b2f75a21<br />
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
-error=Invalid+oauth+request+token.<br />
+error=Invalid+oauth+request+token<br />
 </pre>
 <p>A fail response returns error message.</p> 
 <p>Note that the access token can be reused during the expire threshold is reached. Expire threshold is defined in the 
@@ -310,14 +310,14 @@ Refer to <a href="<?php echo TR_BASE_HREF;?>documentation/web_service_api.php">W
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
-error=User+has+no+author+privilege.<br />
-error=Empty+OAuth+token.<br />
-error=Invalid+OAuth+token.<br />
-error=OAuth+token+expired.<br />
-error=Invalid+imported+file.<br />
-error=Cannot+create+import+directory.<br />
-error=IMS+manifest+file+does+not+appear+to+be+valid.<br />
-error=Error+at+parsing+IMS+manifest+file.<br />
+error=User+has+no+author+privilege<br />
+error=Empty+OAuth+token<br />
+error=Invalid+OAuth+token<br />
+error=OAuth+token+expired<br />
+error=Invalid+imported+file<br />
+error=Cannot+create+import+directory<br />
+error=IMS+manifest+file+does+not+appear+to+be+valid<br />
+error=Error+at+parsing+IMS+manifest+file<br />
 </pre>
 <p>A fail response returns error message. Could be any of the above.</p> 
 

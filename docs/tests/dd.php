@@ -12,11 +12,14 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
+
+global $_course_id;
 
 if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 	$content_base_href = 'get.php/';
 } else {
-	$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
+	$content_base_href = 'content/' . $_course_id . '/';
 }
 // Verify that we may access this question
 if (!isset($_SESSION['dd_question_ids']) || !is_array($_SESSION['dd_question_ids']) || !isset($_SESSION['dd_question_ids'][$_GET['qid']])) {
@@ -30,9 +33,9 @@ if (count($_SESSION['dd_question_ids']) == 0) {
 }
 session_write_close();
 $_GET['qid'] = intval($_GET['qid']);
-$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_GET[qid]";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+
+$testQuestionsDAO = new TestsQuestionsDAO();
+$row = $testQuestionsDAO->get($_GET['qid']);
 
 $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 $_colours = array('#FF9900', '#00FF00', '#0000FF', '#F23AA3', '#9999CC', '#990026', '#0099CC', '#22C921', '#007D48', '#00248F');
@@ -51,7 +54,7 @@ for ($i=0; $i < 10; $i++) {
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>" />
 	<meta name="Generator" content="Transformable - Copyright 2010 by http://atutor.ca" />
 	<base href="<?php echo TR_BASE_HREF . $content_base_href; ?>" />
-	<script type="text/javascript" src="<?php echo TR_BASE_HREF; ?>include/jscripts/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo TR_BASE_HREF; ?>include/jscripts/infusion/InfusionAll.js"></script>
 	<script type="text/javascript" src="<?php echo TR_BASE_HREF; ?>include/jscripts/interface.js"></script>
 	<script type="text/javascript" src="<?php echo TR_BASE_HREF; ?>include/jscripts/wz_jsgraphics.js"></script>
 	<link rel="stylesheet" href="<?php echo TR_BASE_HREF; ?>themes/default/styles.css" type="text/css" />

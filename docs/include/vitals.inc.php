@@ -108,11 +108,11 @@ if (is_array($rows))
 }
 
 // define as constants. more constants are defined in include/constants.inc.php
-define('EMAIL',                     $_config['contact_email']);
-define('SITE_NAME',                 $_config['site_name']);
-$MaxFileSize       = $_config['max_file_size']; 
-$MaxCourseSize     = $_config['max_course_size'];
-$MaxFileSize       = $_config['max_file_size']; 
+define('EMAIL', $_config['contact_email']);
+define('SITE_NAME', $_config['site_name']);
+$MaxFileSize = $_config['max_file_size']; 
+$MaxCourseSize = $_config['max_course_size'];
+$MaxFileSize = $_config['max_file_size']; 
 $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 /***** end loading $_config *****/
 

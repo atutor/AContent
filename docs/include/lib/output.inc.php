@@ -166,7 +166,7 @@ function _AT() {
 	TR_DATE_UNIX_TIMESTAMP:		seconds since epoch
 	TR_DATE_INDEX_VALUE:		0-x, index into a date array
 */
-function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL_DATETIME) {	
+function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=TR_DATE_MYSQL_DATETIME) {	
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 	global $_config;
 
@@ -214,7 +214,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 								'date_dec');
 	}
 
-	if ($formTR_type == TR_DATE_INDEX_VALUE) {
+	if ($format_type == TR_DATE_INDEX_VALUE) {
 		// apply timezone offset
 		apply_timezone($timestamp);
 	
@@ -231,11 +231,11 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 
 	if ($timestamp == '') {
 		$timestamp = time();
-		$formTR_type = TR_DATE_UNIX_TIMESTAMP;
+		$format_type = TR_DATE_UNIX_TIMESTAMP;
 	}
 
 	/* convert the date to a Unix timestamp before we do anything with it */
-	if ($formTR_type == TR_DATE_MYSQL_DATETIME) {
+	if ($format_type == TR_DATE_MYSQL_DATETIME) {
 		$year	= substr($timestamp,0,4);
 		$month	= substr($timestamp,5,2);
 		$day	= substr($timestamp,8,2);
@@ -244,7 +244,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $formTR_type=TR_DATE_MYSQL
 		$sec	= substr($timestamp,17,2);
 		$timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
 
-	} else if ($formTR_type == TR_DATE_MYSQL_TIMESTAMP_14) {
+	} else if ($format_type == TR_DATE_MYSQL_TIMESTAMP_14) {
 	    $year		= substr($timestamp,0,4);
 	    $month		= substr($timestamp,4,2);
 	    $day		= substr($timestamp,6,2);

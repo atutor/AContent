@@ -29,7 +29,7 @@ if (isset($_GET['oauth_token']))
 	
 	if ($_GET['oauth_token'] == '')
 	{
-		echo "error=".urlencode('Empty OAuth token.');
+		echo "error=".urlencode('Empty OAuth token');
 		exit;
 	}
 	else
@@ -41,12 +41,12 @@ if (isset($_GET['oauth_token']))
 
 		if (!is_array($token_row))
 		{
-			echo "error=".urlencode('Invalid OAuth token.');
+			echo "error=".urlencode('Invalid OAuth token');
 			exit;
 		}
 		else if ($oAuthServerTokensDAO->isTokenExpired($_GET['oauth_token']))
 		{
-			echo "error=".urlencode('OAuth token expired.');
+			echo "error=".urlencode('OAuth token expired');
 			exit;
 		}
 		
@@ -136,7 +136,7 @@ function check_available_size($course_id)
 			header('Location: '.$_base_path.'tools/tile/index.php');
 		} 
 		else if ($oauth_import) {
-			echo "error=".urlencode('Empty OAuth token.');
+			echo "error=".urlencode('Empty OAuth token');
 		}
 		else {
 			header('Location: ../create_course.php');
@@ -827,7 +827,7 @@ if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else if ($oauth_import) {
-		echo "error=".urlencode('Invalid imported file.');
+		echo "error=".urlencode('Invalid imported file');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -859,7 +859,7 @@ if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else if ($oauth_import) {
-		echo "error=".urlencode('Cannot create import directory.');
+		echo "error=".urlencode('Cannot create import directory');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -941,7 +941,7 @@ if ($ims_manifest_xml === false) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else if ($oauth_import) {
-		echo "error=".urlencode('IMS manifest file does not appear to be valid.');
+		echo "error=".urlencode('IMS manifest file does not appear to be valid');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -1003,7 +1003,7 @@ if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
 	} else if ($oauth_import) {
-		echo "error=".urlencode('Error at parsing IMS manifest file.');
+		echo "error=".urlencode('Error at parsing IMS manifest file');
 	} else {
 		header('Location: ../create_course.php');
 	}
@@ -1422,7 +1422,7 @@ foreach ($items as $item_id => $content_info)
 					$weight = 0;
 				}
 				$new_order = $order + 1;
-				$testsQuestionsAssocDAO->Create($tid, $qid, $weight, $new_order, 0);
+				$testsQuestionsAssocDAO->Create($tid, $qid, $weight, $new_order);
 //				$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
 //						"(test_id, question_id, weight, ordering, required) " .
 //						"VALUES ($tid, $qid, $weight, $new_order, 0)";

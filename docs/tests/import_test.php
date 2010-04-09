@@ -12,9 +12,9 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_INCLUDE_PATH.'lib/qti.inc.php'); 
 require_once(TR_INCLUDE_PATH.'lib/pclzip.lib.php');
 require_once(TR_INCLUDE_PATH.'lib/pclzip_callback.lib.php');
+require_once(TR_INCLUDE_PATH.'lib/qti.inc.php'); 
 require_once(TR_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
@@ -196,29 +196,30 @@ if (!$overwrite){
 $coursesDAO = new CoursesDAO();
 $q_row	= $coursesDAO->get($_course_id);
 
-if ($q_row['max_quota'] == TR_COURSESIZE_UNLIMITED) return;
-else $zip_size_limit = $MaxCourseSize;
-
-$totalBytes   = FileUtility::dirsize($import_path);
-
-$total_after  = $zip_size_limit - $totalBytes;
-
-if (is_dir(TR_CONTENT_DIR . $course_id.'/')) 
-{
-	$course_total = FileUtility::dirsize(TR_CONTENT_DIR . $course_id.'/');
-	$total_after  -= $course_total;
-}
-
-if ($total_after < 0) {
-	/* remove the content dir, since there's no space for it */
-	$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/TR_KBYTE_SIZE), 2 ) );
-	$msg->addError($errors);
+if ($q_row['max_quota'] != TR_COURSESIZE_UNLIMITED) {
+	$zip_size_limit = $MaxCourseSize;
 	
-	// Clean up import path and inserted course row
-	FileUtility::clr_dir($import_path);
-
-	header('Location: index.php?_course_id='.$_course_id);
-	exit;
+	$totalBytes   = FileUtility::dirsize($import_path);
+	
+	$total_after  = $zip_size_limit - $totalBytes;
+	
+	if (is_dir(TR_CONTENT_DIR . $_course_id.'/')) 
+	{
+		$course_total = FileUtility::dirsize(TR_CONTENT_DIR . $_course_id.'/');
+		$total_after  -= $course_total;
+	}
+	
+	if ($total_after < 0) {
+		/* remove the content dir, since there's no space for it */
+		$errors = array('NO_CONTENT_SPACE', number_format(-1*($total_after/TR_KBYTE_SIZE), 2 ) );
+		$msg->addError($errors);
+		
+		// Clean up import path and inserted course row
+		FileUtility::clr_dir($import_path);
+	
+		header('Location: index.php?_course_id='.$_course_id);
+		exit;
+	}
 }
 
 $ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
@@ -329,7 +330,7 @@ foreach ($qids as $order=>$qid){
 //			"VALUES ($tid, $qid, $weight, $new_order, 0)";
 //	$result = mysql_query($sql, $db);
 	$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
-	$testsQuestionsAssocDAO->Create($tid, $qid, $weight, $new_order, 0);
+	$testsQuestionsAssocDAO->Create($tid, $qid, $weight, $new_order);
 }
 //debug('imported test');
 if (!$msg->containsErrors()) {

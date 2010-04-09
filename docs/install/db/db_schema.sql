@@ -346,7 +346,6 @@ CREATE TABLE `tests_questions_assoc` (
   `question_id` mediumint(8) unsigned NOT NULL default '0',
   `weight` varchar(4) NOT NULL default '',
   `ordering` mediumint(8) unsigned NOT NULL default '0',
-  `required` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`test_id`,`question_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
@@ -1019,8 +1018,8 @@ INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_da
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (4, 'language', 'Language management: Create, edit, delete, enable, disable languages.', NOW(), 'language/index.php', 40, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (5, 'translation', 'Translation: Translate all Transformable terms into other languages.', NOW(), 'translation/index.php', 50, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (6, 'updater', 'Updater: Install, create, edit updates.', NOW(), 'updater/index.php', 60, 0);
-INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (7, 'manage_tests', 'Tests management: Create, edit, delete test questions and tests.', NOW(), 'tests/index.php?_course_id={COURSE_ID}', 70, 0);
-INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (8, 'my_tests', 'My Tests: Take available test and view test results.', NOW(), 'tests/my_tests.php', 80, 0);
+INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (7, 'manage_tests', 'Tests management: Used by instructors to create, edit, delete course-related test questions and tests.', NOW(), 'tests/index.php?_course_id={COURSE_ID}', 70, 0);
+INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (8, 'file_manager', 'File Manager: Allows an instructor to upload and manage files for a course. Files can then be made available to students by linking them into content pages.', NOW(), 'file_manager/index.php?_course_id={COURSE_ID}', 80, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (9, 'profile', 'Profile management: Edit profile, change password or email.', NOW(), 'profile/index.php', 90, 0);
 
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (1, 'Administrator', 'Administrate users, user groups, languages and updates.', now());
@@ -1036,7 +1035,7 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 9, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 1, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 7, 2);
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 8, 3);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 8, 2);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 9, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 1, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 4, 0);

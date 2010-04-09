@@ -10,8 +10,26 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-/* constants to map privileges.privilege_id, used to load constant pages */
+/*******************************************************************
+ * How to add a new module
+ * 1. Add a privilege row into table "privileges";
+ * 2. Define the new privilege as a new constant in this script, 
+ *    the privilege number must be same as privileges.privilege_id.
+ *    @see below
+ * 3. define all accessible pages in the new module down below.
+ *    If the page is accessible by public, define it outside the
+ *    if statement to check user privilege. Otherwise, define inside
+ *    privilege check "if" statment.
+*******************************************************************/
 
+/* when the request is an oauth import request, this script is not loaded. 
+ Because the Utility::authenticate on the following each page section 
+ messes up the oauth user authentication. 
+*/
+global $oauth_import;
+if ($oauth_import) return;
+
+// constants to map privileges.privilege_id, used to load constant pages
 define('TR_PRIV_HOME', 1);
 define('TR_PRIV_SYSTEM', 2);
 define('TR_PRIV_USER_MANAGEMENT', 3);
@@ -19,7 +37,7 @@ define('TR_PRIV_LANGUAGE_MANAGEMENT', 4);
 define('TR_PRIV_TRANSLATION', 5);
 define('TR_PRIV_UPDATER', 6);
 define('TR_PRIV_MANAGE_TESTS', 7);
-define('TR_PRIV_MY_TESTS', 8);
+define('TR_PRIV_FILE_MANAGER', 8);
 define('TR_PRIV_PROFILE', 9);
 
 /* constants used for menu item generation. Used in class Menu (include/classes/Menu.class.php) */
@@ -221,28 +239,6 @@ if (array_key_exists(TR_PRIV_UPDATER, $privs) && Utility::authenticate($privs[TR
 	$_pages['updater/patch_delete.php']['parent']    = 'updater/index.php';
 }
 
-// "manage tests" & "my tests" pages
-if (array_key_exists(TR_PRIV_MY_TESTS, $privs) && Utility::authenticate($privs[TR_PRIV_MY_TESTS], false))
-{
-	$_pages['tests/take_test.php']['title_var'] = 'take_test';
-	$_pages['tests/take_test.php']['parent']    = 'tests/my_tests.php';
-	
-	$_pages['tests/take_test_q.php']['title_var'] = 'take_test';
-	$_pages['tests/take_test_q.php']['parent']    = 'tests/my_tests.php';
-	
-	$_pages['tests/test_intro.php']['title_var'] = 'take_test';
-	$_pages['tests/test_intro.php']['parent']    = 'tests/my_tests.php';
-
-	//student page
-	$_pages['tests/my_tests.php']['title_var'] = 'my_tests';
-	$_pages['tests/my_tests.php']['img']       = 'images/home-tests.png';
-	$_pages['tests/my_tests.php']['icon']       = 'images/home-tests_sm.png';	
-	
-	$_pages['tests/view_results.php']['title_var'] = 'view_results';
-	$_pages['tests/view_results.php']['parent']    = 'tests/my_tests.php';
-	$_pages['tests/view_results.php']['children']  = array(); // to create the "back to tests" link
-}
-
 // manage tests
 if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($privs[TR_PRIV_MANAGE_TESTS], false))
 {
@@ -350,5 +346,32 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	
 	$_pages['tests/delete_question.php']['title_var'] = 'delete';
 	$_pages['tests/delete_question.php']['parent'] = 'tests/question_db.php';
+}
+
+// file manager
+if (array_key_exists(TR_PRIV_FILE_MANAGER, $privs) && Utility::authenticate($privs[TR_PRIV_FILE_MANAGER], false))
+{
+	$_pages['file_manager/index.php']['title_var'] = 'file_manager';
+	$_pages['file_manager/index.php']['parent']    = TR_NAV_TOP;
+	$_pages['file_manager/index.php']['guide']     = 'instructor/?p=file_manager.php';
+	$_pages['file_manager/index.php']['children']  = array('file_manager/new.php');
+	
+	$_pages['file_manager/new.php']['title_var'] = 'create_new_file';
+	$_pages['file_manager/new.php']['parent']    = 'file_manager/index.php';
+	
+	$_pages['file_manager/zip.php']['title_var'] = 'zip_file_manager';
+	$_pages['file_manager/zip.php']['parent']    = 'file_manager/index.php';
+	
+	$_pages['file_manager/rename.php']['title_var'] = 'rename';
+	$_pages['file_manager/rename.php']['parent']    = 'file_manager/index.php';
+	
+	$_pages['file_manager/move.php']['title_var'] = 'move';
+	$_pages['file_manager/move.php']['parent']    = 'file_manager/index.php';
+	
+	$_pages['file_manager/edit.php']['title_var'] = 'edit';
+	$_pages['file_manager/edit.php']['parent']    = 'file_manager/index.php';
+	
+	$_pages['file_manager/delete.php']['title_var'] = 'delete';
+	$_pages['file_manager/delete.php']['parent']    = 'file_manager/index.php';
 }
 ?>

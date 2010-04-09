@@ -12,6 +12,7 @@
 
 global $savant;
 global $_base_path, $_course_id;
+global $framed, $popup;
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
@@ -28,5 +29,10 @@ $savant->assign('course_id', $_course_id);
 $savant->assign('base_path', $_base_path);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
-$savant->display('include/footer.tmpl.php');
+if ($framed || $popup) {
+	$savant->display('include/fm_footer.tmpl.php');
+}
+else {
+	$savant->display('include/footer.tmpl.php');
+}
 ?>

@@ -14,69 +14,51 @@ $page = 'tests';
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+
+global $_course_id;
 
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 	
-	if (isset($_POST['submit_no'])) {
-		$msg->addFeedback('CANCELLED');
-		header('Location: index.php');
-		exit;
-	} else if (isset($_POST['submit_yes'])) {
-		
-		$tid = intval($_POST['tid']);
+$testsDAO = new TestsDAO();
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
+if (isset($_POST['submit_no'])) {
+	$msg->addFeedback('CANCELLED');
+	header('Location: index.php?_course_id='.$_course_id);
+	exit;
+} else if (isset($_POST['submit_yes'])) {
+	
+	$tid = intval($_POST['tid']);
 
-		if (mysql_affected_rows($db) == 1) {
-			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-			$result	= mysql_query($sql, $db);
+	if ($testsDAO->Delete($tid)) {
+		$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
+		$testsQuestionsAssocDAO->DeleteByTestID($tid);
 
-			//delete test content association as well
-			$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE test_id=$tid";
-			$result = mysql_query($sql, $db);
+		//delete test content association as well
+		$contentTestsAssocDAO = new ContentTestsAssocDAO();
+		$contentTestsAssocDAO->DeleteByTestID($tid);
+	}
 
-			/* it has to delete the results as well... */
-			$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
-			$result	= mysql_query($sql, $db);
-			if ($row = mysql_fetch_array($result)) {
-				$result_list = '('.$row['result_id'];
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	header('Location: '.TR_BASE_HREF.'tests/index.php?_course_id='.$_course_id);
+	exit;
 
-				while ($row = mysql_fetch_array($result)) {
-					$result_list .= ','.$row['result_id'];
-				}
-				$result_list .= ')';
-			}
+} /* else: */
 
-			if ($result_list != '') {
-				$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id IN $result_list";
-				$result	= mysql_query($sql, $db);
+require_once(TR_INCLUDE_PATH.'header.inc.php');
 
+$_GET['tid'] = intval($_GET['tid']);
 
-				$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
-				$result	= mysql_query($sql, $db);
-			}
-		}
+$row = $testsDAO->get($_GET['tid']);
 
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.TR_BASE_HREF.'tests/index.php');
-		exit;
+unset($hidden_vars);
+$hidden_vars['tid'] = $_GET['tid'];
+$hidden_vars['_course_id'] = $_course_id;
 
-	} /* else: */
+$msg->addConfirm(array('DELETE_TEST', $row['title']), $hidden_vars);
+$msg->printConfirm();
 
-	require_once(TR_INCLUDE_PATH.'header.inc.php');
-
-	$_GET['tid'] = intval($_GET['tid']);
-
-	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid] AND course_id=$_SESSION[course_id]";
-	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
-
-	unset($hidden_vars);
-	$hidden_vars['tid'] = $_GET['tid'];
-
-	$msg->addConfirm(array('DELETE_TEST', $row['title']), $hidden_vars);
-	$msg->printConfirm();
-
-	require_once(TR_INCLUDE_PATH.'footer.inc.php');
+require_once(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

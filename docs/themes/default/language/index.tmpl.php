@@ -44,8 +44,8 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 <tbody>
 <?php foreach ($this->rows as $row) {?>
-  	<tr onmousedown="document.form1['m<?php echo $row["language_code"]."_".$row["charset"]; ?>'].checked = true; rowselect(this);" 
-	    onkeydown="document.form1['m<?php echo $row["language_code"]."_".$row["charset"]; ?>'].checked = true; rowselect(this);"
+  	<tr onmousedown="document.form1['m<?php echo $row["language_code"]."_".$row["charset"]; ?>'].checked = true; trans.utility.rowselect(this);" 
+	    onkeydown="document.form1['m<?php echo $row["language_code"]."_".$row["charset"]; ?>'].checked = true; trans.utility.rowselect(this);"
 	    id="r_<?php echo $row["language_code"]."_".$row["charset"]; ?>">
  		<td><input type="radio" name="id" value="<?php echo $row["language_code"]."_".$row["charset"]; ?>" id="m<?php echo $row['language_code']."_".$row["charset"]; ?>" 
 		           onmouseup="this.checked=!this.checked" onkeyup="this.checked=!this.checked" /></td>

@@ -11,7 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../');
-require_once(TR_INCLUDE_PATH.'../tests/classes/testQuestions.class.php');
+require_once(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
 require_once(TR_INCLUDE_PATH.'classes/QTI/QTIParser.class.php');	
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 
@@ -197,123 +197,12 @@ class QTIImport {
 	 * @return	int		test id
 	 */
 	function importTest($title='') {
-		global $msg, $db;
-
-		$missing_fields				= array();
-		$test_obj['title']			= ($title=='')?$this->title:$title;
-		$test_obj['description']	= '';
-		$test_obj['num_questions']	= 0;
-		$test_obj['num_takes']		= 0;
-		$test_obj['content_id']		= 0;
-		$test_obj['passpercent']	= 0;
-		$test_obj['passscore']		= 0;
-		$test_obj['passfeedback']	= 0;
-		$test_obj['failfeedback']	= 0;
-		$test_obj['num_takes']		= 0;
-		$test_obj['anonymous']		= 0;
-		$test_obj['allow_guests']	= $_POST['allow_guests'] ? 1 : 0;
-		$test_obj['instructions']	= '';
-		$test_obj['display']		= 0;
-		$test_obj['result_release']	= 0;
-		$test_obj['random']			= 0;
-
-		// currently these options are ignored for tests:
-		$test_obj['format']			= intval($test_obj['format']);
-		$test_obj['order']			= 1;  //intval($test_obj['order']);
-		$test_obj['difficulty']		= 0;  //intval($test_obj['difficulty']); 	/* avman */
-			
-		//Title of the test is empty, could be from question database export or some other system's export.
-		//Either prompt for a title, or generate a random title
-		if ($test_obj['title'] == '') {
-			if ($this->title != '') {
-				$test_obj['title'] = $this->title;
-			} else {
-				//set marks to 0 if no title? 
-				$this->weights = array();
-			}
-		}
-
-		$day_start	= intval(date('j'));
-		$month_start= intval(date('n'));
-		$year_start	= intval(date('Y'));
-		$hour_start	= intval(date('G'));
-		$min_start	= intval(date('i'));
-
-		$day_end	= $day_start;
-		$month_end	= $month_start;
-		$year_end	= $year_start;	//as of Oct 21,09. Check http://www.atutor.ca/atutor/mantis/view.php?id=3961
-		$hour_end	= $hour_start;
-		$min_end	= $min_start;
-
-		if (!checkdate($month_start, $day_start, $year_start)) {
-			$msg->addError('START_DATE_INVALID');
-		}
-
-		if (!checkdate($month_end, $day_end, $year_end)) {
-			$msg->addError('END_DATE_INVALID');
-		}
-
-		if (mktime($hour_end,   $min_end,   0, $month_end,   $day_end,   $year_end) < 
-			mktime($hour_start, $min_start, 0, $month_start, $day_start, $year_start)) {
-				$msg->addError('END_DATE_INVALID');
-		}
-
-		if (!$msg->containsErrors()) {
-			if (strlen($month_start) == 1){
-				$month_start = "0$month_start";
-			}
-			if (strlen($day_start) == 1){
-				$day_start = "0$day_start";
-			}
-			if (strlen($hour_start) == 1){
-				$hour_start = "0$hour_start";
-			}
-			if (strlen($min_start) == 1){
-				$min_start = "0$min_start";
-			}
-
-			if (strlen($month_end) == 1){
-				$month_end = "0$month_end";
-			}
-			if (strlen($day_end) == 1){
-				$day_end = "0$day_end";
-			}
-			if (strlen($hour_end) == 1){
-				$hour_end = "0$hour_end";
-			}
-			if (strlen($min_end) == 1){
-				$min_end = "0$min_end";
-			}
-
-			$start_date = "$year_start-$month_start-$day_start $hour_start:$min_start:00";
-			$end_date	= "$year_end-$month_end-$day_end $hour_end:$min_end:00";
-
-			//If title exceeded database defined length, truncate it.
-			$test_obj['title'] = validate_length($test_obj['title'], 100);
-			
-			$testsDAO = new TestsDAO();
-			$tid = $testsDAO->Create(	$_SESSION['course_id'], 
-									$test_obj['title'], 
-									$test_obj['description'], 
-									$test_obj['format'], 
-									$start_date, 
-									$end_date, 
-									$test_obj['order'], 
-									$test_obj['num_questions'], 
-									$test_obj['instructions'], 
-									$test_obj['content_id'], 
-									$test_obj['passscore'], 
-									$test_obj['passpercent'], 
-									$test_obj['passfeedback'], 
-									$test_obj['failfeedback'], 
-									$test_obj['result_release'], 
-									$test_obj['random'], 
-									$test_obj['difficulty'], 
-									$test_obj['num_takes'], 
-									$test_obj['anonymous'], 
-									'', 
-									$test_obj['allow_guests'], 
-									$test_obj['display']);
+		global $_course_id;
+		
+		$testsDAO = new TestsDAO();
+		$tid = $testsDAO->Create($_course_id, 
+								$this->title, 
+								$test_obj['description']);
 
 //			$sql_params = array (	$_SESSION['course_id'], 
 //									$test_obj['title'], 
@@ -342,7 +231,6 @@ class QTIImport {
 //			$result = mysql_query($sql, $db);
 //			$tid = mysql_insert_id($db);
 		//debug($qti_import->weights, 'weights');			
-		}
 		return $tid;
 	}
 

@@ -26,6 +26,7 @@ global $_custom_css;
 global $_custom_head;
 global $_base_path;
 global $_pages;
+global $framed, $popup;
 global $_current_user, $_course_id, $_sequence_links;
 global $validate_content;
 global $contentManager;
@@ -100,7 +101,7 @@ if (isset($course_base_href) || isset($content_base_href)) {
 $savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
-$savant->assign('base_path', TR_BASE_HREF);
+$savant->assign('base_path', $_base_path);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
@@ -128,6 +129,14 @@ $savant->assign('custom_css', $custom_css);
 if ($onload) $savant->assign('onload', $onload);
 $savant->assign('course_id', $_course_id);
 
-$savant->display('include/header.tmpl.php');
+if ($framed || $popup) {
+    $savant->assign('framed', 1);
+    $savant->assign('popup', 1);
+
+	$savant->display('include/fm_header.tmpl.php');
+
+} else {
+    $savant->display('include/header.tmpl.php');
+}
 
 ?>

@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-require_once(TR_INCLUDE_PATH.'../tests/lib/test_question_queries.inc.php');
+require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 
 /*
  * Steps to follow when adding a new question type:
@@ -138,12 +138,8 @@ function test_question_qti_export_v2p1($question_ids) {
 
 	asort($question_ids);
 
-//	$question_ids_delim = implode(',',$question_ids);
 	$testsQuestionsDAO = new TestsQuestionsDAO();
 	$rows = $testsQuestionsDAO->getByQuestionIDs($question_ids);
-//	$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-//	$result = mysql_query($sql, $db);
-//	while ($row = mysql_fetch_assoc($result)) {
 	if (is_array($rows)) {
 		foreach ($rows as $row) {
 			$obj = TestQuestions::getQuestion($row['type']);
@@ -215,11 +211,6 @@ function test_question_qti_export($question_ids) {
 
 	asort($question_ids);
 
-//	$question_ids_delim = implode(',',$question_ids);
-
-//	$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-//	$result = mysql_query($sql, $db);
-//	while ($row = mysql_fetch_assoc($result)) {
 	$testsQuestionsDAO = new TestsQuestionsDAO();
 	$rows = $testsQuestionsDAO->getByQuestionIDs($question_ids);
 	if (is_array($rows)) {
@@ -745,7 +736,8 @@ class OrderingQuestion extends AbstractTestQuestion {
 	function importQTI($_POST){
 		global $_course_id;
 		
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 		global $msg, $db;
 		
 		if ($_POST['question'] == ''){
@@ -773,7 +765,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 				 * Db defined it to be 255 length, chop strings off it it's less than that
 				 * @harris
 				 */
-				$_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
+				$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
 				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 
 				if ($_POST['choice'][$i] != '') {
@@ -873,7 +865,7 @@ class TruefalseQuestion extends AbstracttestQuestion {
 
 	//QTI Import True/False Question
 	function importQTI($_POST){
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		global $msg, $db, $_course_id;
 
 		if ($_POST['question'] == ''){
@@ -973,7 +965,7 @@ class LikertQuestion extends AbstracttestQuestion {
 
 	//QTI Import Likert Question
 	function importQTI($_POST){
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		global $msg, $db, $_course_id;
 //		$_POST = $this->_POST; 
 
@@ -1085,7 +1077,7 @@ class LongQuestion extends AbstracttestQuestion {
 
 	//QTI Import Open end/long Question
 	function importQTI($_POST){
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		global $msg, $db, $_course_id;
 //		$_POST = $this->_POST; 
 
@@ -1244,7 +1236,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 	//QTI Import Matching Question
 	function importQTI($_POST){
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		global $msg, $db, $_course_id;
 //		$_POST = $this->_POST; 
 
@@ -1311,8 +1303,6 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 			$sql = vsprintf(TR_SQL_QUESTION_MATCHINGDD, $sql_params);
 
-//			$result	= mysql_query($sql, $db);
-//			if ($result==true){
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
 				return mysql_insert_id();
@@ -1417,7 +1407,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 
 	//QTI Import Multiple Choice Question
 	function importQTI($_POST){
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		global $msg, $db, $_course_id;
 //		$_POST = $this->_POST; 
 		if ($_POST['question'] == ''){
@@ -1516,7 +1506,8 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
 	//QTI Import multianswer Question
 	function importQTI($_POST){
-		require_once(TR_INCLUDE.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 		global $msg, $db, $_course_id;
 //		$_POST = $this->_POST; 
 
@@ -1533,7 +1524,7 @@ class MultianswerQuestion extends MultichoiceQuestion {
 			$answer_new = array(); // stores the associated "answer" for the choices
 
 			foreach ($_POST['choice'] as $choiceNum=>$choiceOpt) {
-				$choiceOpt = validate_length($choiceOpt, 255);
+				$choiceOpt = Utility::validateLength($choiceOpt, 255);
 				$choiceOpt = trim($choiceOpt);
 				$_POST['answer'][$choiceNum] = intval($_POST['answer'][$choiceNum]);
 				if ($choiceOpt == '') {

@@ -58,7 +58,7 @@
 	<tbody>
 
 	<?php foreach ($this->rows as $row) { ?>
-		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
+		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;trans.utility.rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
 			<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
 			<td><?php echo $row['description']; ?></td>

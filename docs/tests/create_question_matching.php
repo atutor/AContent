@@ -12,14 +12,13 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_INCLUDE_PATH.'../tests/lib/test_question_queries.inc.php');
+require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 
 global $_course_id;
 
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
-require_once(TR_INCLUDE_PATH.'../tests/lib/test_result_functions.inc.php');
 $testsQuestionsDAO = new TestsQuestionsDAO();
 
 if (isset($_POST['cancel'])) {

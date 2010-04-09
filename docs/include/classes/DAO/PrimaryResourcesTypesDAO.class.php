@@ -30,7 +30,7 @@ class PrimaryResourcesTypesDAO extends DAO {
 	* @return  true, if successful; false, otherwise
 	* @author  Cindy Qi Li
 	*/
-	function Create($primary_resource_id, $type_id)
+	public function Create($primary_resource_id, $type_id)
 	{
 		$primary_resource_id= intval($primary_resource_id);
 		$type_id = intval($type_id);
@@ -42,13 +42,29 @@ class PrimaryResourcesTypesDAO extends DAO {
 	}
 	
 	/**
+	* Delete rows that primary resource name is the given $resourceName
+	* @access  public
+	* @param   $resourceName: primary resource name
+	* @return  true or false
+	* @author  Cindy Qi Li
+	*/
+	function DeleteByResourceName($resourceName)
+	{
+		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
+		         WHERE primary_resource_id in (SELECT primary_resource_id 
+		                      FROM ".TABLE_PREFIX."primary_resources
+		                     WHERE resource = '".$resourceName."')";
+		return $this->execute($sql);
+	}
+	
+	/**
 	* Return a config row by content_id
 	* @access  public
 	* @param   name
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function getByResourceID($resource_id)
+	public function getByResourceID($resource_id)
 	{
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources_types WHERE primary_resource_id='.$resource_id;
 	    return $this->execute($sql);

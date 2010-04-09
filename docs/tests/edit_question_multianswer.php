@@ -20,8 +20,6 @@ global $_course_id;
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 $testsQuestionsDAO = new TestsQuestionsDAO();
 
-require_once(TR_INCLUDE_PATH.'../tests/lib/test_result_functions.inc.php');
-
 $qid = intval($_GET['qid']);
 if ($qid == 0){
 	$qid = intval($_POST['qid']);
