@@ -17,6 +17,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <div id="editable_table">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form1">
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT("language"); ?></legend>
 <h2 align="center"><?php echo $this->title ;?></h2>
 
 <table class="data" rules="rows">
@@ -58,22 +59,20 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <?php }?>
 </tbody>
 
-</table>
+</table><br />
+<small class="data-table-tip"><?php echo _AT('inline_editor_tip'); ?></small>
+</fieldset>
 </form>
 </div>
 <br /><br />
 
 <form name="import_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-<div class="input-form">
-	<div class="row">
-		<h2><label for="file"><?php echo _AT('import_a_new_lang') ;?></label></h2>
-	</div>
-	
-	<div class="row">
-		<input type="file" name="file" id="file" size="50"/>
-		<input type="submit" name="import" value="<?php echo _AT('import'); ?>" onclick="javascript: return validate_filename(); " />
-	</div>
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT("import_a_new_lang"); ?></legend>
+<div id="container">
+	<input type="file" name="file" id="file" size="50"/>
+	<input type="submit" name="import" value="<?php echo _AT('import'); ?>" onclick="javascript: return validate_filename(); " />
 </div>
+</fieldset>
 </form>
 
 <script type="text/javascript">

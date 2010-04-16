@@ -70,7 +70,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 </form>
 </div>
 	
-<div id="output_div" class="output-form">
+<div id="output_div" class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("users"); ?></legend>
 <?php print_paginator($this->page, $this->num_results, $this->page_string . htmlspecialchars(SEP) . $this->order .'='. $this->col, $this->results_per_page); ?>
 
@@ -79,7 +79,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="search" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 <input type="hidden" name="include" value="<?php echo htmlspecialchars($_GET['include']); ?>" />
 
-<table summary="Edit, change passwords, or delete users" class="data" rules="rows" id="editable_table">
+<table summary="<?php echo _AT('user_table_summary'); ?>" class="data" rules="rows" id="editable_table">
 <colgroup>
 	<?php if ($this->col == 'login'): ?>
 		<col />
@@ -168,7 +168,9 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		<td colspan="<?php echo 8 + $this->col_counts; ?>"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
-</table>
+</table><br />
+<small class="data-table-tip"><?php echo _AT('inline_editor_tip'); ?></small>
+
 </form>
 </fieldset>
 </div>

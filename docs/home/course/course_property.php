@@ -28,6 +28,7 @@ if (isset($_POST['cancel'])) {
 }
 else if($_POST['submit']){
 	$coursesDAO->UpdateField($_course_id, 'title', $_POST['title']);
+	$coursesDAO->UpdateField($_course_id, 'category_id', $_POST['category_id']);
 	$coursesDAO->UpdateField($_course_id, 'primary_language', $_POST['pri_lang']);
 	$coursesDAO->UpdateField($_course_id, 'description', $_POST['description']);
 	$coursesDAO->UpdateField($_course_id, 'copyright', $_POST['copyright']);

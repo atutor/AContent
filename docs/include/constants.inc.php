@@ -65,6 +65,9 @@ define('TR_PRIV_IN_A_COURSE', 3);
 define('TR_COURSESIZE_UNLIMITED',	   -1); 
 define('TR_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 
+// course category
+define('TR_COURSECATEGORY_UNCATEGORIZED',   0); 
+
 // content type
 define('CONTENT_TYPE_CONTENT',  0);
 define('CONTENT_TYPE_FOLDER', 1);

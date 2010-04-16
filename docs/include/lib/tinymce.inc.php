@@ -13,12 +13,12 @@
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 function load_editor($simple = TRUE, $name = FALSE, $mode="textareas") {
-	global $_base_path, $content_base_href;
+	global $_base_path, $content_base_href, $_course_id;
 
 	 if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) { 
 		$course_base_href = 'get.php/'; 
 	} else {  
-		$course_base_href = 'content/' . $_SESSION['course_id'] . '/'; 
+		$course_base_href = 'content/' . $_course_id . '/'; 
 	}
 
 // Note: Some tinymce buttons are removed due to lack of accessibility for disabled.

@@ -218,7 +218,7 @@ foreach ($this->top_level_pages as $page) {
 </div>
 !-->
   <a name="content" title="<?php echo _AT("content_start"); ?>"></a>
-  <div id="rtn-msg">
+  <div id="ajax-msg">
   </div>
 
 <?php  
@@ -291,7 +291,9 @@ foreach ($this->top_level_pages as $page) {
       <!-- the page title -->
       <a name="content" title="<?php echo _AT('content'); ?>"></a>
       <h2 class="page-title"><?php echo $this->page_title; ?></h2>
+      <div id="server-msg">
       <?php global $msg; $msg->printAll(); ?>
+      </div>
 
       <?php if (count($this->sub_level_pages) > 0): ?>
 

@@ -11,7 +11,7 @@
 /************************************************************************/
 
 global $languageManager;
-
+require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$this->course_id; ?>" name="form">
@@ -29,6 +29,17 @@ global $languageManager;
 			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
 			<label for="title"><?php echo _AT('title'); ?></label>:</td>
 			<td align="left"><input id="title" name="title" type="text" maxlength="255" size="45" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['title'])); else echo stripslashes(htmlspecialchars($this->course_row['title'])); ?>" /></td>
+		</tr>
+
+		<tr>
+			<td align="left"><label for="category"><?php  echo _AT('category_name'); ?></label></td>
+			<td align="left">
+			<select name="category_id" id="category">
+				<?php if (isset($_POST['category_id'])) $category_id = $_POST['category_id'];
+				      else $category_id = $this->course_row['category_id'];
+				      CoursesUtility::printCourseCatsInDropDown($category_id); ?>
+			</select>
+			</td>
 		</tr>
 
 		<tr>

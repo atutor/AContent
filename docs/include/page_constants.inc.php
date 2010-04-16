@@ -32,13 +32,14 @@ if ($oauth_import) return;
 // constants to map privileges.privilege_id, used to load constant pages
 define('TR_PRIV_HOME', 1);
 define('TR_PRIV_SYSTEM', 2);
-define('TR_PRIV_USER_MANAGEMENT', 3);
-define('TR_PRIV_LANGUAGE_MANAGEMENT', 4);
-define('TR_PRIV_TRANSLATION', 5);
-define('TR_PRIV_UPDATER', 6);
-define('TR_PRIV_MANAGE_TESTS', 7);
-define('TR_PRIV_FILE_MANAGER', 8);
-define('TR_PRIV_PROFILE', 9);
+define('TR_PRIV_COURSE_CATEGORIES_MANAGEMENT', 3);
+define('TR_PRIV_USER_MANAGEMENT', 4);
+define('TR_PRIV_LANGUAGE_MANAGEMENT', 5);
+define('TR_PRIV_TRANSLATION', 6);
+define('TR_PRIV_UPDATER', 7);
+define('TR_PRIV_MANAGE_TESTS', 8);
+define('TR_PRIV_FILE_MANAGER', 9);
+define('TR_PRIV_PROFILE', 10);
 
 /* constants used for menu item generation. Used in class Menu (include/classes/Menu.class.php) */
 define('TR_NAV_PUBLIC', 'TR_NAV_PUBLIC');  // public menus, when no user login
@@ -133,6 +134,17 @@ if (array_key_exists(TR_PRIV_SYSTEM, $privs) && Utility::authenticate($privs[TR_
 	$_pages['system/index.php']['title_var'] = 'system';
 	$_pages['system/index.php']['parent']    = TR_NAV_PUBLIC;
 	$_pages['system/index.php']['guide']    = 'TR_HELP_SYSTEM';
+}
+
+// course categories pages
+if (array_key_exists(TR_PRIV_COURSE_CATEGORIES_MANAGEMENT, $privs) && Utility::authenticate($privs[TR_PRIV_COURSE_CATEGORIES_MANAGEMENT], false))
+{
+	$_pages['course_category/index.php']['title_var'] = 'course_categories';
+	$_pages['course_category/index.php']['parent']    = TR_NAV_TOP;
+	$_pages['user/index.php']['guide']    = 'TR_HELP_COURSE_CATEGORY';
+
+	$_pages['course_category/course_category_delete.php']['title_var'] = 'delete_course_category';
+	$_pages['course_category/course_category_delete.php']['parent']    = 'course_category/index.php';
 }
 
 // user pages

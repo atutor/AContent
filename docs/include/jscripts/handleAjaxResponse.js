@@ -9,7 +9,7 @@
 //* as published by the Free Software Foundation.                        */
 //************************************************************************/
 
-// Parse the returned data array from php script and display messages in div #rtn-msg
+// Parse the returned data array from php script and display messages in div #ajax-msg
 // @parameter: data   - array
 //  success data array structure
 //  data['status'] = 'success';
@@ -35,7 +35,7 @@ function handleAjaxResponse(data)
 	
 	if (typeof(data.status) == "undefined") 
 	{
-		jQuery('#rtn-msg').empty();
+		jQuery('#ajax-msg').empty();
 		return;
 	}
 	
@@ -86,8 +86,8 @@ function handleAjaxResponse(data)
 		}
 		msg += template_suffix;
 	}
-	
-	jQuery('#rtn-msg').html(msg);
+	jQuery('#server-msg').empty();
+	jQuery('#ajax-msg').html(msg);
 }
 
 function addslashes(str)

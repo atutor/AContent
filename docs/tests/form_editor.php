@@ -65,7 +65,7 @@ if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 
 <script type="text/javascript"><!--
 function init() {
-	tinyMCE.activeEditor.setContent(window.opener.document.getElementById("<?php echo $area; ?>"). value);
+	tinyMCE.activeEditor.setContent(window.opener.document.getElementById("<?php echo $area; ?>").value);
 }
 //--></script>
 
@@ -107,7 +107,6 @@ function init() {
 function insertTo(field) {
   if (window.opener.document.getElementById(field)) {
     //use the following if we want to apply absolute path.	-harris.
-    alert(tinyMCE.activeEditor.getContent());
     //window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent({format : 'raw'});
     window.opener.document.getElementById(field).value = tinyMCE.activeEditor.getContent();
   }

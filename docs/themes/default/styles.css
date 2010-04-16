@@ -537,8 +537,6 @@ table.data {
   margin-left: 2em;; 
   margin-right: auto;
   text-align: left;
-
-
 } 
 
 table.data th {
@@ -619,6 +617,10 @@ table.data tfoot input:focus {
 table.data.static tbody tr:hover {
   background-color: transparent;
   cursor: auto;
+}
+
+.data-table-tip {
+	margin-left: 2em;
 }
 
 div#error {
