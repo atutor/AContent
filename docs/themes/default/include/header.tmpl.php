@@ -92,7 +92,7 @@ $starttime = $mtime;
   
   <div class="center-content">
     <div id="logo">
-      <a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="Transformable Logo" style="border:none;" /></a>
+      <!-- <a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="Transformable Logo" style="border:none;" /></a> -->
     </div>
   
   <div id="banner">
@@ -116,13 +116,6 @@ $starttime = $mtime;
         }
         ?>
     </span>
-		
-    <div id="versioninfo">
-      <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
-        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="30" />
-        <input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
-      </form>
-    </div>
   </div>
 
   <div class="topnavlistcontainer">
@@ -132,9 +125,9 @@ $starttime = $mtime;
 foreach ($this->top_level_pages as $page) {
 	if ($page['url'] == $this->current_top_level_page) { 
 ?>
-      <li class="navigation"><a href="<?php echo $page['url']; ?>" title="<?php echo $page['title']; ?>" class="active"><span><?php echo $page['title']; ?></span></a></li>
+      <li class="navigation"><a href="<?php echo $page['url']; ?>" title="<?php echo $page['title']; ?>" class="active"><?php echo $page['title']; ?></a></li>
 <?php } else { ?>
-      <li class="navigation"><a href="<?php echo $page['url']; ?>"  title="<?php echo $page['title']; ?>"><span><?php echo $page['title']; ?></span></a></li>
+      <li class="navigation"><a href="<?php echo $page['url']; ?>"  title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
 <?php } // endif
 } //endforeach ?>
     </ul>
@@ -201,7 +194,14 @@ foreach ($this->top_level_pages as $page) {
       <?php else: ?>
       &nbsp;
       <?php endif; ?>
+
     </div>
+      <div class="search_top">
+      <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
+        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="16" />
+        <input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
+      </form>
+      </div>
   </div>
 <!-- 
 <div>

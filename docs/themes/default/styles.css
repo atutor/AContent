@@ -16,7 +16,7 @@ html,body{
 
 /* main body attributes */
 body {
-  font-family: Arial, sans-serif;
+  font-family: Verdana Arial, sans-serif;
   margin:0px;
   background-color: white;
 }
@@ -387,7 +387,10 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
   padding-left: 5px; 
   padding-right: 5px;
 }
-
+#versioninfo{
+float:right;
+clear:right;
+}
 h2 #title {
   padding: 0px 0px 0px 0px;
   margin: 0px 0px 0px 0px; 
@@ -636,6 +639,8 @@ div#error {
   background-color: #F4DCDC;
   padding-left: 25px;
   font-weight: bold;
+border-radius:.3em .3em .3em .3em;
+-moz-border-radius:.3em .3em .3em .3em;
 }
 div#error h4 {
   color: black;
@@ -664,6 +669,8 @@ div#feedback {
   background-color: #F2FCF0;
   color: #595241;
   font-weight: bold;
+border-radius:.3em .3em .3em .3em;
+-moz-border-radius:.3em .3em .3em .3em;
 }
 
 div#help {
@@ -676,6 +683,8 @@ div#help {
   padding: 5px;
   background-color: #E9F4F3;
   color: #024C41;
+border-radius:.3em .3em .3em .3em;
+-moz-border-radius:.3em .3em .3em .3em;
 }
 
 div#info {
@@ -689,6 +698,8 @@ div#info {
   background-color: #EFE6FF;
   color: #595241;
   font-weight: bold;
+border-radius:.3em .3em .3em .3em;
+-moz-border-radius:.3em .3em .3em .3em;
 }
 
 div#warning {
@@ -702,6 +713,8 @@ div#warning {
   background-color: #FFF6ED;
   color: #D95900;
   font-weight: bold;
+border-radius:.3em .3em .3em .3em;
+-moz-border-radius:.3em .3em .3em .3em;
 }
 acronym {
   cursor: help;
@@ -828,7 +841,7 @@ div#menutoggle{
 div.topnavlistcontainer {
   margin-left:auto; 
   margin-right:auto;
-  margin-bottom:1em;
+  margin-bottom:1.2em;
 /*  border: thin #CCCCCC solid;*/
   line-height:100%;
 /*  background-color: #365D95;*/
@@ -880,15 +893,21 @@ fieldset.group_form{
   border:thin #6D7B8D solid;
   min-height: 100px;
   padding:.5em;
-  background-color:#F8F8F8;;
+  background-color:#eeeeee;
+border-radius:.5em .5em .5em .5em;
+-moz-border-radius:.5em .5em .5em .5em;
 }
 
 legend.group_form{
-  border:thin #6D7B8D solid;
-  background-color: #ffa20c;
+  border:thin #000000 solid;
+  background-color: #eeeeee;
   font-weight: 600;
   color: black;
-  padding:.2em;
+  padding-left:2em;
+  padding-right:2em;
+  height:1.5em;
+border-radius:.3em .3em .3em .3em;
+-moz-border-radius:.3em .3em .3em .3em;
 }
 
 /* highlight active links for WCAG 2.0 conformance */
@@ -903,7 +922,7 @@ a:active,a:hover,a:focus{
 }
 
 .selected {
- font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
+   font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
   font-size : 14px;
   color : black;
   background: #E6E6E6;
@@ -1006,32 +1025,29 @@ pre.badgeSnippet {
 {
   color: #000;
   font-weight:bold;
-  background: #ffa20c url(images/navl.gif) left top no-repeat;
+  background-color: #eeeeee;
   text-decoration: none;
-  padding-left: 10px;
+  padding-left: 1em;
+  padding-right: 1em;
+  margin-left:.5em;
+  border:thin solid #cccccc;
+  border-radius:.3em .3em 0em 0em;
+  -moz-border-radius:.3em .3em 0em 0em;
 } 
 
-.navigation a span
-{
-  background: url(images/navr.gif) right top no-repeat;
-  padding-right: 10px;
-} 
 .navigation a:hover
 {
   color: #fff;
-  background: #781351 url(images/navlh.gif) left top no-repeat;
-  padding-left: 10px
+  background: #cccccc;
 }
 
-.navigation a:hover span
+.navigation a:hover
 {
-  background: url(images/navrh.gif) right top no-repeat;
-  padding-right: 10px
+  background-color: #cccccc;
 }
 .navigation a:active span
 {
-  background: url(images/navrh.gif) right top no-repeat;
-  padding-right: 10px
+  background-color:#cccccc;
 }
 
 .navigation ul
@@ -1045,7 +1061,7 @@ pre.badgeSnippet {
 {
   list-style: none;
   list-style-position:inside;
-  display: inline;
+  display: inline-block;
   float: left;
   margin: 0;
 }
@@ -1057,16 +1073,14 @@ pre.badgeSnippet {
 
 
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
-      background-color: #781351; 
-  background: #781351 url(images/navlh.gif) left top no-repeat;
+      background-color: #cccccc; 
       color: white;
-  text-decoration:none;
+      text-decoration:none;
 }
 
-ul.navigation li a.active span{
-      background-color: #781351; 
-  background: #781351 url(images/navrh.gif) right top no-repeat;
-  padding-right: 10px;
+ul.navigation li a.active{
+      background-color: #cccccc; 
+      padding-right: 10px;
 }
 
 /* course search result display */
@@ -1074,7 +1088,12 @@ ul.navigation li a.active span{
   margin: 0 16px;
   padding-right: 1em;
 }
-
+.search_top{
+white-space:nowrap;
+font-size:.8em;
+width:23em;
+float:right;
+}
 li.course {
   font-family:arial,sans-serif;
   font-size:small;
