@@ -92,10 +92,11 @@ $_pages['oauth/authorization.php']['parent']    = TR_NAV_PUBLIC;
 $_pages['oauth/authorization.php']['guide']    = 'TR_HELP_OAUTH_AUTHENTICATE';
 
 // The scripts below need to be accessible by public. 
-$_pages['guideline/view_guideline.php']['title_var'] = 'view_guideline';   // used in web service validation response
-$_pages['checker/suggestion.php']['title_var'] = 'details';
 $_pages['documentation/web_service_api.php']['title_var'] = 'web_service_api';
+$_pages['documentation/web_service_api.php']['parent'] = TR_NAV_PUBLIC;
+
 $_pages['documentation/oauth_server_api.php']['title_var'] = 'oauth_server_api';
+$_pages['documentation/oauth_server_api.php']['parent'] = TR_NAV_PUBLIC;
 
 // home pages
 if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PRIV_HOME]))

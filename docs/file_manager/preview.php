@@ -37,7 +37,7 @@ if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 
 <noframes>
   <p><?php echo _AT('frame_contains'); ?><br />
-  * <a href="../mods/_core/file_manager/file_manager.php"><?php echo _AT('file_manager'); ?></a>
+  * <a href="../file_manager/index.php"><?php echo _AT('file_manager'); ?></a>
   </p>
 </noframes>
 
