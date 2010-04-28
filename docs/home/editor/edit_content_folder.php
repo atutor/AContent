@@ -1,21 +1,21 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: content.php 8784 2009-09-04 20:02:32Z cindy $
-define('AT_INCLUDE_PATH', '../../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tab_functions.inc.php');
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
-if (isset($_GET['cid'])) $cid = intval($_GET['cid']);
+define('TR_INCLUDE_PATH', '../../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
+require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
+
+global $_cid, $_course_id;
+$cid = $_cid;
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
 
 if ($cid > 0)
@@ -99,7 +99,7 @@ if ($_POST['submit'])
 			}
 		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.$_base_path.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
+		header('Location: '.$_base_path.'home/editor/edit_content_folder.php?_cid='.$cid);
 		exit;
 	}
 }
@@ -107,16 +107,16 @@ if ($_POST['submit'])
 if ($cid > 0)
 { // edit existing content folder
 	if (!$content_row) {
-		$_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'missing_content';
-		$_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'index.php';
-		$_pages['mods/_core/editor/edit_content_folder.php']['ignore']	= true;
+		$_pages['home/editor/edit_content_folder.php']['title_var'] = 'missing_content';
+		$_pages['home/editor/edit_content_folder.php']['parent']    = 'index.php';
+		$_pages['home/editor/edit_content_folder.php']['ignore']	= true;
 
-		require(AT_INCLUDE_PATH.'header.inc.php');
+		require(TR_INCLUDE_PATH.'header.inc.php');
 	
 		$msg->addError('PAGE_NOT_FOUND');
 		$msg->printAll();
 	
-		require (AT_INCLUDE_PATH.'footer.inc.php');
+		require (TR_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
 	
@@ -188,28 +188,28 @@ if ($cid > 0)
 	
 	$shortcuts = array();
 	if (((!$content_row['content_parent_id'] && $_SESSION['packaging'] == 'top') || $_SESSION['packaging'] == 'all') 
-	    || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'mods/_core/imscp/ims_export.php?cid='.$cid);
+	    || authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
+		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'home/imscp/ims_export.php?_cid='.$cid);
 	}
 	
-	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php');
+	if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
+		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id);
 	
 		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 			$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-				'mods/_core/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+				'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id);
 		}
 		
-		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'mods/_core/editor/edit_content_folder.php?pid='.$cid);
+		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?pid='.$cid.SEP.'_course_id='.$_course_id);
 		
-		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php');
+		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id);
 		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 			$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-				'mods/_core/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+				'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
 		}
 	
-		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'mods/_core/editor/edit_content.php?pid='.$cid);
-		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'mods/_core/editor/delete_content.php?cid='.$cid);
+		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'home/editor/edit_content.php?pid='.$cid.SEP.'_course_id='.$_course_id);
+		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid);
 	}
 
 	$release_date = $content_row['release_date'];
@@ -251,15 +251,15 @@ while($row = mysql_fetch_assoc($result))
 
 	$startend_date_format=_AT('startend_date_format'); 
 
-	$results[$i]['availability'] = AT_date($startend_date_format, $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
-	$results[$i]['availability'] .= AT_date($startend_date_format, $row['end_date'], AT_DATE_MYSQL_DATETIME);
+	$results[$i]['availability'] = TR_date($startend_date_format, $row['start_date'], TR_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
+	$results[$i]['availability'] .= TR_date($startend_date_format, $row['end_date'], TR_DATE_MYSQL_DATETIME);
 	
 	// get result release
-	if ($row['result_release'] == AT_RELEASE_IMMEDIATE)
+	if ($row['result_release'] == TR_RELEASE_IMMEDIATE)
 		$results[$i]['result_release'] = _AT('release_immediate');
-	else if ($row['result_release'] == AT_RELEASE_MARKED)
+	else if ($row['result_release'] == TR_RELEASE_MARKED)
 		$results[$i]['result_release'] = _AT('release_marked');
-	else if ($row['result_release'] == AT_RELEASE_NEVER)
+	else if ($row['result_release'] == TR_RELEASE_NEVER)
 		$results[$i]['result_release'] = _AT('release_never');
 		
 	//get # marked submissions
@@ -310,9 +310,9 @@ $_POST['min']= substr($release_date, 14, 2);
 
 if ($pid > 0) $savant->assign('pid', $pid);
 
-require(AT_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 $savant->display('editor/edit_content_folder.tmpl.php');
-require(AT_INCLUDE_PATH.'footer.inc.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 
 //save last visit page.
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

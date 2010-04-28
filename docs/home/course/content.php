@@ -176,19 +176,19 @@ if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
 }
 
 if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
-	$shortcuts[] = array('title' => _AT('edit_this_page'),   'url' => $_base_href . 'home/editor/edit_content.php?cid='.$cid);
-	$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php');
+	$shortcuts[] = array('title' => _AT('edit_this_page'),   'url' => $_base_href . 'home/editor/edit_content.php?_cid='.$cid);
+	$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id);
 
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-			'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+			'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id);
 	}
-	$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php');
+	$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id);
 	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 		$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-			'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id']);
+			'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id);
 	}
-	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'home/editor/delete_content.php?cid='.$cid);
+	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid);
 }
 $savant->assign('shortcuts', $shortcuts);
 

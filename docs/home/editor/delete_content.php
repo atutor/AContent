@@ -1,19 +1,17 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: delete_content.php 7540 2008-05-20 17:11:35Z greg $
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
-define('AT_INCLUDE_PATH', '../../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+define('TR_INCLUDE_PATH', '../../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_POST['submit_yes'])) {
 
@@ -25,22 +23,22 @@ if (isset($_POST['submit_yes'])) {
 	unset($_SESSION['from_cid']);
 		
 	$msg->addFeedback('CONTENT_DELETED');
-	header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
+	header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
 	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
+	header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
 	exit;
 }
 
 $_GET['cid'] = intval($_REQUEST['cid']);
 
 $path	= $contentManager->getContentPath($cid);
-require(AT_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 
 if ($_GET['cid'] == 0) {
 	$msg->printErrors('ID_ZERO');
-	require(AT_INCLUDE_PATH.'footer.inc.php');
+	require(TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -64,5 +62,5 @@ while ($row = mysql_fetch_assoc($result)){
 $msg->addConfirm(array('DELETE', $title),  $hidden_vars);
 $msg->printConfirm();
 	
-require(AT_INCLUDE_PATH.'footer.inc.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

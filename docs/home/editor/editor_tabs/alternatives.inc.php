@@ -1,22 +1,20 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: alternatives.inc.php 7208 2008-07-04 16:07:24Z silvia $
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
 /**
  * This script creates the interface of "edit content" => "adapted content"
  */
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 /**
  * This function returns the preview link of the given file
@@ -27,7 +25,7 @@ function get_preview_link($file)
 {
 	global $content_row;
 	
-	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 		$get_file = 'get.php/';
 	} else {
 		$get_file = 'content/' . $_SESSION['course_id'] . '/';
@@ -61,11 +59,11 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 			{
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
 				echo '      <a href="'.get_preview_link($secondary_resource['secondary_resource']).'" title="'._AT('new_window').'" target="_new">'.$secondary_resource['secondary_resource'].'</a><br />'."\n";
-				echo '      <a href="#" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
-				echo '        <img src="'.AT_BASE_HREF.'images/home-tests_sm.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
+				echo '      <a href="#" onclick="ATutor.poptastic(\''.TR_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
+				echo '        <img src="'.TR_BASE_HREF.'images/home-tests_sm.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '      <a href="#" onclick="removeAlternative(\''.$content_row['content_path'].'\', '.$content_id.','.$pid.','.$alternative_type.');return false;">'."\n";
-				echo '        <img src="'.AT_BASE_HREF.'images/icon_delete.gif" border="0" title="'._AT('remove').'" alt="'._AT('remove').'" />'."\n";
+				echo '        <img src="'.TR_BASE_HREF.'images/icon_delete.gif" border="0" title="'._AT('remove').'" alt="'._AT('remove').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '    </div>'."\n";
 				$found_alternative = true;
@@ -76,7 +74,7 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 	if (!$found_alternative)
 	{
 		echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
-		echo '      <input type="button" value="'._AT('add').'" title="'._AT('new_window').'" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" />'."\n";
+		echo '      <input type="button" value="'._AT('add').'" title="'._AT('new_window').'" onclick="ATutor.poptastic(\''.TR_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" />'."\n";
 		echo '    </div>'."\n";
 	}
 	echo '    </td>'."\n";
@@ -84,7 +82,7 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 
 // Main program
 global $db, $content_row;
-require(AT_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
+require(TR_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
 
 if (count($resources)==0)
 {
@@ -230,11 +228,11 @@ else
 // 2. set the according field to "add" button
 function removeAlternative(contentPath, cid, pid, a_type) 
 {
-	jQuery.post("<?php echo AT_BASE_HREF; ?>mods/_core/editor/remove_alternative.php", 
+	jQuery.post("<?php echo TR_BASE_HREF; ?>mods/_core/editor/remove_alternative.php", 
 			{"pid":pid, "a_type":a_type}, 
 			function(data) {});
 
-	var button_html = '      <input type="button" value="<?php echo _AT('add'); ?>" title="<?php echo _AT('new_window'); ?>" onclick="ATutor.poptastic(\\\'<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp='+contentPath+'<?php echo SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" />';
+	var button_html = '      <input type="button" value="<?php echo _AT('add'); ?>" title="<?php echo _AT('new_window'); ?>" onclick="ATutor.poptastic(\\\'<?php echo TR_BASE_HREF; ?>mods/_core/file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp='+contentPath+'<?php echo SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" />';
 	eval("document.getElementById(\""+pid+"_"+a_type+"\").innerHTML = '"+button_html+"'");
 }
 //-->

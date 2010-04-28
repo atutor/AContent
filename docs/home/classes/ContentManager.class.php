@@ -735,7 +735,7 @@ class ContentManager
 	 * @return print out javascript function initContentMenu()
 	 */
 	function initMenu(){
-		global $_base_path;
+		global $_base_path, $_course_id;
 		
 		echo '
 function initContentMenu() {
@@ -813,10 +813,10 @@ function initContentMenu() {
 		{
 			echo "\n".'
   <div class="menuedit">
-    <a href="'.$_base_path.'editor/edit_content_folder.php">
+    <a href="'.$_base_path.'editor/edit_content_folder.php?_course_id='.$_course_id.'">
       <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
     </a>'."\n".'
-    <a href="'.$_base_path.'editor/edit_content.php">
+    <a href="'.$_base_path.'editor/edit_content.php?_course_id='.$_course_id.'">
       <img id="img_create_top_content" src="'.$_base_path.'images/mpage.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
     </a>'."\n".'
     <a href="javascript:void(0)" onclick="javascript:switchEditMode();">

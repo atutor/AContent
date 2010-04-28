@@ -1,25 +1,23 @@
 <?php
 /************************************************************************/
-/* ATutor																*/
+/* Transformable                                                        */
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: edit_content.php 8901 2009-11-11 19:10:19Z cindy $
 
-define('AT_INCLUDE_PATH', '../../../include/');
+define('TR_INCLUDE_PATH', '../../include/');
 
-global $db, $associated_forum;
+global $db, $associated_forum, $_course_id;
 
 $get_related_glossary = true;
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
+require(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 
 $cid = intval($_REQUEST['cid']);
 
@@ -29,7 +27,7 @@ if ($_POST) {
 	$do_check = FALSE;
 }
 
-require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tab_functions.inc.php');
+require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 
 if ($_POST['close'] || $_GET['close']) {
 	if ($_GET['close']) {
@@ -37,13 +35,13 @@ if ($_POST['close'] || $_GET['close']) {
 	} else {
 		$msg->addFeedback('CLOSED');
 		if ($cid == 0) {
-			header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
+			header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
 			exit;
 		}
 	}
 	
 	if ($_REQUEST['cid'] == 0) {
-		header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
+		header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
 		exit;
 	}
 	header('Location: '.$_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])));
@@ -100,9 +98,9 @@ if ($cid) {
 
 if($current_tab == 0) {
     $_custom_head = '
-    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
-    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
-    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'mods/_core/editor/css/editor.css" />
+    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
+    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
+    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'mods/_core/editor/css/editor.css" />
     <script type="text/javascript" src="'.$_base_path.'mods/_core/editor/js/edit.js"></script>
     ';
 }
@@ -111,16 +109,16 @@ if ($cid) {
 	$result = $contentManager->getContentPage($cid);
 
 	if (!($content_row = @mysql_fetch_assoc($result))) {
-		require(AT_INCLUDE_PATH.'header.inc.php');
+		require(TR_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('PAGE_NOT_FOUND');
-		require (AT_INCLUDE_PATH.'footer.inc.php');
+		require (TR_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
 	$path	= $contentManager->getContentPath($cid);
 	$content_test = $contentManager->getContentTestsAssoc($cid);
 
-	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 		$course_base_href = 'get.php/';
 	} else {
 		$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
@@ -130,7 +128,7 @@ if ($cid) {
 		$content_base_href .= $content_row['content_path'].'/';
 	}
 } else {
-	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 		$content_base_href = 'get.php/';
 	} else {
 		$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
@@ -148,7 +146,7 @@ if (($current_tab == 0) || ($_current_tab == 3)) {
     }
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 
 if ($current_tab == 0 || $current_tab == 3) 
 {
@@ -162,7 +160,7 @@ if ($current_tab == 0 || $current_tab == 3)
 //TODO*************BOLOGNA****************REMOVE ME**************/
 //loading toolbar for insert discussion topic or web link into the content
 if ($current_tab == 0){
-    if(authenticate(AT_PRIV_CONTENT,AT_PRIV_RETURN)){
+    if(authenticate(TR_PRIV_CONTENT,TR_PRIV_RETURN)){
         $home_links = get_home_navigation();                        //vengono lette le caratteristiche di ogni modulo attivato nella home page.
         $main_links = get_main_navigation($current_page);           //vengono lette le caratteristiche di ogni modulo attivo nel main navigation
 
@@ -424,4 +422,4 @@ $pid = intval($_REQUEST['pid']);
 </div></div>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

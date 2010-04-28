@@ -1,17 +1,16 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Harris Wong			*/
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: tests.inc.php 7208 2008-01-09 16:07:24Z harris $
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 ?>
 
 <?php
@@ -55,15 +54,15 @@ while($row = mysql_fetch_assoc($result))
 
 	$startend_date_format=_AT('startend_date_format'); 
 
-	$results[$i]['availability'] = AT_date($startend_date_format, $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
-	$results[$i]['availability'] .= AT_date($startend_date_format, $row['end_date'], AT_DATE_MYSQL_DATETIME);
+	$results[$i]['availability'] = TR_date($startend_date_format, $row['start_date'], TR_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
+	$results[$i]['availability'] .= TR_date($startend_date_format, $row['end_date'], TR_DATE_MYSQL_DATETIME);
 	
 	// get result release
-	if ($row['result_release'] == AT_RELEASE_IMMEDIATE)
+	if ($row['result_release'] == TR_RELEASE_IMMEDIATE)
 		$results[$i]['result_release'] = _AT('release_immediate');
-	else if ($row['result_release'] == AT_RELEASE_MARKED)
+	else if ($row['result_release'] == TR_RELEASE_MARKED)
 		$results[$i]['result_release'] = _AT('release_marked');
-	else if ($row['result_release'] == AT_RELEASE_NEVER)
+	else if ($row['result_release'] == TR_RELEASE_NEVER)
 		$results[$i]['result_release'] = _AT('release_never');
 		
 	//get # marked submissions

@@ -1,18 +1,16 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2009										*/
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: edit.inc.php 8901 2009-11-11 19:10:19Z cindy $
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 ?>
     <script type="text/javascript" language="javascript">
     //<!--
@@ -71,7 +69,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     </script>
     
     <div class="row fl-container fl-fix">
-        <img id="previewtool" class="fl-col clickable" src="<?php echo AT_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" />
+        <img id="previewtool" class="fl-col clickable" src="<?php echo TR_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" />
         <img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" />
         <img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" />
         <img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/>      

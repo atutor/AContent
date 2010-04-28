@@ -1,20 +1,16 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: glossary.inc.php 7208 2008-01-09 16:07:24Z greg $
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 ?>
 
 <div class="row"><?php
@@ -51,7 +47,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				}
 
 				echo _AT('glossary_term'); ?>:</strong></td>
-			<td class="row1"><?php echo AT_print(urldecode($current_word), 'glossary.word'); ?></td>
+			<td class="row1"><?php echo TR_print(urldecode($current_word), 'glossary.word'); ?></td>
 		</tr>
 		<?php if ($strlen(urldecode($current_word)) > 60): ?>
 		<tr>

@@ -1,6 +1,17 @@
 <?php
-define('AT_INCLUDE_PATH', '../../../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
+define('TR_INCLUDE_PATH', '../../include/');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
 ?>
 <html>
     <head>
@@ -109,7 +120,7 @@ class FileData
 function paste_from_file() {
     $fileData = new FileData();
     if ($_FILES['uploadedfile_paste']['name'] == '') {
-        $fileData->setErrorMsg(_AT('AT_ERROR_FILE_NOT_SELECTED'));
+        $fileData->setErrorMsg(_AT('TR_ERROR_FILE_NOT_SELECTED'));
     } elseif (($_FILES['uploadedfile_paste']['type'] == 'text/plain')
             || ($_FILES['uploadedfile_paste']['type'] == 'text/html') ) {
 
@@ -136,7 +147,7 @@ function paste_from_file() {
             $fileData->setBody(trim(file_get_contents($_FILES['uploadedfile_paste']['tmp_name'])));
         } 
      } else {
-        $fileData->setErrorMsg(_AT('AT_ERROR_BAD_FILE_TYPE'));
+        $fileData->setErrorMsg(_AT('TR_ERROR_BAD_FILE_TYPE'));
      }
      return $fileData;
 }

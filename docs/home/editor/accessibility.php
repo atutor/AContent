@@ -1,38 +1,36 @@
 <?php
 /************************************************************************/
-/* ATutor																*/
+/* Transformable                                                        */
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: accessibility.inc.php 8901 2009-11-11 19:10:19Z cindy $
 
-define('AT_INCLUDE_PATH', '../../../include/');
+define('TR_INCLUDE_PATH', '../../include/');
 
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tab_functions.inc.php');
+require(TR_INCLUDE_PATH.'vitals.inc.php');
+require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 
 $cid = intval($_POST['cid']);
 
 if ($cid == 0) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
+	require(TR_INCLUDE_PATH.'header.inc.php');
 	$missing_fields[] = _AT('content_id');
 	$msg->addError(array('EMPTY_FIELDS', $missing_fields));
-	require (AT_INCLUDE_PATH.'footer.inc.php');
+	require (TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 $result = $contentManager->getContentPage($cid);
 
 if (!($content_row = @mysql_fetch_assoc($result))) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
+	require(TR_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('PAGE_NOT_FOUND');
-	require (AT_INCLUDE_PATH.'footer.inc.php');
+	require (TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
@@ -50,8 +48,8 @@ if ($_POST['make_decision'])
 		}
 	}
 
-	$checker_url = AT_ACHECKER_URL. 'decisions.php?'
-				.'uri='.urlencode($_POST['pg_url']).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+	$checker_url = TR_ACHECKER_URL. 'decisions.php?'
+				.'uri='.urlencode($_POST['pg_url']).'&id='.TR_ACHECKER_WEB_SERVICE_ID
 				.'&session='.$_POST['sessionid'].'&output=html'.$desc_query;
 
 	if (@file_get_contents($checker_url) === false) {
@@ -60,8 +58,8 @@ if ($_POST['make_decision'])
 } 
 else if (isset($_POST['reverse'])) 
 {
-	$reverse_url = AT_ACHECKER_URL. 'decisions.php?'
-				.'uri='.urlencode($_POST['pg_url']).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+	$reverse_url = TR_ACHECKER_URL. 'decisions.php?'
+				.'uri='.urlencode($_POST['pg_url']).'&id='.TR_ACHECKER_WEB_SERVICE_ID
 				.'&session='.$_POST['sessionid'].'&output=html&reverse=true&'.key($_POST['reverse']).'=N';
 	
 	if (@file_get_contents($reverse_url) === false) {
@@ -71,7 +69,7 @@ else if (isset($_POST['reverse']))
 	}
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php');
+require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?popup=1" method="post" name="form">
   <div class="row">
@@ -93,8 +91,8 @@ if ($_POST['body_text'] != '') {
 	$_POST['content_path'] = $content_row['content_path'];
 	write_temp_file();
 
-	$pg_url = AT_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
-	$checker_url = AT_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.AT_ACHECKER_WEB_SERVICE_ID
+	$pg_url = TR_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
+	$checker_url = TR_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.TR_ACHECKER_WEB_SERVICE_ID
 					. '&guide=WCAG2-L2&output=html';
 
 	$report = @file_get_contents($checker_url);
@@ -110,7 +108,7 @@ if ($_POST['body_text'] != '') {
 		echo '    <p>'._AT('access_credit').'</p>';
 	}
 	//delete file
-	@unlink(AT_CONTENT_DIR . $_POST['cid'] . '.html');
+	@unlink(TR_CONTENT_DIR . $_POST['cid'] . '.html');
 
 } else {
 	$msg->printInfos('NO_PAGE_CONTENT');
@@ -119,5 +117,5 @@ if ($_POST['body_text'] != '') {
   </div>
 </form>
 <?php 
-require(AT_INCLUDE_PATH.'footer.inc.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

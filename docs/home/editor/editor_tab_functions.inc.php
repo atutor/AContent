@@ -1,17 +1,16 @@
 <?php
 /************************************************************************/
-/* ATutor																*/
+/* Transformable                                                        */
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay, Joel Kronenberg & Heidi Hazelton*/
-/* Adaptive Technology Resource Centre / University of Toronto			*/
-/* http://atutor.ca														*/
-/*																		*/
-/* This program is free software. You can redistribute it and/or		*/
-/* modify it under the terms of the GNU General Public License			*/
-/* as published by the Free Software Foundation.						*/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: editor_tab_functions.inc.php 8903 2009-11-13 19:26:29Z cindy $
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 function in_array_cin($strItem, $arItems)
 {
@@ -523,7 +522,7 @@ function paste_from_file() {
 function write_temp_file() {
 	global $_POST, $msg;
 
-	if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 		$content_base = 'get.php/';
 	} else {
 		$content_base = 'content/' . $_SESSION['course_id'] . '/';
@@ -535,8 +534,8 @@ function write_temp_file() {
 
 	$file_name = $_POST['cid'].'.html';
 
-	if ($handle = fopen(AT_CONTENT_DIR . $file_name, 'wb+')) {
-//		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+	if ($handle = fopen(TR_CONTENT_DIR . $file_name, 'wb+')) {
+//		$temp_content = '<h2>'.TR_print(stripslashes($_POST['title']), 'content.title').'</h2>';
 //
 //		if ($_POST['body_text'] != '') {
 //			$temp_content .= format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);

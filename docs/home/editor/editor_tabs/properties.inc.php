@@ -1,18 +1,16 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: properties.inc.php 8794 2009-09-16 16:06:54Z cindy $
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 ?>
 	<div class="row">
@@ -26,7 +24,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 				$today_hour  = $_POST['hour'];
 				$today_min   = $_POST['min'];		
 		}?>
-		<?php require(AT_INCLUDE_PATH.'html/release_date.inc.php');	?>
+		<?php require(TR_INCLUDE_PATH.'html/release_date.inc.php');	?>
 		<?php echo _AT('applies_to_all_sub_pages'); ?>
 	</div>
 
