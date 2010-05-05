@@ -39,6 +39,8 @@ div.input-form {
 	background-color: #F8F8F8;
 border-radius:.5em .5em .5em .5em;
 -moz-border-radius:.5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 div.input-form div.row {
@@ -72,6 +74,8 @@ div.input-form input[type=text], div.input-form input[type=password] {
 	padding: 2px;
 	max-width: 60%;
 	background-color:white;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;
 }
 
 div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.input-form  input[type=text]:focus{

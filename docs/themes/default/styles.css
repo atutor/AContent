@@ -170,6 +170,8 @@ input[type=button] {
   font-weight:bold;
   padding: 1px 2px;
   background:url(images/formbg.gif) repeat-x left top;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 input[type=submit] {
@@ -180,6 +182,8 @@ input[type=submit] {
   font-weight:bold;
   padding: 1px 2px;
   background:url(images/formbg.gif) repeat-x left top;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 input[type=text] {
   cursor:pointer;
@@ -652,6 +656,7 @@ div#error ul, div#feedback ul, div#help ul {
   list-style: none;
   margin-left: 0px;
   padding-left: 0px;
+
 }
 
 div#error ul li{
@@ -671,6 +676,9 @@ div#feedback {
   font-weight: bold;
 border-radius:.3em .3em .3em .3em;
 -moz-border-radius:.3em .3em .3em .3em;
+
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 div#help {
@@ -896,6 +904,8 @@ fieldset.group_form{
   background-color:#eeeeee;
 border-radius:.5em .5em .5em .5em;
 -moz-border-radius:.5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 legend.group_form{
@@ -908,6 +918,9 @@ legend.group_form{
   height:1.5em;
 border-radius:.3em .3em .3em .3em;
 -moz-border-radius:.3em .3em .3em .3em;
+
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
 }
 
 /* highlight active links for WCAG 2.0 conformance */
@@ -1064,6 +1077,8 @@ pre.badgeSnippet {
   display: inline-block;
   float: left;
   margin: 0;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .1em #999999;
 }
 #logo{
   float:right;
