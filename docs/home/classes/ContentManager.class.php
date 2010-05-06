@@ -1028,7 +1028,7 @@ initContentMenu();
 						$full_title = $content['title'];
 						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
 //							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?_cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
-							$link .= '<a href="editor/edit_content_folder.php?_cid='.$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
+							$link .= '<a href="'.$_base_path.'home/editor/edit_content_folder.php?_cid='.$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
 							$link .= '<span style="cursor:pointer" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); ">'."\n";

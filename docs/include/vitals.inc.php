@@ -77,7 +77,7 @@ require_once(TR_INCLUDE_PATH.'constants.inc.php');
 @ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
 @session_cache_limiter('private, must-revalidate');
 
-session_name('CheckerID');
+session_name('TransformableID');
 error_reporting(TR_ERROR_REPORTING);
 
 ob_start();

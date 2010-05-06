@@ -30,11 +30,7 @@ function get_tabs() {
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
 	$tabs[1] = array('properties',    		'properties.inc.php',    'p');
-	$tabs[2] = array('glossary_terms',		'glossary.inc.php',      'g');
-	//Silvia: Added to declare alternative resources
-	$tabs[3] = array('alternative_content', 'alternatives.inc.php',  'l');	
-	//Harris: Extended test functionality into content export
-	$tabs[4] = array('tests',				'tests.inc.php',		 't');
+	$tabs[2] = array('alternative_content', 'alternatives.inc.php',  'l');	
 	
 	return $tabs;
 }

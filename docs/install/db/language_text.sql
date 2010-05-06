@@ -67,6 +67,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_CARTRIDGE_FAI
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_FAILED','Import Failed','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_CHECKBOX_STATUS','Invalid checkbox status.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_FORMAT','Invalid format.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_LINK','The link is either invalid or expired.','2010-05-06 12:50:23','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_LOGIN','Invalid login/password combination.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_SESSION','Invalid session.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_TOKEN_TYPE','Invalid token type.','2010-01-27 15:48:35','');
@@ -572,7 +573,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','rename','Rename','2010-04
 INSERT INTO `language_text` VALUES ('en', '_template','repair_example','Repair Example','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','replace_file','Replace File','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','required_field','Required Field','2010-01-27 15:48:35','');
-INSERT INTO `language_text` VALUES ('en', '_template','required_field_text','<div class=\"required\" title=\"Required Field\">*</div> indicates required fields.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','required_field_text','<span class=\"required\" title=\"Required Field\">*</span> indicates required fields.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','requirement','Requirement','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','reset_filter','Reset Filter','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','result','Result','2010-01-27 15:48:35','');

@@ -14,14 +14,15 @@ define('TR_INCLUDE_PATH', '../../include/');
 
 global $db, $associated_forum, $_course_id, $_cid;
 
-$get_related_glossary = true;
 require(TR_INCLUDE_PATH.'vitals.inc.php');
-require(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
-require(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
 $cid = $_cid;
+$dao = new DAO();
 
 if ($_POST) {
 	$do_check = TRUE;
@@ -37,16 +38,16 @@ if ($_POST['close'] || $_GET['close']) {
 	} else {
 		$msg->addFeedback('CLOSED');
 		if ($cid == 0) {
-			header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
+			header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$_course_id);
 			exit;
 		}
 	}
 	
 	if ($_REQUEST['cid'] == 0) {
-		header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
+		header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$_course_id);
 		exit;
 	}
-	header('Location: '.$_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])));
+	header('Location: '.TR_BASE_HREF.'home/course/content.php?_cid='.$_cid);
 	exit;
 }
 	
@@ -107,9 +108,9 @@ if($current_tab == 0) {
 }
 
 if ($cid) {
-	$result = $contentManager->getContentPage($cid);
+	$content_row = $contentManager->getContentPage($cid);
 
-	if (!($content_row = @mysql_fetch_assoc($result))) {
+	if (!$content_row) {
 		require(TR_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('PAGE_NOT_FOUND');
 		require (TR_INCLUDE_PATH.'footer.inc.php');
@@ -136,7 +137,7 @@ if ($cid) {
 	}
 }
 
-if (($current_tab == 0) || ($_current_tab == 3)) {
+if (($current_tab == 0) || ($_current_tab == 2)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
 	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
@@ -149,7 +150,7 @@ if (($current_tab == 0) || ($_current_tab == 3)) {
 
 require(TR_INCLUDE_PATH.'header.inc.php');
 
-if ($current_tab == 0 || $current_tab == 3) 
+if ($current_tab == 0 || $current_tab == 2) 
 {
     $simple = true;
     if ($_POST['complexeditor'] == '1') {
@@ -249,7 +250,7 @@ $pid = intval($_REQUEST['pid']);
 		echo '<input type="hidden" name="folder_title" value="'.htmlspecialchars($stripslashes($_POST['folder_title'])).'" />';
 	}
 	echo '<input type="submit" name="submit" style="display:none;"/>';
-	if (($current_tab != 0) && (($_current_tab != 3))) {
+	if (($current_tab != 0) && (($_current_tab != 2))) {
         echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
         echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars($stripslashes($_POST['weblink_text'])).'" />';
         echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
@@ -322,14 +323,17 @@ $pid = intval($_REQUEST['pid']);
 	         WHERE pr.content_id = ".$cid."
 	           AND pr.language_code = '".$_SESSION['lang']."'
 	           AND pr.primary_resource_id = prt.primary_resource_id";
-	$all_types_result = mysql_query($sql, $db);
+//	$all_types_result = mysql_query($sql, $db);
+	$types = $dao->execute($sql);
 	
 	$i = 0;
-	while ($type = mysql_fetch_assoc($all_types_result)) {
-		$row_alternatives['alt_'.$type['primary_resource_id'].'_'.$type['type_id']] = 1;
+	if (is_array($types)) {
+		foreach ($types as $type) {
+			$row_alternatives['alt_'.$type['primary_resource_id'].'_'.$type['type_id']] = 1;
+		}
 	}
 	
-	if ($current_tab != 3 && isset($_POST['use_post_for_alt']))
+	if ($current_tab != 2 && isset($_POST['use_post_for_alt']))
 	{
 		echo '<input type="hidden" name="use_post_for_alt" value="1" />';
 		if (is_array($_POST)) {
@@ -342,7 +346,7 @@ $pid = intval($_REQUEST['pid']);
 	}
 	
 	//tests
-	if ($current_tab != 4){
+	if ($current_tab != 1){
 		// set content associated tests
 		if (is_array($_POST['tid'])) {
 			foreach ($_POST['tid'] as $i=>$tid){
@@ -359,30 +363,31 @@ $pid = intval($_REQUEST['pid']);
 			}
 		}
 		
-		// set pre-tests
-		if (is_array($_POST['pre_tid'])) {
-			foreach ($_POST['pre_tid'] as $i=>$pre_tid){
-				echo '<input type="hidden" name="pre_tid['.$i.']" value="'.$pre_tid.'" />';
-			}
-		}
-		else
-		{
-			$i = 0;
-			$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$cid AND type='".CONTENT_PRE_TEST."'";
-			$pretests_result = mysql_query($sql, $db);
-			while ($pretest_row = mysql_fetch_assoc($pretests_result)) {
-					echo '<input type="hidden" name="pre_tid['.$i++.']" value="'.$pretest_row['item_id'].'" />';
-			}
-		}
+//		// set pre-tests
+//		if (is_array($_POST['pre_tid'])) {
+//			foreach ($_POST['pre_tid'] as $i=>$pre_tid){
+//				echo '<input type="hidden" name="pre_tid['.$i.']" value="'.$pre_tid.'" />';
+//			}
+//		}
+//		else
+//		{
+//			$i = 0;
+//			$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$cid AND type='".CONTENT_PRE_TEST."'";
+//			$pretests_result = mysql_query($sql, $db);
+//			while ($pretest_row = mysql_fetch_assoc($pretests_result)) {
+//					echo '<input type="hidden" name="pre_tid['.$i++.']" value="'.$pretest_row['item_id'].'" />';
+//			}
+//		}
 	} 
-	if (!isset($_POST['allow_test_export']) && $current_tab != 4) {
+	
+	if (!isset($_POST['allow_test_export']) && $current_tab != 1) {
 		//export flag handling.
-		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
-		$result2 = mysql_query($sql, $db);
-		if ($result2){
-			$c_row = mysql_fetch_assoc($result2);
-		}
-		if (intval($c_row['allow_test_export'])==1){
+//		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
+//		$result2 = mysql_query($sql, $db);
+//		if ($result2){
+//			$c_row = mysql_fetch_assoc($result2);
+//		}
+		if (intval($content_row['allow_test_export'])==1){
 			echo '<input type="hidden" name="allow_test_export" value="1" />';
 		} else {
 			echo '<input type="hidden" name="allow_test_export" value="0" />';
