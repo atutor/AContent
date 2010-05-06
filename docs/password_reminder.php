@@ -30,10 +30,10 @@ if (isset($_POST['cancel'])) {
 		//date link was generated (# days since epoch)
 		$gen = intval(((time()/60)/60)/24);
 
-		$hash = sha1($row['member_id'] + $gen + $row['password']);
+		$hash = sha1($row['user_id'] + $gen + $row['password']);
 		$hash_bit = substr($hash, 5, 15);
 		
-		$change_link = $_base_href.'password_reminder.php?id='.$row['member_id'].'&g='.$gen.'&h='.$hash_bit;
+		$change_link = $_base_href.'password_reminder.php?id='.$row['user_id'].'&g='.$gen.'&h='.$hash_bit;
 		if($row['first_name'] != ''){
 			$reply_name = $row['first_name'];
 		}else{
@@ -78,10 +78,10 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 
-	/* check if already visited (possibley add a "last login" field to members table)... if password was changed, won't work anyway. do later. */
+	/* check if already visited (possibley add a "last login" field to users table)... if password was changed, won't work anyway. do later. */
 
 	//check for valid hash
-//	$sql	= "SELECT password, email FROM ".TABLE_PREFIX."members WHERE member_id=".intval($_REQUEST['id']);
+//	$sql	= "SELECT password, email FROM ".TABLE_PREFIX."users WHERE user_id=".intval($_REQUEST['id']);
 //	$result = mysql_query($sql,$db);
 	if ($row = $usersDAO->getUserByID(intval($_REQUEST['id']))) {
 		$email = $row['email'];
@@ -125,16 +125,16 @@ if (isset($_POST['cancel'])) {
 			//save data
 			$password   = $addslashes($_POST['form_password_hidden']);
 
-//			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$password."', last_login=last_login, creation_date=creation_date WHERE member_id=".intval($_REQUEST['id']);
+//			$sql	= "UPDATE ".TABLE_PREFIX."users SET password='".$password."', last_login=last_login, creation_date=creation_date WHERE user_id=".intval($_REQUEST['id']);
 //			$result = mysql_query($sql,$db);
 			$usersDAO->UpdateField(intval($_REQUEST['id']), 'password', $password);
 
 			//reset login attempts
 //			if ($result){
-//				$sql = "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id=".intval($_REQUEST['id']);
+//				$sql = "SELECT login FROM ".TABLE_PREFIX."users WHERE user_id=".intval($_REQUEST['id']);
 //				$result = mysql_query($sql, $db);
 //				$row = mysql_fetch_array($result);
-//				$sql = "DELETE FROM ".TABLE_PREFIX."member_login_attempt WHERE login='$row[login]'";
+//				$sql = "DELETE FROM ".TABLE_PREFIX."user_login_attempt WHERE login='$row[login]'";
 //				mysql_query($sql, $db);
 //			}
 
