@@ -26,7 +26,7 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="title"><?php echo _AT('title'); ?></label>:</td>
 			<td align="left"><input id="title" name="title" type="text" maxlength="255" size="45" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['title'])); else echo stripslashes(htmlspecialchars($this->course_row['title'])); ?>" /></td>
 		</tr>

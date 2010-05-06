@@ -46,7 +46,7 @@ function encrypt_password() {
 				</tr>
 
 				<tr>
-					<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="login"><?php echo _AT('login_name_or_email'); ?></label></td>
+					<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name_or_email'); ?></label></td>
 					<td><input type="text" name="form_login" size="50" id="login"  class="formfield" /><br /></td>
 				</tr>
 				

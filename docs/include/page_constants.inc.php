@@ -126,6 +126,24 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		$_pages['home/course/course_property.php']['title_var'] = 'course_property';
 		$_pages['home/course/course_property.php']['parent']    = 'home/index.php';
 		$_pages['home/course/course_property.php']['guide']    = 'TR_HELP_COURSE_PROPERTY';
+
+		$_pages['home/editor/add_content.php']['title_var']    = 'add_content';
+		$_pages['home/editor/add_content.php']['parent']   = 'home/index.php'; 
+		$_pages['home/editor/add_content.php']['guide']     = 'TR_HELP_ADD_CONTENT';
+		
+		$_pages['home/editor/arrange_content.php']['title_var']    = 'arrange_content';
+		$_pages['home/editor/arrange_content.php']['parent']   = 'home/index.php';
+		$_pages['home/editor/arrange_content.php']['guide']     = 'TR_HELP_ARRANGE_CONTENT';
+		
+		$_pages['home/editor/edit_content.php']['title_var'] = 'edit_content';
+		$_pages['home/editor/edit_content.php']['parent']    = 'home/index.php';
+		$_pages['home/editor/edit_content.php']['guide']     = 'TR_HELP_EDIT_CONTENT';
+		
+		$_pages['home/editor/preview.php']['title_var'] = 'preview';
+		$_pages['home/editor/preview.php']['parent']    = 'home/editor/edit_content.php';
+		
+		$_pages['home/editor/accessibility.php']['title_var'] = 'accessibility';
+		$_pages['home/editor/accessibility.php']['parent']    = 'home/editor/edit_content.php';
 	}
 }
 

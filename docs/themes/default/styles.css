@@ -90,6 +90,9 @@ li {
   margin-top: 0px;
   margin-right: 0px;
 }
+img {
+    border: none;
+}
 ul.msg {
   line-height: 150%
 }
@@ -728,16 +731,10 @@ acronym {
   cursor: help;
 }
 
-div.required {
+required {
   font-weight: bold;
   color: red;
-  font-size: large;
-  float: left;
-  position: relative;
-  margin-top: -5px;
-  height: 15px;
   padding-right: 2px;
-  text-align: left;
 }
 
 form {
@@ -1190,4 +1187,13 @@ div.menuedit{
   float:right;
   margin-top:-1.2em; 
   border:1px solid #cccccc;"
+}
+.hidden {
+    display: none;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.clickable {
+    cursor: pointer;    
 }

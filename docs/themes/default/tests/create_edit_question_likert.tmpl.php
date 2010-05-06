@@ -73,7 +73,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label> 
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		
 		<?php TestsUtility::printVisualEditorLink('question'); ?>
 		
@@ -84,7 +84,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 	for ($i=0; $i<10; $i++) { ?>
 		<div class="row">
 			<?php if ($i==0 || $i==1) { ?>
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<?php } ?>
 
 			<label for="choice_<?php echo $i; ?>">

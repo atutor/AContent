@@ -46,12 +46,12 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="site_name"><?php echo _AT('site_name'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="site_name"><?php echo _AT('site_name'); ?></label>:</td>
 			<td align="left"><input id="site_name" name="site_name" type="text" maxlength="20" size="30" value="<?php if (isset($_POST['site_name'])) echo stripslashes(htmlspecialchars($_POST['site_name'])); else echo stripslashes(htmlspecialchars($this->config['site_name'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="contact_email"><?php echo _AT('contact_email'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="contact_email"><?php echo _AT('contact_email'); ?></label>:</td>
 			<td align="left"><input id="contact_email" name="contact_email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['contact_email'])) echo stripslashes(htmlspecialchars($_POST['contact_email'])); else echo stripslashes(htmlspecialchars($this->config['contact_email'])); ?>" /></td>
 		</tr>
 

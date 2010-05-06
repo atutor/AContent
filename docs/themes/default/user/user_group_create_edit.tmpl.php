@@ -30,7 +30,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		</tr>
 
 		<tr>
-			<th align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="title"><?php echo _AT('title'); ?></label></th>
+			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label></th>
 			<td><input type="text" name="title" size="100" id="title" value="<?php if (isset($_POST['title'])) echo $_POST['title']; else echo $this->user_group_row["title"]; ?>" /></td>
 		</tr>
 

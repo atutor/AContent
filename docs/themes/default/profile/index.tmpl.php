@@ -44,12 +44,12 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 		<tr><td><br /></td></tr>
 
 		<tr>
-			<th align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="first_name"><?php echo _AT('first_name'); ?></label>:</th>
+			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="first_name"><?php echo _AT('first_name'); ?></label>:</th>
 			<td align="left"><input id="first_name" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<th align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="last_name"><?php echo _AT('last_name'); ?></label>:</th>
+			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="last_name"><?php echo _AT('last_name'); ?></label>:</th>
 			<td align="left"><input id="last_name" name="last_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['last_name'])); ?>" /></td>
 		</tr>
 
@@ -64,37 +64,37 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 		<tr align="center"><td>
 		<table id="table_is_author">
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="organization"><?php echo _AT('organization'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="organization"><?php echo _AT('organization'); ?></label>:</td>
 			<td align="left"><input id="organization" name="organization" type="text" size="50" maxlength="100" value="<?php if (isset($_POST['organization'])) echo stripslashes(htmlspecialchars($_POST['organization'])); else echo stripslashes(htmlspecialchars($this->user_row['organization'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="phone"><?php echo _AT('phone'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="phone"><?php echo _AT('phone'); ?></label>:</td>
 			<td align="left"><input id="phone" name="phone" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['phone'])) echo stripslashes(htmlspecialchars($_POST['phone'])); else echo stripslashes(htmlspecialchars($this->user_row['phone'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="address"><?php echo _AT('address'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="address"><?php echo _AT('address'); ?></label>:</td>
 			<td align="left"><input id="address" name="address" type="text" size="50" maxlength="100" value="<?php if (isset($_POST['address'])) echo stripslashes(htmlspecialchars($_POST['address'])); else echo stripslashes(htmlspecialchars($this->user_row['address'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="city"><?php echo _AT('city'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="city"><?php echo _AT('city'); ?></label>:</td>
 			<td align="left"><input id="city" name="city" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['city'])) echo stripslashes(htmlspecialchars($_POST['city'])); else echo stripslashes(htmlspecialchars($this->user_row['city'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="province"><?php echo _AT('province'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="province"><?php echo _AT('province'); ?></label>:</td>
 			<td align="left"><input id="province" name="province" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['province'])) echo stripslashes(htmlspecialchars($_POST['province'])); else echo stripslashes(htmlspecialchars($this->user_row['province'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="country"><?php echo _AT('country'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="country"><?php echo _AT('country'); ?></label>:</td>
 			<td align="left"><input id="country" name="country" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['country'])) echo stripslashes(htmlspecialchars($_POST['country'])); else echo stripslashes(htmlspecialchars($this->user_row['country'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="postal_code"><?php echo _AT('postal_code'); ?></label>:</td>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="postal_code"><?php echo _AT('postal_code'); ?></label>:</td>
 			<td align="left"><input id="postal_code" name="postal_code" type="text" size="10" maxlength="10" value="<?php if (isset($_POST['postal_code'])) echo stripslashes(htmlspecialchars($_POST['postal_code'])); else echo stripslashes(htmlspecialchars($this->user_row['postal_code'])); ?>" /></td>
 		</tr>
 

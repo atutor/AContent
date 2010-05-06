@@ -12,14 +12,16 @@
 
 define('TR_INCLUDE_PATH', '../../include/');
 
-global $db, $associated_forum, $_course_id;
+global $db, $associated_forum, $_course_id, $_cid;
 
 $get_related_glossary = true;
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
 require(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 
-$cid = intval($_REQUEST['cid']);
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+
+$cid = $_cid;
 
 if ($_POST) {
 	$do_check = TRUE;
@@ -97,10 +99,9 @@ if ($cid) {
 }
 
 if($current_tab == 0) {
-    $_custom_head = '
+    $_custom_head .= '
     <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
     <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
-    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'mods/_core/editor/css/editor.css" />
     <script type="text/javascript" src="'.$_base_path.'mods/_core/editor/js/edit.js"></script>
     ';
 }
@@ -159,34 +160,32 @@ if ($current_tab == 0 || $current_tab == 3)
 
 //TODO*************BOLOGNA****************REMOVE ME**************/
 //loading toolbar for insert discussion topic or web link into the content
-if ($current_tab == 0){
-    if(authenticate(TR_PRIV_CONTENT,TR_PRIV_RETURN)){
-        $home_links = get_home_navigation();                        //vengono lette le caratteristiche di ogni modulo attivato nella home page.
-        $main_links = get_main_navigation($current_page);           //vengono lette le caratteristiche di ogni modulo attivo nel main navigation
+//if ($current_tab == 0){
+//    if(authenticate(TR_PRIV_CONTENT,TR_PRIV_RETURN)){
+//        $home_links = get_home_navigation();                        //vengono lette le caratteristiche di ogni modulo attivato nella home page.
+//        $main_links = get_main_navigation($current_page);           //vengono lette le caratteristiche di ogni modulo attivo nel main navigation
+//
+//        $num = count($main_links);                                  //necessario elminare il primo e l'utlimo elemento poichè sono rispettivamente "Home" e "Manage"
+//        unset($main_links[0]);                                      //"Home" label
+//        unset($main_links[$num-1]);                                 //"Manage" label
+//
+//        $all_tools = $home_links;                                   //$all_tools represent a merge between $home_links and main_links without repetitions.
+//        $check=false;
+//        foreach($main_links as $main) {
+//            foreach($home_links as $home) {
+//                if($home['title'] == $main['title']) {
+//                    $check=true;
+//                    break;
+//                }
+//            }
+//            if(!$check)
+//                $all_tools[]=$main;
+//            else
+//                $check=false;
+//        }
+//    }
+//}
 
-        $num = count($main_links);                                  //necessario elminare il primo e l'utlimo elemento poichè sono rispettivamente "Home" e "Manage"
-        unset($main_links[0]);                                      //"Home" label
-        unset($main_links[$num-1]);                                 //"Manage" label
-
-        $all_tools = $home_links;                                   //$all_tools represent a merge between $home_links and main_links without repetitions.
-        $check=false;
-        foreach($main_links as $main) {
-            foreach($home_links as $home) {
-                if($home['title'] == $main['title']) {
-                    $check=true;
-                    break;
-                }
-            }
-            if(!$check)
-                $all_tools[]=$main;
-            else
-                $check=false;
-        }
-    }
-}
-
-
-$cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
@@ -209,18 +208,18 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['test_message'] = $content_row['test_message'];
 			$_POST['allow_test_export'] = $content_row['allow_test_export'];
 
-			$_POST['day']   = substr($content_row['release_date'], 8, 2);
-			$_POST['month'] = substr($content_row['release_date'], 5, 2);
-			$_POST['year']  = substr($content_row['release_date'], 0, 4);
-			$_POST['hour']  = substr($content_row['release_date'], 11, 2);
-			$_POST['min']= substr($content_row['release_date'], 14, 2);
+//			$_POST['day']   = substr($content_row['release_date'], 8, 2);
+//			$_POST['month'] = substr($content_row['release_date'], 5, 2);
+//			$_POST['year']  = substr($content_row['release_date'], 0, 4);
+//			$_POST['hour']  = substr($content_row['release_date'], 11, 2);
+//			$_POST['min']= substr($content_row['release_date'], 14, 2);
 
 			$_POST['ordering'] = $content_row['ordering'];
-			$_POST['related'] = $contentManager->getRelatedContent($cid);
+//			$_POST['related'] = $contentManager->getRelatedContent($cid);
 			
 			$_POST['pid'] = $pid = $content_row['content_parent_id'];
 
-			$_POST['related_term'] = $glossary_ids_related;
+//			$_POST['related_term'] = $glossary_ids_related;
 		}
 
 	} else {
@@ -263,58 +262,58 @@ $pid = intval($_REQUEST['pid']);
 	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
 	echo '<input type="hidden" name="pid" value="'.$pid.'" />';
 
-	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
-	echo '<input type="hidden" name="month" value="'.$_POST['month'].'" />';
-	echo '<input type="hidden" name="year" value="'.$_POST['year'].'" />';
-	echo '<input type="hidden" name="hour" value="'.$_POST['hour'].'" />';
-	echo '<input type="hidden" name="minute" value="'.$_POST['minute'].'" />';
-	echo '<input type="hidden" name="min" value="'.$_POST['min'].'" />';
+//	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
+//	echo '<input type="hidden" name="month" value="'.$_POST['month'].'" />';
+//	echo '<input type="hidden" name="year" value="'.$_POST['year'].'" />';
+//	echo '<input type="hidden" name="hour" value="'.$_POST['hour'].'" />';
+//	echo '<input type="hidden" name="minute" value="'.$_POST['minute'].'" />';
+//	echo '<input type="hidden" name="min" value="'.$_POST['min'].'" />';
 	
 	echo '<input type="hidden" name="alternatives" value="'.$_POST['alternatives'].'" />';
 	
 	echo '<input type="hidden" name="current_tab" value="'.$current_tab.'" />';
 
-	if (is_array($_POST['related']) && ($current_tab != 1)) {
-		foreach($_POST['related'] as $r_id) {
-			echo '<input type="hidden" name="related[]" value="'.$r_id.'" />';
-		}
-	}
+//	if (is_array($_POST['related']) && ($current_tab != 1)) {
+//		foreach($_POST['related'] as $r_id) {
+//			echo '<input type="hidden" name="related[]" value="'.$r_id.'" />';
+//		}
+//	}
 	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
 
 	//content test association
 	echo '<input type="hidden" name="test_message" value="'.$_POST['test_message'].'" />';
 	
 	/* get glossary terms */
-	$matches = find_terms(stripslashes($_POST['body_text']));
-	$num_terms = count($matches[0]);
-	$matches = $matches[0];
-	$word = str_replace(array('[?]', '[/?]'), '', $matches);
-
-	if (is_array($word)) {
-		/* update $_POST['glossary_defs'] with any new/changed terms */
-		for($i=0; $i<$num_terms; $i++) {
-			$word[$i] = $word[$i];
-			if (!isset($_POST['glossary_defs'][$word[$i]])) {
-				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
-			}
-		}
-	}
-
-	if (is_array($_POST['glossary_defs']) && ($current_tab != 2)) {
-		foreach($_POST['glossary_defs'] as $w => $d) {
-			/* this term still exists in the content */
-			if (!in_array($w, $word)) {
-				unset($_POST['glossary_defs'][$w]);
-				continue;
-			}
-			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
-		}
-		if (isset($_POST['related_term'])) {
-			foreach($_POST['related_term'] as $w => $d) {
-				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
-			}
-		}
-	}
+//	$matches = find_terms(stripslashes($_POST['body_text']));
+//	$num_terms = count($matches[0]);
+//	$matches = $matches[0];
+//	$word = str_replace(array('[?]', '[/?]'), '', $matches);
+//
+//	if (is_array($word)) {
+//		/* update $_POST['glossary_defs'] with any new/changed terms */
+//		for($i=0; $i<$num_terms; $i++) {
+//			$word[$i] = $word[$i];
+//			if (!isset($_POST['glossary_defs'][$word[$i]])) {
+//				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
+//			}
+//		}
+//	}
+//
+//	if (is_array($_POST['glossary_defs']) && ($current_tab != 2)) {
+//		foreach($_POST['glossary_defs'] as $w => $d) {
+//			/* this term still exists in the content */
+//			if (!in_array($w, $word)) {
+//				unset($_POST['glossary_defs'][$w]);
+//				continue;
+//			}
+//			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
+//		}
+//		if (isset($_POST['related_term'])) {
+//			foreach($_POST['related_term'] as $w => $d) {
+//				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
+//			}
+//		}
+//	}
 
 	// adapted content
 	$sql = "SELECT pr.primary_resource_id, prt.type_id

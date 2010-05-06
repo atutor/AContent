@@ -21,7 +21,7 @@ if (isset($this->catid)) {
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cat"><?php echo _AT('title'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cat"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="cat" value="<?php echo htmlspecialchars($_POST['title']); ?>" />
 	</div>
 

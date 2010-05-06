@@ -109,7 +109,7 @@ if (!isset($_POST['extension'])) {
 		<h3><?php echo $file; ?></h3>
 	</div>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('type'); ?><br />
 		<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['extension'] == 'txt') { echo 'checked="checked"'; } ?> onclick="trans.editor.switch_content_type(this.value);" />
 		<label for="text"><?php echo _AT('plain_text'); ?></label>
 

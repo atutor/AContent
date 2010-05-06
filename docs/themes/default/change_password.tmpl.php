@@ -58,7 +58,7 @@ function encrypt_password()
 
 			<tr>
 				<td align="left">
-					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+					<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 					<label for="password"><?php echo _AT('new_password'); ?></label>:
 				</td>
 				<td align="left">
@@ -68,7 +68,7 @@ function encrypt_password()
 		
 			<tr>
 				<td align="left">
-					<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+					<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 					<label for="password2"><?php echo _AT('password_again'); ?></label>:
 				</td>
 				<td align="left">

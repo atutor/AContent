@@ -31,7 +31,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		</tr>
 <!-- 
 		<tr align="left">
-			<th><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<th><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="lang_code"><?php echo _AT('lang_code'); ?></label></th>
 			<td>
 <?php if (isset($this->row['language_code'])) echo $this->row['lang_code']; else {?>
@@ -69,7 +69,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		</tr>
 
 		<tr align="left">
-			<th><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<th><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="charset"><?php echo _AT('charset'); ?></label></th>
 			<td>
 <?php if (isset($this->row['language_code'])) echo $this->row['charset']; else {?>
@@ -79,13 +79,13 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		</tr>
 
 		<tr align="left">
-			<th><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<th><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="native_name"><?php echo _AT('name_in_language'); ?></label></th>
 			<td><input type="text" name="native_name" id="native_name" value="<?php if (isset($_POST['native_name'])) echo $_POST['native_name']; else echo $this->row["native_name"]; ?>" /></td>
 		</tr>
 
 		<tr align="left">
-			<th><div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<th><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="english_name"><?php echo _AT('name_in_english'); ?></label></th>
 			<td><input type="text" name="english_name" id="english_name" value="<?php if (isset($_POST['english_name'])) echo $_POST['english_name']; else echo $this->row["english_name"]; ?>" /></td>
 		</tr>

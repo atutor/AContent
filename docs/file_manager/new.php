@@ -150,12 +150,12 @@ $msg->printAll();
 	<div class="input-form">	
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_new_file'); ?></legend>
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
 			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
 		</div>
 
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><?php echo _AT('type'); ?><br />
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('type'); ?><br />
 			<input type="radio" name="extension" value="txt" id="text" <?php if ($_POST['extension'] == 'txt') { echo 'checked="checked"'; } ?> onclick="trans.editor.switch_content_type(this.value);" />
 			<label for="text"><?php echo _AT('plain_text'); ?></label>
 	

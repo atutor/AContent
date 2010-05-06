@@ -454,8 +454,8 @@ class ContentManager
 //		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 //		$result = mysql_query($sql, $this->db);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
+//		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
+//		$result = mysql_query($sql, $this->db);
 
 		/* delete the content tests association */
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
@@ -476,8 +476,8 @@ class ContentManager
 		/* end moving block */
 
 		/* remove the "resume" to this page, b/c it was deleted */
-		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
-		$result = mysql_query($sql, $this->db);
+//		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
+//		$result = mysql_query($sql, $this->db);
 
 		return true;
 	}
@@ -503,9 +503,6 @@ class ContentManager
 		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-
 		/* delete the content tests association */
 		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
 		$result = mysql_query($sql, $this->db);
@@ -517,34 +514,6 @@ class ContentManager
 		return $contentDAO->get($content_id);
 	}
 	
-	/* @See editor/edit_content.php include/html/dropdowns/related_topics.inc.php include/lib/editor_tabs_functions.inc.php */
-	function getRelatedContent($content_id, $all=false) {
-		if ($content_id == 0) {
-			return;
-		}
-		if ($content_id == '') {
-			return;
-		}
-		$related_content = array();
-
-		if ($all) {
-			$sql = "SELECT * FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
-		} else {
-			$sql = "SELECT * FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id";
-		}
-		$result = mysql_query($sql, $this->db);
-
-		while ($row = mysql_fetch_assoc($result)) {
-			if ($row['related_content_id'] != $content_id) {
-				$related_content[] = $row['related_content_id'];
-			} else {
-				$related_content[] = $row['content_id'];
-			}
-		}
-
-		return $related_content;
-	}
-
 	/** 
 	 * Return a list of tests associated with the selected content
 	 * @param	int		the content id that all tests are associated with it.
@@ -556,12 +525,6 @@ class ContentManager
 		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id) AS ct LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id";
 		return $this->dao->execute($sql);
 	}
-
-        /*TODO***************BOLOGNA***************REMOVE ME**********/
-//	function & getContentForumsAssoc($content_id){
-//		$sql	= "SELECT cf.forum_id, f.title FROM (SELECT * FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id) AS cf LEFT JOIN ".TABLE_PREFIX."forums f ON cf.forum_id=f.forum_id";
-//		return $this->dao->execute($sql);
-//	}
 
 	function & cleanOutput($value) {
 		return stripslashes(htmlspecialchars($value));

@@ -95,7 +95,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 		<div class="row">
-			<div class="required" title="<?php echo _AT('required_field'); ?>">*</div>
+			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="lang_code"><?php echo _AT('choose_lang'); ?></label>:
 			<select name="lang_code" id="lang_code"> 
 <?php 

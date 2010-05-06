@@ -30,7 +30,7 @@ require (TR_INCLUDE_PATH.'header.inc.php');
 
 		<tr>
 			<th align="left" style="width: 25%">
-				<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="system_patch_id"><?php echo _AT('system_update_id'); ?>:</label><br />
+				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="system_patch_id"><?php echo _AT('system_update_id'); ?>:</label><br />
 			</th>
 			<td align="left"><input id="system_patch_id" name="system_patch_id" type="text" maxlength="100" size="30" value="<?php echo $this->patch_row['system_patch_id']; ?>" /></td>
 		</tr>
@@ -38,7 +38,7 @@ require (TR_INCLUDE_PATH.'header.inc.php');
 		<tr><th align="left" colspan="2"><small>&middot; <?php echo _AT('contain_only'); ?></small></th></tr>
 
 		<tr>
-			<th align="left"><div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="transformable_version_to_apply"><?php echo _AT('transformable_version_to_apply'); ?>:</label></th>
+			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="transformable_version_to_apply"><?php echo _AT('transformable_version_to_apply'); ?>:</label></th>
 			<td align="left"><input id="transformable_version_to_apply" name="transformable_version_to_apply" type="text" maxlength="100" size="30" value="<?php echo $this->patch_row['applied_version']; ?>" /></td>
 		</tr>
 

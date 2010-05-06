@@ -22,7 +22,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
     <table class="form-data" align="left">
     <tr align="left">
       <td align="left">
-      <div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="category_name"><?php echo _AT('category_name'); ?></label>:
+      <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_name"><?php echo _AT('category_name'); ?></label>:
       <input id="category_name" name="category_name" type="text" maxlength="255" size="30" />
       <input type="submit" name="add" value="<?php echo _AT('add'); ?>" />
       </td>

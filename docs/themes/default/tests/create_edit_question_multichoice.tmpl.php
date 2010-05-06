@@ -21,7 +21,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_mc'); ?></legend>
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="cats"><?php echo _AT('category'); ?></label>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="cats"><?php echo _AT('category'); ?></label>
 		<select name="category_id" id="cats">
 			<?php TestsUtility::printQuestionCatsInDropDown($_POST['category_id']); ?>
 		</select>
@@ -35,7 +35,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 	</div>
 
 	<div class="row">
-		<div class="required" title="<?php echo _AT('required_field'); ?>">*</div><label for="question"><?php echo _AT('question'); ?></label> 
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		<?php TestsUtility::printVisualEditorLink('question'); ?>		
 		<textarea id="question" cols="50" rows="4" name="question"><?php 
 			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
