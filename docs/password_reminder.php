@@ -78,11 +78,7 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 
-	/* check if already visited (possibley add a "last login" field to users table)... if password was changed, won't work anyway. do later. */
-
 	//check for valid hash
-//	$sql	= "SELECT password, email FROM ".TABLE_PREFIX."users WHERE user_id=".intval($_REQUEST['id']);
-//	$result = mysql_query($sql,$db);
 	if ($row = $usersDAO->getUserByID(intval($_REQUEST['id']))) {
 		$email = $row['email'];
 
@@ -124,19 +120,7 @@ if (isset($_POST['cancel'])) {
 		if (!$msg->containsErrors()) {
 			//save data
 			$password   = $addslashes($_POST['form_password_hidden']);
-
-//			$sql	= "UPDATE ".TABLE_PREFIX."users SET password='".$password."', last_login=last_login, creation_date=creation_date WHERE user_id=".intval($_REQUEST['id']);
-//			$result = mysql_query($sql,$db);
 			$usersDAO->UpdateField(intval($_REQUEST['id']), 'password', $password);
-
-			//reset login attempts
-//			if ($result){
-//				$sql = "SELECT login FROM ".TABLE_PREFIX."users WHERE user_id=".intval($_REQUEST['id']);
-//				$result = mysql_query($sql, $db);
-//				$row = mysql_fetch_array($result);
-//				$sql = "DELETE FROM ".TABLE_PREFIX."user_login_attempt WHERE login='$row[login]'";
-//				mysql_query($sql, $db);
-//			}
 
 			//send confirmation email
 			require(TR_INCLUDE_PATH . 'classes/phpmailer/transformablemailer.class.php');

@@ -67,7 +67,7 @@ class TransformableMailer extends PHPMailer {
 
 		// attach the Transformable footer to the body first:
 		$this->Body .= 	"\n\n".'----------------------------------------------'."\n";
-		$this->Body .= _AT(array('sent_via_Transformable', TR_BASE_HREF));
+		$this->Body .= _AT(array('sent_via_transformable', TR_BASE_HREF));
 
 		$this->Body .= "\n"._AT('home').': http://atutor.ca';
 
