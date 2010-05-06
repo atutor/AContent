@@ -42,7 +42,7 @@ if (isset($_POST['cancel'])) {
 		$tmp_message  = _AT(array('password_request2',$reply_name, $row['login'], TR_PASSWORD_REMINDER_EXPIRY, $change_link));
 
 		//send email
-		require(TR_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		require(TR_INCLUDE_PATH . 'classes/phpmailer/transformablemailer.class.php');
 		$mail = new ATutorMailer;
 		$mail->From     = $_config['contact_email'];
 		$mail->AddAddress($row['email']);
@@ -139,7 +139,7 @@ if (isset($_POST['cancel'])) {
 //			}
 
 			//send confirmation email
-			require(TR_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+			require(TR_INCLUDE_PATH . 'classes/phpmailer/transformablemailer.class.php');
 
 			$tmp_message  = _AT(array('password_change_confirm', $_config['site_name'], $_base_href))."\n\n";
 
