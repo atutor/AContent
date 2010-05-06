@@ -43,7 +43,7 @@ if (isset($_POST['cancel'])) {
 
 		//send email
 		require(TR_INCLUDE_PATH . 'classes/phpmailer/transformablemailer.class.php');
-		$mail = new ATutorMailer;
+		$mail = new TransformableMailer;
 		$mail->From     = $_config['contact_email'];
 		$mail->AddAddress($row['email']);
 		$mail->Subject = $_config['site_name'] . ': ' . _AT('password_forgot');
@@ -143,7 +143,7 @@ if (isset($_POST['cancel'])) {
 
 			$tmp_message  = _AT(array('password_change_confirm', $_config['site_name'], $_base_href))."\n\n";
 
-			$mail = new ATutorMailer;
+			$mail = new TransformableMailer;
 			$mail->From     = $_config['contact_email'];
 			$mail->AddAddress($email);
 			$mail->Subject = $_config['site_name'] . ': ' . _AT('password_forgot');
