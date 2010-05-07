@@ -279,11 +279,6 @@ class LanguageManager {
 		$languageParser->parse($language_xml);
 		$languageEditor =& $languageParser->getLanguageEditor(0);
 
-		if ($languageEditor->getTransformableVersion() != VERSION) 
-		{
-				$msg->addError('LANG_WRONG_VERSION');
-		}
-
 		if ($languageManager->exists($languageEditor->getCode())) {
 			$msg->addError('LANG_EXISTS');
 		}
@@ -291,6 +286,13 @@ class LanguageManager {
 		if (!$msg->containsErrors()) {
 			$languageEditor->import($import_path . 'language_text.sql');
 			$msg->addFeedback('IMPORT_LANG_SUCCESS');
+			
+			$version_in_pack = $languageEditor->getTransformableVersion();
+			if ($version_in_pack != VERSION) 
+			{
+					$msg->addFEEDBACK(array('LANG_MISMATCH_VERSION', $version_in_pack, VERSION));
+			}
+
 		}
 
 		// remove the files:
