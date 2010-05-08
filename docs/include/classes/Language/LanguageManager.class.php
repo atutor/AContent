@@ -79,6 +79,7 @@ class LanguageManager {
 		foreach ($rows as $i => $row) {
 			$this->allLanguages[$row['language_code']][$row['charset']] = new Language($row);
 		}
+		$this->numLanguages = count($this->allLanguages);
 	}
 
 
@@ -252,6 +253,10 @@ class LanguageManager {
 		return $this->numEnabledLanguages;
 	}
 
+	function getNumLanguages() {
+		return $this->numLanguages;
+	}
+	
 	// public
 	// checks whether or not the language exists
 	function exists($code) {

@@ -31,10 +31,9 @@ else if ($_POST['delete'])
 {
 	global $msg;
 
-	if ($lang_code == DEFAULT_LANGUAGE_CODE)
-	{
-		$msg->addError(array('CANNOT_DEL_DEFAULT_LANG', DEFAULT_LANGUAGE_CODE));
-	}
+	if ($languageManager->getNumLanguages() == 1) {
+		$msg->addError('LAST_LANGUAGE');
+	} 
 	
 	if (!$msg->containsErrors())
 	{
