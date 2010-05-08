@@ -172,30 +172,7 @@ foreach ($this->top_level_pages as $page) {
     <?php }?>
     </div>
 
-    <!-- the sub navigation -->
-    <div id="sub-navigation">
-      <?php if ($this->sub_menus): ?>
-      <?php if (isset($this->back_to_page)): ?>
-      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<strong>'._AT('back_to').'</strong>'.' '.$this->back_to_page['title']; ?></a> | 
-      <?php endif; ?>
-	
-      <?php $num_pages = count($this->sub_menus); ?>
-      <?php for ($i=0; $i<$num_pages; $i++): ?>
-      <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
-      if ($sub_menu_url == $this->current_page): ?>
-      <strong><?php echo $this->sub_menus[$i]['title']; ?></strong>
-      <?php else: ?>
-      <a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a>
-      <?php endif; ?>
-      <?php if ($i < $num_pages-1): ?>
-      |
-      <?php endif; ?>
-      <?php endfor; ?>
-      <?php else: ?>
-      &nbsp;
-      <?php endif; ?>
-
-    </div>
+   
       <div class="search_top">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
         <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="16" />
@@ -314,7 +291,7 @@ foreach ($this->top_level_pages as $page) {
 	</ul>
 </div> -->
 
-<!--       <div id="subnavlistcontainer">
+       <div id="subnavlistcontainer">
         <div id="subnavbacktopage">
           <?php if (isset($this->back_to_page)): ?>
           <a href="<?php echo $this->back_to_page['url']; ?>">
@@ -336,10 +313,37 @@ foreach ($this->top_level_pages as $page) {
 	          <?php endif; ?>
           <?php endfor; ?>
 			</ul>
-      </div> -->
+      </div> 
 <?php endif; ?>
 <!-- the main navigation. in our case, tabs -->
 
 <?php 
 //} // end of else
 ?>
+ <!-- the sub navigation -->
+<div id="subnavlistcontainer">
+    <div id="sub-navigation">
+      <ul id="subnavlist">
+      <?php if ($this->sub_menus): ?>
+      <?php if (isset($this->back_to_page)): ?>
+      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<strong>'._AT('back_to').'</strong>'.' '.$this->back_to_page['title']; ?></a> | 
+      <?php endif; ?>
+	
+      <?php $num_pages = count($this->sub_menus); ?>
+      <?php for ($i=0; $i<$num_pages; $i++): ?>
+      <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
+      if ($sub_menu_url == $this->current_page): ?>
+      <li><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
+      <?php else: ?>
+      <li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
+      <?php endif; ?>
+      <?php if ($i < $num_pages-1): ?>
+      |
+      <?php endif; ?>
+      <?php endfor; ?>
+      <?php else: ?>
+      &nbsp;
+      <?php endif; ?>
+      </ul>
+    </div>
+</div>
