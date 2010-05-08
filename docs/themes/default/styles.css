@@ -1039,6 +1039,8 @@ pre.badgeSnippet {
 /* Liquid Round theme elements */
 
 #liquid-round {
+background-image:url('images/books_top.jpg');
+background-repeat:no-repeat;
 border:thin solid #cccccc;
 width:95%;
 margin-top:.5em;
