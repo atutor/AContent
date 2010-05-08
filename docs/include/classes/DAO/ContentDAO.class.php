@@ -35,7 +35,7 @@ class ContentDAO extends DAO {
 //		$text = $addslashes(strtolower(trim($text)));
 //		$head = $addslashes(strtolower(trim($head)));
 		
-		if ($this->isFieldsValid($course_id, $title))
+		if ($this->isFieldsValid('create', $course_id, $title))
 		{
 			/* insert into the db */
 			$sql = "INSERT INTO ".TABLE_PREFIX."content
@@ -63,11 +63,11 @@ class ContentDAO extends DAO {
 			               ".$formatting.",
 			               '".$keywords."',
 			               '".$content_path."', 
-			               '".$title."',
-			               '".$text."',
-			               '".$head."',
+			               '".$addslashes($title)."',
+			               '".$addslashes($text)."',
+			               '".$addslashes($head)."',
 			               ".$use_customized_head.",
-			               '".$test_message."',
+			               '".$addslashes($test_message)."',
 			               ".$allow_test_export.",
 			               ".$content_type.")";
 
@@ -88,7 +88,7 @@ class ContentDAO extends DAO {
 	}
 
 	/**
-	 * Update an existing user record
+	 * Update an existing content record
 	 * @access  public
 	 * @param   userID: user ID (1 [admin] or 2 [user])
 	 *          login: login name
@@ -97,52 +97,34 @@ class ContentDAO extends DAO {
 	 *          first_name: first name
 	 *          last_name: last name
 	 *          status
-	 * @return  user id, if successful
+	 * @return  true, if successful
 	 *          false and add error into global var $msg, if unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	public function Update($userID, $user_group_id, $login, $email, $first_name, $last_name, 
-	                       $is_author, $organization, $phone, $address, $city,
-	                       $province, $country, $postal_code, $status)
+	public function Update($content_id, $title, $text, $keywords, $formatting, 
+	                     $head, $use_customized_head, $test_message, 
+	                     $allow_test_export)
 	{
 		global $addslashes, $msg;
 
-		/* email check */
-		$login = $addslashes(strtolower(trim($login)));
-		$email = $addslashes(trim($email));
-		$first_name = $addslashes(str_replace('<', '', trim($first_name)));
-		$last_name = $addslashes(str_replace('<', '', trim($last_name)));
-		$organization = $addslashes(trim($organization));
-		$phone = $addslashes(trim($phone));
-		$address = $addslashes(trim($address));
-		$city = $addslashes(trim($city));
-		$province = $addslashes(trim($province));
-		$country = $addslashes(trim($country));
-		$postal_code = $addslashes(trim($postal_code));
-		
-		if ($this->isFieldsValid('update', $user_group_id,$login, $email,$first_name, $last_name,
-		                         $is_author, $organization, $phone, $address, $city,
-	                             $province, $country, $postal_code))
+		if ($this->isFieldsValid('update', $content_id, $title))
 		{
 			/* insert into the db */
-			$sql = "UPDATE ".TABLE_PREFIX."users
-			           SET login = '".$login."',
-			               user_group_id = '".$user_group_id."',
-			               first_name = '".$first_name."',
-			               last_name = '".$last_name."',
-			               email = '".$email."',
-			               is_author = ".$is_author.",
-			               organization = '".$organization."',
-			               phone = '".$phone."',
-			               address = '".$address."',
-			               city = '".$city."',
-			               province = '".$province."',
-			               country = '".$country."',
-			               postal_code = '".$postal_code."',
-			               status = '".$status."'
-			         WHERE user_id = ".$userID;
+			$sql = "UPDATE ".TABLE_PREFIX."content
+			           SET title = '".$addslashes($title)."',
+			               text = '".$addslashes($text)."',
+			               keywords = '".$addslashes($keywords)."',
+			               formatting = '".$addslashes($formatting)."',
+			               head = '".$addslashes($head)."',
+			               use_customized_head = ".$use_customized_head.",
+			               test_message = '".$addslashes($test_message)."',
+			               allow_test_export = ".$allow_test_export."
+			         WHERE content_id = ".$content_id;
 
 			return $this->execute($sql);
+		}
+		else {
+			return false;
 		}
 	}
 
@@ -235,20 +217,24 @@ class ContentDAO extends DAO {
 	/**
 	 * Validate fields preparing for insert and update
 	 * @access  private
-	 * @param   $course_id, $title
+	 * @param   $action_type: "create" or "update"
+	 *          $row_id: when action_type is "create", row_id is course_id
+	 *                   when action_type is "update", row_id is content_id
+	 *          $title: content title
 	 * @return  true    if update successfully
 	 *          false   if update unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	private function isFieldsValid($course_id, $title)
+	private function isFieldsValid($action_type, $row_id, $title)
 	{
 		global $msg;
 		
 		$missing_fields = array();
 		
-		if (intval($course_id) == 0)
+		if (intval($row_id) == 0)
 		{
-			$missing_fields[] = _AT('course_id');
+			if ($action_type == 'create') $missing_fields[] = _AT('course_id');
+			if ($action_type == 'update') $missing_fields[] = _AT('content_id');
 		}
 		if ($title == '')
 		{

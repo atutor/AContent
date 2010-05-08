@@ -238,73 +238,16 @@ class ContentManager
 		         WHERE ordering>=$ordering 
 		           AND content_parent_id=$content_parent_id 
 		           AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+		$this->contentDAO->execute($sql);
 
 		/* main topics all have minor_num = 0 */
-		$sql = "INSERT INTO ".TABLE_PREFIX."content
-		               (course_id,
-		                content_parent_id,
-		                ordering,
-		                last_modified,
-		                revision,
-		                formatting,
-		                head,
-		                use_customized_head,
-		                keywords,
-		                content_path,
-		                title,
-		                text,
-						test_message,
-						allow_test_export,
-						content_type)
-		        VALUES ($course_id, 
-		                $content_parent_id, 
-		                $ordering, 
-		                NOW(), 
-		                0, 
-		                $formatting, 
-		                '$head',
-		                $use_customized_head,
-		                '$keywords', 
-		                '', 
-		                '$title',
-		                '$text',
-						'$test_message',
-						$allow_test_export,
-						$content_type)";
-
-		$err = mysql_query($sql, $this->db);
-
-		/* insert the related content */
-		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
-		$result = mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
-		$cid = $row['insert_id'];
-
-		$sql = '';
-		if (is_array($related)) {
-			foreach ($related as $x => $related_content_id) {
-				$related_content_id = intval($related_content_id);
-
-				if ($related_content_id != 0) {
-					if ($sql != '') {
-						$sql .= ', ';
-					}
-					$sql .= '('.$cid.', '.$related_content_id.')';
-					$sql .= ', ('.$related_content_id.', '.$cid.')';
-				}
-			}
-
-			if ($sql != '') {
-				$sql	= 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES '.$sql;
-				$result	= mysql_query($sql, $this->db);
-			}
-		}
-
+		$cid = $this->contentDAO->Create($course_ID, $content_parent_id, $ordering, 0, $formatting,
+		                          $keywords, '', $title, $text, $head, $head, $use_customized_head,
+		                          $test_message, $allow_test_export, $content_type);
 		return $cid;
 	}
 	
-	function editContent($content_id, $title, $text, $keywords,$related, $formatting, 
+	function editContent($content_id, $title, $text, $keywords, $formatting, 
 	                     $head, $use_customized_head, $test_message, 
 	                     $allow_test_export) {
 	    global $_current_user;
@@ -313,40 +256,8 @@ class ContentManager
 			return FALSE;
 		}
 
-		/* update the title, text of the newly moved (or not) content */
-		$sql	= "UPDATE ".TABLE_PREFIX."content 
-		              SET title='$title', head='$head', use_customized_head=$use_customized_head, 
-		                  text='$text', keywords='$keywords', formatting=$formatting, 
-		                  revision=revision+1, last_modified=NOW(),  
-		                  test_message='$test_message', allow_test_export=$allow_test_export 
-		            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-
-		/* update the related content */
-		$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
-		$sql = '';
-		if (is_array($related)) {
-			foreach ($related as $x => $related_content_id) {
-				$related_content_id = intval($related_content_id);
-
-				if ($related_content_id != 0) {
-					if ($sql != '') {
-						$sql .= ', ';
-					}
-					$sql .= '('.$content_id.', '.$related_content_id.')';
-					$sql .= ', ('.$related_content_id.', '.$content_id.')';
-				}
-			}
-
-			if ($sql != '') {
-				/* delete the old related content */
-				$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
-
-				/* insert the new, and the old related content again */
-				$sql	= 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES '.$sql;
-				$result	= mysql_query($sql, $this->db);
-			}
-		}
+		$this->contentDAO->Update($content_id, $title, $text, $keywords, $head, $use_customized_head,
+		                          $test_message, $allow_test_export);
 	}
 
 	function moveContent($content_id, $new_content_parent_id, $new_content_ordering) {

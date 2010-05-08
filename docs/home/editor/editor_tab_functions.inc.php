@@ -134,7 +134,7 @@ function save_changes($redir, $current_tab) {
 		if ($_POST['cid']) {
 			/* editing an existing page */
 			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], 
-			                                    $_POST['keywords'], $_POST['related'], $_POST['formatting'], 
+			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $release_date, $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message'], $_POST['allow_test_export']);
 			$cid = $_POST['cid'];

@@ -779,7 +779,7 @@ acronym {
   cursor: help;
 }
 
-required {
+.required {
   font-weight: bold;
   color: red;
   padding-right: 2px;

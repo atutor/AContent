@@ -30,7 +30,7 @@ $_config_defaults['latex_server']       = 'http://www.atutor.ca/cgi/mimetex.cgi?
 $_config_defaults['pref_defaults']      = 'a:1:{s:10:"PREF_THEME";s:7:"default";}';
 $_config = $_config_defaults;
 
-define('VERSION',		'0.1');
+define('VERSION',		'1.0');
 
 define('UPDATE_SERVER', 'http://update.atutor.ca');
 define('SVN_TAG_FOLDER', 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/');
