@@ -189,6 +189,7 @@ if ($current_tab == 0 || $current_tab == 2)
 
 $pid = intval($_REQUEST['pid']);
 ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
 
@@ -406,7 +407,7 @@ $pid = intval($_REQUEST['pid']);
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
 </div>
-<br/>
+
 <div class="input-form" style="width: 95%;">
 
 	<?php if ($changes_made): ?>
