@@ -1361,3 +1361,32 @@ table.etabbed-table input[type=submit] {
 .editor_tab input[type=submit]{
 	height:1.2em;
 }
+
+
+.shortcut_icon{
+	border:0;
+	vertical-align:middle;
+}
+div#shortcuts{
+	border-left:thin solid #cccccc;
+	border-right:thin solid #cccccc;
+	border-bottom:thin solid #cccccc;
+	border-radius: 0em 0em .5em .5em;;
+	-moz-border-radius: 0em 0em .5em .5em;
+	float:right;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
+	margin-right:2em;
+	padding:.1em;
+}
+#shortcuts ul {
+	position: relative;
+	margin-top: 0pt;
+	margin-bottom: 0pt;
+	margin-left: 0pt;
+	list-style-type:  none;
+	padding-left: 0pt; 
+}
+#shortcuts li{
+	display: inline;
+}
