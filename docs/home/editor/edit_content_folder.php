@@ -192,8 +192,8 @@ if ($cid > 0)
 		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'home/imscp/ims_export.php?_cid='.$cid, 'icon' => $_base_href . 'images/download.png');
 	}
 	
-	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/folder_new.gif');
+	if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+//		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/folder_new.gif');
 	
 		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 			$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
@@ -202,7 +202,7 @@ if ($cid > 0)
 		
 		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id.'pid='.$cid);
 		
-		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/page_add.gif');
+//		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/page_add.gif');
 		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
 			$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
 				'home/editor/edit_content.php?_course_id='.$_course_id.SEP.'pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 'icon' => $_base_href . 'images/page_add_sibling.gif');
