@@ -98,6 +98,48 @@ if (isset($course_base_href) || isset($content_base_href)) {
 	}
 }
 
+// Setup array of content tools for shortcuts tool bar.
+
+$shortcuts = array();
+if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
+      || ($_SESSION['packaging'] == 'all'))
+	  || (isset($_current_user) && $_current_user->isAuthor($_course_id))) {
+
+	$shortcuts[] = array(
+		  'title' => _AT('export_content'), 
+		  'url' => $_base_href . 'tools/ims/ims_export.php?cid='.$cid,
+		  'icon' => $_base_href . 'images/download.png');
+}
+
+if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+	$shortcuts[] = array(
+		  'title' => _AT('edit_this_page'),   
+		   'url' => $_base_href . 'home/editor/edit_content.php?_cid='.$cid,
+		  'icon' => $_base_href . 'images/medit.gif');
+
+	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
+		  $shortcuts[] = array(
+		  'title' => _AT('add_sibling_folder'), 
+		  'url' => $_base_href .
+			'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id,
+		   'icon' => $_base_href . 'images/folder_new_sibling.gif');
+	}
+	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
+		$shortcuts[] = array(
+		  'title' => _AT('add_sibling_page'), 
+		  'url' => $_base_href .
+			'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id,
+		  'icon' => $_base_href . 'images/page_add_sibling.gif');
+	}
+	$shortcuts[] = array(
+		  'title' => _AT('delete_this_page'), 	
+		  'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid,
+		  'icon' => $_base_href . 'images/page_delete.gif');
+}
+$savant->assign('shortcuts', $shortcuts);
+
+
+
 $savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
