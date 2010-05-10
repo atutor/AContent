@@ -44,9 +44,9 @@ class A4aImport extends A4a {
 
 					//get primary resource type
 					$resources_attrs = $resource['access_stmt_originalAccessMode'];
-
-					$attrs = $this->toResourceTypeId($resources_attrs);
 					
+					$attrs = $this->toResourceTypeId($resources_attrs);
+
 					//insert primary resource type associations
 					foreach ($attrs as $resource_type_id){
 						$this->setPrimaryResourceType($primary_id, $resource_type_id);
@@ -60,11 +60,13 @@ class A4aImport extends A4a {
 						//we can safely take it out.
 						//@edited Dec 6th, imscc import uses relative paths, ims doesn't.
 						$secondary_files = $items[$this->relative_path.$secondary_resource];
+						
 						if (empty($secondary_files)){
 						    //tweak: if this is empty, then most likely it is an ims import.
 						    $secondary_resource = preg_replace('/^\.\.\//', '', $secondary_resource);
 						    $secondary_files = $items[$this->relative_path.$secondary_resource];
 						}
+						
 						//check if this secondary file is the adaptation of 
 						// this primary file 
 						foreach($secondary_files as $secondary_file){

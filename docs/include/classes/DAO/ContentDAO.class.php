@@ -28,13 +28,8 @@ class ContentDAO extends DAO {
 	                       $content_path, $title, $text, $head, $use_customized_head, $test_message, 
 	                       $allow_test_export, $content_type)
 	{
-//		global $addslashes;
-//
-//		$keywords = $addslashes(strtolower(trim($keywords)));
-//		$title = $addslashes(strtolower(trim($title)));
-//		$text = $addslashes(strtolower(trim($text)));
-//		$head = $addslashes(strtolower(trim($head)));
-		
+		global $addslashes, $msg;
+
 		if ($this->isFieldsValid('create', $course_id, $title))
 		{
 			/* insert into the db */
@@ -61,7 +56,7 @@ class ContentDAO extends DAO {
 			               '".$last_modified."', 
 			               ".$revision.",
 			               ".$formatting.",
-			               '".$keywords."',
+			               '".$addslashes($keywords)."',
 			               '".$content_path."', 
 			               '".$addslashes($title)."',
 			               '".$addslashes($text)."',
@@ -114,7 +109,7 @@ class ContentDAO extends DAO {
 			           SET title = '".$addslashes($title)."',
 			               text = '".$addslashes($text)."',
 			               keywords = '".$addslashes($keywords)."',
-			               formatting = '".$addslashes($formatting)."',
+			               formatting = '".$formatting."',
 			               head = '".$addslashes($head)."',
 			               use_customized_head = ".$use_customized_head.",
 			               test_message = '".$addslashes($test_message)."',

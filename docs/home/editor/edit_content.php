@@ -108,11 +108,11 @@ if($current_tab == 0) {
 }
 
 if ($cid) {
-	$content_row = $contentManager->getContentPage($cid);
+	if (isset($contentManager)) $content_row = $contentManager->getContentPage($cid);
 
-	if (!$content_row) {
+	if (!$content_row || !isset($contentManager)) {
 		require(TR_INCLUDE_PATH.'header.inc.php');
-		$msg->printErrors('PAGE_NOT_FOUND');
+		$msg->printErrors('MISSING_CONTENT');
 		require (TR_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}

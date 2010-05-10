@@ -21,6 +21,10 @@ define('TR_INCLUDE_PATH', '../../include/');
 // when $SESSION['user_id'] is not set
 $oauth_import = false;  // whether the import request is from oauth web service
 
+// By default, enable the import of associated tests and a4a objects
+if (!isset($_POST['allow_test_import'])) $_POST['allow_test_import'] = 1;
+if (!isset($_POST['allow_a4a_import'])) $_POST['allow_a4a_import'] = 1;
+
 // the import request is from oauth web service, find the user id from the given token
 if (isset($_GET['oauth_token']))
 {
@@ -809,17 +813,17 @@ $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
 
 if ($ext != 'zip') {
-	debug($ext);debug('not zip');exit;
+//	debug($ext);debug('not zip');exit;
 	$msg->addError('IMPORTDIR_IMS_NOTVALID');
 } else if ($_FILES['file']['error'] == 1) {
-	debug('file error is 1');exit;
+//	debug('file error is 1');exit;
 	$errors = array('FILE_MAX_SIZE', ini_get('upload_max_filesize'));
 	$msg->addError($errors);
 } else if ( !$_FILES['file']['name'] || (!is_uploaded_file($_FILES['file']['tmp_name']) && !$_REQUEST['url'])) {
-	debug('file not selected');exit;
+//	debug('file not selected');exit;
 	$msg->addError('FILE_NOT_SELECTED');
 } else if ($_FILES['file']['size'] == 0) {
-	debug('file size 0');exit;
+//	debug('file size 0');exit;
 	$msg->addError('IMPORTFILE_EMPTY');
 } 
 $msg->printAll();
@@ -1026,16 +1030,17 @@ if (!isset($_SESSION['course_id']))
 		$course_primary_lang = $langcode_and_charset[0];
 	}
 	
-	$course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $course_title, $course_description, 
+	$_course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $course_title, $course_description, 
 	             '', '', '', '', $course_primary_lang, '', '');
 	
-	check_available_size($course_id);
+	check_available_size($_course_id);
 
 	// insert author role into table "user_courses"
 	$userCoursesDAO = new UserCoursesDAO();
-	$userCoursesDAO->Create($_SESSION['user_id'], $course_id, TR_USERROLE_AUTHOR, 0);
+	$userCoursesDAO->Create($_SESSION['user_id'], $_course_id, TR_USERROLE_AUTHOR, 0);
 }
-else $course_id = $_SESSION['course_id'];
+else $_course_id = $_SESSION['course_id'];
+
 // end of added by Cindy Li on Jan 10, 2010
 
 /* generate a unique new package base path based on the package file name and date as needed. */
@@ -1074,7 +1079,7 @@ if ($xml_base_path) {
 //$result = mysql_query($sql, $db);
 //$row	= mysql_fetch_assoc($result);
 //$order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
-$order_offset = $contentDAO->getMaxOrdering($course_id, 0);
+$order_offset = $contentDAO->getMaxOrdering($_course_id, 0);
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
 $items = rehash($items);
@@ -1327,28 +1332,29 @@ foreach ($items as $item_id => $content_info)
 		$content_folder_type = CONTENT_TYPE_WEBLINK;
 		$content_formatting = 2;
 	}
-	$head = addslashes($head);
-	$content_info['title'] = addslashes($content_info['title']);
-	$content_info['test_message'] = addslashes($content_info['test_message']);
+//	$head = addslashes($head);
+//	$content_info['title'] = addslashes($content_info['title']);
+//	$content_info['test_message'] = addslashes($content_info['test_message']);
 
 	//if this file is a test_xml, create a blank page instead, for imscc.
 	if (preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href']) 
 		|| preg_match('/imsqti\_(.*)/', $content_info['type'])) {
 		$content = ' ';
-	} else {
-		$content = addslashes($content);
-	}
+	} 
+//	else {
+//		$content = addslashes($content);
+//	}
 
 	//check for content_type
 	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
 		$content_folder_type = (!isset($content_info['type'])?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
-
-	$items[$item_id]['real_content_id'] = $contentDAO->Create($course_id, intval($content_parent_id), 
+	
+	$items[$item_id]['real_content_id'] = $contentDAO->Create($_course_id, intval($content_parent_id), 
 	                    ($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1),
 	                    $last_modified, 0, $content_formatting, "", $content_info['new_path'], $content_info['title'],
 	                    $content, $head, 1, $content_info['test_message'], 0, $content_folder_type);
-	
+
 //	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
 //	      . '(course_id, 
 //	          content_parent_id, 
@@ -1489,7 +1495,7 @@ if ($package_base_path == '.') {
 }
 
 // create course directory
-$course_dir = TR_CONTENT_DIR.$course_id.'/';
+$course_dir = TR_CONTENT_DIR.$_course_id.'/';
 if (!is_dir($course_dir)) {
 	if (!@mkdir($course_dir, 0700)) {
 		$msg->addError('IMPORTDIR_FAILED');
@@ -1534,9 +1540,10 @@ if (!$msg->containsErrors()) {
 }
 
 if ($oauth_import) {
-	echo 'course_id='.$course_id;
+	echo 'course_id='.$_course_id;
 } else {
-	header('Location: ../course/index.php?_course_id='.$course_id);
+//	debug('../course/index.php?_course_id='.$_course_id);exit;
+	header('Location: ../course/index.php?_course_id='.$_course_id);
 }
 exit;
 

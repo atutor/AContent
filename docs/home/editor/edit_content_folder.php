@@ -14,15 +14,12 @@ define('TR_INCLUDE_PATH', '../../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 
-global $_content_id, $_cid;
+global $_content_id, $_cid, $contentManager;
 $cid = $_cid;
 
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
 
-if ($cid > 0)
-{
-	$content_row = $contentManager->getContentPage($cid);
-}
+if ($cid > 0 && isset($contentManager)) $content_row = $contentManager->getContentPage($cid);
 
 // save changes
 if ($_POST['submit'])
@@ -105,14 +102,14 @@ if ($_POST['submit'])
 
 if ($cid > 0)
 { // edit existing content folder
-	if (!$content_row) {
+	if (!$content_row || !isset($contentManager)) {
 		$_pages['home/editor/edit_content_folder.php']['title_var'] = 'missing_content';
 		$_pages['home/editor/edit_content_folder.php']['parent']    = 'index.php';
 		$_pages['home/editor/edit_content_folder.php']['ignore']	= true;
 
 		require(TR_INCLUDE_PATH.'header.inc.php');
 	
-		$msg->addError('PAGE_NOT_FOUND');
+		$msg->addError('MISSING_CONTENT');
 		$msg->printAll();
 	
 		require (TR_INCLUDE_PATH.'footer.inc.php');
@@ -309,7 +306,7 @@ if ($cid > 0)
 //$_POST['min']= substr($release_date, 14, 2);
 //
 if ($pid > 0) $savant->assign('pid', $pid);
-
+$tools_shortcuts = $shortcuts;
 require(TR_INCLUDE_PATH.'header.inc.php');
 $savant->display('home/editor/edit_content_folder.tmpl.php');
 require(TR_INCLUDE_PATH.'footer.inc.php');

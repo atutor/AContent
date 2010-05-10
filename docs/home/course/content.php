@@ -23,9 +23,9 @@ if ($cid == 0) {
 	exit;
 }
 /* show the content page */
-$content_row = $contentManager->getContentPage($cid);
+if (isset($contentManager)) $content_row = $contentManager->getContentPage($cid);
 
-if (!$content_row) {
+if (!$content_row || !isset($contentManager)) {
 	$_pages['home/course/content.php']['title_var'] = 'missing_content';
 	$_pages['home/course/content.php']['parent']    = 'home/index.php';
 	$_pages['home/course/content.php']['ignore']	= true;
@@ -33,7 +33,7 @@ if (!$content_row) {
 
 	require(TR_INCLUDE_PATH.'header.inc.php');
 
-	$msg->addError('PAGE_NOT_FOUND');
+	$msg->addError('MISSING_CONTENT');
 	$msg->printAll();
 
 	require (TR_INCLUDE_PATH.'footer.inc.php');

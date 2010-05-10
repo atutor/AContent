@@ -18,6 +18,8 @@ if (isset($_current_user) && $_current_user->isAuthor())
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_course'); ?></legend>
 	<form name="form1" method="post" action="home/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo TR_BASE_HREF; ?>home/prog.php');">
+		<input type="hidden" name="allow_test_import" value="1" />
+		<input type="hidden" name="allow_a4a_import" value="1" />
 		<table class="form_data">
 		<tr><td>
 		<?php echo _AT('create_course_1'); ?>

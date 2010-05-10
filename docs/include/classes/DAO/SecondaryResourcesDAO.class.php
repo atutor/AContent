@@ -42,7 +42,7 @@ class SecondaryResourcesDAO extends DAO {
 		                SET primary_resource_id=$primary_resource_id, 
 		                    secondary_resource='$file_name', 
 		                    language_code='$lang'";
-	    return $this->execute($sql);
+		return $this->execute($sql);
 	}
 	
 	/**

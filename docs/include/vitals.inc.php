@@ -350,7 +350,8 @@ function debug_to_log($var, $log='') {
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
 
 function my_add_null_slashes( $string ) {
-    return mysql_real_escape_string(stripslashes($string));
+//    return mysql_real_escape_string(stripslashes($string));
+    return addslashes(stripslashes($string));
 }
 
 function my_null_slashes($string) {

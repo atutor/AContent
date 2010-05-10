@@ -199,9 +199,11 @@ class QTIImport {
 	function importTest($title='') {
 		global $_course_id;
 		
+		$title = ($title=='')?$this->title:$title;
+		
 		$testsDAO = new TestsDAO();
 		$tid = $testsDAO->Create($_course_id, 
-								$this->title, 
+								$title, 
 								$test_obj['description']);
 
 //			$sql_params = array (	$_SESSION['course_id'], 

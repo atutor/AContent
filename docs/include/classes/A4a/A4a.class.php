@@ -36,7 +36,7 @@ class A4a {
 
 		//if this is the first time calling this function, grab the list from db
 		if (empty($resource_types)){
-			include(TR_INCLUDE_PATH.'classes/DAO/ResourceTypesDAO.class.php');
+			include_once(TR_INCLUDE_PATH.'classes/DAO/ResourceTypesDAO.class.php');
 			$resourceTypesDAO = new ResourceTypesDAO();
 			$rows = $resourceTypesDAO->getAll();
 			
@@ -57,7 +57,7 @@ class A4a {
 	function getPrimaryResources(){
 		$pri_resources = array(); // cid=>[resource, language code]
 
-		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
 		$primaryResourcesDAO = new PrimaryResourcesDAO();
 		$rows = $primaryResourcesDAO->getByContent($this->cid);
 		
@@ -84,7 +84,7 @@ class A4a {
 
 		$pri_resources_types = array();	// cid=>[type id]+
 		
-		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
 		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
 		$rows = $primaryResourcesTypesDAO->getByResourceID($pri_resource_id);
 		
@@ -109,7 +109,7 @@ class A4a {
 		}
 
 		$sec_resources = array(); // cid=>[resource, language code]
-		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
 		$secondaryResourcesDAO = new SecondaryResourcesDAO();
 		$rows = $secondaryResourcesDAO->getByPrimaryResourceID($pri_resource_id);
 		
@@ -135,7 +135,7 @@ class A4a {
 		}
 
 		$sec_resources_types = array();	// cid=>[type id]+
-		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesTypesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesTypesDAO.class.php');
 		$secondaryResourcesTypesDAO = new SecondaryResourcesTypesDAO();
 		$rows = $secondaryResourcesTypesDAO->getByResourceID($sec_resource_id);
 		
@@ -151,7 +151,7 @@ class A4a {
 	// Insert primary resources into the db
 	// @return primary resource id.
 	function setPrimaryResource($content_id, $file_name, $lang){
-		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
 		$primaryResourcesDAO = new PrimaryResourcesDAO();
 		
 		if ($primaryResourcesDAO->Create($content_id, $file_name, $lang)){
@@ -162,7 +162,7 @@ class A4a {
 
 	// Insert primary resource type
 	function setPrimaryResourceType($primary_resource_id, $type_id){
-		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
 		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
 		$primaryResourcesTypesDAO->Create($primary_resource_id, $type_id);
 	}
@@ -170,7 +170,7 @@ class A4a {
 	// Insert secondary resource
 	// @return secondary resource id
 	function setSecondaryResource($primary_resource_id, $file_name, $lang){
-		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
 		$secondaryResourcesDAO = new SecondaryResourcesDAO();
 		if ($secondaryResourcesDAO->Create($primary_resource_id, $file_name, $lang)){
 			return mysql_insert_id();
@@ -180,7 +180,7 @@ class A4a {
 
 	// Insert secondary resource
 	function setSecondaryResourceType($secondary_resource, $type_id){
-		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesTypesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesTypesDAO.class.php');
 		$secondaryResourcesTypesDAO = new SecondaryResourcesTypesDAO();
 		$secondaryResourcesTypesDAO->Create($secondary_resource, $type_id);
 	}
@@ -194,7 +194,7 @@ class A4a {
 
 	// Delete all materials associated with this content
 	function deleteA4a(){
-		include(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
 		$primaryResourcesDAO = new PrimaryResourcesDAO();
 		$rows = $primaryResourcesDAO->Delete($this->cid);
 	}
