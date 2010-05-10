@@ -148,30 +148,6 @@ foreach ($this->top_level_pages as $page) {
 -->
 	<!-- the sub navigation and guide -->
   <div id="sub-menu">
-    <div id="course-tools">
-    <!-- guide -->
-    <?php if (isset($this->guide)) {?>
-    <!-- <div> -->
-      <a href="<?php echo $this->guide; ?>" onclick="popup('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
-    <!-- </div> -->
-    <?php }?>
-
-	<?php if (isset($this->course_id) && $this->course_id > 0) {?>
-    <!--  <div id="course-tools">-->
-      <?php if ($this->isAuthor) { // only for authors ?>
-      <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0" />
-      </a> &nbsp;
-      <a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0" />
-      </a> &nbsp;
-      <?php }?>
-      <a href="<?php echo $this->base_path; ?>home/index.php">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0" />
-      </a>
-    <?php }?>
-    </div>
-
    
       <div class="search_top">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
@@ -198,6 +174,40 @@ foreach ($this->top_level_pages as $page) {
   <div id="ajax-msg">
   </div>
 
+      <?php if ($this->shortcuts): ?>
+      <div id="shortcuts">
+	      <ul>
+		      <?php foreach ($this->shortcuts as $link): ?>
+			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+		      <?php endforeach; ?>
+	      </ul>
+      </div>
+      <?php endif; ?>
+      </div>
+
+ <div id="guide_box">
+    <!-- guide -->
+    <?php if (isset($this->guide)) {?>
+    <!-- <div> -->
+      <a href="<?php echo $this->guide; ?>" onclick="popup('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
+    <!-- </div> -->
+    <?php }?>
+
+	<?php if (isset($this->course_id) && $this->course_id > 0) {?>
+    <!--  <div id="course-tools">-->
+      <?php if ($this->isAuthor) { // only for authors ?>
+      <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0" />
+      </a> &nbsp;
+      <a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0" />
+      </a> &nbsp;
+      <?php }?>
+      <a href="<?php echo $this->base_path; ?>home/index.php">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0" />
+      </a>
+    <?php }?>
+    </div>
 <?php  
 //if ($this->course_id > 0) {
 ?>
@@ -338,7 +348,6 @@ foreach ($this->top_level_pages as $page) {
       <li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
       <?php endif; ?>
       <?php if ($i < $num_pages-1): ?>
-      |
       <?php endif; ?>
       <?php endfor; ?>
       <?php else: ?>

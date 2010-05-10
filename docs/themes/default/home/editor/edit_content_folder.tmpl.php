@@ -16,7 +16,7 @@ global $onload;
 $onload = 'document.form.title.focus();';
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'].'?_cid='.$this->cid; if ($this->pid > 0) echo '?pid='.$this->pid;?>" method="post" name="form"> 
-<div class="input-form" style="width:95%;margin-left:1.5em;">
+<div class="input-form" style="width:95%;margin-left:1.5em;">aaaa
 <!-- <?php
 if ($this->shortcuts): 
 ?>

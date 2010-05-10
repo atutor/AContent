@@ -57,10 +57,6 @@ if($languageManager->getNumEnabledLanguages() > 1)
         <a href="documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
         <br /><br />
       </div>
-
-      <div style="margin-left: auto; margin-right: auto; width: 6em;">
-        <a href="http://atrc.utoronto.ca/"><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/atrclogo.gif" width="84" height="52" alt="Adaptive Technology Resource Centre" title="Adaptive Technology Resource Centre" border="0" /></a>
-      </div>
 		
       <div style="margin-left:auto; margin-right:auto; width:20em;">
         <small><?php if (isset($this->course_copyright)) echo $this->course_copyright.'<br />'; echo _AT("copyright"); ?></small><br />
