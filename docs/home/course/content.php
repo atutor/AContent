@@ -166,7 +166,7 @@ if (isset($_SESSION['user_id'])) ContentUtility::saveLastCid($cid);
 if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
-
+/*
 $shortcuts = array();
 if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
       || ($_SESSION['packaging'] == 'all'))
@@ -191,7 +191,7 @@ if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
 	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid);
 }
 $savant->assign('shortcuts', $shortcuts);
-
+*/
 //if it has test and forum associated with it, still display it even if the content is empty
 if ($content_row['text'] == '' && empty($content_test_ids)){
 	$msg->addInfo('NO_PAGE_CONTENT');
