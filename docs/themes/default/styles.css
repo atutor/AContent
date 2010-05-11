@@ -19,6 +19,7 @@ body {
   font-family: Verdana Arial, sans-serif;
   margin:0px;
   background-color: white;
+  background-image:url('images/texture_bg.png');
 }
 
 p {
@@ -1054,6 +1055,7 @@ pre.badgeSnippet {
 /* Liquid Round theme elements */
 
 #liquid-round {
+background-color:#ffffff;
 background-image:url('images/books_top.jpg');
 background-repeat:repeat-x;
 border:thin solid #cccccc;
