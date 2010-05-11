@@ -97,12 +97,12 @@ function encrypt_password()
 
 <?php if ($this->use_captcha) { ?>
 
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="secret"><?php echo _AT('type_code'); ?></label></dt>
+	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="secret"><?php echo _AT('captcha'); ?></label></dt>
 	  <dd><input id="secret" name="secret" type="text" size="6" maxlength="6" value="" /></dd>
 	  <p><img src="<?php echo TR_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" id="simage" align="left" />
 	      <a href="<?php echo TR_INCLUDE_PATH; ?>securimage/securimage_play.php" title="<?php echo _AT('audible_captcha'); ?>"><img src="<?php echo TR_INCLUDE_PATH; ?>securimage/images/audio_icon.gif" alt="<?php echo _AT('audible_captcha'); ?>" onclick="this.blur()" align="top" border="0"></a>
 	      <a href="#" title="<?php echo _AT('refresh_image'); ?>" onclick="document.getElementById('simage').src = '<?php echo TR_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="<?php echo TR_INCLUDE_PATH; ?>securimage/images/refresh.gif" alt="<?php echo _AT('refresh_image'); ?>" onclick="this.blur()" align="bottom" border="0"></a></p>
-	  <p><small><?php echo _AT('image_validation_text'); ?><?php echo _AT('image_validation_text2'); ?></small></p>
+	  <p><br /><small><?php echo _AT('image_validation_text'); ?> <?php echo _AT('image_validation_text2'); ?></small></p>
 
 <?php } ?>
 
