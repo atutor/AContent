@@ -22,6 +22,7 @@ define('TR_INCLUDE_PATH', '../../include/');
 $oauth_import = false;  // whether the import request is from oauth web service
 
 // By default, enable the import of associated tests and a4a objects
+
 if (!isset($_POST['allow_test_import'])) $_POST['allow_test_import'] = 1;
 if (!isset($_POST['allow_a4a_import'])) $_POST['allow_a4a_import'] = 1;
 
@@ -541,12 +542,12 @@ function rehash($items){
 			}
 			$items[$current_identifier]['new_path'] = implode('/', $temp_path);	
 */
-			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
+			if (isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
-				$items[$current_identifier]['tests'][] = $attrs['href'];
+				$items[$current_identifier]['tests'][] = $attrs['href'];debug('in tests');
 			} 
-			if (	isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
-				$items[$current_identifier]['a4a_import_enabled'] = true;
+			if (isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
+				$items[$current_identifier]['a4a_import_enabled'] = true;debug('in a4a');
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -1083,7 +1084,7 @@ $order_offset = $contentDAO->getMaxOrdering($_course_id, 0);
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
 $items = rehash($items);
-//debug($items);
+//debug($items,'harris');exit;
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1
@@ -1542,8 +1543,7 @@ if (!$msg->containsErrors()) {
 if ($oauth_import) {
 	echo 'course_id='.$_course_id;
 } else {
-//	debug('../course/index.php?_course_id='.$_course_id);exit;
-	header('Location: ../course/index.php?_course_id='.$_course_id);
+//	header('Location: ../course/index.php?_course_id='.$_course_id);
 }
 exit;
 

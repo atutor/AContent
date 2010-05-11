@@ -154,8 +154,18 @@ class ContentDAO extends DAO {
 	 */
 	public function Delete($contentID)
 	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ".$contentID;
-		return $this->execute($sql);
+		global $msg;
+		
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+		$primaryResourcesDAO = new PrimaryResourcesDAO();
+		if ($primaryResourcesDAO->Delete($contentID)) {
+			$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ".$contentID;
+			return $this->execute($sql);
+		}
+		else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 
 	/**
