@@ -431,7 +431,7 @@ h1 {
 div#sub-menu {
   color: #555;
   background-color:#eeeeee; 
-  padding-top: 5px; 
+  padding-top: 3px; 
   font-size:0.85em; 
   border-bottom:1px solid #cccccc;
   height:2em;
@@ -911,10 +911,8 @@ div#menutoggle{
 div.topnavlistcontainer {
   margin-left:auto; 
   margin-right:auto;
-  margin-bottom:1.2em;
-/*  border: thin #CCCCCC solid;*/
+  margin-bottom:1.1em;
   line-height:100%;
-/*  background-color: #365D95;*/
   background-position:  top right;
   background-repeat: no-repeat;
 }
