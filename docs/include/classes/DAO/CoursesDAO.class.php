@@ -140,6 +140,8 @@ class CoursesDAO extends DAO {
 	public function Delete($courseID)
 	{
 		require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+		$contentDAO = new ContentDAO();
 		
 		unset($_SESSION['s_cid']);
 		
@@ -155,10 +157,6 @@ class CoursesDAO extends DAO {
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id = ".$courseID;
 		$this->execute($sql);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests_results 
-		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
-		$this->execute($sql);
-		
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
 		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
 		$this->execute($sql);
@@ -167,17 +165,19 @@ class CoursesDAO extends DAO {
 		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
 		$this->execute($sql);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests_answers 
-		         WHERE question_id in (SELECT question_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
-		$this->execute($sql);
-		
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE course_id = ".$courseID;
 		$this->execute($sql);
 				
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID;
 		$this->execute($sql);
 		
-		// delete content
+		// loop thru content to delete using ContentDAO->Delete(), which deletes a4a objects as well
+		$content_rows = $contentDAO->getContentByCourseID($courseID);
+		if (is_array($content_rows)) {
+			foreach ($content_rows as $content) {
+				$contentDAO->Delete($content['content_id']);
+			}
+		}
 		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id = ".$courseID;
 		$this->execute($sql);
 		
