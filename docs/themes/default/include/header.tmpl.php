@@ -77,6 +77,9 @@ $starttime = $mtime;
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	<!--[if IE]>
+	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
+	<![endif]-->
 <?php echo $this->rtl_css; ?>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
@@ -88,7 +91,6 @@ $starttime = $mtime;
 <body onload="<?php echo $this->onload; ?>">
 
 <div id="liquid-round">
-  <div class="top"><span></span></div>
   
   <div class="center-content">
 <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
@@ -315,26 +317,32 @@ foreach ($this->top_level_pages as $page) {
  <!-- the sub navigation -->
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
-      <ul id="subnavlist">
-      <?php if ($this->sub_menus): ?>
-      <?php if (isset($this->back_to_page)): ?>
-      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<strong>'._AT('back_to').'</strong>'.' '.$this->back_to_page['title']; ?></a> | 
-      <?php endif; ?>
-	
+
+      <?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
+
+	<ul id="subnavlist">
+	  <?php if (isset($this->back_to_page)): ?>
+	  <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<strong>'._AT('back_to').'</strong>'.' '.$this->back_to_page['title']; ?></a> | 
+	  <?php endif; ?>
+	  
       <?php $num_pages = count($this->sub_menus); ?>
       <?php for ($i=0; $i<$num_pages; $i++): ?>
-      <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
+	  <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
       if ($sub_menu_url == $this->current_page): ?>
-      <li><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
+	<li><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
       <?php else: ?>
-      <li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
+	<li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
       <?php endif; ?>
       <?php if ($i < $num_pages-1): ?>
       <?php endif; ?>
       <?php endfor; ?>
       <?php else: ?>
       &nbsp;
+
       <?php endif; ?>
+      <?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
       </ul>
+      <?php endif; ?>
+
     </div>
 </div>
