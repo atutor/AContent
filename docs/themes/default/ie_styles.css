@@ -1,1 +1,27 @@
 /* IE Styles */
+
+
+.center-content {
+  margin:-1px 0 -21px 0;
+
+}
+
+
+.search_top{
+white-space:nowrap;
+font-size:.8em;
+width:23em;
+float:right;
+margin-right:2em;
+
+}
+
+dl.form_layout dt{
+text-align:center; 
+float:left;
+}
+
+dl.form_layout dd{
+margin-left: 12em;
+
+}
