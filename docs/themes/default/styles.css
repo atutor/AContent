@@ -454,6 +454,7 @@ height:1.7em;
 ul#subnavlist {
 	padding-top: 3px;
 	margin-top: 0px;
+	margin-left:1.5em;
 	font-family: Verdana,Helvetica,Arial,serif;
 
 
@@ -487,6 +488,12 @@ ul#subnavlist li a {
     	height: 1.5em;
    	text-decoration:underline;
 	font-weight:500;
+}
+
+div#subnavbacktopage {
+	padding-top:5px;
+	padding-left:20px;
+	float:left;
 }
 
 
@@ -1371,7 +1378,7 @@ div#shortcuts{
 	border-left:thin solid #cccccc;
 	border-right:thin solid #cccccc;
 	border-bottom:thin solid #cccccc;
-	border-radius: 0em 0em .5em .5em;;
+	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
 	float:right;
 	-moz-box-shadow:.2em .2em .2em #999999;
@@ -1402,4 +1409,3 @@ dl.form_layout dd{
 margin-left: 12em;
 padding-bottom:.5em;
 }
-
