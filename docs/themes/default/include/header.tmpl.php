@@ -28,7 +28,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * $this->theme				the directory name of the current theme
  * $this->custom_head		the custom head script used in <head> section
  * $this->$onload			the html body onload event
-
+ * $this->shortcuts		array of editor tools available title:url:icon
  * $this->content_base_href	the <base href> to use for this page
  * $this->rtl_css			if set, the path to the RTL style sheet
  * $this->icon			the path to a course icon
@@ -74,7 +74,7 @@ $starttime = $mtime;
 	<meta name="keywords" content="Transformable,free, open source, accessibility checker, accessibility reviewer, accessibility evaluator, accessibility evaluation, WCAG evaluation, 508 evaluation, BITV evaluation, evaluate accessibility, test accessibility, review accessibility, ATRC, WCAG 2, STANCA, BITV, Section 508." />
 	<meta name="description" content="Transformable is a Web accessibility evalution tool designed to help Web content developers and Web application developers ensure their Web content is accessible to everyone regardless to the technology they may be using, or their abilities or disabilities." />
 	<base href="<?php echo $this->content_base_href; ?>" />
-	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>images/favicon.ico" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>/favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 <?php echo $this->rtl_css; ?>
@@ -91,6 +91,11 @@ $starttime = $mtime;
   <div class="top"><span></span></div>
   
   <div class="center-content">
+<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	
     <div id="logo">
       <!-- <a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="Transformable Logo" style="border:none;" /></a> -->
     </div>
@@ -170,7 +175,7 @@ foreach ($this->top_level_pages as $page) {
 	<?php } ?>
 </div>
 !-->
-  <a name="content" title="<?php echo _AT("content_start"); ?>"></a>
+
   <div id="ajax-msg">
   </div>
 
@@ -301,29 +306,7 @@ foreach ($this->top_level_pages as $page) {
 	</ul>
 </div> -->
 
-       <div id="subnavlistcontainer">
-        <div id="subnavbacktopage">
-          <?php if (isset($this->back_to_page)): ?>
-          <a href="<?php echo $this->back_to_page['url']; ?>">
-          <img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-          <?php endif; ?>
-        </div>
-
-        <ul id="subnavlist">
-          <?php $num_pages = count($this->sub_level_pages); ?>
-          <?php for ($i=0; $i<$num_pages; $i++): ?>
-				
-	          <?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-	          <li><?php echo $this->sub_level_pages[$i]['title']; ?></li>
-	          <?php else: ?>
-	          <li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-	          <?php endif; ?>
-	          <?php if ($i < $num_pages-1): 
-	            echo " ";?>
-	          <?php endif; ?>
-          <?php endfor; ?>
-			</ul>
-      </div> 
+   
 <?php endif; ?>
 <!-- the main navigation. in our case, tabs -->
 
