@@ -75,7 +75,7 @@ function encrypt_password()
 	<tr align="center"><td>
 		<table>
 		<tr>
-			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?><br/></td>
+			<td colspan="2" align="left"><?php echo _AT('required_field_text') ;?><br/></td>
 		</tr>
 
 		<tr>
@@ -227,10 +227,8 @@ function encrypt_password()
 		<table>
 		<tr>
 			<td colspan="2">
-			<p class="submit_button">
 				<input type="submit" name="submit" value="<?php echo $this->submit_button_text; ?>" class="submit" onclick="return encrypt_password();" /> 
 				<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="submit" />
-			</p>
 			</td>
 		</tr>
 		</table>
