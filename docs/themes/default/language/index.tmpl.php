@@ -15,7 +15,8 @@ $_custom_css = TR_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css
 
 include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
-<div id="editable_table">
+<div class="input-form">
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form1">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("language"); ?></legend>
 <h2 align="center"><?php echo $this->title ;?></h2>
@@ -63,7 +64,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <small class="data-table-tip"><?php echo _AT('inline_editor_tip'); ?></small>
 </fieldset>
 </form>
-</div>
+
 <br /><br />
 
 <form name="import_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
@@ -74,7 +75,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 </div>
 </fieldset>
 </form>
-
+</div> <!-- end input-form duv -->
 <script type="text/javascript">
 <!--
 
