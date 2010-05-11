@@ -179,18 +179,17 @@ foreach ($this->top_level_pages as $page) {
   <div id="ajax-msg">
   </div>
 
-      <?php if ($this->shortcuts): ?>
-      <div id="shortcuts">
-	      <ul>
-		      <?php foreach ($this->shortcuts as $link): ?>
-			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
-		      <?php endforeach; ?>
-	      </ul>
-      </div>
-      <?php endif; ?>
-      </div>
+  <?php if (is_array($this->tool_shortcuts)): ?>
+  <div id="shortcuts">
+    <ul>
+    <?php foreach ($this->tool_shortcuts as $link): ?>
+      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+    <?php endforeach; ?>
+    </ul>
+  </div>
+  <?php endif; ?>
 
- <div id="guide_box">
+  <div id="guide_box">
     <!-- guide -->
     <?php if (isset($this->guide)) {?>
     <!-- <div> -->

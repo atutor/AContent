@@ -22,7 +22,7 @@ global $msg, $addslashes;
 $dao = new DAO();
 $languagesDAO = new LanguagesDAO();
 $languageTextDAO = new LanguageTextDAO();
-
+//debug($_REQUEST);exit;
 if (isset($_REQUEST['reset_filter'])) unset($_REQUEST);
 
 if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))
@@ -93,6 +93,11 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<!-- DO NOT REMOVE. It sets the "search" button as the default button, which means when user hit ENTER,
+	     the "search" button is fired instead of "submit" button -->
+	<div style="display:none">
+		<input type="submit" name="search" value="<?php echo _AT('search_phase'); ?>" class="submit" /> 
+	</div>
 	<div class="input-form">
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>

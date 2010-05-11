@@ -228,6 +228,7 @@ class LanguageManager {
 	function printList($current_language, $name, $id, $url) {
 
 		$delim = false;
+		
 		foreach ($this->availableLanguages as $codes) {
 			$language = current($codes);
 
