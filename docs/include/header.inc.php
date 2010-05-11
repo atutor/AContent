@@ -98,6 +98,8 @@ if (isset($course_base_href) || isset($content_base_href)) {
 	}
 }
 
+// Setup array of content tools for shortcuts tool bar.
+
 $savant->assign('tool_shortcuts', $_tool_shortcuts);  // array of content tools for shortcuts tool bar.
 $savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('lang_code', $_SESSION['lang']);
