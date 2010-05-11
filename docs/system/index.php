@@ -55,7 +55,7 @@ if (isset($_POST['cancel'])) {
 		if (!$msg->containsErrors()) {
 			$_config['site_name'] = $addslashes($_POST['site_name']);
 			$_config['contact_email'] = $addslashes($_POST['contact_email']);
-			$_config['default_language'] = $addslashes($_POST['default_language']);
+			$_config['default_language'] = $_SESSION['lang'] = $addslashes($_POST['default_language']);
 			$_config['max_file_size'] = $_POST['max_file_size'];
 			$_config['illegal_extentions'] = $addslashes($_POST['illegal_extentions']);
 			$_config['latex_server'] = $addslashes($_POST['latex_server']);

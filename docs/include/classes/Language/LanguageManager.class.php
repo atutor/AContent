@@ -126,7 +126,7 @@ class LanguageManager {
 	* @see		getLanguage()
 	*/
 	function getMyLanguage() {
-		global $addslashes, $db; 
+		global $addslashes, $db, $_config; 
 
 		if (isset($_GET) && !empty($_GET['lang']) && isset($this->availableLanguages[$_GET['lang']])) {
 			$language = $this->getLanguage($_GET['lang']);
@@ -134,17 +134,16 @@ class LanguageManager {
 			if ($language) {
 				return $language;
 			}
-
 		} 
-
+		
 		if (isset($_POST) && !empty($_POST['lang']) && isset($this->availableLanguages[$_POST['lang']])) {
 			$language = $this->getLanguage($_POST['lang']);
 
 			if ($language) {
 				return $language;
 			}
+		}
 
-		} 
 		if (isset($_SESSION) && isset($_SESSION['lang']) && !empty($_SESSION['lang']) && isset($this->availableLanguages[$_SESSION['lang']])) {
 			$language = $this->getLanguage($_SESSION['lang']);
 
@@ -153,8 +152,19 @@ class LanguageManager {
 			}
 		}
 
-		if (!empty($_SERVER['HTTP_ATCEPT_LANGUAGE'])) {
+		// Didn't catch any valid lang : we use the default settings
+		if (isset($_config['default_language'])) $default_lang = $_config['default_language'];
+		else $default_lang = DEFAULT_LANGUAGE_CODE;
+		
+		if (isset($this->availableLanguages[$default_lang])) {
+			$language = $this->getLanguage($default_lang, DEFAULT_CHARSET);
 
+			if ($language) {
+				return $language;
+			}
+		}
+
+		if (!empty($_SERVER['HTTP_ATCEPT_LANGUAGE'])) {
 			// Language is not defined yet :
 			// try to find out user's language by checking its HTTP_ATCEPT_LANGUAGE
 			$accepted    = explode(',', $_SERVER['HTTP_ATCEPT_LANGUAGE']);
@@ -172,7 +182,6 @@ class LanguageManager {
 		}
 		
 		if (!empty($_SERVER['HTTP_USER_AGENT'])) {
-
 			// Language is not defined yet :
 			// try to find out user's language by checking its HTTP_USER_AGENT
 			foreach ($this->availableLanguages as $codes) {
@@ -184,15 +193,6 @@ class LanguageManager {
 			}
 		}
 
-		// Didn't catch any valid lang : we use the default settings
-		if (isset($this->availableLanguages[DEFAULT_LANGUAGE_CODE])) {
-			$language = $this->getLanguage(DEFAULT_LANGUAGE_CODE, DEFAULT_CHARSET);
-
-			if ($language) {
-				return $language;
-			}
-		}
-		
 		// else pick one at random:
 		reset($this->availableLanguages);
 		$uknown_language = current($this->availableLanguages);

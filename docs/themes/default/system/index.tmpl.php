@@ -29,7 +29,7 @@
  * submit_button_text: button text for submit button. "Register" at registration, "Save" at admin creating/editing user
  */
 
-global $onload;
+global $onload, $_config;
 $onload = 'document.form.site_name.focus();';
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
@@ -87,7 +87,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 				$select_lang = $_POST['default_language']; 
 			} else { 
 				$select_lang = $_config['default_language'];
-			} 
+			}
 			$this->languageManager->printDropdown($select_lang, 'default_language', 'default_language'); ?>
 			</td>
 		</tr>

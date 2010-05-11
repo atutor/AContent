@@ -117,24 +117,24 @@ $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 /***** end loading $_config *****/
 
 /***** 5. start language block *****/
-	// set current language
-	require(TR_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
-	$languageManager = new LanguageManager();
+// set current language
+require(TR_INCLUDE_PATH . 'classes/Language/LanguageManager.class.php');
+$languageManager = new LanguageManager();
 
-	$myLang = $languageManager->getMyLanguage();
+$myLang = $languageManager->getMyLanguage();
 
-	if ($myLang === FALSE) {
-		echo 'There are no languages installed!';
-		exit;
-	}
+if ($myLang === FALSE) {
+	echo 'There are no languages installed!';
+	exit;
+}
 
-	$myLang->saveToSession();
+$myLang->saveToSession();
 
-	/* set right-to-left language */
-	$rtl = '';
-	if ($myLang->isRTL()) {
-		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_atee */
-	}
+/* set right-to-left language */
+$rtl = '';
+if ($myLang->isRTL()) {
+	$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_atee */
+}
 /***** end language block ****/
 
 /***** 6. load common libraries *****/

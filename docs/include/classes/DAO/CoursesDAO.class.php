@@ -161,10 +161,6 @@ class CoursesDAO extends DAO {
 		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
 		$this->execute($sql);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups 
-		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
-		$this->execute($sql);
-		
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE course_id = ".$courseID;
 		$this->execute($sql);
 				
