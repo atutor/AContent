@@ -65,7 +65,6 @@ if($languageManager->getNumEnabledLanguages() > 1) {
   </div> <!--  end center-content div -->
   
   <div class="bottom"><span></span></div><!--  bottom for liquid-round theme -->
-</div> <!-- end liquid-round div -->
 </body>
 </html>
 
