@@ -1084,9 +1084,6 @@ box-shadow: .2em .2em .2em #999999;
   position:relative;
   padding:1px 0px 1px 0px;
   margin:-1px 0 -50px 0;
-background-image:url('images/trans_logo2.png');
-background-repeat: no-repeat;
-background-position:98% 0%;
 }
 
 
@@ -1094,6 +1091,9 @@ background-position:98% 0%;
   margin-left:auto;
   margin-right:auto;
   height:60px;
+  background-image:url('images/trans_logo2.png');
+  background-repeat: no-repeat;
+  background-position:98% 0%;
 }
 .bottom span {
   display:block;
