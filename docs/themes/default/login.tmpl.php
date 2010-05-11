@@ -37,33 +37,21 @@ function encrypt_password() {
 <input type="hidden" name="oauth_callback" value="<?php echo $_REQUEST['oauth_callback']; ?>" />
 <?php }?>
 <input type="hidden" name="form_password_hidden" value="" />
-
 	<div class="input-form">
-		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
-			<table  align="center" width="90%">
-				<tr>
-					<td colspan="2" align="left"><?php echo _AT('login_text'). _AT('required_field_text') ;?><br /><br /></td>
-				</tr>
-
-				<tr>
-					<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name_or_email'); ?></label></td>
-					<td><input type="text" name="form_login" size="50" id="login"  class="formfield" /><br /></td>
-				</tr>
-				
-				<tr>
-					<td align="left"><span class="required" align="right" title="<?php echo _AT('required_field'); ?>">*</span><label for="pass"><?php echo _AT('password'); ?></label></td>
-					<td><input type="password" name="form_password" size="50" id="pass" class="formfield" /></td>
-				</tr>
-
-				<tr align="center">
-					<td colspan="2">
-					<p class="submit_button">
-						<input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="submit" onclick="return encrypt_password();" /> 
-					</p>
-					</td>
-				</tr>
-			</table>
-		</fieldset>			
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
+	    <div  style="width:60%; margin-left:auto; margin-right:auto;">  
+	    <p><?php echo _AT('login_text'). _AT('required_field_text') ;?></p>
+	    <dl class="form_layout">
+	    <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name_or_email'); ?></label></dt>
+	    <dd><input type="text" name="form_login" size="50" id="login"  class="formfield" /></dd>
+	    <dt><span class="required" align="right" title="<?php echo _AT('required_field'); ?>">*</span><label for="pass"><?php echo _AT('password'); ?></label></dt>
+	    <dd><input type="password" name="form_password" size="50" id="pass" class="formfield" /></dd>
+	    </dl>
+	    <p class="submit_button">
+	    <input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="submit" onclick="return encrypt_password();" /> 		
+	    </p>
+	  </div>
+	</fieldset>			
 	</div>
 </form>
 
