@@ -25,3 +25,19 @@ dl.form_layout dd{
 margin-left: 12em;
 
 }
+
+div#shortcuts{
+	width: 7em;
+	float:right;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+
+}
+#shortcuts ul {
+	list-style-type:  none;
+
+}
+#shortcuts li{
+	display: inline;
+}
