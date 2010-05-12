@@ -544,10 +544,12 @@ function rehash($items){
 */
 			if (isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
-				$items[$current_identifier]['tests'][] = $attrs['href'];debug('in tests');
+				$items[$current_identifier]['tests'][] = $attrs['href'];
+//				debug('in tests');
 			} 
 			if (isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
-				$items[$current_identifier]['a4a_import_enabled'] = true;debug('in a4a');
+				$items[$current_identifier]['a4a_import_enabled'] = true;
+//				debug('in a4a');
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -1543,7 +1545,7 @@ if (!$msg->containsErrors()) {
 if ($oauth_import) {
 	echo 'course_id='.$_course_id;
 } else {
-//	header('Location: ../course/index.php?_course_id='.$_course_id);
+	header('Location: ../course/index.php?_course_id='.$_course_id);
 }
 exit;
 
