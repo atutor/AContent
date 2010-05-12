@@ -17,6 +17,7 @@ html,body{
 /* main body attributes */
 body {
   font-family: Verdana Arial, sans-serif;
+  font-size:.9em;
   margin:0px;
   background-color: white;
   background-image:url('images/texture_bg.png');
@@ -1188,7 +1189,7 @@ white-space:nowrap;
 font-size:.8em;
 width:23em;
 float:right;
-margin-right:.5em;
+margin-right:2em;
 
 }
 #search_text_at_header{
