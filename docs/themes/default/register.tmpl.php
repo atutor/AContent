@@ -69,10 +69,11 @@ function encrypt_password()
 <input type="hidden" name="form_password_hidden" value="" />
 
 <div class="input-form">
-    <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
-      <div  style="width:75%; margin-left:auto; margin-right:auto;">
-      <p><?php echo _AT('required_field_text') ;?></p>
-	  <dl class="form_layout">
+  <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
+    <div  style="width:75%; margin-left:auto; margin-right:auto;">
+    <p><?php echo _AT('required_field_text') ;?></p>
+	  
+	<dl class="form_layout">
 	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name'); ?></label>:</dt>
 	  <dd><input id="login" name="login" type="text" maxlength="20" size="30" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['login'])); else echo stripslashes(htmlspecialchars($this->user_row['login'])); ?>" /></dd>
 		  <p><small>&middot; <?php echo _AT('contain_only'); ?><br />
@@ -93,6 +94,8 @@ function encrypt_password()
 	  <dd><input id="form_password1" name="form_password1" type="password" size="15" maxlength="15" /></dd>
 	  <p><small>&middot; <?php echo _AT('combination'); ?><br />
 	  &middot; <?php echo _AT('15_max_chars'); ?></small></p>
+	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password2"><?php echo _AT('password_again'); ?></label>:</dt>
+	  <dd><input id="form_password2" name="form_password2" type="password" size="15" maxlength="15" /></dd>
 <?php } ?>
 
 <?php if ($this->use_captcha) { ?>
@@ -134,11 +137,9 @@ function encrypt_password()
 
 	  <p style="margin-left:5em;"><input type="checkbox" name="is_author" id="is_author" <?php if (isset($_POST['is_author']) || (!isset($_POST['is_author']) && $this->user_row['is_author']==1)) echo 'checked="checked"'; ?> onclick="if (this.checked) jQuery('#table_is_author').show('slow'); else jQuery('#table_is_author').hide('slow');" /> 
 	  <label for="is_author"><?php echo _AT('is_author'); ?></label></p>
-</dl>
+    </dl>
 
-
-
-<dl id="table_is_author" class="form_layout">
+    <dl id="table_is_author" class="form_layout">
 	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="organization"><?php echo _AT('organization'); ?></label>:</dt>
 	  <dd><input id="organization" name="organization" type="text" size="50" maxlength="100" value="<?php if (isset($_POST['organization'])) echo stripslashes(htmlspecialchars($_POST['organization'])); else echo stripslashes(htmlspecialchars($this->user_row['organization'])); ?>" /></dd>
 
@@ -169,10 +170,14 @@ function encrypt_password()
   
 	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="postal_code"><?php echo _AT('postal_code'); ?></label>:</dt>
 	  <dd><input id="postal_code" name="postal_code" type="text" size="10" maxlength="10" value="<?php if (isset($_POST['postal_code'])) echo stripslashes(htmlspecialchars($_POST['postal_code'])); else echo stripslashes(htmlspecialchars($this->user_row['postal_code'])); ?>" /></dd>
-  </dl>
-	<p class="submit_buttons">	<input type="submit" name="submit" value="<?php echo $this->submit_button_text; ?>" class="submit" onclick="return encrypt_password();" /> 
-				<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="submit" />
+    </dl>
+	<p class="submit_buttons">
+      <input type="submit" name="submit" value="<?php echo $this->submit_button_text; ?>" class="submit" onclick="return encrypt_password();" /> 
+      <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="submit" />
 	</p>
+  </div>
+  </fieldset>
 </div>
+</form>
 
 <?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>
