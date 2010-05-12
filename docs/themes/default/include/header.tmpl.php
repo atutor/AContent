@@ -319,12 +319,12 @@ foreach ($this->top_level_pages as $page) {
     <div id="sub-navigation">
 
       <?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
-
-	<ul id="subnavlist">
 	  <?php if (isset($this->back_to_page)): ?>
-	  <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<strong>'._AT('back_to').'</strong>'.' '.$this->back_to_page['title']; ?></a> | 
+	    <div id="subnavbacktopage">	  
+	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.$_base_href.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;">'?></a> 
+	    </div>
 	  <?php endif; ?>
-	  
+	<ul id="subnavlist">
       <?php $num_pages = count($this->sub_menus); ?>
       <?php for ($i=0; $i<$num_pages; $i++): ?>
 	  <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
