@@ -173,7 +173,7 @@ foreach ($this->top_level_pages as $page) {
 	</div>
 
 	<?php if (isset($this->guide)) {?>
-		<a href="<?php echo $this->guide; ?>" id="guide" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><em><?php echo $this->page_title; ?></em></a>
+		<a href="<?php echo $this->guide; ?>" id="guide" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;"><em><?php echo $this->page_title; ?></em></a>
 	<?php } ?>
 </div>
 !-->
@@ -195,7 +195,7 @@ foreach ($this->top_level_pages as $page) {
     <!-- guide -->
     <?php if (isset($this->guide)) {?>
     <!-- <div> -->
-      <a href="<?php echo $this->guide; ?>" onclick="popup('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
+      <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
     <!-- </div> -->
     <?php }?>
 
