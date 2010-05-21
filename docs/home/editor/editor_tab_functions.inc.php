@@ -41,7 +41,7 @@ function output_tabs($current_tab, $changes) {
 	$tabs = get_tabs();
 	$num_tabs = count($tabs);
 ?>
-	<br /><br /><table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
+	<table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
 	<tr>		
 		<?php 
 		for ($i=0; $i < $num_tabs; $i++): 
@@ -383,27 +383,27 @@ function check_for_changes($row, $row_alternatives) {
 	}
 
 	/* release date: */
-	if ($row && strcmp(substr(generate_release_date(), 0, -2), substr($row['release_date'], 0, -2))) {
-		/* the substr was added because sometimes the release_date in the db has the seconds field set, which we dont use */
-		/* so it would show a difference, even though it should actually be the same, so we ignore the seconds with the -2 */
-		/* the seconds gets added if the course was created during the installation process. */
-		$changes[1] = true;
-	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
-		$changes[1] = true;
-	}
+//	if ($row && strcmp(substr(generate_release_date(), 0, -2), substr($row['release_date'], 0, -2))) {
+//		/* the substr was added because sometimes the release_date in the db has the seconds field set, which we dont use */
+//		/* so it would show a difference, even though it should actually be the same, so we ignore the seconds with the -2 */
+//		/* the seconds gets added if the course was created during the installation process. */
+//		$changes[1] = true;
+//	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
+//		$changes[1] = true;
+//	}
 
 	/* related content: */
-	$row_related = $contentManager->getRelatedContent($cid);
-
-	if (is_array($_POST['related']) && is_array($row_related)) {
-		$sum = array_sum(array_diff($_POST['related'], $row_related));
-		$sum += array_sum(array_diff($row_related, $_POST['related']));
-		if ($sum > 0) {
-			$changes[1] = true;
-		}
-	} else if (!is_array($_POST['related']) && !empty($row_related)) {
-		$changes[1] = true;
-	}
+//	$row_related = $contentManager->getRelatedContent($cid);
+//
+//	if (is_array($_POST['related']) && is_array($row_related)) {
+//		$sum = array_sum(array_diff($_POST['related'], $row_related));
+//		$sum += array_sum(array_diff($row_related, $_POST['related']));
+//		if ($sum > 0) {
+//			$changes[1] = true;
+//		}
+//	} else if (!is_array($_POST['related']) && !empty($row_related)) {
+//		$changes[1] = true;
+//	}
 
 	/* keywords */
 	if ($row && strcmp(trim($_POST['keywords']), $row['keywords'])) {
@@ -414,31 +414,31 @@ function check_for_changes($row, $row_alternatives) {
 
 
 	/* glossary */
-	if (is_array($_POST['glossary_defs'])) {
-		global $glossary_ids;
-		foreach ($_POST['glossary_defs'] as $w => $d) {
-
-			$key = in_array_cin($w, $glossary_ids);
-			if ($key === false) {
-				/* new term */
-				$changes[2] = true;
-				break;
-			} else if ($cid && ($d &&($d != $glossary[$glossary_ids[$key]]))) {
-				/* changed term */
-				$changes[2] = true;
-				break;
-			}
-		}
-
-		if (is_array($_POST['related_term'])) {
-			foreach($_POST['related_term'] as $term => $r_id) {
-				if ($glossary_ids_related[$term] != $r_id) {
-					$changes[2] = true;
-					break;
-				}
-			}
-		}
-	}
+//	if (is_array($_POST['glossary_defs'])) {
+//		global $glossary_ids;
+//		foreach ($_POST['glossary_defs'] as $w => $d) {
+//
+//			$key = in_array_cin($w, $glossary_ids);
+//			if ($key === false) {
+//				/* new term */
+//				$changes[2] = true;
+//				break;
+//			} else if ($cid && ($d &&($d != $glossary[$glossary_ids[$key]]))) {
+//				/* changed term */
+//				$changes[2] = true;
+//				break;
+//			}
+//		}
+//
+//		if (is_array($_POST['related_term'])) {
+//			foreach($_POST['related_term'] as $term => $r_id) {
+//				if ($glossary_ids_related[$term] != $r_id) {
+//					$changes[2] = true;
+//					break;
+//				}
+//			}
+//		}
+//	}
 
 	/* adapted content */
 	if (isset($_POST['use_post_for_alt']))
@@ -464,6 +464,8 @@ function check_for_changes($row, $row_alternatives) {
 
 function paste_from_file() {
 	global $msg;
+	
+	include_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 	if ($_FILES['uploadedfile_paste']['name'] == '')	{
 		$msg->addError('FILE_NOT_SELECTED');
 		return;
@@ -491,13 +493,13 @@ function paste_from_file() {
 			unset($start_pos);
 			unset($end_pos);
 
-			$_POST['head'] = get_html_head_by_tag($_POST['body_text'], array("link", "style", "script")); 
+			$_POST['head'] = ContentUtility::getHtmlHeadByTag($_POST['body_text'], array("link", "style", "script")); 
 			if (strlen(trim($_POST['head'])) > 0)	
 				$_POST['use_customized_head'] = 1;
 			else
 				$_POST['use_customized_head'] = 0;
 			
-			$_POST['body_text'] = get_html_body($_POST['body_text']); 
+			$_POST['body_text'] = ContentUtility::getHtmlBody($_POST['body_text']); 
 
 			$msg->addFeedback('FILE_PASTED');
 		} else if ($ext == 'txt') {
@@ -528,7 +530,7 @@ function write_temp_file() {
 		$content_base .= $_POST['content_path'] . '/';
 	}
 
-	$file_name = $_POST['cid'].'.html';
+	$file_name = $_POST['_cid'].'.html';
 
 	if ($handle = fopen(TR_CONTENT_DIR . $file_name, 'wb+')) {
 //		$temp_content = '<h2>'.TR_print(stripslashes($_POST['title']), 'content.title').'</h2>';

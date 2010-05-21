@@ -21,9 +21,15 @@ trans.utility.selected;
    * pops up a 600 * 600 new window
    */
   trans.utility.poptastic = function (url) {
-    trans.newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
-    if (window.focus) {trans.newwindow.focus()}
+    var newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
+    if (window.focus) {newwindow.focus()}
   };
+//	ATutor.poptastic = function (url) {
+//		var newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
+//		if (window.focus) {
+//			newwindow.focus();
+//		}
+//	};
 
   trans.utility.getexpirydate = function (nodays){
     var UTCstring;

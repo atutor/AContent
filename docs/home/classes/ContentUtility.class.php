@@ -266,6 +266,92 @@ class ContentUtility {
 	}
 	
 	/**
+	 * This function returns html string of "table of content"
+	 * @access: public
+	 * @param: $content_row: an array of the current content information
+	 * @return: an array of all the tool short cuts that apply to the current content or content folder
+	 */
+	public static function getToolShortcuts($content_row)
+	{
+		global $_current_user, $_base_href, $contentManager, $_course_id;
+		
+		if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
+		      || ($_SESSION['packaging'] == 'all'))
+			  || (isset($_current_user) && $_current_user->isAuthor($_course_id))) {
+		
+			$tool_shortcuts[] = array(
+				  'title' => _AT('export_content'), 
+				  'url' => $_base_href . 'home/imscc/ims_export.php?_cid='.$content_row['content_id'],
+				  'icon' => $_base_href . 'images/download.png');
+		}
+		
+		if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+				$tool_shortcuts[] = array(
+					  'title' => _AT('edit_this_page'),   
+					   'url' => $_base_href . 'home/editor/edit_content.php?_cid='.$content_row['content_id'],
+					  'icon' => $_base_href . 'images/medit.gif');
+			}
+		
+			if ($contentManager->_menu_info[$content_row['content_id']]['content_parent_id']) {
+				$tool_shortcuts[] = array(
+				  'title' => _AT('add_sibling_folder'), 
+				  'url' => $_base_href .
+					'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
+				   'icon' => $_base_href . 'images/add_sibling_folder.gif');
+			}
+
+			if ($content_row['content_type'] == CONTENT_TYPE_FOLDER) {
+				$tool_shortcuts[] = array(
+				  'title' => _AT('add_sub_folder'), 
+				  'url' => $_base_href .
+					'home/editor/edit_content_folder.php?_course_id='.$_course_id.SEP.'pid='.$content_row['content_id'],
+				   'icon' => $_base_href . 'images/add_sub_folder.gif');
+			}
+			
+			if ($contentManager->_menu_info[$content_row['content_id']]['content_parent_id']) {
+				$tool_shortcuts[] = array(
+				  'title' => _AT('add_sibling_page'), 
+				  'url' => $_base_href .
+					'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
+				  'icon' => $_base_href . 'images/add_sibling_page.gif');
+			}
+			
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+				$tool_shortcuts[] = array(
+				  'title' => _AT('delete_this_page'), 	
+				  'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$content_row['content_id'],
+				  'icon' => $_base_href . 'images/page_delete.gif');
+			}
+			else if ($content_row['content_type'] == CONTENT_TYPE_FOLDER) {
+				$tool_shortcuts[] = array(
+				  'title' => _AT('add_sub_page'), 	
+				  'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id.SEP.'pid='.$content_row['content_id'],
+				  'icon' => $_base_href . 'images/add_sub_page.gif');
+				
+				$tool_shortcuts[] = array(
+				  'title' => _AT('delete_this_folder'), 	
+				  'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$content_row['content_id'],
+				  'icon' => $_base_href . 'images/page_delete.gif');
+			}
+		}
+		return $tool_shortcuts;
+
+//	if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+//		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id.'pid='.$cid);
+//		
+////		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/page_add.gif');
+//		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
+//			$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
+//				'home/editor/edit_content.php?_course_id='.$_course_id.SEP.'pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 'icon' => $_base_href . 'images/page_add_sibling.gif');
+//		}
+//	
+//		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id.SEP.'pid='.$cid);
+//		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid, 'icon' => $_base_href . 'images/page_delete.gif');
+//	}
+	}
+	
+	/**
 	* replace source object with alternatives according to user's preferences
 	* @access	public
 	* @param	$cid: 				content id.

@@ -47,14 +47,14 @@ echo '<script language="javascript" type="text/javascript" src="'.TR_BASE_HREF.'
 <script language="javascript" type="text/javascript">';
 
 echo 'var ATutor = ATutor || {};
-      ATutor.tinymce = ATutor.tinymce || {};
+      trans.tinymce = trans.tinymce || {};
 
       (function () {
 ';
 
-echo 'tinymce.PluginManager.load("insert_tag", "'.TR_BASE_HREF.'include/jscripts/ATutor_tiny_mce_plugins/insert_tag/editor_plugin.js");
+echo 'tinymce.PluginManager.load("insert_tag", "'.TR_BASE_HREF.'include/jscripts/tiny_mce_plugins/insert_tag/editor_plugin.js");
 ';
-echo 'tinymce.PluginManager.load("swap_toolbar", "'.TR_BASE_HREF.'include/jscripts/ATutor_tiny_mce_plugins/swap_toolbar/editor_plugin.js");
+echo 'tinymce.PluginManager.load("swap_toolbar", "'.TR_BASE_HREF.'include/jscripts/tiny_mce_plugins/swap_toolbar/editor_plugin.js");
 ';
 
 echo 'var initSettings = {';
@@ -99,20 +99,20 @@ echo 'theme: "advanced",
         theme_advanced_buttons4 : "search,replace,|,removeformat,undo,redo,|,styleprops,attribs,|,acheck,|,cleanup,code,|,fullscreen ",
     };
 
-    ATutor.tinymce.initSimple = function() {
+    trans.tinymce.initSimple = function() {
         tinyMCE.init(jQuery.extend({}, initSettings, simpleToolBars));
     };
       
-    ATutor.tinymce.initComplex = function() {
+    trans.tinymce.initComplex = function() {
         tinyMCE.init(jQuery.extend({}, initSettings, complexToolBars));
     };
 ';
     
     if ($simple) {
-      echo 'ATutor.tinymce.initSimple();
+      echo 'trans.tinymce.initSimple();
       ';
     } else {
-      echo 'ATutor.tinymce.initComplex();
+      echo 'trans.tinymce.initComplex();
       ';
     }
 echo '})();

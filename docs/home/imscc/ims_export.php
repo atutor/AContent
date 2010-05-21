@@ -12,13 +12,14 @@
 
 define('TR_INCLUDE_PATH', '../../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+global $_course_id, $_content_id;
 
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentManager.class.php');  /* content management class */
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
-if (!isset($_REQUEST['course_id']))
+if (!isset($_REQUEST['course_id']) && !isset($_course_id) && $_course_id = 0)
 {
 	$msg->addError('MISSING_COURSE_ID');
 	header('Location: ../index.php');
@@ -26,8 +27,8 @@ if (!isset($_REQUEST['course_id']))
 }
 
 /* content id of an optional chapter */
-$course_id = $_REQUEST['course_id'];
-$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
+$course_id = (isset($_REQUEST['course_id']) ? $_REQUEST['course_id'] : $_course_id);
+$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id;
 $c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
@@ -195,7 +196,7 @@ $rows = $contentDAO->getContentByCourseID($course_id);
 //}
 //$result = mysql_query($sql, $db);
 
-$cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
+//$cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
 //while ($row = mysql_fetch_assoc($result)) {
 //	if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 if (is_array($rows)) {
@@ -305,7 +306,7 @@ $vcard = new vCard();
 if (isset($row)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
-	$vcard->setNote('Originated from an ATutor at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
+	$vcard->setNote('Originated from an Transformable at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
 	$vcard->setURL($row['website']);
 
 	$imsmanifest_xml = str_replace('{VCARD}', $vcard->getVCard(), $imsmanifest_xml);

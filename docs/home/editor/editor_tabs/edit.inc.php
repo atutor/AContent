@@ -14,7 +14,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 ?>
     <script type="text/javascript" language="javascript">
     //<!--
-        ATutor.mods.editor.editor_pref = "<?php if(isset($_SESSION['prefs']['PREF_CONTENT_EDITOR'])) echo $_SESSION['prefs']['PREF_CONTENT_EDITOR'] ?>";
+        //trans.editor.editor_pref = "<?php if(isset($_SESSION['prefs']['PREF_CONTENT_EDITOR'])) echo $_SESSION['prefs']['PREF_CONTENT_EDITOR'] ?>";
     //-->
     </script>
     <input type="hidden" name="displayhead" id="displayhead" value="<?php if ($_POST['displayhead']==1 || $_REQUEST['displayhead']==1 || $_GET['displayhead']==1) echo '1'; else echo '0'; ?>" />
@@ -54,36 +54,40 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 ?>
     <script type="text/javascript" language="javascript">
     //<!--
-        ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
-        ATutor.mods.editor.content_id = "<?php if(isset($cid)) echo $cid ?>";
-        ATutor.mods.editor.head_enabled_title = "<?php echo _AT('customized_head_enabled_title'); ?>";
-        ATutor.mods.editor.head_disabled_title = "<?php echo _AT('customized_head_disabled_title'); ?>";
-        ATutor.mods.editor.paste_enabled_title = "<?php echo _AT('paste_enabled_title'); ?>";
-        ATutor.mods.editor.paste_disabled_title = "<?php echo _AT('paste_disabled_title'); ?>";
-        ATutor.mods.editor.fileman_enabled_title = "<?php echo _AT('fileman_enabled_title').' - '._AT('new_window'); ?>";
-        ATutor.mods.editor.fileman_disabled_title = "<?php echo _AT('fileman_disabled_title'); ?>";
-        ATutor.mods.editor.accessibility_enabled_title = "<?php echo _AT('accessibility_enabled').' - '._AT('new_window'); ?>";
-        ATutor.mods.editor.accessibility_disabled_title = "<?php echo _AT('accessibility_disabled'); ?>";
-        ATutor.mods.editor.processing_text = "<?php echo _AT('processing'); ?>";
+        trans.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path']; ?>";
+        trans.editor.content_id = "<?php if(isset($cid)) echo $cid; ?>";
+        trans.editor.head_enabled_title = "<?php echo _AT('customized_head_enabled_title'); ?>";
+        trans.editor.head_disabled_title = "<?php echo _AT('customized_head_disabled_title'); ?>";
+        trans.editor.paste_enabled_title = "<?php echo _AT('paste_enabled_title'); ?>";
+        trans.editor.paste_disabled_title = "<?php echo _AT('paste_disabled_title'); ?>";
+        trans.editor.fileman_enabled_title = "<?php echo _AT('fileman_enabled_title').' - '._AT('new_window'); ?>";
+        trans.editor.fileman_disabled_title = "<?php echo _AT('fileman_disabled_title'); ?>";
+        trans.editor.accessibility_enabled_title = "<?php echo _AT('accessibility_enabled').' - '._AT('new_window'); ?>";
+        trans.editor.accessibility_disabled_title = "<?php echo _AT('accessibility_disabled'); ?>";
+        trans.editor.processing_text = "<?php echo _AT('processing'); ?>";
+        trans.base_href = "<?php echo TR_BASE_HREF; ?>";
     //-->
     </script>
     
     <div class="row fl-container fl-fix">
-        <img id="previewtool" class="fl-col clickable" src="<?php echo TR_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" />
-        <img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" />
-        <img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" />
-        <img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/>      
-        <img id="filemantool" class="fl-col" title="" src="" alt="" height="30" width="30" />
+      <ul id="content-tool-links">
+        <li><img id="previewtool" class="fl-col clickable" src="<?php echo TR_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" /><?php echo _AT('preview'); ?></li>
+        <li><img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" /><?php echo _AT('accessibility'); ?></li>
+        <li><img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" /><?php echo _AT('customized_head'); ?></li>
+        <li><img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/><?php echo _AT('paste'); ?></li>
+        <li><img id="filemantool" class="fl-col" title="" src="" alt="" height="30" width="30" /><?php echo _AT('files'); ?></li>
            
-<!-- ******** Tool Manager ******* -->
+<!-- ******** Tool Manager ******* 
 <?php
-    $count = 0;
+/*
+	$count = 0;
     foreach($all_tools as $tool) {
         if($tool['tool_file'] != '' && $tool['table'] != '') {
             $sql_assoc = "SELECT * FROM ".TABLE_PREFIX.$tool['table']." WHERE content_id='$cid'";
-            $result_assoc = mysql_query($sql_assoc,$db);
+            $tool_row = $dao->execute($sql_assoc);
+            if (is_array($tool_row)) $num_row = count($tool_row);
 
-            if($num_row = mysql_num_rows($result_assoc)){
+            if($num_row > 0){
                 $tool['alt'] = $tool['title'].' '._AT('added');
             } else {
                 $tool['alt'] = $tool['title'].' '._AT('none');
@@ -94,15 +98,17 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
             <!-- TODO LAW note problem here with one tool_file variable for multiple tools -->
            	<script type="text/javascript" language="javascript">
            	//<!--
-               	ATutor.mods.editor.tool_file = "<?php if(isset($tool['tool_file'])) echo $tool['tool_file'] ?>";
+               	trans.editor.tool_file = "<?php if(isset($tool['tool_file'])) echo $tool['tool_file'] ?>";
            	//-->
            	</script>
            	<img class="fl-col clickable tool" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" width="30" />
 <?php 
         }
     }
+    */
 ?>
-<!-- ****** end Tool Manager ***** -->
+****** end Tool Manager ***** -->
+   	  </ul>
    	</div> <!-- end toolbar -->
 
 	<!-- Customized head -->

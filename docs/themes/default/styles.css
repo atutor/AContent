@@ -178,7 +178,7 @@ input[type=button] {
 	-moz-box-shadow:.2em .2em .2em #999999;
 	 box-shadow: .2em .2em  .2em #999999;
 }
-
+/*
 input[type=submit] {
   cursor:pointer;
   border:outset 1px #ccc;
@@ -190,6 +190,7 @@ input[type=submit] {
 	-moz-box-shadow:.2em .2em .2em #999999;
 	 box-shadow: .2em .2em  .2em #999999;
 }
+*/
 input[type=text] {
   cursor:pointer;
   border-bottom:solid 1px #ccc;
@@ -282,9 +283,7 @@ padding:.2em;
 /* sequence links */
 div#sequence-links {
   float:right;
-  margin-top: 10px;
   padding-right: 5px;
-  padding-top:7px;
 }
 div#sequence-links a {
   text-decoration: none;
@@ -501,8 +500,8 @@ div#subnavbacktopage {
 a#guide {
 	background-image: url('images/guide.jpg'); 
 	background-repeat: no-repeat; 
-	background-position: 2px 2px;
-	padding: 3px 10px 1px 30px;
+	background-position: 15px 2px;
+	padding: 3px 10px 1px 35px;
 	text-decoration:none;
 	font-size:0.85em;
 	float:right;
@@ -1317,6 +1316,7 @@ table.etabbed-table input[type=submit] {
 	-moz-box-shadow:0em 0em 0em #999999;
 	 box-shadow: 0em 0em  0em #999999;
 }
+/* Content editor tabs */
 .editor_buttontab {
 	color:#000000;
 	font-size:10pt;
@@ -1369,7 +1369,15 @@ table.etabbed-table input[type=submit] {
 .editor_tab input[type=submit]{
 	height:1.2em;
 }
-
+.unsaved {
+	color: red;
+	background-color: #FFFDE0;
+	font-weight: bold;
+}
+.saved {
+	background-color: #FFFDE0;
+	margin: 10px;
+}
 
 .shortcut_icon{
 	border:0;
@@ -1399,7 +1407,6 @@ div#shortcuts{
 	display: inline;
 }
 
-
 dl.form_layout dt{
 text-align:center; 
 float:left;
@@ -1409,4 +1416,33 @@ padding-bottom:.5em;
 dl.form_layout dd{
 margin-left: 12em;
 padding-bottom:.5em;
+}
+
+ul#content-tool-links {
+	list-style: none outside none;
+}
+ul#content-tool-links li{
+	display: inline;
+	float: left;
+	width: 5em;
+	padding: 0 3em 0 0;
+	text-align: center;
+	font-size: 0.7em;
+	font-weight:bold;
+	color: #1A4A72;
+	line-height:120%;
+}
+ul#content-tool-links img{
+	border: 0 none;
+	display: block;
+	padding-left: 10px;
+}
+.hidden {
+    display: none;
+}
+.clickable {
+    cursor: pointer;    
+}
+.nowrap {
+    white-space: nowrap;
 }

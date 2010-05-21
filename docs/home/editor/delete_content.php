@@ -13,25 +13,35 @@
 define('TR_INCLUDE_PATH', '../../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 
+global $_content_id, $_content_id, $contentManager;
+
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+
+$cid = $_GET['cid'] = $_content_id;
+
 if (isset($_POST['submit_yes'])) {
 
-	$_POST['cid'] = intval($_POST['cid']);
+	$cid = intval($_POST['_cid']);
 
-	$result = $contentManager->deleteContent($_POST['cid']);
+	$result = $contentManager->deleteContent($cid);
 
 	unset($_SESSION['s_cid']);
 	unset($_SESSION['from_cid']);
 		
 	$msg->addFeedback('CONTENT_DELETED');
-	header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
+	header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.TR_BASE_HREF.'mods/_core/content/index.php');
+	$cid = intval($_POST['_cid']);
+	$row = $contentManager->getContentPage($cid);
+	if ($row['content_type'] == CONTENT_TYPE_FOLDER) {
+		header('Location: '.TR_BASE_HREF.'home/editor/edit_content_folder.php?_cid='.$cid);
+	} else {
+		header('Location: '.TR_BASE_HREF.'home/course/content.php?_cid='.$cid);
+	}
 	exit;
 }
-
-$_GET['cid'] = intval($_REQUEST['cid']);
 
 $path	= $contentManager->getContentPath($cid);
 require(TR_INCLUDE_PATH.'header.inc.php');
@@ -44,20 +54,17 @@ if ($_GET['cid'] == 0) {
 
 $children = $contentManager->getContent($_GET['cid']);
 
-$hidden_vars['cid'] = $_GET['cid'];
+$hidden_vars['_cid'] = $_GET['cid'];
 
 if (is_array($children) && (count($children)>0) ) {
 	$msg->addConfirm('SUB_CONTENT_DELETE', $hidden_vars);
-	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
-} else {
-	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
+//	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
+//} else {
+//	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 }
 	
-$sql = "SELECT * from ".TABLE_PREFIX."content WHERE content_id = '$hidden_vars[cid]'";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)){
-	$title = $row['title'];
-}
+$row = $contentManager->getContentPage($_GET['cid']);
+$title = $row['title'];
 
 $msg->addConfirm(array('DELETE', $title),  $hidden_vars);
 $msg->printConfirm();

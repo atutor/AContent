@@ -227,7 +227,7 @@ class ContentManager
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, 
 	                    $related, $formatting, $head = '', $use_customized_head = 0, 
 	                    $test_message = '', $allow_test_export = 1, $content_type = CONTENT_TYPE_CONTENT) {
-		global $_current_user;
+		global $_current_user, $_course_id;
 		
 	    if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
 			return false;
@@ -237,12 +237,12 @@ class ContentManager
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
 		         WHERE ordering>=$ordering 
 		           AND content_parent_id=$content_parent_id 
-		           AND course_id=$_SESSION[course_id]";
+		           AND course_id=$_course_id";
 		$this->contentDAO->execute($sql);
 
 		/* main topics all have minor_num = 0 */
-		$cid = $this->contentDAO->Create($course_ID, $content_parent_id, $ordering, 0, $formatting,
-		                          $keywords, '', $title, $text, $head, $head, $use_customized_head,
+		$cid = $this->contentDAO->Create($_course_id, $content_parent_id, $ordering, 0, $formatting,
+		                          $keywords, '', $title, $text, $head, $use_customized_head,
 		                          $test_message, $allow_test_export, $content_type);
 		return $cid;
 	}
@@ -256,29 +256,30 @@ class ContentManager
 			return FALSE;
 		}
 
-		$this->contentDAO->Update($content_id, $title, $text, $keywords, $head, $use_customized_head,
+		$this->contentDAO->Update($content_id, $title, $text, $keywords, $formatting, $head, $use_customized_head,
 		                          $test_message, $allow_test_export);
 	}
 
 	function moveContent($content_id, $new_content_parent_id, $new_content_ordering) {
-		global $msg, $_current_user;
+		global $msg, $_current_user, $_course_id;
 		
 	    if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
 			return FALSE;
 		}
 
 		/* first get the content to make sure it exists	*/
-		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		if (!($row = mysql_fetch_assoc($result)) ) {
+//		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+//		$result	= mysql_query($sql, $this->db);
+		if (!($row = $this->getContentPage($content_id)) ) {
 			return FALSE;
 		}
 		$old_ordering		= $row['ordering'];
 		$old_content_parent_id	= $row['content_parent_id'];
 		
-		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=$old_content_parent_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
+		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=$old_content_parent_id AND course_id=$_course_id";
+//		$result	= mysql_query($sql, $this->db);
+//		$row = mysql_fetch_assoc($result);
+		$row = $this->contentDAO->execute($sql);
 		$max_ordering = $row['max_ordering'];
 		
 		if ($content_id == $new_content_parent_id) {
@@ -312,8 +313,9 @@ class ContentManager
 			         WHERE ordering>$old_ordering 
 			           AND content_parent_id=$old_content_parent_id 
 			           AND content_id<>$content_id 
-			           AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
+			           AND course_id=$_course_id";
+//			$result = mysql_query($sql, $this->db);
+			$this->contentDAO->execute($sql);
 
 			// shift the new neighbouring content down
 			$sql = "UPDATE ".TABLE_PREFIX."content 
@@ -321,27 +323,30 @@ class ContentManager
 			         WHERE ordering>=$new_content_ordering 
 			           AND content_parent_id=$new_content_parent_id 
 			           AND content_id<>$content_id 
-			           AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
+			           AND course_id=$_course_id";
+//			$result = mysql_query($sql, $this->db);
+			$this->contentDAO->execute($sql);
 
 			$sql	= "UPDATE ".TABLE_PREFIX."content 
 			              SET content_parent_id=$new_content_parent_id, ordering=$new_content_ordering 
-			            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-			$result	= mysql_query($sql, $this->db);
+			            WHERE content_id=$content_id AND course_id=$_course_id";
+//			$result	= mysql_query($sql, $this->db);
+			$this->contentDAO->execute($sql);
 		}
 	}
 	
 	function deleteContent($content_id) {
-		global $_current_user;
+		global $_current_user, $_course_id;
 		
 		if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
 			return false;
 		}
 
 		/* check if exists */
-		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		if (!($row = @mysql_fetch_assoc($result)) ) {
+//		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+//		$result	= mysql_query($sql, $this->db);
+//		if (!($row = @mysql_fetch_assoc($result)) ) {
+		if (!($row = $this->getContentPage($content_id)) ) {
 			return false;
 		}
 		$ordering			= $row['ordering'];
@@ -353,13 +358,21 @@ class ContentManager
 		if (is_array($children) && (count($children)>0) ) {
 			/* delete its children recursively first*/
 			foreach ($children as $x => $info) {
-				$this->deleteContentRecursive($info['content_id']);
+				if ($info['content_id'] > 0) {
+					$this->deleteContentRecursive($info['content_id']);
+				}
 			}
 		}
 
+		$this->contentDAO->Delete($content_id);
+
+		/* re-order the rest of the content */
+		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_course_id";
+		$this->contentDAO->execute($sql);
+		
 		/* delete this content page					*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+//		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+//		$result = mysql_query($sql, $this->db);
 
 		/* delete this content from member tracking page	*/
 //		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
@@ -369,22 +382,17 @@ class ContentManager
 //		$result = mysql_query($sql, $this->db);
 
 		/* delete the content tests association */
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
+//		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
+//		$result = mysql_query($sql, $this->db);
 
 		/* delete the content forum association */
 //		$sql	= "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id";
 //		$result = mysql_query($sql, $this->db);
 
 		/* Delete all AccessForAll contents */
-		require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
-		$a4a = new A4a($content_id);
-		$a4a->deleteA4a();
-
-		/* re-order the rest of the content */
-		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
-		/* end moving block */
+//		require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+//		$a4a = new A4a($content_id);
+//		$a4a->deleteA4a();
 
 		/* remove the "resume" to this page, b/c it was deleted */
 //		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
@@ -402,21 +410,24 @@ class ContentManager
 		if (is_array($children) && (count($children)>0) ) {
 			/* delete its children recursively first*/
 			foreach ($children as $x => $info) {
-				$this->deleteContent($info['content_id']);
+				if ($info['content_id'] > 0) {
+					$this->deleteContent($info['content_id']);
+				}
 			}
 		}
 
-		/* delete this content page					*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+		// delete this content page
+		$this->contentDAO->Delete($content_id);
+//		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+//		$result = mysql_query($sql, $this->db);
 
 		/* delete this content from member tracking page	*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
+//		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
+//		$result = mysql_query($sql, $this->db);
 
 		/* delete the content tests association */
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
+//		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
+//		$result = mysql_query($sql, $this->db);
 	}
 
 	function getContentPage($content_id) {
@@ -548,8 +559,13 @@ class ContentManager
 		global $_base_path;
 
 		$sequence_links = array();
-
+		
 		$first = $this->getNextContent(0); // get first
+		
+		// if the given content id is invalid, use the content id of the first page
+		if (intval($cid) == 0 || !($row = $this->getContentPage($cid))) {
+			$cid = $first['content_id'];
+		}
 		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}
@@ -592,9 +608,9 @@ class ContentManager
 				$sequence_links['previous'] = $previous;
 			} else if ($cid) {
 //				$previous['url']   = $_base_path . url_rewrite('index.php');
-				$previous['url']   = $_base_path . 'home/course/index.php';
-				$previous['title'] = _AT('home');
-				$sequence_links['previous'] = $previous;
+//				$previous['url']   = $_base_path . 'home/course/index.php';
+//				$previous['title'] = _AT('home');
+//				$sequence_links['previous'] = $previous;
 			}
 			if (!empty($next['content_id'])) {
 				$sequence_links['next'] = $next;
@@ -628,7 +644,7 @@ function initContentMenu() {
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				echo '
-  if (trans.utility.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
+  if (trans.utility.getcookie("c'.$_course_id.'_'.$row['content_id'].'") == "1")
   {
     jQuery("#folder"+'.$row['content_id'].').show();
     jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
@@ -655,7 +671,7 @@ function initContentMenu() {
   jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
   jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
   jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
-  trans.utility.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
+  trans.utility.setcookie("c'.$_course_id.'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
 		}
 		echo '}'; // end of javascript function initContentMenu()
@@ -897,7 +913,7 @@ initContentMenu();
 					
 					// instructors have privilege to delete content
 					if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !isset($content['test_id']) && !Utility::isMobileTheme()) {
-						$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 					}
 				} 
 				else 
@@ -929,7 +945,7 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
-							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 					}
 					else
@@ -965,7 +981,7 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
-							$link .= '<a href="'.$_base_path.'editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}

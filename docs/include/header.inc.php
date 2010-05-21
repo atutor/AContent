@@ -133,7 +133,7 @@ if ($onload) $savant->assign('onload', $onload);
 $savant->assign('course_id', $_course_id);
 
 if ($framed || $popup) {
-    $savant->assign('framed', 1);
+	$savant->assign('framed', 1);
     $savant->assign('popup', 1);
 
 	$savant->display('include/fm_header.tmpl.php');

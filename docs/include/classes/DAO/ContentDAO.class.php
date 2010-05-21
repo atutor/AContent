@@ -24,7 +24,7 @@ class ContentDAO extends DAO {
 	 *          false and add error into global var $msg, if unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	public function Create($course_id, $content_parent_id, $ordering, $last_modified, $revision, $formatting, $keywords, 
+	public function Create($course_id, $content_parent_id, $ordering, $revision, $formatting, $keywords, 
 	                       $content_path, $title, $text, $head, $use_customized_head, $test_message, 
 	                       $allow_test_export, $content_type)
 	{
@@ -53,7 +53,7 @@ class ContentDAO extends DAO {
 			       VALUES (".$course_id.",
 			               ".$content_parent_id.",
 			               ".$ordering.",
-			               '".$last_modified."', 
+			               now(), 
 			               ".$revision.",
 			               ".$formatting.",
 			               '".$addslashes($keywords)."',
@@ -156,16 +156,22 @@ class ContentDAO extends DAO {
 	{
 		global $msg;
 		
-		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
-		$primaryResourcesDAO = new PrimaryResourcesDAO();
-		if ($primaryResourcesDAO->Delete($contentID)) {
-			$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ".$contentID;
-			return $this->execute($sql);
-		}
-		else {
-			$msg->addError('DB_NOT_UPDATED');
-			return false;
-		}
+		require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+		$a4a = new A4a($contentID);
+		$a4a->deleteA4a();
+		
+		// delete the content tests association
+		include_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+		$contentTestsAssocDAO = new ContentTestsAssocDAO();
+		$contentTestsAssocDAO->DeleteByContentID($contentID);
+		
+		// delete the content forums association
+		include_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
+		$contentForumsAssocDAO = new ContentForumsAssocDAO();
+		$contentForumsAssocDAO->DeleteByContentID($contentID);
+		
+		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ".$contentID;
+		return $this->execute($sql);
 	}
 
 	/**

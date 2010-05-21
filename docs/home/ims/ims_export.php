@@ -303,7 +303,7 @@ $vcard = new vCard();
 if ($row = mysql_fetch_assoc($result)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
-	$vcard->setNote('Originated from an ATutor at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
+	$vcard->setNote('Originated from an Transformable at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
 	$vcard->setURL($row['website']);
 
 	$imsmanifest_xml = str_replace('{VCARD}', $vcard->getVCard(), $imsmanifest_xml);

@@ -139,7 +139,7 @@ class QTIImport {
 					//TODO: The groups is 1-0+ choices.  So we should loop thru groups, not choices.
 					if (is_array($xml->choices[$loopcounter])){		
 						foreach ($xml->choices[$loopcounter] as $choiceNum=>$choiceOpt){
-							if (sizeof($test_obj['groups'] )>0) {
+							if (sizeof($test_obj['groups'] )>0 && is_array($xml->answers[$loopcounter])) {
 								foreach ($xml->answers[$loopcounter] as $ansNum=>$ansOpt){
 									if ($choiceNum == $ansOpt){
 										//Not exactly efficient, worst case N^2

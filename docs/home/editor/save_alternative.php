@@ -13,7 +13,7 @@
 /**
  * This script handles the ajax post submit from "content editor" =? "adpated content"
  * to save the selected alternative into database
- * @see mods/_core/file_manager/filemanager_display.inc.php
+ * @see file_manager/filemanager_display.inc.php
  * @var $_POST values: 
  *      pid: primary resource id
  *      a_type: alternative type, must be one of the values in resource_types.type_id

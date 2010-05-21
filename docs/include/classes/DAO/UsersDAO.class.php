@@ -133,8 +133,7 @@ class UsersDAO extends DAO {
 			               '".$postal_code."',
 			               '".Utility::getRandomStr(32)."',
 			               ".$status.", 
-			               now()
-										)";
+			               now())";
 
 			if (!$this->execute($sql))
 			{

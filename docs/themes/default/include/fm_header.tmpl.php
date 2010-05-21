@@ -52,7 +52,7 @@ global $system_courses;
 </head>
 
 <body onload="<?php echo $this->onload; ?>"><div class="input-form"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>
-<br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_file_manager'); ?></a></div>
+<br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close'); ?></a></div>
 <a name="content" title="<?php echo _AT("content_start"); ?>"></a>
 <div id="ajax-msg">
 </div>

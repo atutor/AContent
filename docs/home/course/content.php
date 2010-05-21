@@ -193,7 +193,7 @@ if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
 $savant->assign('shortcuts', $shortcuts);
 */
 
-if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
+/*if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
       || ($_SESSION['packaging'] == 'all'))
 	  || (isset($_current_user) && $_current_user->isAuthor($_course_id))) {
 
@@ -227,29 +227,14 @@ if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
 		  'title' => _AT('delete_this_page'), 	
 		  'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid,
 		  'icon' => $_base_href . 'images/page_delete.gif');
-}
+}*/
+$_tool_shortcuts = ContentUtility::getToolShortcuts($content_row);
 
 //if it has test and forum associated with it, still display it even if the content is empty
 if ($content_row['text'] == '' && empty($content_test_ids)){
 	$msg->addInfo('NO_PAGE_CONTENT');
 	$savant->assign('body', '');
 } else {
-// Commented by Cindy Qi Li on Jan 27, 2010
-//	$pre_test_id = $contentManager->getPretest($cid);
-//	
-//	if (intval($pre_test_id) > 0)
-//	{
-//		if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
-//			$msg->addInfo('PRETEST');
-//		}
-//		else {
-//			header('Location: '.url_rewrite('tools/test_intro.php?tid='.$pre_test_id.SEP.'cid='.$cid, TR_PRETTY_URL_IS_HEADER));
-//		}
-//	}
-	
-	// if one of the prerequisite test(s) has expired, student cannot view the content 
-//	if (intval($pre_test_id) != -1 || $_current_user->isAuthor($_course_id))
-// end of Commented by Cindy Qi Li on Jan 27, 2010
 
 	//Silvia: to provide appropriated content on the basis of users' preferences
 	$content = ContentUtility::applyAlternatives($cid, $content_row['text']);

@@ -145,6 +145,10 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		$_pages['home/editor/edit_content_folder.php']['parent']    = 'home/index.php';
 		$_pages['home/editor/edit_content_folder.php']['guide']     = 'TR_HELP_EDIT_CONTENT_FOLDER';
 		
+		$_pages['home/editor/delete_content.php']['title_var'] = 'delete_content';
+		$_pages['home/editor/delete_content.php']['parent']    = 'home/index.php';
+		$_pages['home/editor/delete_content.php']['guide']     = 'TR_HELP_DELETE_CONTENT';
+		
 		$_pages['home/editor/preview.php']['title_var'] = 'preview';
 		$_pages['home/editor/preview.php']['parent']    = 'home/editor/edit_content.php';
 		

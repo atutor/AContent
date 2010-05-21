@@ -137,6 +137,10 @@ $_base_path  = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST
 define('TR_BASE_HREF', $_base_href);
 define('TR_GUIDES_PATH', $_base_path . 'documentation/');
 
+// third party URL for web accessibility validation
+define('TR_ACHECKER_URL', 'http://www.achecker.ca/');
+define('TR_ACHECKER_WEB_SERVICE_ID', '2f4149673d93b7f37eb27506905f19d63fbdfe2d');
+
 /* relative uri */
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));
 

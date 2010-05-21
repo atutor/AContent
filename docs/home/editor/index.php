@@ -11,7 +11,7 @@
 /************************************************************************/
 
 /** Commented by Cindy Li on Apr 27, 2010
- * Modified from ATutor mods/_core/editor/*, SVN revision 9807
+ * Modified from ATutor home/editor/*, SVN revision 9807
  */
 
 define('TR_INCLUDE_PATH', '../../include/');

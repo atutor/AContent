@@ -15,7 +15,11 @@ define('TR_INCLUDE_PATH', '../../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 
-$cid = intval($_POST['cid']);
+global $_course_id, $_content_id, $contentManager;
+
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+
+$cid = $_content_id;
 
 if ($cid == 0) {
 	require(TR_INCLUDE_PATH.'header.inc.php');
@@ -69,13 +73,14 @@ else if (isset($_POST['reverse']))
 	}
 }
 
+$popup = intval($_GET['popup']);
 require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?popup=1" method="post" name="form">
   <div class="row">
 <?php 					
 	echo '    <input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
-	echo '    <input type="hidden" name="cid" value="'.$_POST['cid'].'" />';
+	echo '    <input type="hidden" name="_cid" value="'.$cid.'" />';
 	
 	if (!$cid) {
 		$msg->printInfos('SAVE_CONTENT');
@@ -91,7 +96,7 @@ if ($_POST['body_text'] != '') {
 	$_POST['content_path'] = $content_row['content_path'];
 	write_temp_file();
 
-	$pg_url = TR_BASE_HREF.'get_acheck.php/'.$_POST['cid'] . '.html';
+	$pg_url = TR_BASE_HREF.'get_acheck.php/'.$cid . '.html';
 	$checker_url = TR_ACHECKER_URL.'checkacc.php?uri='.urlencode($pg_url).'&id='.TR_ACHECKER_WEB_SERVICE_ID
 					. '&guide=WCAG2-L2&output=html';
 
@@ -108,7 +113,7 @@ if ($_POST['body_text'] != '') {
 		echo '    <p>'._AT('access_credit').'</p>';
 	}
 	//delete file
-	@unlink(TR_CONTENT_DIR . $_POST['cid'] . '.html');
+	@unlink(TR_CONTENT_DIR . $cid . '.html');
 
 } else {
 	$msg->printInfos('NO_PAGE_CONTENT');

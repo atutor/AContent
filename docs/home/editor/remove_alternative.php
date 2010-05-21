@@ -13,7 +13,7 @@
 /**
  * This script handles the ajax post submit from "content editor" =? "adpated content"
  * to remove selected alternative from database
- * @see mods/_core/editor/editor_tabs/alternatives.inc.php
+ * @see home/editor/editor_tabs/alternatives.inc.php
  * @var $_POST values: 
  *      pid: primary resource id
  *      a_type: alternative type, must be one of the values in resource_types.type_id

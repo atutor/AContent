@@ -28,6 +28,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_FILE_DELETE','Are 
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_FILE_EXISTS','The file <strong>%s</strong> already exists. Do you want to overwrite the file?','2010-04-05 14:58:41','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_FILE_MOVE','Are you sure you want to move <strong>%1s</strong> to the folder <strong>%2s</strong>?','2010-04-07 13:47:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_REMOVE_TEST_QUESTION','Are you sure you want to remove this question from this test? Removing the question will not delete it from the question database.','2010-03-31 16:15:44','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_SUB_CONTENT_DELETE','This content page has sub content. If you delete this page all its sub pages will be deleted as well.<br />','2010-05-20 12:08:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_ACCOUNT_DISABLED','That account has been disabled.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_BAD_FILE_TYPE','Unsupported file type. Plain Text or HTML files only.','2010-04-06 14:30:44','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_BAD_FOLDER_NAME','The folder name contains illegal characters. You may choose from alphanumeric characters and underscores, dashes or periods.','2010-04-01 15:23:52','');
@@ -60,9 +61,11 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_ILLEGAL','%s fi
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_NOT_DELETED','Error deleting file. Cannot delete file.','2010-04-06 14:42:19','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_NOT_EXIST','The selected file does not exist.','2010-04-06 14:30:44','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_NOT_SAVED','The file cannot be saved.','2010-04-05 14:58:40','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_NOT_SELECTED','You did not select a file to upload.','2010-05-21 15:57:36','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_TOO_BIG','The file size exceeds the limit of <strong>%s </strong>. Contact your Transformable Administrator to have this limit increased.','2010-04-06 13:21:58','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FIRST_LAST_NAME_UNIQUE','First, second, and last names combination must be unique.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FOLDER_NOT_CREATED','The folder \" %s \" could not be created.','2010-04-01 15:23:52','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_ID_ZERO','Content ID was zero, or was missing.','2010-05-20 12:08:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_CARTRIDGE_FAILED','Import failed. Does not appear to be a valid content package or common cartridge.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_FAILED','Import Failed','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_CHECKBOX_STATUS','Invalid checkbox status.','2010-01-27 15:48:35','');
@@ -79,6 +82,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LANG_WRONG_VERSION',
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LOGIN_CHARS','Your Login Name must only contain letters, numbers, periods, or underscores (_\'s).','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LOGIN_EXISTS','That login already exists, please choose another.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MAX_STORAGE_EXCEEDED','Adding this file exceeds the maximum course storage limit.','2010-04-06 13:21:58','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MISSING_CONTENT','The requested content is missing.','2010-05-20 12:08:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MISSING_COURSE_ID','Please select a course.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NOT_LOCALHOST','Sorry, the IP address of localhost is not public. For security reasons, validating resources located at non-public IP addresses has been disabled in this service.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_ACTION_SELECTED','No action selected.','2010-01-27 15:48:35','');
@@ -111,6 +115,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CHANGE_TO_SAME_EM
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CONFIRMATION_SENT','An email confirmation message has been sent.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CONFIRM_EMAIL2','An email with instructions on retrieving your password has been sent.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CONFIRM_GOOD','Your email address has been confirmed successfully.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CONTENT_DELETED','Content was successfully deleted','2010-05-20 14:34:38','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CONTENT_DIR_CREATED','Content directory created successfully.','2010-04-01 15:23:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_DIRS_MOVED','Directories successfully moved.','2010-04-07 13:47:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_DIR_DELETED','Folder was successfully deleted.','2010-04-06 14:42:19','');
@@ -118,6 +123,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_EXPORT_CANCELLED'
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILEUPLOAD_DONE','File(s) uploaded.','2010-04-01 15:23:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_EXISTS','The file <strong>%1$s</strong> already exists. The newly uploaded file was saved as <strong>%2$s</strong>.','2010-04-06 13:58:12','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_OVERWRITE','File overwrite successful.','2010-04-01 15:23:51','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_PASTED','The file was successfully pasted into the textarea below. <strong><em>Save to apply changes</em></strong>, or Cancel to return to the previously saved content.','2010-05-21 15:57:36','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_SAVED','The file was successfully saved as <strong>%s</strong>','2010-04-05 14:58:41','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_UPLOADED','File was successfully uploaded.','2010-04-06 13:58:12','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_UPLOADED_ZIP','File was successfully uploaded. You may now <a href=\"file_manager/zip.php?pathext=%1$s%5$sfile=%2$s%5$spopup=%3$s%5$s_course_id=%4$s\">extract</a> the file.','2010-04-09 10:53:33','');
@@ -154,13 +160,19 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_HELP_USER','<h2>User Manag
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_HELP_USER_GROUP ','<h2>User Group</h2>\r\n\r\n<p>The User Group section allows administrators to manage user groups. User groups define the privileges that are granted to the users who are members of a group. Note that \"Administrator\" and \"Regular User\" groups can not  be deleted. They must exist for Transformable\'s proper operations. All other groups are optional.</p>\r\n\r\n<p>There are three default user groups in Transformable. Below is a description of the default privileges that are granted to each group. The privileges in user groups are editable by users who are a member of a group that has the \"User Management\" privilege.\r\n<dl>\r\n<dt>Administrator</dt>\r\n<dd>Administrators have privileges to use the Home, manage users, languages and manage their own profile.</dd>\r\n<dt>Regular User</dt>\r\n<dd>Regular users have privileges to use the Home and manage their own profile. </dd>\r\n<dt>Translator</dt>\r\n<dd>Translators have privileges to use the Home, translate Transformable terms from English to other languages, and to manage their own profile. The languages that can be used in the system are defined by users who have \"Language Management\" privileges.</dd>\r\n</dl>\r\n</p>','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_HELP_USER_PASSWORD ','<h2>Change Password</h2>\r\n\r\n<p>All fields are required and self-explanatory. Once the new password is set successfully, an email notification is sent to the user.</p>\r\n','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_INVALID_USER','You must <a href=\"login.php\">login</a> to use this section.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_NO_PAGE_CONTENT','There is no content on this page.','2010-05-20 12:08:10','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_NO_TESTS','No tests found. Create tests using the \"Test Manager\".','2010-05-21 14:46:07','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_OVER_QUOTA','You have reached or passed your maximum quota for this course. You will have to delete some files before you will be able to upload again.','2010-04-01 15:23:51','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_UPDATE_INSTALLED_AND_REMOVE_PERMISSION','The update has been installed. Please remove write permission as instruction.','2010-01-27 15:48:35','Updater: info msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_WARNING_QUESTION_WEIGHT','One or more of the questions on this test do not have points associated with them.  Ensure that this is correct, or enter values for questions that do not have points.','2010-03-31 15:16:51','');
 INSERT INTO `language_text` VALUES ('en', '_template','15_max_chars','15 character maximum','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','20_max_chars','20 character maximum','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','a','A','2010-03-25 14:52:29','');
+INSERT INTO `language_text` VALUES ('en', '_template','about_content_tests','Link available tests to this content page.','2010-05-21 14:46:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','accessibility','Accessibility','2010-04-29 11:06:22','');
+INSERT INTO `language_text` VALUES ('en', '_template','accessibility_disabled','Accessibility Validation disabled','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','accessibility_enabled','Acessibility Validation enabled','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','access_credit','Accessibility report provided by <a title=\"AChecker Web Accessibility Checker (link opens in a new window)\" target=\"_new\" href=\"http://www.achecker.ca\">AChecker</a>.','2010-05-21 11:56:42','');
 INSERT INTO `language_text` VALUES ('en', '_template','add','Add','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','address','Street Address','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_a_file','Add A File','2010-01-27 15:48:35','Updater');
@@ -176,13 +188,18 @@ INSERT INTO `language_text` VALUES ('en', '_template','add_privileges','Add Priv
 INSERT INTO `language_text` VALUES ('en', '_template','add_questions','Add Questions','2010-03-31 11:17:18','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_sibling_folder','Add Sibling Folder','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_sibling_page','Add Sibling Page','2003-05-20 12:26:32','');
+INSERT INTO `language_text` VALUES ('en', '_template','add_sub_folder','Add Sub Folder','2010-05-19 14:26:14','');
+INSERT INTO `language_text` VALUES ('en', '_template','add_sub_page','Add Sub Page','2010-05-19 14:26:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_top_folder','Add Top Folder','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_top_page','Add Top Page','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_to_test_survey','Add to Test/Survey','2010-03-23 11:04:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','all','All','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','allow_test_export','Allow students to export tests with content packages:','2010-05-21 14:46:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','all_questions_on_page','All questions on one page','2010-03-18 14:28:15','');
 INSERT INTO `language_text` VALUES ('en', '_template','alter','Alter','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','alternate_text','Alternate Text','2010-04-09 14:49:24','');
+INSERT INTO `language_text` VALUES ('en', '_template','alternatives','Alternatives','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','alternative_content','Adapted Content','2010-05-20 16:08:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','answer','Answer','2010-03-25 14:52:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','answers','Answers','2010-03-25 14:52:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','answer_size','Answer Size','2010-03-25 15:11:39','');
@@ -190,6 +207,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','archive_total','Archive T
 INSERT INTO `language_text` VALUES ('en', '_template','arrange_content','Arrange Content','2010-04-29 11:06:22','');
 INSERT INTO `language_text` VALUES ('en', '_template','assigned_to','Assigned To','2010-03-17 13:40:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','audible_captcha','Audible Version of CAPTCHA','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','audio','Audio','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','author','Author','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','authoring_img_info','indicates my own authoring course.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','availability','Availability','2010-03-17 13:40:46','');
@@ -200,6 +218,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','back','Back','2010-03-25 
 INSERT INTO `language_text` VALUES ('en', '_template','back_to','Back To:','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','body','Body','2010-04-05 14:54:41','');
 INSERT INTO `language_text` VALUES ('en', '_template','browse_files','Browse Files','2010-04-01 15:02:37','');
+INSERT INTO `language_text` VALUES ('en', '_template','browse_for_upload','Browse for file to upload','2010-05-21 15:57:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','bt','<acronym title=\"Byte\">B</acronym>','2010-04-05 13:38:43','');
 INSERT INTO `language_text` VALUES ('en', '_template','c','C','2010-03-25 14:52:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','calendar','Calendar','2010-01-27 15:48:35','');
@@ -217,7 +236,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','choose_lang','Choose a la
 INSERT INTO `language_text` VALUES ('en', '_template','city','City','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','click_browse_files','Click <em>Browse Files</em> to add files to the queue','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','close','Close','2010-01-27 15:48:35','');
-INSERT INTO `language_text` VALUES ('en', '_template','close_file_manager','Close File Manager','2010-04-09 14:11:38','');
+INSERT INTO `language_text` VALUES ('en', '_template','close_after_saving','Close after saving','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','close_popup','Close Popup','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','close_window','Close Window','2010-03-30 11:48:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','code_to_replace_from','Code To Replace From','2010-01-27 15:48:35','Updater');
@@ -228,6 +247,9 @@ INSERT INTO `language_text` VALUES ('en', '_template','confirm_delete','Are you 
 INSERT INTO `language_text` VALUES ('en', '_template','consumer','Consumer','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','contact_email','Contact Email','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','contain_only','May contain only letters, numbers, underscores, hyphens or periods.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','content','Content','2010-05-20 16:08:37','');
+INSERT INTO `language_text` VALUES ('en', '_template','content_folder_title','Content Folder Title','2010-05-19 14:26:14','');
+INSERT INTO `language_text` VALUES ('en', '_template','content_id','Content ID','2010-05-21 15:57:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','content_navigation','Content Navigation','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','continue','Continue','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','copyright','Web site engine\'s code is copyright &copy; 2009','2010-01-27 15:48:35','');
@@ -261,6 +283,11 @@ INSERT INTO `language_text` VALUES ('en', '_template','create_update','Create Up
 INSERT INTO `language_text` VALUES ('en', '_template','create_user','Create User','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','current_location','(Current location)','2010-04-07 13:26:02','');
 INSERT INTO `language_text` VALUES ('en', '_template','current_path','Path to Current Directory:','2010-04-01 15:02:36','');
+INSERT INTO `language_text` VALUES ('en', '_template','customized_head','Styles/CSS','2010-05-20 16:08:30','');
+INSERT INTO `language_text` VALUES ('en', '_template','customized_head_disabled_title','Scripts/CSS disabled','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','customized_head_enabled_title','Toggle Scripts/CSS','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','customized_head_note','Edit your own styles or javascript','2010-05-20 14:44:44','');
+INSERT INTO `language_text` VALUES ('en', '_template','custom_test_message','Include a message to appear along with the link to the test.','2010-05-21 14:46:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','d','D','2010-03-25 14:52:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','date','Date','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','date_apr','Apr','2010-01-27 15:48:35','date');
@@ -314,6 +341,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','delete_course_category','
 INSERT INTO `language_text` VALUES ('en', '_template','delete_language','Delete Language','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','delete_test','Delete Test/Survey','2010-03-11 14:37:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','delete_this_file','Delete This File','2010-01-27 15:48:35','Updater');
+INSERT INTO `language_text` VALUES ('en', '_template','delete_this_folder','Delete This Folder','2010-05-19 14:26:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','delete_this_page','Delete This Page','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','delete_update','Delete Update','2010-01-27 15:48:35','Updater');
 INSERT INTO `language_text` VALUES ('en', '_template','delete_user','Delete User','2010-01-27 15:48:35','');
@@ -335,6 +363,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','download_file','Download 
 INSERT INTO `language_text` VALUES ('en', '_template','e','E','2010-03-25 14:52:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit','Edit','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit_content','Edit Content','2010-04-29 11:06:22','');
+INSERT INTO `language_text` VALUES ('en', '_template','edit_content_folder','Edit Content Folder','2010-05-19 14:26:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit_function','Edit Function','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit_profile','Edit Profile','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','edit_question','Edit Question','2010-03-11 14:37:01','');
@@ -374,6 +403,8 @@ INSERT INTO `language_text` VALUES ('en', '_template','fail_feedback','Fail Feed
 INSERT INTO `language_text` VALUES ('en', '_template','false','False','2010-03-29 10:16:33','');
 INSERT INTO `language_text` VALUES ('en', '_template','file','File','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','filemanager_date_format','%Y-%m-%d %H:%i','2010-04-06 14:02:31','');
+INSERT INTO `language_text` VALUES ('en', '_template','fileman_disabled_title','File Manager disabled','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','fileman_enabled_title','Open File Manager window','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','files','Files','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','file_manager','File Manager','2010-04-01 14:07:51','');
 INSERT INTO `language_text` VALUES ('en', '_template','file_manager_frame','File Manager Frame','2010-04-06 11:45:32','');
@@ -384,6 +415,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','filter','Filter','2010-01
 INSERT INTO `language_text` VALUES ('en', '_template','first_name','First Name','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','folder','Folder','2010-04-07 15:23:22','');
 INSERT INTO `language_text` VALUES ('en', '_template','for','for','2010-02-09 16:10:07','');
+INSERT INTO `language_text` VALUES ('en', '_template','formatting','Formatting','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','form_editor','Form Editor','2010-03-30 13:57:07','');
 INSERT INTO `language_text` VALUES ('en', '_template','frame_contains','','2010-04-06 11:45:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','g','G','2010-03-25 14:52:29','');
@@ -399,6 +431,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','hide_contents','Hide Cont
 INSERT INTO `language_text` VALUES ('en', '_template','hide_course','Hide the course from other users','2010-02-09 13:04:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','home','Home','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','html','HTML','2010-04-05 14:54:41','');
+INSERT INTO `language_text` VALUES ('en', '_template','html_only','Plain Text or HTML files only.','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','i','I','2010-03-25 14:52:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','illegal_extentions','Illegal File Extensions','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','illegal_file','Illegal File Type','2010-04-07 15:23:22','');
@@ -423,6 +456,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','j','J','2010-03-25 14:52:
 INSERT INTO `language_text` VALUES ('en', '_template','jump_to_content','Jump to Content','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','kb','<acronym title=\"Kilobytes\">KB</acronym>','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','keep_it_short','Tip: Keep it short, no spaces.','2010-04-01 15:02:37','');
+INSERT INTO `language_text` VALUES ('en', '_template','keywords','Keywords','2010-05-21 14:46:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','language','Language','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','lang_code','Language Code','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','last_login','Last Login','2010-01-27 15:48:35','');
@@ -466,6 +500,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','match_all_words','Match A
 INSERT INTO `language_text` VALUES ('en', '_template','match_any_word','Match Any Word','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','max_file_size','Maximum File Size','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','mb','<acronym title=\"Megabyte\">MB</acronym>','2010-04-05 14:22:48','');
+INSERT INTO `language_text` VALUES ('en', '_template','missing_content','Missing Content','2010-05-19 14:04:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','move','Move','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','msg_terms','Message Terms','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','must_be_author','Must be an author','2010-03-16 11:45:52','');
@@ -484,6 +519,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','new_name','New Name','201
 INSERT INTO `language_text` VALUES ('en', '_template','new_or_translated','New or Translated Terms','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','new_password','New Password','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','new_terms','New Terms','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','new_window','Search opens in a new window.','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','next','Next','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','next_chapter','Next Chapter','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','next_topic','Next Topic','2010-01-27 15:48:35','');
@@ -492,6 +528,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','none','None','2010-03-16 
 INSERT INTO `language_text` VALUES ('en', '_template','none_found','None Found.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','not_installed','Not Installed','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','no_pass_score','No pass score','2010-03-18 14:28:15','');
+INSERT INTO `language_text` VALUES ('en', '_template','No_resources','No resources found in this content page.','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','no_results_for_keywords','No results found for keyword(s) \"%1s\".','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','no_results_found','No results found.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','num','No.','2010-03-31 11:04:26','');
@@ -511,8 +548,10 @@ INSERT INTO `language_text` VALUES ('en', '_template','options','Options','2010-
 INSERT INTO `language_text` VALUES ('en', '_template','or','Or','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','order','Order','2010-03-31 11:04:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','organization','Organization','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','original_resource','Original resource','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','outline','Outline','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','overwrite','Overwrite','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','packaged_in','Content Package','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','page_info','Last Modified: %s.  Revision: %s.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','page_info_date_format','%l %M %j, %Y - %H:%i','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','password','Password','2010-01-27 15:48:35','');
@@ -529,6 +568,9 @@ INSERT INTO `language_text` VALUES ('en', '_template','password_request2','Dear 
 INSERT INTO `language_text` VALUES ('en', '_template','pass_feedback','Pass Feedback','2010-03-18 14:28:15','');
 INSERT INTO `language_text` VALUES ('en', '_template','pass_score','Pass Score','2010-03-18 14:28:15','');
 INSERT INTO `language_text` VALUES ('en', '_template','paste','Paste','2010-03-24 16:02:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','paste_disabled_title','Paste from file disabled','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','paste_enabled_title','Toggle paste from file','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','paste_file','Paste From File','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','pending','Pending','2010-03-17 13:40:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','percentage_score','percentage score','2010-03-18 14:28:15','');
 INSERT INTO `language_text` VALUES ('en', '_template','phone','Phone','2010-01-27 15:48:35','');
@@ -542,12 +584,14 @@ INSERT INTO `language_text` VALUES ('en', '_template','prev','Prev','2010-01-27 
 INSERT INTO `language_text` VALUES ('en', '_template','preview','Preview','2010-03-11 14:37:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','preview_questions','Preview Questions','2010-03-11 14:37:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','previous_chapter','Previous Chapter','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','previous_topic','Previous Topic','2010-05-20 14:34:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','prev_used','Previously Used','2010-03-24 13:16:34','');
 INSERT INTO `language_text` VALUES ('en', '_template','primary_language','Primary Language','2010-02-09 11:48:22','');
 INSERT INTO `language_text` VALUES ('en', '_template','print_version','Print Version','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','privileges','Privileges','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','processing','Processing','2010-04-29 11:06:22','');
 INSERT INTO `language_text` VALUES ('en', '_template','profile','Profile','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','properties','Properties','2010-05-20 16:08:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','province','Province/State/Region','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','published_date','Published Date','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','question','Question','2010-03-23 11:04:47','');
@@ -576,6 +620,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','required_field','Required
 INSERT INTO `language_text` VALUES ('en', '_template','required_field_text','<span class=\"required\" title=\"Required Field\">*</span> indicates required fields.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','requirement','Requirement','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','reset_filter','Reset Filter','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','resource_type','Original Resource Type','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','result','Result','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','results','Results','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','results_found','Results Found: %s','2010-01-27 15:48:35','');
@@ -584,6 +629,8 @@ INSERT INTO `language_text` VALUES ('en', '_template','return_file_manager','Ret
 INSERT INTO `language_text` VALUES ('en', '_template','return_to_handbook','Return to Handbook','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','save','Save','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','save_and_close','Save and Close','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','save_changes','Save Changes','2010-05-20 14:44:44','');
+INSERT INTO `language_text` VALUES ('en', '_template','save_changes_unsaved','Unsaved changes have been made.','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','search','Search','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','search_and_add','Please search and add courses','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','search_phase','Search Phase','2010-01-27 15:48:35','');
@@ -598,6 +645,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','set_preset','Apply Preset
 INSERT INTO `language_text` VALUES ('en', '_template','shortcuts','Shortcuts','2010-02-08 14:27:03','');
 INSERT INTO `language_text` VALUES ('en', '_template','short_paragraph','Short Paragraph','2010-03-25 15:11:39','');
 INSERT INTO `language_text` VALUES ('en', '_template','show','Show','2003-05-20 12:26:32','');
+INSERT INTO `language_text` VALUES ('en', '_template','sign_lang','Sign Language','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','site_name','Site Name','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','size','Size','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','specify_url_to_content_package','Or, Specify a URL to a Content Package or Common Cartridge','2010-02-02 12:03:44','');
@@ -623,6 +671,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','test_mc','Multiple Choice
 INSERT INTO `language_text` VALUES ('en', '_template','test_open','Open Ended','2010-03-23 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','test_ordering','Ordering','2010-03-23 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','test_tf','True or False','2010-03-23 14:23:29','');
+INSERT INTO `language_text` VALUES ('en', '_template','text','Text','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','theme','Theme','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','the_follow_errors_occurred','The following errors occurred:','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','title','Title','2010-01-27 15:48:35','');
@@ -661,6 +710,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','upload_progress','Upload 
 INSERT INTO `language_text` VALUES ('en', '_template','upload_question','Upload Question','2010-03-23 11:04:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','upload_test','Select Test Package to Upload','2010-03-17 13:40:45','');
 INSERT INTO `language_text` VALUES ('en', '_template','upload_update','Upload a zip file to install update:','2010-01-27 15:48:35','Updater');
+INSERT INTO `language_text` VALUES ('en', '_template','usaved_changes_made','Unsaved changes made','2010-05-21 14:46:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','user','User','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','users','Users','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','user_group','User Group','2010-01-27 15:48:35','');
@@ -669,11 +719,14 @@ INSERT INTO `language_text` VALUES ('en', '_template','user_status','User Status
 INSERT INTO `language_text` VALUES ('en', '_template','user_table_summary','Edit, change passwords, or delete users','2010-04-13 14:13:20','');
 INSERT INTO `language_text` VALUES ('en', '_template','use_as_alternative','Use As Alternative','2010-04-05 16:07:53','');
 INSERT INTO `language_text` VALUES ('en', '_template','use_captcha','Allow the use of CAPTCHA','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','use_customized_head','Use Customized Head','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','use_visual_editor','<small style=\"text-decoration:underline;\">(Editor)</small>','2010-03-24 15:54:22','');
 INSERT INTO `language_text` VALUES ('en', '_template','version_not_match','This update is for Transformable version %s. Does not match with your current Transformable version. The installation of it may break Transformable. Are you sure you want to proceed?','2010-01-27 15:48:35','Updater');
 INSERT INTO `language_text` VALUES ('en', '_template','view','View','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','view_message','View Message','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','visual','Visual','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','warning','Warning','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','weblink','Web Link','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','web_service_api','Web Service API','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','web_service_id','Web Service ID','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','web_site','Web Site','2010-01-27 15:48:35','');

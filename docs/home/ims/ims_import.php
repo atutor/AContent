@@ -545,11 +545,9 @@ function rehash($items){
 			if (isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
-//				debug('in tests');
 			} 
 			if (isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
 				$items[$current_identifier]['a4a_import_enabled'] = true;
-//				debug('in a4a');
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
@@ -914,6 +912,7 @@ $items[content_id/resource_id] = array(
 									);
 */
 $ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
+
 //scan for manifest xml if it's not on the top level.
 if ($ims_manifest_xml === false){
 	$data = rscandir($import_path);
@@ -1086,7 +1085,7 @@ $order_offset = $contentDAO->getMaxOrdering($_course_id, 0);
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
 $items = rehash($items);
-//debug($items,'harris');exit;
+//debug($items);exit;
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1

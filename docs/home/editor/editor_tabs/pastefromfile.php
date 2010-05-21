@@ -18,34 +18,30 @@ require(TR_INCLUDE_PATH.'vitals.inc.php');
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <title>Paste from file tool</title>
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-        <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>
+        <script src="<?php echo $this->base_path; ?>jscripts/transformable.js" type="text/javascript"></script>
         <script type="text/javascript">
-        ATutor = ATutor || {};
-        ATutor.mods = ATutor.mods || {};
-        ATutor.mods.editor = ATutor.mods.editor || {};
-
         var errorStringPrefix = '<div id="error"><h4><?php echo _AT('the_follow_errors_occurred'); ?></h4><ul><li>';      
         var errorStringSuffix = '</li></ul></div>';      
 
         (function () {
             
-            ATutor.mods.editor.insertErrorMsg = function (errorString) {
+            trans.editor.insertErrorMsg = function (errorString) {
                 jQuery("#subnavlistcontainer", window.opener.document).before(errorStringPrefix + errorString + errorStringSuffix);    
             };
 
-            ATutor.mods.editor.removeErrorMsg = function () {
+            trans.editor.removeErrorMsg = function () {
                 jQuery("#error", window.opener.document).remove();
             };
 
-            ATutor.mods.editor.testStuff = function () {
-                var body = ATutor.mods.editor.stuff;
+            trans.editor.testStuff = function () {
+                var body = trans.editor.stuff;
                 body = body.replace(/\\/g,"");
                 alert(body);
                 jQuery("#body_text", window.opener.document).val(body);
                                 
             };
             
-            ATutor.mods.editor.pasteFromFile = function (body, title, head) {
+            trans.editor.pasteFromFile = function (body, title, head) {
                 body = body.replace(/\\/g,"");
                 if (jQuery("#html", window.opener.document).attr("checked") && 
                    (<?php echo $_SESSION['prefs']['PREF_CONTENT_EDITOR']; ?> !== 1)) {
@@ -155,13 +151,13 @@ function paste_from_file() {
 if (isset($_POST['submit_file']))
 {
 	echo '<script type="text/javascript">';
-    echo 'ATutor.mods.editor.removeErrorMsg();';
+    echo 'trans.editor.removeErrorMsg();';
 	$fileData = paste_from_file();
 	$errorMessage = $fileData->getErrorMsg();
 	if ($errorMessage == "") {
-        echo 'ATutor.mods.editor.pasteFromFile('.json_encode($fileData->getBody()).','.json_encode($fileData->getTitle()).','.json_encode($fileData->getHead()).');';
+        echo 'trans.editor.pasteFromFile('.json_encode($fileData->getBody()).','.json_encode($fileData->getTitle()).','.json_encode($fileData->getHead()).');';
     } else {
-       echo 'ATutor.mods.editor.insertErrorMsg("'.$errorMessage.'");';
+       echo 'trans.editor.insertErrorMsg("'.$errorMessage.'");';
     }
     echo "window.close();";
 	echo '</script>';

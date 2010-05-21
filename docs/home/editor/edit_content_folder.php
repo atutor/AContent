@@ -11,15 +11,20 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-require(TR_INCLUDE_PATH.'vitals.inc.php');
-require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
+require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
+require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
-global $_content_id, $_cid, $contentManager;
-$cid = $_cid;
+global $_content_id, $_content_id, $contentManager;
+$cid = $_content_id;
+
+Utility::authenticate(TR_PRIV_ISAUTHOR);
 
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
 
-if ($cid > 0 && isset($contentManager)) $content_row = $contentManager->getContentPage($cid);
+if ($cid > 0 && isset($contentManager)) {
+	$content_row = $contentManager->getContentPage($cid);
+}
 
 // save changes
 if ($_POST['submit'])
@@ -28,13 +33,9 @@ if ($_POST['submit'])
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 		
-//	if (!($release_date = generate_release_date())) {
-//		$msg->addError('BAD_DATE');
-//	}
-//	
 	if (!$msg->containsErrors()) 
 	{
-		$_POST['title']	= $content_row['title'] = $addslashes($_POST['title']);
+		$_POST['title']	= $content_row['title'] = $_POST['title'];
 	
 		if ($cid > 0)
 		{ // edit existing content
@@ -43,7 +44,6 @@ if ($_POST['submit'])
 			                                    '', 
 			                                    '', 
 			                                    $content_row['formatting'], 
-			                                    $release_date, 
 			                                    '', 
 			                                    $content_row['use_customized_head'], 
 			                                    '', 
@@ -70,7 +70,6 @@ if ($_POST['submit'])
 			                                   '',
 			                                   '',
 			                                   0,
-			                                   $release_date,
 			                                   '',
 			                                   0,
 			                                   '',
@@ -78,22 +77,6 @@ if ($_POST['submit'])
 			                                   CONTENT_TYPE_FOLDER);
 		}
 		
-		// save pre-tests
-		$sql = "DELETE FROM ". TABLE_PREFIX . "content_prerequisites 
-		         WHERE content_id=".$cid." AND type='".CONTENT_PRE_TEST."'";
-		$result = mysql_query($sql, $db);
-		
-		if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0)
-		{
-			foreach ($_POST['tid'] as $i => $tid){
-				$tid = intval($tid);
-				$sql = "INSERT INTO ". TABLE_PREFIX . "content_prerequisites 
-				           SET content_id=".$cid.", type='".CONTENT_PRE_TEST."', item_id=$tid";
-				$result = mysql_query($sql, $db);
-
-				if ($result===false) $msg->addError('MYSQL_FAILED');
-			}
-		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_path.'home/editor/edit_content_folder.php?_cid='.$cid);
 		exit;
@@ -176,41 +159,13 @@ if ($cid > 0)
 	reset($path);
 	$first_page = current($path);
 	
-	save_last_cid($cid);
+	ContentUtility::saveLastCid($cid);
 	
 	if (isset($top_num) && $top_num != (int) $top_num) {
 		$top_num = substr($top_num, 0, strpos($top_num, '.'));
 	}
-	/* MOVE SHORTCUTS INTO HEADER.INC */
+	$_tool_shortcuts = ContentUtility::getToolShortcuts($content_row);  // used by header.tmpl.php
 	
-	$shortcuts = array();
-	if (((!$content_row['content_parent_id'] && $_SESSION['packaging'] == 'top') || $_SESSION['packaging'] == 'all') 
-	    || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-		$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'home/imscp/ims_export.php?_cid='.$cid, 'icon' => $_base_href . 'images/download.png');
-	}
-	
-	if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
-//		$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/folder_new.gif');
-	
-		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-			$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-				'home/editor/edit_content_folder.php?_course_id=.'.$_course_id.SEP.'pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 'icon' => $_base_href . 'images/folder_new_sibling.gif');
-		}
-		
-		$shortcuts[] = array('title' => _AT('add_sub_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id.'pid='.$cid);
-		
-//		$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id, 'icon' => $_base_href . 'images/page_add.gif');
-		if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-			$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-				'home/editor/edit_content.php?_course_id='.$_course_id.SEP.'pid='.$contentManager->_menu_info[$cid]['content_parent_id'], 'icon' => $_base_href . 'images/page_add_sibling.gif');
-		}
-	
-		$shortcuts[] = array('title' => _AT('add_sub_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id.SEP.'pid='.$cid);
-		$shortcuts[] = array('title' => _AT('delete_this_folder'), 'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid, 'icon' => $_base_href . 'images/page_delete.gif');
-	}
-	
-	$release_date = $content_row['release_date'];
-
 	// display pre-tests
 //	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$_REQUEST[cid] AND type='".CONTENT_PRE_TEST."'";
 //	$result = mysql_query($sql, $db);
@@ -219,94 +174,16 @@ if ($cid > 0)
 //	}
 
 	$savant->assign('ftitle', $content_row['title']);
-	$savant->assign('shortcuts', $shortcuts);
+//	$savant->assign('shortcuts', $shortcuts);
 	$savant->assign('cid', $cid);
 }
 
-//// display pre-tests
-//// get a list of all the tests we have, and links to create, edit, delete, preview 
-//$sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue 
-//             FROM ".TABLE_PREFIX."tests 
-//            WHERE course_id=$_SESSION[course_id] 
-//            ORDER BY start_date DESC";
-//$result	= mysql_query($sql, $db);
-//$num_tests = mysql_num_rows($result);
-//
-//$i = 0;
-//while($row = mysql_fetch_assoc($result))
-//{
-//	$results[$i]['test_id'] = $row['test_id'];
-//	$results[$i]['title'] = $row['title'];
-//	
-//	if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
-//		$results[$i]['status'] = '<em>'._AT('ongoing').'</em>';
-//	} else if ($row['ue'] < time() ) {
-//		$results[$i]['status'] = '<em>'._AT('expired').'</em>';
-//	} else if ($row['us'] > time() ) {
-//		$results[$i]['status'] = '<em>'._AT('pending').'</em>';
-//	} 
-//
-//	$startend_date_format=_AT('startend_date_format'); 
-//
-//	$results[$i]['availability'] = AT_date($startend_date_format, $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
-//	$results[$i]['availability'] .= AT_date($startend_date_format, $row['end_date'], AT_DATE_MYSQL_DATETIME);
-//	
-//	// get result release
-//	if ($row['result_release'] == AT_RELEASE_IMMEDIATE)
-//		$results[$i]['result_release'] = _AT('release_immediate');
-//	else if ($row['result_release'] == AT_RELEASE_MARKED)
-//		$results[$i]['result_release'] = _AT('release_marked');
-//	else if ($row['result_release'] == AT_RELEASE_NEVER)
-//		$results[$i]['result_release'] = _AT('release_never');
-//		
-//	//get # marked submissions
-//	$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id'];
-//	$result_sub	= mysql_query($sql_sub, $db);
-//	$row_sub = mysql_fetch_assoc($result_sub);
-//	$results[$i]['submissions'] = $row_sub['sub_cnt'].' '._AT('submissions').', ';
-//
-//	//get # submissions
-//	$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id']." AND final_score=''";
-//	$result_sub	= mysql_query($sql_sub, $db);
-//	$row_sub = mysql_fetch_assoc($result_sub);
-//	$results[$i]['submissions'] .= $row_sub['marked_cnt'].' '._AT('unmarked');
-//
-//	//get assigned groups
-//	$sql_sub = "SELECT G.title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."tests_groups T USING (group_id) WHERE T.test_id=".$row['test_id'];
-//	$result_sub	= mysql_query($sql_sub, $db);
-//	if (mysql_num_rows($result_sub) == 0) {
-//		$results[$i]['assign_to'] = _AT('everyone');
-//	} else {
-//		$row_sub = mysql_fetch_assoc($result_sub);
-//		$results[$i]['assign_to'] = $row_sub['title'];
-//		do {
-//			$results[$i]['assign_to'] .= ', '.$row_sub['title'];
-//		} while ($row_sub = mysql_fetch_assoc($result_sub));
-//	}
-//	
-//	if ($row['passscore'] == 0 && $row['passpercent'] == 0)
-//		$results[$i]['pass_score'] = _AT('no_pass_score');
-//	else if ($row['passscore'] <> 0)
-//		$results[$i]['pass_score'] = $row['passscore'];
-//	else if ($row['passpercent'] <> 0)
-//		$results[$i]['pass_score'] = $row['passpercent'].'%';
-//		
-//	$i++;
-//}
-//
-//if (isset($results)) $savant->assign('pretests', $results);
-//
-//// set release date
-//if (!isset($release_date)) $release_date = date('Y-m-d H:i:s');
-//
-//$_POST['day']   = substr($release_date, 8, 2);
-//$_POST['month'] = substr($release_date, 5, 2);
-//$_POST['year']  = substr($release_date, 0, 4);
-//$_POST['hour']  = substr($release_date, 11, 2);
-//$_POST['min']= substr($release_date, 14, 2);
-//
-if ($pid > 0) $savant->assign('pid', $pid);
-$tools_shortcuts = $shortcuts;
+if ($pid > 0) {
+	$savant->assign('pid', $pid);
+	$savant->assign('course_id', $_course_id);
+}
+
+$onload = "document.form.title.focus();";
 require(TR_INCLUDE_PATH.'header.inc.php');
 $savant->display('home/editor/edit_content_folder.tmpl.php');
 require(TR_INCLUDE_PATH.'footer.inc.php');

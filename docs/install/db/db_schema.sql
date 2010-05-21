@@ -39,6 +39,15 @@ CREATE TABLE `content` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # --------------------------------------------------------
+# Table structure for table `content_forums_assoc`
+
+CREATE TABLE `content_forums_assoc` (
+  `content_id` INTEGER UNSIGNED NOT NULL,
+  `forum_id` INTEGER UNSIGNED NOT NULL,
+PRIMARY KEY ( `content_id` , `forum_id` )
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
 # Table structure for table `course_tests_assoc`
 # since 0.1
 CREATE TABLE `content_tests_assoc` (
@@ -80,6 +89,17 @@ CREATE TABLE `course_categories` (
   `category_id` mediumint(8) unsigned NOT NULL auto_increment,
   `category_name` VARCHAR(255) NOT NULL ,
   PRIMARY KEY  (`category_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
+# Table structure for table `forums`
+
+CREATE TABLE `forums` (
+  `forum_id` mediumint(8) unsigned NOT NULL auto_increment,
+  `title` varchar(240) NOT NULL default '',
+  `description` TEXT ,
+  `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  PRIMARY KEY  (`forum_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # --------------------------------------------------------

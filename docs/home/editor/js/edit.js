@@ -10,13 +10,12 @@
 /************************************************************************/
 
 /*global jQuery*/
-/*global ATutor */
+/*global trans */
 /*global tinyMCE */
 /*global window */
 
-ATutor = ATutor || {};
-ATutor.mods = ATutor.mods || {};
-ATutor.mods.editor = ATutor.mods.editor || {};
+trans = trans || {};
+trans.editor = trans.editor || {};
 
 (function () {
     var hiddenClass = "hidden";
@@ -44,9 +43,9 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     //click function to launch accessibility validation window
     var launchAChecker = function () {
     	var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
-		theCode += '<h1>'+ATutor.mods.editor.processing_text+' .....</h1>\n';
-		theCode += '<form action="'+ATutor.base_href+'mods/_core/editor/accessibility.php?popup=1" name="accessform" method="post"> \n';
-		theCode += '<input type="hidden" name="cid" value="'+jQuery("input[name=cid]").val()+'" /> \n';
+		theCode += '<h1>'+trans.editor.processing_text+' .....</h1>\n';
+		theCode += '<form action="'+trans.base_href+'home/editor/accessibility.php?popup=1" name="accessform" method="post"> \n';
+		theCode += '<input type="hidden" name="_cid" value="'+jQuery("input[name=\_cid]").val()+'" /> \n';
        	theCode += '<textarea name="body_text" style="display:none">' + tinyMCE.activeEditor.getContent() + '</textarea>\n';
 		theCode += '<input type="submit" style="display:none" /></form> \n';  
 		theCode += '</body></html> \n';
@@ -95,7 +94,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 
     //click function to launch file manager window
     var launchFileManager = function () {
-        window.open(ATutor.base_href + '/mods/_core/file_manager/index.php?framed=1&popup=1&cp=' + ATutor.mods.editor.content_path, 'newWin1', 'menubar=0,scrollbars=1,resizable=1,width=640,height=490');
+        window.open(trans.base_href + 'file_manager/index.php?framed=1&popup=1&cp=' + trans.editor.content_path + '&_cid=' + trans.editor.content_id, 'newWin1', 'menubar=0,scrollbars=1,resizable=1,width=640,height=490');
         return false;
     };
 
@@ -122,7 +121,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     var disableTool = function (theTool) {
         var theToolElement = jQuery(theTool.toolId);
         theToolElement.removeClass(theTool.enabledClass);
-        theToolElement.attr("src", ATutor.base_href + theTool.disabledImage);
+        theToolElement.attr("src", trans.base_href + theTool.disabledImage);
         theToolElement.attr("title", theTool.disabledTitle);
         theToolElement.attr("alt", theTool.disabledTitle);
         theToolElement.unbind("click");
@@ -131,7 +130,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     var enableTool = function (theTool) {
         var theToolElement = jQuery(theTool.toolId);
         theToolElement.addClass(theTool.enabledClass);
-        theToolElement.attr("src", ATutor.base_href + theTool.enabledImage);
+        theToolElement.attr("src", trans.base_href + theTool.enabledImage);
         theToolElement.attr("title", theTool.enabledTitle);
         theToolElement.attr("alt", theTool.enabledTitle);
         theToolElement.click(theTool.clickFunction);
@@ -167,7 +166,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             
             setDisplay(head, displayhead);
             setDisplay(paste, displaypaste);
-            if (ATutor.mods.editor.editor_pref !== '1' && !tinyMCE.get(textAreaId)) {
+            if (trans.editor.editor_pref !== '1' && !tinyMCE.get(textAreaId)) {
            		tinyMCE.execCommand('mceAddControl', false, textAreaId);
             }
             weblink.hide();
@@ -191,14 +190,11 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     //click function to launch preview window
     var previewTool = function () {
 		var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
-		theCode += '<h1>'+ATutor.mods.editor.processing_text+' .....</h1>\n';
-		theCode += '<form action="'+ATutor.base_href+'mods/_core/editor/preview.php?popup=1" name="accessform" method="post"> \n';
+		theCode += '<h1>'+trans.editor.processing_text+' .....</h1>\n';
+		theCode += '<form action="'+trans.base_href+'home/editor/preview.php?popup=1" name="accessform" method="post"> \n';
 		theCode += '<input type="hidden" name="title" value="'+jQuery("input[name=title]").val()+'" /> \n';
-		theCode += '<input type="hidden" name="cid" value="'+jQuery("input[name=cid]").val()+'" /> \n';
+		theCode += '<input type="hidden" name="_cid" value="'+jQuery("input[name=\_cid]").val()+'" /> \n';
 		theCode += '<input type="hidden" name="formatting" value="'+jQuery("#formatting_radios input:radio:checked").val()+'" /> \n';
-    	jQuery("input[name*='glossary_defs[']").each(function() { 
-    		theCode += '<input type="hidden" name="'+this.name+'" value="'+jQuery(this).val()+'" /> \n';
-    	});
         if (jQuery("#weblink").attr("checked")) {
     		theCode += '<input type="hidden" name="weblink_text" value="'+jQuery("#weblink_text").val()+'" /> \n';
         } else if (jQuery("#html").attr("checked")) {
@@ -216,7 +212,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 
     //click function to launch tool window
     var launchTool = function () {
-        window.open(ATutor.base_href + '/mods/_core/tool_manager/index.php?framed=1&popup=1&tool_file=' + ATutor.mods.editor.tool_file + '&cid=' + ATutor.mods.editor.content_id, 'newWin2', 'menubar=0,scrollbars=1,resizable=1,width=600,height=400');
+        window.open(trans.base_href + 'home/tool_manager/index.php?framed=1&popup=1&tool_file=' + trans.editor.tool_file + '&_cid=' + trans.editor.content_id, 'newWin2', 'menubar=0,scrollbars=1,resizable=1,width=600,height=400');
         return false;
     };
 
@@ -225,14 +221,14 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         jQuery("#previewtool").click(previewTool);
         jQuery(".tool").click(launchTool);
         jQuery("#formatting_radios > input").click(setupPage);
-        headTool.enabledTitle = ATutor.mods.editor.head_enabled_title;
-        headTool.disabledTitle = ATutor.mods.editor.head_disabled_title;
-        pasteTool.enabledTitle = ATutor.mods.editor.paste_enabled_title;
-        pasteTool.disabledTitle = ATutor.mods.editor.paste_disabled_title;
-        filemanTool.enabledTitle = ATutor.mods.editor.fileman_enabled_title;
-        filemanTool.disabledTitle = ATutor.mods.editor.fileman_disabled_title;
-        accessibilityTool.enabledTitle = ATutor.mods.editor.accessibility_enabled_title;
-        accessibilityTool.disabledTitle = ATutor.mods.editor.accessibility_disabled_title;
+        headTool.enabledTitle = trans.editor.head_enabled_title;
+        headTool.disabledTitle = trans.editor.head_disabled_title;
+        pasteTool.enabledTitle = trans.editor.paste_enabled_title;
+        pasteTool.disabledTitle = trans.editor.paste_disabled_title;
+        filemanTool.enabledTitle = trans.editor.fileman_enabled_title;
+        filemanTool.disabledTitle = trans.editor.fileman_disabled_title;
+        accessibilityTool.enabledTitle = trans.editor.accessibility_enabled_title;
+        accessibilityTool.disabledTitle = trans.editor.accessibility_disabled_title;
         setupPage();
     };
     

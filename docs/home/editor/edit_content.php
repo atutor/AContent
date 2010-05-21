@@ -12,7 +12,7 @@
 
 define('TR_INCLUDE_PATH', '../../include/');
 
-global $db, $associated_forum, $_course_id, $_cid;
+global $db, $associated_forum, $_course_id, $_content_id;
 
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
@@ -21,7 +21,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
-$cid = $_cid;
+$cid = $_content_id;
 $dao = new DAO();
 
 if ($_POST) {
@@ -101,9 +101,9 @@ if ($cid) {
 
 if($current_tab == 0) {
     $_custom_head .= '
-    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
-    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
-    <script type="text/javascript" src="'.$_base_path.'mods/_core/editor/js/edit.js"></script>
+    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'include/jscripts/infusion/framework/fss/css/fss-layout.css" />
+    <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'include/jscripts/infusion/framework/fss/css/fss-text.css" />
+    <script type="text/javascript" src="'.$_base_path.'home/editor/js/edit.js"></script>
     ';
 }
 
@@ -118,7 +118,7 @@ if ($cid) {
 	}
 
 	$path	= $contentManager->getContentPath($cid);
-	$content_test = $contentManager->getContentTestsAssoc($cid);
+	$content_tests = $contentManager->getContentTestsAssoc($cid);
 
 	if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 		$course_base_href = 'get.php/';
@@ -243,7 +243,7 @@ $pid = intval($_REQUEST['pid']);
 		}
 	}
 	
-	echo '<input type="hidden" name="cid" value="'.$cid.'" />';
+	echo '<input type="hidden" name="_cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
 	if ($_REQUEST['sub'] == 1)
 	{
@@ -357,8 +357,8 @@ $pid = intval($_REQUEST['pid']);
 		else
 		{
 			$i = 0;
-			if ($content_test){
-				while ($content_test_row = mysql_fetch_assoc($content_test)){
+			if (is_array($content_tests)) {
+				foreach ($content_tests as $content_test_row) {
 					echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
 				}
 			}
@@ -402,8 +402,6 @@ $pid = intval($_REQUEST['pid']);
 	}
 ?>
 
-<div class="editor_wrapper">
-
 <div align="center">
 	<?php output_tabs($current_tab, $changes_made); ?>
 </div>
@@ -424,7 +422,7 @@ $pid = intval($_REQUEST['pid']);
 		</div>
 	<?php endif; ?>
 	<?php include('editor_tabs/'.$tabs[$current_tab][1]); ?>
-</div></div>
+</div>
 </form>
 
 <?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>
