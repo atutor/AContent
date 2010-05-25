@@ -137,6 +137,309 @@ class ContentUtility {
 		return $text;
 	}
 
+	private static function embedFLV($text) {
+		global $content_base_href, $_course_id;
+		
+		// .flv - uses Flowplayer 3.0 from flowplayer.org (playing file via full URL)
+		preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.flv\[/media\]#i",$text,$media_matches[0],PREG_SET_ORDER);
+		$media_replace[0] ="<a class=\"flowplayerholder\"
+		style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\"
+		href=\"http://##MEDIA1##.flv\">
+		</a>";
+		
+		// .flv - uses Flowplayer 3.0 from flowplayer.org (playing file from AT_content_dir)
+		preg_match_all("#\[media[0-9a-z\|]*\]([\w\./-]+)\.flv\[/media\]#i",$text,$media_matches[1],PREG_SET_ORDER);
+		$media_replace[1] ="<a class=\"flowplayerholder\"
+		style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\"
+		href=\"".TR_BASE_HREF."get.php/".$content_base_href."##MEDIA1##.flv?_course_id=".$_course_id."\">
+		</a>";
+		
+		$has_flv = false;
+		// Executing the replace
+		for ($i=0;$i<count($media_replace);$i++){
+			foreach($media_matches[$i] as $media)
+			{
+				if (is_array($media)) $has_flv = true;
+				
+				//find width and height for each matched media
+				if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
+				{
+					$width = $matches[1];
+					$height = $matches[2];
+				}
+				else
+				{
+					$width = 425;
+					$height = 350;
+				}
+				
+				//replace media tags with embedded media for each media tag
+				$media_input = $media_replace[$i];
+				$media_input = str_replace("##WIDTH##","$width",$media_input);
+				$media_input = str_replace("##HEIGHT##","$height",$media_input);
+				$media_input = str_replace("##MEDIA1##","$media[1]",$media_input);
+				$media_input = str_replace("##MEDIA2##","$media[2]",$media_input);
+				$text = str_replace($media[0],$media_input,$text);
+			}
+		}
+		
+		if ($has_flv)
+		{
+			$text .= '
+			<script language="JavaScript">
+				$f("a.flowplayerholder", "'.TR_BASE_HREF.'include/jscripts/flowplayer/flowplayer-3.1.2.swf", { 
+				 	clip: { autoPlay: false },  		
+			        plugins:  { 
+				        controls: { 
+				            all: false,  
+				            play: true,  
+				            scrubber: true 
+				        }         
+				    }
+				});
+			</script>
+			';
+		}
+		
+		return $text;		
+	}
+	
+	public static function embedMedia($text) {
+		if (preg_match("/\[media(\|[0-9]+\|[0-9]+)?\]*/", $text)==0){
+			return $text;
+		}
+	
+		$media_matches = Array();
+		
+		/*
+			First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
+			
+			Then the different replacements for the different media tags are stored in $media_replace.
+			
+			Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
+			
+		*/
+		
+		// youtube videos
+		preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i",$text,$media_matches[1],PREG_SET_ORDER);
+		$media_replace[1] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
+			
+		// .mpg
+		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mpg\[/media\]#i",$text,$media_matches[2],PREG_SET_ORDER);
+		$media_replace[2] = "<object data=\"##MEDIA1##.mpg\" type=\"video/mpeg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mpg\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mpg\">##MEDIA1##.mpg</a></object>";
+		
+		// .avi
+		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).avi\[/media\]#i",$text,$media_matches[3],PREG_SET_ORDER);
+		$media_replace[3] = "<object data=\"##MEDIA1##.avi\" type=\"video/x-msvideo\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.avi\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.avi\">##MEDIA1##.avi</a></object>";
+		
+		// .wmv
+		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).wmv\[/media\]#i",$text,$media_matches[4],PREG_SET_ORDER);
+		$media_replace[4] = "<object data=\"##MEDIA1##.wmv\" type=\"video/x-ms-wmv\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wmv\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wmv\">##MEDIA1##.wmv</a></object>";
+		
+		// .mov
+		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mov\[/media\]#i",$text,$media_matches[5],PREG_SET_ORDER);
+		$media_replace[5] = "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mov\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><!--[if gte IE 7]> <!--><object type=\"video/quicktime\" data=\"##MEDIA1##.mov\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a></object><!--<![endif]--><!--[if lt IE 7]><a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a><![endif]--></object>";
+		
+		// .swf
+		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i",$text,$media_matches[6],PREG_SET_ORDER);
+		$media_replace[6] = "<object type=\"application/x-shockwave-flash\" data=\"##MEDIA1##.swf\" width=\"##WIDTH##\" height=\"##HEIGHT##\">  <param name=\"movie\" value=\"##MEDIA1##.swf\"><param name=\"loop\" value=\"false\"><a href=\"##MEDIA1##.swf\">##MEDIA1##.swf</a></object>";
+		
+		// .mp3
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mp3\[/media\]#i",$text,$media_matches[7],PREG_SET_ORDER);
+		$media_replace[7] = "<object type=\"audio/mpeg\" data=\"##MEDIA1##.mp3\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mp3\">##MEDIA1##.mp3</a></object>";
+		
+		// .wav
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).wav\[/media\]#i",$text,$media_matches[8],PREG_SET_ORDER);
+		$media_replace[8] ="<object type=\"audio/x-wav\" data=\"##MEDIA1##.wav\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wav\">##MEDIA1##.wav</a></object>";
+		
+		// .ogg
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogg\[/media\]#i",$text,$media_matches[9],PREG_SET_ORDER);
+		$media_replace[9] ="<object type=\"application/ogg\" data=\"##MEDIA1##.ogg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogg\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogg</a></object>";
+		
+		// .mid
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i",$text,$media_matches[10],PREG_SET_ORDER);
+		$media_replace[10] ="<object type=\"application/x-midi\" data=\"##MEDIA1##.mid\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mid\"><a href=\"##MEDIA1##.mid\">##MEDIA1##.mid</a></object>";
+		
+		$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
+	
+		// Executing the replace
+		for ($i=1;$i<=count($media_replace);$i++){
+			foreach($media_matches[$i] as $media)
+			{
+				
+				//find width and height for each matched media
+				if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
+				{
+					$width = $matches[1];
+					$height = $matches[2];
+				}
+				else
+				{
+					$width = 425;
+					$height = 350;
+				}
+				
+				//replace media tags with embedded media for each media tag
+				$media_input = $media_replace[$i];
+				$media_input = str_replace("##WIDTH##","$width",$media_input);
+				$media_input = str_replace("##HEIGHT##","$height",$media_input);
+				$media_input = str_replace("##MEDIA1##","$media[1]",$media_input);
+				$media_input = str_replace("##MEDIA2##","$media[2]",$media_input);
+				$text = str_replace($media[0],$media_input,$text);
+			}
+		}
+		
+		$text = ContentUtility::embedFLV($text);
+		
+		return $text;
+	}
+
+	private static function makeClickable($text) {
+		$text = ContentUtility::embedMedia($text);
+	
+	//	$text = eregi_replace("([[:space:]])(http[s]?)://([^[:space:]<]*)([[:alnum:]#?/&=])", "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
+	//
+	//	$text = eregi_replace(	'([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
+	//							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)',
+	//							"<a href=\"mailto:\\1\">\\1</a>",
+	//							$text);
+	
+		$text = preg_replace("/([\s])(http[s]?):\/\/(.*)(\s|\$|<br\s\/\>)(.*)/U", 
+		                     "\\1<a href=\"\\2://\\3\">\\3</a>\\4\\5", $text);
+		
+		$text = preg_replace('/([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
+							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)/i',
+							"<a href=\"mailto:\\1\">\\1</a>",
+							$text);
+		return $text;
+	}
+
+	private static function myCodes($text, $html = false) {
+		global $_base_path;
+		global $HTTP_USER_AGENT;
+	
+		if (substr($HTTP_USER_AGENT,0,11) == 'Mozilla/4.7') {
+			$text = str_replace('[quote]','</p><p class="block">',$text);
+			$text = str_replace('[/quote]','</p><p>',$text);
+	
+			$text = str_replace('[reply]','</p><p class="block">',$text);
+			$text = str_replace('[/reply]','</p><p>',$text);
+		} else {
+			$text = str_replace('[quote]','<blockquote>',$text);
+			$text = str_replace('[/quote]','</blockquote><p>',$text);
+	
+			$text = str_replace('[reply]','</p><blockquote class="block"><p>',$text);
+			$text = str_replace('[/reply]','</p></blockquote><p>',$text);
+		}
+	
+		$text = str_replace('[b]','<strong>',$text);
+		$text = str_replace('[/b]','</strong>',$text);
+	
+		$text = str_replace('[i]','<em>',$text);
+		$text = str_replace('[/i]','</em>',$text);
+	
+		$text = str_replace('[u]','<u>',$text);
+		$text = str_replace('[/u]','</u>',$text);
+	
+		$text = str_replace('[center]','<center>',$text);
+		$text = str_replace('[/center]','</center><p>',$text);
+	
+		/* colours */
+		$text = str_replace('[blue]','<span style="color: blue;">',$text);
+		$text = str_replace('[/blue]','</span>',$text);
+	
+		$text = str_replace('[orange]','<span style="color: orange;">',$text);
+		$text = str_replace('[/orange]','</span>',$text);
+	
+		$text = str_replace('[red]','<span style="color: red;">',$text);
+		$text = str_replace('[/red]','</span>',$text);
+	
+		$text = str_replace('[purple]','<span style="color: purple;">',$text);
+		$text = str_replace('[/purple]','</span>',$text);
+	
+		$text = str_replace('[green]','<span style="color: green;">',$text);
+		$text = str_replace('[/green]','</span>',$text);
+	
+		$text = str_replace('[gray]','<span style="color: gray;">',$text);
+		$text = str_replace('[/gray]','</span>',$text);
+	
+		$text = str_replace('[op]','<span class="bigspacer"></span> <a href="',$text);
+		$text = str_replace('[/op]','">'._AT('view_entire_post').'</a>',$text);
+	
+		$text = str_replace('[head1]','<h2>',$text);
+		$text = str_replace('[/head1]','</h2>',$text);
+	
+		$text = str_replace('[head2]','<h3>',$text);
+		$text = str_replace('[/head2]','</h3>',$text);
+	
+		$text = str_replace('[cid]',$_base_path.'content.php?_cid='.$_SESSION['s_cid'],$text);
+	
+		global $sequence_links, $_course_id, $_content_id;
+		if ($_course_id > 0 && !isset($sequence_links) && $_content_id > 0) {
+			global $contentManager;
+			$sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
+		}
+		if (isset($sequence_links['previous']) && $sequence_links['previous']['url']) {
+			$text = str_replace('[pid]', $sequence_links['previous']['url'], $text);
+		}
+		if (isset($sequence_links['next']) && $sequence_links['next']['url']) {
+			$text = str_replace('[nid]', $sequence_links['next']['url'], $text);
+		}
+		if (isset($sequence_links['resume']) && $sequence_links['resume']['url']) {
+			$text = str_replace('[nid]', $sequence_links['resume']['url'], $text);
+		}
+		if (isset($sequence_links['first']) && $sequence_links['first']['url']) {
+			$text = str_replace('[fid]', $sequence_links['first']['url'], $text);
+		}
+	
+		/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
+	    $html = !$html ? 0 : 1;
+	    
+		// little hack added by greg to add syntax highlighting without using <?php \?\>
+		
+		$text = str_replace("[code]","[code]<?php",$text);
+		$text = str_replace("[/code]","?>[/code]",$text);
+	
+		$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'), $html)", $text);
+		// now remove the <?php added above and leave the syntax colour behind.
+		$text = str_replace("&lt;?php", "", $text);
+		$text = str_replace("?&gt;", "", $text);
+	
+		return $text;
+	}
+
+	private static function imageReplace($text) {
+		/* image urls do not require http:// */
+		
+	//	$text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
+	//						 "[:space:]*" .
+	//						 "([[:alnum:]#?/&=:\"'_.-]+)" .
+	//						 "[:space:]*" .
+	//						 "((\[/image\])|(.*\[/image\]))",
+	//				  "<img src=\"\\3\" alt=\"\\2\" />",
+	//				  $text);
+		 
+		$text = preg_replace("/\[image(\|)?([a-zA-Z0-9\s]*)\]".
+		                     "[\s]*".
+		                     "([a-zA-Z0-9\#\?\/\&\=\:\\\"\'\_\.\-]+)[\s]*".
+		                     "((\[\/image\])|(.*\[\/image\]))/i",
+					  "<img src=\"\\3\" alt=\"\\2\" />",
+					  $text);
+					  
+		return $text;
+	}
+	
+	private static function formatFinalOutput($text, $nl2br = true) {
+		global $_base_path;
+	
+		$text = str_replace('CONTENT_DIR/', '', $text);
+		if ($nl2br) {
+			return nl2br(ContentUtility::imageReplace(ContentUtility::makeClickable(ContentUtility::myCodes(' '.$text, false))));
+		}
+	
+		return ContentUtility::imageReplace(ContentUtility::makeClickable(ContentUtility::myCodes(' '.$text, true)));
+	}
+
 	/**
 	* This function converts the input string into Transformable html content string 
 	* @access  public
@@ -215,14 +518,12 @@ class ContentUtility {
 			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
 		}
 	
-		/* Commented by Cindy Qi Li on Jan 12, 2010
 		if ($html) {
-			$x = apply_customized_format(format_final_output($input, false));
+			$x = ContentUtility::formatFinalOutput($input, false);
 			return $x;
 		}
 	
-		$output = apply_customized_format(format_final_output($input));
-		*/
+		$output = ContentUtility::formatFinalOutput($input);
 	
 		$output = '<p>'.$input.'</p>';
 	
@@ -361,7 +662,7 @@ class ContentUtility {
 	* @author	Cindy Qi Li
 	*/
 	public static function applyAlternatives($cid, $content){
-		global $db;
+		global $db, $_course_id;
 		
 		include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		$dao = new DAO();
@@ -427,10 +728,10 @@ class ContentUtility {
 					$file .= $file_location;
 					
 					if ($row['content_path'] <> '') {
-						$file = TR_CONTENT_DIR.$_SESSION['course_id'] . '/'.$row['content_path'].'/'.$file_location;
+						$file = TR_CONTENT_DIR.$_course_id . '/'.$row['content_path'].'/'.$file_location;
 					}
 					else {
-						$file = TR_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
+						$file = TR_CONTENT_DIR.$_course_id . '/'.$file_location;
 					}
 					$target = file_get_contents($file);
 					
@@ -441,7 +742,7 @@ class ContentUtility {
 						if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 							$course_base_href = 'get.php/';
 						} else {
-							$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+							$course_base_href = 'content/' . $_course_id . '/';
 						}
 		
 						$file = TR_BASE_HREF . $course_base_href.$file_location;

@@ -23,6 +23,7 @@ function write_config_file($filename, $comments) {
 					'{TABLE_PREFIX}',
 					'{CONTENT_DIR}',
 					'{GENERATED_COMMENTS}',
+					'{GET_FILE}'
 				);
 
 		$values = array(urldecode($_POST['step2']['db_login']),
@@ -33,7 +34,8 @@ function write_config_file($filename, $comments) {
 					$_POST['step2']['tb_prefix'],
 					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$comments,
-				);
+					$_POST['step4']['get_file']
+					);
 
 	$config_template = str_replace($tokens, $values, $config_template);
 
@@ -87,6 +89,12 @@ define('TABLE_PREFIX',                 '{TABLE_PREFIX}');
 /* recommended that the content directory be moved outside of the web	*/
 /* accessible area.														*/
 define('TR_CONTENT_DIR', '{CONTENT_DIR}');
+
+/* Whether or not to use the TR_CONTENT_DIR as a protected directory.   */
+/* The if set to FALSE then the content directory will be hard coded    */
+/* to Transformable_install_dir/content/ and TR_CONTENT_DIR will be ignored.   */
+/* This option is used for compatability with IIS and Apache 2.         */
+define('TR_FORCE_GET_FILE', {GET_FILE});
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('TR_INSTALL', TRUE);

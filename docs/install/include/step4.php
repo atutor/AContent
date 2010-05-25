@@ -133,7 +133,7 @@ else
 		}
 	
 		if (strlen($content) == 0) {
-			$headers[] = 'Transformable-Get: OK';
+			$headers[] = 'Trans-Get: OK';
 		} else {
 			$headers[] = '';
 		}
@@ -151,7 +151,7 @@ else
 		}
 	}
 	
-	if (in_array('Transformable-Get: OK', $headers)) {
+	if (in_array('Trans-Get: OK', $headers)) {
 		$get_file = 'TRUE';
 	} else {
 		$get_file = 'FALSE';

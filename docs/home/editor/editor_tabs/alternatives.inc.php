@@ -23,12 +23,12 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  */
 function get_preview_link($file)
 {
-	global $content_row;
+	global $content_row, $_course_id;
 	
 	if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 		$get_file = 'get.php/';
 	} else {
-		$get_file = 'content/' . $_SESSION['course_id'] . '/';
+		$get_file = 'content/' . $_course_id . '/';
 	}
 	
 	return $get_file.$content_row['content_path'].'/'.$file;

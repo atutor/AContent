@@ -1,33 +1,28 @@
 <?php
-/****************************************************************/
-/* ATutor														*/
-/****************************************************************/
-/* Copyright (c) 2002-2008 by Greg Gay & Joel Kronenberg        */
-/* Adaptive Technology Resource Centre / University of Toronto  */
-/* http://atutor.ca												*/
-/*                                                              */
-/* This program is free software. You can redistribute it and/or*/
-/* modify it under the terms of the GNU General Public License  */
-/* as published by the Free Software Foundation.				*/
-/****************************************************************/
-// $Id: resources_parser_inc.inc.php 7208 2008-07-04 16:07:24Z silvia $
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-//require(AT_INCLUDE_PATH.'lib/output.inc.php');
+if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 global $db;
 
-define('AT_INCLUDE_PATH', '../include/');
-
-//echo 'uffa';
-//echo $_POST['body_text'];
+define('TR_INCLUDE_PATH', '../include/');
+include_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
 $body_text 	= htmlspecialchars($stripslashes($_POST['body_text']));
 $body_t		= html_entity_decode($body_text);
 		
 
-require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require(AT_INCLUDE_PATH.'../mods/_core/imscp/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
+require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+//require(TR_INCLUDE_PATH.'../mods/_core/imscp/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 /*
 the following resources are to be identified:
@@ -105,7 +100,7 @@ $my_files 		= array();
 $content_files 	= "\n";
 
 //in order to control if some [media] is in the body_text
-$body = embed_media($body_t);
+$body = ContentUtility::embedMedia($body_t);
 
 $parser->parse($body);
 		

@@ -82,7 +82,8 @@ $starttime = $mtime;
 	<![endif]-->
 <?php echo $this->rtl_css; ?>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.1.2.min.js"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
@@ -315,10 +316,9 @@ foreach ($this->top_level_pages as $page) {
 //} // end of else
 ?>
  <!-- the sub navigation -->
+<?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
-
-      <?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
 	  <?php if (isset($this->back_to_page)): ?>
 	    <div id="subnavbacktopage">	  
 	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.$_base_href.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;">'?></a> 
@@ -342,7 +342,6 @@ foreach ($this->top_level_pages as $page) {
       <?php endif; ?>
       <?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
       </ul>
-      <?php endif; ?>
-
     </div>
 </div>
+<?php endif; ?>

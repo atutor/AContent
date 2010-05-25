@@ -43,11 +43,11 @@ if ($_POST['close'] || $_GET['close']) {
 		}
 	}
 	
-	if ($_REQUEST['cid'] == 0) {
+	if (!isset($_content_id) || $_content_id == 0) {
 		header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$_course_id);
 		exit;
 	}
-	header('Location: '.TR_BASE_HREF.'home/course/content.php?_cid='.$_cid);
+	header('Location: '.TR_BASE_HREF.'home/course/content.php?_cid='.$_content_id);
 	exit;
 }
 	
@@ -190,7 +190,7 @@ if ($current_tab == 0 || $current_tab == 2)
 $pid = intval($_REQUEST['pid']);
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>?cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>?_cid=<?php echo $cid; ?>" method="post" name="form" enctype="multipart/form-data">
 <?php
 
 	if ($cid) {

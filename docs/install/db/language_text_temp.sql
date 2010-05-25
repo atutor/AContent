@@ -467,9 +467,9 @@ INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_INFOS_NO_TESTS', 'No te
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_FEEDBACK_FILE_PASTED', 'The file was successfully pasted into the textarea below. <strong><em>Save to apply changes</em></strong>, or Cancel to return to the previously saved content.', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_NOT_SELECTED', 'You did not select a file to upload.', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_BAD_FILE_TYPE', 'Unsupported file type. Plain Text or HTML files only.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_INPUT', 'Invalid URL: %s', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CLOSED', 'Successfully closed', now(), '');
 
-INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');

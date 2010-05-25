@@ -84,10 +84,10 @@ function isValidURL($url) {
 
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
-	global $contentManager, $db, $addslashes, $msg;
+	global $contentManager, $addslashes, $msg, $_course_id, $_content_id;
 	
 	$_POST['pid']	= intval($_POST['pid']);
-	$_POST['cid']	= intval($_POST['cid']);
+	$_POST['_cid']	= intval($_POST['_cid']);
 	
 	$_POST['alternatives'] = intval($_POST['alternatives']);
 	
@@ -115,33 +115,33 @@ function save_changes($redir, $current_tab) {
 		$content_type_pref = CONTENT_TYPE_CONTENT;
 	}
 
-	if (!($release_date = generate_release_date())) {
+	/*if (!($release_date = generate_release_date())) {
 		$msg->addError('BAD_DATE');
-	}
+	}*/
 
-	if ($_POST['title'] == '') {
-		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
-	}
+//	if ($_POST['title'] == '') {
+//		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
+//	}
 		
-	if (!$msg->containsErrors()) {
-		$_POST['title']			= $addslashes($_POST['title']);
-		$_POST['body_text']		= $addslashes($_POST['body_text']);
-		$_POST['head']  		= $addslashes($_POST['head']);
-		$_POST['keywords']		= $addslashes($_POST['keywords']);
-		$_POST['test_message']	= $addslashes($_POST['test_message']);		
+//	if (!$msg->containsErrors()) {
+//		$_POST['title']			= $addslashes($_POST['title']);
+//		$_POST['body_text']		= $addslashes($_POST['body_text']);
+//		$_POST['head']  		= $addslashes($_POST['head']);
+//		$_POST['keywords']		= $addslashes($_POST['keywords']);
+//		$_POST['test_message']	= $addslashes($_POST['test_message']);		
 
 		// add or edit content
-		if ($_POST['cid']) {
+		if ($_POST['_cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], 
+			$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
 			                                    $_POST['keywords'], $_POST['formatting'], 
-			                                    $release_date, $_POST['head'], $_POST['use_customized_head'], 
+			                                    $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message'], $_POST['allow_test_export']);
-			$cid = $_POST['cid'];
+			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
 			
-			$cid = $contentManager->addContent($_SESSION['course_id'],
+			$cid = $contentManager->addContent($_course_id,
 												  $_POST['pid'],
 												  $_POST['ordering'],
 												  $_POST['title'],
@@ -149,18 +149,18 @@ function save_changes($redir, $current_tab) {
 												  $_POST['keywords'],
 												  $_POST['related'],
 												  $_POST['formatting'],
-												  $release_date,
 												  $_POST['head'],
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
 												  $_POST['allow_test_export'],
 												  $content_type_pref);
-			$_POST['cid']    = $cid;
-			$_REQUEST['cid'] = $cid;
+			$_POST['_cid']    = $cid;
+			$_REQUEST['_cid'] = $cid;
 		}
-	}
+//	}
 
 	/* insert glossary terms */
+	/*
 	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
 		global $glossary, $glossary_ids, $msg;
 
@@ -185,7 +185,7 @@ function save_changes($redir, $current_tab) {
 				$glossary[$old_w] = $d;
 			}
 		}
-	}
+	}*/
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
 	}
@@ -196,6 +196,9 @@ function save_changes($redir, $current_tab) {
 	// adapted content: save primary content type
 	if (isset($_POST['use_post_for_alt']))
 	{
+		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesTypesDAO.class.php');
+		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
+		
 		// 1. delete old primary content type
 		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
 		         WHERE primary_resource_id in 
@@ -203,7 +206,7 @@ function save_changes($redir, $current_tab) {
 		                  FROM ".TABLE_PREFIX."primary_resources
 		                 WHERE content_id=".$cid."
 		                   AND language_code='".$_SESSION['lang']."')";
-		$result = mysql_query($sql, $db);
+		$primaryResourcesTypesDAO->execute($sql);
 		
 		// 2. insert the new primary content type
 		$sql = "SELECT pr.primary_resource_id, rt.type_id
@@ -211,24 +214,31 @@ function save_changes($redir, $current_tab) {
 		                 TABLE_PREFIX."resource_types rt
 		         WHERE pr.content_id = ".$cid."
 		           AND pr.language_code = '".$_SESSION['lang']."'";
-		$all_types_result = mysql_query($sql, $db);
+		$all_types_rows = $primaryResourcesTypesDAO->execute($sql);
 		
-		while ($type = mysql_fetch_assoc($all_types_result)) {
-			if (isset($_POST['alt_'.$type['primary_resource_id'].'_'.$type['type_id']]))
-			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types (primary_resource_id, type_id)
-				        VALUES (".$type['primary_resource_id'].", ".$type['type_id'].")";
-				$result = mysql_query($sql, $db);
+		if (is_array($all_types_rows)) {
+			foreach ($all_types_rows as $type) {
+				if (isset($_POST['alt_'.$type['primary_resource_id'].'_'.$type['type_id']]))
+				{
+					$primaryResourcesTypesDAO->Create($type['primary_resource_id'], $type['type_id']);
+//					$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types (primary_resource_id, type_id)
+//					        VALUES (".$type['primary_resource_id'].", ".$type['type_id'].")";
+//					$result = mysql_query($sql, $db);
+				}
 			}
 		}
 	}
 	
-	//Add test to this content - @harris
-	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_tests_assoc WHERE content_id=$_POST[cid]";
-	$result = mysql_query($sql, $db);
+	include_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+	$contentTestsAssocDAO = new ContentTestsAssocDAO();
+	$test_rows = $contentTestsAssocDAO->getByContent($_POST['_cid']);
+//	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_tests_assoc WHERE content_id=$_POST[cid]";
+//	$result = mysql_query($sql, $db);
 	$db_test_array = array();
-	while ($row = mysql_fetch_assoc($result)) {
-		$db_test_array[] = $row['test_id'];
+	if (is_array($test_rows)) {
+		foreach ($test_rows as $row) {
+			$db_test_array[] = $row['test_id'];
+		}
 	}
 
 	if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
@@ -238,73 +248,57 @@ function save_changes($redir, $current_tab) {
 		if (!empty($toBeDeleted)){
 			$tids = implode(",", $toBeDeleted);
 			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
-			$result = mysql_query($sql, $db);
+			$contentTestsAssocDAO->execute($sql);
 		}
 	
 		//Add entries
 		if (!empty($toBeAdded)){
 			foreach ($toBeAdded as $i => $tid){
 				$tid = intval($tid);
-				$sql = 'INSERT INTO '. TABLE_PREFIX . "content_tests_assoc SET content_id=$_POST[cid], test_id=$tid";
-				$result = mysql_query($sql, $db);
-				if ($result===false){
-					$msg->addError('MYSQL_FAILED');
+//				$sql = 'INSERT INTO '. TABLE_PREFIX . "content_tests_assoc SET content_id=$_POST[cid], test_id=$tid";
+//				$result = mysql_query($sql, $db);
+				if ($contentTestsAssocDAO->Create($_POST['_cid'], $tid) === false){
+					$msg->addError('DB_NOT_UPDATED');
 				}
 			}
 		}
 	} else {
 		//All tests has been removed.
-		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
-		$result = mysql_query($sql, $db);
+		$contentTestsAssocDAO->DeleteByContentID($_POST['_cid']);
+//		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
+//		$result = mysql_query($sql, $db);
 	}
 	//End Add test
 
-	// add pre-tests
-	$sql = "DELETE FROM ". TABLE_PREFIX . "content_prerequisites 
-	         WHERE content_id=".$_POST[cid]." AND type='".CONTENT_PRE_TEST."'";
-	$result = mysql_query($sql, $db);
-	
-	if (is_array($_POST['pre_tid']) && sizeof($_POST['pre_tid']) > 0)
-	{
-		foreach ($_POST['pre_tid'] as $i => $tid){
-			$tid = intval($tid);
-			$sql = "INSERT INTO ". TABLE_PREFIX . "content_prerequisites 
-			           SET content_id=".$_POST[cid].", type='".CONTENT_PRE_TEST."', item_id=$tid";
-			$result = mysql_query($sql, $db);
-			
-			if ($result===false) $msg->addError('MYSQL_FAILED');
+	//TODO*******************BOLOGNA****************REMOVE ME**************/
+/*
+	if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){
+		if($_SESSION['associated_forum']=='none'){
+			$sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
+			mysql_query($sql,$db);
+		} else {
+			$sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
+			mysql_query($sql,$db);
+			$associated_forum = $_SESSION['associated_forum'];
+			for($i=0; $i<count($associated_forum); $i++){
+				$sql="INSERT INTO ".TABLE_PREFIX."content_forums_assoc SET content_id='$_POST[cid]',forum_id='$associated_forum[$i]'";
+				mysql_query($sql,$db);
+			}
 		}
+		unset($_SESSION['associated_forum']);
 	}
-
-        //TODO*******************BOLOGNA****************REMOVE ME**************/
-         if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){
-            if($_SESSION['associated_forum']=='none'){
-                $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
-                mysql_query($sql,$db);
-            } else {
-                $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
-                mysql_query($sql,$db);
-                $associated_forum = $_SESSION['associated_forum'];
-                for($i=0; $i<count($associated_forum); $i++){
-                    $sql="INSERT INTO ".TABLE_PREFIX."content_forums_assoc SET content_id='$_POST[cid]',forum_id='$associated_forum[$i]'";
-                    mysql_query($sql,$db);
-                }
-            }
-            unset($_SESSION['associated_forum']);
-         }
-
-
+*/
 	if (!$msg->containsErrors() && $redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.basename($_SERVER['PHP_SELF']).'?cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'displayhead='.$addslashes($_POST['displayhead']).SEP.'alternatives='.$addslashes($_POST['alternatives']));
+		header('Location: '.basename($_SERVER['PHP_SELF']).'?_cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'displayhead='.$addslashes($_POST['displayhead']).SEP.'alternatives='.$addslashes($_POST['alternatives']));
 		exit;
 	} else {
 		return;
 	}
 }
-
+/*
 function generate_release_date($now = false) {
 	if ($now) {
 		$day  = date('d');
@@ -340,7 +334,7 @@ function generate_release_date($now = false) {
 	
 	return $release_date;
 }
-
+*/
 function check_for_changes($row, $row_alternatives) {
 	global $contentManager, $cid, $glossary, $glossary_ids_related, $addslashes;
 

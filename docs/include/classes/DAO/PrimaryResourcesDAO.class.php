@@ -100,9 +100,9 @@ class PrimaryResourcesDAO extends DAO {
 	}
 	
 	/**
-	* Return a config row by content_id
+	* Return rows by content_id
 	* @access  public
-	* @param   name
+	* @param   cid: content_id
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
