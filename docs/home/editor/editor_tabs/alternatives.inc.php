@@ -15,7 +15,11 @@
  */
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
+include_once(TR_INCLUDE_PATH.'classes/DAO/ResourceTypesDAO.class.php');
+include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 
+$dao = new DAO();
+$resourceTypesDAO = new ResourceTypesDAO();
 /**
  * This function returns the preview link of the given file
  * @param  $file     the file location in "file manager"
@@ -42,7 +46,7 @@ function get_preview_link($file)
  *        $ps                 used to pass into file_manager/index.php
  * @return html of the table cell "<td>...</td>"
  */ 
-function display_alternative_cell($secondary_result, $alternative_type, $content_id, $pid, $td_header_id)
+function display_alternative_cell($secondary_resources, $alternative_type, $content_id, $pid, $td_header_id)
 {
 	global $content_row;
 	
@@ -50,10 +54,10 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 	
 	echo '    <td headers="'.$td_header_id.'">'."\n";
 	
-	if (mysql_num_rows($secondary_result) > 0)
+	if (is_array($secondary_resources))
 	{
-		mysql_data_seek($secondary_result, 0);  // move the mysql result cursor back to the first row
-		while ($secondary_resource = mysql_fetch_assoc($secondary_result))
+//		mysql_data_seek($secondary_result, 0);  // move the mysql result cursor back to the first row
+		foreach ($secondary_resources as $secondary_resource)
 		{
 			if ($secondary_resource['type_id'] == $alternative_type)
 			{
@@ -92,8 +96,9 @@ else
 {
 	$is_post_indicator_set = false;
 	// get all resource types
-	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-	$resource_types_result = mysql_query($sql, $db);
+//	$sql = "SELECT * FROM ".TABLE_PREFIX."resource_types";
+//	$resource_types_result = mysql_query($sql, $db);
+	$resource_types = $resourceTypesDAO->getAll();
 	
 	echo '<table class="data" rules="all" style="width:100%">'."\n";
 	echo '  <thead>'."\n";
@@ -118,21 +123,25 @@ else
 		         WHERE content_id = ".$cid."
 		           AND language_code = '".$_SESSION['lang']."'
 		           AND resource='".$primary_resource."'";
-		$primary_result = mysql_query($sql, $db);
+//		$primary_result = mysql_query($sql, $db);
+		$primary_resources = $dao->execute($sql);
 		
+		if (is_array($primary_resources)) $num_of_primary_resources = count($primary_resources);
 		// insert primary resource if it's not in db
-		if (mysql_num_rows($primary_result) == 0)
+		if ($num_of_primary_resources == 0)
+//		if (mysql_num_rows($primary_result) == 0)
 		{
 			$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources (content_id, resource, language_code) 
 			        VALUES (".$cid.", '".$primary_resource."', '".$_SESSION['lang']."')";
-			$result	= mysql_query($sql, $db);
+//			$result	= mysql_query($sql, $db);
+			$dao->execute($sql);
 			$primary_resource_id = mysql_insert_id();
 		}
 		else
 		{
 			// get primary resource id
-			$primary_resource_row = mysql_fetch_assoc($primary_result);
-			$primary_resource_id = $primary_resource_row['primary_resource_id'];
+//			$primary_resource_row = mysql_fetch_assoc($primary_result);
+			$primary_resource_id = $primary_resources['primary_resource_id'];
 		}
 		$sql = "SELECT prt.type_id, rt.type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
@@ -143,7 +152,8 @@ else
 		           AND pr.resource='".$primary_resource."'
 		           AND pr.primary_resource_id = prt.primary_resource_id
 		           AND prt.type_id = rt.type_id";
-		$primary_type_result = mysql_query($sql, $db);
+//		$primary_type_result = mysql_query($sql, $db);
+		$primary_types = $dao->execute($sql);
 		
 		if (!$is_post_indicator_set)
 		{
@@ -161,7 +171,8 @@ else
 		           AND pr.resource='".$primary_resource."'
 		           AND pr.primary_resource_id = sr.primary_resource_id
 		           AND sr.secondary_resource_id = srt.secondary_resource_id";
-		$secondary_result = mysql_query($sql, $db);
+//		$secondary_result = mysql_query($sql, $db);
+		$secondary_resources = $dao->execute($sql);
 		
 		echo '  <tr>'."\n";
 
@@ -173,46 +184,49 @@ else
 		// table cell "original resource type"
 		echo '    <td headers="header2">'."\n";
 		
-		mysql_data_seek($resource_types_result, 0);  // move the mysql result cursor back to the first row
-		while ($resource_type = mysql_fetch_assoc($resource_types_result))
+//		mysql_data_seek($resource_types_result, 0);  // move the mysql result cursor back to the first row
+//		while ($resource_type = mysql_fetch_assoc($resource_types_result))
+		if (is_array($secondary_resources))
 		{
-			if ($resource_type['type'] == 'sign_language')
-				continue;
-			else 
-			{
-				echo '<input type="checkbox" name="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'" value="1" id="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'"';
-				if ($_POST['use_post_for_alt'])
+			foreach ($secondary_resources as $resource_type) {
+				if ($resource_type['type'] == 'sign_language')
+					continue;
+				else 
 				{
-					if (isset($_POST['alt_'.$primary_resource_id.'_'.$resource_type['type_id']])) {
-						echo 'checked="checked"';
-					}
-				}
-				else {
-					if (mysql_num_rows($primary_type_result)> 0) mysql_data_seek($primary_type_result, 0);
-					while ($primary_resource_type = mysql_fetch_assoc($primary_type_result)) {
-						if ($primary_resource_type['type_id'] == $resource_type['type_id']){
+					echo '<input type="checkbox" name="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'" value="1" id="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'"';
+					if ($_POST['use_post_for_alt'])
+					{
+						if (isset($_POST['alt_'.$primary_resource_id.'_'.$resource_type['type_id']])) {
 							echo 'checked="checked"';
-							break;
 						}
 					}
+					else {
+						if (mysql_num_rows($primary_type_result)> 0) mysql_data_seek($primary_type_result, 0);
+						while ($primary_resource_type = mysql_fetch_assoc($primary_type_result)) {
+							if ($primary_resource_type['type_id'] == $resource_type['type_id']){
+								echo 'checked="checked"';
+								break;
+							}
+						}
+					}
+					echo '/>'."\n";
+					echo '<label for="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'">'. _AT($resource_type['type']).'</label><br/>'."\n";	
 				}
-				echo '/>'."\n";
-				echo '<label for="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'">'. _AT($resource_type['type']).'</label><br/>'."\n";	
-			}	
+			}
 		}
 		echo '    </td>'."\n";
 		
 		// table cell "text alternative"
-		display_alternative_cell($secondary_result, 3, $cid, $primary_resource_id, "header3");
+		display_alternative_cell($secondary_resources, 3, $cid, $primary_resource_id, "header3");
 		
 		// table cell "audio"
-		display_alternative_cell($secondary_result, 1, $cid, $primary_resource_id, "header4");
+		display_alternative_cell($secondary_resources, 1, $cid, $primary_resource_id, "header4");
 		
 		// table cell "visual"
-		display_alternative_cell($secondary_result, 4, $cid, $primary_resource_id, "header5");
+		display_alternative_cell($secondary_resources, 4, $cid, $primary_resource_id, "header5");
 		
 		// table cell "sign language"
-		display_alternative_cell($secondary_result, 2, $cid, $primary_resource_id, "header6");
+		display_alternative_cell($secondary_resources, 2, $cid, $primary_resource_id, "header6");
 		
 		echo '  </tr>'."\n";
 	}

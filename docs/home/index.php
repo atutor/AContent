@@ -16,6 +16,9 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 
 global $_current_user;
 
+// clean up the course level session vars
+unset($_SESSION['course_id']);
+
 $userCoursesDAO = new UserCoursesDAO();
 
 if (isset($_GET['action'], $_GET['cid']) && $_SESSION['user_id'] > 0)

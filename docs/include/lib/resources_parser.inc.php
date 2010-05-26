@@ -22,7 +22,7 @@ $body_t		= html_entity_decode($body_text);
 		
 
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-//require(TR_INCLUDE_PATH.'../mods/_core/imscp/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
+require(TR_INCLUDE_PATH.'imscc/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 /*
 the following resources are to be identified:

@@ -138,7 +138,7 @@ class ContentUtility {
 	}
 
 	private static function embedFLV($text) {
-		global $content_base_href, $_course_id;
+		global $content_base_href;
 		
 		// .flv - uses Flowplayer 3.0 from flowplayer.org (playing file via full URL)
 		preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.flv\[/media\]#i",$text,$media_matches[0],PREG_SET_ORDER);
@@ -151,7 +151,7 @@ class ContentUtility {
 		preg_match_all("#\[media[0-9a-z\|]*\]([\w\./-]+)\.flv\[/media\]#i",$text,$media_matches[1],PREG_SET_ORDER);
 		$media_replace[1] ="<a class=\"flowplayerholder\"
 		style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\"
-		href=\"".TR_BASE_HREF."get.php/".$content_base_href."##MEDIA1##.flv?_course_id=".$_course_id."\">
+		href=\"".TR_BASE_HREF."get.php/".$content_base_href."##MEDIA1##.flv\">
 		</a>";
 		
 		$has_flv = false;

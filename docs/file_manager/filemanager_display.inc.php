@@ -479,16 +479,18 @@ function insertFile(fileName, pathTo, ext, ed_pref) {
 		var info = "<?php echo _AT('put_link'); ?>";
 		var html = '<a href="' + pathTo+fileName + '">' + info + '</a>';
 	}
-	insertLink(html, ed_pref);
+	insertLink(html);
+//	insertLink(html, ed_pref);
 }
 
-function insertLink(html, ed_pref)
+//function insertLink(html, ed_pref)
+function insertLink(html)
 {
-    if (window.opener) {
-        var isNotVisual = window.opener.document.form.html.checked && (ed_pref === '1');
-    }
+//    if (window.opener) {
+//        var isNotVisual = window.opener.document.form.html.checked;
+//    }
 
-	if (!window.opener || !isNotVisual) {
+	if (!window.opener || $('#html:checked').val() !== null) {
 		if (!window.opener && window.parent.tinyMCE)
 			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 		else

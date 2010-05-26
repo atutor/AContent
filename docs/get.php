@@ -23,8 +23,6 @@ $in_get = TRUE;
 require(TR_INCLUDE_PATH . 'vitals.inc.php');
 require(TR_INCLUDE_PATH . 'lib/mime.inc.php');
 
-global $_course_id;
-
 $force_download = false;
 
 //get path to file
@@ -81,7 +79,7 @@ if (substr($file_name, 0, 4) == 'b64:') {
 }
 
 
-$file = TR_CONTENT_DIR . $_course_id . $current_file;
+$file = TR_CONTENT_DIR . $_SESSION['course_id'] . $current_file;
 
 //send header mime type
 $pathinfo = pathinfo($file);

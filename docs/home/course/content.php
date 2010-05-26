@@ -22,6 +22,10 @@ if ($cid == 0) {
 	header('Location: '.$_base_href.'index.php');
 	exit;
 }
+if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
+	$_SESSION['course_id'] = $cid;  // used by get.php
+}
+
 /* show the content page */
 if (isset($contentManager)) $content_row = $contentManager->getContentPage($cid);
 

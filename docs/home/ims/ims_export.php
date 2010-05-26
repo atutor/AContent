@@ -81,7 +81,7 @@ $course_language_code = $courseLanguage->getCode();
 require(TR_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(TR_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require(TR_INCLUDE_PATH.'ims/ims_template.inc.php');				/* for ims templates + print_organizations() */
+require(TR_INCLUDE_PATH.'imscc/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');
