@@ -28,7 +28,9 @@ $type_id = intval($_POST['a_type']);
 // check post vars
 if ($pid == 0 || $type_id == 0) exit;
 
-global $db;
+require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+$dao = new DAO();
+
 // delete the existing alternative for this (pid, a_type)
 $sql = "SELECT sr.secondary_resource_id 
           FROM ".TABLE_PREFIX."secondary_resources sr, ".TABLE_PREFIX."secondary_resources_types srt
@@ -36,18 +38,20 @@ $sql = "SELECT sr.secondary_resource_id
            AND sr.primary_resource_id = ".$pid."
            AND sr.language_code = '".$_SESSION['lang']."'
            AND srt.type_id=".$type_id;
-$existing_secondary_result = mysql_query($sql, $db);
+$existing_secondary_rows = $dao->execute($sql);
 
-while ($existing_secondary = mysql_fetch_assoc($existing_secondary_result))
-{
-	$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources 
-	         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id'];
-	$result = mysql_query($sql, $db);
-
-	$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types 
-	         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id']."
-	           AND type_id=".$type_id;
-	$result = mysql_query($sql, $db);
+if (is_array($existing_secondary_rows)) {
+	foreach ($existing_secondary_rows as $existing_secondary)
+	{
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources 
+		         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id'];
+		$dao->execute($sql);
+	
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types 
+		         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id']."
+		           AND type_id=".$type_id;
+		$dao->execute($sql);
+	}
 }
 
 exit;

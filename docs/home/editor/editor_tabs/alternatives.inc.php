@@ -20,6 +20,10 @@ include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 
 $dao = new DAO();
 $resourceTypesDAO = new ResourceTypesDAO();
+
+global $_content_id;
+$cid = $_content_id;
+
 /**
  * This function returns the preview link of the given file
  * @param  $file     the file location in "file manager"
@@ -43,12 +47,13 @@ function get_preview_link($file)
  * @param $secondary_result   mysql result of all secondary alternatives
  *        $alternative type   the resource type of the alternative to display. Must be one of the values in resource_types.type_id
  *        $content_id         used to pass into file_manager/index.php
- *        $ps                 used to pass into file_manager/index.php
+ *        $pid                primary resource id
+ *        $td_header_id       the id of the table header cell, to comply with accessibility rule
  * @return html of the table cell "<td>...</td>"
  */ 
 function display_alternative_cell($secondary_resources, $alternative_type, $content_id, $pid, $td_header_id)
 {
-	global $content_row;
+	global $content_row, $_course_id;
 	
 	$found_alternative = false;
 	
@@ -63,11 +68,11 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 			{
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
 				echo '      <a href="'.get_preview_link($secondary_resource['secondary_resource']).'" title="'._AT('new_window').'" target="_new">'.$secondary_resource['secondary_resource'].'</a><br />'."\n";
-				echo '      <a href="#" onclick="trans.utility.poptastic(\''.TR_BASE_HREF.'file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
-				echo '        <img src="'.TR_BASE_HREF.'images/home-tests_sm.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
+				echo '      <a href="#" onclick="trans.utility.poptastic(\''.TR_BASE_HREF.'file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'_cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
+				echo '        <img src="'.TR_BASE_HREF.'images/alter.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '      <a href="#" onclick="removeAlternative(\''.$content_row['content_path'].'\', '.$content_id.','.$pid.','.$alternative_type.');return false;">'."\n";
-				echo '        <img src="'.TR_BASE_HREF.'images/icon_delete.gif" border="0" title="'._AT('remove').'" alt="'._AT('remove').'" />'."\n";
+				echo '        <img src="'.TR_BASE_HREF.'images/remove.gif" border="0" title="'._AT('remove').'" alt="'._AT('remove').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '    </div>'."\n";
 				$found_alternative = true;
@@ -78,7 +83,7 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 	if (!$found_alternative)
 	{
 		echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
-		echo '      <input type="button" value="'._AT('add').'" title="'._AT('new_window').'" onclick="trans.utility.poptastic(\''.TR_BASE_HREF.'file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" />'."\n";
+		echo '      <input type="button" value="'._AT('add').'" title="'._AT('new_window').'" onclick="trans.utility.poptastic(\''.TR_BASE_HREF.'file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'_cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" />'."\n";
 		echo '    </div>'."\n";
 	}
 	echo '    </td>'."\n";
@@ -100,7 +105,7 @@ else
 //	$resource_types_result = mysql_query($sql, $db);
 	$resource_types = $resourceTypesDAO->getAll();
 	
-	echo '<table class="data" rules="all" style="width:100%">'."\n";
+	echo '<br /><table class="data" rules="all">'."\n";
 	echo '  <thead>'."\n";
 	echo '  <tr>'."\n";
 	echo '    <th rowspan="2" id="header1">'._AT('original_resource').'</th>'."\n";
@@ -124,25 +129,24 @@ else
 		           AND language_code = '".$_SESSION['lang']."'
 		           AND resource='".$primary_resource."'";
 //		$primary_result = mysql_query($sql, $db);
-		$primary_resources = $dao->execute($sql);
-		
-		if (is_array($primary_resources)) $num_of_primary_resources = count($primary_resources);
+		$existing_primary_resource = $dao->execute($sql);
+
 		// insert primary resource if it's not in db
-		if ($num_of_primary_resources == 0)
+		if (!is_array($existing_primary_resource))
 //		if (mysql_num_rows($primary_result) == 0)
 		{
 			$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources (content_id, resource, language_code) 
 			        VALUES (".$cid.", '".$primary_resource."', '".$_SESSION['lang']."')";
 //			$result	= mysql_query($sql, $db);
-			$dao->execute($sql);
-			$primary_resource_id = mysql_insert_id();
+			$primary_resource_id = $dao->execute($sql);
 		}
 		else
 		{
 			// get primary resource id
 //			$primary_resource_row = mysql_fetch_assoc($primary_result);
-			$primary_resource_id = $primary_resources['primary_resource_id'];
+			$primary_resource_id = $existing_primary_resource[0]['primary_resource_id'];
 		}
+		
 		$sql = "SELECT prt.type_id, rt.type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."primary_resources_types prt, ".
@@ -186,9 +190,9 @@ else
 		
 //		mysql_data_seek($resource_types_result, 0);  // move the mysql result cursor back to the first row
 //		while ($resource_type = mysql_fetch_assoc($resource_types_result))
-		if (is_array($secondary_resources))
+		if (is_array($resource_types))
 		{
-			foreach ($secondary_resources as $resource_type) {
+			foreach ($resource_types as $resource_type) {
 				if ($resource_type['type'] == 'sign_language')
 					continue;
 				else 
@@ -201,11 +205,12 @@ else
 						}
 					}
 					else {
-						if (mysql_num_rows($primary_type_result)> 0) mysql_data_seek($primary_type_result, 0);
-						while ($primary_resource_type = mysql_fetch_assoc($primary_type_result)) {
-							if ($primary_resource_type['type_id'] == $resource_type['type_id']){
-								echo 'checked="checked"';
-								break;
+						if (is_array($primary_types)) {
+							foreach ($primary_types as $primary_resource_type) {
+								if ($primary_resource_type['type_id'] == $resource_type['type_id']){
+									echo 'checked="checked"';
+									break;
+								}
 							}
 						}
 					}
@@ -231,7 +236,7 @@ else
 		echo '  </tr>'."\n";
 	}
 	echo '  </tbody>'."\n";
-	echo '</table>'."\n";
+	echo '</table><br /><br />'."\n";
 }
 ?>
 
@@ -246,7 +251,7 @@ function removeAlternative(contentPath, cid, pid, a_type)
 			{"pid":pid, "a_type":a_type}, 
 			function(data) {});
 
-	var button_html = '      <input type="button" value="<?php echo _AT('add'); ?>" title="<?php echo _AT('new_window'); ?>" onclick="trans.utility.poptastic(\\\'<?php echo TR_BASE_HREF; ?>file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp='+contentPath+'<?php echo SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" />';
+	var button_html = '      <input type="button" value="<?php echo _AT('add'); ?>" title="<?php echo _AT('new_window'); ?>" onclick="trans.utility.poptastic(\\\'<?php echo TR_BASE_HREF; ?>file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp='+contentPath+'<?php echo SEP; ?>_cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" />';
 	eval("document.getElementById(\""+pid+"_"+a_type+"\").innerHTML = '"+button_html+"'");
 }
 //-->

@@ -13,7 +13,8 @@
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 
-global $_course_id, $MaxCourseSize;
+global $_course_id, $MaxCourseSize, $_content_id;
+
 $editable_file_types = array('txt', 'html', 'htm', 'xml', 'css', 'asc', 'csv', 'sql');
 $_SESSION['prefs']['PREF_CONTENT_EDITOR'] = 1;
 
@@ -60,7 +61,7 @@ $course_total = FileUtility::dirsize($current_path);
 $framed = intval($_GET['framed']);
 $popup = intval($_GET['popup']);
 $cp = $_GET['cp'];
-$cid = intval($_GET['cid']);        // content id, used at "adapted content" page, => add/edit alternatives
+$cid = $_content_id;        // content id, used at "adapted content" page, => add/edit alternatives
 $pid = intval($_GET['pid']);        // primary resource id, used at "adapted content" page, => add/edit alternatives
 $a_type = intval($_GET['a_type']);  // alternative_type, used at "adapted content" page, => add/edit alternatives
 
@@ -75,7 +76,7 @@ function fm_path(){
 echo '<p>'._AT('current_path').' ';
 
 if (isset($pathext) && $pathext != '') {
-	echo '<a href="'.$_SERVER['PHP_SELF'].'?popup=' . $popup . SEP . 'framed=' . $framed.SEP . 'cp=' . $cp.SEP . 'cid=' . $cid.SEP . 'pid=' . $pid.SEP . 'a_type=' . $a_type.SEP.'_course_id='.$_course_id.'">'._AT('home').'</a> ';
+	echo '<a href="'.$_SERVER['PHP_SELF'].'?popup=' . $popup . SEP . 'framed=' . $framed.SEP . 'cp=' . $cp.SEP . '_cid=' . $cid.SEP . 'pid=' . $pid.SEP . 'a_type=' . $a_type.SEP.'_course_id='.$_course_id.'">'._AT('home').'</a> ';
 }
 else {
 	$pathext = '';
@@ -99,7 +100,7 @@ if ($pathext != '') {
 			if ($bit_path == $pathext) {
 				echo $bit;
 			} else {
-				echo '<a href="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">' . $bit . '</a>';
+				echo '<a href="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($bit_path) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">' . $bit . '</a>';
 			}
 		}
 	}
@@ -143,7 +144,7 @@ if (TRUE || $framed != TRUE) {
 	// make new directory 
 	echo '<div class="input-form"><fieldset class="group_form"><legend class="group_form">'._AT('add_file_folder').'</legend>'."\n";
 	echo '	<div class="row">'."\n";
-	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.SEP.'cp='.SEP.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">'."\n";
+	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.SEP.'cp='.SEP.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">'."\n";
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
 			echo '		<label for="dirname">'._AT('create_folder_here').'</label><br />'."\n";
@@ -151,6 +152,7 @@ if (TRUE || $framed != TRUE) {
 			echo '		<input type="text" name="dirname" id="dirname" size="20" /> '."\n";
 			echo '		<input type="hidden" name="mkdir_value" value="true" /> '."\n";
 			echo '		<input type="hidden" name="_course_id" value="'.$_course_id.'" /> '."\n";
+			if ($cid > 0) echo '		<input type="hidden" name="_cid" value="'.$cid.'" /> '."\n";
 			echo '		<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />'."\n";
 		} else {
 			echo _AT('depth_reached')."\n";
@@ -263,7 +265,7 @@ if (TRUE || $framed != TRUE) {
 		}
 
 		// Simple single file uploader
-		echo '<form onsubmit="openWindow(\''.TR_BASE_HREF.'home/prog.php\');" class="fl-ProgEnhance-basic" name="form1" method="post" action="file_manager/upload.php?popup='.$popup.SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'" enctype="multipart/form-data">';
+		echo '<form onsubmit="openWindow(\''.TR_BASE_HREF.'home/prog.php\');" class="fl-ProgEnhance-basic" name="form1" method="post" action="file_manager/upload.php?popup='.$popup.SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
 		echo '<label for="uploadedfile">'._AT('upload_files').'</label>'."\n";
 		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
@@ -286,9 +288,10 @@ if (TRUE || $framed != TRUE) {
 }
 
 // Directory and File listing 
-echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'" method="post">';
+echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.'" method="post">';
 echo '<input type="hidden" name="pathext" value ="'.$pathext.'" />';
 echo '<input type="hidden" name="_course_id" value ="'.$_course_id.'" />';
+if ($cid > 0) echo '<input type="hidden" name="_cid" value ="'.$cid.'" />';
 ?>
 <table class="data static" summary="" border="0" rules="groups" style="width: 90%">
 <thead>
@@ -338,7 +341,7 @@ echo '<input type="hidden" name="_course_id" value ="'.$_course_id.'" />';
 
 if($pathext) : ?>
 	<tr>
-		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
+		<td colspan="5"><a href="<?php echo $_SERVER['PHP_SELF'].'?back=1'.SEP.'pathext='.$pathext.SEP. 'popup=' . $popup .SEP. 'framed=' . $framed .SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id; ?>"><img src="images/arrowicon.gif" border="0" height="11" width="10" alt="" /> <?php echo _AT('back'); ?></a></td>
 	</tr>
 <?php endif; ?>
 <?php
@@ -366,7 +369,7 @@ while (false !== ($file = readdir($dir)) ) {
 	if(is_dir($current_path.$pathext.$file)) {
 		$size = FileUtility::dirsize($current_path.$pathext.$file.'/');
 		$totalBytes += $size;
-		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed . SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">'.$file.'</a>';
+		$filename = '<a href="'.$_SERVER['PHP_SELF'].'?pathext='.urlencode($pathext.$file.'/'). SEP . 'popup=' . $popup . SEP . 'framed='. $framed . SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">'.$file.'</a>';
 		$fileicon = '&nbsp;';
 		$fileicon .= '<img src="images/folder.gif" alt="'._AT('folder').':'.$file.'" height="18" width="20" class="img-size-fm1" />';
 		$fileicon .= '&nbsp;';
@@ -473,7 +476,7 @@ function insertFile(fileName, pathTo, ext, ed_pref) {
 	if (ext == "gif" || ext == "jpg" || ext == "jpeg" || ext == "png") {
 		var info = "<?php echo _AT('alternate_text'); ?>";
 		var html = '<img src="' + pathTo+fileName + '" border="0" alt="' + info + '" />';
-	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid") {
+	} else if (ext == "mpg" || ext == "avi" || ext == "wmv" || ext == "mov" || ext == "swf" || ext == "mp3" || ext == "wav" || ext == "ogg" || ext == "mid" ||ext == "flv"|| ext == "mp4") {
 		var html = '[media]'+ pathTo + fileName + '[/media]';
 	} else {
 		var info = "<?php echo _AT('put_link'); ?>";
@@ -527,17 +530,17 @@ function insertAtCursor(myField, myValue) {
 // 2. set the according field in opener window to the selected file
 // 3. close file manager itself
 function setAlternative(file, file_preview_link, cid, pid, a_type) {
-	jQuery.post("<?php echo TR_BASE_HREF; ?>home/course/save_alternative.php", 
-			{"pid":pid, "a_type":a_type, "alternative":file, "course_id":$_course_id}, 
+	jQuery.post("<?php echo TR_BASE_HREF; ?>home/editor/save_alternative.php", 
+			{"pid":pid, "a_type":a_type, "alternative":file}, 
 			function(data) {});
 
 	link_html = '\
       <a href="'+file_preview_link+'" title="<?php echo _AT('new_window'); ?>" target="_new">'+file+'</a><br /> \
-      <a href="#" onclick="trans.utility.poptastic(\\\'<?php echo TR_BASE_HREF; ?>file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $cp.SEP; ?>cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'<?php echo SEP; ?>_course_id=<?php echo $_course_id; ?>\\\');return false;" title="<?php echo _AT('new_window'); ?>"> \
-        <img src="<?php echo TR_BASE_HREF; ?>images/home-tests_sm.png" border="0" title="<?php echo _AT('alter'); ?>" alt="<?php echo _AT('alter'); ?>" /> \
+      <a href="#" onclick="trans.utility.poptastic(\\\'<?php echo TR_BASE_HREF; ?>file_manager/index.php?framed=1<?php echo SEP; ?>popup=1<?php echo SEP; ?>cp=<?php echo $cp.SEP; ?>_cid='+cid+'<?php echo SEP; ?>pid='+pid+'<?php echo SEP; ?>a_type='+a_type+'\\\');return false;" title="<?php echo _AT('new_window'); ?>"> \
+        <img src="<?php echo TR_BASE_HREF; ?>images/alter.png" border="0" title="<?php echo _AT('alter'); ?>" alt="<?php echo _AT('alter'); ?>" /> \
       </a> \
       <a href="#" onclick="removeAlternative(\\\'<?php echo $cp; ?>\\\', '+cid+','+pid+','+a_type+');return false;"> \
-        <img src="<?php echo TR_BASE_HREF; ?>images/icon_delete.gif" border="0" title="<?php echo _AT('remove'); ?>" alt="<?php echo _AT('remove'); ?>" /> \
+        <img src="<?php echo TR_BASE_HREF; ?>images/remove.gif" border="0" title="<?php echo _AT('remove'); ?>" alt="<?php echo _AT('remove'); ?>" /> \
       </a> \
     </div> \
 ';
@@ -586,7 +589,7 @@ function setCheckboxCookie(obj, value1, value2, date)
 // and close "file manager" once the upload is successful
 if ($a_type > 0 && isset($_GET['uploadfile']) && $_GET['uploadfile'] <> '') { ?>
 function setAlternativeAndClose() {
-	setAlternative('<?php echo get_relative_path($_GET['cp'], $pathext).$_GET['uploadfile']; ?>', '<?php echo TR_BASE_HREF.$get_file.$pathext.urlencode($_GET['uploadfile']); ?>', '<?php echo $cid; ?>', '<?php echo $pid; ?>', '<?php echo $a_type; ?>');
+	setAlternative('<?php echo get_relative_path($_GET['cp'], $pathext).$_GET['uploadfile']; ?>', '<?php echo TR_BASE_HREF.$get_file.$pathext.urlencode($_GET['uploadfile']); ?>', '<?php echo $_content_id; ?>', '<?php echo $pid; ?>', '<?php echo $a_type; ?>');
 	window.close();
 }
 

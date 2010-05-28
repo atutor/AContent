@@ -427,11 +427,18 @@ INSERT INTO `TR_language_text` VALUES ('en', '_template', 'processing', 'Process
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'browse_for_upload', 'Browse for file to upload', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'the_follow_errors_occurred', 'The following errors occurred:', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'content_id', 'Content ID', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'put_link', 'put link name here', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'auditory', 'Auditory', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'textual', 'Textual', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'stop_apply_text_alternatives', 'Stop Applying Text Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'apply_audio_alternatives', 'Apply Audio Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'stop_apply_audio_alternatives', 'Stop Applying Audio Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'apply_text_alternatives', 'Apply Text Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'stop_apply_visual_alternatives', 'Stop Applying Visual Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'apply_visual_alternatives', 'Apply Visual Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'stop_apply_sign_lang_alternatives', 'Stop Applying Sign Language Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'apply_sign_lang_alternatives', 'Apply Sign Language Alternatives', now(), '');
 
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');

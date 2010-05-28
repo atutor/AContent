@@ -18,8 +18,7 @@ define('TR_INCLUDE_PATH', '../include/');
 include_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
 $body_text 	= htmlspecialchars($stripslashes($_POST['body_text']));
-$body_t		= html_entity_decode($body_text);
-		
+$body		= html_entity_decode($body_text);
 
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 require(TR_INCLUDE_PATH.'imscc/ims_template.inc.php');				/* for ims templates + print_organizations() */
@@ -90,7 +89,7 @@ $parser->set_element_handler('openHandler','closeHandler');
 
 /* generate the resources and save the HTML files */
 			
-ob_start();
+//ob_start();
 							 
 global $parser, $my_files;
 global $course_id;
@@ -100,19 +99,23 @@ $my_files 		= array();
 $content_files 	= "\n";
 
 //in order to control if some [media] is in the body_text
-$body = ContentUtility::embedMedia($body_t);
+//$body = ContentUtility::embedMedia($body_t);
 
 $parser->parse($body);
-		
+
+// find all [media] resources
+preg_match_all("/\[media[0-9a-z\|]*\](.*)\[\/media\]/i",$body,$media_matches);
+$my_files = array_merge($media_matches[1], $my_files);
+
 // add by Cindy Li. 
 // This resolves the problem introduced by [media] tag: when [media] is 
 // parsed into <object>, same resource appears a few times in <object> with different 
-// format to cater for different browsers or players. This way creates prolem that different
+// format to cater for different browsers or players. This way creates problem that different
 // formats in <object> are all parsed and considered as different resource. array_unique()
 // call solves this problem. But, it introduces the new problem that when a same resource
 // appears at different places in the content and users do want to have them with different
 // alternatives. With this solution, this same resource only shows up once at "adapt content"
-// and only can have one alternative associate with. Table and scripts need to re-design
+// and only can have one alternative associated with. Table and scripts need to be re-designed
 // to solve this problem, for example, include line number in table. 
 $my_files = array_unique($my_files);
 
@@ -126,7 +129,7 @@ $i=0;
 foreach ($my_files as $file) {
 	/* filter out full urls */
 	$url_parts = @parse_url($file);
-	if (isset($url_parts['scheme'])) {
+	if (isset($url_parts['scheme']) && substr($file, 0, strlen(TR_BASE_HREF)) != TR_BASE_HREF) {
 		continue;
 	}
 

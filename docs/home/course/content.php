@@ -23,7 +23,7 @@ if ($cid == 0) {
 	exit;
 }
 if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
-	$_SESSION['course_id'] = $cid;  // used by get.php
+	$_SESSION['course_id'] = $_course_id;  // used by get.php
 }
 
 /* show the content page */
@@ -239,9 +239,16 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	$msg->addInfo('NO_PAGE_CONTENT');
 	$savant->assign('body', '');
 } else {
+	// find whether the body has alternatives defined
+	list($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative)
+	= ContentUtility::applyAlternatives($cid, $content_row['text'], true);
 
-	//Silvia: to provide appropriated content on the basis of users' preferences
-	$content = ContentUtility::applyAlternatives($cid, $content_row['text']);
+	// apply alternatives
+	if (intval($_GET['alternative']) > 0) {
+		$content = ContentUtility::applyAlternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
+	} else {
+		$content = ContentUtility::applyAlternatives($cid, $content_row['text']);
+	}
                 
 	$content = ContentUtility::formatContent($content, $content_row['formatting']);
 
@@ -249,7 +256,12 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	
 	$savant->assign('content_table', $content_array[0]);
 	$savant->assign('body', $content_array[1]);
-
+	$savant->assign('has_text_alternative', $has_text_alternative);
+	$savant->assign('has_audio_alternative', $has_audio_alternative);
+	$savant->assign('has_visual_alternative', $has_visual_alternative);
+	$savant->assign('has_sign_lang_alternative', $has_sign_lang_alternative);
+	$savant->assign('cid', $cid);
+	
 	//assign test pages if there are tests associated with this content page
 	if (!empty($content_test_ids)){
 		$savant->assign('test_message', $content_row['test_message']);

@@ -1446,3 +1446,15 @@ ul#content-tool-links img{
 .nowrap {
     white-space: nowrap;
 }
+div#alternatives_shortcuts {
+	float: right;
+	margin: 0 2em;
+	border-radius: .5em .5em .5em .5em;;
+	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .2em #999999;
+	 box-shadow: .2em .2em  .2em #999999;
+	 border:1px solid #cccccc;
+	 padding-top: .2em;
+	 padding-left: .2em;
+	 padding-right: .2em;
+}
