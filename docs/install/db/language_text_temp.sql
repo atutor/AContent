@@ -438,7 +438,28 @@ INSERT INTO `TR_language_text` VALUES ('en', '_template', 'stop_apply_visual_alt
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'apply_visual_alternatives', 'Apply Visual Alternatives', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'stop_apply_sign_lang_alternatives', 'Stop Applying Sign Language Alternatives', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'apply_sign_lang_alternatives', 'Apply Sign Language Alternatives', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'editor_properties_instructions', 'Select the radio button of the content you want to move. Use the %1$s and %2$s buttons to place this topic after or before the selected location, respectively. Use the %3$s button to add this topic as a child of the selected location.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'after_topic', 'After: %s', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'before_topic', 'Before: %s', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'child_of', 'Child of: %s', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'forums', 'Forums', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'content_packaging', 'Import/Export Content', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'export_content_info', 'Export content as an <strong>IMS or SCORM conformant content package</strong>, or as an <strong>IMS Common Cartridge</strong>. Import the zipped package or cartridge into another ATutor system or another course, or into another conformant LMS or LCMS.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'export_content_package_what', 'What to export', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'export_entire_course_or_chap', 'Entire course, or select a chapter below', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'content_package', 'Content Package', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'common_cartridge', 'Common Cartridge', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'a4a_export', 'Export AccessForAll adapted content.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'none_found', 'None Found.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'import_content', 'Import Content', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'import_content_info', 'Import a conformant IMS content package or IMS common cartridge. Select a location within the existing content to <strong>import into</strong>.  Or enter a URL to content package or common cartridge, to import directly from the Web.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'import_content_package_where', 'Import into', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'import_content_package_bottom_subcontent', 'As top level content, or as subcontent selected below', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'test_import_package', 'Import available tests.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'a4a_import_package', 'Import available AccessForAll adapted content.', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'upload_content_package', 'Upload a Content Package or Common Cartridge', now(), '');
 
+INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');

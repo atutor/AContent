@@ -88,6 +88,22 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 </div>
 <?php endif; ?>
 
+<?php if (is_array($this->forum_ids)): ?>
+<div id="content-test" class="input-form">
+    <ol>
+        <strong><?php echo _AT('forums') . ':' ; ?></strong>
+            <ul class="tools">
+                <?php
+                foreach ($this->forum_ids as $id => $forum_obj) {
+                    echo '<li>'.AT_print($forum_obj['title'], 'forums.title').'<br /></li>';
+                }
+                ?>
+            </ul>
+        </li>
+    </ol>
+</div>
+<?php endif; ?>
+
 <div id="content-info">
 	<?php echo $this->content_info; ?>
 

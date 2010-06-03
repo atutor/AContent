@@ -13,6 +13,7 @@
 define('TR_INCLUDE_PATH', '../../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 
 global $_current_user, $_course_id, $_content_id, $contentManager;
 
@@ -125,7 +126,7 @@ $_pages['home/course/content.php'] = $last_page;
 reset($path);
 $first_page = current($path);
 
-/* the content test extension page */
+/* the tests associated with the content */
 $content_test_ids = array();	//the html
 $content_test_rows = $contentManager->getContentTestsAssoc($cid);
 if (is_array($content_test_rows))
@@ -134,6 +135,17 @@ if (is_array($content_test_rows))
 		$content_test_ids[] = $content_test_row;
 	}
 }
+
+/* the forums associated with the content */
+$contentForumsAssocDAO = new ContentForumsAssocDAO();
+$content_forum_ids = $contentForumsAssocDAO->getByContent($cid);
+//$content_test_rows = $contentManager->getContentTestsAssoc($cid);
+//if (is_array($content_test_rows))
+//{
+//	foreach ($content_test_rows as $content_test_row){
+//		$content_test_ids[] = $content_test_row;
+//	}
+//}
 
 /*TODO***************BOLOGNA***************REMOVE ME**********/
 /* the content forums extension page*/
@@ -270,16 +282,10 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 		$savant->assign('test_message', '');
 		$savant->assign('test_ids', array());
 	}
-
-		/*TODO***************BOLOGNA***************REMOVE ME**********/
-		//assign forum pages if there are forums associated with this content page
-//		if (!empty($content_forum_ids)){
-//			$savant->assign('forum_message','');
-//			$savant->assign('forum_ids', $content_forum_ids);
-//		} else {
-//			$savant->assign('forum_message', '');
-//			$savant->assign('forum_ids', array());
-//		}
+	
+	if (is_array($content_forum_ids)){
+		$savant->assign('forum_ids', $content_forum_ids);
+	}
 }
 
 $savant->assign('content_info', _AT('page_info', AT_date(_AT('page_info_date_format'), $content_row['last_modified'], TR_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], TR_DATE_MYSQL_DATETIME)));

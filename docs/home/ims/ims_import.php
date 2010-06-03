@@ -79,8 +79,8 @@ require_once(TR_INCLUDE_PATH.'classes/QTI/QTIImport.class.php');
 require_once(TR_INCLUDE_PATH.'classes/A4a/A4aImport.class.php');
 require(TR_INCLUDE_PATH.'../home/ims/ns.inc.php');	//namespace, no longer needs, delete it after it's stable.
 require_once(TR_INCLUDE_PATH.'classes/Weblinks/WeblinksParser.class.php');
-//require(TR_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsParser.class.php');
-//require(TR_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsImport.class.php');
+require(TR_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsParser.class.php');
+require(TR_INCLUDE_PATH.'classes/DiscussionTools/DiscussionToolsImport.class.php');
 
 // make sure the user has author privilege
 Utility::authenticate(TR_PRIV_ISAUTHOR);
@@ -1279,7 +1279,6 @@ foreach ($items as $item_id => $content_info)
 //				@unlink(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
 			}
 
-			/** Commented by Cindy Qi Li on Jan 6, 2010. Ignore discussion tools
 			// overwrite content if this is discussion tool.
 			if ($content_info['type']=='imsdt_xmlv1p0'){
 				$dt_parser = new DiscussionToolsParser();
@@ -1290,7 +1289,6 @@ foreach ($items as $item_id => $content_info)
 				unset($forum_obj);
 				$dt_parser->close();
 			}
-			*/
 		} else if ($ext) {
 			/* non text file, and can't embed (example: PDF files) */
 			$content = '<a href="'.$content_info['href'].'">'.$content_info['title'].'</a>';
@@ -1457,7 +1455,6 @@ foreach ($items as $item_id => $content_info)
 		$a4a_import->importA4a($items[$item_id]['a4a']);
 	}
 
-	/** Commented by Cindy Qi Li on Jan 6, 2010. Ignore discussion tools
 	// get the discussion tools (dependent to content)
 	if (isset($items[$item_id]['forum']) && !empty($items[$item_id]['forum'])){
 		foreach($items[$item_id]['forum'] as $forum_ref => $forum_link){
@@ -1469,11 +1466,11 @@ foreach ($items as $item_id => $content_info)
 				$xml_content = @file_get_contents($import_path . $forum_link);
 				$dt_parser->parse($xml_content);
 				$forum_obj = $dt_parser->getDt();
-				$dt_import->import($forum_obj, $items[$item_id]['real_content_id']);
+				$dt_import->import($forum_obj, $items[$item_id]['real_content_id'], $_course_id);
 				$added_dt[$forum_ref] = $dt_import->getFid();				
 			}
 			//associate the fid and content id
-			$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$forum_ref]);
+//			$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$forum_ref]);
 		}
 	} elseif ($items[$item_id]['type']=='imsdt_xmlv1p0'){
 		//optimize this, repeated codes as above
@@ -1482,13 +1479,12 @@ foreach ($items as $item_id => $content_info)
 		$xml_content = @file_get_contents($import_path . $content_info['href']);
 		$dt_parser->parse($xml_content);
 		$forum_obj = $dt_parser->getDt();
-		$dt_import->import($forum_obj, $items[$item_id]['real_content_id']);
+		$dt_import->import($forum_obj, $items[$item_id]['real_content_id'], $_course_id);
 		$added_dt[$item_id] = $dt_import->getFid();
 
 		//associate the fid and content id
-		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
+//		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
 	}
-	*/
 }
 
 //exit;//harris

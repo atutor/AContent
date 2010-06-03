@@ -12,7 +12,7 @@
 
 define('TR_INCLUDE_PATH', '../../include/');
 
-global $db, $associated_forum, $_course_id, $_content_id;
+global $associated_forum, $_course_id, $_content_id;
 
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');

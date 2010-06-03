@@ -15,12 +15,18 @@ require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
-global $_content_id, $_content_id, $contentManager;
+global $_content_id, $_content_id, $contentManager, $_course_id;
 $cid = $_content_id;
 
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
+
+if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
+	$course_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_course_id . '/';
+}
 
 if ($cid > 0 && isset($contentManager)) {
 	$content_row = $contentManager->getContentPage($cid);
@@ -190,4 +196,5 @@ require(TR_INCLUDE_PATH.'footer.inc.php');
 
 //save last visit page.
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+debug($_SESSION['course_id']);
 ?>

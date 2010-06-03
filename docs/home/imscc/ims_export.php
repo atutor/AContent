@@ -19,17 +19,16 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
-if (!isset($_REQUEST['course_id']) && !isset($_course_id) && $_course_id = 0)
+$course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
+$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
+$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
+
+if ($course_id == 0 && $cid == 0)
 {
 	$msg->addError('MISSING_COURSE_ID');
 	header('Location: ../index.php');
 	exit;	
 }
-
-/* content id of an optional chapter */
-$course_id = (isset($_REQUEST['course_id']) ? $_REQUEST['course_id'] : $_course_id);
-$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id;
-$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* for TILE */
@@ -237,7 +236,7 @@ $first = $content[$top_content_parent_id][0];
 $test_ids = array();	//global array to store all the test ids
 
 // Modified by Cindy Qi Li on Jan 12, 2010
-// Transformable does not have glossary and forums (discussion tools)
+// Transformable does not support glossary
 //TODO**************BOLOGNA***************REMOVE ME***************************/
 /*
 //Exoprt Forum:
@@ -286,7 +285,7 @@ ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 
 //Exoprt Forum:
-//print_resources_forum();
+print_resources_forum();
 
 $organizations_str = ob_get_contents();
 ob_end_clean();

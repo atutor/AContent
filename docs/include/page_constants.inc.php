@@ -154,6 +154,10 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		
 		$_pages['home/editor/accessibility.php']['title_var'] = 'accessibility';
 		$_pages['home/editor/accessibility.php']['parent']    = 'home/editor/edit_content.php';
+
+		$_pages['home/editor/import_export_content.php']['title_var']    = 'content_packaging';
+		$_pages['home/editor/import_export_content.php']['parent']   = 'home/index.php';
+		$_pages['home/editor/import_export_content.php']['guide']     = 'TR_HELP_IMPORT_EXPORT_CONTENT';
 	}
 }
 

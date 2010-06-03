@@ -567,7 +567,7 @@ class ContentUtility {
 	}
 	
 	/**
-	 * This function returns html string of "table of content"
+	 * This function returns an array of content tools' shortcuts
 	 * @access: public
 	 * @param: $content_row: an array of the current content information
 	 * @return: an array of all the tool short cuts that apply to the current content or content folder

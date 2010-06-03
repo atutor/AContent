@@ -11,7 +11,7 @@
 /************************************************************************/
 
 /**
-* DAO for "content_forums_assoc" table
+* DAO for "forums_courses" table
 * @access	public
 * @author	Cindy Qi Li
 * @package	DAO
@@ -21,34 +21,43 @@ if (!defined('TR_INCLUDE_PATH')) exit;
 
 require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
-class ContentForumsAssocDAO extends DAO {
+class ForumsCoursesDAO extends DAO {
 
 	/**
 	* Insert a new row
 	* @access  public
-	* @param   content_id, forum_id
+	* @param   forum_id, course_id
 	* @return  true / false
 	* @author  Cindy Qi Li
 	*/
-	function Create($content_id, $forum_id)
+	function Create($forum_id, $course_id)
 	{
-		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_forums_assoc' . 
-				'(content_id, forum_id) ' .
-				'VALUES (' . $content_id . ", $forum_id)";
+		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'forums_courses' . 
+				'(forum_id, course_id) ' .
+				'VALUES (' . $forum_id . ", $course_id)";
 	    return $this->execute($sql);
 	}
 	
 	/**
-	* Delete row by content ID
+	* Delete row by course ID
 	* @access  public
-	* @param   contentID
+	* @param   courseID
 	* @return  true or false
 	* @author  Cindy Qi Li
 	*/
-	function DeleteByContentID($contentID)
+	function DeleteByCourseID($courseID)
 	{
-	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
-	             WHERE content_id = ".$contentID."";
+	    include_once(TR_INCLUDE_PATH.'classes/DAO/ForumsDAO.class.php');
+	    $forumsDAO = new ForumsDAO();
+	    
+		$all_forums = $this->getByCourse($courseID);
+	    if (is_array($all_forums)) {
+	    	foreach ($all_forums as $forums) {
+	    		$forumsDAO->Delete($forums['forum_id']);
+	    	}
+	    }
+		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
+	             WHERE course_id = ".$courseID."";
 	    return $this->execute($sql);
 	}
 	
@@ -61,24 +70,21 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function DeleteByForumID($forumID)
 	{
-	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
+	    $sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
 	             WHERE forum_id = ".$forumID."";
 	    return $this->execute($sql);
 	}
 	
 	/**
-	* Return rows by content ID
+	* Return rows by course ID
 	* @access  public
 	* @param   name
 	* @return  table rows
 	* @author  Cindy Qi Li
 	*/
-	function getByContent($content_id)
+	function getByCourse($course_id)
 	{
-	    $sql = "SELECT f.forum_id, f.title, f.description
-	              FROM ".TABLE_PREFIX."content_forums_assoc cfa, ".TABLE_PREFIX."forums f 
-	             WHERE cfa.content_id = '".$content_id."'
-	               AND cfa.forum_id = f.forum_id";
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id = '".$course_id."'";
 	    return $this->execute($sql);
 	}
 }

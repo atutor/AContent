@@ -206,6 +206,12 @@ foreach ($this->top_level_pages as $page) {
       <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0" />
       </a> &nbsp;
+      <a href="<?php echo $this->base_path; ?>home/editor/arrange_content.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>" border="0" />
+      </a> &nbsp;
+      <a href="<?php echo $this->base_path; ?>home/editor/import_export_content.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/import_export.png"; ?>" title="<?php echo _AT('content_packaging'); ?>" alt="<?php echo _AT('content_packaging'); ?>" border="0" />
+      </a> &nbsp;
       <a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0" />
       </a> &nbsp;
@@ -214,7 +220,7 @@ foreach ($this->top_level_pages as $page) {
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0" />
       </a>
     <?php }?>
-    </div>
+ </div>
 <?php  
 //if ($this->course_id > 0) {
 ?>

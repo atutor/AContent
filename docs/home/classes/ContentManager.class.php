@@ -280,7 +280,7 @@ class ContentManager
 //		$result	= mysql_query($sql, $this->db);
 //		$row = mysql_fetch_assoc($result);
 		$row = $this->contentDAO->execute($sql);
-		$max_ordering = $row['max_ordering'];
+		$max_ordering = $row[0]['max_ordering'];
 		
 		if ($content_id == $new_content_parent_id) {
 			$msg->addError("NO_SELF_AS_PARENT");
@@ -305,7 +305,6 @@ class ContentManager
 		// to the last element under the same parent content.
 		if ($old_content_parent_id == $new_content_parent_id && $new_content_ordering > $max_ordering) 
 			$new_content_ordering = $max_ordering;
-		
 		if (($old_content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
 			// remove the gap left by the moved content
 			$sql = "UPDATE ".TABLE_PREFIX."content 

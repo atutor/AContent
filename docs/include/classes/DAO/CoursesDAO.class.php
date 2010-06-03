@@ -141,7 +141,9 @@ class CoursesDAO extends DAO {
 	{
 		require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+		require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
 		$contentDAO = new ContentDAO();
+		$forumsCoursesDAO = new ForumsCoursesDAO();
 		
 		unset($_SESSION['s_cid']);
 		
@@ -166,6 +168,9 @@ class CoursesDAO extends DAO {
 				
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID;
 		$this->execute($sql);
+		
+		// delete forums that are associated with this course
+		$forumsCoursesDAO->DeleteByCourseID($courseID);
 		
 		// loop thru content to delete using ContentDAO->Delete(), which deletes a4a objects as well
 		$content_rows = $contentDAO->getContentByCourseID($courseID);

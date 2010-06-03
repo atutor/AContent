@@ -16,10 +16,6 @@
 
 define('TR_INCLUDE_PATH', '../../include/');
 
-/* content id of an optional chapter */
-$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : 0;
-$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
-
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* for TILE */
 
@@ -41,7 +37,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	/* request (hopefully) coming from a TILE server, send the content package */
 
 	$_user_location = 'public';
-	require(TR_INCLUDE_PATH.'vitals.inc.php');
+	require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 	$m = md5(DB_PASSWORD . 'x' . ADMIN_PASSWORD . 'x' . $_SERVER['SERVER_ADDR'] . 'x' . $cid . 'x' . $c . 'x' . date('Ymd'));
 	if (($m != $_GET['m']) || !$c) {
 		header('HTTP/1.1 404 Not Found');
@@ -56,23 +52,45 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	if (isset($_REQUEST['to_a4a'])){
 		$use_a4a = true;
 	}
-	require(TR_INCLUDE_PATH.'vitals.inc.php');
-	$course_id = $_SESSION['course_id'];
+	require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+	global $_course_id, $_content_id;
+
+	$course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
+	$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
+	$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 }
+
+if ($course_id == 0 && $cid == 0)
+{
+	$msg->addError('MISSING_COURSE_ID');
+	header('Location: ../index.php');
+	exit;	
+}
+
+require_once(TR_INCLUDE_PATH.'../home/classes/ContentManager.class.php');  /* content management class */
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+
 //load the following after vitals is included
 require(TR_INCLUDE_PATH.'classes/testQuestions.class.php');
 require(TR_INCLUDE_PATH.'classes/A4a/A4aExport.class.php');
 
-$instructor_id   = $system_courses[$course_id]['member_id'];
-$course_desc     = htmlspecialchars($system_courses[$course_id]['description'], ENT_QUOTES, 'UTF-8');
-$course_title    = htmlspecialchars($system_courses[$course_id]['title'], ENT_QUOTES, 'UTF-8');
-$course_language = $system_courses[$course_id]['primary_language'];
+$coursesDAO = new CoursesDAO();
+$course_row = $coursesDAO->get($course_id);
+
+$contentManager = new ContentManager($course_id);
+
+$instructor_id   = $course_row['user_id'];
+$course_desc     = htmlspecialchars($course_row['description'], ENT_QUOTES, 'UTF-8');
+$course_title    = htmlspecialchars($course_row['title'], ENT_QUOTES, 'UTF-8');
+$course_language = $course_row['primary_language'];
 
 $courseLanguage =& $languageManager->getLanguage($course_language);
 //If course language cannot be found, use UTF-8 English
 //@author harris, Oct 30,2008
-if ($courseLanguage == null){
-	$courseLanguage =& $languageManager->getLanguage('en');
+if (!isset($courseLanguage) || $courseLanguage == null){
+	$courseLanguage =& $languageManager->getLanguage(DEFAULT_LANGUAGE_CODE);
 }
 
 $course_language_charset = $courseLanguage->getCharacterSet();
@@ -81,8 +99,8 @@ $course_language_code = $courseLanguage->getCode();
 require(TR_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(TR_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require(TR_INCLUDE_PATH.'imscc/ims_template.inc.php');				/* for ims templates + print_organizations() */
-
+debug('a');require(TR_INCLUDE_PATH.'../home/ims/include/ims_template.inc.php');/* for ims templates + print_organizations() */
+debug('a');
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');
 	header('Location: ../index.php');
@@ -165,14 +183,20 @@ $parser = new XML_HTMLSax();
 $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');
 
-if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
-} else {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
-}
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
-	if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
+$contentDAO = new ContentDAO();
+$rows = $contentDAO->getContentByCourseID($course_id);
+
+//if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
+//	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
+//} else {
+//	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
+//}
+//$result = mysql_query($sql, $db);
+//while ($row = mysql_fetch_assoc($result)) {
+//	if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
+
+if (is_array($rows)) {
+	foreach ($rows as $row) {
 		$content[$row['content_parent_id']][] = $row;
 		if ($cid == $row['content_id']) {
 			$top_content = $row;
@@ -234,13 +258,16 @@ foreach ($content[0] as $content_box){
 }
 */
 
-/* generate the resources and save the HTML files */
-$used_glossary_terms = array();
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
 ob_end_clean();
 
+// Modified by Cindy Qi Li on Jun 3, 2010
+// Transformable does not support glossary
+/* generate the resources and save the HTML files */
+/*
+$used_glossary_terms = array();
 if (count($used_glossary_terms)) {
 	$used_glossary_terms = array_unique($used_glossary_terms);
 	sort($used_glossary_terms);
@@ -273,6 +300,8 @@ if (count($used_glossary_terms)) {
 } else {
 	unset($glossary_xml);
 }
+*/
+// END OF Modified by Cindy Qi Li on Jun 3, 2010
 
 $toc_html = str_replace(array('{TOC}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
 					    array($toc_html, $course_language_charset, $course_language_code),
@@ -289,18 +318,19 @@ $html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE
 							   array($ims_course_title, $course_language_charset, $course_language_code),
 							   $html_mainheader);
 
-
-
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURSE_TITLE}'),
 									array($organizations_str,	$resources, $ims_course_title),
 									$ims_template_xml['final']);
 
 /* generate the vcard for the instructor/author */
-$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-$result = mysql_query($sql, $db);
+//$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
+//$result = mysql_query($sql, $db);
+$usersDAO = new UsersDAO();
+$row = $usersDAO->getUserByID($instructor_id);
+									
 $vcard = new vCard();
-if ($row = mysql_fetch_assoc($result)) {
+if (isset($row)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
 	$vcard->setNote('Originated from an Transformable at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
@@ -317,17 +347,23 @@ $zipfile->add_file($frame,			 'index.html');
 $zipfile->add_file($toc_html,		 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
+
+// Modified by Cindy Qi Li on Jun 3, 2010
+// Transformable does not support glossary
+/*
 if ($glossary_xml) {
 	$zipfile->add_file($glossary_xml,  'glossary.xml');
 	$zipfile->add_file($glossary_html, 'glossary.html');
 }
-$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'ims/adlcp_rootv1p2.xsd'), 'adlcp_rootv1p2.xsd');
-$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'ims/ims_xml.xsd'), 'ims_xml.xsd');
-$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'ims/imscp_rootv1p1p2.xsd'), 'imscp_rootv1p1p2.xsd');
-$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'ims/imsmd_rootv1p2p1.xsd'), 'imsmd_rootv1p2p1.xsd');
-$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'ims/ims.css'), 'ims.css');
-$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'ims/footer.html'), 'footer.html');
-$zipfile->add_file(file_get_contents('../../images/logo.gif'), 'logo.gif');
+*/
+// END OF Modified by Cindy Qi Li on Jun 3, 2010
+$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/adlcp_rootv1p2.xsd'), 'adlcp_rootv1p2.xsd');
+$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/ims_xml.xsd'), 'ims_xml.xsd');
+$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/imscp_rootv1p1p2.xsd'), 'imscp_rootv1p1p2.xsd');
+$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/imsmd_rootv1p2p1.xsd'), 'imsmd_rootv1p2p1.xsd');
+$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/ims.css'), 'ims.css');
+$zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/footer.html'), 'footer.html');
+$zipfile->add_file(file_get_contents('../../images/logo.png'), 'logo.png');
 
 $zipfile->close(); // this is optional, since send_file() closes it anyway
 

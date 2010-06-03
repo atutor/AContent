@@ -103,6 +103,16 @@ CREATE TABLE `forums` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 # --------------------------------------------------------
+# Table structure for table `forums_courses`
+# since 0.1
+
+CREATE TABLE `forums_courses` (
+  `forum_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  `course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
+  PRIMARY KEY (`forum_id`,`course_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+# --------------------------------------------------------
 # Table structure for table `languages`
 # since 0.1
 
