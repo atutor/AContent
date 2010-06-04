@@ -54,10 +54,13 @@ class A4aExport extends A4a {
 					//add this primary file ref, and the resources type to the secondary file
 					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']] = $rtid;
 //					$this->original_files[$current_sec_file]['primary_resources'][$prop['resource']]['language_code'] = $sec_resource['language_code'];
-
+					}
 				}
 				$res_type['resource_type'] = $rtid;	//could be 1+
 				$temp = array_merge($prop, $res_type, $secondary_array);
+				if (isset($this->original_files[$temp['resource']])){
+					//use the existing temp array values, but merge in the secondary_array
+					$temp = array_merge($this->original_files[$temp['resource']], $secondary_array);
 			}
 			if (!empty($temp)){
 				$this->original_files[$temp['resource']] = $temp;
@@ -74,7 +77,7 @@ class A4aExport extends A4a {
 		global $db;
 		$secondary_files = array();
 
-		include(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
 		$secondaryResourcesDAO = new SecondaryResourcesDAO();
 		$rows = $secondaryResourcesDAO->getByContent($this->cid);
 //		$sql = "SELECT DISTINCT secondary_resource FROM ".TABLE_PREFIX."primary_resources a LEFT JOIN ".TABLE_PREFIX."secondary_resources s
@@ -109,6 +112,10 @@ class A4aExport extends A4a {
 				if (!is_array($type_id)){
 					//primary resource will always have just on type
 					$orig_access_mode[] = $this->getResourceNameById($type_id);
+				} else {
+					foreach($type_id as $k=>$type_id2){
+						$orig_access_mode[] = $this->getResourceNameById($type_id2[0]);
+					}
 				}
 			}
 			$savant->assign('relative_path', $this->relative_path);	//the template will need the relative path
@@ -130,9 +137,9 @@ class A4aExport extends A4a {
 					$orig_access_mode = array(); //reinitialize
 					foreach($resource['resource_type'][$uri] as $type_id){
 						$orig_access_mode[] = $this->getResourceNameById($type_id);
+						$savant->assign('orig_access_mode', $orig_access_mode);
+						$xml_array[$id.' to '.$uri] = $savant->fetch(TR_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 					}
-					$savant->assign('orig_access_mode', $orig_access_mode);
-					$xml_array[$id.' to '.$uri] = $savant->fetch(TR_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 				}
 			} else {
 				$savant->assign('primary_resource_uri', '');
@@ -149,7 +156,9 @@ class A4aExport extends A4a {
 	 */
 	function getResourceNameById($type_id){
 		$orig_access_mode = '';
-
+		if (is_array($type_id)) {
+			$type_id = $type_id[0];
+		}
 		switch($type_id){
 			case 1:
 				$orig_access_mode = 'auditory';
@@ -158,6 +167,8 @@ class A4aExport extends A4a {
 				$orig_access_mode = 'textual';
 				break;
 			case 2:
+				$orig_access_mode = 'sign_language';
+				break;
 			case 4:
 				$orig_access_mode = 'visual';
 				break;

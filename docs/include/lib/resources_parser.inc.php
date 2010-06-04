@@ -21,7 +21,7 @@ $body_text 	= htmlspecialchars($stripslashes($_POST['body_text']));
 $body		= html_entity_decode($body_text);
 
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require(TR_INCLUDE_PATH.'imscc/ims_template.inc.php');				/* for ims templates + print_organizations() */
+require(TR_INCLUDE_PATH.'../home/imscc/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 /*
 the following resources are to be identified:

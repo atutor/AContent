@@ -153,19 +153,19 @@ trans.utility.selected;
   };
   
   // toggle content folder in side menu "content navigation"
-  trans.utility.toggleFolder = function (cid, expand_text, collapse_text)
+  trans.utility.toggleFolder = function (cid, expand_text, collapse_text, course_id)
   {
     if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
       jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
       jQuery("#tree_icon"+cid).attr("alt", expand_text);
       jQuery("#tree_icon"+cid).attr("title", expand_text);
-      trans.utility.setcookie("c<?php echo $this->course_id;?>_"+cid, null, 1);
+      trans.utility.setcookie("t.c"+course_id+"_"+cid, null, 1);
     }
     else {
       jQuery("#tree_icon"+cid).attr("src", tree_collapse_icon);
       jQuery("#tree_icon"+cid).attr("alt", collapse_text);
       jQuery("#tree_icon"+cid).attr("title", collapse_text);
-      trans.utility.setcookie("c<?php echo $this->course_id;?>_"+cid, "1", 1);
+      trans.utility.setcookie("t.c"+course_id+"_"+cid, "1", 1);
     }
     
     jQuery("#folder"+cid).slideToggle();
@@ -187,23 +187,24 @@ trans.utility.selected;
       jQuery(elem).attr("src", element_collapse_icon);
       jQuery(elem).attr("alt", hide_text + " "+ title);
       jQuery(elem).attr("title", hide_text + " "+ title);
-      trans.utility.setcookie("m_"+title, null, 1);;
+      trans.utility.setcookie("m_"+title, 1, 1);;
     }
     
     jQuery(elem).parent().next().slideToggle();
   };
   
-  trans.utility.printSubmenuHeader = function (title, base_path, show_text, hide_text)
+  trans.utility.printSubmenuHeader = function (title, base_path, show_text, hide_text, default_value)
   {
-    if (trans.utility.getcookie("m_"+title) == "0")
+	cookie_value = trans.utility.getcookie("m_"+title);
+	if (cookie_value == "0" || cookie_value == "" && default_value == "hide")
     {
       image = base_path + "images/mswitch_plus.gif";
-      alt_text = show_text + title;
+      alt_text = show_text + " " + title;
     }
-    else
+    else if (cookie_value == "1")
     {
       image = base_path+"images/mswitch_minus.gif";
-      alt_text = hide_text + title;
+      alt_text = hide_text + " " + title;
     }
     
     document.writeln('<h4 class="box">'+

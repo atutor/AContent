@@ -93,9 +93,10 @@ class A4aImport extends A4a {
 
 	/**
 	 * By the given attrs array, decide which resource type it is
-	 *	auditory = type 1
-	 *	textual	 = type 3
-	 *	visual	 = type 4
+	 *	auditory		= type 1
+	 *  sign_language	= type 2
+	 *	textual			= type 3
+	 *	visual			= type 4
 	 * @param	array
 	 * return type id array
 	 */
@@ -106,18 +107,32 @@ class A4aImport extends A4a {
 		 if (empty($resources_attrs)){
 			 return $result;
 		 }
-
-		 if (in_array('auditory', $resources_attrs)){
-			 $result[] = 1;
-		 }
-		 if (in_array('textual', $resources_attrs)){
-			 $result[] = 3;
-		 }
-		 if (in_array('visual', $resources_attrs)){
-			 $result[] = 4;
-		 }
-		 return $result;
-	 }
+		if (is_array($resources_attrs)) {
+				 if (in_array('auditory', $resources_attrs)){
+					 $result[] = 1;
+				 }
+				 if (in_array('sign_language', $resources_attrs)){
+					 $result[] = 2;
+				 }
+				 if (in_array('textual', $resources_attrs)){
+					 $result[] = 3;
+				 }
+				 if (in_array('visual', $resources_attrs)){
+					 $result[] = 4;
+				 }		
+		} else {
+			if ($resources_attrs=='auditory'){
+				$result[] = 1;
+			} elseif ($resources_attrs=='sign_language'){
+				$result[] = 2;
+			} elseif ($resources_attrs=='textual'){
+				$result[] = 3;
+			} elseif ($resources_attrs=='visual'){
+				$result[] = 4;
+			}
+		}
+		return $result;
+	}
 }
 
 ?>

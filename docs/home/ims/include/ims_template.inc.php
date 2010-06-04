@@ -56,6 +56,8 @@ function print_organizations($parent_id,
 	global $glossary;
 	global $test_zipped_files, $use_a4a, $db;
 
+	require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
+	
 	$space  = '    ';
 	$prefix = '                    ';
 
@@ -91,21 +93,29 @@ function print_organizations($parent_id,
 			/* save the content as HTML files */
 			/* @See: include/lib/format_content.inc.php */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
-			/* get all the glossary terms used */
+
+			/* Commented by Cindy Qi Li on Jan 12, 2010
+			 * Transformable does not support glossary
+			// get all the glossary terms used
 			$terms = find_terms($content['text']);
 			if (is_array($terms)) {
 				foreach ($terms[2] as $term) {
 					$used_glossary_terms[] = $term;
 				}
 			}
-
+*/
 			/** Test dependency **/
-			$test_dependency = '';	//Template for test
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)){
-				//add test dependency ontop to forums dependency
-				$test_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
+//			$test_dependency = '';	//Template for test
+//			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
+//			$result = mysql_query($sql, $db);
+//			while ($row = mysql_fetch_assoc($result)){
+			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+			$contentTestsAssocDAO = new ContentTestsAssocDAO();
+			$rows = $contentTestsAssocDAO->getByContent($content['content_id']);
+			if (is_array($rows)) {
+				//add test dependency on top of forum dependency
+				foreach ($rows as $row)
+					$test_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
 			}
 
 			/* calculate how deep this page is: */
@@ -116,7 +126,7 @@ function print_organizations($parent_id,
 				$path .= str_repeat('../', $depth);
 			}
 			
-			$content['text'] = format_content($content['text'], $content['formatting'], $glossary, $path);
+			$content['text'] = ContentUtility::formatContent($content['text'], $content['formatting']);
 
 			/* add HTML header and footers to the files */
 			

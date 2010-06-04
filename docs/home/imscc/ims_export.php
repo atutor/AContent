@@ -102,7 +102,7 @@ $course_language_code = $courseLanguage->getCode();
 require_once(TR_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require_once(TR_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require_once(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-require_once(TR_INCLUDE_PATH.'imscc/ims_template.inc.php');				/* for ims templates + print_organizations() */
+require_once(TR_INCLUDE_PATH.'../home/imscc/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');

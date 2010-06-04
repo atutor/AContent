@@ -243,6 +243,7 @@ $pid = intval($_REQUEST['pid']);
 		}
 	}
 	
+	echo '<input type="hidden" name="_course_id" value="'.$_course_id.'" />';
 	echo '<input type="hidden" name="_cid" value="'.$cid.'" />';
 	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
 	if ($_REQUEST['sub'] == 1)

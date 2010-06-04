@@ -849,7 +849,7 @@ if (!is_dir($import_path)) {
 	}
 }
 
-if (isset($_SESSION['course_id'])) $import_path .= $_SESSION['course_id'].'/';
+if (isset($_POST['_course_id'])) $import_path .= $_POST['_course_id'].'/';
 else $import_path .= Utility::getRandomStr(16).'/';
 
 if (is_dir($import_path)) {
@@ -892,9 +892,9 @@ $testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
 $contentTestsAssocDAO = new ContentTestsAssocDAO();
 
 // get the course's max_quota
-if (isset($_SESSION['course_id']))
+if (isset($_POST['_course_id']))
 {
-	check_available_size($_SESSION['course_id']);
+	check_available_size($_POST['_course_id']);
 }
 
 $items = array(); /* all the content pages */
@@ -1018,7 +1018,7 @@ if ($msg->containsErrors()) {
 
 // added by Cindy Li on Jan 10, 2010
 // generate a course_id if the import is not into an existing course
-if (!isset($_SESSION['course_id']))
+if (!isset($_POST['_course_id']))
 {
 	if (isset($_POST['hide_course']))
 		$access = 'private';
@@ -1041,7 +1041,7 @@ if (!isset($_SESSION['course_id']))
 	$userCoursesDAO = new UserCoursesDAO();
 	$userCoursesDAO->Create($_SESSION['user_id'], $_course_id, TR_USERROLE_AUTHOR, 0);
 }
-else $_course_id = $_SESSION['course_id'];
+else $_course_id = $_POST['_course_id'];
 
 // end of added by Cindy Li on Jan 10, 2010
 
@@ -1059,7 +1059,9 @@ $package_base_name = strtolower($package_base_name);
 $package_base_name = str_replace(array('\'', '"', ' ', '|', '\\', '/', '<', '>', ':'), '_' , $package_base_name);
 $package_base_name = preg_replace("/[^A-Za-z0-9._\-]/", '', $package_base_name);
 
-if (is_dir($import_path.$package_base_name)) {
+$course_dir = TR_CONTENT_DIR.$_course_id.'/';
+
+if (is_dir($course_dir.$package_base_name)) {
 	$package_base_name .= '_'.date('ymdHis');
 }
 
@@ -1182,13 +1184,13 @@ foreach ($items as $item_id => $content_info)
 			$ext = '';
 			$last_modified = date('Y-m-d H:i:s');
 		} else {
-			//$file_info = @stat(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$file_info = @stat(TR_CONTENT_DIR . 'import/'.$_POST['_course_id'].'/'.$content_info['href']);
 			$file_info = @stat($import_path.$content_info['href']);
 			if ($file_info === false) {
 				continue;
 			}
 		
-			//$path_parts = pathinfo(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$path_parts = pathinfo(TR_CONTENT_DIR . 'import/'.$_POST['_course_id'].'/'.$content_info['href']);
 			$path_parts = pathinfo($import_path.$content_info['href']);
 			$ext = strtolower($path_parts['extension']);
 
@@ -1236,7 +1238,7 @@ foreach ($items as $item_id => $content_info)
 			}
 
 			/* this is a plain text file */
-			//$content = file_get_contents(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+			//$content = file_get_contents(TR_CONTENT_DIR . 'import/'.$_POST['_course_id'].'/'.$content_info['href']);
 			$content = file_get_contents($import_path.$content_info['href']);
 			if ($content === false) {
 				/* if we can't stat() it then we're unlikely to be able to read it */
@@ -1276,7 +1278,7 @@ foreach ($items as $item_id => $content_info)
 
 			/* potential security risk? */
 			if ( strpos($content_info['href'], '..') === false && !preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])) {
-//				@unlink(TR_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+//				@unlink(TR_CONTENT_DIR . 'import/'.$_POST['_course_id'].'/'.$content_info['href']);
 			}
 
 			// overwrite content if this is discussion tool.
@@ -1493,7 +1495,6 @@ if ($package_base_path == '.') {
 }
 
 // create course directory
-$course_dir = TR_CONTENT_DIR.$_course_id.'/';
 if (!is_dir($course_dir)) {
 	if (!@mkdir($course_dir, 0700)) {
 		$msg->addError('IMPORTDIR_FAILED');

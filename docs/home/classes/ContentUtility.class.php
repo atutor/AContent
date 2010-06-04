@@ -716,7 +716,13 @@ class ContentUtility {
 		
 		$rows = $dao->execute($sql);
 	
-		if (!is_array($rows)) return $content;
+		if (!is_array($rows)) {
+			if (!$info_only) {
+				return $content;
+			} else {
+				return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
+			}
+		}
 		
 		foreach ($rows as $row) 
 		{

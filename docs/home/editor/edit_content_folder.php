@@ -184,7 +184,7 @@ if ($cid > 0)
 	$savant->assign('cid', $cid);
 }
 
-if ($pid > 0) {
+if ($pid > 0 || !isset($pid)) {
 	$savant->assign('pid', $pid);
 	$savant->assign('course_id', $_course_id);
 }

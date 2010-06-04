@@ -112,7 +112,7 @@ function print_menu_sections(&$menu, $only_print_content_folder = false, $parent
 </div>
 </form>
 
-<form name="form1" method="post" action="home/imscp/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php');">
+<form name="form1" method="post" action="home/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo TR_BASE_HREF; ?>home/prog.php');">
 <div class="input-form">
 	<input type="hidden" name="_course_id" value="<?php echo $_course_id; ?>" />
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_content'); ?></legend>

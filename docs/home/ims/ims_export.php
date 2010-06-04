@@ -99,8 +99,8 @@ $course_language_code = $courseLanguage->getCode();
 require(TR_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(TR_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-debug('a');require(TR_INCLUDE_PATH.'../home/ims/include/ims_template.inc.php');/* for ims templates + print_organizations() */
-debug('a');
+require(TR_INCLUDE_PATH.'../home/ims/include/ims_template.inc.php');/* for ims templates + print_organizations() */
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');
 	header('Location: ../index.php');
@@ -108,7 +108,7 @@ if (isset($_POST['cancel'])) {
 }
 
 
-$zipfile = new zipfile(); 
+$zipfile = new zipfile();
 $zipfile->create_dir('resources/');
 
 /*

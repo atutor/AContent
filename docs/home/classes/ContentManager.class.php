@@ -643,7 +643,7 @@ function initContentMenu() {
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
 				echo '
-  if (trans.utility.getcookie("c'.$_course_id.'_'.$row['content_id'].'") == "1")
+  if (trans.utility.getcookie("t.c'.$_course_id.'_'.$row['content_id'].'") == "1")
   {
     jQuery("#folder"+'.$row['content_id'].').show();
     jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
@@ -670,7 +670,7 @@ function initContentMenu() {
   jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
   jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
   jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
-  trans.utility.setcookie("c'.$_course_id.'_'.$current_content_path[$i]['content_id'].'", "1", 1);
+  trans.utility.setcookie("t.c'.$_course_id.'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
 		}
 		echo '}'; // end of javascript function initContentMenu()
@@ -702,10 +702,10 @@ function initContentMenu() {
 		{
 			echo "\n".'
   <div class="menuedit">
-    <a href="'.$_base_path.'editor/edit_content_folder.php?_course_id='.$_course_id.'">
+    <a href="'.$_base_path.'home/editor/edit_content_folder.php?_course_id='.$_course_id.'">
       <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
     </a>'."\n".'
-    <a href="'.$_base_path.'editor/edit_content.php?_course_id='.$_course_id.'">
+    <a href="'.$_base_path.'home/editor/edit_content.php?_course_id='.$_course_id.'">
       <img id="img_create_top_content" src="'.$_base_path.'images/mpage.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
     </a>'."\n".'
     <a href="javascript:void(0)" onclick="javascript:switchEditMode();">
@@ -957,7 +957,7 @@ initContentMenu();
 							$link .= '<a href="'.$_base_path.'home/editor/edit_content_folder.php?_cid='.$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
 						else {
-							$link .= '<span style="cursor:pointer" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); ">'."\n";
+							$link .= '<span style="cursor:pointer" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\', '.$this->course_id.'); ">'."\n";
 						}
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
@@ -1027,21 +1027,21 @@ initContentMenu();
 					if (isset($_SESSION['menu'][$content['content_id']]) && $_SESSION['menu'][$content['content_id']] == 1) {
 						if ($on) {
 //							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\'); " />'."\n";
-							echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); " />'."\n";
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
 						if ($on) {
 //							echo '<img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" />'."\n";
-							echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
+							echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\', '.$this->course_id.'); "><img src="'.$_base_path.'images/tree/tree_collapse.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').'" class="img-size-tree" /></a>'."\n";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\'); " />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_expand.gif" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT("expand").'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
 							echo '</a>'."\n";
 						}
 					}

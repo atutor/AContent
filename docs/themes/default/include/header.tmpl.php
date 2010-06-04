@@ -225,7 +225,7 @@ foreach ($this->top_level_pages as $page) {
 //if ($this->course_id > 0) {
 ?>
   <div id="contentwrapper">
-    <?php if ((isset($this->course_id) && $this->course_id > 0)): ?>
+    <?php //if ((isset($this->course_id) && $this->course_id > 0)): ?>
     <div id="leftcolumn">
       <script type="text/javascript">
       //<![CDATA[
@@ -237,16 +237,14 @@ foreach ($this->top_level_pages as $page) {
       }
       //]]>
       </script>
-
       <?php require(TR_INCLUDE_PATH.'side_menu.inc.php'); ?>
-
       <script type="text/javascript">
       //<![CDATA[
       document.writeln('</div>');
       //]]>
       </script>
     </div>
-	<?php endif; ?>
+	<?php //endif; ?>
 
     <div id="contentcolumn"
     <?php if (isset($this->course_id) && $this->course_id <= 0): ?>
@@ -254,9 +252,9 @@ foreach ($this->top_level_pages as $page) {
     <?php endif; ?>
     >
 
-    <?php if (isset($this->course_id) && $this->course_id > 0): ?>
+    <?php //if (isset($this->course_id) && $this->course_id > 0): ?>
       <div id="menutoggle">
-        <?php if ($this->course_id > 0): ?>
+        <?php //if ($this->course_id > 0): ?>
         <script type="text/javascript" language="javascript">
         //<![CDATA[
         var state = trans.utility.getcookie("side-menu");
@@ -268,7 +266,7 @@ foreach ($this->top_level_pages as $page) {
         }
         //]]>
         </script>
-        <?php endif; ?>
+        <?php //endif; ?>
       </div>
 
       <div id="sequence-links">
@@ -286,7 +284,7 @@ foreach ($this->top_level_pages as $page) {
 		<?php // } ?>
 			&nbsp;
       </div>
-        <?php endif; ?>
+    <?php //endif; ?>
 
       <!-- the page title -->
       <a name="content" title="<?php echo _AT('content'); ?>"></a>
