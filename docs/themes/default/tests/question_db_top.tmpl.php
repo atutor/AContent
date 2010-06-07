@@ -11,7 +11,7 @@
 /************************************************************************/
 
 ?>
-<div class="input-form" width="95%">
+<div class="input-form">
 	<fieldset class="group_form" style="width:43%;float:left;height:18em;min-width:15em;margin-left:2em;"><legend class="group_form"><?php echo _AT('create_new_question'); ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 			<input type="hidden" name="tid" value="<?php echo $this->tid; ?>" />
@@ -36,5 +36,5 @@
 			</div>
 		</form>
 	</fieldset>
-
+<br style="clear:both;">
 </div>
