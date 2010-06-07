@@ -82,7 +82,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LANG_EXISTS','The la
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LANG_WRONG_VERSION','The language pack you are trying to import is not compatible with this version of Transformable.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LOGIN_CHARS','Your Login Name must only contain letters, numbers, periods, or underscores (_\'s).','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_LOGIN_EXISTS','That login already exists, please choose another.','2010-01-27 15:48:35','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MAX_STORAGE_EXCEEDED','Adding this file exceeds the maximum course storage limit.','2010-04-06 13:21:58','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MAX_STORAGE_EXCEEDED','Adding this file exceeds the maximum  lesson storage limit.','2010-04-06 13:21:58','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MISSING_CONTENT','The requested content is missing.','2010-05-20 12:08:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_MISSING_COURSE_ID','Please select a lesson.','2010-06-07 12:45:29','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NOT_LOCALHOST','Sorry, the IP address of localhost is not public. For security reasons, validating resources located at non-public IP addresses has been disabled in this service.','2010-01-27 15:48:35','');
@@ -92,7 +92,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_ITEM_SELECTED','Y
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_PRIV','User has no privilege to do this action.','2010-02-19 14:18:02','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_QUESTIONS_SELECTED','You did not select any questions to add to this test.','2010-03-31 11:47:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_SEARCH_TEXT','Please provide search text.','2010-01-27 15:48:35','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_SPACE_LEFT','There is no more space in this course to extract this archive.','2010-04-07 15:17:28','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_SPACE_LEFT','There is no more space in this lesson to extract this archive.','2010-04-07 15:17:28','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_PAGE_NOT_FOUND','Page (%s) cannot be found','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_PASSWORD_CHARS','The password must contain letters, numbers, and symbols.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_PASSWORD_LENGTH','Password must be at least 8 characters long.','2010-01-27 15:48:35','');
@@ -186,7 +186,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','add_dependent_update','Ad
 INSERT INTO `language_text` VALUES ('en', '_template','add_edit_group','Add/Edit Group','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_edit_language','Add/Edit Language','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_file_folder','Add File or Folder','2010-04-01 15:02:37','');
-INSERT INTO `language_text` VALUES ('en', '_template','add_into_list','Add into \"My courses\"','2010-02-03 15:30:42','');
+INSERT INTO `language_text` VALUES ('en', '_template','add_into_list','Add into \"My Lessons\"','2010-02-03 15:30:42','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_language','Add Language','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_privileges','Add Privileges','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_questions','Add Questions','2010-03-31 11:17:18','');
@@ -219,7 +219,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','audible_captcha','Audible
 INSERT INTO `language_text` VALUES ('en', '_template','audio','Audio','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','auditory','Auditory','2010-05-27 14:41:45','');
 INSERT INTO `language_text` VALUES ('en', '_template','author','Author','2010-01-27 15:48:35','');
-INSERT INTO `language_text` VALUES ('en', '_template','authoring_img_info','indicates my own authoring course.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','authoring_img_info','indicates my own authored lessons.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','availability','Availability','2010-03-17 13:40:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','available_to','Available To','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','available_updates','Available Updates','2010-01-27 15:48:35','Updater');
@@ -410,7 +410,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','expected_result','Expecte
 INSERT INTO `language_text` VALUES ('en', '_template','expired','Expired','2010-03-17 13:40:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','export','Export','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_content','Export Content','2003-05-20 12:26:32','');
-INSERT INTO `language_text` VALUES ('en', '_template','export_content_info','Export content as an <strong>IMS or SCORM conformant content package</strong>, or as an <strong>IMS Common Cartridge</strong>. Import the zipped package or cartridge into another ATutor system or another course, or into another conformant LMS or LCMS.','2010-06-03 10:30:44','');
+INSERT INTO `language_text` VALUES ('en', '_template','export_content_info','Export content as an <strong>IMS or SCORM conformant content package</strong>, or as an <strong>IMS Common Cartridge</strong>. Import the zipped package or cartridge into another ATutor system or another lesson, or into another conformant LMS or LCMS.','2010-06-03 10:30:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_content_package_what','What to export','2010-06-03 10:30:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','export_entire_course_or_chap','Entire lesson, or select a sub-section below','2010-06-07 12:43:01','');
 INSERT INTO `language_text` VALUES ('en', '_template','extract','Extract','2010-04-07 15:23:22','');
@@ -529,7 +529,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','move','Move','2010-04-01 
 INSERT INTO `language_text` VALUES ('en', '_template','msg_terms','Message Terms','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','must_be_author','Must be an author','2010-03-16 11:45:52','');
 INSERT INTO `language_text` VALUES ('en', '_template','must_be_author_of_course','Must be an author of the current lesson','2010-06-07 12:43:37','');
-INSERT INTO `language_text` VALUES ('en', '_template','must_in_course','Must be in a course','2010-03-16 11:45:52','');
+INSERT INTO `language_text` VALUES ('en', '_template','must_in_course','Must be in a lesson','2010-03-16 11:45:52','');
 INSERT INTO `language_text` VALUES ('en', '_template','myown_updates','My Own Updates','2010-01-27 15:48:35','Updater');
 INSERT INTO `language_text` VALUES ('en', '_template','my_authoring_course','My authored lessons','2010-06-07 12:43:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','my_courses','My Lessons','2010-06-07 12:44:06','');
@@ -634,7 +634,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','release_marked','Once qui
 INSERT INTO `language_text` VALUES ('en', '_template','release_never','Do not release results','2010-03-17 13:40:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove','Remove','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_frame','Remove Frame','2010-04-06 11:45:32','');
-INSERT INTO `language_text` VALUES ('en', '_template','remove_from_list','Remove from \"My Courses\"','2010-02-03 15:30:42','');
+INSERT INTO `language_text` VALUES ('en', '_template','remove_from_list','Remove from \"My Lessons\"','2010-02-03 15:30:42','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_question','Remove Question','2010-03-31 16:16:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_queued_file','Remove file from queue','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_write_permission','<span style=\"color:red\">Please <strong>REMOVE</strong> write permission on the listed folders and files for your security:</span><p><strong>Note:</strong> To remove permissions on Unix use <kbd>chmod 755</kbd> then the file name..</p>','2010-01-27 15:48:35','Updater');
@@ -657,7 +657,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','save_and_close','Save and
 INSERT INTO `language_text` VALUES ('en', '_template','save_changes','Save Changes','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','save_changes_unsaved','Unsaved changes have been made.','2010-05-20 14:44:44','');
 INSERT INTO `language_text` VALUES ('en', '_template','search','Search','2010-01-27 15:48:35','');
-INSERT INTO `language_text` VALUES ('en', '_template','search_and_add','Please search and add courses','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_template','search_and_add','Please search and add lessons','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','search_phase','Search Phase','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','search_results','Search results','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','search_str','Search String','2010-01-27 15:48:35','');
