@@ -90,6 +90,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_ACTION_SELECTED',
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_CONTENT_SPACE','Not enough space to import content directory. %s KB over the limit.','2010-01-27 15:48:35','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_ITEM_SELECTED','You must select an item before using a button.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_PRIV','User has no privilege to do this action.','2010-02-19 14:18:02','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_QUESTIONS','Test has no questions.','2010-06-07 14:15:29','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_QUESTIONS_SELECTED','You did not select any questions to add to this test.','2010-03-31 11:47:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_SEARCH_TEXT','Please provide search text.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_NO_SPACE_LEFT','There is no more space in this lesson to extract this archive.','2010-04-07 15:17:28','');
@@ -525,6 +526,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','match_any_word','Match An
 INSERT INTO `language_text` VALUES ('en', '_template','max_file_size','Maximum File Size','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','mb','<acronym title=\"Megabyte\">MB</acronym>','2010-04-05 14:22:48','');
 INSERT INTO `language_text` VALUES ('en', '_template','missing_content','Missing Content','2010-05-19 14:04:47','');
+INSERT INTO `language_text` VALUES ('en', '_template','most_recent_courses','Most Recent Courses','2010-06-07 16:20:05','');
 INSERT INTO `language_text` VALUES ('en', '_template','move','Move','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','msg_terms','Message Terms','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','must_be_author','Must be an author','2010-03-16 11:45:52','');
@@ -573,6 +575,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','or','Or','2010-01-27 15:4
 INSERT INTO `language_text` VALUES ('en', '_template','order','Order','2010-03-31 11:04:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','organization','Organization','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','original_resource','Original resource','2010-05-21 15:57:28','');
+INSERT INTO `language_text` VALUES ('en', '_template','others_course','Others\' course','2010-06-07 16:19:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','outline','Outline','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','overwrite','Overwrite','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','packaged_in','Content Package','2010-05-20 14:44:44','');

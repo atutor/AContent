@@ -209,6 +209,36 @@ class CoursesDAO extends DAO {
 	}
 
 	/**
+	 * Return courses in the order of time stamp
+	 * @access  public
+	 * @param   none
+	 * @return  course row
+	 * @author  Cindy Qi Li
+	 */
+	public function getByMostRecent()
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
+		         WHERE access='public'
+		         ORDER BY modified_date, created_date";
+		return $this->execute($sql);
+	}
+
+	/**
+	 * Return course information by given category id
+	 * @access  public
+	 * @param   category id
+	 * @return  course row
+	 * @author  Cindy Qi Li
+	 */
+	public function getByCategory($categoryID)
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
+		         WHERE category_id=".$categoryID."
+		           AND access='public'";
+		return $rows = $this->execute($sql);
+	}
+
+	/**
 	 * Return the array of (category_id, num_of_courses)
 	 * @access  public
 	 * @param   none
@@ -217,7 +247,10 @@ class CoursesDAO extends DAO {
 	 */
 	public function getCategoriesAndNumOfCourses()
 	{
-		$sql = 'SELECT category_id, count(*) num_of_courses FROM '.TABLE_PREFIX.'courses GROUP BY category_id';
+		$sql = "SELECT category_id, count(*) num_of_courses 
+		          FROM ".TABLE_PREFIX."courses
+		         WHERE access = 'public' 
+		         GROUP BY category_id";
 		return $this->execute($sql);
 	}
 

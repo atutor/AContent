@@ -10,21 +10,6 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-global $onload;
-$onload .="document.frm_search.search_text.focus();";
-
-require(TR_INCLUDE_PATH.'header.inc.php'); 
-global $_current_user;
-
-if (!isset($_current_user))
-{
-?>
-	<div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('getting_start'); ?></legend>
-	<?php echo _AT('getting_start_info');?>
-	</fieldset>
-	</div>
-<?php } // end of if
 ?>
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
@@ -38,6 +23,4 @@ if (!isset($_current_user))
 
 <?php 
 include('create_course_tmpl.tmpl.php');
-
-require(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>

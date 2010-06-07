@@ -459,8 +459,8 @@ INSERT INTO `TR_language_text` VALUES ('en', '_template', 'test_import_package',
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'a4a_import_package', 'Import available AccessForAll adapted content.', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'upload_content_package', 'Upload a Content Package or Common Cartridge', now(), '');
 
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'others_course', 'Others\' course', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'most_recent_courses', 'Most Recent Courses', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');

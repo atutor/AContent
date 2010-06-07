@@ -13,13 +13,17 @@
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 
 global $_current_user;
 
-// clean up the course level session vars
+// clean up the session vars from the previous course
 unset($_SESSION['course_id']);
 
 $userCoursesDAO = new UserCoursesDAO();
+$coursesDAO = new CoursesDAO();
+
+if (isset($_GET['catid']) && trim($_GET['catid']) <> '') $catid = intval($_GET['catid']);
 
 if (isset($_GET['action'], $_GET['cid']) && $_SESSION['user_id'] > 0)
 {
@@ -30,19 +34,33 @@ if (isset($_GET['action'], $_GET['cid']) && $_SESSION['user_id'] > 0)
 }
 
 // retrieve data to display
-if ($_SESSION['user_id'] > 0) {
-	$my_courses = $userCoursesDAO->getByUserID($_SESSION['user_id']); 
+//if ($_SESSION['user_id'] > 0) {
+//	$courses = $userCoursesDAO->getByUserID($_SESSION['user_id']);
+//	$is_my_courses = true; 
+//}
+
+if (isset($catid)) {
+	$courses = $coursesDAO->getByCategory($catid);
+	$is_for_category = true;
+} else {
+	$courses = $coursesDAO->getByMostRecent();
 }
 
-if (is_array($my_courses))
+require(TR_INCLUDE_PATH.'header.inc.php'); 
+
+if (is_array($courses))
 {
 	$curr_page_num = intval($_GET['p']);
 	if (!$curr_page_num) {
 		$curr_page_num = 1;
-	}	
-	$savant->assign('courses', $my_courses);
+	}
+	$savant->assign('courses', $courses);
 	$savant->assign('curr_page_num', $curr_page_num);
-	$savant->assign('title', _AT('my_courses'));
+	if ($is_for_category) {
+		$savant->assign('title', _AT('search_results'));
+	} else {
+		$savant->assign('title', _AT('most_recent_courses'));
+	}
 	
 	$savant->display('home/index_course.tmpl.php');
 }
@@ -50,4 +68,6 @@ else
 {
 	$savant->display('home/index_search.tmpl.php');
 }
+
+require(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>

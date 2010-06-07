@@ -1445,6 +1445,9 @@ ul#content-tool-links img{
 .nowrap {
     white-space: nowrap;
 }
+.selected-sidemenu {
+    font-weight:bold;
+}
 div#alternatives_shortcuts {
 	float: right;
 	margin: 0 2em;
