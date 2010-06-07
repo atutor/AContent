@@ -52,7 +52,7 @@ $count = 1;
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$_course_id; ?>" name="preview">
 
 <?php if (is_array($rows)) {?>
-	<div class="input-form" style="width:80%">
+	<div class="input-form">
 	<div class="row"><h2><?php echo $test_row['title']; ?></h2></div>
 
 
