@@ -17,6 +17,7 @@ global $savant, $_course_id;
 
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] == 0) {
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/getting_start.inc.php';
+	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/categories.inc.php';
 }
 if ($_course_id > 0) {
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/content_nav.inc.php';

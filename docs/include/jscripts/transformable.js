@@ -196,12 +196,13 @@ trans.utility.selected;
   trans.utility.printSubmenuHeader = function (title, base_path, show_text, hide_text, default_value)
   {
 	cookie_value = trans.utility.getcookie("m_"+title);
-	if (cookie_value == "0" || cookie_value == "" && default_value == "hide")
+	
+	if (cookie_value == "0" || (cookie_value == "" && default_value == "hide"))
     {
       image = base_path + "images/mswitch_plus.gif";
       alt_text = show_text + " " + title;
     }
-    else if (cookie_value == "1")
+    else
     {
       image = base_path+"images/mswitch_minus.gif";
       alt_text = hide_text + " " + title;

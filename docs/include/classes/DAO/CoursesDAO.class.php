@@ -209,6 +209,19 @@ class CoursesDAO extends DAO {
 	}
 
 	/**
+	 * Return the array of (category_id, num_of_courses)
+	 * @access  public
+	 * @param   none
+	 * @return  the array of (category_id, num_of_courses)
+	 * @author  Cindy Qi Li
+	 */
+	public function getCategoriesAndNumOfCourses()
+	{
+		$sql = 'SELECT category_id, count(*) num_of_courses FROM '.TABLE_PREFIX.'courses GROUP BY category_id';
+		return $this->execute($sql);
+	}
+
+	/**
 	 * Return course information by given course id
 	 * @access  public
 	 * @param   keywords: for keywords to include, use '+' in front.

@@ -20,7 +20,7 @@ if (cookie_value == "0" || cookie_value == "" && "<?php echo $this->default_stat
 {
 	jQuery("#menu_<?php echo $compact_title; ?>").hide();
 }
-else if (cookie_value == "1")
+else
 {
 	jQuery("#menu_<?php echo $compact_title; ?>").show();
 }

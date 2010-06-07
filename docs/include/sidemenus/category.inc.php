@@ -12,10 +12,23 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 
 global $savant;
 
-$savant->assign('title', _AT('getting_start'));
+$courseCategoriesDAO = new CourseCategoriesDAO();
+$coursesDAO = new CoursesDAO();
+
+$courses_in_category = $coursesDAO->getCategoriesAndNumOfCourses();
+
+if (is_array($courses_in_category)) {
+	foreach ($courses_in_category as $row){
+		$num_of_courses[$row['category_id']] = $row['num_of_courses'];
+	}
+}
+
+$savant->assign('title', _AT('category'));
 $savant->assign('dropdown_contents', _AT('getting_start_info'));
 //$savant->assign('default_status', "hide");
 
