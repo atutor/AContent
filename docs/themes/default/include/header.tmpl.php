@@ -183,7 +183,7 @@ foreach ($this->top_level_pages as $page) {
   </div>
 
   <?php if (is_array($this->tool_shortcuts)): ?>
-  <div id="shortcuts">
+  <div class="shortcuts">
     <ul>
     <?php foreach ($this->tool_shortcuts as $link): ?>
       <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
@@ -201,7 +201,7 @@ foreach ($this->top_level_pages as $page) {
     <?php }?>
 
 	<?php if (isset($this->course_id) && $this->course_id > 0) {?>
-  <div id="shortcuts">
+  <div class="shortcuts">
     <!--  <div id="course-tools">-->
       <?php if ($this->isAuthor) { // only for authors ?>
       <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
