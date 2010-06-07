@@ -55,4 +55,4 @@ function encrypt_password() {
 	</div>
 </form>
 
-<?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php  include(TR_INCLUDE_PATH.'footer.inc.php'); ?>

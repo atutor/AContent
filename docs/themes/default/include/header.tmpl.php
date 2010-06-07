@@ -192,15 +192,16 @@ foreach ($this->top_level_pages as $page) {
   </div>
   <?php endif; ?>
 
-  <div id="guide_box">
+
     <!-- guide -->
     <?php if (isset($this->guide)) {?>
-    <!-- <div> -->
+      <div id="guide_box">
       <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
-    <!-- </div> -->
+    </div>
     <?php }?>
 
 	<?php if (isset($this->course_id) && $this->course_id > 0) {?>
+  <div id="shortcuts">
     <!--  <div id="course-tools">-->
       <?php if ($this->isAuthor) { // only for authors ?>
       <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
@@ -219,8 +220,9 @@ foreach ($this->top_level_pages as $page) {
       <a href="<?php echo $this->base_path; ?>home/index.php">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0" />
       </a>
-    <?php }?>
  </div>
+    <?php }?>
+
 <?php  
 //if ($this->course_id > 0) {
 ?>
