@@ -39,8 +39,8 @@ div.input-form {
 	background-color: #F8F8F8;
 border-radius:.5em .5em .5em .5em;
 -moz-border-radius:.5em .5em .5em .5em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-	 box-shadow: .2em .2em  .2em #999999;
+	-moz-box-shadow:.1em .1em .1em #999999;
+	 box-shadow: .1em .1em  .1em #999999;
 }
 
 div.input-form div.row {
