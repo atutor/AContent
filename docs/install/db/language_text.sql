@@ -575,7 +575,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','or','Or','2010-01-27 15:4
 INSERT INTO `language_text` VALUES ('en', '_template','order','Order','2010-03-31 11:04:26','');
 INSERT INTO `language_text` VALUES ('en', '_template','organization','Organization','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','original_resource','Original resource','2010-05-21 15:57:28','');
-INSERT INTO `language_text` VALUES ('en', '_template','others_course','Others\' course','2010-06-07 16:19:47','');
+INSERT INTO `language_text` VALUES ('en', '_template','others_course','Others\' Lesson','2010-06-07 16:19:47','');
 INSERT INTO `language_text` VALUES ('en', '_template','outline','Outline','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','overwrite','Overwrite','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','packaged_in','Content Package','2010-05-20 14:44:44','');

@@ -963,15 +963,16 @@ ul.topnavlist li a.selected {
     color: #555;
     font-weight: normal;
 }
-
+ol.remove-margin-left {
+  margin-left:-3em;
+}
 /*  form fields grouping for WCAG 2.0 conformance*/
 fieldset.group_form{
   margin:.5em;
   border:thin #cccccc solid;
-  min-height: 100px;
-border-radius:.5em .5em .5em .5em;
--moz-border-radius:.5em .5em .5em .5em;
-
+  min-height: 40px;
+  border-radius:.5em .5em .5em .5em;
+  -moz-border-radius:.5em .5em .5em .5em;
 }
 
 legend.group_form{

@@ -461,7 +461,7 @@ INSERT INTO `TR_language_text` VALUES ('en', '_template', 'upload_content_packag
 
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'others_course', 'Others\' course', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'most_recent_courses', 'Most Recent Courses', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'all_categories', 'All Categories', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');

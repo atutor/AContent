@@ -21,27 +21,6 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 $caller_url_parts = explode('/', $_SERVER['PHP_SELF']); 
 $caller_script = $caller_url_parts[count($caller_url_parts)-1];
 
-// construct the caller query string
-//if (count($_GET) > 0)
-//{
-////	$url_param = '?';
-//	$counter = 0;
-//	foreach ($_GET as $param => $value)
-//	{
-//		$counter++;
-//		if ($param == 'action' || $param == 'cid') 
-//		{
-//			$counter--;
-//			continue;
-//		}
-//		else if ($counter > 1)
-//		{
-//			$url_param .= '&';
-//		}
-//		$url_param .= $param.'='.urlencode($value);
-//	}
-//}
-
 if (count($_GET) > 0)
 {
 	foreach ($_GET as $param => $value)
@@ -57,15 +36,34 @@ $caller_url = $caller_script. '?'.(isset($url_param) ? $url_param : '');
 $url_param = substr($url_param, 0, -1);
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
-if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
 ?>
+<div class="input-form">
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
+	<form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get" name="frm_search">
+	<input type="text" name="search_text" id="search_text" value="<?php if (isset($_REQUEST['search_text'])) echo $_REQUEST['search_text']; ?>" size="50"   />
+<?php if (is_array($this->categories)) { // print category dropdown list box?>
+    <select name="catid">
+      <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected'; ?>><?php echo _AT('all_categories'); ?></option>
+      <option value="">---------------------------------</option>
+<?php foreach ($this->categories as $category) {?>
+      <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
+<?php }?>
+      <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
+    </select>
+<?php }?>
+	<input type="submit" name="search" size="100" value="<?php echo _AT("search"); ?>" />
+	</form>
+</fieldset>
+</div>
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 <?php if (is_array($this->courses)) { ?>
   <div class="results">
-    <ol>
+    <ol class="remove-margin-left">
 <?php 
+	if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
+	
 	$num_results = count($this->courses);
 	
 	// if the requested page number exceeds the max number of pages, set the current page to the last page
@@ -124,7 +122,8 @@ if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
   </div>
 <?php } // end of if
 else {
-	echo _AT("no_results_for_keywords", $this->search_text);
+//	echo _AT("no_results_for_keywords", $this->search_text);
+	echo _AT("none_found");
 } // end of else?>
 </fieldset>
 </div>

@@ -79,7 +79,7 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 		<?php 
 			foreach ($this->test_ids as $id => $test_obj){
 //				echo '<li><a href="'.url_rewrite('tools/test_intro.php?tid='.$test_obj['test_id'], AT_PRETTY_URL_IS_HEADER).'">'.
-				echo '<li><a href="tools/test_intro.php?tid='.$test_obj['test_id'].'">'.
+				echo '<li><a href="'.TR_BASE_HREF.'tests/preview.php?tid='.$test_obj['test_id'].'&_cid='.$this->cid.'">'.
 				AT_print($test_obj['title'], 'tests.title').'</a><br /></li>';
 			}
 		?>

@@ -443,7 +443,11 @@ class ContentManager
 	 * @author	Harris
 	 */
 	function & getContentTestsAssoc($content_id){
-		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id) AS ct LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id";
+		$sql	= "SELECT ct.test_id, t.title 
+		             FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc 
+		                    WHERE content_id=$content_id) AS ct 
+		             LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id
+		            ORDER BY t.title";
 		return $this->dao->execute($sql);
 	}
 
@@ -875,7 +879,7 @@ initContentMenu();
 					//if this is a test link.
 					if (isset($content['test_id'])){
 						$title_n_alt =  $content['title'];
-						$in_link = 'tools/test_intro.php?tid='.$content['test_id'];
+						$in_link = $_base_path.'tests/preview.php?tid='.$content['test_id'].'&_cid='.$parent_id;
 						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
 						$in_link = $_base_path.'home/course/content.php?_cid='.$content['content_id'];

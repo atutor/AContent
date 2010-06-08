@@ -234,7 +234,8 @@ class CoursesDAO extends DAO {
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
 		         WHERE category_id=".$categoryID."
-		           AND access='public'";
+		           AND access='public'
+		         ORDER BY title";
 		return $rows = $this->execute($sql);
 	}
 
@@ -260,12 +261,13 @@ class CoursesDAO extends DAO {
 	 * @param   keywords: for keywords to include, use '+' in front.
 	 *                    for keywords to exclude, use '-' in front.
 	 *                    for example '+a -b' means find all courses with keyword 'a', without 'b'
+	 *          catid: category id
 	 *          start: start receiving from this record number, 0 if not specified
 	 *          maxResults: Number of results desired. If 0, returns all
 	 * @return  course row if successful, otherwise, return false
 	 * @author  Cindy Qi Li
 	 */
-	public function getSearchResult($keywords, $start=0, $maxResults=0)
+	public function getSearchResult($keywords, $catid='', $start=0, $maxResults=0)
 	{
 		require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 		// full-text search
@@ -282,24 +284,28 @@ class CoursesDAO extends DAO {
         
 		// if the keywords is not given, return false
 		$keywords = trim($keywords);
-		if ($keywords == '') return false;
+//		if ($keywords == '') return false;
 		
 		$all_keywords = Utility::removeEmptyItemsFromArray(explode(' ', $keywords));
 		
-		if (!is_array($all_keywords) || count($all_keywords) == 0) return false;
+//		if (!is_array($all_keywords) || count($all_keywords) == 0) return false;
 		
 		list($sql_where, $sql_order) = $this->getSearchSqlParams($all_keywords);
+		
+		if ($sql_where <> '') $sql_where = ' AND '. $sql_where;
+		if (trim($catid) <> '') $sql_where .= ' AND category_id='.intval($catid);
 		
 		// sql search
 		$sql = "SELECT DISTINCT cs.course_id, cs.title, cs.description, cs.created_date
 		          FROM ".TABLE_PREFIX."courses cs, ".TABLE_PREFIX."content ct, ".TABLE_PREFIX."users u
 		         WHERE cs.access='public'
 		           AND cs.course_id = ct.course_id
-		           AND cs.user_id = u.user_id
-		           AND ".$sql_where."
-		         ORDER BY ".$sql_order." DESC ";
+		           AND cs.user_id = u.user_id";
+		if ($sql_where <> '') $sql .= $sql_where;
+		if ($sql_order <> '') $sql .= " ORDER BY ".$sql_order." DESC ";
 		
 		if ($maxResults > 0) $sql .= " LIMIT ".$start.", ".$maxResults;
+
 		return $this->execute($sql);
 	}
 

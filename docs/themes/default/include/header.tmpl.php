@@ -327,7 +327,7 @@ foreach ($this->top_level_pages as $page) {
     <div id="sub-navigation">
 	  <?php if (isset($this->back_to_page)): ?>
 	    <div id="subnavbacktopage">	  
-	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.$_base_href.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;">'?></a> 
+	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;">'?></a> 
 	    </div>
 	  <?php endif; ?>
 	<ul id="subnavlist">

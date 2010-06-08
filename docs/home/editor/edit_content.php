@@ -137,7 +137,7 @@ if ($cid) {
 	}
 }
 
-if (($current_tab == 0) || ($_current_tab == 2)) {
+if (($current_tab == 0) || ($current_tab == 2)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
 	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
@@ -348,15 +348,16 @@ $pid = intval($_REQUEST['pid']);
 	}
 	
 	//tests
-	if ($current_tab != 1){
+	if ($current_tab != 3){
 		// set content associated tests
-		if (is_array($_POST['tid'])) {
-			foreach ($_POST['tid'] as $i=>$tid){
-				echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
+		if (isset($_POST['visited_tests'])) {
+			echo '<input type="hidden" name="visited_tests" value="1" />'."\n";
+			if (is_array($_POST['tid'])) {
+				foreach ($_POST['tid'] as $i=>$tid){
+					echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
+				}
 			}
-		}
-		else
-		{
+		} else {
 			$i = 0;
 			if (is_array($content_tests)) {
 				foreach ($content_tests as $content_test_row) {
@@ -382,7 +383,7 @@ $pid = intval($_REQUEST['pid']);
 //		}
 	} 
 	
-	if (!isset($_POST['allow_test_export']) && $current_tab != 1) {
+	if (!isset($_POST['allow_test_export']) && $current_tab != 3) {
 		//export flag handling.
 //		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
 //		$result2 = mysql_query($sql, $db);

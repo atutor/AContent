@@ -33,7 +33,7 @@ if (!is_array($my_courses)) {
 } else {
 	$num_of_courses = count($my_courses);
 
-    $output .= '<ol style="margin-left:-3em;">'."\n";
+    $output .= '<ol class="remove-margin-left">'."\n";
 	foreach ($my_courses as $row) {
 		// only display the first 200 character of course description
 

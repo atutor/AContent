@@ -31,6 +31,7 @@ function get_tabs() {
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
 	$tabs[1] = array('properties',    		'properties.inc.php',    'p');
 	$tabs[2] = array('alternative_content', 'alternatives.inc.php',  'l');	
+	$tabs[3] = array('tests',               'tests.inc.php',         't');	
 	
 	return $tabs;
 }
@@ -439,7 +440,7 @@ function check_for_changes($row, $row_alternatives) {
 	{
 		foreach ($_POST as $alt_id => $alt_value) {
 			if (substr($alt_id, 0 ,4) == 'alt_' && $alt_value != $row_alternatives[$alt_id]){
-				$changes[5] = true;
+				$changes[2] = true;
 				break;
 			}
 		}
@@ -447,10 +448,26 @@ function check_for_changes($row, $row_alternatives) {
 	
 	/* test & survey */	
 	if ($row && isset($_POST['test_message']) && $_POST['test_message'] != $row['test_message']){
-		$changes[6] = true;
+		$changes[3] = true;
 	}
 	if ($row && isset($_POST['allow_test_export']) && $_POST['allow_test_export'] != $row['allow_test_export']){
-		$changes[6] = true;
+		$changes[3] = true;
+	}
+	
+	$content_tests = $contentManager->getContentTestsAssoc($cid);
+	
+	if (isset($_POST['visited_tests'])) {
+		if (!is_array($content_tests) && is_array($_POST['tid'])) {
+			$changes[3] = true;
+		}
+		if (is_array($content_tests)) {
+			for ($i = 0; $i < count($content_tests); $i++) {
+				if ($content_tests[$i]['test_id'] <> $_POST['tid'][$i]) {
+					$changes[3] = true;
+					break;
+				}
+			}
+		}
 	}
 
 	return $changes;

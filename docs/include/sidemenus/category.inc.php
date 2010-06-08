@@ -37,8 +37,8 @@ if (is_array($categories)) {
 	foreach ($categories as $category) {
 		$output .= '<a href="'.TR_BASE_HREF.'home/index.php?catid='.$category['category_id'].'">';
 		
-		if ($_GET['catid'] == $category['category_id']) {
-			$output .= '<span class="selected">';
+		if ($_GET['catid'] <> '' && $_GET['catid'] == $category['category_id']) {
+			$output .= '<span class="selected-sidemenu">';
 		}
 		$output .= $category['category_name'].'&nbsp;';
 		if (isset($course_num_summary[$category['category_id']])) {
@@ -47,7 +47,7 @@ if (is_array($categories)) {
 		else {
 			$output .= '(0)';
 		}
-		if ($_GET['catid'] == $category['category_id']) {
+		if ($_GET['catid'] <> '' && $_GET['catid'] == $category['category_id']) {
 			$output .= '</span>';
 		}
 		$output .= '</a><br />';
@@ -57,12 +57,13 @@ if (is_array($categories)) {
 // Uncategorized
 if (isset($course_num_summary[0])) {
 	$output .= '<a href="'.TR_BASE_HREF.'home/index.php?catid=0">';
-	if ($_GET['catid'] == 0) {
+	
+	if ($_GET['catid'] <> '' && $_GET['catid'] == 0) {
 		$output .= '<span class="selected-sidemenu">';
 	}
 		
 	$output .= _AT('cats_uncategorized').'&nbsp;('.$course_num_summary[0].')';
-	if ($_GET['catid'] == 0) {
+	if ($_GET['catid'] <> '' && $_GET['catid'] == 0) {
 		$output .= '</span>';
 	}
 	$output .= '</a><br />';
