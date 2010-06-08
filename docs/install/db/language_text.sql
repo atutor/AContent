@@ -526,7 +526,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','match_any_word','Match An
 INSERT INTO `language_text` VALUES ('en', '_template','max_file_size','Maximum File Size','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','mb','<acronym title=\"Megabyte\">MB</acronym>','2010-04-05 14:22:48','');
 INSERT INTO `language_text` VALUES ('en', '_template','missing_content','Missing Content','2010-05-19 14:04:47','');
-INSERT INTO `language_text` VALUES ('en', '_template','most_recent_courses','Most Recent Courses','2010-06-07 16:20:05','');
+INSERT INTO `language_text` VALUES ('en', '_template','most_recent_courses','Most Recent Lessons','2010-06-07 16:20:05','');
 INSERT INTO `language_text` VALUES ('en', '_template','move','Move','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','msg_terms','Message Terms','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_template','must_be_author','Must be an author','2010-03-16 11:45:52','');

@@ -87,7 +87,7 @@ if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
 		$row = $this->courses[$i];
 		
 		// find whether the current user is the author of this course
-		$user_role = $userCoursesDAO->get($_SESSION['user_id'], $row['course_id']);
+		if (isset($_SESSION['user_id'])) $user_role = $userCoursesDAO->get($_SESSION['user_id'], $row['course_id']);
 		
 		$len_description = 330;
 		if (strlen($row['description']) > $len_description)
@@ -99,7 +99,7 @@ if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
         <h3>
 <?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />
-<?php } else {?>
+<?php } else if ($user_role['role'] == TR_USERROLE_VIEWER) {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/others_course.png" alt="<?php echo _AT('others_course'); ?>" title="<?php echo _AT('others_course'); ?>" />
 <?php } ?>
           <a href="<?php echo TR_BASE_HREF; ?>home/course/index.php?_course_id=<?php echo $row['course_id']; ?>"><?php echo Utility::highlightKeywords($row['title'], $keywords); ?></a>
