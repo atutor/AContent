@@ -131,7 +131,12 @@ $starttime = $mtime;
     <ul class="navigation">
 <?php 
 foreach ($this->top_level_pages as $page) {
-	if ($page['url'] == $this->current_top_level_page) { 
+	if (strpos($page['url'], '?') > 0)  {
+		$url_without_param = substr($page['url'], 0, strpos($page['url'], '?'));
+	} else {
+		$url_without_param = $page['url'];
+	}
+	if ($url_without_param == $this->current_top_level_page) { 
 ?>
       <li class="navigation"><a href="<?php echo $page['url']; ?>" title="<?php echo $page['title']; ?>" class="active"><?php echo $page['title']; ?></a></li>
 <?php } else { ?>

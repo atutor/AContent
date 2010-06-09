@@ -399,7 +399,7 @@ class Menu {
 		}
 		else if (isset($parent_page))
 		{
-			return $this->getRootPage($parent_page);
+			return $this->setRootPage($parent_page);
 		}
 		else
 		{
