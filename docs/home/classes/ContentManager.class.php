@@ -1293,11 +1293,11 @@ initContentMenu();
 	 * @return	true if 'allow_test_export'==1 || is instructor
 	 */
 	function allowTestExport($content_id){
-//		if (isset($_SESSION['is_admin'])){	
-//			return true;
-//		}
+		include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+		
 		$row = $this->contentDAO->get($content_id);
-		if ($row['allow_test_export'] == 1){
+		
+		if ($row['allow_test_export'] == 1 || Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE)){
 			return true;
 		}
 		return false;

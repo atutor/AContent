@@ -144,7 +144,7 @@ function check_available_size($course_id)
 			echo "error=".urlencode('Empty OAuth token');
 		}
 		else {
-			header('Location: ../create_course.php');
+			header('Location: '.$_SERVER['HTTP_REFERER']);
 		}
 		exit;
 	}
@@ -776,12 +776,12 @@ function rehash($items){
 if (!isset($_POST['submit']) && !isset($_POST['cancel']) && !isset($_GET['oauth_token'])) {
 	/* just a catch all */
 	$msg->addError('NO_PRIV');
-	header('Location: ../create_course.php');
+	header('Location: '.$_SERVER['HTTP_REFERER']);
 	exit;
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('IMPORT_CANCELLED');
 
-	header('Location: ../create_course.php');
+	header('Location: '.$_SERVER['HTTP_REFERER']);
 	exit;
 }
 
@@ -834,7 +834,7 @@ if ($msg->containsErrors()) {
 	} else if ($oauth_import) {
 		echo "error=".urlencode('Invalid imported file');
 	} else {
-		header('Location: ../create_course.php');
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 	exit;
 }
@@ -866,7 +866,7 @@ if ($msg->containsErrors()) {
 	} else if ($oauth_import) {
 		echo "error=".urlencode('Cannot create import directory');
 	} else {
-		header('Location: ../create_course.php');
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 	exit;
 }
@@ -880,7 +880,7 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 	$msg->addError('IMPORT_FAILED');
 	echo 'Error : '.$archive->errorInfo(true);
 	FileUtility::clr_dir($import_path);
-	header('Location: ../create_course.php');
+	header('Location: '.$_SERVER['HTTP_REFERER']);
 	exit;
 }
 //error_reporting(AT_ERROR_REPORTING);
@@ -949,7 +949,7 @@ if ($ims_manifest_xml === false) {
 	} else if ($oauth_import) {
 		echo "error=".urlencode('IMS manifest file does not appear to be valid');
 	} else {
-		header('Location: ../create_course.php');
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 	exit;
 }
@@ -1011,7 +1011,7 @@ if ($msg->containsErrors()) {
 	} else if ($oauth_import) {
 		echo "error=".urlencode('Error at parsing IMS manifest file');
 	} else {
-		header('Location: ../create_course.php');
+		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
 	exit;
 }

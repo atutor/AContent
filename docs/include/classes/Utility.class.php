@@ -193,11 +193,11 @@ class Utility {
 				include(TR_INCLUDE_PATH.'footer.inc.php');
 				exit;
 			}
-			else
+			else {
 				return false;
+			}
 		}
-		
-		if (!$printMsg) return true;
+		return true;
 	}
 	
 	/**

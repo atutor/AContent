@@ -224,27 +224,29 @@ function print_organizations($parent_id,
 				$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
 				$test_ids = array();		//reset test ids
 				//$my_files = array();		//reset myfiles.
-				while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
-					//export
-					$test_ids[] = $content_test_row['test_id'];
-					//the 'added_files' is for adding into the manifest file in this zip
-					$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
-					foreach($added_files as $xml_file=>$chunk){
-						foreach ($chunk as $xml_filename){
-							$added_files_xml .= str_replace('{FILE}', 'QTI/'.$xml_filename, $ims_template_xml['xml']);
+				if (is_array($content_test_rs)) {
+					foreach ($content_test_rs as $content_test_row){
+						//export
+						$test_ids[] = $content_test_row['test_id'];
+						//the 'added_files' is for adding into the manifest file in this zip
+						$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
+						foreach($added_files as $xml_file=>$chunk){
+							foreach ($chunk as $xml_filename){
+								$added_files_xml .= str_replace('{FILE}', 'QTI/'.$xml_filename, $ims_template_xml['xml']);
+							}
 						}
-					}
-					//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
-					$resources .= str_replace(	array('{TEST_ID}', '{PATH}', '{FILES}'),
-												array($content_test_row['test_id'], 'tests_'.$content_test_row['test_id'].'.xml', $added_files_xml),
-												$ims_template_xml['resource_test']); 
-/*	Taken out since we are gonna use dependency instead
-					$test_xml_items .= str_replace(	array('{TEST_ID}'),
-												array($content_test_row['test_id']),
-												$ims_template_xml['test']); 
-*/
-					foreach($test_files as $filename=>$realfilepath){
-						$zipfile->add_file(@file_get_contents($realfilepath), 'QTI/'.$filename, filemtime($realfilepath));
+						//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
+						$resources .= str_replace(	array('{TEST_ID}', '{PATH}', '{FILES}'),
+													array($content_test_row['test_id'], 'tests_'.$content_test_row['test_id'].'.xml', $added_files_xml),
+													$ims_template_xml['resource_test']); 
+	/*	Taken out since we are gonna use dependency instead
+						$test_xml_items .= str_replace(	array('{TEST_ID}'),
+													array($content_test_row['test_id']),
+													$ims_template_xml['test']); 
+	*/
+						foreach($test_files as $filename=>$realfilepath){
+							$zipfile->add_file(@file_get_contents($realfilepath), 'QTI/'.$filename, filemtime($realfilepath));
+						}
 					}
 				}
 			}

@@ -78,7 +78,7 @@ else {
 </div>
 
 <?php 
-print_test_table($results, $_POST['tid']);
+if (is_array($results)) print_test_table($results, $_POST['tid']);
 
 function print_test_table($results, $post_tids, $id_prefix='') {?>
 	<div>
@@ -91,6 +91,7 @@ function print_test_table($results, $post_tids, $id_prefix='') {?>
 	</tr>
 	</thead>
 	<tbody>
+	<?php if (is_array($results)) { ?>
 	<?php foreach ($results as $row) { ?>
 	<?php
 		$checkMe = '';
@@ -102,6 +103,7 @@ function print_test_table($results, $post_tids, $id_prefix='') {?>
 		<td><input type="checkbox" name="<?php echo $id_prefix; ?>tid[]" value="<?php echo $row['test_id']; ?>" id="<?php echo $id_prefix; ?>t<?php echo $row['test_id']; ?>" <?php echo $checkMe; ?> onmouseup="this.checked=!this.checked" /></td>
 		<td><?php echo $row['title']; ?></td>
 	</tr>
+	<?php } ?>
 	<?php } ?>
 	</tbody>
 	</table>
