@@ -1297,7 +1297,7 @@ initContentMenu();
 		
 		$row = $this->contentDAO->get($content_id);
 		
-		if ($row['allow_test_export'] == 1 || Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE)){
+		if ($row['allow_test_export'] == 1 || Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE, false)){
 			return true;
 		}
 		return false;

@@ -98,6 +98,10 @@ $_pages['documentation/web_service_api.php']['parent'] = TR_NAV_PUBLIC;
 $_pages['documentation/oauth_server_api.php']['title_var'] = 'oauth_server_api';
 $_pages['documentation/oauth_server_api.php']['parent'] = TR_NAV_PUBLIC;
 
+$_pages['tests/preview.php']['title_var'] = 'preview_questions';
+$_pages['tests/preview.php']['parent']    = TR_NAV_PUBLIC;
+$_pages['tests/preview.php']['guide']     = 'TR_HELP_PREVIEW';
+
 // home pages
 if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PRIV_HOME]))
 {
@@ -320,10 +324,6 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	$_pages['tests/edit_test.php']['title_var'] = 'edit_test';
 	$_pages['tests/edit_test.php']['parent']    = 'tests/index.php';
 	$_pages['tests/edit_test.php']['guide']     = 'TR_HELP_CREATE_TEST';
-	
-	$_pages['tests/preview.php']['title_var'] = 'preview_questions';
-	$_pages['tests/preview.php']['parent']    = 'tests/index.php';
-	$_pages['tests/preview.php']['guide']     = 'TR_HELP_PREVIEW';
 	
 	$_pages['tests/preview_question.php']['title_var'] = 'preview';
 	$_pages['tests/preview_question.php']['parent']    = 'tests/question_db.php';

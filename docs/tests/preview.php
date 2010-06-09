@@ -18,7 +18,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsAssocDAO.class.php');
 
 global $_course_id;
-Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
+//Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 $testsDAO = new TestsDAO();
 $testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
 
@@ -68,11 +68,13 @@ $count = 1;
 		$o = TestQuestions::getQuestion($row['type']);
 		$o->display($row);
 	}
-	?>
+	
+	// "back" button only appears when the request is from index page of "tests" module
+	if (stripos($_SERVER['HTTP_REFERER'], 'tests/index.php')) { ?>
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('back'); ?>" name="back" />
 	</div>
-
+	<?php }?>
 	</div>
 </form>
 <script type="text/javascript">
