@@ -31,6 +31,7 @@ if ($this->course_id > 0) { ?>
 	
 	<div id="footer">
 <?php 
+
 if($languageManager->getNumEnabledLanguages() > 1) {
 ?>
       <div align="center" id="lang" style="clear: left"><br />

@@ -55,7 +55,6 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 $lang_charset = "UTF-8";
-
 //Timer
 $mtime = microtime(); 
 $mtime = explode(' ', $mtime); 
@@ -187,15 +186,40 @@ foreach ($this->top_level_pages as $page) {
   <div id="ajax-msg">
   </div>
 
-  <?php if (is_array($this->tool_shortcuts)): ?>
+  <?php if (is_array($this->tool_shortcuts) ||isset($this->course_id) && $this->course_id > 0){ ?>
+
   <div class="shortcuts">
     <ul>
-    <?php foreach ($this->tool_shortcuts as $link): ?>
-      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
-    <?php endforeach; ?>
-    </ul>
-  </div>
-  <?php endif; ?>
+  <?php if (is_array($this->tool_shortcuts)){ ?>
+      <?php foreach ($this->tool_shortcuts as $link){ ?>
+	<li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+      <?php } ?>
+    <?php } ?>
+  <?php } ?>
+
+  <?php if (isset($this->course_id) && $this->course_id > 0) {?>
+    <!--  <div id="course-tools">-->
+      <?php if ($this->isAuthor) { // only for authors ?>
+      <li><a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0"  class="shortcut_icon"/>
+      </a></li>
+      <li><a href="<?php echo $this->base_path; ?>home/editor/arrange_content.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>" border="0"  class="shortcut_icon"/>
+      </a> </li>
+      <li><a href="<?php echo $this->base_path; ?>home/editor/import_export_content.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/import_export.png"; ?>" title="<?php echo _AT('content_packaging'); ?>" alt="<?php echo _AT('content_packaging'); ?>" border="0"  class="shortcut_icon"/>
+      </a> </li>
+      <li><a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
+      <li></a></li>
+      <?php }?>
+      <a href="<?php echo $this->base_path; ?>home/index.php">
+      <li>  <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0"  class="shortcut_icon"/>
+      </a></li>
+
+  </ul>
+ </div>
+    <?php }?>
 
 
     <!-- guide -->
@@ -204,30 +228,6 @@ foreach ($this->top_level_pages as $page) {
       <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
     </div>
     <?php }?>
-
-	<?php if (isset($this->course_id) && $this->course_id > 0) {?>
-  <div class="shortcuts">
-    <!--  <div id="course-tools">-->
-      <?php if ($this->isAuthor) { // only for authors ?>
-      <a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0" />
-      </a> &nbsp;
-      <a href="<?php echo $this->base_path; ?>home/editor/arrange_content.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>" border="0" />
-      </a> &nbsp;
-      <a href="<?php echo $this->base_path; ?>home/editor/import_export_content.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/import_export.png"; ?>" title="<?php echo _AT('content_packaging'); ?>" alt="<?php echo _AT('content_packaging'); ?>" border="0" />
-      </a> &nbsp;
-      <a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0" />
-      </a> &nbsp;
-      <?php }?>
-      <a href="<?php echo $this->base_path; ?>home/index.php">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0" />
-      </a>
- </div>
-    <?php }?>
-
 <?php  
 //if ($this->course_id > 0) {
 ?>
@@ -331,6 +331,13 @@ foreach ($this->top_level_pages as $page) {
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
 	  <?php if (isset($this->back_to_page)): ?>
+
+<?php
+//global $_base_href;
+//debug($_base_href);
+
+?>
+
 	    <div id="subnavbacktopage">	  
 	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;">'?></a> 
 	    </div>
