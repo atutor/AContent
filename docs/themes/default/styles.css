@@ -182,15 +182,13 @@ input[type=button] {
 input[type=submit] {
   cursor:pointer;
   border:outset 1px #ccc;
-  background:#999;
-  color:#666;
+  background:#eee;
+  color:#333;
   font-weight:bold;
-  padding: 1px 2px;
-  background:url(images/formbg.gif) repeat-x left top;
-	-moz-box-shadow:.1em .1em .1em #999999;
-	 box-shadow: .1em .1em  .1em #999999;
-    border-radius: .3em .3em .3em .3em;
-    -moz-border-radius: .3em .3em .3em .3em;
+  -moz-box-shadow:.1em .1em .1em #999999;
+  box-shadow: .1em .1em  .1em #999999;
+  border-radius: .3em .3em .3em .3em;
+  -moz-border-radius: .3em .3em .3em .3em;
 }
 
 input[type=text] {
@@ -1187,19 +1185,22 @@ white-space:nowrap;
 font-size:.8em;
 width:23em;
 float:right;
-margin-right:2em;
+margin-right:3em;
 
 }
 #search_text_at_header{
 	border:1px solid #cccccc;
 	background-color:#ffffff;
 	margin-right: .5em;
-	border-radius:.5em;
+	border-radius:.8em;
 	-moz-border-radius:.8em .8em .8em .8em;
-	-moz-box-shadow:.1em .1em .1em #999999;
-	box-shadow: .1em .1em .1em #999999;
 }
-
+.search_top input[type=submit]{
+	-moz-border-radius:.8em;
+	border-radius:.8em;
+	font-size:8pt;
+	border:1px solid #cccccc;
+}
 
 li.course {
   font-family:arial,sans-serif;
@@ -1461,3 +1462,4 @@ div#alternatives_shortcuts {
 	 padding-left: .2em;
 	 padding-right: .2em;
 }
+
