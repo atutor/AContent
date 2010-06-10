@@ -21,9 +21,14 @@ include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 $dao = new DAO();
 $resourceTypesDAO = new ResourceTypesDAO();
 
-global $_content_id;
+global $_content_id, $content_row, $msg;
 $cid = $_content_id;
 
+if ($cid == 0) {
+	$msg->printErrors('SAVE_BEFORE_PROCEED');
+	require_once(TR_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
 /**
  * This function returns the preview link of the given file
  * @param  $file     the file location in "file manager"
@@ -90,7 +95,6 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 }
 
 // Main program
-global $db, $content_row;
 require(TR_INCLUDE_PATH.'lib/resources_parser.inc.php');
 
 if (count($resources)==0)

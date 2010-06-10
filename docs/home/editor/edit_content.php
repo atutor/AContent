@@ -208,7 +208,6 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['weblink_text'] = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
 			$_POST['test_message'] = $content_row['test_message'];
-			$_POST['allow_test_export'] = $content_row['allow_test_export'];
 
 //			$_POST['day']   = substr($content_row['release_date'], 8, 2);
 //			$_POST['month'] = substr($content_row['release_date'], 5, 2);
@@ -383,22 +382,6 @@ $pid = intval($_REQUEST['pid']);
 //		}
 	} 
 	
-	if (!isset($_POST['allow_test_export']) && $current_tab != 3) {
-		//export flag handling.
-//		$sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
-//		$result2 = mysql_query($sql, $db);
-//		if ($result2){
-//			$c_row = mysql_fetch_assoc($result2);
-//		}
-		if (intval($content_row['allow_test_export'])==1){
-			echo '<input type="hidden" name="allow_test_export" value="1" />';
-		} else {
-			echo '<input type="hidden" name="allow_test_export" value="0" />';
-		}
-	} else {
-		echo '<input type="hidden" name="allow_test_export" value="'.intval($_POST['allow_test_export']).'" />';
-	}
-
 	if ($do_check) {
 		$changes_made = check_for_changes($content_row, $row_alternatives);
 	}

@@ -462,8 +462,9 @@ INSERT INTO `TR_language_text` VALUES ('en', '_template', 'upload_content_packag
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'others_course', 'Others\' course', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'most_recent_courses', 'Most Recent Courses', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'all_categories', 'All Categories', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'ims_files_missing', 'In this package, the file, %1$s, is missing or misplaced.', now(), '');
+
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'metadata', 'Meta-data', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
@@ -497,8 +498,8 @@ INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_NOT_SELECTED
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_BAD_FILE_TYPE', 'Unsupported file type. Plain Text or HTML files only.', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_INPUT', 'Invalid URL: %s', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_FEEDBACK_CLOSED', 'Successfully closed', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_ERROR_SAVE_BEFORE_PROCEED', 'Please save the content before proceeding to define "Adapted Content".', now(), '');
 
-INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_msgs','TR_', '', now(), '');

@@ -226,7 +226,7 @@ class ContentManager
 
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, 
 	                    $related, $formatting, $head = '', $use_customized_head = 0, 
-	                    $test_message = '', $allow_test_export = 1, $content_type = CONTENT_TYPE_CONTENT) {
+	                    $test_message = '', $content_type = CONTENT_TYPE_CONTENT) {
 		global $_current_user, $_course_id;
 		
 	    if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
@@ -243,13 +243,12 @@ class ContentManager
 		/* main topics all have minor_num = 0 */
 		$cid = $this->contentDAO->Create($_course_id, $content_parent_id, $ordering, 0, $formatting,
 		                          $keywords, '', $title, $text, $head, $use_customized_head,
-		                          $test_message, $allow_test_export, $content_type);
+		                          $test_message, $content_type);
 		return $cid;
 	}
 	
 	function editContent($content_id, $title, $text, $keywords, $formatting, 
-	                     $head, $use_customized_head, $test_message, 
-	                     $allow_test_export) {
+	                     $head, $use_customized_head, $test_message) {
 	    global $_current_user;
 	    
 		if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
@@ -257,7 +256,7 @@ class ContentManager
 		}
 
 		$this->contentDAO->Update($content_id, $title, $text, $keywords, $formatting, $head, $use_customized_head,
-		                          $test_message, $allow_test_export);
+		                          $test_message);
 	}
 
 	function moveContent($content_id, $new_content_parent_id, $new_content_ordering) {
@@ -1285,22 +1284,6 @@ initContentMenu();
 				$counter++;
 			}
 		}
-	}
-
-	/** 
-	 * Return true if this content page allows export, else false.
-	 * @param	int	content id
-	 * @return	true if 'allow_test_export'==1 || is instructor
-	 */
-	function allowTestExport($content_id){
-		include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-		
-		$row = $this->contentDAO->get($content_id);
-		
-		if ($row['allow_test_export'] == 1 || Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE, false)){
-			return true;
-		}
-		return false;
 	}
 }
 

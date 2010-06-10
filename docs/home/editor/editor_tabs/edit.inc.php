@@ -11,6 +11,7 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
+global $_course_id;
 ?>
     <script type="text/javascript" language="javascript">
     //<!--
@@ -55,6 +56,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
     <script type="text/javascript" language="javascript">
     //<!--
         trans.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path']; ?>";
+        trans.editor.course_id = "<?php if(isset($cid)) echo $_course_id; ?>";
         trans.editor.content_id = "<?php if(isset($cid)) echo $cid; ?>";
         trans.editor.head_enabled_title = "<?php echo _AT('customized_head_enabled_title'); ?>";
         trans.editor.head_disabled_title = "<?php echo _AT('customized_head_disabled_title'); ?>";

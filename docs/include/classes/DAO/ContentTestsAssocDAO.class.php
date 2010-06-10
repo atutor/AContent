@@ -35,7 +35,16 @@ class ContentTestsAssocDAO extends DAO {
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
 				'(content_id, test_id) ' .
 				'VALUES (' . $content_id . ", $test_id)";
-	    return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($content_id, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**
@@ -49,7 +58,17 @@ class ContentTestsAssocDAO extends DAO {
 	{
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
 	             WHERE content_id = ".$contentID."";
-	    return $this->execute($sql);
+		
+	    if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($contentID, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**
@@ -63,7 +82,22 @@ class ContentTestsAssocDAO extends DAO {
 	{
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
 	             WHERE test_id = ".$testID."";
-	    return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$testsDAO = new TestsDAO();
+			$test_rows = $testsDAO->get($testID);
+			
+			if ($test_rows['course_id'] > 0) {
+				$coursesDAO = new CoursesDAO();
+				$coursesDAO->updateModifiedDate($test_rows['course_id']);
+			}
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**

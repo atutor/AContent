@@ -94,7 +94,7 @@ trans.editor = trans.editor || {};
 
     //click function to launch file manager window
     var launchFileManager = function () {
-        window.open(trans.base_href + 'file_manager/index.php?framed=1&popup=1&cp=' + trans.editor.content_path + '&_cid=' + trans.editor.content_id, 'newWin1', 'menubar=0,scrollbars=1,resizable=1,width=640,height=490');
+        window.open(trans.base_href + 'file_manager/index.php?framed=1&popup=1&cp=' + trans.editor.content_path + '&_course_id=' + trans.editor.course_id, 'newWin1', 'menubar=0,scrollbars=1,resizable=1,width=640,height=490');
         return false;
     };
 

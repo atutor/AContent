@@ -26,7 +26,7 @@ class ContentDAO extends DAO {
 	 */
 	public function Create($course_id, $content_parent_id, $ordering, $revision, $formatting, $keywords, 
 	                       $content_path, $title, $text, $head, $use_customized_head, $test_message, 
-	                       $allow_test_export, $content_type)
+	                       $content_type)
 	{
 		global $addslashes, $msg;
 
@@ -47,7 +47,6 @@ class ContentDAO extends DAO {
 			               head,
 			               use_customized_head,
 			               test_message,
-			               allow_test_export,
 			               content_type
 			               )
 			       VALUES (".$course_id.",
@@ -63,7 +62,6 @@ class ContentDAO extends DAO {
 			               '".$addslashes($head)."',
 			               ".$use_customized_head.",
 			               '".$addslashes($test_message)."',
-			               ".$allow_test_export.",
 			               ".$content_type.")";
 
 			if (!$this->execute($sql))
@@ -73,7 +71,14 @@ class ContentDAO extends DAO {
 			}
 			else
 			{
-				return mysql_insert_id();
+				$cid = mysql_insert_id();
+				
+				// update the courses.modified_date to the current timestamp
+				include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+				$coursesDAO = new CoursesDAO();
+				$coursesDAO->updateModifiedDate($cid, "content_id");
+				
+				return $cid;
 			}
 		}
 		else
@@ -97,8 +102,7 @@ class ContentDAO extends DAO {
 	 * @author  Cindy Qi Li
 	 */
 	public function Update($content_id, $title, $text, $keywords, $formatting, 
-	                     $head, $use_customized_head, $test_message, 
-	                     $allow_test_export)
+	                     $head, $use_customized_head, $test_message)
 	{
 		global $addslashes, $msg;
 
@@ -112,11 +116,19 @@ class ContentDAO extends DAO {
 			               formatting = '".$formatting."',
 			               head = '".$addslashes($head)."',
 			               use_customized_head = ".$use_customized_head.",
-			               test_message = '".$addslashes($test_message)."',
-			               allow_test_export = ".$allow_test_export."
+			               test_message = '".$addslashes($test_message)."'
 			         WHERE content_id = ".$content_id;
 
-			return $this->execute($sql);
+			if ($this->execute($sql)) {
+				// update the courses.modified_date to the current timestamp
+				include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+				$coursesDAO = new CoursesDAO();
+				$coursesDAO->updateModifiedDate($content_id, "content_id");
+				return true;
+			} else {
+				$msg->addError('DB_NOT_UPDATED');
+				return false;
+			}
 		}
 		else {
 			return false;
@@ -141,7 +153,16 @@ class ContentDAO extends DAO {
 		           SET ".$fieldName."='".$addslashes($fieldValue)."'
 		         WHERE content_id = ".$contentID;
 		
-		return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($contentID, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**
@@ -171,7 +192,16 @@ class ContentDAO extends DAO {
 		$contentForumsAssocDAO->DeleteByContentID($contentID);
 		
 		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ".$contentID;
-		return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($contentID, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 
 	/**

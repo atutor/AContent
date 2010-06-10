@@ -87,5 +87,18 @@ class ForumsCoursesDAO extends DAO {
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id = '".$course_id."'";
 	    return $this->execute($sql);
 	}
+
+	/**
+	* Return rows by forum ID
+	* @access  public
+	* @param   name
+	* @return  table rows
+	* @author  Cindy Qi Li
+	*/
+	function getByForum($forum_id)
+	{
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = '".$forum_id."'";
+	    return $this->execute($sql);
+	}
 }
 ?>

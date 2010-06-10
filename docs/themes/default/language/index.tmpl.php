@@ -19,10 +19,8 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form1">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("language"); ?></legend>
-<h2 align="center"><?php echo $this->title ;?></h2>
 
 <table class="data" rules="rows">
-
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
@@ -55,7 +53,13 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 		<td><span class="inlineEdits" id="<?php echo "english_name:".$row["language_code"].":".$row["charset"]; ?>"><?php echo $row['english_name']; ?></span></td>
 		<td><?php echo $row['language_code']; ?></td>
 		<td><?php echo $row['charset']; ?></td>
-		<td><?php if ($row['status']) echo _AT('enabled'); else echo _AT('disabled'); ?></td>
+		<td>
+		<?php 
+		if ($row['status'] == TR_STATUS_ENABLED) echo _AT('enabled'); 
+		else if ($row['status'] == TR_STATUS_DISABLED) echo _AT('disabled'); 
+		else echo _AT('unknown'); 
+		?>
+		</td>
 	</tr>
 <?php }?>
 </tbody>

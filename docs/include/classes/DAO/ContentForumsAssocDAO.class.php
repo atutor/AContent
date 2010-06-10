@@ -35,7 +35,16 @@ class ContentForumsAssocDAO extends DAO {
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_forums_assoc' . 
 				'(content_id, forum_id) ' .
 				'VALUES (' . $content_id . ", $forum_id)";
-	    return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($content_id, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**
@@ -49,7 +58,16 @@ class ContentForumsAssocDAO extends DAO {
 	{
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 	             WHERE content_id = ".$contentID."";
-	    return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($contentID, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**
@@ -63,7 +81,25 @@ class ContentForumsAssocDAO extends DAO {
 	{
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 	             WHERE forum_id = ".$forumID."";
-	    return $this->execute($sql);
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			
+			$forumsCoursesDAO = new ForumsCoursesDAO();
+			$course_rows = $forumsCoursesDAO->getByForum($forumID);
+			
+			if (is_array($course_rows)) {
+				foreach ($course_rows as $row) {
+					$coursesDAO = new CoursesDAO();
+					$coursesDAO->updateModifiedDate($row['course_id']);
+				}
+			}
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
 	}
 	
 	/**

@@ -123,7 +123,8 @@ class CoursesDAO extends DAO {
 			return false;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
-		           SET ".$fieldName."='".$addslashes($fieldValue)."'
+		           SET ".$fieldName."='".$addslashes($fieldValue).",
+		               modified_date = now()
 		         WHERE course_id = ".$courseID;
 		
 		return $this->execute($sql);
@@ -192,6 +193,27 @@ class CoursesDAO extends DAO {
 	}
 
 	/**
+	 * Update courses.modified_date to the current timestamp
+	 * @access  public
+	 * @param   id: course_id or content_id
+	 *          id_type: "course_id" or "content_id", by default is "course_id"
+	 * @return  true if successful, otherwise, return false
+	 * @author  Cindy Qi Li
+	 */
+	public function updateModifiedDate($id, $id_type = "course_id")
+	{
+		if ($id_type != "course_id" && $id_type != "content_id") return false;
+		
+		if ($id_type == "course_id") {
+			$sql = "UPDATE ".TABLE_PREFIX."courses SET modified_date=now() WHERE course_id=".$id;
+		} else if ($id_type == "content_id") {
+			$sql = "UPDATE ".TABLE_PREFIX."courses SET modified_date=now() 
+			         WHERE course_id=(SELECT course_id FROM ".TABLE_PREFIX."content WHERE content_id=".$id.")";
+		}
+		return $this->execute($sql);
+	}
+
+	/**
 	 * Return course information by given course id
 	 * @access  public
 	 * @param   course id
@@ -219,7 +241,7 @@ class CoursesDAO extends DAO {
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
 		         WHERE access='public'
-		         ORDER BY modified_date, created_date";
+		         ORDER BY modified_date DESC, created_date DESC";
 		return $this->execute($sql);
 	}
 

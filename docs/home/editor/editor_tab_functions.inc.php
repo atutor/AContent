@@ -29,7 +29,7 @@ function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
-	$tabs[1] = array('properties',    		'properties.inc.php',    'p');
+	$tabs[1] = array('metadata',    		'properties.inc.php',    'p');
 	$tabs[2] = array('alternative_content', 'alternatives.inc.php',  'l');	
 	$tabs[3] = array('tests',               'tests.inc.php',         't');	
 	
@@ -100,7 +100,6 @@ function save_changes($redir, $current_tab) {
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= trim($_POST['keywords']);
 	$_POST['test_message'] = trim($_POST['test_message']);
-	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
 	//if weblink is selected, use it
 	if ($_POST['formatting']==CONTENT_TYPE_WEBLINK) {
@@ -137,11 +136,10 @@ function save_changes($redir, $current_tab) {
 			$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
 			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $_POST['head'], $_POST['use_customized_head'], 
-			                                    $_POST['test_message'], $_POST['allow_test_export']);
+			                                    $_POST['test_message']);
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
-			
 			$cid = $contentManager->addContent($_course_id,
 												  $_POST['pid'],
 												  $_POST['ordering'],
@@ -153,11 +151,11 @@ function save_changes($redir, $current_tab) {
 												  $_POST['head'],
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
-												  $_POST['allow_test_export'],
 												  $content_type_pref);
 			$_POST['_cid']    = $cid;
 			$_REQUEST['_cid'] = $cid;
 		}
+		if ($cid == 0) return;
 //	}
 
 	/* insert glossary terms */
@@ -448,9 +446,6 @@ function check_for_changes($row, $row_alternatives) {
 	
 	/* test & survey */	
 	if ($row && isset($_POST['test_message']) && $_POST['test_message'] != $row['test_message']){
-		$changes[3] = true;
-	}
-	if ($row && isset($_POST['allow_test_export']) && $_POST['allow_test_export'] != $row['allow_test_export']){
 		$changes[3] = true;
 	}
 	

@@ -19,8 +19,8 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
-$course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
-$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
+$_course_id = $course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
+$_content_id = $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
 $c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 
 if ($course_id == 0 && $cid == 0)
@@ -31,9 +31,7 @@ if ($course_id == 0 && $cid == 0)
 }
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
-	/* for TILE */
-
-	/* redirect to TILE import servlet */
+	/* export from transformable to atutor */
 
 	require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 	if (!authenticate(TR_PRIV_ADMIN, TR_PRIV_RETURN)) {
@@ -281,6 +279,7 @@ if ($glossary_xml){
 	$glossary_manifest_xml = '';
 }
 */
+
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 
