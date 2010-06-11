@@ -372,7 +372,7 @@ function rehash($items){
 		//check if this is a test import
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){			
-				$msg->addError('IMPORT_FAILED');debug('1');exit;
+				$msg->addError('IMPORT_FAILED');
 			} 
 			$content_type = trim($my_data);
 		}
@@ -597,7 +597,7 @@ error_reporting(0);
 $archive = new PclZip($_FILES['file']['tmp_name']);
 if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-	$msg->addError('IMPORT_FAILED');debug('2');exit;
+	$msg->addError('IMPORT_FAILED');
 	echo 'Error : '.$archive->errorInfo(true);
 	clr_dir($import_path);
 	header('Location: ../index.php');
@@ -1109,7 +1109,7 @@ if (!is_dir($course_dir)) {
 
 if (@rename($import_path.$package_base_path, $course_dir.$package_base_name) === false) {
 	if (!$msg->containsErrors()) {
-		$msg->addError('IMPORT_FAILED');debug('3');exit;
+		$msg->addError('IMPORT_FAILED');
 	}
 }
 //check if there are still resources missing

@@ -64,7 +64,6 @@ if (FileUtility::course_realpath($current_path . $pathext . $file) == FALSE) {
 	exit;
 } else if (is_dir($current_path.$pathext.$file)) {
 	// error: cannot edit folder
-	debug($current_path.$pathext.$file);exit;
 	$msg->addError('BAD_FILE_TYPE');
 	header('Location: index.php?pathext='.$pathext.SEP.'framed='.$framed.SEP.'popup='.$popup.SEP.'_course_id='.$_course_id);
 	exit;

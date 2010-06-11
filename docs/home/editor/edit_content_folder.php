@@ -195,5 +195,4 @@ require(TR_INCLUDE_PATH.'footer.inc.php');
 
 //save last visit page.
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
-debug($_SESSION['course_id']);
 ?>

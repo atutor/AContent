@@ -171,7 +171,6 @@ class Menu {
 //				debug($_base_path.$this->current_page);debug($page);
 				if ($_base_path.$this->current_page != $page['url'])
 				{
-//					debug('here');exit;
 					header('Location: '.$page['url']);
 						
 					// reset current_page after re-direction
