@@ -19,7 +19,11 @@ global $_course_id;
 
 $coursesDAO = new CoursesDAO();
 
-Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
+if ($_course_id > 0) {
+	Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
+} else {
+	Utility::authenticate(TR_PRIV_ISAUTHOR);
+}
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -27,23 +31,37 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 else if($_POST['submit']){
-	$coursesDAO->UpdateField($_course_id, 'title', $_POST['title']);
-	$coursesDAO->UpdateField($_course_id, 'category_id', $_POST['category_id']);
-	$coursesDAO->UpdateField($_course_id, 'primary_language', $_POST['pri_lang']);
-	$coursesDAO->UpdateField($_course_id, 'description', $_POST['description']);
-	$coursesDAO->UpdateField($_course_id, 'copyright', $_POST['copyright']);
-	
-	if (isset($_POST['hide_course']))
-		$access = 'private';
-	else
-		$access = 'public';
-	
-	$coursesDAO->UpdateField($_course_id, 'access', $access);
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		if (isset($_POST['hide_course']))
+			$access = 'private';
+		else
+			$access = 'public';
+		
+	if ($_course_id > 0) { // update an existing course
+		$coursesDAO->UpdateField($_course_id, 'title', $_POST['title']);
+		$coursesDAO->UpdateField($_course_id, 'category_id', $_POST['category_id']);
+		$coursesDAO->UpdateField($_course_id, 'primary_language', $_POST['pri_lang']);
+		$coursesDAO->UpdateField($_course_id, 'description', $_POST['description']);
+		$coursesDAO->UpdateField($_course_id, 'copyright', $_POST['copyright']);
+		
+		$coursesDAO->UpdateField($_course_id, 'access', $access);
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	}
+	else { // create a new course
+		if ($course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $_POST['title'], $_POST['description'], 
+		                    null, null, null, $_POST['copyright'], $_POST['pri_lang'], null, null))
+		{
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+			header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$course_id);
+			exit;
+		}
+	}
 }
 
-$savant->assign('course_id', $_course_id);
-$savant->assign('course_row', $coursesDAO->get($_course_id));
+// display
+if ($_course_id > 0) {
+	$savant->assign('course_id', $_course_id);
+	$savant->assign('course_row', $coursesDAO->get($_course_id));
+}
 
 global $onload;
 $onload = "document.form.title.focus();";

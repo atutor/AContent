@@ -23,14 +23,12 @@ if ($_course_id <= 0)
 	exit;
 }
 
-if (isset($_sequence_links['resume']['url']))
-	$url = $_sequence_links['resume']['url'];
-else if (isset($_sequence_links['first']['url']))
-	$url = $_sequence_links['first']['url'];
-else
-{
-	$url = TR_BASE_HREF.'home/course/course_start.php?_course_id='.$_course_id;
-}
+$coursesDAO = new CoursesDAO();
 
-header('Location: '.$url);
+require(TR_INCLUDE_PATH.'header.inc.php'); 
+
+$savant->assign('course_id', $_course_id);
+$savant->display('home/course/course_start.tmpl.php');
+
+require(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>

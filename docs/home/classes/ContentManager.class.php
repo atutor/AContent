@@ -117,7 +117,9 @@ class ContentManager
 		}
 
 		// generate array of all the content ids in the same order that they appear in "content navigation"
-		$this->_menu_in_order[] = $next_content_id = $this->getNextContentID(0);
+		if ($this->getNextContentID(0) > 0) {
+			$this->_menu_in_order[] = $next_content_id = $this->getNextContentID(0);
+		}
 		while ($next_content_id > 0)
 		{
 			$next_content_id = $this->getNextContentID($next_content_id);

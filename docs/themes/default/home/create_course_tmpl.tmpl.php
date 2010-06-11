@@ -23,7 +23,7 @@ if (isset($_current_user) && $_current_user->isAuthor())
 		<table class="form_data">
 		<tr><td>
 		<?php echo _AT('create_course_1'); ?>
-		<a href="course_wizard.php"><?php echo htmlentities(_AT('course_wizard')); ?></a><br /><br />
+		<a href="home/course/course_property.php"><?php echo htmlentities(_AT('course_wizard')); ?></a><br /><br />
 		</td></tr>
 
 		<tr><td>

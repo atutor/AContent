@@ -1,4 +1,4 @@
-<?php
+<?php 
 /************************************************************************/
 /* Transformable                                                        */
 /************************************************************************/
@@ -10,27 +10,19 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('TR_INCLUDE_PATH', '../../include/');
-require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
-
-global $msg, $contentManager, $_course_id;
-
-if ($_course_id <= 0)
-{
-	$msg->addError('MISSING_COURSE_ID');
-	header('Location: '.TR_BASE_HREF.'home/index.php');
-	exit;
-}
-
-if (isset($_sequence_links['resume']['url']))
-	$url = $_sequence_links['resume']['url'];
-else if (isset($_sequence_links['first']['url']))
-	$url = $_sequence_links['first']['url'];
-else
-{
-	$url = TR_BASE_HREF.'home/course/course_start.php?_course_id='.$_course_id;
-}
-
-header('Location: '.$url);
 ?>
+	<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_content'); ?></legend>
+		<table class="form_data">
+		<tr><td>
+		<?php echo _AT('create_content_1'); ?>
+		<a href="home/course/content_wizard.php"><?php echo _AT('content_wizard'); ?></a><br /><br />
+		</td></tr>
+
+		<tr><td>
+		<?php echo _AT('create_content_2', TR_BASE_HREF.'home/editor/edit_content.php?_course_id='.$this->course_id, TR_BASE_HREF.'home/editor/edit_content_folder.php?_course_id='.$this->course_id); ?>
+		</td></tr>
+		</table>
+	</fieldset>
+	</div>
+

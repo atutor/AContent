@@ -126,6 +126,10 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 			$_pages['home/create_course.php']['guide']    = 'TR_HELP_CREATE_COURSE';
 		}
 
+		$_pages['home/course/course_start.php']['title_var'] = 'course_start';
+		$_pages['home/course/course_start.php']['parent']    = 'home/index.php';
+		$_pages['home/course/course_start.php']['guide']    = 'TR_HELP_CONTENT_WIZARD';
+		
 		$_pages['home/course/del_course.php']['title_var'] = 'del_course';
 		$_pages['home/course/del_course.php']['parent']    = 'home/index.php';
 		

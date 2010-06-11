@@ -458,18 +458,19 @@ INSERT INTO `TR_language_text` VALUES ('en', '_template', 'import_content_packag
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'test_import_package', 'Import available tests.', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'a4a_import_package', 'Import available AccessForAll adapted content.', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'upload_content_package', 'Upload a Content Package or Common Cartridge', now(), '');
-
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'others_course', 'Others\' course', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'most_recent_courses', 'Most Recent Courses', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'all_categories', 'All Categories', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'ims_files_missing', 'In this package, the file, %1$s, is missing or misplaced.', now(), '');
-
 INSERT INTO `TR_language_text` VALUES ('en', '_template', 'metadata', 'Meta-data', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
-INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'download_content_package', 'Download Content Package', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'download_common_cartridge', 'Download Common Cartridge', now(), '');
+
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'course_start', 'How to create course content', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template','create_content_1','<span style="font-weight:bold">Method 1</span>: Use',now(),'');
+INSERT INTO `TR_language_text` VALUES ('en', '_template','create_content_2','<span style="font-weight:bold">Method 2</span>: Manually <a href="%1s">create a content</a> or <a href="%2s">create a content folder</a>. These tools are also available as "Add top page" or "Add top folder" links in "Content Navigation" side menu.',now(),'');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'create_content', 'Create Content', now(), '');
+INSERT INTO `TR_language_text` VALUES ('en', '_template', 'content_wizard', '"Create Content" Wizard', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');
 INSERT INTO `TR_language_text` VALUES ('en', '_template', '', '', now(), '');

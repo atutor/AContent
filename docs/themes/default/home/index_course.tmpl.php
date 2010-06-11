@@ -110,9 +110,14 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/add.gif" alt="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" title="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" border="0" />
           </a>
 <?php }?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/imscc/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export.png" alt="<?php echo _AT('export'); ?>" title="<?php echo _AT('export'); ?>" border="0" />
+          <a href="<?php echo TR_BASE_HREF; ?>home/ims/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
+            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export.png" alt="<?php echo _AT('download_content_package'); ?>" title="<?php echo _AT('download_content_package'); ?>" border="0" />
           </a>
+<?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
+          <a href="<?php echo TR_BASE_HREF; ?>home/imscc/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
+            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export_cc.png" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT('download_common_cartridge'); ?>" border="0" />
+          </a>
+<?php }?>
         </h3>
         <div><?php echo $description; ?></div>
       </li>				

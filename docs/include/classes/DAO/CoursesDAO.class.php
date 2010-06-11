@@ -80,7 +80,12 @@ class CoursesDAO extends DAO {
 			}
 			else
 			{
-				return mysql_insert_id();
+				$course_id = mysql_insert_id();
+				// create the user and course relationship
+				$sql = "INSERT INTO ".TABLE_PREFIX."user_courses (user_id, course_id, role, last_cid)
+				        VALUES (".$user_id.", ".$course_id.", ".TR_USERROLE_AUTHOR.", 0)";
+				$this->execute($sql);
+				return $course_id;
 			}
 		}
 		else

@@ -140,7 +140,7 @@ if ($cid) {
 if (($current_tab == 0) || ($current_tab == 2)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
-	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
+	    if (isset($_SESSION['prefs']['PREF_CONTENT_EDITOR']) && $_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
 			$_POST['formatting'] = 0;
 		} else {
 			$_POST['formatting'] = 1;

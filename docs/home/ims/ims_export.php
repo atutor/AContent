@@ -55,8 +55,8 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 	global $_course_id, $_content_id;
 
-	$course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
-	$cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
+	$_course_id = $course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
+	$_content_id = $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
 	$c   = isset($_REQUEST['c'])   ? intval($_REQUEST['c'])   : 0;
 }
 
