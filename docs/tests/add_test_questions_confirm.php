@@ -26,7 +26,7 @@ $tid = intval($_POST['tid']);
 
 $_pages['tests/questions.php?tid='.$tid.'&_course_id='.$_course_id]['title_var']    = 'questions';
 $_pages['tests/questions.php?tid='.$tid.'&_course_id='.$_course_id]['parent']   = 'tests/index.php';
-$_pages['tests/questions.php?tid='.$tid.'&_course_id='.$_course_id]['children'] = array('tests/add_test_questions.php?tid='.$tid.'&_course_id='.$_course_id);
+$_pages['tests/questions.php?tid='.$tid.'&_course_id='.$_course_id]['children'] = array('tests/add_test_questions.php');
 
 $_pages['tests/add_test_questions.php']['title_var']  = 'add_questions';
 $_pages['tests/add_test_questions.php']['parent'] = 'tests/questions.php?tid='.$tid.'&_course_id='.$_course_id;
