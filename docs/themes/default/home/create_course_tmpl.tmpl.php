@@ -38,6 +38,11 @@ if (isset($_current_user) && $_current_user->isAuthor())
 			<label for="to_url"><?php echo _AT('specify_url_to_content_package'); ?></label>
 			<input type="text" name="url" value="http://" size="40" id="to_url" />
 		</td></tr>
+
+		<tr><td>
+			<input type="checkbox" name="ignore_validation" id="ignore_validation" value="1" />
+			<label for="ignore_validation"><?php echo _AT('ignore_validation'); ?></label> <br />
+		</td></tr>
 	
 		<tr><td>
 			<input type="checkbox" name="hide_course" id="hide_course" value="1" /><label for="hide_course"><?php echo _AT('hide_course'); ?></label>
