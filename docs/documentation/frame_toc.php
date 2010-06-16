@@ -49,9 +49,9 @@ function hb_print_toc($handbook_pages) {
 <style type="text/css">
 body { font-family: Verdana,Arial,sans-serif; font-size: x-small; margin: 0px; padding: 0px; background: #f4f4f4; margin-left: -5px; }
 ul { list-style: none; padding-left: 0px; margin-left: -15px; }
-li { margin-left: 19pt; padding-top: 2px; }
+li { margin-left: 19pt; padding-top: 2px;vertical-align:text-bottom; }
 a { background-repeat: no-repeat; background-position: 0px 1px; padding-left: 12px; text-decoration: none; }
-a.tree { background-image: url('../images/folder.gif'); }
+a.tree { background-image: url('../images/folder_open.png'); background-position:-1px -2px;text-align:center; line-height:1em; }
 a.leaf { background-image: url('../images/paper.gif'); }
 a:link, a:visited { color: #006699; }
 a:hover { color: #66AECC; }
