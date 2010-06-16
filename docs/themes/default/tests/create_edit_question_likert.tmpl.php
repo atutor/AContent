@@ -64,7 +64,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 </div>
 
 <div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('question'); ?></legend>
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_lk'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">

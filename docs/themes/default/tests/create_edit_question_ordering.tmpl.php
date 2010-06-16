@@ -19,6 +19,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 <input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
 
 <div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_ordering'); ?></legend>
 	<div class="row">
 		<label for="cats"><?php echo _AT('category'); ?></label><br />
 		<select name="category_id" id="cats">
@@ -60,5 +61,6 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
+	</fieldset>
 </div>
 </form>
