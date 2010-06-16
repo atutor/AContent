@@ -33,8 +33,8 @@ if (is_array($all_tests)) $num_tests = count($all_tests);
 //If there are no tests, don't display anything except a message
 if ($num_tests == 0){
 	$msg->addInfo('NO_TESTS');
-//	$msg->printInfos();
-//	return;
+	$msg->printInfos();
+	return;
 }
 else {
 	$i = 0;
