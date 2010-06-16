@@ -17,5 +17,7 @@ require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 // make sure the user has author privilege
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
+require(TR_INCLUDE_PATH.'header.inc.php');
 $savant->display('home/create_course.tmpl.php');
+require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>

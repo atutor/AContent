@@ -50,27 +50,20 @@ if (isset($catid)) {
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 
-//if (is_array($courses))
-//{
-	$curr_page_num = intval($_GET['p']);
-	if (!$curr_page_num) {
-		$curr_page_num = 1;
-	}
-	$savant->assign('courses', $courses);
-	$savant->assign('categories', $courseCategoriesDAO->getAll());
-	$savant->assign('curr_page_num', $curr_page_num);
-	if ($is_for_category) {
-		$savant->assign('title', _AT('search_results'));
-	} else {
-		$savant->assign('title', _AT('most_recent_courses'));
-	}
-	
-	$savant->display('home/index_course.tmpl.php');
-//}
-//else
-//{
-//	$savant->display('home/index_search.tmpl.php');
-//}
+$curr_page_num = intval($_GET['p']);
+if (!$curr_page_num) {
+	$curr_page_num = 1;
+}
+$savant->assign('courses', $courses);
+$savant->assign('categories', $courseCategoriesDAO->getAll());
+$savant->assign('curr_page_num', $curr_page_num);
+if ($is_for_category) {
+	$savant->assign('title', _AT('search_results'));
+} else {
+	$savant->assign('title', _AT('most_recent_courses'));
+}
+
+$savant->display('home/index_course.tmpl.php');
 
 require(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>
