@@ -172,7 +172,7 @@ trans.utility.selected;
   };
   
   // toggle elements in side menu
-  trans.utility.elementToggle = function (elem, title, base_path, show_text, hide_text)
+  trans.utility.elementToggle = function (elem, title, compact_title, base_path, show_text, hide_text)
   {
     element_collapse_icon = base_path+"images/mswitch_minus.gif";
     element_expand_icon = base_path+"images/mswitch_plus.gif";
@@ -181,21 +181,21 @@ trans.utility.selected;
       jQuery(elem).attr("src", element_expand_icon);
       jQuery(elem).attr("alt", show_text + " "+ title);
       jQuery(elem).attr("title", show_text + " "+ title);
-      trans.utility.setcookie("m_"+title, 0, 1);
+      trans.utility.setcookie("m_"+compact_title, 0, 1);
     }
     else {
       jQuery(elem).attr("src", element_collapse_icon);
       jQuery(elem).attr("alt", hide_text + " "+ title);
       jQuery(elem).attr("title", hide_text + " "+ title);
-      trans.utility.setcookie("m_"+title, 1, 1);;
+      trans.utility.setcookie("m_"+compact_title, 1, 1);;
     }
     
     jQuery(elem).parent().next().slideToggle();
   };
   
-  trans.utility.printSubmenuHeader = function (title, base_path, show_text, hide_text, default_value)
+  trans.utility.printSubmenuHeader = function (title, compact_title, base_path, show_text, hide_text, default_value)
   {
-	cookie_value = trans.utility.getcookie("m_"+title);
+	cookie_value = trans.utility.getcookie("m_"+compact_title);
 	
 	if (cookie_value == "0" || (cookie_value == "" && default_value == "hide"))
     {
@@ -210,7 +210,7 @@ trans.utility.selected;
     
     document.writeln('<h4 class="box">'+
     '  <input src="'+image+'"' + 
-    '         onclick="trans.utility.elementToggle(this, \''+title+'\', \''+base_path+'\', \''+show_text+'\', \''+hide_text+'\'); return false;"' +
+    '         onclick="trans.utility.elementToggle(this, \''+title+'\', \''+compact_title+'\', \''+base_path+'\', \''+show_text+'\', \''+hide_text+'\'); return false;"' +
     '         alt="'+ alt_text + '" ' +
     '         title="'+ alt_text + '"' +
     '         style="float:right" type="image" /> '+ title +

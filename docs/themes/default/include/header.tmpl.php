@@ -82,7 +82,7 @@ $starttime = $mtime;
 <?php echo $this->rtl_css; ?>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.1.2.min.js"></script>
+	<script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.1.2.min.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
@@ -196,38 +196,40 @@ foreach ($this->top_level_pages as $page) {
       <?php } ?>
     <?php } ?>
   <?php } ?>
-
   <?php if (isset($this->course_id) && $this->course_id > 0) {?>
     <!--  <div id="course-tools">-->
       <?php if ($this->isAuthor) { // only for authors ?>
       <li><a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0"  class="shortcut_icon"/>
-      </a></li>
+        </a>
+      </li>
       <li><a href="<?php echo $this->base_path; ?>home/editor/arrange_content.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>" border="0"  class="shortcut_icon"/>
-      </a> </li>
+        </a>
+      </li>
       <li><a href="<?php echo $this->base_path; ?>home/editor/import_export_content.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/import_export.png"; ?>" title="<?php echo _AT('content_packaging'); ?>" alt="<?php echo _AT('content_packaging'); ?>" border="0"  class="shortcut_icon"/>
-      </a> </li>
+        </a>
+      </li>
       <li><a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
-      <li></a></li>
+        </a>
+      </li>
       <?php }?>
-      <a href="<?php echo $this->base_path; ?>home/index.php">
-      <li>  <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0"  class="shortcut_icon"/>
-      </a></li>
-
+      <li><a href="<?php echo $this->base_path; ?>home/index.php">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0"  class="shortcut_icon"/>
+        </a>
+      </li>
   </ul>
  </div>
     <?php }?>
 
-
-    <!-- guide -->
-    <?php if (isset($this->guide)) {?>
-      <div id="guide_box">
-      <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
-    </div>
-    <?php }?>
+<!-- guide -->
+  <?php if (isset($this->guide)) {?>
+    <div id="guide_box">
+    <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
+  </div>
+  <?php }?>
 <?php  
 //if ($this->course_id > 0) {
 ?>
@@ -339,7 +341,7 @@ foreach ($this->top_level_pages as $page) {
 ?>
 
 	    <div id="subnavbacktopage">	  
-	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;">'?></a> 
+	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;" />'; ?></a> 
 	    </div>
 	  <?php endif; ?>
 	<ul id="subnavlist">
