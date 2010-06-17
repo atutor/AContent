@@ -1,5 +1,5 @@
 #########################################################
-# Database setup SQL for a new install of Transformable #
+# Database setup SQL for a new install of AContent      #
 #########################################################
 
 # --------------------------------------------------------
@@ -1049,7 +1049,7 @@ INSERT INTO `lang_codes` (`code_3letters`, `direction`, `code_2letters`, `descri
 ('zxx', 'ltr', '', 'Nolinguisticcontent');
 
 # insert the default theme
-INSERT INTO `themes` VALUES ('Transformable', '0.1', 'default', NOW(), 'This is the default Transformable theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
+INSERT INTO `themes` VALUES ('AContent', '0.1', 'default', NOW(), 'This is the default AContent theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
 
 # insert privileges, user groups and user group privileges
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (1, 'home', 'Home', NOW(), 'home/index.php', 10, 1);
@@ -1065,7 +1065,7 @@ INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_da
 
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (1, 'Administrator', 'Administrate users, user groups, languages and updates.', now());
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (2, 'User', 'Regular user.', now());
-INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (3, 'Translator', 'Translate Transformable terms into a foreign lanugage.', now());
+INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (3, 'Translator', 'Translate AContent terms into a others language.', now());
 
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 1, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 2, 0);
