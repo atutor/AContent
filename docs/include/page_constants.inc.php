@@ -166,6 +166,36 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		$_pages['home/editor/import_export_content.php']['title_var']    = 'content_packaging';
 		$_pages['home/editor/import_export_content.php']['parent']   = 'home/index.php';
 		$_pages['home/editor/import_export_content.php']['guide']     = 'TR_HELP_IMPORT_EXPORT_CONTENT';
+
+		//Tests and Surveys 
+		$_pages['tests/index.php']['title_var']    = 'manage_tests';
+		$_pages['tests/index.php']['parent']   = 'home/index.php';
+		$_pages['tests/index.php']['guide']     = 'TR_HELP_MANAGE_TESTS';
+
+		$_pages['tests/create_test.php']['title_var']    = 'create_test';
+		$_pages['tests/create_test.php']['parent']   = 'tests/index.php';
+		$_pages['tests/create_test.php']['guide']     = 'TR_HELP_CREATE_TESTS';
+
+		$_pages['tests/edit_test.php']['title_var']    = 'edit_test';
+		$_pages['tests/edit_test.php']['parent']   = 'tests/index.php';
+		$_pages['tests/edit_test.php']['guide']     = 'TR_HELP_EDIT_TESTS';
+
+		$_pages['tests/question_db.php']['title_var']    = 'question_database';
+		$_pages['tests/question_db.php']['parent']   = 'tests/index.php';
+		$_pages['tests/question_db.php']['guide']     = 'TR_HELP_QUESTION_BANK';
+
+		$_pages['tests/questions.php']['title_var']    = 'add_questions';
+		$_pages['tests/questions.php']['parent']   = 'tests/index.php';
+		$_pages['tests/questions.php']['guide']     = 'TR_HELP_QUESTIONS_ADD';
+
+		$_pages['tests/question_cats.php']['title_var']    = 'question_categories';
+		$_pages['tests/question_cats.php']['parent']   = 'tests/index.php';
+		$_pages['tests/question_cats.php']['guide']     = 'TR_HELP_QUESTION_CATEGORIES';
+
+		$_pages['file_manager/index.php']['title_var']    = 'file_manager';
+		$_pages['file_manager/index.php']['parent']   = 'home/index.php';
+		$_pages['file_manager/index.php']['guide']     = 'TR_HELP_FILE_MANAGER';
+
 	}
 }
 
