@@ -814,7 +814,9 @@ h3.indent {
 h4.box {
   font-size:0.85em;
   padding: 2px;
-  border: 1px solid #B8AE9C;
+  border-top: 1px solid #B8AE9C;
+  border-left: 1px solid #B8AE9C;
+  border-right: 1px solid #B8AE9C;
   -moz-border-radius:.5em .5em 0em 0em;
   border-radius:.5em .5em 0em 0em;
   -moz-box-shadow:.1em .1em .2em #999999;
@@ -823,7 +825,7 @@ h4.box {
 
 div.box {
   padding: 5px;
-  background-color: #F5F5F5;
+  background-color: #F8F8F8;
   color: black;
   border: 1px solid #B8AE9C;
   font-size:0.85em;
@@ -832,7 +834,7 @@ div.box {
   -moz-border-radius:.0em .0em .5em .5em;
   border-radius:.0em .0em .5em .5em;
   -moz-box-shadow:.1em .1em .0em #999999;
-  box-shadow: .1em .1em  .2em #999999;
+  box-shadow: .1em .1em  .1em #999999;
 }
 
 h5.box { 
@@ -840,8 +842,7 @@ h5.box {
     border: 1px solid #B8AE9C;
     border-style: solid solid none solid;
     color: Black;
-    padding: 0em 1em 0em 1em;
-    
+    padding: 0em 1em 0em 1em;  
     display: inline;
   font-size:  1em;
     height: 1em;
