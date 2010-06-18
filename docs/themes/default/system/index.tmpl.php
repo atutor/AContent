@@ -38,7 +38,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 
 <div class="input-form">
-<fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
+<fieldset class="group_form"><legend class="group_form"><?php echo  _AT("system_settings"); ?></legend>
 
 	<table class="form-data" align="center">
 		<tr>
