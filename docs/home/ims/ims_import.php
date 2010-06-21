@@ -524,7 +524,9 @@ function rehash($items){
 					array_pop($all_package_base_path);
 				}
 			}
-			$items[$current_identifier]['new_path'] = implode('/', $package_base_path);	
+			if (count($package_base_path) > 0) {
+				$items[$current_identifier]['new_path'] = implode('/', $package_base_path);
+			}	
 /* 
  * @harris, reworked the package_base_path 
 				if ($package_base_path=="") {
@@ -594,7 +596,7 @@ function rehash($items){
 			if(!isset($items[$current_identifier]) && $attrs['href']!=''){
 				$items[$current_identifier]['href']	 = $attrs['href'];
 			}
-			if (file_exists($import_path.$attrs['href'])){
+			if (substr($attrs['href'], 0, 7) == 'http://' || substr($attrs['href'], 0, 8) == 'https://' || file_exists($import_path.$attrs['href'])){
 				$items[$current_identifier]['file'][] = $attrs['href'];
 			} else {
 				//$msg->addError('');
