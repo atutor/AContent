@@ -138,7 +138,7 @@ class A4aExport extends A4a {
 					foreach($resource['resource_type'][$uri] as $type_id){
 						$orig_access_mode[] = $this->getResourceNameById($type_id);
 						$savant->assign('orig_access_mode', $orig_access_mode);
-						$xml_array[$id.' to '.$uri] = $savant->fetch(TR_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
+						$xml_array[$id.' to '.$uri][] = $savant->fetch(TR_INCLUDE_PATH.'classes/A4a/A4a.tmpl.php');
 					}
 				}
 			} else {
