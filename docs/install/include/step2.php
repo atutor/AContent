@@ -129,8 +129,8 @@ if (isset($errors)) {
 	<tr>
 		<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="prefix">Table Prefix:</label></b><br />
 			The prefix to add to table names to avoid conflicts with existing tables.<br />
-			Default: <kbd>TR_</kbd></td>
-		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo stripslashes(htmlspecialchars($_POST['tb_prefix'])); } else { echo 'TR_'; } ?>" class="formfield" /></td>
+			Default: <kbd>AC_</kbd></td>
+		<td class="row1"><input type="text" name="tb_prefix" id="prefix" value="<?php if (!empty($_POST['tb_prefix'])) { echo stripslashes(htmlspecialchars($_POST['tb_prefix'])); } else { echo 'AC_'; } ?>" class="formfield" /></td>
 	</tr>
 	</table>
 
