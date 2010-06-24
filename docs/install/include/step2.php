@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -27,7 +27,7 @@ if(isset($_POST['submit'])) {
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. Transformable requires version 4.1.10 or later.';
+			$errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
 		}
 
 		if (!isset($errors)){
@@ -123,8 +123,8 @@ if (isset($errors)) {
 	</tr>
 	<tr>
 		<td class="row1"><div class="required" title="Required Field">*</div><b><label for="name">Database Name:</label></b><br />
-			The name of the database to use. It will be created if it does not exist.<br />Default: <kbd>transformable</kbd></td>
-		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo stripslashes(htmlspecialchars($_POST['db_name'])); } else { echo 'transformable'; } ?>" class="formfield" /></td>
+			The name of the database to use. It will be created if it does not exist.<br />Default: <kbd>acontent</kbd></td>
+		<td class="row1"><input type="text" name="db_name" id="name" value="<?php if (!empty($_POST['db_name'])) { echo stripslashes(htmlspecialchars($_POST['db_name'])); } else { echo 'acontent'; } ?>" class="formfield" /></td>
 	</tr>
 	<tr>
 		<td class="row1"><div class="optional" title="Optional Field">?</div><b><label for="prefix">Table Prefix:</label></b><br />

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                         */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -21,7 +21,7 @@ if (!defined('TR_INCLUDE_PATH')) exit;
 class LanguageUtility {
 
 	/**
-	* return language code from given Transformable language code
+	* return language code from given AContent  language code
 	* @access  public
 	* @param   $code
 	* @return  language code
@@ -36,7 +36,7 @@ class LanguageUtility {
 	}
 
 	/**
-	* return charset from given Transformable language code
+	* return charset from given AContent  language code
 	* @access  public
 	* @param   $code
 	* @return  charset

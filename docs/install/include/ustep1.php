@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -20,7 +20,7 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 		if ( file_exists('../../'.$_POST['old_path'] . '/include/config.inc.php') ) {
 			
 			require('../../'.$_POST['old_path'] . '/include/constants.inc.php');
-			$progress[] = 'Found Transformable version <kbd><b>'.VERSION . '</b></kbd> in path <kbd><b>'.$_POST['old_path'].'</b></kbd>.';
+			$progress[] = 'Found AContent version <kbd><b>'.VERSION . '</b></kbd> in path <kbd><b>'.$_POST['old_path'].'</b></kbd>.';
 
 			if (!version_compare(VERSION, $new_version, '<')) {
 				$errors[] = 'The version upgrading (<kbd><b>'.VERSION.'</b></kbd>) is not older than the new version (<kbd><b>'.$new_version.'</b></kbd>).';
@@ -150,7 +150,7 @@ if (isset($errors)) {
 }
 
 ?>
-<p>Please specify the location of the old Transformable installation.</p>
+<p>Please specify the location of the old AContent installation.</p>
 
 <ol>
 	<li>Release Candidate (RC) installations cannot be upgraded.</li>
@@ -160,7 +160,7 @@ if (isset($errors)) {
 	<li>All extra modules will have to be reinstalled before they can be enabled again.</li>
 </ol>
 
-<p>Select the old Transformable installation directory below.</p>
+<p>Select the old AContent installation directory below.</p>
 
 <?php
 	$dirs = scandir('../../');

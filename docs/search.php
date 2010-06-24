@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                         */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -11,7 +11,7 @@
 /************************************************************************/
 
 /*
- * This is the web service interface to search transformable and return
+ * This is the web service interface to search AContent  and return
  * search results in REST
  * Expected parameters:
  * id: to identify the user. must be given

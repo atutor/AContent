@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -106,10 +106,10 @@ print_progress($step);
 <br />
 	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1" colspan="2">Submit the following information to the transformable.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your Transformable installation.</td>
+		<td class="row1" colspan="2">Submit the following information to the atutor.ca server anonymously? The information we gather helps us plan our development resources to better suit the needs of the community. You may optionally choose to send the URL of your AContent installation.</td>
 	</tr>
 	<tr>
-		<td class="row1" width="20%"><b>Transformable Version:</b></td>
+		<td class="row1" width="20%"><b>AContent Version:</b></td>
 		<td class="row1"><?php echo $new_version; ?> (build <?php echo $build . ' - '.$build_date; ?>)</td>
 	</tr>
 	<tr>

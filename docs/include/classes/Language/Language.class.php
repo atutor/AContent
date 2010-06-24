@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                         */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -174,7 +174,7 @@ class Language {
 	function getXML($part=FALSE) {
 		if (!$part) {
 			$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
-			<!-- This is an Transformable language pack -->
+			<!-- This is an AContent  language pack -->
 
 			<!DOCTYPE language [
 			   <!ELEMENT transformable-version (#PCDATA)>

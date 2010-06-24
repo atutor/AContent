@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -53,7 +53,7 @@ function write_config_file($filename, $comments) {
 
 $config_template = "<"."?php 
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */

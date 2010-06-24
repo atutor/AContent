@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -131,7 +131,7 @@ function encrypt_password()
 			<th colspan="2">Super Administrator Account</th>
 		</tr>
 		<tr>
-			<td colspan="2" class="row1">The Super Administrator account is used for managing Transformable. The Super Administrator can also create additional Administrators each with their own privileges and roles. </td>
+			<td colspan="2" class="row1">The Super Administrator account is used for managing AContent. The Super Administrator can also create additional Administrators each with their own privileges and roles. </td>
 		</tr>
 		<tr>
 			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="username">Administrator Username:</label></b><br />

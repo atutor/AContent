@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                         */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -266,7 +266,7 @@ class LanguageEditor extends Language {
 		}
 		$sql_dump = substr($sql_dump, 0, -3) . ";";
 
-		$readme = 'This is an Transformable language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct Transformable table prefix as defined in ./include/config.inc.php .';
+		$readme = 'This is an AContent  language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct AContent  table prefix as defined in ./include/config.inc.php .';
 
 		require(TR_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile = new zipfile();
@@ -281,7 +281,7 @@ class LanguageEditor extends Language {
 		} else {
 			$version = str_replace('.','_',VERSION);
 
-			$zipfile->send_file('Transformable_' . $version . '_' . $this->code);
+			$zipfile->send_file('AContent _' . $version . '_' . $this->code);
 		}
 	}
 

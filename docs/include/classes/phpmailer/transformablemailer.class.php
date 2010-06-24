@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -30,7 +30,7 @@ class TransformableMailer extends PHPMailer {
 	* The constructor sets whether to use SMTP or Sendmail depending
 	* on the value of MAIL_USE_SMTP defined in the config.inc.php file.
 	* @access  public
-	* @since   Transformable 0.2
+	* @since   AContent 0.2
 	* @author  Joel Kronenberg
 	*/
 	function TransformableMailer() {
@@ -51,7 +51,7 @@ class TransformableMailer extends PHPMailer {
 	}
 
 	/**
-	* Appends a custom Transformable footer to all outgoing email then sends the email.
+	* Appends a custom AContent footer to all outgoing email then sends the email.
 	* If mail_queue is enabled then instead of sending the mail out right away, it 
 	* places it in the database and waits for the cron to send it using SendQueue().
 	* The mail queue does not support reply-to, or attachments, and converts all BCCs
@@ -59,13 +59,13 @@ class TransformableMailer extends PHPMailer {
 	* @access  public
 	* @return  boolean	whether or not the mail was sent (or queued) successfully.
 	* @see     parent::send()
-	* @since   Transformable 0.1
+	* @since   AContent 0.1
 	* @author  Joel Kronenberg
 	*/
 	function Send() {
 		global $_config;
 
-		// attach the Transformable footer to the body first:
+		// attach the AContent footer to the body first:
 		$this->Body .= 	"\n\n".'----------------------------------------------'."\n";
 		$this->Body .= _AT(array('sent_via_transformable', TR_BASE_HREF));
 
@@ -97,7 +97,7 @@ class TransformableMailer extends PHPMailer {
 	* Sends all the queued mail. Called by ./admin/cron.php.
 	* @access public
 	* @return void
-	* @since Transformable 0.2
+	* @since AContent 0.2
 	* @author Joel Kronenberg
 	*/
 	function SendQueue() {

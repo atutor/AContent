@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                         */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -309,7 +309,7 @@ class LanguageManager {
 	}
 
 	// public
-	// imports LIVE language from the Transformable language database
+	// imports LIVE language from the AContent  language database
 	function liveImport($language_code) {
 		global $db;
 

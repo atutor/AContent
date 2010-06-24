@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -227,8 +227,8 @@ $not_as_good = FALSE;
 <?php elseif ($not_as_good): ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
-		<td class="row1"><strong>Transformable has indicated that the 'mbstring' library is missing from the PHP.  <br />
-						We strongly encourage you to install the 'mbstring' library before continuing, however, if you choose not to install the library from PHP, a third party library within Transformable will be used.  <br/><br/>
+		<td class="row1"><strong>AContent has indicated that the 'mbstring' library is missing from the PHP.  <br />
+						We strongly encourage you to install the 'mbstring' library before continuing, however, if you choose not to install the library from PHP, a third party library within AContent will be used.  <br/><br/>
 						For production systems, we strongly encourage you to install the PHP with <a href="http://ca.php.net/manual/en/ref.mbstring.php" target="php_site">mbstring</a> support.  <br/><br/>
 						You may choose to by pass the mbstring check for the installation at your own risk by clicking <a href="javascript:void(0);" onclick="javascript:document.form.next.disabled=false;">continue</a>.</strong></td>
 		<td class="row1"></td>
@@ -252,7 +252,7 @@ $not_as_good = FALSE;
 	</table>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
-		<td class="row1"><strong>Upgrading from previous Transformable must have mbstring library installed.</strong></td>
+		<td class="row1"><strong>Upgrading from previous AContent must have mbstring library installed.</strong></td>
 		<td class="row1"></td>
 	</tr>
 	<tr>

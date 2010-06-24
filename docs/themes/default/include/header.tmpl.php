@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -15,7 +15,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * $this->lang_code			the ISO language code
  * SITE_NAME				the site name from the config file
  * $this->page_title		the name of this page to use in the <title>
- * top_level_pages           array(array('url', 'title'))     the top level pages. Transformable default creates tabs.
+ * top_level_pages           array(array('url', 'title'))     the top level pages. AContent default creates tabs.
  * current_top_level_page    string                           full url to the current top level page in "top_leve_pages"
  * path                      array(array('url', 'title'))     the breadcrumb path to the current page.
  * sub_menus                 array(array('url', 'title'))     the sub level menus.
@@ -24,7 +24,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * page_title                string                           the title of the current page.
  * user_name                 string                           name of login user
  * $this->lang_charset		the ISO language character set
- * $this->base_path			the absolute path to this Transformable installation
+ * $this->base_path			the absolute path to this AContent installation
  * $this->theme				the directory name of the current theme
  * $this->custom_head		the custom head script used in <head> section
  * $this->$onload			the html body onload event
@@ -33,7 +33,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * $this->rtl_css			if set, the path to the RTL style sheet
  * $this->icon			the path to a course icon
  * $this->banner_style		-deprecated-
- * $this->base_href			the full url to this Transformable installation
+ * $this->base_href			the full url to this AContent installation
  * $this->onload			javascript onload() calls
  * $this->img				the absolute path to this theme's images/ directory
  * $this->sequence_links	associative array of 'previous', 'next', and/or 'resume' links
@@ -69,9 +69,9 @@ $starttime = $mtime;
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
-	<meta name="Generator" content="Transformable - Copyright 2009 by ATRC http://atrc.utoronto.ca/" />
-	<meta name="keywords" content="Transformable,free, open source, accessibility checker, accessibility reviewer, accessibility evaluator, accessibility evaluation, WCAG evaluation, 508 evaluation, BITV evaluation, evaluate accessibility, test accessibility, review accessibility, ATRC, WCAG 2, STANCA, BITV, Section 508." />
-	<meta name="description" content="Transformable is a Web accessibility evalution tool designed to help Web content developers and Web application developers ensure their Web content is accessible to everyone regardless to the technology they may be using, or their abilities or disabilities." />
+	<meta name="Generator" content="AContent - Copyright 2009 by ATRC http://atrc.utoronto.ca/" />
+	<meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
+	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any sysem that supports IMS content interoperability standards." />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
@@ -99,7 +99,7 @@ $starttime = $mtime;
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 	
     <div id="logo">
-      <!-- <a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="Transformable Logo" style="border:none;" /></a> -->
+      <!-- <a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="AContent  Logo" style="border:none;" /></a> -->
     </div>
   
   <div id="banner">

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -13,13 +13,13 @@
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
 
-/* transformable default configuration options */
+/* AContent default configuration options */
 /* used on: step3.php, step4.php, step5.php */
 $_defaults['admin_username'] = 'admin';
 $_defaults['admin_password'] = '';
 $_defaults['admin_email'] = '';
 
-$_defaults['site_name'] = 'Transformable';
+$_defaults['site_name'] = 'AContent';
 $_defaults['header_img'] = '';
 $_defaults['header_logo'] = '';
 $_defaults['home_url'] = '';
