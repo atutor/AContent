@@ -59,11 +59,11 @@ trans.editor = trans.editor || {};
     var accessibilityTool = {
             toolId: "#accessibilitytool",
             enabledClass: enabledClass,
-            enabledImage: "/images/achecker.png",
+            enabledImage: "images/achecker.png",
             clickFunction: function () {
                 launchAChecker();
             },
-            disabledImage: "/images/achecker_disabled.png"
+            disabledImage: "images/achecker_disabled.png"
         };
 
     //customized head variables
@@ -72,11 +72,11 @@ trans.editor = trans.editor || {};
     var headTool = {
             toolId: "#headtool",
             enabledClass: enabledClass,
-            enabledImage: "/images/custom_head.png",
+            enabledImage: "images/custom_head.png",
             clickFunction: function () {
                 doToggle(jQuery(headId), jQuery(displayheadId));
             },
-            disabledImage: "/images/custom_head_disabled.png"
+            disabledImage: "images/custom_head_disabled.png"
         };
 
     //paste from file variables
@@ -85,11 +85,11 @@ trans.editor = trans.editor || {};
     var pasteTool = {
             toolId: "#pastetool",
             enabledClass: enabledClass,
-            enabledImage: "/images/paste.png",
+            enabledImage: "images/paste.png",
             clickFunction: function () {
                 doToggle(jQuery(pasteId), jQuery(displaypasteId));
             },
-            disabledImage: "/images/paste_disabled.png"
+            disabledImage: "images/paste_disabled.png"
         };
 
     //click function to launch file manager window
@@ -102,11 +102,11 @@ trans.editor = trans.editor || {};
     var filemanTool = {
             toolId: "#filemantool",
             enabledClass: enabledClass,
-            enabledImage: "/images/file-manager.png",
+            enabledImage: "images/file-manager.png",
             clickFunction: function () {
                 launchFileManager();
             },
-            disabledImage: "/images/file-manager_disabled.png"
+            disabledImage: "images/file-manager_disabled.png"
         };
     
     //checks hidden variable and shows/hides element accordingly
