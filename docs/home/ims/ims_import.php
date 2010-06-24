@@ -1,13 +1,13 @@
 <?php
 /************************************************************************/
-/* AContent                                                             */
+/* AContent                                                        									*/
 /************************************************************************/
-/* Copyright (c) 2009                                                   */
-/* Adaptive Technology Resource Centre / University of Toronto          */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or        */
-/* modify it under the terms of the GNU General Public License          */
-/* as published by the Free Software Foundation.                        */
+/* Copyright (c) 2010                                                   								*/
+/* Inclusive Design Institute   										                */
+/*                                                                      							                */
+/* This program is free software. You can redistribute it and/or        				        */
+/* modify it under the terms of the GNU General Public License          			        */
+/* as published by the Free Software Foundation.                         				        */
 /************************************************************************/
 
 /** Commented by Cindy Li on Feb 2, 2010
