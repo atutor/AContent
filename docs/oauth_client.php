@@ -18,8 +18,8 @@ require_once("oauth/lib/OAuth.php");
 require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthClientServersDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/OAuthClientTokensDAO.class.php');
 
-// This part should be moved into include/constants.inc.php
-$oauth_server_url = "http://localhost/transformable/";
+// This part should be moved into include/constants.inc.php, or, admin configuration
+$oauth_server_url = TR_BASE_HREF;
 
 $register_consumer_url = $oauth_server_url.'oauth/register_consumer.php';
 $request_token_url = $oauth_server_url.'oauth/request_token.php';
