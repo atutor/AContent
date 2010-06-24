@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -18,10 +18,10 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <div class="output-form" style="line-height:150%">
 
 <h1>OAuth Server API</h1>
-<p>Transformable implements the OAuth Core 1.0 specification.</p>
+<p>AContent implements the OAuth Core 1.0 specification.</p>
 <p>The <a href="http://oauth.net/documentation/getting-started" target="_blank">OAuth</a> protocol enables web services consumers to access protected resources via an API without requiring users to supply the service credentials to the consumers. It's a generic methodology for unobtrusive, wire protocol level authenticated data access over HTTP.</p>
 
-<p>Transformable exposes the following API endpoints:</p>
+<p>AContent exposes the following API endpoints:</p>
 
     <div id="toc">
       <ul>
@@ -29,7 +29,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
         <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#request_token">Request token</a></li>
         <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#authorization">Authorization</a></li>
         <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#access_token">Access token</a></li>
-        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#import">Import Common Cartridge or Content Package into Transformable</a></li>
+        <li><a href="<?php echo TR_BASE_HREF.'documentation/oauth_server_api.php'; ?>#import">Import Common Cartridge or Content Package into AContent</a></li>
       </ul>
     </div>
     
@@ -63,9 +63,9 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <h3>Example</h3><br />
 <span style="font-weight: bold">Request</span>
 <pre style="background-color:#F7F3ED;"> 
-<?php echo TR_BASE_HREF; ?>oauth/register_consumer.php?consumer=http%3A%2F%2Flocalhost%2Ftransformable%2F&expire=300<br />
+<?php echo TR_BASE_HREF; ?>oauth/register_consumer.php?consumer=http%3A%2F%2Flocalhost%2Facontent%2F&expire=300<br />
 </pre>
-<p>Goal: Registers consumer http://localhost/transformable/ and requests that the assigned access token expires in 5 minutes.</p>
+<p>Goal: Registers consumer http://localhost/acontent/ and requests that the assigned access token expires in 5 minutes.</p>
 
 <span style="font-weight:bold">Success response</span>
 <pre style="background-color:#F7F3ED;"> 
@@ -269,9 +269,9 @@ error=Invalid+oauth+request+token<br />
 <p>Note that the access token can be reused during the expire threshold is reached. Expire threshold is defined in the 
 <a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php#register_consumer">register consumer request</a>.</p>
 
-<h2 id="import">Import Common Cartridge or Content Package into Transformable</h2>
+<h2 id="import">Import Common Cartridge or Content Package into AContent</h2>
 <p>Till here, with a set of token credentials, the client is now able to import common cartridge or content package into
-Transformable as a new course. The generated course ID is returned at success. Or, an error message is returned at fail.</p>
+AContent as a new course. The generated course ID is returned at success. Or, an error message is returned at fail.</p>
 <h3>Endpoint: </h3><p>http://server-cname/home/ims/ims_import.php</p>
 <h3>Parameters</h3><br />
 

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -333,7 +333,7 @@ $vcard = new vCard();
 if (isset($row)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
-	$vcard->setNote('Originated from an Transformable at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
+	$vcard->setNote('Originated from an AContent at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
 	$vcard->setURL($row['website']);
 
 	$imsmanifest_xml = str_replace('{VCARD}', $vcard->getVCard(), $imsmanifest_xml);
@@ -349,7 +349,7 @@ $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
 
 // Modified by Cindy Qi Li on Jun 3, 2010
-// Transformable does not support glossary
+// AContent does not support glossary
 /*
 if ($glossary_xml) {
 	$zipfile->add_file($glossary_xml,  'glossary.xml');

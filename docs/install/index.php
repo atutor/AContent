@@ -35,8 +35,8 @@ $good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="G
 $no_good = FALSE;
 $not_as_good = FALSE;
 ?>
-<h3>Welcome to the Transformable Installation</h3>
-<p>This process will step you through your Transformable installation or upgrade.</p>
+<h3>Welcome to the AContent Installation</h3>
+<p>This process will step you through your AContent installation or upgrade.</p>
 <p>During this process be sure not to use your browser's <em>Refresh</em> or <em>Reload</em> feature as it may complicate the installation process.</p>
 
 <h4>Requirements</h4>

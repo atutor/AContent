@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -63,7 +63,7 @@ class Patch {
 	*/
 	function Patch($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder) 
 	{
-		// add relative path to move to Transformable root folder
+		// add relative path to move to AContent root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)
 		{
 			$patch_array[files][$i]['location'] = $this->relative_to_root . $patch_array[files][$i]['location'];
@@ -295,7 +295,7 @@ class Patch {
 	}
 	
 	/**
-	* Check if Transformable version is same as "applied version" defined in the patch.
+	* Check if AContent version is same as "applied version" defined in the patch.
 	* @access  private
 	* @return  true  if versions match
 	*          false if versions don't match
@@ -435,7 +435,7 @@ class Patch {
 	}
 
 	/**
-	* Compare user's local file with SVN backup for user's Transformable version,
+	* Compare user's local file with SVN backup for user's AContent version,
 	* if different, check table TR_patches_files to see if user's local file
 	* was altered by previous patch installation. If it is, return false 
 	* (not modified), otherwise, return true (modified).

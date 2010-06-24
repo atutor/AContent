@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -441,11 +441,11 @@ class ContentUtility {
 	}
 
 	/**
-	* This function converts the input string into Transformable html content string 
+	* This function converts the input string into AContent html content string 
 	* @access  public
 	* @param   $input: input string
 	*          $html: whether the input is in html
-	* @return  converted Transformable html content string
+	* @return  converted AContent html content string
 	* @author  Cindy Qi Li
 	*/
 	public static function formatContent($input, $html = 0) {
@@ -473,7 +473,7 @@ class ContentUtility {
 		}
 	
 		/* Commented by Cindy Qi Li on Jan 12, 2010
-		 * Transformable does not support glossary
+		 * AContent does not support glossary
 		// do the glossary search and replace:
 		if (is_array($glossary)) {
 			foreach ($glossary as $k => $v) {

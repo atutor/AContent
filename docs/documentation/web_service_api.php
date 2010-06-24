@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -17,12 +17,12 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <div class="output-form" style="line-height:150%">
 
-<h1>Transformable Web Service API</h1>
-<p>Interface applications with the Transformable through its experimental API. This is version 0.1, dated Jun 2010.</p>
-<p>Transformable provides search web service API that allows users to send request to Transformable to search through 
-the repository by keywords. Transformable returns the search results in REST format. Transformable also provides URLs and 
+<h1>AContent Web Service API</h1>
+<p>Interface applications with the AContent through its experimental API. This is version 0.1, dated Jun 2010.</p>
+<p>AContent provides search web service API that allows users to send request to AContent to search through 
+the repository by keywords. AContent returns the search results in REST format. AContent also provides URLs and 
 <a href="<?php echo TR_BASE_HREF;?>documentation/oauth_web_server">OAuth web service API</a> to view, download, import, 
-export courses at Transformable. </p>
+export courses at AContent. </p>
 
 <h2 id="TableOfContents">Table of Contents</h2>
 
@@ -38,7 +38,7 @@ export courses at Transformable. </p>
           <ul>
             <li><a href="<?php echo TR_BASE_HREF.'documentation/web_service_api.php'; ?>#view">View course</a></li>
             <li><a href="<?php echo TR_BASE_HREF.'documentation/web_service_api.php'; ?>#download">Download course</a></li>
-            <li><a href="<?php echo TR_BASE_HREF.'documentation/web_service_api.php'; ?>#import">Import course into Transformable</a></li>
+            <li><a href="<?php echo TR_BASE_HREF.'documentation/web_service_api.php'; ?>#import">Import course into AContent</a></li>
           </ul>
         </li>
       </ul>
@@ -47,12 +47,12 @@ export courses at Transformable. </p>
 <div id="search">
 <h2 id="request_format">Search request format</h2>
 
-<p>Below is a table of the parameter you can use to send a request to Transformable to search through the repository
-by keywords. Transformable returns the matching results in REST format.</p>
+<p>Below is a table of the parameter you can use to send a request to AContent to search through the repository
+by keywords. AContent returns the matching results in REST format.</p>
 
 <p>URL:<br />
 <kbd><?php echo TR_BASE_HREF; ?>search.php</kbd> <br />
-(replace with the address of your own server if you want to call a private instance of the Transformable)</p>
+(replace with the address of your own server if you want to call a private instance of the AContent)</p>
 
 <table class="data" rules="all">
 <tbody><tr>
@@ -61,7 +61,7 @@ by keywords. Transformable returns the matching results in REST format.</p>
 
 <tr>
   <th>id</th>
-  <td>The "Web Service ID" generated once successfully registering into Transformable. 
+  <td>The "Web Service ID" generated once successfully registering into AContent. 
   This ID is a 32 characters long string. It can always be retrieved from user's "Profile" page.</td>
   <td>None, must be given.</td>
 </tr>
@@ -163,27 +163,27 @@ by keywords. Transformable returns the matching results in REST format.</p>
 <p>This URL returns a zipped common cartridge of the course.</p>
 </div>
 
-<h2 id="import">Import common cartridge or content package into Transformable</h2>
-<p>A Transformable user ID with author privilege is required for this action. If you
-don't have an Transformable ID yet, register at <a href="<?php echo TR_BASE_HREF;?>register.php">here</a>.</p> 
+<h2 id="import">Import common cartridge or content package into AContent</h2>
+<p>A AContent user ID with author privilege is required for this action. If you
+don't have an AContent ID yet, register at <a href="<?php echo TR_BASE_HREF;?>register.php">here</a>.</p> 
 
-<p>Once the Transformable user ID is ready, the first step is to go through 
+<p>Once the AContent user ID is ready, the first step is to go through 
 <a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php">
-Transformable OAuth authentication process</a> to get an OAuth access token. The 
-authentication process prompts user to login with the Transformable user ID and an
+AContent OAuth authentication process</a> to get an OAuth access token. The 
+authentication process prompts user to login with the AContent user ID and an
 access token is returned at the end of the authentication process. This access 
 token must be sent along with the import request for user privilege check. The access
 token can be used repeatedly till its expire threshold is reached. After the
 user is confirmed as an valid author, the common cartridge or content package retrieved
-from the request "url" parameter is imported as a new Transformable course. The course
+from the request "url" parameter is imported as a new AContent course. The course
 ID of the newly-imported course is returned at success.</p>
 
 <kbd><?php echo TR_BASE_HREF;?>home/ims/ims_import.php?oauth_token=xxx&url=xxx</kbd><br />
 
-<p>oauth_token is the valid access token returned by Transformable OAuth server.<br />
+<p>oauth_token is the valid access token returned by AContent OAuth server.<br />
 url points to a zip file of a common cartridge or a content package.<br />
 Refer to <a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php#import">
-Import Common Cartridge or Content Package into Transformable via OAuth</a> for detailed 
+Import Common Cartridge or Content Package into AContent via OAuth</a> for detailed 
 request parameters and success/fail responses.</p>
 
 </div>

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -33,9 +33,9 @@ if (isset($_POST['submit'])) {
 
 print_progress($step);
 ?>
-<p>Transformable is licensed under the terms of the <a href="http://transformable.ca/services/licensing_gpl.php" target="_new">GNU General Public License (GPL)</a>, which essentially allows for the free distribution and modification of Transformable. Transformable has its own license that governs its use outside the bounds of the GPL.</p>
+<p>AContent is licensed under the terms of the <a href="http://atutor.ca/services/licensing_gpl.php" target="_new">GNU General Public License (GPL)</a>, which essentially allows for the free distribution and modification of AContent. AContent has its own license that governs its use outside the bounds of the GPL.</p>
 
-<p>If you do not agree to the Terms of Use then you may not install and use Transformable.</p>
+<p>If you do not agree to the Terms of Use then you may not install and use AContent.</p>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="action" value="process" />

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* ACConntent                                                       */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -24,7 +24,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 
-<p>Transformable does not appear to be installed. <a href="index.php">Continue on to the installation</a>.</p>
+<p>AContent does not appear to be installed. <a href="index.php">Continue on to the installation</a>.</p>
 
 
 <?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>

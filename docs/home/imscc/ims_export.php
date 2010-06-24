@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                       */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -31,7 +31,7 @@ if ($course_id == 0 && $cid == 0)
 }
 
 if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
-	/* export from transformable to atutor */
+	/* export from AContent to atutor */
 
 	require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 	if (!authenticate(TR_PRIV_ADMIN, TR_PRIV_RETURN)) {
@@ -234,7 +234,7 @@ $first = $content[$top_content_parent_id][0];
 $test_ids = array();	//global array to store all the test ids
 
 // Modified by Cindy Qi Li on Jan 12, 2010
-// Transformable does not support glossary
+//AContent does not support glossary
 //TODO**************BOLOGNA***************REMOVE ME***************************/
 /*
 //Exoprt Forum:
@@ -304,7 +304,7 @@ $vcard = new vCard();
 if (isset($row)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
-	$vcard->setNote('Originated from an Transformable at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
+	$vcard->setNote('Originated from an AContent at '.TR_BASE_HREF.'. See ATutor.ca for additional information.');
 	$vcard->setURL($row['website']);
 
 	$imsmanifest_xml = str_replace('{VCARD}', $vcard->getVCard(), $imsmanifest_xml);
@@ -316,7 +316,7 @@ if (isset($row)) {
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 
 /* Commented by Cindy Qi Li on Jan 12, 2010
-// Transformable does not have glossary and forums (discussion tools)
+// AContent does not have glossary and forums (discussion tools)
 if ($glossary_xml) {
 	$zipfile->create_dir('resources/GlossaryItem/');
 	$zipfile->add_file($glossary_xml,  'resources/GlossaryItem/glossary.xml');

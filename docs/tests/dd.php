@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -52,7 +52,7 @@ for ($i=0; $i < 10; $i++) {
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo AT_print($row['question'], 'tests_questions.question'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>" />
-	<meta name="Generator" content="Transformable - Copyright 2010 by http://atutor.ca" />
+	<meta name="Generator" content="AContent - Copyright 2010 by http://atutor.ca" />
 	<base href="<?php echo TR_BASE_HREF . $content_base_href; ?>" />
 	<script type="text/javascript" src="<?php echo TR_BASE_HREF; ?>include/jscripts/infusion/InfusionAll.js"></script>
 	<script type="text/javascript" src="<?php echo TR_BASE_HREF; ?>include/jscripts/interface.js"></script>

@@ -1,6 +1,6 @@
 <?php
 /************************************************************************/
-/* Transformable                                                        */
+/* AContent                                                        */
 /************************************************************************/
 /* Copyright (c) 2009                                                   */
 /* Adaptive Technology Resource Centre / University of Toronto          */
@@ -119,7 +119,7 @@ function print_organizations($parent_id,
 			/* @See: include/lib/format_content.inc.php */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
 			/* Commented by Cindy Qi Li on Jan 12, 2010
-			 * Transformable does not support glossary
+			 * AContent does not support glossary
 			// get all the glossary terms used
 			$terms = find_terms($content['text']);
 			if (is_array($terms)) {
