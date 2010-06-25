@@ -79,17 +79,16 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 			<tbody>
 	<?php foreach ($this->privs_rows as $privs_row) { ?>
-			<tr id="rdel_privileges_<?php echo $privs_row['privilege_id']; ?>">
-				<td onmousedown="document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked = !document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked; togglerowhighlight(document.getElementById('rdel_privileges_<?php echo $privs_row['privilege_id']; ?>'), 'del_privileges_<?php echo $privs_row['privilege_id']; ?>');" 
-			    onkeydown="document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked = !document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked; togglerowhighlight(document.getElementById('rdel_privileges_<?php echo $privs_row['privilege_id']; ?>'), 'del_privileges_<?php echo $privs_row['privilege_id']; ?>');">
-			    	<input type="checkbox" name="del_privileges_id[]" value="<?php echo $privs_row['privilege_id']; ?>" id="del_privileges_<?php echo $privs_row['privilege_id']; ?>" 
-				           onmouseup="this.checked=!this.checked" onkeyup="this.checked=!this.checked" 
-				           <?php if (is_array($_POST['del_privileges_id']) && in_array($privs_row['privilege_id'], $_POST['del_privileges_id'])) echo 'checked="checked"';?> />
+			<tr id="rdp_<?php echo $privs_row['privilege_id']; ?>"
+			    onmousedown="document.input_form['dp_<?php echo $privs_row['privilege_id']; ?>'].checked = !document.input_form['dp_<?php echo $privs_row['privilege_id']; ?>'].checked; togglerowhighlight(this, 'dp_<?php echo $privs_row['privilege_id']; ?>');" 
+			    onkeydown="document.input_form['dp_<?php echo $privs_row['privilege_id']; ?>'].checked = !document.input_form['dp_<?php echo $privs_row['privilege_id']; ?>'].checked; togglerowhighlight(this, 'dp_<?php echo $privs_row['privilege_id']; ?>');">
+				<td>
+			    	<input type="checkbox" name="del_privileges_id[]" value="<?php echo $privs_row['privilege_id']; ?>" id="dp_<?php echo $privs_row['privilege_id']; ?>" 
+				           onmouseup="this.checked=!this.checked" onkeyup="this.checked=!this.checked" />
 				</td>
 
-				<td onmousedown="document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked = !document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked; togglerowhighlight(document.getElementById('rdel_privileges_<?php echo $privs_row['privilege_id']; ?>'), 'del_privileges_<?php echo $privs_row['privilege_id']; ?>');" 
-			    onkeydown="document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked = !document.input_form['del_privileges_<?php echo $privs_row['privilege_id']; ?>'].checked; togglerowhighlight(document.getElementById('rdel_privileges_<?php echo $privs_row['privilege_id']; ?>'), 'del_privileges_<?php echo $privs_row['privilege_id']; ?>');">
-					<label for="del_privileges_<?php echo $privs_row['privilege_id']; ?>"><?php echo $privs_row['description']; ?></label>
+				<td>
+					<label for="dp_<?php echo $privs_row['privilege_id']; ?>"><?php echo $privs_row['description']; ?></label>
 				</td>
 
 				<td>
@@ -130,13 +129,16 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 			
 			<tbody>
 	<?php foreach ($this->privs_to_add_rows as $privileges_to_add_row) { ?>
-			<tr onmousedown="document.input_form['add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked = !document.input_form['add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked; togglerowhighlight(this, 'add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>');" 
-			    onkeydown="document.input_form['add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked = !document.input_form['add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked; togglerowhighlight(this, 'add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>');"
-			    id="radd_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>">
-				<td><input type="checkbox" name="add_privileges_id[]" value="<?php echo $privileges_to_add_row['privilege_id']; ?>" id="add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>" 
-				           onmouseup="this.checked=!this.checked" onkeyup="this.checked=!this.checked" 
-				           <?php if (is_array($_POST['add_privileges_id']) && in_array($privileges_to_add_row['privilege_id'], $_POST['add_privileges_id'])) echo 'checked="checked"';?> /></td>
-				<td><label for="add_privileges_<?php echo $privileges_to_add_row['privilege_id']; ?>"><?php echo $privileges_to_add_row['description']; ?></label></td>
+			<tr onmousedown="document.input_form['ap_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked = !document.input_form['ap_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked; togglerowhighlight(this, 'ap_<?php echo $privileges_to_add_row['privilege_id']; ?>');" 
+			    onkeydown="document.input_form['ap_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked = !document.input_form['ap_<?php echo $privileges_to_add_row['privilege_id']; ?>'].checked; togglerowhighlight(this, 'ap_<?php echo $privileges_to_add_row['privilege_id']; ?>');"
+			    id="rap_<?php echo $privileges_to_add_row['privilege_id']; ?>">
+				<td>
+				  <input type="checkbox" name="add_privileges_id[]" value="<?php echo $privileges_to_add_row['privilege_id']; ?>" id="ap_<?php echo $privileges_to_add_row['privilege_id']; ?>" 
+				           onmouseup="this.checked=!this.checked" onkeyup="this.checked=!this.checked" />
+				</td>
+				<td>
+				  <label for="ap_<?php echo $privileges_to_add_row['privilege_id']; ?>"><?php echo $privileges_to_add_row['description']; ?></label>
+				</td>
 			</tr>
 	<?php } // end of foreach?>
 			</tbody>
