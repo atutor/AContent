@@ -20,6 +20,8 @@ body {
   font-size:.9em;
   margin:0px;
   background-color:  #EDE7C2;
+  
+    background-color:  #a3a8b3;
   /* background-image:url('images/texture_bg.png'); */
 }
 
@@ -44,7 +46,7 @@ p a:active {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    color: #A50707;
+    color: #000000;
     clear: right;
     font: 100% Verdana, Helvetica, Arial, sans-serif;
   font-weight: bold;
@@ -446,17 +448,18 @@ div#subnavlistcontainer {
 	width:95%;
 	margin:auto;
 	height:auto;
-height:1.7em;
+height:1.5em;
 
 
 }
 
 ul#subnavlist {
-	padding-top: 3px;
+
+	padding-top: .3em;
 	margin-top: 0px;
 	margin-left:1.5em;
 	font-family: Verdana,Helvetica,Arial,serif;
-
+font-size:.8em;
 
 }
 
@@ -1062,12 +1065,12 @@ background-color:#ffffff;
 background-image:url('images/books_top.jpg');
 background-repeat:repeat-x;
 border:thin solid #cccccc;
-width:95%;
-margin-top:.5em;
+width:97%;
+margin-top:.2em;
 margin-left:auto;
 margin-right:auto;
--moz-border-radius:.5em .5em .5em .5em;
-border-radius:.5em .5em .5em .5em;
+-moz-border-radius:.8em .8em .8em .8em;
+border-radius:.8em .8em .8em .8em;
 -moz-box-shadow:.1em .1em .1em #999999;
 box-shadow: .1em .1em .1em #999999;
 }
@@ -1115,6 +1118,8 @@ box-shadow: .1em .1em .1em #999999;
   text-decoration: none;
   padding-left: 1em;
   padding-right: 1em;
+    font-weight:700;
+      text-decoration:underline;
   margin-left:.5em;
   border-left:thin solid #cccccc;
   border-right:thin solid #cccccc;
@@ -1129,6 +1134,7 @@ box-shadow: .1em .1em .1em #999999;
 {
   color: #fff;
   background: #eeeeee;
+  text-decoration:underline;
 }
 
 .navigation a:hover
@@ -1138,6 +1144,8 @@ box-shadow: .1em .1em .1em #999999;
 .navigation a:active span
 {
   background-color:#eeeeee;
+
+
 }
 
 .navigation ul
