@@ -37,11 +37,10 @@ if (!is_array($my_courses)) {
 	foreach ($my_courses as $row) {
 		// only display the first 200 character of course description
 
-		$output .= '  <li>'."\n";
 		if ($row['role'] == TR_USERROLE_AUTHOR) {
-			$output .= '    <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/my_own_course.gif" alt="'. _AT('my_authoring_course').'" title="'. _AT('my_authoring_course').'" />'."\n";
+			$output .= ' <li class="mine" title="'. _AT('my_authoring_course').'"> '."\n";
 		} else {
-			$output .= '    <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/others_course.png" alt="'. _AT('others_course').'" title="'. _AT('others_course').'" />'."\n";
+			$output .= ' <li class="theirs" title="'. _AT('others_course').'">'."\n";
 		}
 		$output .= '    <a href="'. TR_BASE_HREF.'home/course/index.php?_course_id='. $row['course_id'].'">'.$row['title'].'</a>'."\n";
 		if ($row['role'] == TR_USERROLE_VIEWER) {
