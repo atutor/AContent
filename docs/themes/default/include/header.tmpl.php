@@ -97,11 +97,6 @@ $starttime = $mtime;
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-	
-    <div id="logo">
-      <!-- <a href="http://www.atutor.ca/"><img width="100" src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/logo.png" height="30" alt="AContent  Logo" style="border:none;" /></a> -->
-    </div>
-  
   <div id="banner">
     <span id="logininfo">
         <?php

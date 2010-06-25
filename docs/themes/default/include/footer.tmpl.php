@@ -67,6 +67,9 @@ if($languageManager->getNumEnabledLanguages() > 1) {
 
   <div class="bottom"><span></span></div><!--  bottom for liquid-round theme -->
   </div>
+      <div id="logo">
+      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
+    </div>
 </body>
 </html>
 
