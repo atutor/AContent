@@ -503,8 +503,8 @@ div#subnavbacktopage {
 a#guide {
 	background-image: url('images/guide.jpg'); 
 	background-repeat: no-repeat; 
-	background-position: 15px 2px;
-	padding: 3px 10px 1px 35px;
+	background-position: 2px 2px;
+	padding: 3px 10px 1px 25px;
 	text-decoration:none;
 	font-size:0.85em;
 	float:right;
@@ -831,7 +831,7 @@ div.box {
   background-color: #F8F8F8;
   color: black;
   border: 1px solid #B8AE9C;
-  font-size:0.85em;
+  font-size:0.8em;
   font-weight: normal;
   padding:2px;
   -moz-border-radius:.0em .0em .5em .5em;
@@ -1166,9 +1166,10 @@ box-shadow: .1em .1em .1em #999999;
 
 }
 #logo{
-  float:right;
-  margin-right:1em;
-  margin-top:-1em;
+  float:left;
+  clear:right;
+margin-left:2em;
+
 }
 
 
@@ -1218,8 +1219,23 @@ li.course {
 
 ol li {
   list-style-image:none;
-  list-style-position:outside;
+  list-style-position:inside;
   list-style-type:none;
+  margin-left:1.7em;
+}
+div.box ol li.mine{
+list-style-position:outside;
+list-style-image: url('images/my_own_course.gif');
+list-style-type: disc;
+ /*list-style: disc inside url("themes/default/images/my_own_course.gif"); */
+
+}
+div.box ol li.theirs{
+list-style-position:outside;
+list-style-image: url('images/others_course.png');
+list-style-type: disc;
+ /*list-style: disc inside url("themes/default/images/my_own_course.gif"); */
+
 }
 
 .results h3 {
@@ -1402,7 +1418,10 @@ div.shortcuts{
 	-moz-box-shadow:.1em .1em .0em #999999;
 	 box-shadow: .1em .1em  .0em #999999;
 	margin-right:2em;
-	padding:.1em;
+	padding-left:.5em;
+	padding-right:.5em;
+	padding-bottom:.2em;
+
 }
 .shortcuts ul {
 	position: relative;
