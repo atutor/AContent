@@ -38,9 +38,9 @@ if (!is_array($my_courses)) {
 		// only display the first 200 character of course description
 
 		if ($row['role'] == TR_USERROLE_AUTHOR) {
-			$output .= ' <li class="mine" title="'. _AT('my_authoring_course').'"> '."\n";
+			$output .= ' <li class="mine" title="'. _AT('my_authoring_course').': '. $row['title'].'"> '."\n";
 		} else {
-			$output .= ' <li class="theirs" title="'. _AT('others_course').'">'."\n";
+			$output .= ' <li class="theirs" title="'. _AT('others_course').': '. $row['title'].'">'."\n";
 		}
 		$output .= '    <a href="'. TR_BASE_HREF.'home/course/index.php?_course_id='. $row['course_id'].'">'.$row['title'].'</a>'."\n";
 		if ($row['role'] == TR_USERROLE_VIEWER) {
