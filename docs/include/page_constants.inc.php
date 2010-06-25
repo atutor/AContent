@@ -100,7 +100,7 @@ $_pages['documentation/oauth_server_api.php']['parent'] = TR_NAV_PUBLIC;
 
 $_pages['tests/preview.php']['title_var'] = 'preview_questions';
 $_pages['tests/preview.php']['parent']    = TR_NAV_PUBLIC;
-$_pages['tests/preview.php']['guide']     = 'TR_HELP_PREVIEW';
+//$_pages['tests/preview.php']['guide']     = 'TR_HELP_PREVIEW';
 
 // home pages
 if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PRIV_HOME]))
