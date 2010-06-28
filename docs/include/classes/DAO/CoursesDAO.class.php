@@ -128,7 +128,7 @@ class CoursesDAO extends DAO {
 			return false;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
-		           SET ".$fieldName."='".$addslashes($fieldValue).",
+		           SET ".$fieldName."='".$addslashes($fieldValue)."',
 		               modified_date = now()
 		         WHERE course_id = ".$courseID;
 		
