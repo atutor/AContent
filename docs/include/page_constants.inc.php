@@ -344,6 +344,8 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	$_pages['tests/question_db.php']['parent']    = 'tests/index.php';
 	$_pages['tests/question_db.php']['guide']     = 'TR_HELP_QUESTION_DB';
 	
+	$_pages['tests/preview.php']['parent']    = 'tests/index.php';
+	
 	$_pages['tests/question_cats.php']['title_var'] = 'question_categories';
 	$_pages['tests/question_cats.php']['parent']    = 'tests/index.php';
 	$_pages['tests/question_cats.php']['children']  = array('tests/question_cats_manage.php');
