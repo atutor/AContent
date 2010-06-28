@@ -1083,3 +1083,5 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 6, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (3, 10, 0);
 
+# insert default atutor account
+INSERT INTO `users` (`user_id`, `login`, `password`, `user_group_id`, `first_name`, `last_name`, `web_service_id`, `status`, `create_date`) VALUES (1, 'ATutor', '0cbab2aec26a53b0107487d43b1b8eb29384ad10', 2, 'ATutor', 'ATutor', '90c3cd6f656739969847f3a99ac0f3c7', 1, now());
