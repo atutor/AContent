@@ -50,6 +50,10 @@ else if($_POST['submit']){
 		if ($course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $_POST['title'], $_POST['description'], 
 		                    null, null, null, $_POST['copyright'], $_POST['pri_lang'], null, null))
 		{
+			// create the course content directory
+			$path = TR_CONTENT_DIR . $course_id . '/';
+			@mkdir($path, 0700);
+			
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$course_id);
 			exit;
