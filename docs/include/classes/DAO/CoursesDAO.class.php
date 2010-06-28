@@ -85,6 +85,11 @@ class CoursesDAO extends DAO {
 				$sql = "INSERT INTO ".TABLE_PREFIX."user_courses (user_id, course_id, role, last_cid)
 				        VALUES (".$user_id.", ".$course_id.", ".TR_USERROLE_AUTHOR.", 0)";
 				$this->execute($sql);
+				
+				// create the course content directory
+				$path = TR_CONTENT_DIR . $course_id . '/';
+				@mkdir($path, 0700);
+			
 				return $course_id;
 			}
 		}
