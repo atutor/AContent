@@ -20,9 +20,9 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 $_config_defaults = array();
 $_config_defaults['site_name']          = '';
 $_config_defaults['contact_email']      = '';
-$_config_defaults['max_file_size']      = 1048576;  // 1MB
-$_config_defaults['max_course_size']    = 10485760; // 10 MB
-$_config_defaults['max_file_size']      = 1048576;  // 1MB
+$_config_defaults['max_file_size']      = 10485760;  // 10MB
+$_config_defaults['max_course_size']    = 104857600; // 100 MB
+$_config_defaults['max_file_size']      = 10485760;  // 10MB
 $_config_defaults['illegal_extentions'] = 'exe|asp|php|php3|bat|cgi|pl|com|vbs|reg|pcd|pif|scr|bas|inf|vb|vbe|wsc|wsf|wsh';
 $_config_defaults['default_language']   = 'en';
 $_config_defaults['use_captcha']		= 0;	//use captcha?
