@@ -1,13 +1,13 @@
 <?php
 /************************************************************************/
-/* AContent                                                        									*/
+/* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   								*/
-/* Inclusive Design Institute   										                */
-/*                                                                      							                */
-/* This program is free software. You can redistribute it and/or        				        */
-/* modify it under the terms of the GNU General Public License          			        */
-/* as published by the Free Software Foundation.                         				        */
+/* Copyright (c) 2010                                                   */
+/* Inclusive Design Institute                                           */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
 define('PCLZIP_TEMPORARY_DIR', TR_CONTENT_DIR.'export'.DIRECTORY_SEPARATOR);  //constant for the temp folder.
