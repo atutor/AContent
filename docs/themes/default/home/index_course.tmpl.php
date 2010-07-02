@@ -43,7 +43,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	<input type="text" name="search_text" id="search_text" value="<?php if (isset($_REQUEST['search_text'])) echo $_REQUEST['search_text']; ?>" size="50"   />
 <?php if (is_array($this->categories)) { // print category dropdown list box?>
     <select name="catid">
-      <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected'; ?>><?php echo _AT('all_categories'); ?></option>
+      <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
       <option value="">---------------------------------</option>
 <?php foreach ($this->categories as $category) {?>
       <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
