@@ -8,7 +8,7 @@
 set now = `date +"%Y_%m_%d"`
 set acontent_dir = "AContent_$now"
 set bundle = "AContent"
-set svndir = "http://atutorsvn.atrc.utoronto.ca/repos/transformable/trunk/docs/"
+set svndir = "http://atutorsvn.atrc.utoronto.ca/repos/transformable2/trunk/docs/"
 set svnexec = "svn"
 
 echo "\033[1mAContent Bundle Script [for CVS 1.3.1+] \033[0m"
@@ -54,7 +54,7 @@ sleep 1
 echo "\nDumping language_text"
 rm $acontent_dir/AContent/install/db/language_text.sql
 echo "DROP TABLE language_text;" > $acontent_dir/AContent/install/db/language_text.sql
-wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $acontent_dir/AContent/install/db/language_text.sql
+wget --output-document=- http://atutor.ca/atutor/translate/dump_lang_acontent.php >> $acontent_dir/AContent/install/db/language_text.sql
 
 sleep 1
 
@@ -65,15 +65,15 @@ sleep 1
 
 
 
-echo "\nDisabling AT_DEVEL if enabled."
-sed "s/define('AT_DEVEL', 1);/define('AT_DEVEL', 0);/" $acontent_dir/AContent/include/vitals.inc.php > $acontent_dir/vitals.inc.php
+echo "\nDisabling TR_DEVEL if enabled."
+sed "s/define('TR_DEVEL', 1);/define('TR_DEVEL', 0);/" $acontent_dir/AContent/include/vitals.inc.php > $acontent_dir/vitals.inc.php
 rm $acontent_dir/AContent/include/vitals.inc.php
 echo "\nDisabling AT_DEVEL_TRANSLATE if enabled."
 sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $acontent_dir/vitals.inc.php > $acontent_dir/AContent/include/vitals.inc.php
 sleep 1
 
 echo -n "<?php "'$svn_data = '"'" >> $acontent_dir/AContent/svn.php
-$svnexec log  -q -r HEAD http://atutorsvn.atrc.utoronto.ca/repos/transformable/trunk/  >> $acontent_dir/AContent/svn.php
+$svnexec log  -q -r HEAD http://atutorsvn.atrc.utoronto.ca/repos/transformable2/trunk/  >> $acontent_dir/AContent/svn.php
 echo -n "';?>" >> $acontent_dir/AContent/svn.php
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $acontent_dir/AContent/"
