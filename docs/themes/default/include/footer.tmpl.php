@@ -50,14 +50,14 @@ if($languageManager->getNumEnabledLanguages() > 1) {
         <br/><br/>
       </div>
 <?php } // end of displaying language selection ?>
-		
+
       <div align="center" style="clear:both;margin-left:auto; width:30em;margin-right:auto;">
         <a href="<?php echo $_base_path; ?>documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
           &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="<?php echo $_base_path; ?>documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
         <br /><br />
       </div>
-		
+		<br style="clear:both;" />
       <div style="margin-left:auto; margin-right:auto; width:20em;">
         <small><?php if (isset($this->course_copyright)) echo $this->course_copyright.'<br />'; echo _AT("copyright"); ?></small><br />
       </div>
@@ -65,7 +65,8 @@ if($languageManager->getNumEnabledLanguages() > 1) {
     </div>
   </div> <!--  end center-content div -->
 
-  <div class="bottom"><span></span></div><!--  bottom for liquid-round theme -->
+  <div class="bottom"></div>
+  <!--  bottom for liquid-round theme -->
   </div>
       <div id="logo">
       <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
