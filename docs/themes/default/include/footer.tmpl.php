@@ -52,9 +52,9 @@ if($languageManager->getNumEnabledLanguages() > 1) {
 <?php } // end of displaying language selection ?>
 		
       <div align="center" style="clear:both;margin-left:auto; width:30em;margin-right:auto;">
-        <a href="documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
+        <a href="<?php echo $_base_path; ?>documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
           &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
+        <a href="<?php echo $_base_path; ?>documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
         <br /><br />
       </div>
 		
