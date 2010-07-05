@@ -1213,7 +1213,7 @@ margin-right:3em;
 
 li.course {
   font-family:arial,sans-serif;
-  font-size:small;
+  font-size:smaller;
   margin:1em 0;
 }
 
@@ -1240,7 +1240,7 @@ list-style-type: disc;
 
 .results h3 {
   display:inline;
-  font-size:medium;
+  font-size:small;
   font-weight:normal;
   margin:0;
   padding:0;

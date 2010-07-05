@@ -40,7 +40,7 @@ function encrypt_password() {
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
 	    <div  style="width:60%; margin-left:auto; margin-right:auto;">  
-	    <p><?php echo _AT('login_text'). _AT('required_field_text') ;?></p>
+	    <p><small><?php echo  _AT('required_field_text'); ?></small></p>
 	    <dl class="form_layout">
 	    <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name_or_email'); ?></label></dt>
 	    <dd><input type="text" name="form_login" size="50" id="login"  class="formfield" /></dd>
@@ -51,6 +51,7 @@ function encrypt_password() {
 	    <input type="submit" name="submit" value="<?php echo _AT('login'); ?>" class="submit" onclick="return encrypt_password();" /> 		
 	    </p>
 	  </div>
+ <p  style="font-size:small; width:60%; margin-left:auto; margin-right:auto;"><span style="font-size:x-small"><?php echo _AT('login_text');?></span></p>
 	</fieldset>			
 	</div>
 </form>
