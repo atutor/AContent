@@ -105,7 +105,7 @@ foreach ($path as $i=>$page) {
 	}
 	
 	if ($contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER)
-		$content_url = 'home/course/edit_content_folder.php?_cid='.$page['content_id'];
+		$content_url = 'home/editor/edit_content_folder.php?_cid='.$page['content_id'];
 	else
 		$content_url = 'home/course/content.php?_cid='.$page['content_id'];
 		
@@ -114,12 +114,17 @@ foreach ($path as $i=>$page) {
 		$_pages[$content_url]['parent']   = 'home/index.php';
 	} else {
 		$_pages[$content_url]['title']    = $page['content_number'] . $page['title'];
-		$_pages[$content_url]['parent']   = 'home/course/edit_content_folder.php?_cid='.$parent;
+		if (isset($_pages['home/editor/edit_content_folder.php?_cid='.$parent])) {
+			$_pages[$content_url]['parent']   = 'home/editor/edit_content_folder.php?_cid='.$parent;
+		} else {
+			$_pages[$content_url]['parent']   = 'home/course/content.php?_cid='.$parent;
+		}
 	}
 
 	$_pages[$content_url]['ignore'] = true;
 	$parent = $page['content_id'];
 }
+
 $last_page = array_pop($_pages);
 $_pages['home/course/content.php'] = $last_page;
 

@@ -1364,7 +1364,7 @@ foreach ($items as $item_id => $content_info)
 	$items[$item_id]['real_content_id'] = $contentDAO->Create($_course_id, intval($content_parent_id), 
 	                    ($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1),
 	                    0, $content_formatting, "", $content_info['new_path'], $content_info['title'],
-	                    $content, $head, 1, $content_info['test_message'], 0, $content_folder_type);
+	                    $content, $head, 1, $content_info['test_message'], $content_folder_type);
 
 //	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
 //	      . '(course_id, 
