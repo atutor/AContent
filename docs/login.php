@@ -17,7 +17,24 @@ require_once(TR_INCLUDE_PATH. 'classes/DAO/UsersDAO.class.php');
 
 $usersDAO = new UsersDAO();
 
-// $_SESSION['token'] is used to encrypt the password from web form
+// For security reasons the token has to be generated anew before each login attempt.
+// The entropy of SHA-1 input should be comparable to that of its output; in other words, the more randomness you feed it the better.
+/***
+* Remove comments below and add comments to the 2 lines in the following block to enable a remote login form.
+*/
+//if (isset($_POST['token']))
+//{
+//	$_SESSION['token'] = $_POST['token'];
+//}
+//else
+//{
+//	if (!isset($_SESSION['token']))
+//		$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
+//}
+
+/***
+* Add comments 2 lines below to enable a remote login form.
+*/
 if (!isset($_SESSION['token']))
 	$_SESSION['token'] = sha1(mt_rand() . microtime(TRUE));
 
