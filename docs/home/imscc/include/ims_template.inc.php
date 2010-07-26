@@ -351,7 +351,11 @@ function print_organizations($parent_id,
 					if (!empty($test_zipped_files) && in_array($file_path, $test_zipped_files)){
 						$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 					} else {
-						$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+						if (preg_match('/^http[s]?\:/', $file) == 1){
+							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
+						} else {
+							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+						}
 					}
 				}
 				/* check if this file is one of the test xml file, if so, we need to add the dependency
@@ -362,6 +366,11 @@ function print_organizations($parent_id,
 					$test_zipped_files[] = $file;
 				}
 			}
+			
+			/******************************
+			 * http://www.atutor.ca/atutor/mantis/view.php?id=4383 
+		     */
+			$my_files = array();
 			
 			/******************************/
 			//add it to the resources section if it hasn't been added.  
