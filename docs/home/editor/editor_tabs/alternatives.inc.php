@@ -162,7 +162,8 @@ else
 			$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources (content_id, resource, language_code) 
 			        VALUES (".$cid.", '".$primary_resource."', '".$_SESSION['lang']."')";
 //			$result	= mysql_query($sql, $db);
-			$primary_resource_id = $dao->execute($sql);
+			$dao->execute($sql);
+			$primary_resource_id = mysql_insert_id();
 		}
 		else
 		{
