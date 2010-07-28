@@ -23,12 +23,13 @@ if ($_course_id <= 0)
 	exit;
 }
 
-$coursesDAO = new CoursesDAO();
+$msg->addInfo('NO_CONTENT_IN_COURSE');
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 
-$savant->assign('course_id', $_course_id);
-$savant->display('home/course/course_start.tmpl.php');
-
+if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+	$savant->assign('course_id', $_course_id);
+	$savant->display('home/course/course_start.tmpl.php');
+}
 require(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>
