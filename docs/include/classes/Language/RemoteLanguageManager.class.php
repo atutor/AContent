@@ -26,10 +26,10 @@ class RemoteLanguageManager extends LanguageManager {
 
 	function RemoteLanguageManager() {
 		$version = str_replace('.','_',VERSION);
-		$language_xml = @file_get_contents('http://update.atutor.ca.ca/transformable/languages/'.$version.'/languages.xml');
+		$language_xml = @file_get_contents('http://update.atutor.ca.ca/acontent/languages/'.$version.'/languages.xml');
 		if ($language_xml === FALSE) {
 			// fix for bug #2896
-			$language_xml = @file_get_contents('http://update.atutor.ca/transformable/languages/1_5_3/languages.xml');
+			$language_xml = @file_get_contents('http://update.atutor.ca/acontent/languages/1_5_3/languages.xml');
 		}
 		if ($language_xml !== FALSE) {
 
