@@ -30,5 +30,9 @@ if (!($test_row = $testsDAO->get($tid))) {
 }
 
 //export
-test_qti_export($tid, $test_row['title']);
+if (!test_qti_export($tid, $test_row['title'])) {
+	$msg->addInfo('TEST_NO_QUESTION');
+	header('Location: index.php?_course_id='.$_course_id);
+	exit;
+}
 ?>

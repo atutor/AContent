@@ -333,7 +333,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
 	$question_rows = $testsQuestionsAssocDAO->getByTestID($tid);
 
-	if (!is_array($question_rows)) return;
+	if (!is_array($question_rows)) return false;
 	else {
 		foreach ($question_rows as $row) {
 			$obj = TestQuestions::getQuestion($row['type']);
