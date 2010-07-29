@@ -23,8 +23,7 @@ $cid = $_content_id;
 
 if ($cid == 0) {
 	require(TR_INCLUDE_PATH.'header.inc.php');
-	$missing_fields[] = _AT('content_id');
-	$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+	$msg->printInfos('NO_PAGE_CONTENT');
 	require (TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
