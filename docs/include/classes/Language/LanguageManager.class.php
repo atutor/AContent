@@ -269,7 +269,8 @@ class LanguageManager {
 	function import($filename) {
 		require_once(TR_INCLUDE_PATH . 'lib/pclzip.lib.php');
 		require_once(TR_INCLUDE_PATH . 'classes/Language/LanguageParser.class.php');
-
+		require_once(TR_INCLUDE_PATH . 'classes/DAO/LanguagesDAO.class.php');
+		
 		global $languageManager, $msg;
 
 		$import_path = TR_CONTENT_DIR . 'import/';
@@ -285,12 +286,15 @@ class LanguageManager {
 		$languageParser->parse($language_xml);
 		$languageEditor =& $languageParser->getLanguageEditor(0);
 
-		if ($languageManager->exists($languageEditor->getCode())) {
+		$lang_code = $languageEditor->getCode();
+		if ($languageManager->exists($lang_code)) {
 			$msg->addError('LANG_EXISTS');
 		}
 
 		if (!$msg->containsErrors()) {
 			$languageEditor->import($import_path . 'language_text.sql');
+			$languagesDAO = new LanguagesDAO();
+			$languagesDAO->UpdateField($lang_code, "status", TR_STATUS_ENABLED);
 			$msg->addFeedback('IMPORT_LANG_SUCCESS');
 			
 			$version_in_pack = $languageEditor->getTransformableVersion();

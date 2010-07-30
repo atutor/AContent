@@ -75,13 +75,12 @@ class LanguagesDAO extends DAO {
 	* Update the given field with the given value by language_code and charset
 	* @access  public
 	* @param   $langCode
-	*          $charset
 	*          $fieldName
 	*          $fieldValue
 	* @return  true / false
 	* @author  Cindy Qi Li
 	*/
-	function UpdateField($langCode, $charset, $fieldName, $fieldValue)
+	function UpdateField($langCode, $fieldName, $fieldValue)
 	{
 		global $addslashes;
 		
@@ -90,8 +89,7 @@ class LanguagesDAO extends DAO {
 		
 		$sql = "UPDATE ".TABLE_PREFIX."languages 
 		           SET ".$fieldName."='".$addslashes($fieldValue)."'
-		         WHERE language_code = '".$langCode."'
-		           AND charset = '".$charset."'";
+		         WHERE language_code = '".$langCode."'";
 		return $this->execute($sql);
 	}
 
