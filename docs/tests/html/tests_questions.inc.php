@@ -50,8 +50,6 @@ else if (isset($category_row)) {
 
 $cols = 3;
 ?>
-
-	<div class="input-form" style="width:90%;">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('category'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
@@ -67,10 +65,9 @@ $cols = 3;
 			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
-		</form>
+	</form>
 
-		</fieldset>
-	</div>
+	</fieldset>
 
 <?php if ($tid): ?>
 	<form method="post" action="tests/add_test_questions_confirm.php?_course_id=<?php echo $_course_id; ?>" name="form">

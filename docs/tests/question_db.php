@@ -99,7 +99,8 @@ $savant->display('tests/question_db_top.tmpl.php');
 $tid = 0; 
 
 require_once(TR_INCLUDE_PATH.'../tests/html/tests_questions.inc.php'); 
-
-require_once(TR_INCLUDE_PATH.'footer.inc.php'); 
-
 ?>
+<br style="clear:both;" />
+</div>
+
+<?php require_once(TR_INCLUDE_PATH.'footer.inc.php');?>

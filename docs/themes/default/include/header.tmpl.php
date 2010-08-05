@@ -328,13 +328,6 @@ foreach ($this->top_level_pages as $page) {
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
 	  <?php if (isset($this->back_to_page)): ?>
-
-<?php
-//global $_base_href;
-//debug($_base_href);
-
-?>
-
 	    <div id="subnavbacktopage">	  
 	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.gif"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;" />'; ?></a> 
 	    </div>

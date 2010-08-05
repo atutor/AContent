@@ -431,19 +431,25 @@ class Menu {
 		// all children pages inherit URL parameter of the parent page
 		$parent_page = $this->pages[$page]['parent'];
 		$parent_page_param = $this->getParam($page);
+		
+		if (stripos($page, str_replace(array(SEP, '?'), array('', ''), $parent_page_param)) > 0) {
+			$page_url = $page;
+		} else {
+			$page_url = $page.$parent_page_param;
+		}
 
 		$page_title = $this->getPageTitle($page);
 
 		if (isset($parent_page) && defined($parent_page))
 		{
-			$path[] = array('url' => $_base_path . $page.$parent_page_param, 'title' => $page_title, 'param' => $parent_page_param);
+			$path[] = array('url' => $_base_path . $page_url, 'title' => $page_title, 'param' => $parent_page_param);
 		}
 		else if (isset($parent_page))
 		{
-			$path[] = array('url' => $_base_path . $page.$parent_page_param, 'title' => $page_title, 'param' => $parent_page_param);
+			$path[] = array('url' => $_base_path . $page_url, 'title' => $page_title, 'param' => $parent_page_param);
 			$path = array_merge((array) $path, $this->setPath($parent_page));
 		} else {
-			$path[] = array('url' => $_base_path . $page.$parent_page_param, 'title' => $page_title, 'param' => $parent_page_param);
+			$path[] = array('url' => $_base_path . $page_url, 'title' => $page_title, 'param' => $parent_page_param);
 		}
 
 		return $path;
