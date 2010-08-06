@@ -73,7 +73,6 @@ $starttime = $mtime;
 	<meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
 	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any sysem that supports IMS content interoperability standards." />
 	<base href="<?php echo $this->content_base_href; ?>" />
-	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<!--[if IE]>
@@ -158,7 +157,7 @@ foreach ($this->top_level_pages as $page) {
    
       <div class="search_top">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
-        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="16" />
+        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="25" />
         <input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
       </form>
       </div>
