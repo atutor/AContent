@@ -819,7 +819,9 @@ div.box {
   padding: 5px;
   background-color: #F8F8F8;
   color: black;
-  border: 1px solid #B8AE9C;
+  border-left: 1px solid #B8AE9C;
+  border-right: 1px solid #B8AE9C;
+  border-bottom: 1px solid #B8AE9C;
   font-size:0.8em;
   font-weight: normal;
   padding:2px;
