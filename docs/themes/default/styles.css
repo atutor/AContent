@@ -9,6 +9,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+
 html,body{
   height:100%;
 }
@@ -16,12 +17,11 @@ html,body{
 
 /* main body attributes */
 body {
-  font-family: Verdana Arial, sans-serif;
+  font-family: Tahoma,Geneva,sans-serif;;
   font-size:.9em;
   margin:0px;
-  background-color:  #EDE7C2;
+  background-color:  #FFFFFF;
   
-    background-color:  #a3a8b3;
   /* background-image:url('images/texture_bg.png'); */
 }
 
@@ -82,14 +82,13 @@ p.subgroup {
 
 /* list attributes */
 ul {
-  font-family: Verdana, Helevetica, Arial, sans-serif;
+
   margin-bottom: 0px;
   margin-top: 0px;
   margin-right: 0px;
 }
 
 li {
-  font-family: Verdana, Helevetica, Arial, sans-serif;
   margin-bottom: 0px;
   margin-top: 0px;
   margin-right: 0px;
@@ -102,7 +101,6 @@ ul.msg {
 }
 
 li.msg_err, li.msg_info {
-  font-family: Verdana, Helevetica, Arial, sans-serif;
   margin-bottom: 30px;
   margin-top: 0px;
   margin-right: 10px;
@@ -118,7 +116,7 @@ span.err_type{
 }
 
 span.msg{
-  font-family: Verdana, Helevetica, Arial, sans-serif;
+
   line-height: 150%;
 }
 
@@ -209,7 +207,7 @@ input[type=text] {
 }
 /* small submit button at top */
 .button2 {
-  font-family: Verdana, Helevetica, Arial, sans-serif;
+
   background-color: #E9F4F3;
 
 }
@@ -440,7 +438,6 @@ div#sub-menu {
 }
 
 div#sub-navigation {
-
   float:left;
 }
 
@@ -448,17 +445,15 @@ div#subnavlistcontainer {
 	width:95%;
 	margin:auto;
 	height:auto;
-height:1.5em;
-
+	height:1.8em;
 
 }
 
 ul#subnavlist {
-
+float:left;
 	padding-top: .3em;
 	margin-top: 0px;
 	margin-left:1.5em;
-	font-family: Verdana,Helvetica,Arial,serif;
 font-size:.8em;
 
 }
@@ -474,9 +469,7 @@ ul#subnavlist li {
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.0em;	
-	-moz-box-shadow:.1em .0em .0em #999999;
-	box-shadow: .1em .0em .0em #999999;
-	padding: .1em .3em .4em .3em ;
+	padding: .4em 1em .4em 1em ;
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, 		ul#subnavlist li:hover{
@@ -517,8 +510,7 @@ div#guide_box{
 	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
 	float:right;
-	-moz-box-shadow:.1em .1em .0em #999999;
-	 box-shadow: .1em .1em  .0em #999999;
+
 	margin-right:2em;
 	padding:.1em;
 }
@@ -747,8 +739,6 @@ div#feedback {
 border-radius:.3em .3em .3em .3em;
 -moz-border-radius:.3em .3em .3em .3em;
 
-	-moz-box-shadow:.1em .1em .2em #999999;
-	 box-shadow: .1em .1em  .2em #999999;
 }
 
 div#help {
@@ -822,8 +812,7 @@ h4.box {
   border-right: 1px solid #B8AE9C;
   -moz-border-radius:.5em .5em 0em 0em;
   border-radius:.5em .5em 0em 0em;
-  -moz-box-shadow:.1em .1em .2em #999999;
-  box-shadow: .1em .1em  .2em #999999;
+
 }
 
 div.box {
@@ -836,8 +825,7 @@ div.box {
   padding:2px;
   -moz-border-radius:.0em .0em .5em .5em;
   border-radius:.0em .0em .5em .5em;
-  -moz-box-shadow:.1em .1em .0em #999999;
-  box-shadow: .1em .1em  .1em #999999;
+
 }
 
 h5.box { 
@@ -898,6 +886,7 @@ div.box .odd {
 
 fieldset {
   margin-bottom: 10pt;
+
 }
 
 div#container {
@@ -920,12 +909,10 @@ div#menutoggle{
 
 /*** header ***/
 div.topnavlistcontainer {
-  margin-left:auto; 
   margin-right:auto;
   margin-bottom:1.1em;
   line-height:100%;
-  background-position:  top right;
-  background-repeat: no-repeat;
+
 }
 ul.topnavlist {
   padding-top: 10px;
@@ -934,12 +921,12 @@ ul.topnavlist {
   margin-left:0px;
   list-style-position:inside;
   list-style: disc inside;
+
 }
 
 ul.topnavlist li {
   list-style: none;
   list-style-position:inside;
-
   display: inline;
   margin: 0px;
 }
@@ -948,6 +935,7 @@ ul.topnavlist li a:hover, ul.topnavlist li a:focus, ul.topnavlist li a.active {
     background-color: #eeeeee;
     color: black;
   text-decoration:none;
+
 }
 
 ul.topnavlist li a {
@@ -955,9 +943,10 @@ ul.topnavlist li a {
     color: #555;
   font-weight:bold;
     height: 1.5em;
-    padding: 0em 2em 0em;
+    padding: 0em .5em 0em;
      text-decoration:none;
   background-color:white;
+
 }
 
 ul.topnavlist li a.selected {
@@ -971,22 +960,18 @@ ol.remove-margin-left {
 /*  form fields grouping for WCAG 2.0 conformance*/
 fieldset.group_form{
   margin:.5em;
-  border:thin #cccccc solid;
   min-height: 40px;
-  border-radius:.5em .5em .5em .5em;
-  -moz-border-radius:.5em .5em .5em .5em;
+border:none;
+
 }
 
 legend.group_form{
-  border:thin #cccccc solid;
   background-color: #eeeeee;
   font-weight: 600;
   color: black;
   height:1.5em;
-  border-radius:.3em .3em .3em .3em;
-  -moz-border-radius:.3em .3em .3em .3em;
-  -moz-box-shadow:.1em .1em .1em #999999;
-  box-shadow: .1em .1em  .1em #999999;
+
+  display:none;
 }
 
 /* highlight active links for WCAG 2.0 conformance */
@@ -1001,7 +986,6 @@ a:active,a:hover,a:focus{
 }
 
 .selected {
-   font-family : Arial, Helvetica, Arial Cyr, Arial Ua, sans-serif;
   font-size : 14px;
   color : black;
   background: #E6E6E6;
@@ -1064,15 +1048,14 @@ pre.badgeSnippet {
 background-color:#ffffff;
 background-image:url('images/books_top.jpg');
 background-repeat:repeat-x;
-border:thin solid #cccccc;
+border:thin solid #000000;
 width:97%;
 margin-top:.2em;
 margin-left:auto;
 margin-right:auto;
 -moz-border-radius:.8em .8em .8em .8em;
 border-radius:.8em .8em .8em .8em;
--moz-box-shadow:.1em .1em .1em #999999;
-box-shadow: .1em .1em .1em #999999;
+
 }
 
 .top {
@@ -1118,16 +1101,15 @@ box-shadow: .1em .1em .1em #999999;
   text-decoration: none;
   padding-left: 1em;
   padding-right: 1em;
-    font-weight:700;
-      text-decoration:underline;
+  font-weight:700;
+  text-decoration:underline;
   margin-left:.5em;
   border-left:thin solid #cccccc;
   border-right:thin solid #cccccc;
   border-top:thin solid #cccccc;
   border-radius:.3em .3em 0em 0em;
   -moz-border-radius:.3em .3em 0em 0em;
-  -moz-box-shadow:.1em -.0em .0em #999999;
-  box-shadow: .1em .0em  .1em #999999;
+
 } 
 
 .navigation a:hover
@@ -1153,6 +1135,7 @@ box-shadow: .1em .1em .1em #999999;
   list-style: none;
   padding: 0;
   margin: 0
+
 }
 
 .navigation li
@@ -1162,6 +1145,7 @@ box-shadow: .1em .1em .1em #999999;
   display: inline-block;
   float: left;
   margin: 0;
+
 
 
 }
@@ -1192,7 +1176,7 @@ ul.navigation li a.active{
 .search_top{
 white-space:nowrap;
 font-size:.8em;
-width:23em;
+width:33em;
 float:right;
 margin-right:3em;
 
@@ -1201,18 +1185,18 @@ margin-right:3em;
 	border:1px solid #cccccc;
 	background-color:#ffffff;
 	margin-right: .5em;
-	border-radius:.8em;
-	-moz-border-radius:.8em .8em .8em .8em;
+	border-radius:.3em .3em .3em .3em;
+	-moz-border-radius:.3em .3em .3em .3em;
 }
 .search_top input[type=submit]{
-	-moz-border-radius:.8em;
-	border-radius:.8em;
+	-moz-border-radius:.2em;
+	border-radius:.2em;
 	font-size:8pt;
 	border:1px solid #cccccc;
 }
 
 li.course {
-  font-family:arial,sans-serif;
+  font-family: 'Droid Sans', Verdana, Arial, sans-serif;
   font-size:smaller;
   margin:1em 0;
 }
@@ -1222,6 +1206,8 @@ ol li {
   list-style-position:inside;
   list-style-type:none;
   margin-left:1.7em;
+line-height:1.5em;
+vertical-align:center;
 }
 div.box ol li.mine{
 list-style-position:outside;
@@ -1337,8 +1323,7 @@ table.etabbed-table	{
 
 
 table.etabbed-table input[type=submit] {
-	-moz-box-shadow:0em 0em 0em #999999;
-	 box-shadow: 0em 0em  0em #999999;
+
 	border:0;
 }
 /* Content editor tabs */
@@ -1366,8 +1351,6 @@ table.etabbed-table input[type=submit] {
 	background-color: #ffffff;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	-moz-box-shadow:.1em .0em .1em #999999;
-	box-shadow: .1em .0em .1em #999999;
 	padding: 0em .2em 0em .2em ;
 	height:1.4em;
 }
@@ -1415,8 +1398,6 @@ div.shortcuts{
 	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
 	float:right;
-	-moz-box-shadow:.1em .1em .0em #999999;
-	 box-shadow: .1em .1em  .0em #999999;
 	margin-right:2em;
 	padding-left:.5em;
 	padding-right:.5em;
@@ -1482,8 +1463,6 @@ div#alternatives_shortcuts {
 	margin: 0 2em;
 	border-radius: .5em .5em .5em .5em;;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.1em .1em .1em #999999;
-	 box-shadow: .1em .1em  .1em #999999;
 	 border:1px solid #cccccc;
 	 padding-top: .2em;
 	 padding-left: .2em;
