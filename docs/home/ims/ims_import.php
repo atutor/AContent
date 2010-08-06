@@ -848,6 +848,7 @@ if ($msg->containsErrors()) {
 	} else {
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
+	if (file_exists($full_filename)) @unlink($full_filename);
 	exit;
 }
 
@@ -880,6 +881,7 @@ if ($msg->containsErrors()) {
 	} else {
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
+	if (file_exists($full_filename)) @unlink($full_filename);
 	exit;
 }
 
@@ -893,6 +895,7 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 	echo 'Error : '.$archive->errorInfo(true);
 	FileUtility::clr_dir($import_path);
 	header('Location: '.$_SERVER['HTTP_REFERER']);
+	if (file_exists($full_filename)) @unlink($full_filename);
 	exit;
 }
 //error_reporting(AT_ERROR_REPORTING);
@@ -963,6 +966,7 @@ if ($ims_manifest_xml === false) {
 	} else {
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
+	if (file_exists($full_filename)) @unlink($full_filename);
 	exit;
 }
 
@@ -1025,6 +1029,7 @@ if ($msg->containsErrors()) {
 	} else {
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
+	if (file_exists($full_filename)) @unlink($full_filename);
 	exit;
 }
 
@@ -1541,10 +1546,7 @@ foreach($items as $idetails){
 }
 FileUtility::clr_dir($import_path);
 
-if (isset($_REQUEST['url'])) {
-	@unlink($full_filename);
-}
-
+if (file_exists($full_filename)) @unlink($full_filename);
 
 if (!$msg->containsErrors()) {
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
