@@ -37,10 +37,12 @@ $url_param = substr($url_param, 0, -1);
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
+<!--
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 	<form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get" name="frm_search">
 	<input type="text" name="search_text" id="search_text" value="<?php if (isset($_REQUEST['search_text'])) echo $_REQUEST['search_text']; ?>" size="50"   />
+
 <?php if (is_array($this->categories)) { // print category dropdown list box?>
     <select name="catid">
       <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
@@ -51,11 +53,12 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
       <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
     </select>
 <?php }?>
+	
 	<input type="submit" name="search" size="100" value="<?php echo _AT("search"); ?>" />
 	</form>
 </fieldset>
-</div>
-
+</div> 
+-->
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 <?php if (is_array($this->courses)) { ?>
