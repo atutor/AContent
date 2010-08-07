@@ -97,7 +97,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
         <h3>
 <?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />
-<?php } else if ($user_role['role'] == TR_USERROLE_VIEWER) {?>
+<?php } else  {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/others_course.png" alt="<?php echo _AT('others_course'); ?>" title="<?php echo _AT('others_course'); ?>" />
 <?php } ?>
           <a href="<?php echo TR_BASE_HREF; ?>home/course/index.php?_course_id=<?php echo $row['course_id']; ?>"><?php echo Utility::highlightKeywords($row['title'], $keywords); ?></a>

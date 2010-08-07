@@ -172,23 +172,15 @@ input[type=button] {
   border:outset 1px #ccc;
   font-weight:bold;
   padding: 1px 2px;
-  border-radius: .3em .3em .3em .3em;
-  -moz-border-radius: .3em .3em .3em .3em;
-  -moz-box-shadow:.1em .1em .2em #999999;
-  box-shadow: .1em .1em  .1em #999999;
+
 
 }
 
 input[type=submit] {
   cursor:pointer;
   border:outset 1px #ccc;
-  background:#eee;
-  color:#333;
   font-weight:bold;
-  -moz-box-shadow:.1em .1em .1em #999999;
-  box-shadow: .1em .1em  .1em #999999;
-  border-radius: .3em .3em .3em .3em;
-  -moz-border-radius: .3em .3em .3em .3em;
+
 }
 
 input[type=text] {
@@ -316,6 +308,12 @@ table.tabbed-table th.tab-spacer {
   width: 5px;
   border-bottom: 1px solid #B8AE9C;
 }
+table.tabbed-table td.tab-spacer {
+  background-color: transparent;
+  width: 5px;
+  border-bottom: 1px solid #B8AE9C;
+}
+
 
 table.tabbed-table th.tab {
   padding-top: 2px;
@@ -433,7 +431,8 @@ div#sub-menu {
   background-color:#eeeeee; 
   padding-top: 3px; 
   font-size:0.85em; 
-  border-bottom:1px solid #cccccc;
+
+    border-top:1px solid #cccccc;
   height:2.1em;
 }
 
@@ -1045,7 +1044,15 @@ pre.badgeSnippet {
 }
 
 /* Liquid Round theme elements */
+#liquid-round {
+background-image:url('images/books_top.jpg');
+background-repeat:repeat-x;
+width:99%;
+margin-left:auto;
+margin-right:auto;
+}
 
+/*
 #liquid-round {
 background-color:#ffffff;
 background-image:url('images/books_top.jpg');
@@ -1059,7 +1066,7 @@ margin-right:auto;
 border-radius:.8em .8em .8em .8em;
 
 }
-
+*/
 .top {
     width:100%;
   height:15px;
@@ -1203,21 +1210,28 @@ li.course {
   margin:1em 0;
 }
 
-ol li {
-  list-style-image:none;
-  list-style-position:inside;
-  list-style-type:none;
-  margin-left:1.7em;
-line-height:1.5em;
-vertical-align:center;
+ol li{
+list-style:none;
 }
-div.box ol li.mine{
-list-style-position:outside;
-list-style-image: url('images/my_own_course.gif');
-list-style-type: disc;
- /*list-style: disc inside url("themes/default/images/my_own_course.gif"); */
+
+div.box ol
+{
+list-style:none;
+list-style-position:inherit;
+padding:0px;
+margin:0px;
+
 
 }
+
+li.mine{
+background-image: url('images/my_own_course.gif');
+background-repeat: no-repeat;
+background-position: 0px 0px;
+padding-left: 18px;
+line-height:1.5em;
+}
+
 div.box ol li.theirs{
 list-style-position:outside;
 list-style-image: url('images/others_course.png');
@@ -1225,7 +1239,13 @@ list-style-type: disc;
  /*list-style: disc inside url("themes/default/images/my_own_course.gif"); */
 
 }
-
+li.theirs{
+background-image: url('images/others_course.png');
+background-repeat: no-repeat;
+background-position: 0px 0px;
+padding-left: 18px;
+line-height:1.5em;
+}
 .results h3 {
   display:inline;
   font-size:small;
@@ -1294,7 +1314,7 @@ fieldset#shortcuts {
 div.menuedit{
   float:right;
   margin-top:-1.2em; 
-  border:1px solid #cccccc;"
+
 }
 .hidden {
     display: none;
@@ -1317,18 +1337,21 @@ div.menuedit{
 table.etabbed-table	{
 	padding-left:5em;
 	font-size:10pt;
-	width:90%;
-	margin-left:auto;
-	margin-right:auto;
-
+	width: 95%;
 }
-
 
 table.etabbed-table input[type=submit] {
-
 	border:0;
 }
-/* Content editor tabs */
+
+table.etabbed-table td.tab-spacer {
+  background-color: transparent;
+  width: 5px;
+  border-bottom: 1px solid #B8AE9C;
+}
+
+
+
 .editor_buttontab {
 	color:#000000;
 	font-size:10pt;
@@ -1337,24 +1360,22 @@ table.etabbed-table input[type=submit] {
 	background-color: #ffffff;
 	margin: 0px;
 	font-weight:500;
-	text-align:center;
-	padding:0em 0em 0em;
+	padding:0em 0em 0em 0em;
 
 }
 .editor_tab{
-	float:left;
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
 	margin-bottom:-.5em;
-	text-align: center;
 	white-space: nowrap;
 	background-color: #ffffff;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: 0em .2em 0em .2em ;
+	padding: 0em .5em 0em .5em ;
 	height:1.4em;
+	width:5%;
 }
 .editor_tab:hover, .editor_tab input[type=submit]:hover{
 	background-color:#eeeeee;
@@ -1365,14 +1386,14 @@ table.etabbed-table input[type=submit] {
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
-	padding: 0em .2em 0em .2em ;
+	padding: 0em .5em 0em .5em ;
   	background-color: #eeeeee;
 	font-weight:bold;
-	text-align:center;
 	white-space: nowrap;
 	text-decoration:none;
-	border-radius:.3em;
+	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
+	width:5%;
 	height:1.4em;
 
 }
