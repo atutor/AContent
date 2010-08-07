@@ -52,7 +52,6 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * ======================================
  * back_to_page              array('url', 'title')            the link back to the part of the current page, if needed.
  */
-
 include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 $lang_charset = "UTF-8";
 //Timer
@@ -73,6 +72,23 @@ $starttime = $mtime;
 	<meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
 	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any sysem that supports IMS content interoperability standards." />
 	<base href="<?php echo $this->content_base_href; ?>" />
+	
+	    <script type="text/javascript">
+      WebFontConfig = {
+        google: { families: [ 'Droid Sans', 'Cantarell' ] }
+      };
+      (function() {
+        var wf = document.createElement('script');
+        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+        wf.type = 'text/javascript';
+        wf.async = 'true';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(wf, s);
+      })();
+    </script>
+
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<!--[if IE]>
@@ -152,12 +168,29 @@ foreach ($this->top_level_pages as $page) {
     </ul>
   </div>
 -->
+
+
 	<!-- the sub navigation and guide -->
   <div id="sub-menu">
    
       <div class="search_top">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
         <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="25" />
+      
+<?php 
+
+if (is_array($this->categories)) { // print category dropdown list box?>
+    <select name="catid">
+      <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
+      <option value="">---------------------------------</option>
+<?php foreach ($this->categories as $category) {?>
+      <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
+<?php }?>
+      <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
+    </select>
+<?php }?>
+        
+        
         <input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
       </form>
       </div>
@@ -275,13 +308,13 @@ foreach ($this->top_level_pages as $page) {
       <div id="sequence-links">
         <?php //if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
           <?php if ($this->sequence_links['resume']): ?>
-        <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+        <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
           <?php else:
           if ($this->sequence_links['previous']): ?>
-        <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.gif" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
+        <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
           <?php endif;
           if ($this->sequence_links['next']): ?>
-        <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.gif" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+        <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
           <?php endif; ?>
         <?php endif; ?>
 		<?php // } ?>
@@ -336,7 +369,7 @@ foreach ($this->top_level_pages as $page) {
       <?php for ($i=0; $i<$num_pages; $i++): ?>
 	  <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
       if ($sub_menu_url == $this->current_page): ?>
-	<li><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
+	<li class="active"><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
       <?php else: ?>
 	<li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
       <?php endif; ?>

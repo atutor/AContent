@@ -8,7 +8,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-
+@import url(http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold);
 
 html,body{
   height:100%;
@@ -17,7 +17,7 @@ html,body{
 
 /* main body attributes */
 body {
-  font-family: Tahoma,Geneva,sans-serif;;
+  font-family: 'Droid Sans',Tahoma,Geneva,sans-serif;;
   font-size:.9em;
   margin:0px;
   background-color:  #FFFFFF;
@@ -276,6 +276,7 @@ padding:.2em;
 div#sequence-links {
   float:right;
   padding-right: 5px;
+  padding-top:.3em;
 }
 div#sequence-links a {
   text-decoration: none;
@@ -420,41 +421,36 @@ div#breadcrumbs {
 
 h2.page-title {
   clear:right;
+  margin-left:1em;
 }
 
 h1 {
-  margin-bottom: 5px;
+ 	margin-bottom: 5px;
 }
 
 div#sub-menu {
-  color: #555;
-  background-color:#eeeeee; 
-  padding-top: 3px; 
-  font-size:0.85em; 
-
-    border-top:1px solid #cccccc;
-  height:2.1em;
+  	color: #555;
+	background-color:#FAEBD7; 
+	padding-top: 3px; 
+ 	font-size:0.85em; 
+  	border-top:1px solid #cccccc;
+  	height:2.1em;
 }
 
 div#sub-navigation {
-  float:left;
+   float:left;
 }
 
 div#subnavlistcontainer {
 	width:95%;
-	margin:auto;
 	height:auto;
-	height:1.8em;
+	height:1.6em;
 
 }
 
 ul#subnavlist {
-float:left;
-	padding-top: .3em;
 	margin-top: 0px;
-	margin-left:1.5em;
-font-size:.8em;
-
+	font-size:.8em;
 }
 
 ul#subnavlist li {
@@ -467,33 +463,36 @@ ul#subnavlist li {
 	border-right:1px solid #cccccc;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	height:1.0em;	
-	padding: .4em 1em .4em 1em ;
+	padding: .4em 1em .35em 1em ;
 }
 
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, 		ul#subnavlist li:hover{
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
-	background-color: #E6E6E6;
+	background-color: #FFF5EE;
+	height:1.2em;
 }
-
+ul#subnavlist li.active{
+	padding-bottom: .5em;
+	background-color: #FFF5EE;
+}
 ul#subnavlist li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
-    	height: 1.5em;
+    	height: 1.0em;
    	text-decoration:underline;
 	font-weight:500;
 }
 
 div#subnavbacktopage {
 	padding-top:5px;
-	padding-left:20px;
+	padding-left:5px;
 	float:left;
 }
 
 
 a#guide {
-	background-image: url('images/guide.jpg'); 
+	background-image: url('images/guide.png'); 
 	background-repeat: no-repeat; 
 	background-position: 2px 2px;
 	padding: 3px 10px 1px 25px;
@@ -503,11 +502,15 @@ a#guide {
 }
 
 div#guide_box{
+background-color:#FAEBD7;
+/*
 	border-left:thin solid #cccccc;
 	border-right:thin solid #cccccc;
 	border-bottom:thin solid #cccccc;
+*/
 	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
+	line-height:1.5em;
 	float:right;
 
 	margin-right:2em;
@@ -805,10 +808,12 @@ h3.indent {
 
 h4.box {
   font-size:0.85em;
-  padding: 2px;
-  border-top: 1px solid #B8AE9C;
+  padding: 3px;
+  background-color:#FAEBD7;
+  /*border-top: 1px solid #B8AE9C;
   border-left: 1px solid #B8AE9C;
   border-right: 1px solid #B8AE9C;
+  */
   -moz-border-radius:.5em .5em 0em 0em;
   border-radius:.5em .5em 0em 0em;
 
@@ -816,11 +821,13 @@ h4.box {
 
 div.box {
   padding: 5px;
-  background-color: #F8F8F8;
+  background-color: #FAEBD7;
   color: black;
+  /*
   border-left: 1px solid #B8AE9C;
   border-right: 1px solid #B8AE9C;
   border-bottom: 1px solid #B8AE9C;
+  */
   font-size:0.8em;
   font-weight: normal;
   padding:2px;
@@ -909,20 +916,17 @@ div#menutoggle{
 }
 
 /*** header ***/
-div.topnavlistcontainer {
-  margin-right:auto;
-  margin-bottom:1.1em;
-  line-height:100%;
 
-}
+
+
+/*
 ul.topnavlist {
   padding-top: 10px;
   white-space: nowrap;
-  margin-left:0px;
-  margin-left:0px;
   list-style-position:inside;
   list-style: disc inside;
-
+  line-height:1.0em;
+  border:thin solid black;
 }
 
 ul.topnavlist li {
@@ -933,17 +937,16 @@ ul.topnavlist li {
 }
 
 ul.topnavlist li a:hover, ul.topnavlist li a:focus, ul.topnavlist li a.active {
-    background-color: #eeeeee;
+    background-color: #FAEBD7;
     color: black;
-  text-decoration:none;
-
+    text-decoration:none;
+    line-height:1.6em;
 }
 
 ul.topnavlist li a {
-    /* The normal, unselected tabs. They are all links */
+
     color: #555;
   font-weight:bold;
-    height: 1.5em;
     padding: 0em .5em 0em;
      text-decoration:none;
   background-color:white;
@@ -951,10 +954,11 @@ ul.topnavlist li a {
 }
 
 ul.topnavlist li a.selected {
-    /* The selected tab. There's only one of these */
+
     color: #555;
     font-weight: normal;
 }
+*/
 ol.remove-margin-left {
   margin-left:-3em;
 }
@@ -977,7 +981,7 @@ legend.group_form{
 
 /* highlight active links for WCAG 2.0 conformance */
 a:active,a:hover,a:focus{
-  background-color:#F6EAD6;
+  background-color:#FAEBD7;
   color:#000000;
 }
 
@@ -1103,14 +1107,22 @@ border-radius:.8em .8em .8em .8em;
 
 
 /* Navigation tab style */
+
+
+div.topnavlistcontainer {
+  margin-left:-2.5em;
+}
+
 .navigation a
 {
   color: #000;
   background-color: #ffffff;
   text-decoration: none;
   padding-left: 1em;
-  padding-right: 1em;
-  font-weight:700;
+  padding-right: 1em;  
+  padding-top: .2em;
+  padding-bottom: -.1em;
+  font-weight:500;
   text-decoration:underline;
   margin-left:.5em;
   border-left:thin solid #cccccc;
@@ -1118,63 +1130,55 @@ border-radius:.8em .8em .8em .8em;
   border-top:thin solid #cccccc;
   border-radius:.3em .3em 0em 0em;
   -moz-border-radius:.3em .3em 0em 0em;
-
 } 
-
-.navigation a:hover
-{
-  color: #fff;
-  background: #eeeeee;
-  text-decoration:underline;
-}
-
-.navigation a:hover
-{
-  background-color: #eeeeee;
-}
-.navigation a:active span
-{
-  background-color:#eeeeee;
-
-
-}
-
-.navigation ul
-{
-  list-style: none;
-  padding: 0;
-  margin: 0
-
-}
 
 .navigation li
 {
   list-style: none;
   list-style-position:inside;
   display: inline-block;
-  float: left;
   margin: 0;
-
-
-
 }
+.navigation a:hover
+{
+  color: #fff;
+  background: #FAEBD7;
+  text-decoration:underline;
+
+  padding-bottom: -.4em;
+  padding-top: .2em;
+  padding-bottom: .1em;
+}
+
+.navigation a.active 
+{
+  background-color:#FAEBD7;
+  padding-bottom: -.6em;
+  font-weight:700;
+  padding-top: .2em;
+  padding-bottom: .1em;
+}
+
 #logo{
   float:left;
   clear:right;
-margin-left:2em;
+  margin-left:2em;
 
 }
 
 
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
-      background-color: #eeeeee; 
+      background-color:#FAEBD7; 
       color: #000000;
       text-decoration:none;
+
+
 }
 
 ul.navigation li a.active{
-      background-color: #eeeeee; 
+      background-color: #FAEBD7; 
       padding-right: 10px;
+      
 }
 
 /* course search result display */
@@ -1187,7 +1191,6 @@ white-space:nowrap;
 font-size:.8em;
 width:33em;
 float:right;
-margin-right:3em;
 
 }
 #search_text_at_header{
@@ -1205,7 +1208,6 @@ margin-right:3em;
 }
 
 li.course {
-  font-family: 'Droid Sans', Verdana, Arial, sans-serif;
   font-size:smaller;
   margin:1em 0;
 }
@@ -1378,7 +1380,7 @@ table.etabbed-table td.tab-spacer {
 	width:5%;
 }
 .editor_tab:hover, .editor_tab input[type=submit]:hover{
-	background-color:#eeeeee;
+	background-color:#FAEBD7;
 }
 
 .editor_tab_selected{
@@ -1387,7 +1389,7 @@ table.etabbed-table td.tab-spacer {
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
 	padding: 0em .5em 0em .5em ;
-  	background-color: #eeeeee;
+  	background-color: #FAEBD7;
 	font-weight:bold;
 	white-space: nowrap;
 	text-decoration:none;

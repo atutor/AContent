@@ -36,7 +36,7 @@ div.input-form {
 	border: thin #cccccc solid;
 	margin-bottom: 20px;
 	line-height:150%;
-	background-color: #F8F8F8;
+	background-color: #FFF5EE;
 border-radius:.5em .5em .5em .5em;
 -moz-border-radius:.5em .5em .5em .5em;
 	-moz-box-shadow:.05em .05em .0em #999999;
@@ -44,7 +44,7 @@ border-radius:.5em .5em .5em .5em;
 }
 
 div.input-form div.row {
-	background-color: #F8F8F8;
+	background-color:  #FFF5EE;
 	padding:8px;
 }
 
