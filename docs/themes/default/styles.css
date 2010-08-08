@@ -903,10 +903,7 @@ div.box .odd {
     background-color: transparent;
 }
 
-fieldset {
-  margin-bottom: 10pt;
 
-}
 
 div#container {
   text-align: left;
@@ -986,10 +983,21 @@ legend.group_form{
   font-weight: 600;
   color: black;
   height:1.5em;
-
   display:none;
 }
+fieldset.group_form1{
+  margin:.5em;
+  min-height:15em;
 
+
+}
+
+table.qdb_table{
+width:100%;
+}
+table.qdb_table td{
+vertical-align:top;
+}
 /* highlight active links for WCAG 2.0 conformance */
 a:active,a:hover,a:focus{
   background-color:#FAEBD7;
