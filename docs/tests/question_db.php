@@ -101,6 +101,6 @@ $tid = 0;
 require_once(TR_INCLUDE_PATH.'../tests/html/tests_questions.inc.php'); 
 ?>
 <br style="clear:both;" />
-</div>
+
 
 <?php require_once(TR_INCLUDE_PATH.'footer.inc.php');?>
