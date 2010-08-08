@@ -1493,6 +1493,7 @@ ul#content-tool-links img{
 }
 .selected-sidemenu {
     font-weight:bold;
+    color: #ffffff;
 }
 div#alternatives_shortcuts {
 	float: right;
