@@ -2,24 +2,25 @@
 
 
 .center-content {
-  margin:-1px 0 -21px 0;
+  	margin:-1px 0 -21px 0;
 
 }
 
 .topnavlistcontainer{
-	margin-top:2em;
+	height:1.8em;
 }
+
 .search_top{
-white-space:nowrap;
-font-size:.8em;
-width:23em;
-float:right;
-margin-right:7.5em;
+	white-space:nowrap;
+	font-size:.8em;
+	width:23em;
+	float:right;
+	margin-right:7.5em;
 
 }
 
 #subnavlistcontainer{
-margin-left:2em;
+	margin-left:2em;
 }
 #guide_box{
 	width:15%;
@@ -29,46 +30,42 @@ margin-left:2em;
 	margin-left:5em;
 }
 
-
-
-div.topnavlistcontainer {
-  margin-left:-2.5em;
-
-}
-
 .navigation a
 {
-  color: #000;
-  zoom:100%;
-  border-left:1px solid #cccccc;
-  border-right:1px solid #cccccc;
-  border-top:1px solid #cccccc;
-  padding-bottom:.3em;
-
+  	color: #000;
+  	zoom:100%;
+  	padding-top:.4em;
+  	padding-bottom:.7em;
+  	
 } 
-
-.navigation li
+div#sub-menu {
+	margin-top:-.2em;
+	height:2.3em;
+}
+ul.navigation li
 {
 	zoom:100%;
   	display: inline;
-  	  padding-top:.5em;
+  	padding-top:.0em;
+
 }
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
+  	padding-top:.4em;
+  	padding-bottom:.7em;
 
-        padding-bottom:.3em;
-
+               
 }
 .course{
 	margin-left:6em;
 }
 
 dl.form_layout dt{
-text-align:center; 
-float:left;
+	text-align:center; 
+	float:left;
 }
 
 dl.form_layout dd{
-margin-left: 12em;
+	margin-left: 12em;
 
 }
 
@@ -86,4 +83,10 @@ div#shortcuts{
 }
 #shortcuts li{
 	display: inline;
+}
+a#back-to {
+padding-top:-2px;
+  	padding-left: 10px;
+	padding-right:10px;
+	padding-bottom:12px;
 }
