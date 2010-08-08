@@ -6,14 +6,53 @@
 
 }
 
-
+.topnavlistcontainer{
+	margin-top:2em;
+}
 .search_top{
 white-space:nowrap;
 font-size:.8em;
 width:23em;
 float:right;
-margin-right:2em;
+margin-right:7.5em;
 
+}
+
+#subnavlistcontainer{
+margin-left:2em;
+}
+#guide_box{
+	width:15%;
+	background-color:#ffffff;
+}
+.results{
+	margin-left:5em;
+}
+
+
+
+div.topnavlistcontainer {
+  margin-left:-2.5em;
+}
+
+.navigation a
+{
+  color: #000;
+  zoom:100%;
+  border-left:thin solid #cccccc;
+  border-right:thin solid #cccccc;
+  border-top:thin solid #cccccc;
+
+} 
+
+.navigation li
+{
+	zoom:100%;
+  	display: inline;
+}
+
+.course{
+	margin-left:6em;
 }
 
 dl.form_layout dt{
