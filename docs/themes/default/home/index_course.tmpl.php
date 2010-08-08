@@ -37,7 +37,7 @@ $url_param = substr($url_param, 0, -1);
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
-<!--
+
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 	<form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get" name="frm_search">
@@ -58,7 +58,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	</form>
 </fieldset>
 </div> 
--->
+
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 <?php if (is_array($this->courses)) { ?>

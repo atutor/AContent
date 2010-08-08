@@ -13,7 +13,7 @@
 ?>
 <form method="post" action="tests/import_test.php" enctype="multipart/form-data" >
 <input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
-<div class="input-form" style="width: 90%">
+<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('import_test'); ?></legend>
 	<div class="row">
 		<label for="to_file"><?php echo _AT('upload_test'); ?></label><br />
@@ -29,7 +29,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
-<table class="data" summary="" style="width: 90%" rules="cols">
+<table class="data" summary="" rules="cols">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

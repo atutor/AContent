@@ -68,9 +68,9 @@ $starttime = $mtime;
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
-	<meta name="Generator" content="AContent - Copyright 2009 by ATRC http://atrc.utoronto.ca/" />
+	<meta name="Generator" content="AContent - Copyright 2010 by IDRC/IDI http://inclusivedesign.ca/" />
 	<meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
-	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any sysem that supports IMS content interoperability standards." />
+	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any system that supports IMS content interoperability standards." />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	
 	    <script type="text/javascript">
@@ -88,7 +88,8 @@ $starttime = $mtime;
       })();
     </script>
 
-	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css' />
+	<link rel="icon" href="favicon.ico" type="image/x-icon" /> 
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<!--[if IE]>
@@ -107,17 +108,16 @@ $starttime = $mtime;
 
 <div id="liquid-round">
   
-  <div class="center-content">
+ <div class="center-content">
 <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-  <div id="banner">
-    <span id="logininfo">
+	<span id="logininfo">
         <?php
         if (isset($this->user_name))
         {
-          echo _AT('welcome'). ' '.$this->user_name;
+          echo _AT('logged_in_as'). ' '.$this->user_name;
         ?>
 				&nbsp;&nbsp;
 				<a href="<?php echo TR_BASE_HREF; ?>logout.php" ><?php echo _AT('logout'); ?></a>
@@ -132,7 +132,9 @@ $starttime = $mtime;
         <?php
         }
         ?>
-    </span>
+  </span>
+  <div id="banner">
+ 
   </div>
 
   <div class="topnavlistcontainer">
@@ -252,8 +254,8 @@ if (is_array($this->categories)) { // print category dropdown list box?>
     <?php }?>
 
 <!-- guide -->
-  <?php if (isset($this->guide)) {?>
-    <div id="guide_box">
+  <?php if (isset($this->guide)) {  ?>
+    <div id="guide_box" title="<?php echo _AT('handbook_for').' '.$this->page_title; ?>">
     <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
   </div>
   <?php }?>

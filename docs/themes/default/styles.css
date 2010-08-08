@@ -17,7 +17,7 @@ html,body{
 
 /* main body attributes */
 body {
-  font-family: 'Droid Sans',Tahoma,Geneva,sans-serif;;
+  font-family: 'Droid Sans', Cantarell, Tahoma, Geneva,sans-serif;;
   font-size:.9em;
   margin:0px;
   background-color:  #FFFFFF;
@@ -375,12 +375,23 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
   font-weight:bold;
   margin-left: 10px; 
   margin-top: 2px; 
-  position: absolute; 
-  left: 0px; 
-  top: 0px; 
+
   color: black; 
   background-color: white; 
-  padding-left: 5px; 
+  padding-left: 70%; 
+  padding-right: 5px;
+}
+
+#logininfo {
+float:right;
+  font-size: small; 
+  font-weight:bold;
+  margin-left: 10px; 
+  margin-top: 2px; 
+
+  color: black; 
+  background-color: transparent; 
+  padding-left: 70%; 
   padding-right: 5px;
 }
 #banner #versioninfo {
@@ -605,7 +616,6 @@ table.filter td {
 table.data {
   clear:right;
   width: 95%; 
-  margin-left: 2em;; 
   margin-right: auto;
   text-align: left;
 } 
@@ -1122,9 +1132,9 @@ div.topnavlistcontainer {
   padding-right: 1em;  
   padding-top: .2em;
   padding-bottom: -.1em;
-  font-weight:500;
+  font-weight:700;
   text-decoration:underline;
-  margin-left:.5em;
+  margin-left:.1em;
   border-left:thin solid #cccccc;
   border-right:thin solid #cccccc;
   border-top:thin solid #cccccc;
@@ -1337,7 +1347,7 @@ div.menuedit{
 }
 /* Content editor tabs */
 table.etabbed-table	{
-	padding-left:5em;
+	padding-left:.5em;	
 	font-size:10pt;
 	width: 95%;
 }
@@ -1349,7 +1359,7 @@ table.etabbed-table input[type=submit] {
 table.etabbed-table td.tab-spacer {
   background-color: transparent;
   width: 5px;
-  border-bottom: 1px solid #B8AE9C;
+
 }
 
 
@@ -1362,7 +1372,7 @@ table.etabbed-table td.tab-spacer {
 	background-color: #ffffff;
 	margin: 0px;
 	font-weight:500;
-	padding:0em 0em 0em 0em;
+	padding:0em 0em .1em 0em;
 
 }
 .editor_tab{
@@ -1387,8 +1397,8 @@ table.etabbed-table td.tab-spacer {
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
-	border-bottom:0;
-	padding: 0em .5em 0em .5em ;
+	border-bottom: #FAEBD7;
+	padding: .0em .5em 0em .5em ;
   	background-color: #FAEBD7;
 	font-weight:bold;
 	white-space: nowrap;
@@ -1396,7 +1406,7 @@ table.etabbed-table td.tab-spacer {
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	width:5%;
-	height:1.4em;
+	height:1.5em;
 
 }
 .editor_tab input[type=submit]{
@@ -1406,6 +1416,7 @@ table.etabbed-table td.tab-spacer {
 	color: red;
 	background-color: #FFFDE0;
 	font-weight: bold;
+	margin-left:.5em;
 }
 .saved {
 	background-color: #FFFDE0;
