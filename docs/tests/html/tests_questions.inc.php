@@ -71,7 +71,7 @@ $cols = 3;
 	</fieldset>
 </td></tr>
 </table>
-	<br style="clear:both;" /></div>
+</div>
 <?php if ($tid): ?>
 	<form method="post" action="tests/add_test_questions_confirm.php?_course_id=<?php echo $_course_id; ?>" name="form">
 <?php else: ?>
