@@ -79,7 +79,10 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
       <li class="course" style="font-weight:bold">
         <div><?php echo _AT('results').' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
+        <?php  
+        if($_SESSION['user_id']){ ?>
           <span style="float: right"><img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />&nbsp;&nbsp;&nbsp;<?php echo _AT('authoring_img_info'); ?></span>
+          <?php } ?>
         </div>
 				
       </li>
