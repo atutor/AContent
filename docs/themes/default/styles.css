@@ -462,6 +462,7 @@ div#subnavlistcontainer {
 ul#subnavlist {
 	margin-top: 0px;
 	font-size:.8em;
+		margin-left:.5em;
 }
 
 ul#subnavlist li {
@@ -490,7 +491,7 @@ ul#subnavlist li.active{
 ul#subnavlist li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
-    	height: 1.0em;
+    height: 1.0em;
    	text-decoration:underline;
 	font-weight:500;
 }
@@ -988,15 +989,14 @@ legend.group_form{
 fieldset.group_form1{
   margin:.5em;
   min-height:15em;
-
-
 }
 
 table.qdb_table{
-width:100%;
+	width:100%;
 }
+
 table.qdb_table td{
-vertical-align:top;
+	vertical-align:top;
 }
 /* highlight active links for WCAG 2.0 conformance */
 a:active,a:hover,a:focus{
