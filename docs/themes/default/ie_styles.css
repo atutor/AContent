@@ -13,10 +13,9 @@
 .search_top{
 	white-space:nowrap;
 	font-size:.8em;
-	width:23em;
+	width:22em;
 	float:right;
-	margin-right:7.5em;
-
+	margin-right:8.5em;
 }
 
 #subnavlistcontainer{
@@ -32,7 +31,6 @@
 
 .navigation a
 {
-  	color: #000;
   	zoom:100%;
   	padding-top:.4em;
   	padding-bottom:.7em;
