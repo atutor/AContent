@@ -1464,6 +1464,7 @@ div.shortcuts{
 dl.form_layout dt{
 text-align:center; 
 float:left;
+clear:left;
 padding-bottom:.5em;
 }
 
