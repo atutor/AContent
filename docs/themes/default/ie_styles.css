@@ -33,15 +33,17 @@ margin-left:2em;
 
 div.topnavlistcontainer {
   margin-left:-2.5em;
+
 }
 
 .navigation a
 {
   color: #000;
   zoom:100%;
-  border-left:thin solid #cccccc;
-  border-right:thin solid #cccccc;
-  border-top:thin solid #cccccc;
+  border-left:1px solid #cccccc;
+  border-right:1px solid #cccccc;
+  border-top:1px solid #cccccc;
+  padding-bottom:.3em;
 
 } 
 
@@ -49,8 +51,13 @@ div.topnavlistcontainer {
 {
 	zoom:100%;
   	display: inline;
+  	  padding-top:.5em;
 }
+ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
 
+        padding-bottom:.3em;
+
+}
 .course{
 	margin-left:6em;
 }
