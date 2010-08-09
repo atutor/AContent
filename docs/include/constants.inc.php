@@ -32,7 +32,7 @@ $_config = $_config_defaults;
 
 define('VERSION',		'1.0');
 
-define('UPDATE_SERVER', 'http://update.atutor.ca');
+define('UPDATE_SERVER', 'http://update.atutor.ca/acontent');
 define('SVN_TAG_FOLDER', 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/');
 define('RESULTS_PER_PAGE', 10);
 
