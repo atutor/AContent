@@ -452,7 +452,7 @@ class Patch {
 
 		if (!$this->svn_server_connected) return true;
 		
-		$svn_file = SVN_TAG_FOLDER . 'transformable_' . str_replace('.', '_', VERSION) .
+		$svn_file = SVN_TAG_FOLDER . 'acontent_' . str_replace('.', '_', VERSION) .
 		            str_replace(substr($this->relative_to_root, 0, -1), '' , $folder) .$file;
 		$local_file = $folder.$file;
 

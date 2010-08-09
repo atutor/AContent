@@ -14,7 +14,7 @@ define('TR_INCLUDE_PATH', '../include/');
 
 require (TR_INCLUDE_PATH.'vitals.inc.php');
 require_once('classes/PatchListParser.class.php');
-require_once(TR_INCLUDE_PATH. 'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH. 'classes/FileUtility.class.php');
 require_once(TR_INCLUDE_PATH. 'classes/DAO/PatchesDAO.class.php');
 require_once('include/common.inc.php');
 
@@ -116,14 +116,14 @@ if ($_POST['install_upload'] && $_POST['uploading'])
 	include_once(TR_INCLUDE_PATH . 'lib/pclzip.lib.php');
 	
 	// clean up module content folder
-	Utility::clearDir($module_content_folder);
+	FileUtility::clr_dir($module_content_folder);
 	
 	// 1. unzip uploaded file to module's content directory
 	$archive = new PclZip($_FILES['patchfile']['tmp_name']);
 
 	if ($archive->extract(PCLZIP_OPT_PATH, $module_content_folder) == 0)
 	{
-	    Utility::clearDir($module_content_folder);
+	    FileUtility::clr_dir($module_content_folder);
 	    $msg->addError('CANNOT_UNZIP');
 	}
 }
