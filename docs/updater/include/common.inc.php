@@ -13,7 +13,7 @@
 function print_errors( $errors, $notes='' ) {
 	?>
 	<div class="input-form">
-	<table style="align:center; padding: 3px; background-color: #F8F8F8; border: 0">
+	<table>
 	<tr>
 		<td>
 		<h3><img src="images/bad.gif" align="top" alt="" class="img" /> Warning</h3>
@@ -39,7 +39,7 @@ function print_errors( $errors, $notes='' ) {
 function print_feedback( $feedback, $notes='' ) {
 ?>
 	<div class="input-form">
-	<table style="align:center; padding: 3px; background-color: #F8F8F8; border: 0">
+	<table>
 	<tr>
 	<td><h3><img src="images/feedback.gif" align="top" alt="" class="img" /> <?php echo _AT('TR_FEEDBACK_UPDATE_INSTALLED_SUCCESSFULLY')?></h3>
 		<?php
