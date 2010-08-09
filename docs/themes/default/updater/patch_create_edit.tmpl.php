@@ -14,7 +14,6 @@ require ('include/json.inc.php');
 require (TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
-<h2 align="center"><?php echo _AT("create_edit_update"); ?></h2>
 
 <form enctype="multipart/form-data" action='<?php echo $this->url; ?>' method="post" name="form" target="messageIFrame">
 
@@ -89,7 +88,7 @@ if ($num_of_dependents == 0)
 {
 ?>
 		<tr>
-			<td><input id="dependent_patch" name="dependent_patch[]" type="text" maxlength="100" size="100" style="max-width:100%; display:block" /></td>
+			<td><input id="dependent_patch" name="dependent_patch[]" type="text" maxlength="100" size="100" style="max-width:95%; display:block" /></td>
 		</tr>
 <?php
 }
@@ -110,7 +109,7 @@ if ($num_of_dependents == 0)
 	
 	<br /><br />
 	
-	<div class="row">
+	<div>
 		<input type="submit" name="create" value=" <?php echo _AT('create_update'); ?> " accesskey="c" />
 		<input type="submit" name="save" value=" <?php echo _AT('save'); ?> " accesskey="s" onclick="document.form.target=''; "/>
 		<input type="button" name="cancel" value=" <?php echo _AT('cancel'); ?> " onclick="location.href='updater/myown_patches.php'" />
@@ -257,7 +256,7 @@ var ACTION_HTML_TEMPLATE = ' \
 	</div> \
 	<br /><br /> \
 	<div> \
-	<table style="display:" width="100%"> \
+	<table style="display:" width="95%"> \
 		<tr> \
 			<td width="150px"><?php echo addslashes(_AT("file_name")); ?></td> \
 			<td><input name="add_filename[{1}]" type="text"  /></td> \
@@ -269,32 +268,32 @@ var ACTION_HTML_TEMPLATE = ' \
 		<tr style="display: none"> \
 			<td><?php echo addslashes(_AT("file")); ?></td> \
 			<td></td> \
-			<td><INPUT TYPE="hidden" NAME="add_uploaded_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
+			<td><INPUT TYPE="hidden" NAME="add_uploaded_file[{1}]" SIZE="40" style="max-width:95%" /></td> \
 		</tr> \
 		<tr> \
 			<td><?php echo addslashes(_AT("upload_file")); ?></td> \
-			<td><INPUT TYPE="file" NAME="add_upload_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
+			<td><INPUT TYPE="file" NAME="add_upload_file[{1}]" SIZE="40" style="max-width:95%" /></td> \
 		</tr> \
 	</table> \
-	<table style="display: none" width="100%"> \
+	<table style="display: none" width="95%"> \
 		<tr> \
 			<td width="150px"><?php echo addslashes(_AT("file_name")); ?></td> \
 			<td><input name="alter_filename[{1}]" type="text" maxlength="100" size="100" /></td> \
 		</tr> \
 		<tr> \
 			<td><?php echo addslashes(_AT("directory")); ?></td> \
-			<td><input name="alter_dir[{1}]" type="text" maxlength="100" size="100" style="max-width:100%" /></td> \
+			<td><input name="alter_dir[{1}]" type="text" maxlength="100" size="100" style="max-width:95%" /></td> \
 		</tr> \
 		<tr> \
 			<td><?php echo addslashes(_AT("code_to_replace_from")); ?></td> \
-			<td><textarea name="alter_code_from[{1}]" rows="5" cols="120" style="max-width:100%"></textarea></td> \
+			<td><textarea name="alter_code_from[{1}]" rows="5" cols="120" style="max-width:95%"></textarea></td> \
 		</tr> \
 		<tr> \
 			<td><?php echo addslashes(_AT("code_to_replace_to")); ?></td> \
-			<td><textarea name="alter_code_to[{1}]" rows="5" cols="120" style="max-width:100%"></textarea></td> \
+			<td><textarea name="alter_code_to[{1}]" rows="5" cols="120" style="max-width:95%"></textarea></td> \
 		</tr> \
 	</table> \
- 	<table style="display: none" width="100%"> \
+ 	<table style="display: none" width="95%"> \
  		<tr> \
  			<td width="150px"><?php echo addslashes(_AT("file_name")); ?></td> \
  			<td><input name="delete_filename[{1}]" type="text" maxlength="100" size="100" /></td> \
@@ -304,7 +303,7 @@ var ACTION_HTML_TEMPLATE = ' \
  			<td><input name="delete_dir[{1}]" type="text" maxlength="100" size="100" /></td> \
  		</tr> \
  	</table> \
-	<table style="display: none" width="100%"> \
+	<table style="display: none" width="95%"> \
 		<tr> \
 			<td width="150px"><?php echo addslashes(_AT("file_name")); ?></td> \
 			<td><input name="overwrite_filename[{1}]" type="text" /></td> \
@@ -316,15 +315,15 @@ var ACTION_HTML_TEMPLATE = ' \
 		<tr id="overwrite_uploaded_file" style="display:none"> \
 			<td><?php echo addslashes(_AT("file")); ?></td> \
 			<td></td> \
-			<td><INPUT type="hidden" NAME="overwrite_uploaded_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
+			<td><INPUT type="hidden" NAME="overwrite_uploaded_file[{1}]" SIZE="40" style="max-width:95%" /></td> \
 		</tr> \
 		<tr> \
 			<td><?php echo addslashes(_AT("upload_file")); ?></td> \
-			<td><INPUT TYPE="file" NAME="overwrite_upload_file[{1}]" SIZE="40" style="max-width:100%" /></td> \
+			<td><INPUT TYPE="file" NAME="overwrite_upload_file[{1}]" SIZE="40" style="max-width:95%" /></td> \
 		</tr> \
 	</table> \
 	</div> \
-	<div class="row" style="float:left"> \
+	<div style="float:left"> \
 		<input type="button" value="<?php echo addslashes(_AT("delete_this_file")); ?>" onclick="del_file(event)" /> \
 	</div> \
 	<br /><br /> \
