@@ -74,7 +74,7 @@ if (isset($_pages[$current_page]['title'])) {
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
 
 if ($_course_id > 0) {
-	$sequence_links = $contentManager->generateSequenceCrumbs($cid);
+	$sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
 	$savant->assign('sequence_links', $sequence_links);
 }
 

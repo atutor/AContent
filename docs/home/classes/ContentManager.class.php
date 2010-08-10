@@ -566,15 +566,10 @@ class ContentManager
 		
 		$first = $this->getNextContent(0); // get first
 		
-		// if the given content id is invalid, use the content id of the first page
-		if (intval($cid) == 0 || !($row = $this->getContentPage($cid))) {
-			$cid = $first['content_id'];
-		}
 		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}
 		if ($first) {
-//			$first['url'] = $_base_path.url_rewrite('content.php?cid='.$first['content_id']);
 			$first['url'] = $_base_path.'home/course/content.php?_cid='.$first['content_id'];
 			$sequence_links['first'] = $first;
 		}
@@ -586,7 +581,6 @@ class ContentManager
 				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
 			}
 
-//			$resume['url'] = $_base_path.url_rewrite('content.php?cid='.$_SESSION['s_cid']);
 			$resume['url'] = $_base_path.'home/course/content.php?_cid='.$_SESSION['s_cid'];
 			
 			$sequence_links['resume'] = $resume;
@@ -601,10 +595,8 @@ class ContentManager
 				$next['title'] = $this->getNumbering($next['content_id']).' '.$next['title'];
 			}
 
-//			$next['url'] = $_base_path.url_rewrite('content.php?cid='.$next['content_id']);
 			$next['url'] = $_base_path.'home/course/content.php?_cid='.$next['content_id'];
 			if (isset($previous['content_id'])) {
-//				$previous['url'] = $_base_path.url_rewrite('content.php?cid='.$previous['content_id']);
 				$previous['url'] = $_base_path.'home/course/content.php?_cid='.$previous['content_id'];
 			}
 			
