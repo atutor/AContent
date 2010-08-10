@@ -44,7 +44,7 @@ if ($_GET['category_id'] <= 0) {
 if (is_array($category_rows)) {
 	foreach ($category_rows as $row) $cats[] = $row;
 }
-else if (isset($category_row)) {
+else if (isset($category_row) && $category_row <> '') {
 	$cats[] = $category_row;
 }
 
@@ -118,11 +118,7 @@ $question_flag = FALSE;
 //output categories
 foreach ($cats as $cat) {
 	//ouput questions
-//	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question";
-//	$result	= mysql_query($sql, $db);
-//	if ($row = mysql_fetch_assoc($result)) {
 	$rows = $testsQuestionsDAO->getByCourseIDAndCategoryID($_course_id, $cat['category_id']);
-//	debug($cat);debug($rows);
 	if (is_array($rows)) {
 		$question_flag = TRUE;
 		echo '<tr>';
