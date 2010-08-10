@@ -89,8 +89,6 @@ $parser->set_element_handler('openHandler','closeHandler');
 
 /* generate the resources and save the HTML files */
 			
-//ob_start();
-							 
 global $parser, $my_files;
 global $course_id;
 
@@ -141,6 +139,4 @@ foreach ($my_files as $file) {
 	$resources[$i] = $file;
 	$i++;
 }
-		
-$organizations_str = ob_get_contents();
-ob_end_clean();
+?>
