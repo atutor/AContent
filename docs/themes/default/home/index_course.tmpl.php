@@ -37,7 +37,7 @@ $url_param = substr($url_param, 0, -1);
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
-
+<!-- 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
 	<form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get" name="frm_search">
@@ -58,6 +58,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	</form>
 </fieldset>
 </div> 
+-->
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
@@ -78,7 +79,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	$end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
 ?>
       <li class="course" style="font-weight:bold">
-        <div><?php echo _AT('results').' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
+        <div><?php echo ((strstr($caller_script, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
         <?php  
         if($_SESSION['user_id']){ ?>
           <span style="float: right"><img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />&nbsp;&nbsp;&nbsp;<?php echo _AT('authoring_img_info'); ?></span>
