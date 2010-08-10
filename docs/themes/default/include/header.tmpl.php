@@ -179,20 +179,16 @@ foreach ($this->top_level_pages as $page) {
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
         <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="25" />
       
-<?php 
-
-if (is_array($this->categories)) { // print category dropdown list box?>
-    <select name="catid">
-      <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
-      <option value="">---------------------------------</option>
+<?php if (is_array($this->categories)) { // print category dropdown list box?>
+        <select name="catid">
+          <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
+          <option value="">---------------------------------</option>
 <?php foreach ($this->categories as $category) {?>
-      <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
+          <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
 <?php }?>
-      <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
-    </select>
+          <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
+        </select>
 <?php }?>
-        
-        
         <input type="submit" name="search" value="<?php echo _AT("search"); ?>" />
       </form>
       </div>

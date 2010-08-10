@@ -1208,7 +1208,7 @@ ul.navigation li a.active{
 .search_top{
 white-space:nowrap;
 font-size:.8em;
-width:33em;
+margin-right:1em;
 float:right;
 
 }

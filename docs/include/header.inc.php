@@ -99,8 +99,8 @@ if (isset($course_base_href) || isset($content_base_href)) {
 }
 
 // Setup array of content tools for shortcuts tool bar.
-
 $savant->assign('tool_shortcuts', $_tool_shortcuts);  // array of content tools for shortcuts tool bar.
+
 $savant->assign('content_base_href', $_tmp_base_href);
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
@@ -109,6 +109,11 @@ $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
+
+// course categories for search tool
+require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
+$courseCategoriesDAO = new CourseCategoriesDAO();
+$savant->assign('categories', $courseCategoriesDAO->getAll());
 
 // get custom css
 $custom_css = '';
