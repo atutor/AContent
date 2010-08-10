@@ -32,7 +32,7 @@ if (is_array($all_tests)) $num_tests = count($all_tests);
 
 //If there are no tests, don't display anything except a message
 if ($num_tests == 0){
-	$msg->addInfo('NO_TESTS');
+	$msg->addInfo(array('NO_TESTS', TR_BASE_HREF.'tests/create_test.php?_course_id='.$_course_id));
 	$msg->printInfos();
 	return;
 }
@@ -47,7 +47,7 @@ else {
 }
 ?>
 <div class="row">
-	<span style="font-weight:bold"><?php echo _AT('about_content_tests'); ?></span>
+	<span style="font-weight:bold"><?php echo _AT('about_content_tests', TR_BASE_HREF.'tests/create_test.php?_course_id='.$_course_id); ?></span>
 </div>
 
 <div class="row">
