@@ -1263,9 +1263,8 @@ div.shortcuts{
   -moz-border-radius: 0em 0em .5em .5em;
   float:right;
   margin-right:2em;
-  padding-left:.5em;
-  padding-right:.5em;
-  padding-bottom:.2em;
+  padding: 0.1em 0.3em 0.3em 0.5em;
+  line-height: 1.5em;
 }
 .shortcuts ul {
   position: relative;

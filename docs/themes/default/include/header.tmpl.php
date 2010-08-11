@@ -211,8 +211,30 @@ foreach ($this->top_level_pages as $page) {
   <div id="ajax-msg">
   </div>
 
-  <?php if (is_array($this->tool_shortcuts) ||isset($this->course_id) && $this->course_id > 0){ ?>
+  <div id="sequence-links">
+    <?php //if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+    <?php if ($this->sequence_links['resume']): ?>
+    <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+    <?php else:
+          if ($this->sequence_links['previous']): ?>
+    <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
+    <?php endif;
+          if ($this->sequence_links['next']): ?>
+    <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
+    <?php endif; ?>
+    <?php endif; ?>
+<?php // } ?>
+    &nbsp;
+  </div>
 
+  <!-- guide -->
+  <?php if (isset($this->guide)) {  ?>
+    <div id="guide_box" title="<?php echo _AT('handbook_for').' '.$this->page_title; ?>">
+    <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
+  </div>
+  <?php }?>
+
+  <?php if (is_array($this->tool_shortcuts) ||isset($this->course_id) && $this->course_id > 0){ ?>
   <div class="shortcuts">
     <ul>
   <?php if (is_array($this->tool_shortcuts)){ ?>
@@ -249,15 +271,7 @@ foreach ($this->top_level_pages as $page) {
  </div>
     <?php }?>
 
-<!-- guide -->
-  <?php if (isset($this->guide)) {  ?>
-    <div id="guide_box" title="<?php echo _AT('handbook_for').' '.$this->page_title; ?>">
-    <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
-  </div>
-  <?php }?>
-<?php  
-//if ($this->course_id > 0) {
-?>
+<?php //if ($this->course_id > 0) { ?>
   <div id="contentwrapper">
     <?php //if ((isset($this->course_id) && $this->course_id > 0)): ?>
     <div id="leftcolumn">
@@ -302,22 +316,6 @@ foreach ($this->top_level_pages as $page) {
         </script>
         <?php //endif; ?>
       </div>
-
-      <div id="sequence-links">
-        <?php //if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-          <?php if ($this->sequence_links['resume']): ?>
-        <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
-          <?php else:
-          if ($this->sequence_links['previous']): ?>
-        <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
-          <?php endif;
-          if ($this->sequence_links['next']): ?>
-        <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
-          <?php endif; ?>
-        <?php endif; ?>
-		<?php // } ?>
-			&nbsp;
-      </div>
     <?php //endif; ?>
 
       <!-- the page title -->
@@ -345,7 +343,6 @@ foreach ($this->top_level_pages as $page) {
 		<?php endforeach; ?>
 	</ul>
 </div> -->
-
    
 <?php endif; ?>
 <!-- the main navigation. in our case, tabs -->
