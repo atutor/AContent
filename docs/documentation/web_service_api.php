@@ -152,14 +152,14 @@ by keywords. AContent returns the matching results in REST format.</p>
 
 <div id="urls">
 <h2 id="view">View course URL</h2>
-<kbd><?php echo TR_BFSE_HREF;?>home/course/index.php?_course_id=10</kbd><br />
+<kbd><?php echo TR_BASE_HREF;?>home/course/index.php?_course_id=10</kbd><br />
 <p>_course_id is the "courseID" element returned in the REST search result</p>
-<p>This URL leads to the first content page of the course.</p>
+<p>This URL leads to the first content page of the lesson.</p>
 
 <h2 id="download">Download course URL</h2>
 <kbd><?php echo TR_BASE_HREF;?>home/imscc/ims_export.php?course_id=10</kbd><br />
 <p>course_id is the "courseID" element returned in the REST search result</p>
-<p>This URL returns a zipped common cartridge of the course.</p>
+<p>This URL returns a zipped common cartridge of the lesson.</p>
 </div>
 
 <h2 id="import">Import common cartridge or content package into AContent</h2>
@@ -174,15 +174,15 @@ access token is returned. This access
 token must be sent along with the import request as a user privilege check. The access
 token can be used repeatedly until its expiration. After the
 user is confirmed as an valid author, the common cartridge or content package is retrieved
-from the request "url" parameter and imported as a new AContent course. The course
-ID of the newly-imported course is returned at success.</p>
+from the request "url" parameter and imported as a new AContent lesson. The 
+ID of the newly-imported lesson is returned at success.</p>
 
 <kbd><?php echo TR_BASE_HREF;?>home/ims/ims_import.php?oauth_token=xxx&url=xxx</kbd><br />
 
 <p>oauth_token is the valid access token returned by an AContent OAuth server.<br />
 url points to a zip file of a common cartridge or a content package.<br />
 Refer to <a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php#import">
-Import Common Cartridge or Content Package into AContent via OAuth</a> for detailed 
+Importing Common Cartridges or Content Packages into AContent via OAuth</a> for detailed 
 request parameters and success/fail responses.</p>
 
 </div>
