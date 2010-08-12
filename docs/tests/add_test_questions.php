@@ -31,10 +31,29 @@ $_pages['tests/add_test_questions.php']['title_var']    = 'add_questions';
 $_pages['tests/add_test_questions.php']['parent']   = 'tests/questions.php?tid='.$_GET['tid'].'&_course_id='.$_course_id;
 
 require_once(TR_INCLUDE_PATH.'header.inc.php');
+require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 ?>
 
 <?php $tid = intval($_GET['tid']); ?>
+<div class="input-form">
+	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('category'); ?></legend>
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+		<input type="hidden" name="_course_id" value="<?php echo $_course_id; ?>" />
 
+			<label for="cats"><?php echo _AT('category'); ?></label><br />
+			<select name="category_id" id="cats">
+				<option value="-1"><?php echo _AT('cats_all'); ?></option>
+				<?php TestsUtility::printQuestionCatsInDropDown($_GET['category_id']); ?>
+			</select>
+
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+	</form>
+
+	</fieldset>
+
+</div>
 <?php require_once(TR_INCLUDE_PATH.'../tests/html/tests_questions.inc.php'); ?>
 
 <?php require_once(TR_INCLUDE_PATH.'footer.inc.php'); ?>
