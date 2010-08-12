@@ -73,6 +73,7 @@ if (is_array($cat_rows)) {
 require_once(TR_INCLUDE_PATH.'header.inc.php');
 
 $row = $testsDAO->get($tid);
+echo '<div class="input-form">';
 echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 
 $rows = $testsQuestionsAssocDAO->getZeroWeightRowsByTestID($tid);
@@ -89,5 +90,5 @@ $savant->assign('rows', $rows);
 $savant->assign('tid', $tid);
 $savant->assign('course_id', $_course_id);
 $savant->display('tests/questions.tmpl.php');
-
+echo '</div>';
 require_once(TR_INCLUDE_PATH.'footer.inc.php');?>
