@@ -33,6 +33,8 @@ if (isset($_GET['action'], $_GET['cid']) && $_SESSION['user_id'] > 0)
 	
 	if ($_GET['action'] == 'remove') $userCoursesDAO->Delete($_SESSION['user_id'], $cid);
 	if ($_GET['action'] == 'add') $userCoursesDAO->Create($_SESSION['user_id'], $cid, TR_USERROLE_VIEWER, 0);
+	
+	$msg->addFeedback(ACTION_COMPLETED_SUCCESSFULLY);
 }
 
 // retrieve data to display
