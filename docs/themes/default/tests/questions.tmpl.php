@@ -12,6 +12,7 @@
 global $strlen, $substr;
 
 ?>
+
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?tid=<?php echo $this->tid.SEP; ?>_course_id=<?php echo $this->course_id;?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $this->tid; ?>" />
 <input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
@@ -85,3 +86,4 @@ if (is_array($this->rows)) {
 
 </table><br />
 </form>
+
