@@ -10,6 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
+
 ?>
 <div class="input-form">
 <table class="qdb_table">
@@ -41,3 +43,24 @@
 		</form>
 	</fieldset>
 </td>
+<td>
+	<fieldset class="group_form1"><legend class="group_form1"><?php echo _AT('category'); ?></legend>
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+		<input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
+		<div class="row">
+			<label for="cats"><?php echo _AT('category'); ?></label><br />
+			<select name="category_id" id="cats">
+				<option value="-1"><?php echo _AT('cats_all'); ?></option>
+				<?php TestsUtility::printQuestionCatsInDropDown($_GET['category_id']); ?>
+			</select>
+		</div>
+		<div class="row buttons">
+			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
+			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
+		</div>
+	</form>
+
+	</fieldset>
+
+</td></tr></table>
+</div>
