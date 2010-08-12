@@ -68,6 +68,9 @@ define('TR_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 // course category
 define('TR_COURSECATEGORY_UNCATEGORIZED',   0); 
 
+// the maximum length of the category name in category picker
+define('TR_MAX_LAN_CATEGORY_NAME', 28);
+
 // content type
 define('CONTENT_TYPE_CONTENT',  0);
 define('CONTENT_TYPE_FOLDER', 1);

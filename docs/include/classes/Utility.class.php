@@ -51,12 +51,12 @@ class Utility {
 	* truncate it.
 	* This is used on data that are being inserted into the database.
 	* If this function is used for display purposes, you may want to add the '...' 
-	*  at the end of the string by setting the $forDisplay=1
+	* at the end of the string by setting the $forDisplay=1
 	* @param	the mbstring that needed to be checked
 	* @param	the byte length of what the input should be in the database.
-	* @param	(OPTIONAL)
-	*			append '...' at the end of the string.  Should not use this when 
-	*			dealing with database.  This should only be set for display purposes.
+	* @param	(OPTIONAL) 1 or 0, default value is 0 
+	*			when 1, append '...' at the end of the string.
+	*           when 0, only truncate string, do not append '...'  
 	* @return	the mbstring safe sql entry
 	* @author	Harris Wong
 	*/

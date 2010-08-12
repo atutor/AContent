@@ -53,6 +53,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * back_to_page              array('url', 'title')            the link back to the part of the current page, if needed.
  */
 include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+
 $lang_charset = "UTF-8";
 //Timer
 $mtime = microtime(); 
@@ -184,7 +185,9 @@ foreach ($this->top_level_pages as $page) {
           <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
           <option value="">---------------------------------</option>
 <?php foreach ($this->categories as $category) {?>
-          <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
+          <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?> title="<?php echo $category['category_name']; ?>">
+            <?php echo Utility::validateLength($category['category_name'], TR_MAX_LAN_CATEGORY_NAME, 1); ?>
+          </option>
 <?php }?>
           <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
         </select>
@@ -259,7 +262,7 @@ foreach ($this->top_level_pages as $page) {
         </a>
       </li>
       <li><a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/bookmark_remove.png"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
         </a>
       </li>
       <?php }?>
