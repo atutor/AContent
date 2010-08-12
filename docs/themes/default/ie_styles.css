@@ -18,9 +18,19 @@
 	margin-right:8.5em;
 }
 
-#subnavlistcontainer{
+div#subnavlistcontainer{
 	margin-left:2em;
+margin-top:1em;
 }
+
+ul#subnavlist li{
+
+  	zoom:100%;
+	display:inline;
+margin-left:.5em;
+
+}
+
 #guide_box{
 	width:15%;
 	background-color:#ffffff;
