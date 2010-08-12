@@ -18,22 +18,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 // This template is called by home/index.php and home/search.php
 // Find out the caller URL and direct the page back to the caller 
 // after adding/removing the course from "My Courses"
-$caller_url_parts = explode('/', $_SERVER['PHP_SELF']); 
-$caller_script = $caller_url_parts[count($caller_url_parts)-1];
-
-if (count($_GET) > 0)
-{
-	foreach ($_GET as $param => $value)
-	{
-		if ($param == 'action' || $param == 'cid') 
-			continue;
-		else
-			$url_param .= $param.'='.urlencode($value).'&';
-	}
-}
-
-$caller_url = $caller_script. '?'.(isset($url_param) ? $url_param : '');
-$url_param = substr($url_param, 0, -1);
+list($caller_url, $url_param) = Utility::getRefererURLAndParams();
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
@@ -110,11 +95,11 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
           <a href="<?php echo TR_BASE_HREF; ?>home/course/index.php?_course_id=<?php echo $row['course_id']; ?>"><?php echo Utility::highlightKeywords($row['title'], $keywords); ?></a>
 <?php if ($user_role['role'] == TR_USERROLE_VIEWER) {?>
           <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=remove&cid=<?php echo $row['course_id']; ?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/delete.gif" alt='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' title='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' border="0" />
+            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_remove.png" alt='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' title='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' border="0" />
           </a>
 <?php } if ($user_role['role'] == NULL && $_SESSION['user_id']>0) {?>
           <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=add&cid=<?php echo $row['course_id'];?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/add.gif" alt="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" title="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" border="0" />
+            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_add.png" alt="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" title="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" border="0" />
           </a>
 <?php }?>
           <a href="<?php echo TR_BASE_HREF; ?>home/ims/ims_export.php?course_id=<?php echo $row['course_id']; ?>">

@@ -290,5 +290,35 @@ class Utility {
 		if (!$pos) return array($str, '');
 		else return array(substr($str, 0, $pos), substr($str, $pos));
 	}
+	
+	/**
+	 * This funciton returns a pair of (URL, URL parameters) of the PHP_SELF url. 
+	 * For example, if http referer is "http://localhost/achecker/home/index.php?a=1&b=2", 
+	 * the function returns array ("http://localhost/achecker/home/index.php?a=1&b=2&", 'a=1&b=2"');
+	 * @access public
+	 * @param none
+	 * @return array of (URL, URL parameters)
+	 * @author Cindy Qi Li
+	 */
+	public static function getRefererURLAndParams() {
+		$caller_url_parts = explode('/', $_SERVER['PHP_SELF']); 
+		$caller_script = $caller_url_parts[count($caller_url_parts)-1];
+		
+		if (count($_GET) > 0)
+		{
+			foreach ($_GET as $param => $value)
+			{
+				if ($param == 'action' || $param == 'cid') 
+					continue;
+				else
+					$url_param .= $param.'='.urlencode($value).'&';
+			}
+		}
+		
+		$caller_url = $caller_script. '?'.(isset($url_param) ? $url_param : '');
+		$url_param = substr($url_param, 0, -1);
+		
+		return array($caller_url, $url_param);
+	}
 }
 ?>

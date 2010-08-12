@@ -22,6 +22,11 @@ global $savant, $_course_id;
 $userCoursesDAO = new UserCoursesDAO();
 $output = '';
 
+// The main page can be home/index.php or home/search.php
+// Find out the caller URL and direct the page back to the caller 
+// after adding/removing the course from "My Courses"
+list($caller_url, $url_param) = Utility::getRefererURLAndParams();
+
 // retrieve data to display
 if ($_SESSION['user_id'] > 0) {
 	$my_courses = $userCoursesDAO->getByUserID($_SESSION['user_id']); 
@@ -46,12 +51,12 @@ if (!is_array($my_courses)) {
 		$output .= '    <a href="'. TR_BASE_HREF.'home/course/index.php?_course_id='. $row['course_id'].'"'.(($_course_id == $row['course_id']) ? ' class="selected-sidemenu"' : '').'>'.$row['title'].'</a>'."\n";
 		if ($row['role'] == TR_USERROLE_VIEWER) {
 			$output .= '    <a href="'. TR_BASE_HREF.'home/'. $caller_url.'action=remove&cid='. $row['course_id'].'">'."\n";
-            $output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/delete.gif" alt="'. htmlspecialchars(_AT('remove_from_list')).'" title="'. htmlspecialchars(_AT('remove_from_list')).'" border="0" />'."\n";
+            $output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_remove.png" alt="'. htmlspecialchars(_AT('remove_from_list')).'" title="'. htmlspecialchars(_AT('remove_from_list')).'" border="0" />'."\n";
 			$output .= '    </a>'."\n";
 		} 
 		if ($row['role'] == NULL && $_SESSION['user_id']>0) {
 			$output .= '    <a href="'. TR_BASE_HREF.'home/'. $caller_url.'action=add&cid='. $row['course_id'].'">'."\n";
-			$output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/add.gif" alt="'. htmlspecialchars(_AT('add_into_list')).'" title="'. htmlspecialchars(_AT('add_into_list')).'" border="0" />'."\n";
+			$output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_add.png" alt="'. htmlspecialchars(_AT('add_into_list')).'" title="'. htmlspecialchars(_AT('add_into_list')).'" border="0" />'."\n";
 			$output .= '    </a>'."\n";
 		}
 		//$output .= '    <a href="'. TR_BASE_HREF.'home/ims/ims_export.php?course_id='. $row['course_id'].'">'."\n";

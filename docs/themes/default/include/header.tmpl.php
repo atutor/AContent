@@ -259,7 +259,7 @@ foreach ($this->top_level_pages as $page) {
         </a>
       </li>
       <li><a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/bookmark_remove.png"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
         </a>
       </li>
       <?php }?>
