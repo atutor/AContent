@@ -19,7 +19,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 <h1>OAuth Server API</h1>
 <p>AContent implements the OAuth Core 1.0 specification.</p>
-<p>The <a href="http://oauth.net/documentation/getting-started" target="_blank">OAuth</a> protocol enables web services consumers to access protected resources via an API without requiring users to supply the service credentials to the consumers. It's a generic methodology for unobtrusive, wire protocol level authenticated data access over HTTP.</p>
+<p>The <a href="http://oauth.net/documentation/getting-started" target="new">OAuth</a> protocol enables web service consumers to access protected resources via an API without requiring users to supply the service credentials to the consumers. It's a generic methodology for unobtrusive, wire protocol level authenticated data access over HTTP.</p>
 
 <p>AContent exposes the following API endpoints:</p>
 
@@ -53,7 +53,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 <tr>
   <th>expire</th>
-  <td>Optional. The seconds that the access token is valid. The access token expires after this number of seconds since it is assigned. When "expire" is set to 0, the access token never expires.</td>
+  <td>Optional. The length of time in seconds that the access token is valid. The access token expires after this number of seconds since being assigned. When "expire" is set to 0, the access token never expires.</td>
   <td>0</td>
 </tr>
 
@@ -77,13 +77,13 @@ consumer_key=8862a51faa12c1b1&consumer_secret=79d591810c803167&expire=300<br />
 <pre style="background-color:#F7F3ED;"> 
 error=Empty+parameter+%22consumer%22<br />
 </pre>
-<p>A fail response returns error message.</p> 
+<p>A fail response returns an error message.</p> 
 
 <h2 id="request_token">Request token</h2>
 
 <h3>Endpoint: </h3><p>http://server-cname/oauth/request_token.php</p>
 <h3>Parameters</h3><br />
-<p>Both GET or POST method are supported.</p>
+<p>Both GET or POST methods are supported.</p>
 
 <table class="data" rules="all">
 <tbody><tr>
@@ -145,7 +145,7 @@ oauth_token=086cbfe90b41a7fdf9&oauth_token_secret=55e2bd8454b2f75a21<br />
 <pre style="background-color:#F7F3ED;"> 
 error=Consumer+is+not+registered<br />
 </pre>
-<p>A fail response returns error message.</p> 
+<p>A fail response returns an error message.</p> 
 
 <h2 id="authorization">Authorization</h2>
 
@@ -168,8 +168,8 @@ error=Consumer+is+not+registered<br />
   <td>Optional. The Consumer MAY specify a URL the Service Provider will use to redirect the User 
   back to the Consumer along with the request token when 
   <a href="http://oauth.net/core/1.0#auth_step2">Obtaining User Authorization</a> 
-  is complete. If this parameter was not given or empty, the message "User is authenticated successfully" 
-  will be returned as success response.</td>
+  is complete. If this parameter was not given or empty, the message "User was authenticated successfully" 
+  will be returned as a success response.</td>
   <td>0</td>
 </tr>
 
@@ -184,13 +184,13 @@ error=Consumer+is+not+registered<br />
 
 <span style="font-weight:bold">Success response</span>
 <p>Redirect the User back to the URL specified in oauth_callback along with the send-in request token "oauth_token". 
-If oauth_callback is not given or empty, the message "User is authenticated successfully" will be returned.</p> 
+If oauth_callback is not given or empty, the message "User was authenticated successfully" will be returned.</p> 
 
 <span style="font-weight:bold">Fail response</span>
 <pre style="background-color:#F7F3ED;"> 
 error=Empty+oauth+token<br />
 </pre>
-<p>A fail response returns error message.</p> 
+<p>A fail response returns an error message.</p> 
 
 <h2 id="access_token">Access token</h2>
 
@@ -217,7 +217,7 @@ error=Empty+oauth+token<br />
 <tr>
   <th>oauth_signature_method</th>
   <td>Required. The signature method the Consumer used to sign the request.</td>
-  <td>None. <br /> Or, One of these values: HMAC-SHA1, RSA-SHA1, and PLAINTEXT.</td>
+  <td>None. <br /> Or, one of these values: HMAC-SHA1, RSA-SHA1, and PLAINTEXT.</td>
 </tr>
 
 <tr>
@@ -265,13 +265,13 @@ oauth_token=086cbfe90b41a7fdf9&oauth_token_secret=55e2bd8454b2f75a21<br />
 <pre style="background-color:#F7F3ED;"> 
 error=Invalid+oauth+request+token<br />
 </pre>
-<p>A fail response returns error message.</p> 
+<p>A fail response returns an error message.</p> 
 <p>Note that the access token can be reused during the expire threshold is reached. Expire threshold is defined in the 
 <a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php#register_consumer">register consumer request</a>.</p>
 
 <h2 id="import">Import Common Cartridge or Content Package into AContent</h2>
-<p>Till here, with a set of token credentials, the client is now able to import common cartridge or content package into
-AContent as a new course. The generated course ID is returned at success. Or, an error message is returned at fail.</p>
+<p>Until here, with a set of token credentials, the client is now able to import common cartridges or content packages into
+AContent as a new lesson. The generated course ID is returned at success. Or, an error message is returned at fail.</p>
 <h3>Endpoint: </h3><p>http://server-cname/home/ims/ims_import.php</p>
 <h3>Parameters</h3><br />
 
@@ -305,7 +305,7 @@ url=http%3A%2F%2Fatutor.ca%2Fdemo%2Fmods%2F_core%2Fimscp%2Fims_export.php%3Fcid%
 <pre style="background-color:#F7F3ED;"> 
 course_id=20<br />
 </pre>
-<p>course_id is the number ID of the newly-imported course. This ID can be used to view and download the imported course. 
+<p>course_id is the number ID of the newly-imported lesson. This ID can be used to view and download the imported lesson. 
 Refer to <a href="<?php echo TR_BASE_HREF;?>documentation/web_service_api.php">Web Service API</a> for details.</p> 
 
 <span style="font-weight:bold">Fail response</span>
@@ -319,6 +319,6 @@ error=Cannot+create+import+directory<br />
 error=IMS+manifest+file+does+not+appear+to+be+valid<br />
 error=Error+at+parsing+IMS+manifest+file<br />
 </pre>
-<p>A fail response returns error message. Could be any of the above.</p> 
+<p>A fail response returns an error message. Could be any of the above.</p> 
 
 <?php include(TR_INCLUDE_PATH.'footer.inc.php'); ?>
