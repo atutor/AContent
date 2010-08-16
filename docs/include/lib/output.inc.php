@@ -669,17 +669,16 @@ function embed_media($text) {
 function make_clickable($text) {
 	$text = embed_media($text);
 
-	// The next 3 preg_replace convert the plain text URL to clickable URL. 
-	// Note that it only converts URL without ending " (double quotes)
-	// or </ for the reason of eliminating the URL specified in a html tag. The drawback is the url inside
-	// double quotes does not get converted, for example "http://google.ca" is not converted.
-	
-	// Remove the spaces in [media] tag, otherwise, the next line converts URL inside [media] into <a> tag
+	// The next 3 preg_replace convert plain text URL to clickable URL.
+	// limited conversion. It doesn't cover the case when the stuff in front of the URL is not a word. For example:
+	// <p>http://google.ca</p>
+	// "http://google.ca"  
+	// 1. remove the spaces in [media] tag, otherwise, the next line converts URL inside [media] into <a> tag
 	$text = preg_replace("/(\[media\])([\s]*)(.*)(\[\/media\])/", '$1$3$4', $text);
 	$text = preg_replace("/(\[media\])(.*)([\s]*)(\[\/media\])/U", '$1$2$4', $text);
-	
-	$text = preg_replace('/(?<!(\[media\]))(https?:\/\/([-\w]+\.[-\w\.]+)+\w(:\d+)?(\/([-\w\/_\.]*(\?\S+)?)?)*)'.
-	                     '(?!([\s]*(\"|\<\/)))/', '<a href="$2">$2</a>', $text);
+	// 2. convert URL
+	$text = preg_replace('/(^|[\n ])([\w]*?)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t<]*)/is', 
+	                     '$1$2<a href="$3">$3</a>', $text);
 	
 	// convert email address to clickable URL that pops up "send email" interface with the address filled in
 	$text = preg_replace('/(?|<a href="mailto[\s]*:[\s]*([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'\@'
