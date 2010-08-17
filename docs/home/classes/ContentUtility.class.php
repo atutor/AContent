@@ -598,13 +598,11 @@ class ContentUtility {
 					  'icon' => $_base_href . 'images/medit.gif');
 			}
 		
-			if ($contentManager->_menu_info[$content_row['content_id']]['content_parent_id']) {
-				$tool_shortcuts[] = array(
-				  'title' => _AT('add_sibling_folder'), 
-				  'url' => $_base_href .
-					'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
-				   'icon' => $_base_href . 'images/add_sibling_folder.gif');
-			}
+			$tool_shortcuts[] = array(
+			  'title' => _AT('add_sibling_folder'), 
+			  'url' => $_base_href .
+				'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
+			   'icon' => $_base_href . 'images/add_sibling_folder.gif');
 
 			if ($content_row['content_type'] == CONTENT_TYPE_FOLDER || $content_row['content_type'] == CONTENT_TYPE_WEBLINK) {
 				$tool_shortcuts[] = array(
@@ -614,13 +612,11 @@ class ContentUtility {
 				   'icon' => $_base_href . 'images/add_sub_folder.gif');
 			}
 			
-			if ($contentManager->_menu_info[$content_row['content_id']]['content_parent_id']) {
-				$tool_shortcuts[] = array(
-				  'title' => _AT('add_sibling_page'), 
-				  'url' => $_base_href .
-					'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
-				  'icon' => $_base_href . 'images/add_sibling_page.gif');
-			}
+			$tool_shortcuts[] = array(
+			  'title' => _AT('add_sibling_page'), 
+			  'url' => $_base_href .
+				'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
+			  'icon' => $_base_href . 'images/add_sibling_page.gif');
 			
 			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
 				$tool_shortcuts[] = array(
