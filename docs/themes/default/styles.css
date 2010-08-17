@@ -8,7 +8,21 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-@import url(http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold);
+/* @import url(http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold); */
+
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: bold;
+  src: local('Droid Sans'), url('fonts/DroidSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Droid Sans';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Droid Sans'), url('fonts/DroidSans.ttf') format('truetype');
+}
 
 html,body{
   height:100%;

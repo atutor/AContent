@@ -60,6 +60,13 @@ if($languageManager->getNumEnabledLanguages() > 1) {
 		<br style="clear:both;" />
       <div style="margin-left:auto; margin-right:auto; width:20em;">
         <small><?php if (isset($this->course_copyright)) echo $this->course_copyright.'<br />'; echo _AT("copyright"); ?></small><br />
+  <!-- guide -->
+
+    <div>
+    <a href="#" onclick="trans.utility.poptastic('<?php echo TR_GUIDES_PATH."index.php?p=home/index.php"; ?>'); return false;" target="_new"><em><?php echo _AT('general_help'); ?></em></a>&nbsp;
+  </div>
+
+
       </div>
 		
     </div>
