@@ -18,7 +18,7 @@ print_progress($step);
 <p><strong>Congratulations on your installation of AContent <?php echo $new_version; ?><i>!</i></strong></p>
 
 <p>For security reasons once you have confirmed that AContent has installed correctly, you should delete the <kbd>install/</kbd> directory,
-and reset the permissions on the config.inc.php file to read only.</p>
+and reset the permissions on the config.inc.php file to read only. Use the administrator or author account created in the earlier step to login.</p>
 
 <br />
 
