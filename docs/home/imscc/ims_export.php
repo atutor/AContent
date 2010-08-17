@@ -169,10 +169,16 @@ class MyHandler {
 			//hack, if param[name]=src or none <param> tag, extract. Skip all other <param> attributes.  
 			if ($name!='param' || $attrs['name']=='src'){
 				//skip glossary.html, tweak to accomodate atutor imscp; also skip repeated entries.
-			    if (strpos($attrs[$elements[$name]], 'glossary.html')===false 
-			            && !in_array($attrs[$elements[$name]], $my_files)){
-			        $my_files[] = $attrs[$elements[$name]];
-			    }
+				//skip javascript: links, void();, #, mailto:
+				if (strpos($attrs[$elements[$name]], 'glossary.html')===false 
+				    && !in_array($attrs[$elements[$name]], $my_files)
+				    && $attrs[$elements[$name]]!='#'
+				    && strpos($attrs[$elements[$name]], 'javascript:')===false 
+				    && strpos($attrs[$elements[$name]], 'mailto:')===false 
+				    && strpos($attrs[$elements[$name]], 'void(')===false 
+				   ){
+					$my_files[] = $attrs[$elements[$name]];
+				}
 			}
 		}
     }

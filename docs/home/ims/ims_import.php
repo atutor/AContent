@@ -1530,14 +1530,16 @@ if (is_dir($import_path.'resources')) {
 	closedir($handler);
 }
 //takes care of the condition where the whole package doesn't have any contents but question banks
+//also is the case of urls
 if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 }
-
-if (@rename($import_path.$all_package_base_path, $course_dir.$package_base_name) === false) {
-	if (!$msg->containsErrors()) {
-		$msg->addError('IMPORT_FAILED');
-	}
+if(strpos($all_package_base_path, 'http://')===false){
+	if (@rename($import_path.$all_package_base_path, TR_CONTENT_DIR .$_course_id.'/'.$package_base_name) === false) {
+        if (!$msg->containsErrors()) {
+            $msg->addError('IMPORT_FAILED');
+        }
+    }
 }
 //check if there are still resources missing
 foreach($items as $idetails){
@@ -1548,13 +1550,12 @@ FileUtility::clr_dir($import_path);
 
 if (file_exists($full_filename)) @unlink($full_filename);
 
-if (!$msg->containsErrors()) {
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-}
-
 if ($oauth_import) {
 	echo 'course_id='.$_course_id;
 } else {
+	if (!$msg->containsErrors()) {
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	}
 	header('Location: ../course/index.php?_course_id='.$_course_id);
 }
 exit;
