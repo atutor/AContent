@@ -619,9 +619,9 @@ function rehash($items){
 	/* called when an element ends */
 	/* removed the current element from the $path */
 	function endElement($parser, $name) {
-		global $path, $element_path, $my_data, $items;
+		global $path, $element_path, $my_data, $items, $oauth_import;
 		global $current_identifier, $skip_ims_validation;
-		global $msg, $content_type;		
+		global $msg, $content_type;
 		global $course_title, $course_description, $course_primary_lang;  // added by Cindy Li
 		static $resource_num = 0;
 		
@@ -654,7 +654,11 @@ function rehash($items){
 		//check if this is a test import
 		if ($name == 'schema'){
 			if (trim($my_data)=='IMS Question and Test Interoperability'){
-				$msg->addError('IMPORT_FAILED');
+				if ($oauth_import) {
+					echo "error=".urlencode('A test import');
+				} else {
+					$msg->addError('IMPORT_FAILED');
+				}
 			} 
 			$content_type = trim($my_data);
 		}
@@ -891,8 +895,12 @@ $archive = new PclZip($_FILES['file']['tmp_name']);
 
 if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 						PCLZIP_CB_PRE_EXTRACT,	'preImportCallBack') == 0) {
-	$msg->addError('IMPORT_FAILED');
-	echo 'Error : '.$archive->errorInfo(true);
+	if ($oauth_import) {
+		echo "error=".urlencode('Cannot unzip the package');
+	} else {
+		$msg->addError('IMPORT_FAILED');
+		echo 'Error : '.$archive->errorInfo(true);
+	}
 	FileUtility::clr_dir($import_path);
 	header('Location: '.$_SERVER['HTTP_REFERER']);
 	if (file_exists($full_filename)) @unlink($full_filename);
@@ -1534,10 +1542,14 @@ if (is_dir($import_path.'resources')) {
 if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 }
-if(strpos($all_package_base_path, 'http://')===false){
+if(strpos($all_package_base_path, 'http:/')===false){
 	if (@rename($import_path.$all_package_base_path, TR_CONTENT_DIR .$_course_id.'/'.$package_base_name) === false) {
         if (!$msg->containsErrors()) {
-            $msg->addError('IMPORT_FAILED');
+					if ($oauth_import) {
+						echo "error=".urlencode('Cannot move lesson directory into content directory');
+					} else {
+						$msg->addError('IMPORT_FAILED');
+					}
         }
     }
 }
