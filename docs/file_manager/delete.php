@@ -96,7 +96,7 @@ if (isset($_POST['submit_yes'])) {
 				$result=false;
 				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type'].SEP.'_course_id='.$_course_id);
 				exit;
-			} else if (!($result = clr_dir($current_path.$pathext.$filename))) { 
+			} else if (!($result = FileUtility::clr_dir($current_path.$pathext.$filename))) { 
 				$msg->addError('DIR_NO_PERMISSION');
 				$result=false;
 				header('Location: index.php?pathext='.$_POST['pathext'].SEP.'framed='.$_POST['framed'].SEP.'popup='.$_POST['popup'].SEP.'cp='.$_POST['cp'].SEP.'cid='.$_POST['cid'].SEP.'pid='.$_POST['pid'].SEP.'a_type='.$_POST['a_type'].SEP.'_course_id='.$_course_id);
