@@ -1545,11 +1545,11 @@ if(is_array($all_package_base_path)){
 if(strpos($all_package_base_path, 'http:/')===false){
 	if (@rename($import_path.$all_package_base_path, TR_CONTENT_DIR .$_course_id.'/'.$package_base_name) === false) {
         if (!$msg->containsErrors()) {
-					if ($oauth_import) {
-						echo "error=".urlencode('Cannot move lesson directory into content directory');
-					} else {
-						$msg->addError('IMPORT_FAILED');
-					}
+			if ($oauth_import) {
+				echo "error=".urlencode('Cannot move lesson directory into content directory');
+			} else {
+				$msg->addError('IMPORT_FAILED');
+			}
         }
     }
 }
