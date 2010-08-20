@@ -43,6 +43,15 @@ if (isset($_POST['submit'])) {
 			$errors[] = '<strong>'.$_POST['content_dir'].'/updater</strong> directory is not writable.';
 		}
 
+		// content directory for the default HowTo lesson
+		if (!is_dir($_POST['content_dir'].'/1')) {
+			if (!@mkdir($_POST['content_dir'].'/1')) {
+				$errors[] = '<strong>'.$_POST['content_dir'].'/1</strong> directory does not exist and cannot be created.';  
+			}
+		} else if (!is_writable($_POST['content_dir'].'/1')){
+			$errors[] = '<strong>'.$_POST['content_dir'].'/1</strong> directory is not writable.';
+		}
+
 		// save blank index.html pages to those directories
 		@copy('../images/index.html', $_POST['content_dir'] . '/import/index.html');
 		@copy('../images/index.html', $_POST['content_dir'] . '/index.html');

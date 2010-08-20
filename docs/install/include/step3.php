@@ -145,7 +145,16 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
                1, 
                now())";
 		$result = mysql_query($sql ,$db);
+		$user_id = mysql_insert_id();
 		
+		// associate the default HowTo lesson with this author account 
+		$sql = "UPDATE ".$_POST['step2']['tb_prefix']."courses SET user_id=".$user_id." WHERE course_id=1";
+		$result = mysql_query($sql ,$db);
+		
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."user_courses (user_id, course_id, role) VALUES (".$user_id.", 1, 1)";
+		$result = mysql_query($sql ,$db);
+		
+		// configurations
 		$_POST['site_name'] = $addslashes($_POST['site_name']);
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('site_name', '$_POST[site_name]')";
 		$result = mysql_query($sql ,$db);

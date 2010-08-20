@@ -59,6 +59,7 @@ if(isset($_POST['submit'])) {
 			/* @See include/classes/dbmanager.php */
 			queryFromFile('db/db_schema.sql');
 			queryFromFile('db/language_text.sql');
+			queryFromFile('db/HowTo_lesson.sql');
 
 			if (!$errors) {
 				print_progress($step);
