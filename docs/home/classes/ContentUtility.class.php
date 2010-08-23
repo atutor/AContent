@@ -618,7 +618,7 @@ class ContentUtility {
 				'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$content_row['content_id']]['content_parent_id'].SEP.'_course_id='.$_course_id,
 			  'icon' => $_base_href . 'images/add_sibling_page.gif');
 			
-			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT) {
+			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT || $content_row['content_type'] == CONTENT_TYPE_WEBLINK) {
 				$tool_shortcuts[] = array(
 				  'title' => _AT('delete_this_page'), 	
 				  'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$content_row['content_id'],

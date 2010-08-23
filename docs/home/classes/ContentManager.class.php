@@ -370,6 +370,14 @@ class ContentManager
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_course_id";
 		$this->contentDAO->execute($sql);
 		
+		// unset last-visited content id
+		require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
+		$userCoursesDAO = new UserCoursesDAO();
+		$userCoursesDAO->UpdateLastCid($_SESSION['user_id'], $_course_id, 0);
+		
+		unset($_SESSION['s_cid']);
+		unset($_SESSION['from_cid']);
+		
 		/* delete this content page					*/
 //		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
 //		$result = mysql_query($sql, $this->db);

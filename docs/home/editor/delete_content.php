@@ -25,9 +25,6 @@ if (isset($_POST['submit_yes'])) {
 
 	$result = $contentManager->deleteContent($cid);
 
-	unset($_SESSION['s_cid']);
-	unset($_SESSION['from_cid']);
-		
 	$msg->addFeedback('CONTENT_DELETED');
 	header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$_course_id);
 	exit;
