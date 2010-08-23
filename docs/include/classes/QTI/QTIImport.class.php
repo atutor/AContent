@@ -246,7 +246,7 @@ class QTIImport {
 	 * @param	array	The list of relative files that is used in the question contents.  Default empty.
 	 */
 	function copyMedia($files, $xml_items = array()){
-		global $msg;
+		global $msg, $_course_id;
 		foreach($files as $file_num => $file_loc){
 			//skip test xml files
 			if (preg_match('/tests\_[0-9]+\.xml/', $file_loc)){
@@ -284,15 +284,15 @@ class QTIImport {
 			//we only want to touch the files that the test/surveys use
 			if ($new_file_loc!=$file_loc){
 				//check if new folder is there, if not, create it.
-				createDir(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc );
+				createDir(TR_CONTENT_DIR .$_course_id.'/'.$new_file_loc );
 				
 				//overwrite files
-				if (file_exists(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc)){
-					unlink(TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc);
+				if (file_exists(TR_CONTENT_DIR .$_course_id.'/'.$new_file_loc)){
+					unlink(TR_CONTENT_DIR .$_course_id.'/'.$new_file_loc);
 				}
 				if (file_exists($this->import_path.$file_loc)){
 					if (copy($this->import_path.$file_loc, 
-						TR_CONTENT_DIR .$_SESSION['course_id'].'/'.$new_file_loc) === false) {
+						TR_CONTENT_DIR .$_course_id.'/'.$new_file_loc) === false) {
 						//TODO: Print out file already exist error.
 						if (!$msg->containsErrors()) {
 			//				$msg->addError('FILE_EXISTED');

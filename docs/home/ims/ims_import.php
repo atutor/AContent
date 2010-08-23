@@ -380,18 +380,26 @@ function rehash($items){
 function removeCommonPath($items){
     $common_path; 
     $quit = false;  //a flag that is set if it's not the first time being run.
-    
-    foreach($items as $index=>$item){
-        if (isset($item['new_path']) && $item['new_path']!=''){
-            $path = $item['new_path'];
-        } else {
-            continue;
-        }
 
+    $filearray = array();
+    //get all files listed in the manifest
+    foreach($items as $name=>$fileinfo){
+		if(isset($fileinfo['file']) && is_array($fileinfo['file']) && !empty($fileinfo['file'])){
+			foreach($fileinfo['file'] as $fn){
+				if (!in_array($fn, $filearray)){
+					if (preg_match('/^http[s]?\:/', $fn) == 0){
+						$filearray[] = $fn;
+					}					
+				}
+			}
+		}
+	}
+
+    foreach($filearray as $index=>$path){
         //hack
         //check if this is a XML file; if so, skip through, 
         //cause XML most likely isn't a content resource.
-        $ext = substr($item['href'], (strrpos($item['href'], '.')+1));
+        $ext = substr($path, (strrpos($path, '.')+1));
         if($ext=='xml'){
             continue;
         }
@@ -1581,9 +1589,9 @@ if (is_dir($import_path.'resources')) {
 }
 **/
 //--- harris edit for path thing
-$file = TR_CONTENT_DIR . 'import/'.$_course_id.DIRECTORY_SEPARATOR.$common_path;
+$file = $import_path.$common_path;
 if (is_dir($file)) {
-    rename($file, TR_CONTENT_DIR .$_course_id.'/'.$package_base_name);
+    rename($file, TR_CONTENT_DIR.$_course_id.DIRECTORY_SEPARATOR.$package_base_name);
 }
 //--- end
 //takes care of the condition where the whole package doesn't have any contents but question banks
@@ -1592,7 +1600,7 @@ if(is_array($all_package_base_path)){
 	$all_package_base_path = implode('/', $all_package_base_path);
 
 	if(strpos($all_package_base_path, 'http:/')===false){
-		if (@rename($import_path.$all_package_base_path, TR_CONTENT_DIR .$_course_id.'/'.$package_base_name) === false) {
+		if (rename($import_path.$all_package_base_path, $course_dir.$package_base_name) === false) {
 	        if (!$msg->containsErrors()) {
 				if ($oauth_import) {
 					echo "error=".urlencode('Cannot move lesson directory into content directory');
@@ -1604,10 +1612,12 @@ if(is_array($all_package_base_path)){
 	}
 }
 //check if there are still resources missing
+/*
 foreach($items as $idetails){
 	$temp_path = pathinfo($idetails['href']);
 	@rename($import_path.$temp_path['dirname'], $course_dir.$package_base_name . '/' . $temp_path['dirname']);
 }
+*/
 FileUtility::clr_dir($import_path);
 
 if (file_exists($full_filename)) @unlink($full_filename);
