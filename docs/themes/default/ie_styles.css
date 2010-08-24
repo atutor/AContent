@@ -43,7 +43,7 @@ margin-left:.5em;
 {
   	zoom:100%;
   	padding-top:.4em;
-  	padding-bottom:.7em;
+  	padding-bottom:.6em;
   	
 } 
 div#sub-menu {
@@ -60,7 +60,7 @@ margin-left:.5em;
 }
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
   	padding-top:.4em;
-  	padding-bottom:.7em;
+  	padding-bottom:.6em;
 
                
 }
