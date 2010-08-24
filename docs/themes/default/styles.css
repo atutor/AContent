@@ -1092,8 +1092,8 @@ ul.navigation li a.active{
   border:1px solid #cccccc;
 }
 li.course {
-  font-size:smaller;
-  margin:1em 0;
+
+  margin:.5em -.5em;
 }
 ol li{
   list-style:none;
