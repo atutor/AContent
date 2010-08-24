@@ -72,21 +72,6 @@ $starttime = $mtime;
 	<meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
 	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any system that supports IMS content interoperability standards." />
 	<base href="<?php echo $this->content_base_href; ?>" />
-	
-	    <script type="text/javascript">
-      WebFontConfig = {
-        google: { families: [ 'Droid Sans', 'Cantarell' ] }
-      };
-      (function() {
-        var wf = document.createElement('script');
-        wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-        wf.type = 'text/javascript';
-        wf.async = 'true';
-        var s = document.getElementsByTagName('script')[0];
-        s.parentNode.insertBefore(wf, s);
-      })();
-    </script>
 
 	<!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css' /> -->
 	<link rel="icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
