@@ -167,7 +167,7 @@ foreach ($this->top_level_pages as $page) {
 <?php if (is_array($this->categories)) { // print category dropdown list box?>
         <select name="catid">
           <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
-          <option value="">---------------------------------</option>
+          <option value=""> ------------------ </option>
 <?php foreach ($this->categories as $category) {?>
           <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?> title="<?php echo $category['category_name']; ?>">
             <?php echo Utility::validateLength($category['category_name'], TR_MAX_LAN_CATEGORY_NAME, 1); ?>
