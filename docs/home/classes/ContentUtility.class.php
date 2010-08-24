@@ -586,7 +586,7 @@ class ContentUtility {
 				  'icon' => $_base_href . 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/export.png');
 			$tool_shortcuts[] = array(
 				  'title' => _AT('export_content_in_cc'), 
-				  'url' => $_base_href . 'home/imscc/ims_export.php?_cid='.$content_row['content_id'].'&to_a4a=1',
+				  'url' => $_base_href . 'home/imscc/ims_export.php?_cid='.$content_row['content_id'].SEP.'to_a4a=1',
 				  'icon' => $_base_href . 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/export_cc.png');
 		}
 		
