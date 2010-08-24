@@ -116,7 +116,6 @@ function print_organizations($parent_id,
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
 			
 			/* save the content as HTML files */
-			/* @See: include/lib/format_content.inc.php */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
 			/* Commented by Cindy Qi Li on Jan 12, 2010
 			 * AContent does not support glossary

@@ -209,6 +209,10 @@ class ContentUtility {
 			return $text;
 		}
 	
+		// remove the spaces in [media] tag, otherwise, the next line converts URL inside [media] into <a> tag
+		$text = preg_replace("/(\[media\])([\s]*)(.*)(\[\/media\])/", '$1$3$4', $text);
+		$text = preg_replace("/(\[media\])(.*)([\s]*)(\[\/media\])/U", '$1$2$4', $text);
+		
 		$media_matches = Array();
 		
 		/*
@@ -289,32 +293,35 @@ class ContentUtility {
 			}
 		}
 		
+		return $text;
+	}
+
+	public static function makeClickable($text) {
+		$text = ContentUtility::embedMedia($text);
+	
+		// convert plain text URL to clickable URL.
+		// Limited conversion: It doesn't cover the case when the stuff in front of the URL is not a word. For example:
+		// <p>http://google.ca</p>
+		// "http://google.ca" 
+		$text = preg_replace('/(^|[\n ])([\w]*?[\"]*)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t\)<]*)/is', 
+		                     '$1$2<a href="$3">$3</a>', $text);
+		
+		// convert email address to clickable URL that pops up "send email" interface with the address filled in
+		$text = preg_replace('/(?|<a href="mailto[\s]*:[\s]*([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'\@'
+	                            .'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)">(.*)<\/a>'
+	                            .'|((((([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'\@'
+	                            .'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+))))))/i',
+							"<a href=\"mailto:\\1\">\\5</a>",
+							$text);
+		
+		// flv conversion needs to come after url conversion (2 lines above) otherwise the url to flowplayer swf file
+		// in the script for a.flowplayerholder is converted
 		$text = ContentUtility::embedFLV($text);
 		
 		return $text;
 	}
 
-	private static function makeClickable($text) {
-		$text = ContentUtility::embedMedia($text);
-	
-	//	$text = eregi_replace("([[:space:]])(http[s]?)://([^[:space:]<]*)([[:alnum:]#?/&=])", "\\1<a href=\"\\2://\\3\\4\">\\3\\4</a>", $text);
-	//
-	//	$text = eregi_replace(	'([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
-	//							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)',
-	//							"<a href=\"mailto:\\1\">\\1</a>",
-	//							$text);
-	
-		$text = preg_replace("/([\s])(http[s]?):\/\/(.*)(\s|\$|<br\s\/\>)(.*)/U", 
-		                     "\\1<a href=\"\\2://\\3\">\\3</a>\\4\\5", $text);
-		
-		$text = preg_replace('/([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.
-							'\@'.'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)/i',
-							"<a href=\"mailto:\\1\">\\1</a>",
-							$text);
-		return $text;
-	}
-
-	private static function myCodes($text, $html = false) {
+	public static function myCodes($text, $html = false) {
 		global $_base_path;
 		global $HTTP_USER_AGENT;
 	
@@ -400,7 +407,7 @@ class ContentUtility {
 		$text = str_replace("[code]","[code]<?php",$text);
 		$text = str_replace("[/code]","?>[/code]",$text);
 	
-		$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'), $html)", $text);
+		$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "ContentUtility::highlightCode(ContentUtility::fixQuotes('\\1'), $html)", $text);
 		// now remove the <?php added above and leave the syntax colour behind.
 		$text = str_replace("&lt;?php", "", $text);
 		$text = str_replace("?&gt;", "", $text);
@@ -408,7 +415,34 @@ class ContentUtility {
 		return $text;
 	}
 
-	private static function imageReplace($text) {
+	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
+	private static function highlightCode($code, $html) {
+		// XHTMLize PHP highlight_string output until it gets fixed in PHP
+		static $search = array(
+			'<br>',
+			'<font',
+			'</font>',
+			'color="');
+	
+		static $replace = array(
+			'<br />',
+			'<span',
+			'</span>',
+			'style="color:');
+		if (!$html) {
+			$code = str_replace('&lt;', '<', $code);
+			$code = str_replace("\r", '', $code);
+		}
+	
+		return str_replace($search, $replace, highlight_string($code, true));
+	}
+	
+	/* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
+	private static function fixQuotes($text){
+		return str_replace('\\"', '"', $text);
+	}
+
+	public static function imageReplace($text) {
 		/* image urls do not require http:// */
 		
 	//	$text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
