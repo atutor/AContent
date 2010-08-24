@@ -66,6 +66,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
       <li class="course">
 
+<?php echo SEP; ?>
 <?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />
 <?php } else  {?>
@@ -73,11 +74,11 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 <?php } ?>
           <a href="<?php echo TR_BASE_HREF; ?>home/course/index.php?_course_id=<?php echo $row['course_id']; ?>"><?php echo Utility::highlightKeywords($row['title'], $keywords); ?></a>
 <?php if ($user_role['role'] == TR_USERROLE_VIEWER) {?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=remove&cid=<?php echo $row['course_id']; ?>">
+          <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=remove<?php echo SEP; ?>cid=<?php echo $row['course_id']; ?>">
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_remove.png" alt='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' title='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' border="0" />
           </a>
 <?php } if ($user_role['role'] == NULL && $_SESSION['user_id']>0) {?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=add&cid=<?php echo $row['course_id'];?>">
+          <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=add<?php echo SEP; ?>cid=<?php echo $row['course_id'];?>">
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_add.png" alt="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" title="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" border="0" />
           </a>
 <?php }?>
