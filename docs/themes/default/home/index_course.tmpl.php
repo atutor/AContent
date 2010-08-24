@@ -22,28 +22,7 @@ list($caller_url, $url_param) = Utility::getRefererURLAndParams();
 
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
-<!-- 
-<div class="input-form">
-<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
-	<form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get" name="frm_search">
-	<input type="text" name="search_text" id="search_text" value="<?php if (isset($_REQUEST['search_text'])) echo $_REQUEST['search_text']; ?>" size="50"   />
 
-<?php if (is_array($this->categories)) { // print category dropdown list box?>
-    <select name="catid">
-      <option value="" <?php if (!isset($_GET['catid']) || $_GET['catid'] == '') echo 'selected="selected"'; ?>><?php echo _AT('all_categories'); ?></option>
-      <option value="">---------------------------------</option>
-<?php foreach ($this->categories as $category) {?>
-      <option value="<?php echo $category['category_id']; ?>" <?php if ($_GET['catid'] == $category['category_id']) echo 'selected'; ?>><?php echo $category['category_name']; ?></option>
-<?php }?>
-      <option value="0" <?php if ($_GET['catid'] == 0 && $_GET['catid'] <> '') echo 'selected'; ?>><?php echo _AT('cats_uncategorized'); ?></option>
-    </select>
-<?php }?>
-	
-	<input type="submit" name="search" size="100" value="<?php echo _AT("search"); ?>" />
-	</form>
-</fieldset>
-</div> 
--->
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
@@ -86,7 +65,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 			$description = Utility::highlightKeywords($row['description'], $keywords);
 ?>
       <li class="course">
-        <h3>
+
 <?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />
 <?php } else  {?>
@@ -108,7 +87,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
           <a href="<?php echo TR_BASE_HREF; ?>home/imscc/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export_cc.png" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT('download_common_cartridge'); ?>" border="0" />
           </a>
-        </h3>
+
         <div><?php echo $description; ?></div>
       </li>				
 <?php } // end of foreach; ?>
