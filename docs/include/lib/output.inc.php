@@ -677,7 +677,7 @@ function make_clickable($text) {
 	$text = preg_replace("/(\[media\])([\s]*)(.*)(\[\/media\])/", '$1$3$4', $text);
 	$text = preg_replace("/(\[media\])(.*)([\s]*)(\[\/media\])/U", '$1$2$4', $text);
 	// 2. convert URL
-	$text = preg_replace('/(^|[\n ])([\w]*?)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t<]*)/is', 
+	$text = preg_replace('/(^|[\n ])([\w]*?[\"]*)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t\)<]*)/is', 
 	                     '$1$2<a href="$3">$3</a>', $text);
 	
 	// convert email address to clickable URL that pops up "send email" interface with the address filled in
