@@ -426,26 +426,33 @@ ul#subnavlist {
   margin-left:.5em;
 }
 ul#subnavlist li {
-  background-color: #FFFFFF;
+  background-color: #FAEBD7;
   list-style: none;
   display: inline-block;
   text-align:center;
   border-top:1px solid #cccccc;
   border-left:1px solid #cccccc;
   border-right:1px solid #cccccc;
+  border-bottom:1px solid #cccccc;
   border-radius: .3em .3em 0em 0em;
   -moz-border-radius: .3em .3em 0em 0em;
-  padding: .4em 1em .35em 1em ;
+  padding: .4em 1em .3em 1em ;
 }
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li:hover{
   color: black;
   text-decoration:none;
-  background-color: #FFF5EE;
-  height:1.2em;
+  background-color: #FFFEF0;
+  height:1.2em;  
+padding-bottom: .35em;
+  border-bottom:0;
+
 }
 ul#subnavlist li.active{
   padding-bottom: .5em;
-  background-color: #FFF5EE;
+  background-color: #FFFEF0;
+padding-bottom: .35em;
+  border-bottom:0;
+
 }
 ul#subnavlist li a {
   /* The normal, unselected tabs. They are all links */
@@ -1006,7 +1013,7 @@ div.topnavlistcontainer {
 .navigation a
 {
   color: #000;
-  background-color: #ffffff;
+  background-color: #FFFEF0;
   text-decoration: none;
   padding-left: 1em;
   padding-right: 1em;  

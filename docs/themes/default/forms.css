@@ -36,15 +36,16 @@ div.input-form {
 	border: 1px #cccccc solid;
 	margin-bottom: 20px;
 	line-height:150%;
-	background-color: #FFF5EE;
-border-radius:.5em .5em .5em .5em;
--moz-border-radius:.5em .5em .5em .5em;
+	background-color: #FFFEF0;
+	padding:.3em;
+	border-radius:.5em .5em .5em .5em;
+	-moz-border-radius:.5em .5em .5em .5em;
 	-moz-box-shadow:.05em .05em .0em #999999;
 	 box-shadow: .1em .0em  .1em #999999;
 }
 
 div.input-form div.row {
-	background-color:  #FFF5EE;
+	background-color:  #FFFEF0;
 	padding:8px;
 }
 
@@ -100,4 +101,21 @@ div.input-form div.buttons input {
 }
 .formfield:focus{
 	background-color: #FFDAB9;
+}
+
+div.input-form input[type=submit]{
+	background-color:#F0F1FF;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em .2em #999999;
+}
+div.input-form input[type=submit]:hover, div.input-form input[type=submit]:focus {
+	background-color:#FFDAB9;
+}
+input[type=reset]{
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.2em .2em .3em #999999;
+	box-shadow: .2em .2em .3em #999999;
 }
