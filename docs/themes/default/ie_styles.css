@@ -55,6 +55,7 @@ ul.navigation li
 	zoom:100%;
   	display: inline;
   	padding-top:.0em;
+margin-left:.5em;
 
 }
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
