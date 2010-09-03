@@ -59,7 +59,7 @@ if($languageManager->getNumEnabledLanguages() > 1) {
       </div>
 		<br style="clear:both;" />
       <div style="margin-left:auto; margin-right:auto; width:20em;">
-        <small><?php if (isset($this->course_copyright)) echo $this->course_copyright.'<br />'; echo _AT("copyright"); ?></small><br />
+        <small><?php if (isset($this->course_copyright)) echo htmlentities($this->course_copyright, ENT_QUOTES, 'UTF-8').'<br />'; echo _AT("copyright"); ?></small><br />
   <!-- guide -->
 
     <div>

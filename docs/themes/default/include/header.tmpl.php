@@ -162,7 +162,7 @@ foreach ($this->top_level_pages as $page) {
    
       <div class="search_top">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
-        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo $_GET['search_text']; ?>" size="25" />
+        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo htmlentities($_GET['search_text'], ENT_QUOTES, 'UTF-8'); ?>" size="25" />
       
 <?php if (is_array($this->categories)) { // print category dropdown list box?>
         <select name="catid">

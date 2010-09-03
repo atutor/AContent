@@ -54,7 +54,7 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 		
 		<tr>
 			<td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>
-			<td align="left"><textarea name="copyright" rows="2" cols="65" id="copyright"><?php if (isset($_POST['copyright'])) echo stripslashes(htmlspecialchars($_POST['copyright'])); else echo $this->course_row['copyright']; ?></textarea></td>
+			<td align="left"><textarea name="copyright" rows="2" cols="65" id="copyright"><?php if (isset($_POST['copyright'])) echo stripslashes(htmlspecialchars($_POST['copyright'])); else echo stripslashes(htmlspecialchars($this->course_row['copyright'])); ?></textarea></td>
 		</tr>
 
 		<tr>
