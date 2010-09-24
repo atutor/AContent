@@ -414,6 +414,12 @@ function removeCommonPath($items){
         //actually use '\' and return the whole string. 
         $common_array = explode('/', $common_path);
         $path_array = explode('/', $path);
+        //convert path_array to absolute path
+        //TODO: array_search is slow, build a faster search
+        $pos=array_search('..', $path_array);
+        while($pos=array_search('..', $path_array)){
+            array_splice($path_array, $pos-1, 2);
+        }
         $intersect_array = array_intersect($common_array, $path_array);
         $common_path = implode('/', $intersect_array);       
     }
