@@ -97,7 +97,7 @@ function populate_a4a($cid, $content, $formatting){
 	include_once(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	include_once(TR_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
 	
-	$body = format_content($content, $formatting,array());
+	$body = ContentUtility::formatContent($content, $formatting,array());
     
 	$handler = new ContentOutputParser();
 	$parser = new XML_HTMLSax();
@@ -123,7 +123,7 @@ function populate_a4a($cid, $content, $formatting){
 		// that the parsed-out url (http://www.youtube.com/v/a0ryB0m0MiM) does not match with
 		// the URL saved in content table (http://www.youtube.com/watch?v=a0ryB0m0MiM).
 		// The code below is to convert the URL back to original.
-		$file = convertYoutubePlayURLToWatchURL($file);
+		$file = ContentUtility::convertYoutubePlayURLToWatchURL($file);
 		
 		$resources[] = convertAmp($file);  // converts & to &amp;
 	}
