@@ -35,7 +35,7 @@ class SecondaryResourcesDAO extends DAO {
 		global $addslashes;
 		
 		$primary_resource_id = intval($primary_resource_id);
-		$file_name = $addslashes($file_name);
+		$file_name = $addslashes(convertAmp($file_name));
 		$lang = $addslashes($lang);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources 
