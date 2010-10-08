@@ -107,6 +107,9 @@ if (is_array($rows))
 	}
 }
 
+//set the timezone, php 5.3+ problem. http://atutor.ca/atutor/mantis/view.php?id=4409
+date_default_timezone_set('UTC');
+
 // define as constants. more constants are defined in include/constants.inc.php
 define('EMAIL', $_config['contact_email']);
 define('SITE_NAME', $_config['site_name']);
@@ -395,6 +398,18 @@ function get_default_theme() {
 		return 'default';
 	else
 		return $rows[0]['dir_name'];
+}
+
+/**
+ * Convert all '&' to '&amp;' from the input
+ * @param   string  any string input, mainly URLs.
+ * @return  input with & replaced to '&amp;'
+ * @author  Harris Wong
+ * @date    Oct 7, 2010
+ */
+function convertAmp($input){
+    $input = str_replace('&amp;', '&', $input); //convert everything to '&' first
+    return str_replace('&', '&amp;', $input);
 }
 
 ?>

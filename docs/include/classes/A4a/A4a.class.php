@@ -72,6 +72,18 @@ class A4a {
 		return $pri_resources;
 	}
 
+    //get primary resource by resource name
+    function getPrimaryResourceByName($resource_name){
+        if ($resource_name==''){
+            return array();
+        }
+
+        include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+        $primaryResourcesDAO = new PrimaryResourcesDAO();
+        $pri_resources = $primaryResourcesDAO->getByResourceName($this->cid, $_SESSION['lang'], $resource_name);
+        return $pri_resources;
+    }
+
 
 	// Get primary resources types
 	function getPrimaryResourcesTypes($pri_resource_id=0){
@@ -192,12 +204,22 @@ class A4a {
 	}
 
 
+    /**
+     * Delete this primary resource and all its associated secondary resources
+     * @param   int     primary resournce id
+     */
+    function deletePrimaryResource($primary_rid){
+        include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
+        $primaryResourcesDAO = new PrimaryResourcesDAO();
+        $primaryResourcesDAO->DeleteByResourceID($primary_rid);
+    }
+
 	// Delete all materials associated with this content
 	function deleteA4a(){
 		include_once(TR_INCLUDE_PATH.'classes/DAO/PrimaryResourcesDAO.class.php');
 		$primaryResourcesDAO = new PrimaryResourcesDAO();
 		$rows = $primaryResourcesDAO->Delete($this->cid);
-	}
+	}    
 }
 
 ?>

@@ -35,7 +35,7 @@ class PrimaryResourcesDAO extends DAO {
 		global $addslashes;
 		
 		$content_id = intval($content_id);
-		$file_name = $addslashes($file_name);
+		$file_name = $addslashes(convertAmp($file_name));
 		$lang = $addslashes($lang);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources 
@@ -99,6 +99,26 @@ class PrimaryResourcesDAO extends DAO {
 		return $this->execute($sql);
 	}
 	
+    /**
+     * Delete rows by using resource id
+     * @access  public
+     * @param   $resourceID: primary resource ID
+     * @return  true or false
+     * @author  Harris Wong
+     * @date    Oct 6, 2010
+     */
+    function DeleteByResourceID($resourceID){
+        // Delete all secondary a4a
+        $sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX."secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id=$resourceID";
+        $result = $this->execute($sql);
+        
+        // If successful, remove all primary resources
+        if ($result){
+            $sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX."primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE a.primary_resource_id=$resourceID";
+            return $this->execute($sql);
+        }
+    }
+
 	/**
 	* Return rows by content_id
 	* @access  public
@@ -108,8 +128,26 @@ class PrimaryResourcesDAO extends DAO {
 	*/
 	public function getByContent($cid)
 	{
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$cid;
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$cid.' ORDER BY primary_resource_id';;
 	    return $this->execute($sql);
 	}
+
+    /**
+     * Return rows by primary resource name
+     * @access  public
+     * @param   $cid: the content id
+     * @param   $lang: the language code. 
+     * @param   $resourceName: primary resource name
+     * @return  table rows
+     * @author  Harris Wong
+     * @date    Oct 6, 2010
+     */
+    public function getByResourceName($cid, $lang, $resource_name){
+		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
+		        WHERE content_id=".$cid."
+		          AND language_code = '".$lang."'
+		          AND resource='".$resource_name."'";
+		return $this->execute($sql);
+    }
 }
 ?>

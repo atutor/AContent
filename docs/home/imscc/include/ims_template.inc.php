@@ -328,6 +328,18 @@ function print_organizations($parent_id,
 					}
 				}
 
+                /**
+                 * A hack to fix youtube links.  one uses youtube.com?watch=xxx, the other uses youtube.com/v/xxx,
+                 * in which both points to the same file, but needed different links to play.
+                 * in A4a, these youtube links are always stored as "?watch=xxx", however, output.inc.php converted
+                 * these to /v/xxx for rendering purposes.  Convert it back if youtube exists in url.
+                 * http://atutor.ca/atutor/mantis/view.php?id=4548
+                 * @harris 9/30/2010
+                 */
+                if (strpos($file, 'youtube.com')!==false){
+                    //apply the conversion before linking the alternatives. Otherwise it will not be added.
+                    $file = convert_youtube_playURL_to_watchURL($file);
+                }
 				// If this file has a4a alternatives, link it.
 				if (isset($a4a_xml_array[$file]) || isset($a4a_secondary_files[$file])){
 					//if this is an array, meaning that it has more than 1 alternatives, print all
@@ -532,10 +544,14 @@ function print_resources_forum() {
 
 
 $ims_template_xml['header'] = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
-<!--This is an ATutor 1.0 Common Cartridge document-->
-<!--Created from the ATutor Content Package Generator - http://www.atutor.ca-->
-<manifest identifier="MANIFEST-2415ad93fc44817acbe40edfd1ffb1ee" xmlns="http://www.imsglobal.org/xsd/imscc/imscp_v1p1" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:lomimscc="http://ltsc.ieee.org/xsd/imscc/LOM" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" xsi:schemaLocation="http://www.imsglobal.org/xsd/imscc/imscp_v1p1 imscp_v1p2_localised.xsd http://ltsc.ieee.org/xsd/imscc/LOM domainProfile_1/lomLoose_localised.xsd">
-	<metadata>
+<!--This is an AContent IMS Common Cartridge 1.0 document-->
+<!--Created from the AContent Content Package Generator - http://www.atutor.ca-->
+<manifest identifier="MANIFEST-'.md5($cid).'" 
+xmlns="http://www.imsglobal.org/xsd/imscc/imscp_v1p1" 
+xmlns:imsmd="http://ltsc.ieee.org/xsd/imscc/LOM" 
+xmlns:lomimscc="http://ltsc.ieee.org/xsd/imscc/LOM" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://www.imsglobal.org/xsd/imscc/imscp_v1p1 http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/imscp_v1p2_localised.xsd http://ltsc.ieee.org/xsd/imscc/LOM http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/domainProfile_1/lomLoose_localised.xsd" version="IMS Common Cartridge 1.0.0">	<metadata>
 		<schema>IMS Common Cartridge</schema>
 	    <schemaversion>1.0.0</schemaversion>
 		<lomimscc:lom>

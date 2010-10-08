@@ -29,27 +29,6 @@ if ($cid == 0) {
 	require_once(TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-/**
- * This function returns the preview link of the given file
- * @param  $file     the file location in "file manager"
- * @return the relative URL to preview the file
- */
-function get_preview_link($file)
-{
-	global $content_row, $_course_id;
-	
-	if (substr($file, 0 , 7) == 'http://' || substr($file, 0 , 8) == 'https://') {
-		return $file;
-	} else {
-		if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
-			$get_file = 'get.php/';
-		} else {
-			$get_file = 'content/' . $_course_id . '/';
-		}
-	}
-	
-	return $get_file.$content_row['content_path'].'/'.$file;
-}
 
 /**
  * When the file name is a remote URL, this function reduces the full URL
@@ -92,7 +71,7 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 			if ($secondary_resource['type_id'] == $alternative_type)
 			{
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
-				echo '      <a href="'.get_preview_link($secondary_resource['secondary_resource']).'" title="'._AT('new_window').'" target="_new">'.get_display_filename($secondary_resource['secondary_resource']).'</a><br />'."\n";
+				echo '      <a href="'.$secondary_resource['secondary_resource'].'" title="'._AT('new_window').'" target="_new">'.get_display_filename($secondary_resource['secondary_resource']).'</a><br />'."\n";
 				echo '      <a href="#" onclick="trans.utility.poptastic(\''.TR_BASE_HREF.'file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'_cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
 				echo '        <img src="'.TR_BASE_HREF.'images/alter.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
 				echo '      </a>'."\n";
@@ -115,9 +94,15 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 }
 
 // Main program
-require(TR_INCLUDE_PATH.'lib/resources_parser.inc.php');
+global $db, $content_row;
+populate_a4a($cid, $_POST['body_text'], $_POST['formatting']);
 
-if (count($resources)==0)
+include_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+
+$a4a = new A4a($cid);
+$primary_resources = $a4a->getPrimaryResources();
+
+if (count($primary_resources)==0)
 {
 	echo '<p>'. _AT('No_resources'). '</p>';
 }
@@ -145,32 +130,9 @@ else
 	echo '  </thead>'."\n";
 	
 	echo '  <tbody>';
-	foreach($resources as $primary_resource)
+	foreach($primary_resources as $primary_resource_id => $primary_resource_row)
 	{
-		// check whether the primary resource is in the table
-		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
-		         WHERE content_id = ".$cid."
-		           AND language_code = '".$_SESSION['lang']."'
-		           AND resource='".$primary_resource."'";
-//		$primary_result = mysql_query($sql, $db);
-		$existing_primary_resource = $dao->execute($sql);
-
-		// insert primary resource if it's not in db
-		if (!is_array($existing_primary_resource))
-//		if (mysql_num_rows($primary_result) == 0)
-		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources (content_id, resource, language_code) 
-			        VALUES (".$cid.", '".$primary_resource."', '".$_SESSION['lang']."')";
-//			$result	= mysql_query($sql, $db);
-			$dao->execute($sql);
-			$primary_resource_id = mysql_insert_id();
-		}
-		else
-		{
-			// get primary resource id
-//			$primary_resource_row = mysql_fetch_assoc($primary_result);
-			$primary_resource_id = $existing_primary_resource[0]['primary_resource_id'];
-		}
+		$primary_resource = $primary_resource_row['resource'];
 		
 		$sql = "SELECT prt.type_id, rt.type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
@@ -178,7 +140,7 @@ else
 		                 TABLE_PREFIX."resource_types rt
 		         WHERE pr.content_id = ".$cid."
 		           AND pr.language_code = '".$_SESSION['lang']."'
-		           AND pr.resource='".$primary_resource."'
+		           AND pr.primary_resource_id='".$primary_resource_id."'
 		           AND pr.primary_resource_id = prt.primary_resource_id
 		           AND prt.type_id = rt.type_id";
 //		$primary_type_result = mysql_query($sql, $db);
@@ -197,7 +159,7 @@ else
 		                 TABLE_PREFIX."secondary_resources_types srt
 		         WHERE pr.content_id = ".$cid."
 		           AND pr.language_code = '".$_SESSION['lang']."'
-		           AND pr.resource='".$primary_resource."'
+		           AND pr.primary_resource_id='".$primary_resource_id."'
 		           AND pr.primary_resource_id = sr.primary_resource_id
 		           AND sr.secondary_resource_id = srt.secondary_resource_id";
 //		$secondary_result = mysql_query($sql, $db);
@@ -207,7 +169,7 @@ else
 
 		// table cell "original resource"
 		echo '    <td headers="header1">'."\n";
-		echo '    <a href="'.get_preview_link($primary_resource).'" title="'._AT('new_window').'" target="_new">'.get_display_filename($primary_resource).'</a>'."\n";
+		echo '    <a href="'.$primary_resource.'" title="'._AT('new_window').'" target="_new">'.get_display_filename($primary_resource).'</a>'."\n";
 		echo '    </td>'."\n";
 
 		// table cell "original resource type"

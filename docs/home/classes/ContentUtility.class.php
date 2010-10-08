@@ -204,6 +204,33 @@ class ContentUtility {
 		return $text;		
 	}
 	
+    /*
+     * This function converts the youtube playable url used in <object> tag (for instance: http://www.youtube.com/v/a0ryB0m0MiM)
+     * to youtube url that is used to browse (for instance: http://www.youtube.com/watch?v=a0ryB0m0MiM)
+     * @param: youtube playable URL. For instance, http://www.youtube.com/v/a0ryB0m0MiM
+     * @return: if the param is a youtube playable url, return the according youtube URL used to browse. 
+     *          For instance: http://www.youtube.com/watch?v=a0ryB0m0MiM
+     *          Otherwise, return the original send-in parameter.
+     */
+    function convertYoutubePlayURLToWatchURL($youtube_playURL) {
+        return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
+                            "\\1youtube.com/watch?v=\\2", $youtube_playURL);
+    }
+
+    /*
+     * This function converts the youtube url that is used to browse (for instance: http://www.youtube.com/watch?v=a0ryB0m0MiM)
+     * to youtube playable url used in <object> tag (for instance: http://www.youtube.com/v/a0ryB0m0MiM)
+     * @param: the youtube URL used to browse. 
+     *         For instance: http://www.youtube.com/watch?v=a0ryB0m0MiM
+     * @return: if the param is a youtube url used to browse, return the according youtube playable URL. 
+     *          For instance, http://www.youtube.com/v/a0ryB0m0MiM
+     *          Otherwise, return the original send-in parameter.
+     */
+    function convertYoutubeWatchURLToPlayURL($youtube_watchURL) {
+        return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/watch\?v=(.*)/",
+                            "\\1youtube.com/v/\\2", $youtube_watchURL);
+    }
+
 	public static function embedMedia($text) {
 		if (preg_match("/\[media(\|[0-9]+\|[0-9]+)?\]*/", $text)==0){
 			return $text;
@@ -215,19 +242,14 @@ class ContentUtility {
 		
 		$media_matches = Array();
 		
-		/*
-			First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
-			
-			Then the different replacements for the different media tags are stored in $media_replace.
-			
-			Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
-			
-		*/
+		// First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
+        // Then the different replacements for the different media tags are stored in $media_replace.
+        // Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
 		
 		// youtube videos
-		preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=([a-z0-9_-]+)\[/media\]#i",$text,$media_matches[1],PREG_SET_ORDER);
-		$media_replace[1] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
-			
+        preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[1],PREG_SET_ORDER);
+        $media_replace[1] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
+				
 		// .mpg
 		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mpg\[/media\]#i",$text,$media_matches[2],PREG_SET_ORDER);
 		$media_replace[2] = "<object data=\"##MEDIA1##.mpg\" type=\"video/mpeg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mpg\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mpg\">##MEDIA1##.mpg</a></object>";
@@ -240,29 +262,25 @@ class ContentUtility {
 		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).wmv\[/media\]#i",$text,$media_matches[4],PREG_SET_ORDER);
 		$media_replace[4] = "<object data=\"##MEDIA1##.wmv\" type=\"video/x-ms-wmv\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wmv\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wmv\">##MEDIA1##.wmv</a></object>";
 		
-		// .mov
-		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mov\[/media\]#i",$text,$media_matches[5],PREG_SET_ORDER);
-		$media_replace[5] = "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mov\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><!--[if gte IE 7]> <!--><object type=\"video/quicktime\" data=\"##MEDIA1##.mov\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"controller\" value=\"true\"><param name=\"autoplay\" value=\"false\"><a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a></object><!--<![endif]--><!--[if lt IE 7]><a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a><![endif]--></object>";
-		
 		// .swf
-		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i",$text,$media_matches[6],PREG_SET_ORDER);
-		$media_replace[6] = "<object type=\"application/x-shockwave-flash\" data=\"##MEDIA1##.swf\" width=\"##WIDTH##\" height=\"##HEIGHT##\">  <param name=\"movie\" value=\"##MEDIA1##.swf\"><param name=\"loop\" value=\"false\"><a href=\"##MEDIA1##.swf\">##MEDIA1##.swf</a></object>";
-		
-		// .mp3
-		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mp3\[/media\]#i",$text,$media_matches[7],PREG_SET_ORDER);
-		$media_replace[7] = "<object type=\"audio/mpeg\" data=\"##MEDIA1##.mp3\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mp3\">##MEDIA1##.mp3</a></object>";
+		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i",$text,$media_matches[5],PREG_SET_ORDER);
+		$media_replace[5] = "<object type=\"application/x-shockwave-flash\" data=\"##MEDIA1##.swf\" width=\"##WIDTH##\" height=\"##HEIGHT##\">  <param name=\"movie\" value=\"##MEDIA1##.swf\"><param name=\"loop\" value=\"false\"><a href=\"##MEDIA1##.swf\">##MEDIA1##.swf</a></object>";
 		
 		// .wav
-		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).wav\[/media\]#i",$text,$media_matches[8],PREG_SET_ORDER);
-		$media_replace[8] ="<object type=\"audio/x-wav\" data=\"##MEDIA1##.wav\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wav\">##MEDIA1##.wav</a></object>";
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).wav\[/media\]#i",$text,$media_matches[6],PREG_SET_ORDER);
+		$media_replace[6] ="<object type=\"audio/x-wav\" data=\"##MEDIA1##.wav\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wav\">##MEDIA1##.wav</a></object>";
 		
 		// .ogg
-		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogg\[/media\]#i",$text,$media_matches[9],PREG_SET_ORDER);
-		$media_replace[9] ="<object type=\"application/ogg\" data=\"##MEDIA1##.ogg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogg\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogg</a></object>";
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogg\[/media\]#i",$text,$media_matches[7],PREG_SET_ORDER);
+		$media_replace[7] ="<object type=\"application/ogg\" data=\"##MEDIA1##.ogg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogg\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogg</a></object>";
+
+        // .ogm
+        preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogm\[/media\]#i",$text,$media_matches[8],PREG_SET_ORDER);
+        $media_replace[8] ="<object type=\"application/ogm\" data=\"##MEDIA1##.ogm\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogm\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogm</a></object>";
 		
 		// .mid
-		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i",$text,$media_matches[10],PREG_SET_ORDER);
-		$media_replace[10] ="<object type=\"application/x-midi\" data=\"##MEDIA1##.mid\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mid\"><a href=\"##MEDIA1##.mid\">##MEDIA1##.mid</a></object>";
+		preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i",$text,$media_matches[9],PREG_SET_ORDER);
+		$media_replace[9] ="<object type=\"application/x-midi\" data=\"##MEDIA1##.mid\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mid\"><a href=\"##MEDIA1##.mid\">##MEDIA1##.mid</a></object>";
 		
 		$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
 	
@@ -535,8 +553,8 @@ class ContentUtility {
 							$input);
 				} else {
 					$input = preg_replace
-							("/(\[\?\])$term(\[\/\?\])/i",
-							'\\2<sup><a class="tooltip" href="'.$_base_path.'glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'"><span style="color: blue; text-decoration: none;font-size:small; font-weight:bolder;">?</span></a></sup>',$input);
+						("/(\[\?\])$term(\[\/\?\])/i",
+						'\\2<sup><a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">?</a></sup>',$input);
 				}
 			}
 		} else if (!$user_glossary) {
@@ -703,7 +721,19 @@ class ContentUtility {
 		include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 		$dao = new DAO();
 		
-		$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid", "mp4", "flv");
+		// All a4a resources have "&" converted to "&amp;". To match content with resources, 
+        // need the same conversion on content. 
+        $content = convertAmp($content);
+        
+        // keep &lt; (content saved in plain text format) as it is instead of &amp;lt;
+        $content = str_replace('&amp;lt;', '&lt;', $content);
+        
+        $video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp4", "flv");
+        
+        $audio_exts = array("mp3", "wav", "ogg", "mid");
+        $audio_width = 425;
+        $audio_height = 27;
+
 		$txt_exts = array("txt", "html", "htm");
 		$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
 		$only_on_secondary_type = intval($only_on_secondary_type);
@@ -729,9 +759,16 @@ class ContentUtility {
 				return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
 			}
 		}
-		
 		// get all relations between primary resources and their alternatives
-		$sql = "SELECT c.content_path, pr.resource, prt.type_id primary_type, sr.secondary_resource, srt.type_id secondary_type
+        $sql = "SELECT DISTINCT c.content_path, pr.resource, ";
+        
+        // ignore primary resource type if the request is on particular secondary type.
+        // otherwise, if the primary resource is defined with multiple primary types, 
+        // the primary resource would be replaced/appended multiple times.
+        if ($only_on_secondary_type == 0) {
+            $sql .= "prt.type_id primary_type, ";
+        }
+        $sql .= "sr.secondary_resource, srt.type_id secondary_type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."primary_resources_types prt,".
 		                 TABLE_PREFIX."secondary_resources sr,".
@@ -758,7 +795,18 @@ class ContentUtility {
 			}
 		}
 		
-		foreach ($rows as $row) 
+		foreach ($rows as $row) {
+            $alternative_rows[] = $row;
+            
+            $youtube_playURL = ContentUtility::convertYoutubeWatchURLToPlayURL($row['resource']);
+            
+            if ($row['resource'] <> $youtube_playURL) {
+                $row['resource'] = $youtube_playURL;
+                $alternative_rows[] = $row;
+            }
+        }
+
+        foreach ($alternative_rows as $row) 
 		{
 			if ($info_only || $only_on_secondary_type ||
 			    ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 && $row['primary_type']==3 &&
@@ -780,8 +828,18 @@ class ContentUtility {
 				$ext = substr($row['secondary_resource'], strrpos($row['secondary_resource'], '.')+1);
 				
 				// alternative is video
-				if (in_array($ext, $video_exts))
-					$target = '[media]'.$row['secondary_resource'].'[/media]';
+				if (in_array($ext, $video_exts)|| in_array($ext, $audio_exts) || 
+                    preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource'])) {
+                    if (in_array($ext, $audio_exts)) {
+                        // display audio medias in a smaller width/height (425 * 27)
+                        // A hack for now to handle audio media player size
+                        $target = '[media|'.$audio_width.'|'.$audio_height.']'.$row['secondary_resource'].'[/media]';
+                    } else {
+                        // use default media size for video medias
+                        $target = '[media]'.$row['secondary_resource'].'[/media]';
+                    }
+                    $target = ContentUtility::embedFLV(ContentUtility::embedMedia($target));
+                }
 				// a text primary to be replaced by a visual alternative 
 				else if (in_array($ext, $txt_exts))
 				{
@@ -822,19 +880,17 @@ class ContentUtility {
 				if (($row['primary_type']==3 && $_SESSION['prefs']['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] == 'replace') ||
 					($row['primary_type']==1 && $_SESSION['prefs']['PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE']=='replace') ||
 					($row['primary_type']==4 && $_SESSION['prefs']['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE']=='replace'))
-					$pattern_replace_to = '${1}'.$target.'${3}';
-				else
-					$pattern_replace_to = '${1}${2}'.$target.'${3}';
-	
-				// *** Alternative replace/append starts from here ***
-				$img_processed = false;    // The indicator to tell the source image is found (or not) 
-				                           // and processed (or not) in an <img> tag. If found and processed, 
-				                           // SKIP the found/process for <a> tag because the source is a image
-				                           // and <a> is very likely the tag wrapping around <img>
+					$pattern_replace_to = '${1}'."\n".$target."\n".'${3}';
+                else
+                    $pattern_replace_to = '${1}${2}'."<br /><br />\n".$target."\n".'${3}';
 
-				// append/replace target alternative to [media]source[/media]
-				if (preg_match("/".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/")."/sU", $content))
-				{
+                // *** Alternative replace/append starts from here ***
+                $processed = false;    // one primary resource is only processed once 
+                
+                // append/replace target alternative to [media]source[/media]
+                if (!$processed && preg_match("/".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/")."/sU", $content))
+                {
+                    $processed = true;
 					if (!$info_only) {
 						$content = preg_replace("/(.*)(".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/").")(.*)/sU", 
 				             $pattern_replace_to, $content);
@@ -847,9 +903,9 @@ class ContentUtility {
 				}
 				
 				// append/replace target alternative to <img ... src="source" ...></a>
-				if (preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/sU", $content))
-				{
-					$img_processed = true;
+				if (!$processed && preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/sU", $content))
+                {
+                    $processed = true;
 					if (!$info_only) {
 						$content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/sU", 
 			                                $pattern_replace_to, $content);
@@ -861,12 +917,12 @@ class ContentUtility {
 					}
 				}
 				
-				// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
-				// skip this "if" when the source object has been processed in aboved <img> tag
-				if (!$img_processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
-				{
-					if (!$info_only) {
-						$content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
+				// append/replace target alternative to <object ... source ...></object>
+                if (!$processed && preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
+                {
+                    $processed = true;
+                    if (!$info_only) {
+                        $content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
 			                                $pattern_replace_to, $content);
 					} else {
 						if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -876,11 +932,13 @@ class ContentUtility {
 					}
 				}
 	
-				// append/replace target alternative to <object ... source ...></object>
-				if (preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
-				{
-					if (!$info_only) {
-						$content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
+				// append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
+                // skip this "if" when the source object has been processed in aboved <img> tag
+                if (!$processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
+                {
+                    $processed = true;
+                    if (!$info_only) {
+                        $content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU",
 			                                $pattern_replace_to, $content);
 					} else {
 						if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -891,8 +949,9 @@ class ContentUtility {
 				}
 	
 				// append/replace target alternative to <embed ... source ...>
-				if (preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
-				{
+				if (!$processed && preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
+                {
+                    $processed = true;
 					if (!$info_only) {
 						$content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU", 
 			                                $pattern_replace_to, $content);

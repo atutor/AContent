@@ -83,6 +83,73 @@ function isValidURL($url) {
     return false;
 }
 
+/*
+ * Parse the primary resources out of the content and save into db.
+ * Clean up the removed primary resources from db.
+ * @param: $cid: content id
+ * @param: $content
+ * @return: none
+ */
+function populate_a4a($cid, $content, $formatting){
+	global $db, $my_files;
+	
+    include_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+	include_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+	include_once(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
+	
+	$body = format_content($content, $formatting,array());
+    
+	$handler = new ContentOutputParser();
+	$parser = new XML_HTMLSax();
+	$parser->set_object($handler);
+	$parser->set_element_handler('openHandler','closeHandler');
+	
+	$my_files 		= array();
+	$parser->parse($body);
+	$my_files = array_unique($my_files);
+	
+	foreach ($my_files as $file) {
+		/* filter out full urls */
+		$url_parts = @parse_url($file);
+		
+		// file should be relative to content
+		if ((substr($file, 0, 1) == '/')) {
+			continue;
+		}
+		
+		// The URL of the movie from youtube.com has been converted above in embed_media().
+		// For example:  http://www.youtube.com/watch?v=a0ryB0m0MiM is converted to
+		// http://www.youtube.com/v/a0ryB0m0MiM to make it playable. This creates the problem
+		// that the parsed-out url (http://www.youtube.com/v/a0ryB0m0MiM) does not match with
+		// the URL saved in content table (http://www.youtube.com/watch?v=a0ryB0m0MiM).
+		// The code below is to convert the URL back to original.
+		$file = convertYoutubePlayURLToWatchURL($file);
+		
+		$resources[] = convertAmp($file);  // converts & to &amp;
+	}
+    
+    if (count($resources) == 0) return;
+
+    $a4a = new A4a($cid);
+    $db_primary_resources = $a4a->getPrimaryResources();
+    
+    // clean up the removed resources
+    foreach ($db_primary_resources  as $primary_rid=>$db_resource){
+        //if this file from our table is not found in the $resource, then it's not used.
+        if(in_array($db_resource['resource'], $resources)===false){
+            $a4a->deletePrimaryResource($primary_rid);
+        }
+    }
+
+	// insert the new resources
+    foreach($resources as $primary_resource)
+	{
+		if (!$a4a->getPrimaryResourceByName($primary_resource)){
+			$a4a->setPrimaryResource($cid, $primary_resource, $_SESSION['lang']);
+		}
+	}
+}
+
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
 	global $contentManager, $addslashes, $msg, $_course_id, $_content_id;
@@ -124,6 +191,7 @@ function save_changes($redir, $current_tab) {
 //	}
 		
 //	if (!$msg->containsErrors()) {
+        $orig_body_text = $_POST['body_text'];  // used to populate a4a tables
 //		$_POST['title']			= $addslashes($_POST['title']);
 //		$_POST['body_text']		= $addslashes($_POST['body_text']);
 //		$_POST['head']  		= $addslashes($_POST['head']);
@@ -155,6 +223,8 @@ function save_changes($redir, $current_tab) {
 			$_POST['_cid']    = $cid;
 			$_REQUEST['_cid'] = $cid;
 		}
+        // re-populate a4a tables based on the new content
+		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
 		if ($cid == 0) return;
 //	}
 

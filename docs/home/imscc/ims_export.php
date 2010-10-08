@@ -100,6 +100,7 @@ $course_language_code = $courseLanguage->getCode();
 require_once(TR_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require_once(TR_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require_once(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+require_once(TR_INCLUDE_PATH.'classes/ContentOutputParser.class.php');   /* to retrieve content resources/medias from at_content[text] */
 require_once(TR_INCLUDE_PATH.'../home/imscc/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
 
 if (isset($_POST['cancel'])) {
@@ -111,86 +112,12 @@ if (isset($_POST['cancel'])) {
 $zipfile = new zipfile(); 
 $zipfile->create_dir('resources/');
 
-/*
-	the following resources are to be identified:
-	even if some of these can't be images, they can still be files in the content dir.
-	theoretically the only urls we wouldn't deal with would be for a <!DOCTYPE and <form>
-
-	img		=> src
-	a		=> href				// ignore if href doesn't exist (ie. <a name>)
-	object	=> data | classid	// probably only want data
-	applet	=> classid | archive			// whatever these two are should double check to see if it's a valid file (not a dir)
-	link	=> href
-	script	=> src
-	form	=> action
-	input	=> src
-	iframe	=> src
-
-*/
-class MyHandler {
-    function MyHandler(){}
-    function openHandler(& $parser,$name,$attrs) {
-		global $my_files;
-
-		$name = strtolower($name);
-		$attrs = array_change_key_case($attrs, CASE_LOWER);
-
-		$elements = array(	'img'		=> 'src',
-							'a'			=> 'href',				
-							'object'	=> array('data', 'classid'),
-							'applet'	=> array('classid', 'archive'),
-							'link'		=> 'href',
-							'script'	=> 'src',
-							'form'		=> 'action',
-							'input'		=> 'src',
-							'iframe'	=> 'src',
-							'embed'		=> 'src',
-							'param'		=> 'value');
-	
-		/* check if this attribute specifies the files in different ways: (ie. java) */
-		if (is_array($elements[$name])) {
-			$items = $elements[$name];
-
-			foreach ($items as $item) {
-				if ($attrs[$item] != '') {
-
-					/* some attributes allow a listing of files to include seperated by commas (ie. applet->archive). */
-					if (strpos($attrs[$item], ',') !== false) {
-						$files = explode(',', $attrs[$item]);
-						foreach ($files as $file) {
-							$my_files[] = trim($file);
-						}
-					} else {
-						$my_files[] = $attrs[$item];
-					}
-				}
-			}
-		} else if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
-			//hack, if param[name]=src or none <param> tag, extract. Skip all other <param> attributes.  
-			if ($name!='param' || $attrs['name']=='src'){
-				//skip glossary.html, tweak to accomodate atutor imscp; also skip repeated entries.
-				//skip javascript: links, void();, #, mailto:
-				if (strpos($attrs[$elements[$name]], 'glossary.html')===false 
-				    && !in_array($attrs[$elements[$name]], $my_files)
-				    && $attrs[$elements[$name]]!='#'
-				    && strpos($attrs[$elements[$name]], 'javascript:')===false 
-				    && strpos($attrs[$elements[$name]], 'mailto:')===false 
-				    && strpos($attrs[$elements[$name]], 'void(')===false 
-				   ){
-					$my_files[] = $attrs[$elements[$name]];
-				}
-			}
-		}
-    }
-    function closeHandler(& $parser,$name) { }
-}
-
 /* get all the content */
 $content = array();
 $paths	 = array();
 $top_content_parent_id = 0;
 
-$handler=new MyHandler();
+$handler=new ContentOutputParser();
 $parser = new XML_HTMLSax();
 $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');

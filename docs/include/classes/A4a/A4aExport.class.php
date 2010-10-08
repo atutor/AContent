@@ -34,6 +34,10 @@ class A4aExport extends A4a {
 
 		foreach($resources as $rid => $prop){
 			$resources_types = parent::getPrimaryResourcesTypes($rid);
+            if (empty($resources_types)){
+                //if there are no resource types, then don't use it.
+                continue;
+            }
 			$temp = array();
 			$secondary_array = array();
 			foreach($resources_types as $rtid){
