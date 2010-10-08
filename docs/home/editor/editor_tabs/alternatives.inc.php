@@ -97,7 +97,7 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 global $db, $content_row;
 populate_a4a($cid, $_POST['body_text'], $_POST['formatting']);
 
-include_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 
 $a4a = new A4a($cid);
 $primary_resources = $a4a->getPrimaryResources();

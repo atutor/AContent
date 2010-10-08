@@ -93,9 +93,9 @@ function isValidURL($url) {
 function populate_a4a($cid, $content, $formatting){
 	global $db, $my_files;
 	
-    include_once(AT_INCLUDE_PATH.'classes/A4a/A4a.class.php');
-	include_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
-	include_once(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
+    include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+	include_once(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+	include_once(TR_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
 	
 	$body = format_content($content, $formatting,array());
     
