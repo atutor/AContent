@@ -72,7 +72,6 @@ if (isset($_POST['submit_file'])) {
 	paste_from_file(body_text);
 } else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
 	/* we're saving. redirects if successful. */
-	debug('here');exit;
 	save_changes(true, $current_tab);
 }
 
@@ -85,7 +84,6 @@ if (isset($_POST['submit_file_alt'])) {
 
 if (isset($_POST['submit'])) {
 	/* we're saving. redirects if successful. */
-	debug('here');
 	save_changes(true, $current_tab);
 }
 
@@ -138,7 +136,7 @@ if ($cid) {
 		$content_base_href = 'content/' . $_SESSION['course_id'] . '/';
 	}
 }
-debug($content_base_href);exit;
+
 if (($current_tab == 0) || ($current_tab == 2)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
