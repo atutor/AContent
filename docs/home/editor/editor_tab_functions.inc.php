@@ -97,7 +97,7 @@ function populate_a4a($cid, $content, $formatting){
 	include_once(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	include_once(TR_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
 	
-	$body = ContentUtility::formatContent($content, $formatting,array());
+	$body = ContentUtility::formatContent($content, $formatting);
     
 	$handler = new ContentOutputParser();
 	$parser = new XML_HTMLSax();
@@ -144,7 +144,7 @@ function populate_a4a($cid, $content, $formatting){
 	// insert the new resources
     foreach($resources as $primary_resource)
 	{
-		if (!$a4a->getPrimaryResourceByName($primary_resource)){
+		if (!is_array($a4a->getPrimaryResourceByName($primary_resource))){
 			$a4a->setPrimaryResource($cid, $primary_resource, $_SESSION['lang']);
 		}
 	}

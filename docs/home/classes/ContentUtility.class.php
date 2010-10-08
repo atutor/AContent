@@ -212,7 +212,7 @@ class ContentUtility {
 				 	clip: { autoPlay: false },  		
 			        plugins:  { 
 				        controls: { 
-				            all: false,  
+				            buttons:true, 
 				            play: true,  
 				            scrubber: true 
 				        }         
@@ -233,7 +233,7 @@ class ContentUtility {
      *          For instance: http://www.youtube.com/watch?v=a0ryB0m0MiM
      *          Otherwise, return the original send-in parameter.
      */
-    function convertYoutubePlayURLToWatchURL($youtube_playURL) {
+    public function convertYoutubePlayURLToWatchURL($youtube_playURL) {
         return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
                             "\\1youtube.com/watch?v=\\2", $youtube_playURL);
     }
@@ -247,7 +247,7 @@ class ContentUtility {
      *          For instance, http://www.youtube.com/v/a0ryB0m0MiM
      *          Otherwise, return the original send-in parameter.
      */
-    function convertYoutubeWatchURLToPlayURL($youtube_watchURL) {
+    public function convertYoutubeWatchURLToPlayURL($youtube_watchURL) {
         return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/watch\?v=(.*)/",
                             "\\1youtube.com/v/\\2", $youtube_watchURL);
     }
@@ -805,7 +805,7 @@ class ContentUtility {
 			$sql .= " AND srt.type_id=".$only_on_secondary_type;
 		}
 		$sql .= " ORDER BY pr.primary_resource_id, prt.type_id";
-		
+			
 		$rows = $dao->execute($sql);
 	
 		if (!is_array($rows)) {

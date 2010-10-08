@@ -187,68 +187,7 @@ if (isset($_SESSION['user_id'])) ContentUtility::saveLastCid($cid);
 if (isset($top_num) && $top_num != (int) $top_num) {
 	$top_num = substr($top_num, 0, strpos($top_num, '.'));
 }
-/*
-$shortcuts = array();
-if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
-      || ($_SESSION['packaging'] == 'all'))
-	  || (isset($_current_user) && $_current_user->isAuthor($_course_id))) {
 
-	$shortcuts[] = array('title' => _AT('export_content'), 'url' => $_base_href . 'tools/ims/ims_export.php?cid='.$cid);
-}
-
-if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
-	$shortcuts[] = array('title' => _AT('edit_this_page'),   'url' => $_base_href . 'home/editor/edit_content.php?_cid='.$cid);
-//	$shortcuts[] = array('title' => _AT('add_top_folder'),   'url' => $_base_href . 'home/editor/edit_content_folder.php?_course_id='.$_course_id);
-
-	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-		$shortcuts[] = array('title' => _AT('add_sibling_folder'), 'url' => $_base_href .
-			'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id);
-	}
-//	$shortcuts[] = array('title' => _AT('add_top_page'),     'url' => $_base_href . 'home/editor/edit_content.php?_course_id='.$_course_id);
-	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-		$shortcuts[] = array('title' => _AT('add_sibling_page'), 'url' => $_base_href .
-			'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id);
-	}
-	$shortcuts[] = array('title' => _AT('delete_this_page'), 'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid);
-}
-$savant->assign('shortcuts', $shortcuts);
-*/
-
-/*if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
-      || ($_SESSION['packaging'] == 'all'))
-	  || (isset($_current_user) && $_current_user->isAuthor($_course_id))) {
-
-	$_tool_shortcuts[] = array(
-		  'title' => _AT('export_content'), 
-		  'url' => $_base_href . 'home/imscc/ims_export.php?_cid='.$cid,
-		  'icon' => $_base_href . 'images/download.png');
-}
-
-if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
-	$_tool_shortcuts[] = array(
-		  'title' => _AT('edit_this_page'),   
-		   'url' => $_base_href . 'home/editor/edit_content.php?_cid='.$cid,
-		  'icon' => $_base_href . 'images/medit.gif');
-
-	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-		  $_tool_shortcuts[] = array(
-		  'title' => _AT('add_sibling_folder'), 
-		  'url' => $_base_href .
-			'home/editor/edit_content_folder.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id,
-		   'icon' => $_base_href . 'images/folder_new_sibling.gif');
-	}
-	if ($contentManager->_menu_info[$cid]['content_parent_id']) {
-		$_tool_shortcuts[] = array(
-		  'title' => _AT('add_sibling_page'), 
-		  'url' => $_base_href .
-			'home/editor/edit_content.php?pid='.$contentManager->_menu_info[$cid]['content_parent_id'].SEP.'_course_id='.$_course_id,
-		  'icon' => $_base_href . 'images/page_add_sibling.gif');
-	}
-	$_tool_shortcuts[] = array(
-		  'title' => _AT('delete_this_page'), 	
-		  'url' => $_base_href . 'home/editor/delete_content.php?_cid='.$cid,
-		  'icon' => $_base_href . 'images/page_delete.gif');
-}*/
 $_tool_shortcuts = ContentUtility::getToolShortcuts($content_row);
 
 //if it has test and forum associated with it, still display it even if the content is empty

@@ -59,13 +59,6 @@ function print_menu_sections(&$menu, $only_print_content_folder = false, $parent
 	}
 }
 
-//if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'none')) {
-//	echo '<p>'._AT('content_packaging_disabled').'</p>';
-//	require (AT_INCLUDE_PATH.'footer.inc.php'); 
-//	exit;
-//} else if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] == 'top')) {
-//	$_main_menu = array($_main_menu[0]);
-//}
 ?>
 <form name="exportForm" method="post" action="home/ims/ims_export.php">
 <div class="input-form">
