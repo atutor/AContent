@@ -119,7 +119,11 @@ if (file_exists($real) && (substr($real, 0, strlen(TR_CONTENT_DIR)) == TR_CONTEN
 	header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
 	header('Content-Type: '.$ext);
-	header('Content-length: '.filesize($real));
+    //a hack for http://atutor.ca/atutor/mantis/view.php?id=4531
+    //@harris
+    if ($pathinfo['extension']=='mp3' || $pathinfo['extension']=='mp4') {
+        header('Content-length: '.filesize($real));
+    }
 
 	@readfile($real);
 	exit;

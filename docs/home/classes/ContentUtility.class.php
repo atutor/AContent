@@ -187,7 +187,7 @@ class ContentUtility {
 		{
 			$text .= '
 			<script language="JavaScript">
-				$f("a.flowplayerholder", "'.TR_BASE_HREF.'include/jscripts/flowplayer/flowplayer-3.1.2.swf", { 
+				$f("a.flowplayerholder", "'.TR_BASE_HREF.'include/jscripts/flowplayer/flowplayer-3.2.5.swf", { 
 				 	clip: { autoPlay: false },  		
 			        plugins:  { 
 				        controls: { 

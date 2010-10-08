@@ -240,9 +240,9 @@ class zipfile {
 		}
 		$file_name = str_replace(array('"', '<', '>', '|', '?', '*', ':', '/', '\\'), '', $file_name);
 
-		header("Content-type: application/octet-stream");
+		header("Content-type: archive/zip");
 		header("Content-disposition: attachment; filename=$file_name.zip");
-		readfile($this->zipfile_dir.$this->filename.'.zip');
+		FileUtility::readfile_in_chunks($this->zipfile_dir.$this->filename.'.zip');
 		exit;
 	}
 
