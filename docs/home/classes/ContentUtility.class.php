@@ -208,16 +208,17 @@ class ContentUtility {
 		{
 			$text .= '
 			<script language="JavaScript">
-				$f("a.flowplayerholder", "'.TR_BASE_HREF.'include/jscripts/flowplayer/flowplayer-3.2.5.swf", { 
-				 	clip: { autoPlay: false },  		
-			        plugins:  { 
-				        controls: { 
-				            buttons:true, 
-				            play: true,  
-				            scrubber: true 
-				        }         
-				    }
-				});
+				$f("a.flowplayerholder", "'.TR_BASE_HREF.'include/jscripts/flowplayer/flowplayer-3.2.4.swf", { 
+		 		clip: { autoPlay: false },  
+		        plugins:  { 
+			        controls: { 
+			            buttons:true, 
+			            play: true,  
+			            scrubber: true, 
+				        autoHide:false
+			        }         
+			    }
+			});
 			</script>
 			';
 		}
