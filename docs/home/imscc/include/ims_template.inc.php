@@ -338,7 +338,7 @@ function print_organizations($parent_id,
                  */
                 if (strpos($file, 'youtube.com')!==false){
                     //apply the conversion before linking the alternatives. Otherwise it will not be added.
-                    $file = convert_youtube_playURL_to_watchURL($file);
+                    $file = ContentUtility::convertYoutubePlayURLToWatchURL($file);
                 }
 				// If this file has a4a alternatives, link it.
 				if (isset($a4a_xml_array[$file]) || isset($a4a_secondary_files[$file])){
