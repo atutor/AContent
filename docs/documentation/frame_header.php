@@ -14,7 +14,7 @@ define('TR_INCLUDE_PATH', '../include/');
 include(TR_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_GET['p'])) {
-	$this_page = htmlentities($_GET['p']);
+	$this_page = htmlentities_utf8($_GET['p']);
 } else {
 	exit;
 } 

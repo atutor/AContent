@@ -40,7 +40,7 @@ class WeblinksExport {
 		$wl = $this->wl;
 
 		//assign all the neccessarily values to the template.
-		$savant->assign('title', htmlentities($wl->getTitle(), ENT_QUOTES, 'UTF-8'));
+		$savant->assign('title', htmlentities_utf8($wl->getTitle(), ENT_QUOTES, 'UTF-8'));
 		$url = $wl->getUrl();
 		$savant->assign('url_href', urlencode($url['href']));
 		$savant->assign('url_target', $url['target']);

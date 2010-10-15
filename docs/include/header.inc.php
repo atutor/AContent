@@ -129,7 +129,7 @@ if (isset($_custom_head)) {
 if (isset($_pages[$current_page]['guide'])) 
 {
 	$script_name = substr($_SERVER['PHP_SELF'], strlen($_base_path));
-	$savant->assign('guide', TR_GUIDES_PATH .'index.php?p='. htmlentities($script_name));
+	$savant->assign('guide', TR_GUIDES_PATH .'index.php?p='. htmlentities_utf8($script_name));
 }
 
 $savant->assign('custom_css', $custom_css);

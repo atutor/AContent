@@ -401,6 +401,22 @@ function get_default_theme() {
 }
 
 /**
+ * Convert all input to htmlentities output, in UTF-8.
+ * @param	string	input to be convert
+ * @param	boolean	true if we wish to change all newlines(\r\n) to a <br/> tag, false otherwise.  
+ *			ref: http://php.net/manual/en/function.nl2br.php
+ * @author	Harris Wong
+ * @date	March 12, 2010
+ */
+function htmlentities_utf8($str, $use_nl2br=true){
+	$return = htmlentities($str, ENT_QUOTES, 'UTF-8');
+	if ($use_nl2br){
+		return nl2br($return);
+	} 
+	return $return;
+}
+
+/**
  * Convert all '&' to '&amp;' from the input
  * @param   string  any string input, mainly URLs.
  * @return  input with & replaced to '&amp;'
