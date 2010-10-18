@@ -195,20 +195,20 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	$msg->addInfo('NO_PAGE_CONTENT');
 	$savant->assign('body', '');
 } else {
-    $content = ContentUtility::formatContent($content_row['text'], $content_row['formatting']);
-
     // find whether the body has alternatives defined
 	list($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative)
-	= ContentUtility::applyAlternatives($cid, $content, true);
+	= ContentUtility::applyAlternatives($cid, $content_row['text'], true);
 
 	// apply alternatives
 	if (intval($_GET['alternative']) > 0) {
-		$content = ContentUtility::applyAlternatives($cid, $content, false, intval($_GET['alternative']));
+		$content = ContentUtility::applyAlternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
 	} else {
-		$content = ContentUtility::applyAlternatives($cid, $content);
+		$content = $content_row['text'];
 	}
 
-	$content_array = ContentUtility::getContentTable($content);
+    $content = ContentUtility::formatContent($content, $content_row['formatting']);
+
+	$content_array = ContentUtility::getContentTable($content, $content_row['formatting']);
 	
 	$savant->assign('content_table', $content_array[0]);
 	$savant->assign('body', $content_array[1]);
