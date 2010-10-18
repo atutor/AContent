@@ -93,15 +93,21 @@ function isValidURL($url) {
 function populate_a4a($cid, $content, $formatting){
 	global $my_files, $content_base_href, $contentManager;
 	
-    include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
+	// Defining alternatives is only available for content type "html".
+	// But don't clean up the a4a tables at other content types in case the user needs them back at html.
+	if ($formatting <> 1) return;
+
+	include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 	include_once(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	include_once(TR_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
 	
 	// initialize content_base_href; used in format_content
 	if (!isset($content_base_href)) {
-		$result = $contentManager->getContentPage($cid);
+		$content_row = $contentManager->getContentPage($cid);
 		// return if the cid is not found
-		if (!($content_row = @mysql_fetch_assoc($result))) return;
+		if (!is_array($content_row)) {
+			return;
+		}
 		$content_base_href = $content_row["content_path"].'/';
 	}
 	

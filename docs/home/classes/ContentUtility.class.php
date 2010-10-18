@@ -790,12 +790,6 @@ class ContentUtility {
 				return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
 			}
 		}
-		// All a4a resources have "&" converted to "&amp;". To match content with resources, 
-        // need the same conversion on content. 
-        $content = convertAmp($content);
-        
-        // keep &lt; (content saved in plain text format) as it is instead of &amp;lt;
-        $content = str_replace('&amp;lt;', '&lt;', $content);
         
 		// get all relations between primary resources and their alternatives
         $sql = "SELECT DISTINCT c.content_path, pr.resource, ";
