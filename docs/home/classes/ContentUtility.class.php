@@ -613,10 +613,13 @@ class ContentUtility {
 			return $x;
 		}
 	
-		$output = ContentUtility::formatFinalOutput($input);
-	
+        // the following has been taken out for this: 
+        // http://atutor.ca/atutor/mantis/view.php?id=4593
+        // @date Oct 18, 2010
+        //	$output = ContentUtility::formatFinalOutput($input);
+        $output = $input;
 		$output = '<p>'.$input.'</p>';
-	
+        
 		return $output;
 	}
 	
