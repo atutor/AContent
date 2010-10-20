@@ -203,7 +203,7 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	if (intval($_GET['alternative']) > 0) {
 		$content = ContentUtility::applyAlternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
 	} else {
-		$content = $content_row['text'];
+		$content = ContentUtility::applyAlternatives($cid, $content_row['text']);
 	}
 
     $content = ContentUtility::formatContent($content, $content_row['formatting']);

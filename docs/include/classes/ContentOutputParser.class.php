@@ -60,7 +60,11 @@ class ContentOutputParser {
 							$my_files[] = trim($file);
 						}
 					} else {
-						$my_files[] = $attrs[$item];
+						$file = trim($attrs[$item]);
+						// filter our classid="clsid:..."
+						if (!strpos($file, "clsid:")) {
+							$my_files[] = $file;
+						}
 					}
 				}
 			}
