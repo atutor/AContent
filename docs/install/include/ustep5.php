@@ -23,7 +23,7 @@ print_progress($step);
 
 <br />
 
-<form method="get" action="../checker/index.php">
+<form method="get" action="../index.php">
 	<div align="center">
 		<input type="submit" name="submit" value="&raquo; Go To AContent!" class="button" />
 	</div>

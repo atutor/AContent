@@ -77,10 +77,13 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			}
 			
 			$curr_ver = $_POST['old_version'];
-			ksort($update_files);
-			foreach ($update_files as $up_file) {
-				if(version_compare($curr_ver, $up_file[4], '<')) {
-					update_one_ver($up_file);
+			
+			if (is_array($update_files)) {
+				ksort($update_files);
+				foreach ($update_files as $up_file) {
+					if(version_compare($curr_ver, $up_file[4], '<')) {
+						update_one_ver($up_file);
+					}
 				}
 			}
 			

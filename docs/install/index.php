@@ -275,7 +275,6 @@ $not_as_good = FALSE;
 	</tr>
 	</table>
 	
-<!-- 
 	<table cellspacing="0" cellpadding="10" align="center" width="45%">
 	<tr>
 		<td align="center"><b>Or</b></td>
@@ -290,7 +289,6 @@ $not_as_good = FALSE;
 		</form></td>
 	</tr>
 	</table>
- -->
 <?php endif; ?>
 
 <?php require(TR_INCLUDE_PATH.'footer.inc.php'); ?>
