@@ -795,7 +795,7 @@ class ContentUtility {
 		}
         
 		// get all relations between primary resources and their alternatives
-        $sql = "SELECT DISTINCT c.content_path, pr.resource, , prt.type_id primary_type,
+        $sql = "SELECT DISTINCT c.content_path, pr.resource,  prt.type_id primary_type,
                        sr.secondary_resource, srt.type_id secondary_type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."primary_resources_types prt,".
