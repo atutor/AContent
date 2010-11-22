@@ -8,7 +8,7 @@
 set now = `date +"%Y_%m_%d"`
 set acontent_dir = "AContent_$now"
 set bundle = "AContent"
-set svndir = "http://atutorsvn.atrc.utoronto.ca/repos/transformable2/trunk/docs/"
+set svndir = "http://svn.atutor.ca/repos/transformable2/trunk/docs/"
 set svnexec = "svn"
 
 echo "\033[1mAContent Bundle Script [for CVS 1.3.1+] \033[0m"
@@ -73,7 +73,7 @@ sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $acon
 sleep 1
 
 echo -n "<?php "'$svn_data = '"'" >> $acontent_dir/AContent/svn.php
-$svnexec log  -q -r HEAD http://atutorsvn.atrc.utoronto.ca/repos/transformable2/trunk/  >> $acontent_dir/AContent/svn.php
+$svnexec log  -q -r HEAD http://svn.atutor.ca/repos/transformable2/trunk/  >> $acontent_dir/AContent/svn.php
 echo -n "';?>" >> $acontent_dir/AContent/svn.php
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $acontent_dir/AContent/"
