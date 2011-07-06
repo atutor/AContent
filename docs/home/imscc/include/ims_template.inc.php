@@ -504,7 +504,7 @@ function print_resources_forum() {
 	
 	        //viene generato il file descrittore
 	        //file Descrittore con la descrzione del forum
-	        $fileDesDT_D = '<?xml version="1.0" encoding="UTF-8"?>
+	   /*     $fileDesDT_D = '<?xml version="1.0" encoding="UTF-8"?>
 	
 	                    <topic
                             xmlns="http://www.imsglobal.org/xsd/imsdt_v1p0"
@@ -527,8 +527,20 @@ function print_resources_forum() {
 	
 	                        <text/>
 	
-	                    </topic>';
-	
+	                    </topic>'; */
+	        $fileDesDT_D = '<?xml version="1.0" encoding="UTF-8"?>
+
+<dt:topic xmlns:dt="http://www.imsglobal.org/xsd/imsdt_v1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsdt_v1p0 http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/domainProfile_6/imsdt_v1p0_localised.xsd">
+<title>{TitleDiscussionTopic}</title>
+<text texttype="text/plain">{DescriptionDiscussionTopic}</text>
+</dt:topic>';
+
+        //file Descrittore senza la descrizione del forum
+        $fileDesDT = '<?xml version="1.0" encoding="UTF-8"?>
+<dt:topic xmlns:dt="http://www.imsglobal.org/xsd/imsdt_v1p0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.imsglobal.org/xsd/imsdt_v1p0 http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/domainProfile_6/imsdt_v1p0_localised.xsd">
+<title>{TitleDiscussionTopic}</title>
+<text/>
+</dt:topic>';
 			$f['title'] = htmlspecialchars($f['title']);
 			$f['description'] = htmlspecialchars($f['description']);
 	        if (empty($f['description']))
