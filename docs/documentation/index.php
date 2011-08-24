@@ -42,7 +42,7 @@ if (isset($_GET['p'])) {
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-	<title><?php echo _AT('Transformable_handbook'); ?></title>
+	<title><?php echo htmlspecialchars(_AT('Transformable_handbook'), ENT_QUOTES, 'UTF-8'); ?></title>
 
 <script type="text/javascript">
 
