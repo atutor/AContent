@@ -166,7 +166,7 @@ function populate_a4a($cid, $content, $formatting){
 
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
-	global $contentManager, $addslashes, $msg, $_course_id, $_content_id;
+	global $contentManager, $addslashes, $msg, $_course_id, $_content_id, $stripslashes;
 	
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['_cid']	= intval($_POST['_cid']);
@@ -176,10 +176,10 @@ function save_changes($redir, $current_tab) {
 	$_POST['title'] = trim($_POST['title']);
 	$_POST['head']	= trim($_POST['head']);
 	$_POST['use_customized_head']	= isset($_POST['use_customized_head'])?$_POST['use_customized_head']:0;
-	$_POST['body_text']	= trim($_POST['body_text']);
+	$_POST['body_text']	= $stripslashes(trim($_POST['body_text']));
 	$_POST['weblink_text'] = trim($_POST['weblink_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
-	$_POST['keywords']	= trim($_POST['keywords']);
+	$_POST['keywords']	= $stripslashes(trim($_POST['keywords']));
 	$_POST['test_message'] = trim($_POST['test_message']);
 
 	//if weblink is selected, use it

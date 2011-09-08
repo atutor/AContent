@@ -99,8 +99,8 @@ if ($_POST['formatting'] <> 1)
 	$msg->addFeedback('NO_A4A_FOR_PLAIN_TEXT');
 	$msg->printAll();
 } else {
-	global $db, $content_row;
-	populate_a4a($cid, $_POST['body_text'], $_POST['formatting']);
+	global $db, $content_row, $stripslashes;
+	populate_a4a($cid, $stripslashes($_POST['body_text']), $_POST['formatting']);
 	
 	include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 	
