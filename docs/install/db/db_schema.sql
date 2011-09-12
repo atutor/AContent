@@ -498,19 +498,19 @@ CREATE TABLE `primary_resources` (
   `resource` TEXT,
   `language_code` varchar(20) default NULL,
   PRIMARY KEY  (`primary_resource_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `primary_resources_types` (
   `primary_resource_id` mediumint(8) unsigned NOT NULL,
   `type_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`primary_resource_id`,`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `resource_types` (
   `type_id` mediumint(8) unsigned NOT NULL auto_increment,
   `type` TEXT,
   PRIMARY KEY  (`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `secondary_resources` (
   `secondary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -518,13 +518,13 @@ CREATE TABLE `secondary_resources` (
   `secondary_resource` TEXT,
   `language_code` varchar(20) default NULL,
   PRIMARY KEY  (`secondary_resource_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE `secondary_resources_types` (
   `secondary_resource_id` mediumint(8) unsigned NOT NULL,
   `type_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`secondary_resource_id`,`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM DEFAULT CHARSET=utf8;
 
 INSERT INTO `resource_types` VALUES
 (1, 'auditory'),
