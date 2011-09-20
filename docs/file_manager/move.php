@@ -187,14 +187,14 @@ else {
 	</div>
 </div>
 
-<input type="hidden" name="pathext" value="<?php echo $pathext; ?>" />
-<input type="hidden" name="framed" value="<?php echo $framed; ?>" />
-<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
-<input type="hidden" name="cp" value="<?php echo $cp; ?>" />
-<input type="hidden" name="cid" value="<?php echo $cid; ?>" />
-<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
-<input type="hidden" name="a_type" value="<?php echo $a_type; ?>" />
-<input type="hidden" name="_course_id" value="<?php echo $_course_id; ?>" />
+<input type="hidden" name="pathext" value="<?php echo AT_print($pathext, 'input.hidden'); ?>" />
+<input type="hidden" name="framed" value="<?php echo AT_print($framed, 'input.hidden'); ?>" />
+<input type="hidden" name="popup" value="<?php echo AT_print($popup, 'input.hidden'); ?>" />
+<input type="hidden" name="cp" value="<?php echo AT_print($cp, 'input.hidden'); ?>" />
+<input type="hidden" name="cid" value="<?php echo AT_print($cid, 'input.hidden'); ?>" />
+<input type="hidden" name="pid" value="<?php echo AT_print($pid, 'input.hidden'); ?>" />
+<input type="hidden" name="a_type" value="<?php echo AT_print($a_type, 'input.hidden'); ?>" />
+<input type="hidden" name="_course_id" value="<?php echo AT_print($_course_id, 'input.hidden'); ?>" />
 <?php
 	echo $hidden_dirs;
 	echo $hidden_files;

@@ -94,7 +94,7 @@ function init() {
 		</tr>
 		<tr>
 			<td colspan="2" valign="top" align="center" class="row1">
-				<input type="button" name="paste"  value="<?php echo _AT('paste');  ?>" class="button" onclick="javascript:insertTo('<?php echo $area; ?>');" />
+				<input type="button" name="paste"  value="<?php echo _AT('paste');  ?>" class="button" onclick="javascript:insertTo('<?php echo AT_print($area, 'input.text'); ?>');" />
 			</td>
 		</tr>
 	</table>

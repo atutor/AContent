@@ -147,4 +147,27 @@ define('TR_ACHECKER_WEB_SERVICE_ID', '2f4149673d93b7f37eb27506905f19d63fbdfe2d')
 /* relative uri */
 $_rel_url = '/'.implode('/', array_slice($url_parts, count($url_parts) - $dir_deep-1));
 
+/* control how user inputs get formatted on output: */
+/* note: v131 not all formatting options are available on each section. */
+
+define('TR_FORMAT_NONE',	      0); /* LEQ to ~AT_FORMAT_ALL */
+define('TR_FORMAT_EMOTICONS',     1);
+define('TR_FORMAT_LINKS',         2);
+define('TR_FORMAT_IMAGES',        4);
+define('TR_FORMAT_HTML',          8);
+define('TR_FORMAT_GLOSSARY',     16);
+define('TR_FORMAT_ATCODES',      32);
+define('TR_FORMAT_CONTENT_DIR', 64); /* remove CONTENT_DIR */
+define('TR_FORMAT_QUOTES',      128); /* remove double quotes (does this get used?) */
+define('TR_FORMAT_ALL',       TR_FORMAT_EMOTICONS 
+							   + TR_FORMAT_LINKS 
+						       + TR_FORMAT_IMAGES 
+						       + TR_FORMAT_HTML 
+						       + TR_FORMAT_GLOSSARY 
+							   + TR_FORMAT_ATCODES
+							   + TR_FORMAT_CONTENT_DIR);
+
+$_field_formatting = array();
+$_field_formatting['input.*'] = TR_FORMAT_QUOTES; /* All input should have '<' and quotes escaped.*/
+
 ?>

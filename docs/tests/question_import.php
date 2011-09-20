@@ -281,7 +281,7 @@ if (!$overwrite && !empty($existing_files)){
 	echo '<input type="submit" class="" name="submit_yes" value="'._AT('yes').'"/>';
 	echo '<input type="submit" class="" name="submit_no" value="'._AT('no').'"/>';
 	echo '<input type="hidden" name="submit_import" value="submit_import" />';
-	ECHO '<input type="hidden" name="url" value="'.$_POST['url'].'" />';
+	echo '<input type="hidden" name="url" value="'.AT_print($_POST['url'], 'input.hidden').'" />';
 	echo '</div></div>';
 	echo '</form>';
 	require (TR_INCLUDE_PATH.'footer.inc.php');

@@ -151,7 +151,7 @@ $msg->printAll();
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_new_file'); ?></legend>
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><?php echo _AT('file_name');  ?></label><br />
-			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.$_POST['filename'].'"'?> />
+			<input type="text" name="filename" id="ctitle" size="40" <?php if (isset($_POST['filename'])) echo 'value="'.AT_print($_POST['filename'], 'input.text').'"'?> />
 		</div>
 
 		<div class="row">

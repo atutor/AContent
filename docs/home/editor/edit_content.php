@@ -256,12 +256,12 @@ $pid = intval($_REQUEST['pid']);
         echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars($stripslashes($_POST['weblink_text'])).'" />';
         echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
 		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
-        echo '<input type="hidden" name="displayhead" id="displayhead" value="'.$_POST['displayhead'].'" />';
-        echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.$_POST['complexeditor'].'" />';
-        echo '<input type="hidden" name="formatting" value="'.$_POST['formatting'].'" />';
+        echo '<input type="hidden" name="displayhead" id="displayhead" value="'.AT_print($_POST['displayhead'], 'input.hidden').'" />';
+        echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.AT_print($_POST['complexeditor'], 'input.hidden').'" />';
+        echo '<input type="hidden" name="formatting" value="'.AT_print($_POST['formatting'], 'input.hidden').'" />';
 	}
 
-	echo '<input type="hidden" name="ordering" value="'.$_POST['ordering'].'" />';
+	echo '<input type="hidden" name="ordering" value="'.AT_print($_POST['ordering'], 'input.hidden').'" />';
 	echo '<input type="hidden" name="pid" value="'.$pid.'" />';
 
 //	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
@@ -271,7 +271,7 @@ $pid = intval($_REQUEST['pid']);
 //	echo '<input type="hidden" name="minute" value="'.$_POST['minute'].'" />';
 //	echo '<input type="hidden" name="min" value="'.$_POST['min'].'" />';
 	
-	echo '<input type="hidden" name="alternatives" value="'.$_POST['alternatives'].'" />';
+	echo '<input type="hidden" name="alternatives" value="'.AT_print($_POST['alternatives'], 'input.hidden').'" />';
 	
 	echo '<input type="hidden" name="current_tab" value="'.$current_tab.'" />';
 
@@ -283,7 +283,7 @@ $pid = intval($_REQUEST['pid']);
 	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
 
 	//content test association
-	echo '<input type="hidden" name="test_message" value="'.$_POST['test_message'].'" />';
+	echo '<input type="hidden" name="test_message" value="'.AT_print($_POST['test_message'], 'input.hidden').'" />';
 	
 	/* get glossary terms */
 //	$matches = find_terms(stripslashes($_POST['body_text']));
@@ -353,7 +353,7 @@ $pid = intval($_REQUEST['pid']);
 			echo '<input type="hidden" name="visited_tests" value="1" />'."\n";
 			if (is_array($_POST['tid'])) {
 				foreach ($_POST['tid'] as $i=>$tid){
-					echo '<input type="hidden" name="tid['.$i.']" value="'.$tid.'" />';
+					echo '<input type="hidden" name="tid['.$i.']" value="'.AT_print($tid, 'input.hidden').'" />';
 				}
 			}
 		} else {

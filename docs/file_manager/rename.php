@@ -76,17 +76,17 @@ if (isset($_POST['rename_action'])) {
 require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 <form name="rename" action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
-<input type="hidden" name="pathext" value="<?php echo $_REQUEST['pathext']; ?>" />
-<input type="hidden" name="oldname" value="<?php echo $_REQUEST['oldname']; ?>" />
-<input type="hidden" name="framed" value="<?php echo $_REQUEST['framed']; ?>" />
-<input type="hidden" name="popup" value="<?php echo $_REQUEST['popup']; ?>" />
+<input type="hidden" name="pathext" value="<?php echo AT_print($_REQUEST['pathext'], 'input.hidden'); ?>" />
+<input type="hidden" name="oldname" value="<?php echo AT_print($_REQUEST['oldname'], 'input.hidden'); ?>" />
+<input type="hidden" name="framed" value="<?php echo AT_print($_REQUEST['framed'], 'input.hidden'); ?>" />
+<input type="hidden" name="popup" value="<?php echo AT_print($_REQUEST['popup'], 'input.hidden'); ?>" />
 <input type="hidden" name="_course_id" value="<?php echo $_course_id; ?>" />
 
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<label for="new"><?php echo _AT('new_name'); ?></label><br />
-		<?php echo $_GET['pathext']; ?><input type="text" name="new_name" id="new" value="<?php echo $_REQUEST['oldname']; ?>" size="30" />
+		<?php echo $_GET['pathext']; ?><input type="text" name="new_name" id="new" value="<?php echo AT_print($_REQUEST['oldname'], 'input.text'); ?>" size="30" />
 	</div>
 
 	<div class="row buttons">

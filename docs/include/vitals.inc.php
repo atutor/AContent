@@ -428,4 +428,13 @@ function convertAmp($input){
     return str_replace('&', '&amp;', $input);
 }
 
+function query_bit( $bitfield, $bit ) {
+	if (!is_int($bitfield)) {
+		$bitfield = intval($bitfield);
+	}
+	if (!is_int($bit)) {
+		$bit = intval($bit);
+	}
+	return ( $bitfield & $bit ) ? true : false;
+}
 ?>

@@ -198,10 +198,10 @@ if (isset($_POST['cancel'])) {
 	} else {
 ?>
 		<form method="post" action="file_manager/zip.php">
-		<input type="hidden" name="pathext" value="<?php echo $_GET['pathext']; ?>" />
-		<input type="hidden" name="file"    value="<?php echo $_GET['file']; ?>" />
-		<input type="hidden" name="popup"   value="<?php echo $_GET['popup']; ?>" />
-		<input type="hidden" name="framed"   value="<?php echo $_GET['framed']; ?>" />
+		<input type="hidden" name="pathext" value="<?php echo AT_print($_GET['pathext'], 'input.hidden'); ?>" />
+		<input type="hidden" name="file"    value="<?php echo AT_print($_GET['file'], 'input.hidden'); ?>" />
+		<input type="hidden" name="popup"   value="<?php echo AT_print($_GET['popup'], 'input.hidden'); ?>" />
+		<input type="hidden" name="framed"   value="<?php echo AT_print($_GET['framed'], 'input.hidden'); ?>" />
 		<input type="hidden" name="_course_id" value="<?php echo $_course_id; ?>" />
 		<div class="input-form">
 			<div class="row">
@@ -211,7 +211,7 @@ if (isset($_POST['cancel'])) {
 
 			<div class="row">
 				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('directory_name'); ?><br />
-				<input type="text" name="custom_path" value="<?php echo $temp_name; ?>" />
+				<input type="text" name="custom_path" value="<?php echo AT_print($temp_name, 'input.text'); ?>" />
 			</div>
 
 			<div class="row buttons">

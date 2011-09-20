@@ -97,15 +97,15 @@ if (!isset($_POST['extension'])) {
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="pathext" value="<?php echo $pathext; ?>" />
-<input type="hidden" name="framed" value="<?php echo $framed; ?>" />
-<input type="hidden" name="popup" value="<?php echo $popup; ?>" />
-<input type="hidden" name="file" value="<?php echo $file; ?>" />
-<input type="hidden" name="_course_id" value="<?php echo $_course_id; ?>" />
+<input type="hidden" name="pathext" value="<?php echo AT_print($pathext, 'input.hidden'); ?>" />
+<input type="hidden" name="framed" value="<?php echo AT_print($framed, 'input.hidden'); ?>" />
+<input type="hidden" name="popup" value="<?php echo AT_print($popup, 'input.hidden'); ?>" />
+<input type="hidden" name="file" value="<?php echo AT_print($file, 'input.hidden'); ?>" />
+<input type="hidden" name="_course_id" value="<?php echo AT_print($_course_id, 'input.hidden'); ?>" />
 <input type="submit" name="submit" style="display:none;"/>
 <div class="input-form">
 	<div class="row">
-		<h3><?php echo $file; ?></h3>
+		<h3><?php echo AT_print($file, 'input.h3'); ?></h3>
 	</div>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('type'); ?><br />

@@ -19,7 +19,7 @@
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit_test'); ?></legend>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" size="40" value="<?php if (isset($_POST['title'])) echo stripslashes(htmlspecialchars($_POST['title'])); else echo $this->row['title']; ?>" />
+		<input type="text" name="title" id="title" size="40" value="<?php if (isset($_POST['title'])) echo stripslashes(htmlspecialchars($_POST['title'])); else echo AT_print($this->row['title'], 'input.text'); ?>" />
 	</div>
 	
 	<div class="row">
