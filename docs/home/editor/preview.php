@@ -14,7 +14,10 @@ define('TR_INCLUDE_PATH', '../../include/');
 
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
-require(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
+
+// commented out this require which was causing the a redeclare error #4846
+// delete the following line when its confirmed the require is not needed
+// require(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
 global $_course_id, $_content_id, $contentManager;
 
