@@ -16,7 +16,7 @@ $onload = "initial();";
 include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
-<form name="input_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?><?php if (isset($_GET["id"])) echo '?id='.$_GET["id"]; ?>" >
+<form name="input_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?><?php if (isset($_GET["id"])) echo '?id='.intval($_GET["id"]); ?>" >
 <?php if (isset($this->user_group_row["user_group_id"])) {?>
 <input type="hidden" name="user_group_id" value="<?php echo $this->user_group_row["user_group_id"]; ?>" />
 <?php }?>
@@ -31,12 +31,12 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 		<tr>
 			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label></th>
-			<td><input type="text" name="title" size="100" id="title" value="<?php if (isset($_POST['title'])) echo $_POST['title']; else echo $this->user_group_row["title"]; ?>" /></td>
+			<td><input type="text" name="title" size="100" id="title" value="<?php if (isset($_POST['title'])) echo AT_print($_POST['title'], 'input.text'); else echo AT_print($this->user_group_row["title"], 'input.text'); ?>" /></td>
 		</tr>
 
 		<tr>
 			<th align="left"><label for="description"><?php echo _AT('description'); ?></label></th>
-			<td><textarea rows="3" cols="30" name="description" id="description"><?php if (isset($_POST['description'])) echo $_POST['description']; else echo $this->user_group_row["description"]; ?></textarea></td>
+			<td><textarea rows="3" cols="30" name="description" id="description"><?php if (isset($_POST['description'])) echo AT_print($_POST['description'], 'input.text'); else echo AT_print($this->user_group_row["description"], 'input.text'); ?></textarea></td>
 		</tr>
 
 		<?php if (isset($this->user_group_row['user_group_id'])) {?>

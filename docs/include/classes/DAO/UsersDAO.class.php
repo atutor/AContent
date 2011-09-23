@@ -296,6 +296,7 @@ class UsersDAO extends DAO {
 	 */
 	public function getUserByID($userID)
 	{
+	    $userID = intval($userID);
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'users WHERE user_id='.$userID;
 		if ($rows = $this->execute($sql))
 		{
@@ -313,6 +314,7 @@ class UsersDAO extends DAO {
 	 */
 	public function getUserByWebServiceID($webServiceID)
 	{
+	    $webServiceID = intval($webServiceID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE web_service_id='".$webServiceID."'";
 		if ($rows = $this->execute($sql))
 		{

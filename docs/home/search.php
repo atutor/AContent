@@ -32,7 +32,7 @@ $courseCategoriesDAO = new CourseCategoriesDAO();
 
 //$my_courses = array();
 $search_text = trim($_GET['search_text']);
-$courses = $coursesDAO->getSearchResult($search_text, $_GET['catid']);
+$courses = $coursesDAO->getSearchResult($addslashes($search_text), $_GET['catid']);
 
 // handle submits
 if (isset($_GET['action'], $_GET['cid']) && $_SESSION['user_id'] > 0)

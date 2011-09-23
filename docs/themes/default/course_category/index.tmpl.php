@@ -17,7 +17,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <div class="input-form">
-  <form name="add_form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
+  <form name="add_form" method="post" action="<?php echo AT_print($_SERVER['PHP_SELF'], 'input.form'); ?>" >
   <fieldset class="group_form"><legend class="group_form"><?php echo _AT("add_course_category"); ?></legend>
     <table class="form-data" align="left">
     <tr align="left">

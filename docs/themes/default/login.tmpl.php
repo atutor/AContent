@@ -31,10 +31,10 @@ function encrypt_password() {
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php if (isset($_REQUEST['oauth_token'])) {?>
-<input type="hidden" name="oauth_token" value="<?php echo $_REQUEST['oauth_token']; ?>" />
+<input type="hidden" name="oauth_token" value="<?php echo AT_print($_REQUEST['oauth_token'], 'input.hidden'); ?>" />
 <?php }?>
 <?php if (isset($_REQUEST['oauth_callback'])) {?>
-<input type="hidden" name="oauth_callback" value="<?php echo $_REQUEST['oauth_callback']; ?>" />
+<input type="hidden" name="oauth_callback" value="<?php echo AT_print($_REQUEST['oauth_callback'], 'input.hidden'); ?>" />
 <?php }?>
 <input type="hidden" name="form_password_hidden" value="" />
 	<div class="input-form">

@@ -16,6 +16,7 @@ include_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 include_once(TR_INCLUDE_PATH.'classes/DAO/UserGroupsDAO.class.php');
 
 // handle submit
+$_GET['id'] = intval($_GET['id']);
 if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
