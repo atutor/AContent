@@ -89,9 +89,10 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function updateUserIDByToken($token, $user_id)
 	{
+	    global $addslashes;
 	    $sql = "UPDATE ".TABLE_PREFIX."oauth_server_tokens 
 	               SET user_id = ".$user_id."
-	             WHERE token = '".$token."'";
+	             WHERE token = '".$addslashes($token)."'";
 	    return $this->execute($sql);
   	}
 
@@ -150,9 +151,10 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
+	    global $addslashes;
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
-	             WHERE token = '".$token."'
-	               AND token_type = '".$token_type."'";
+	             WHERE token = '".$addslashes($token)."'
+	               AND token_type = '".$addslashes($token_type)."'";
 	    return $this->execute($sql);
   	}
 

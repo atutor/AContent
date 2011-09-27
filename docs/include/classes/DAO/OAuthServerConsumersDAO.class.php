@@ -164,7 +164,8 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumer($consumer)
 	{
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer='".$consumer."'";
+	    global $addslashes;
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer='".$addslashes($consumer)."'";
 	    return $this->execute($sql);
   	}
 

@@ -88,8 +88,8 @@ class LanguagesDAO extends DAO {
 		if ($fieldValue == '') return false;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."languages 
-		           SET ".$fieldName."='".$addslashes($fieldValue)."'
-		         WHERE language_code = '".$langCode."'";
+		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
+		         WHERE language_code = '".$addslashes($langCode)."'";
 		return $this->execute($sql);
 	}
 

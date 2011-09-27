@@ -252,8 +252,8 @@ class UsersDAO extends DAO {
 		}
 						
 		$sql = "UPDATE ".TABLE_PREFIX."users 
-		           SET ".$fieldName."='".$addslashes($fieldValue)."'
-		         WHERE user_id = ".$userID;
+		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
+		         WHERE user_id = ".intval($userID);
 		
 		return $this->execute($sql);
 	}

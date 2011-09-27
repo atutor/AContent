@@ -104,7 +104,7 @@ class MyownPatchesDAO extends DAO {
 			return array(_AT('TR_ERROR_EMPTY_FIELD'));
 
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
-		           SET ".$fieldName."='".$addslashes($fieldValue)."'
+		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
 		         WHERE myown_patch_id = ".$myownPatchID;
 		
 		return $this->execute($sql);
