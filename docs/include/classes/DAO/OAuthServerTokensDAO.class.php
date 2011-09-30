@@ -151,10 +151,10 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
-	    global $addslashes;
+
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
-	             WHERE token = '".$addslashes($token)."'
-	               AND token_type = '".$addslashes($token_type)."'";
+	             WHERE token = '".addslashes($token)."'
+	               AND token_type = '".addslashes($token_type)."'";
 	    return $this->execute($sql);
   	}
 
