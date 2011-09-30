@@ -56,5 +56,4 @@ global $system_courses;
 <a name="content" title="<?php echo _AT("content_start"); ?>"></a>
 <div id="ajax-msg">
 </div>
-
 <?php global $msg; $msg->printAll(); ?>
