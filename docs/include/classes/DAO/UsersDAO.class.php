@@ -314,7 +314,8 @@ class UsersDAO extends DAO {
 	 */
 	public function getUserByWebServiceID($webServiceID)
 	{
-	    $webServiceID = intval($webServiceID);
+		global $addslashes;
+	    $webServiceID = $addslashes($webServiceID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE web_service_id='".$webServiceID."'";
 		if ($rows = $this->execute($sql))
 		{
