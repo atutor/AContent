@@ -265,6 +265,72 @@ if ($_course_id > 0)
 /*** 10. register pages based on user's priviledge ***/
 require_once(TR_INCLUDE_PATH.'page_constants.inc.php');
 
+/*~~~~~~~~~~~~~~~~~flash detection~~~~~~~~~~~~~~~~*/
+if(isset($_COOKIE["flash"])){
+    $_SESSION['flash'] = $_COOKIE["flash"];
+
+    //delete the cookie
+    ATutor.setcookie("flash",'',time()-3600);
+}
+
+if (!isset($_SESSION["flash"])) {
+	$_custom_head .= '
+		<script type="text/javascript">
+		<!--
+
+			//VB-Script for InternetExplorer
+			function iExploreCheck()
+			{
+				document.writeln("<scr" + "ipt language=\'VBscript\'>");
+				//document.writeln("\'Test to see if VBScripting works");
+				document.writeln("detectableWithVB = False");
+				document.writeln("If ScriptEngineMajorVersion >= 2 then");
+				document.writeln("   detectableWithVB = True");
+				document.writeln("End If");
+				//document.writeln("\'This will check for the plugin");
+				document.writeln("Function detectActiveXControl(activeXControlName)");
+				document.writeln("   on error resume next");
+				document.writeln("   detectActiveXControl = False");
+				document.writeln("   If detectableWithVB Then");
+				document.writeln("      detectActiveXControl = IsObject(CreateObject(activeXControlName))");
+				document.writeln("   End If");
+				document.writeln("End Function");
+				document.writeln("</scr" + "ipt>");
+				return detectActiveXControl("ShockwaveFlash.ShockwaveFlash.1");
+			}
+
+
+			var plugin = (navigator.mimeTypes && navigator.mimeTypes["application/x-shockwave-flash"]) ? navigator.mimeTypes["application/x-shockwave-flash"].enabledPlugin : false;
+			if(!(plugin) && (navigator.userAgent && navigator.userAgent.indexOf("MSIE")>=0 && (navigator.appVersion.indexOf("Win") != -1)))
+				if (iExploreCheck())
+					flash_detect = "flash=yes";
+				else
+					flash_detect = "flash=no";
+
+			else if(plugin)
+				flash_detect = "flash=yes";
+			else
+				flash_detect = "flash=no";
+
+			writeCookie(flash_detect);
+
+			function writeCookie(value)
+			{
+				var today = new Date();
+				var the_date = new Date("December 31, 2099");
+				var the_cookie_date = the_date.toGMTString();
+				var the_cookie = value + ";expires=" + the_cookie_date;
+				document.cookie = the_cookie;
+			}
+		//-->
+		</script>
+';
+}
+
+
+
+/*~~~~~~~~~~~~~~end flash detection~~~~~~~~~~~~~~~*/
+
 /**
  * This function is used for printing variables for debugging.
  * @access  public
