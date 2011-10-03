@@ -76,6 +76,7 @@ $starttime = $mtime;
 	<!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css' /> -->
 	<link rel="icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
 	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<!--[if IE]>
