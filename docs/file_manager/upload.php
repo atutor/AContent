@@ -49,20 +49,21 @@ $my_MaxFileSize = FileUtility::megabytes_to_bytes(substr(ini_get('upload_max_fil
 $path = TR_CONTENT_DIR . $_course_id.'/'.$_POST['pathext'];
 
 if (isset($_POST['submit'])) {
-
+    if($_FILES['file']) {
+       $_FILES['uploadedfile'] = $_FILES['file']; 
+    }
 	if($_FILES['uploadedfile']['name'])	{
-
 		$_FILES['uploadedfile']['name'] = trim($_FILES['uploadedfile']['name']);
 		$_FILES['uploadedfile']['name'] = str_replace(' ', '_', $_FILES['uploadedfile']['name']);
 
 		$path_parts = pathinfo($_FILES['uploadedfile']['name']);
 		$ext = $path_parts['extension'];
-
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
 		if (in_array($ext, $IllegalExtentions)) {
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->addError($errors);
+			FileUtility::handleAjaxUpload(500);
 			header('Location: index.php?pathext='.$_POST['pathext'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type'].SEP.'_course_id='.$_course_id);
 			exit;
 		}
@@ -77,7 +78,6 @@ if (isset($_POST['submit'])) {
 	
 		/* anything else should be okay, since we're on *nix.. hopefully */
 		$_FILES['uploadedfile']['name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_FILES['uploadedfile']['name']);
-
 
 		/* if the file size is within allowed limits */
 		if( ($_FILES['uploadedfile']['size'] > 0) && ($_FILES['uploadedfile']['size'] <= $my_MaxFileSize) ) {
@@ -118,6 +118,7 @@ if (isset($_POST['submit'])) {
 										$_course_id,
 										SEP);
 						$msg->addFeedback($f);
+						FileUtility::handleAjaxUpload(200);
 						if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab'].SEP.'_course_id='.$_course_id);
 						else
@@ -131,7 +132,8 @@ if (isset($_POST['submit'])) {
 					}
 					else {
 						$msg->addFeedback('FILE_UPLOADED');
-
+						FileUtility::handleAjaxUpload(200);
+						
 						if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab'].SEP.'_course_id='.$_course_id);
 						else
@@ -141,6 +143,7 @@ if (isset($_POST['submit'])) {
 				}
 			} else {
 				$msg->addError(array('MAX_STORAGE_EXCEEDED', get_human_size($my_MaxCourseSize)));
+				FileUtility::handleAjaxUpload(500);
 				if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab'].SEP.'_course_id='.$_course_id);
 						else
@@ -150,6 +153,7 @@ if (isset($_POST['submit'])) {
 			}
 		} else {
 			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
+			FileUtility::handleAjaxUpload(500);
 			if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab'].SEP.'_course_id='.$_course_id);
 						else
@@ -159,6 +163,7 @@ if (isset($_POST['submit'])) {
 		}
 	} else {
 		$msg->addError('FILE_NOT_SELECTED');
+		FileUtility::handleAjaxUpload(500);
 		if ($alter)
 			header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab'].SEP.'_course_id='.$_course_id);
 		else

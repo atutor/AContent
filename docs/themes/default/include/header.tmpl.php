@@ -75,6 +75,7 @@ $starttime = $mtime;
 
 	<!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css' /> -->
 	<link rel="icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
+	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	<!--[if IE]>
@@ -82,6 +83,7 @@ $starttime = $mtime;
 	<![endif]-->
 <?php echo $this->rtl_css; ?>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_href; ?>include/jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.2.4.min.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>

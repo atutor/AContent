@@ -120,6 +120,7 @@ $labelcol = 3;
 
 if (TRUE || $framed != TRUE) {
 
+
 	if ($_GET['overwrite'] != '') {
 		// get file name, out of the full path
 		$path_parts = pathinfo($current_path.$_GET['overwrite']);
@@ -144,15 +145,13 @@ if (TRUE || $framed != TRUE) {
 	// make new directory 
 	echo '<div class="input-form"><fieldset class="group_form"><legend class="group_form">'._AT('add_file_folder').'</legend>'."\n";
 	echo '	<div class="row">'."\n";
-	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.SEP.'cp='.SEP.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'">'."\n";
+	echo '		<form name="form1" method="post" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext != '') ? 'pathext='.urlencode($pathext).SEP : ''). 'popup='.$popup.SEP.'cp='.SEP.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'">'."\n";
 	if( $MakeDirOn ) {
 		if ($depth < $MaxDirDepth) {
 			echo '		<label for="dirname">'._AT('create_folder_here').'</label><br />'."\n";
 			echo '		&nbsp;<small class="spacer">'._AT('keep_it_short').'</small><br />'."\n";
 			echo '		<input type="text" name="dirname" id="dirname" size="20" /> '."\n";
 			echo '		<input type="hidden" name="mkdir_value" value="true" /> '."\n";
-			echo '		<input type="hidden" name="_course_id" value="'.$_course_id.'" /> '."\n";
-			if ($cid > 0) echo '		<input type="hidden" name="_cid" value="'.$cid.'" /> '."\n";
 			echo '		<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />'."\n";
 		} else {
 			echo _AT('depth_reached')."\n";
@@ -164,98 +163,200 @@ if (TRUE || $framed != TRUE) {
 
 	echo '	<div class="row"><hr /></div>'."\n";
 
-
-	// If flash is available, provide the option of using Fluid's uploader or the basic uploader
+    // If flash is available, provide the option of using Fluid's uploader or the basic uploader
 	if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		echo '<div class="row">'."\n";
 		if (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes")
 			$fluid_on = 'checked="checked"';
-		echo '(<input type="checkbox" id="fluid_on" name="fluid_on" onclick="toggleform(\'simple-container\', \'fluid-container\'); setCheckboxCookie(this, \'fluid_on=yes\', \'fluid_on=no\',\'December 31, 2099\');" value="yes" '.$fluid_on.' /> '."\n";
+		echo '(<input type="checkbox" id="fluid_on" name="fluid_on" value="yes" '.$fluid_on.' /> '."\n";
 		echo '<label for="fluid_on" >'._AT('enable_uploader').'</label>)'."\n";
 		echo '</div>'."\n";
 	}
-
-
 	// Create a new file
 	echo '	<div class="row" style="float: left;"><input type="button" class="button" name="new_file" value="' . _AT('file_manager_new') . '" onclick="window.location.href=\''.TR_BASE_HREF.'file_manager/new.php?pathext=' . urlencode($pathext) . SEP . 'framed=' . $framed . SEP . 'popup=' . $popup . SEP.'_course_id='.$_course_id. '\'"/></div>'."\n";
 
-	$course_row = $coursesDAO->get($_course_id);
-	if ($course_row['max_quota'] == '' || is_null($course_row['max_quota']))
-		$my_MaxCourseSize = $MaxCourseSize;
+    $course_row = $coursesDAO->get($_course_id);
+    if ($course_row['max_quota'] == '' || is_null($course_row['max_quota']))
+    	$my_MaxCourseSize = $MaxCourseSize;
 
 	// upload file 
 	if ($course_row['max_quota'] == TR_COURSESIZE_UNLIMITED || $my_MaxCourseSize-$course_total > 0) {
 		echo '	<div class="row" style="float: left;">'._AT('OR').'</div>'."\n".'	<div class="row" style="float: left;">'."\n";
 		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		?>
-			<div id="fluid-container" <?php echo (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes") ? '' : 'style="display:none;"'; ?>>
-				<input type="button" id="uploader_link" class="button" name="upload_file" value="<?php echo _AT('upload_files'); ?>" onclick="toggleform('uploader', 'uploader_link');" />
-				<div id="uploader" style="display: none;">
-					<form id="flc-uploader" class="flc-uploader fl-uploader fl-progEnhance-enhanced" method="get" enctype="multipart/form-data" action="" style="margin: 0px; padding: 0px;">
-						<div class="start">
-							<div class="fl-uploader-queue-wrapper">
-								<div class="fl-uploader-queue-header">
-									<table cellspacing="0" cellpadding="0">
-											<tr>
-												<th scope="col" class="fileName"><?php echo _AT('file_name'); ?></th>
-												<th scope="col" class="fileSize"><?php echo _AT('size'); ?>&nbsp;&nbsp;</th>
-												<th scope="col" class="fileRemove">&nbsp;</th>
-											</tr>
-									</table>
-								</div>
+		<div id="uploader-error-container"></div>
+			<div id="fluid-container">
+				<div id="uploader">
+				<!-- Basic upload controls, used when JavaScript is unavailable -->
+        <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
+            <p>Use the Browse button to add a file, and the Save button to upload it.</p>
+            <input name="fileData" type="file" />
+            <input type="hidden" name="_course_id" value ="<?php echo $_course_id; ?>" />
+            <input class="fl-uploader-basic-save" type="submit" value="Save"/>
+        </form>
+        
+        <!-- Uploader container -->
+        <form class="flc-uploader fl-uploader fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
+            
+            <!-- File Queue, which is split up into two separate tables: one for the header and body -->
+            <table class="fl-uploader-header">
+           		<tr>
+					<th class="fl-uploader-file-name">File Name</th>
+					<th class="fl-uploader-file-size">Size</th>
+					<th class="fl-uploader-file-actions"></th>
+				</tr>u
+            </table>
+            
+            <!-- File Queue body, which is the default container for the FileQueueView component -->
+            <table summary="The list of files" class="flc-uploader-queue fl-uploader-queue">
+				<caption>File Upload Queue:</caption>
+				<tbody>
+					<!-- Template for file row -->
+					<tr class="flc-uploader-file-tmplt flc-uploader-file">
+						<td class="flc-uploader-file-name fl-uploader-file-name">File Name Placeholder</td>
+						<td class="flc-uploader-file-size fl-uploader-file-size">0 KB</td>
+						<td class="fl-uploader-file-actions">
+							<button type="button" class="flc-uploader-file-action" tabindex="-1"></button>
+						</td>
+					</tr>
+					
+					<!-- Template for error info row -->
+					<tr class="flc-uploader-file-error-tmplt fl-uploader-file-error">
+						<td colspan="3" class="flc-uploader-file-error"></td>
+					</tr>
+				</tbody>
+			</table>
+            
+            <!-- File progress bar template, used to generate progress bars for each file in the queue -->
+            <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"></div>            
 
-			               <div class="flc-scroller fl-scroller">
-			                        <div class="fl-scroller-inner">
-			                            <table cellspacing="0" class="flc-uploader-queue fl-uploader-queue" summary="Queue of files to upload.">
-			                                <tbody>
-			                                    <!-- Rows will be rendered in here. -->
-			                                    
-			                                    <!-- Template markup for the file queue rows -->
-			                                    <tr class="flc-uploader-file-tmplt flc-uploader-file fl-uploader-hidden-templates">
-			                                        <th class="flc-uploader-file-name fl-uploader-file-name" scope="row"><?php echo _AT('file_placeholder'); ?></th>
-			                                        <td class="flc-uploader-file-size fl-uploader-file-size">0 <?php echo _AT('kb'); ?></td>
-			                                        <td class="fl-uploader-file-actions">
-			                                            <button type="button" class="flc-uploader-file-action fl-uploader-file-action" title="<?php echo _AT('remove_queued_file'); ?>" tabindex="-1">
-			                                                <span class="fl-uploader-button-text fl-uploader-hidden"><?php echo _AT('remove_queued_file'); ?></span>
-			                                            </button>
-			                                        </td>
-			                                    </tr>
-			                                    
-			                                    <!-- Template for the file error info rows -->
-			                                    <tr class="flc-uploader-file-error-tmplt fl-uploader-file-error fl-uploader-hidden-templates">
-			                                        <td colspan="3" class="flc-uploader-file-error"></td>
-			                                    </tr>
-			                                </tbody>
-			                            </table>
-			                            <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"><span class="fl-uploader-file-progress-text fl-uploader-hidden">76%</span></div>
-			                        </div>
-			                    </div>
+            <!-- Initial instructions -->
+            <div class="flc-uploader-browse-instructions fl-uploader-browse-instructions">
+                Choose <em>Browse files</em> to add files to the queue. 
+            </div>            
 
-								<div class="flc-uploader-browse-instructions fl-uploader-browse-instructions"> <?php echo _AT('click_browse_files'); ?> </div>
-
-								<div class="flc-uploader-queue-footer fl-uploader-queue-footer">
-									<table cellspacing="0" cellpadding="0">
-											<tr>
-												<td class="flc-uploader-total-progress-text"><?php echo _AT('total'); ?>: <span class="fluid-uploader-totalFiles">0</span> <?php echo _AT('files'); ?> (<span class="fluid-uploader-totalBytes">0 <?php echo _AT('kb'); ?></span>)</td>
-												<td class="fl-uploader-footer-buttons" align="right" ><a class="flc-uploader-button-browse fl-uploader-browse" tabindex="0" ><?php echo _AT('browse_files'); ?></a></td>
-											</tr>
-									</table>
-									<div class="flc-uploader-total-progress fl-uploader-total-progress-okay">&nbsp;</div>
-								</div>
-							</div>
-							
-							<div class="fl-uploader-btns">
-								<button type="button" class="flc-uploader-button-pause fl-uploader-pause fl-uploader-hidden" onclick="toggleform('uploader', 'uploader_link');"><?php echo _AT('cancel'); ?></button>
-								<button type="button" class="flc-uploader-button-upload fl-uploader-upload fl-uploader-button-default fl-uploader-dim" ><?php echo _AT('upload'); ?></button>
-							</div>
-							
-						</div>
-					</form>
-
+            <!-- Status footer -->
+            <div class="flc-uploader-queue-footer fl-uploader-queue-footer fl-fix">
+                <div class="flc-uploader-total-progress-text fl-uploader-total-progress-text fl-force-left">
+                    Total: 0 files (0 KB)
+                </div>
+                <div class="fl-text-align-right fl-force-right">
+                    <span class="flc-uploader-button-browse fl-uploader-browse">
+                        <span class="flc-uploader-button-browse-text">Browse files</span>
+                    </span>
+                </div>
+                <!-- Total progress bar -->
+                <div class="flc-uploader-total-progress fl-uploader-total-progress-okay"></div>
+                <div class="flc-uploader-errorsPanel fl-uploader-errorsPanel">
+                     <div class="fl-uploader-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
+    
+                     <!-- The markup for each error section will be rendered into these containers. -->
+                     <div class="flc-uploader-errorPanel-section-fileSize"></div>
+                     <div class="flc-uploader-errorPanel-section-numFiles"></div>
+                     
+                     <!-- Error section template.-->
+                     <div class="flc-uploader-errorPanel-section-tmplt fl-uploader-hidden-templates">
+                         <div class="flc-uploader-errorPanel-section-title fl-uploader-errorPanel-section-title">
+                             x files were too y and were not added to the queue.
+                         </div>
+                         
+                         <div class="flc-uploader-errorPanel-section-details fl-uploader-errorPanel-section-details">
+                             <p>The following files were not added:</p>
+                             <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
+                         </div>
+                         
+                         <button type="button" class="flc-uploader-errorPanel-section-toggleDetails fl-uploader-errorPanel-section-toggleDetails">Hide this list</button>
+                         <button type="button" class="flc-uploader-errorPanel-section-removeButton fl-uploader-errorPanel-section-removeButton">
+                             <span class="flc-uploader-erroredButton-text fl-uploader-hidden">Remove error</span>
+                         </button>
+                     </div>
+                 </div>                
+            </div>
+            
+            <!-- Upload buttons -->
+            <div class="fl-uploader-buttons">
+                <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop Upload</button>
+                <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Upload</button>
+            </div>
+            
+            <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
+        </form>        
+            
+        <script type="text/javascript">
+            var myUploader = fluid.uploader(".flc-uploader", {
+                queueSettings: {
+                    uploadURL: '<?php echo TR_BASE_HREF; ?>file_manager/upload.php',
+                    fileUploadLimit: 5,
+                    fileQueueLimit: 2,
+                    postParams: {pathext: '<?php echo $pathext; ?>', type: 'ajax', submit: 'submit', _course_id: '<?php echo $_course_id; ?>'},
+                    fileSizeLimit: <?php echo $my_MaxCourseSize/1024; ?>
+                },
+                events: {
+                    onSuccess: {
+                        event: "onFileSuccess",
+                        args: [
+                            {
+                                fileName: "{arguments}.0.name",
+                                responseText: "{arguments}.1"
+                            }
+                        ]
+                    },
+                    onError: {
+                        event: "onFileError",
+                        args: [
+                            {
+                                fileName: "{arguments}.0.name",
+                                statusCode: "{arguments}.2",
+                                responseText: "{arguments}.3.responseText"
+                            }
+                        ]
+                    }
+                },
+                listeners: {
+            		onSuccess: function (response){
+		                // example assumes that the server code passes the new image URL in the serverData
+        		        console.log("Success triggered", response);
+        		        jQuery('#uploader-error-container').html(response.responseText);
+                	}, 
+                	onError: function(response) {
+                        console.log("Error triggered", response);
+                        jQuery('#uploader-error-container').html(response.responseText);
+                    },
+                    onUploadStart: function() {
+                        jQuery('#uploader-error-container').html("");
+                    },
+                    afterUploadComplete: function () {
+                        window.location = "<?php echo TR_BASE_HREF; ?>file_manager/index.php?pathext=<?php echo $pathext . SEP . '_course_id=' . $_course_id; ?>";
+                    }
+    		    },
+    		    components: {
+                    strategy: {
+                        options: {
+                            flashMovieSettings: {
+                                flashURL: "<?php echo TR_BASE_HREF; ?>include/jscripts/infusion/lib/swfupload/flash/swfupload.swf",
+                                flashButtonImageURL: "<?php echo TR_BASE_HREF; ?>include/jscripts/infusion/components/uploader/images/browse.png"
+                            }
+                        }
+                    }
+                }
+            });
+            
+            //bind fluid checkbox
+            jQuery('#fluid_on').bind("click", function() {
+                toggleform('simple-container', 'fluid-container'); 
+                setCheckboxCookie(this, 'fluid_on=yes', 'fluid_on=no','December 31, 2099');
+                console.log('hey');
+            });
+            
+            //hide multifile uploader if it's not checked 
+            if (!jQuery('#fluid_on').attr('checked')) {
+                jQuery('#fluid-container').hide();
+            }
+        </script>
 				</div>
 			</div>
 		<?php
-			if (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes")
+		if (isset($_COOKIE["fluid_on"]) && $_COOKIE["fluid_on"]=="yes")
 				echo '<div id="simple-container" style="display: none;">';
 			else
 				echo '<div id="simple-container">';
@@ -265,11 +366,13 @@ if (TRUE || $framed != TRUE) {
 		}
 
 		// Simple single file uploader
-		echo '<form onsubmit="openWindow(\''.TR_BASE_HREF.'home/prog.php\');" class="fl-ProgEnhance-basic" name="form1" method="post" action="file_manager/upload.php?popup='.$popup.SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id.'" enctype="multipart/form-data">';
+		echo '<form onsubmit="openWindow(\''.TR_BASE_HREF.'home/prog.php\');" name="form1" method="post" action="file_manager/upload.php?popup='.$popup.SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.'" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="MAX_FILE_SIZE" value="'.$my_MaxFileSize.'" />';
-		echo '<label for="uploadedfile">'._AT('upload_files').'</label>'."\n";
+		
+		echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
 		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
 		echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+		echo '<input type="hidden" name="_course_id" value ="'.$_course_id.'" />';
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
 
 		if ($popup == TRUE) {
@@ -277,14 +380,13 @@ if (TRUE || $framed != TRUE) {
 		}
 		echo '</form>';
 		echo '</div>';
-
 		echo '		</div>'."\n".'	</fieldset></div>';
-
 	} else {
 		echo '	</fieldset></div>'."\n";
 		$msg->printInfos('OVER_QUOTA');
 	}
 }
+
 
 // Directory and File listing 
 echo '<form name="checkform" action="'.$_SERVER['PHP_SELF'].'?'.(($pathext!='') ? 'pathext='.urlencode($pathext).SEP : '').'popup='.$popup .SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'_cid='.$cid.SEP.'a_type='.$a_type.'" method="post">';
@@ -572,6 +674,19 @@ function setURLAlternative() {
 }
 
 <?php  if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") { ?>
+// set a cookie
+function setCheckboxCookie(obj, value1, value2, date)
+{
+	var today = new Date();
+	var the_date = new Date(date);
+	var the_cookie_date = the_date.toGMTString();
+	if (obj.checked==true)
+		var the_cookie = value1 + ";expires=" + the_cookie_date;
+	else
+		var the_cookie = value2 + ";expires=" + the_cookie_date;
+	document.cookie = the_cookie;
+}
+
 // toggle the view between div object and button
 function toggleform(id, link) {
 	var obj = document.getElementById(id);
@@ -590,19 +705,6 @@ function toggleform(id, link) {
 		obj.style.display='none';
 		btn.style.display = '';
 	}
-}
-
-// set a cookie
-function setCheckboxCookie(obj, value1, value2, date)
-{
-	var today = new Date();
-	var the_date = new Date(date);
-	var the_cookie_date = the_date.toGMTString();
-	if (obj.checked==true)
-		var the_cookie = value1 + ";expires=" + the_cookie_date;
-	else
-		var the_cookie = value2 + ";expires=" + the_cookie_date;
-	document.cookie = the_cookie;
 }
 <?php } ?>
 
