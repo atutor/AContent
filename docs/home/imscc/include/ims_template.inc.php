@@ -375,10 +375,24 @@ function print_organizations($parent_id,
 						if (preg_match('/^http[s]?\:/', $file) == 1){
 							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
 						} elseif (file_exists($file_path) && is_file($file_path)) {
-							//http://www.atutor.ca/atutor/mantis/view.php?id=4313
 							//relative link that goes beyond get.php shouldn't be added
 							//relative link that does not exist shouldn't be added.
-							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+							$filepath_array = explode('/', $content['content_path'] . $file);
+						    $new_filepath_array = array();
+						    if (in_array('..', $filepath_array)){
+							    while (!empty($filepath_array)){
+								    $temp = array_shift($filepath_array);
+								    if ($temp == '..'){
+									    array_pop($new_filepath_array);
+								    } else {
+									    array_push($new_filepath_array, $temp);
+								    }
+							    }
+							    $file = implode('/', $new_filepath_array);
+						    } else {
+						        $file = $content['content_path'] . $file;
+                            }
+							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);							
 						}
 					}
 				}
