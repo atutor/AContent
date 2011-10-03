@@ -646,8 +646,10 @@ function removeCommonPath($items){
 		}
 		
 		// get language from COMMON CARTRIDGE
+		
 		if (substr($element_path[count($element_path)-1], -9) == ':language') {
 			$course_primary_lang = trim($my_data);
+			
 		}
 		// end of added by Cindy Li on Jan 10, 2010
 		
@@ -1015,13 +1017,14 @@ if (!isset($_POST['_course_id']))
 	else
 		$access = 'public';
 	
-	if (isset($course_primary_lang))
+	if (isset($course_primary_lang) && $course_primary_lang != '')
 	{
 		$langcode_and_charset = explode('-', $course_primary_lang);
 //		$course_primary_lang = Utility::get3LetterLangCode($langcode_and_charset[0]);
 		$course_primary_lang = $langcode_and_charset[0];
+	}else{
+		$course_primary_lang = DEFAULT_LANGUAGE_CODE;
 	}
-	
 	$_course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $course_title, $course_description, 
 	             '', '', '', '', $course_primary_lang, '', '');
 	
