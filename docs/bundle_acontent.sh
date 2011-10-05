@@ -5,6 +5,7 @@
 # Author: Greg Gay - IDI, July 2010                              #
 #########################################################################
 
+
 set now = `date +"%Y_%m_%d"`
 set acontent_dir = "AContent_$now"
 set bundle = "AContent"
