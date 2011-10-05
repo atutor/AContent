@@ -538,9 +538,11 @@ function removeCommonPath($items){
 				//find the intersection of each item's related files, then that intersection is the content_path
 				if (isset($items[$current_identifier]['file'])){
 					foreach ($items[$current_identifier]['file'] as $resource_path){
-						$temp_path = pathinfo($resource_path);
-						$temp_path = explode('/', $temp_path['dirname']);
-						$package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
+					    if (!strpos($resource_path, 'Share')) {
+						    $temp_path = pathinfo($resource_path);
+						    $temp_path = explode('/', $temp_path['dirname']);
+						    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
+					    }
 					}
 				}
 			}
