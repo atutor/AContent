@@ -70,6 +70,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php'); /* for clr_dir() and preImportCallBack and dirsize() */
+require_once(TR_INCLUDE_PATH.'classes/HTTPRequest.class.php'); /* for importing from remote servers that use Cookies and/or redirection */
 
 require_once(TR_INCLUDE_PATH.'lib/pclzip.lib.php');
 require_once(TR_INCLUDE_PATH.'lib/pclzip_callback.lib.php');
@@ -808,7 +809,8 @@ if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
 }
 
 if (isset($_REQUEST['url']) && ($_REQUEST['url'] != 'http://') ) {
-	if ($content = @file_get_contents($_REQUEST['url'])) {
+	$http_req = new HTTPRequest($_REQUEST['url'], array());
+	if ($content = $http_req->DownloadToString()) {
 		$filename = substr(time(), -6). '.zip';
 		$full_filename = TR_CONTENT_DIR . $filename;
 
