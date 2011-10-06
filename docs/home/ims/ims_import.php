@@ -541,7 +541,7 @@ function removeCommonPath($items){
 					    if (!strpos($resource_path, 'Share')) {
 						    $temp_path = pathinfo($resource_path);
 						    $temp_path = explode('/', $temp_path['dirname']);
-						    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
+						    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);
 					    }
 					}
 				}
