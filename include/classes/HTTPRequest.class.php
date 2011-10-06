@@ -15,6 +15,8 @@ class HTTPRequest
     var $_uri;        // request URI
     var $_port;        // port
     var $_cookies = array();    // array of cookies
+    var $_errstr;
+    var $_errno;
 
     // scan url
     function _scan_url()
@@ -73,47 +75,59 @@ class HTTPRequest
         $req .=  $crlf;
 
         // fetch
-        $this->_fp = fsockopen(($this->_protocol == 'https' ? 'ssl://' : '') . $this->_host, $this->_port);
-        fwrite($this->_fp, $req);
-        $response = '';
-        while(is_resource($this->_fp) && $this->_fp && !feof($this->_fp))
-            $response .= fread($this->_fp, 1024);
-        fclose($this->_fp);
+        try {
+            $this->_fp = fsockopen(($this->_protocol == 'https' ? 'ssl://' : '') . $this->_host,
+                                   $this->_port, $this->_errorno, $this->_errstr);
+            if($this->_fp) {
+                fwrite($this->_fp, $req);
+                $response = '';
+                while(is_resource($this->_fp) && $this->_fp && !feof($this->_fp))
+                    $response .= fread($this->_fp, 1024);
+                fclose($this->_fp);
 
-        // split header and body
-        $pos = strpos($response, $crlf . $crlf);
-        if($pos === false)
-            return($response);
-        $header = substr($response, 0, $pos);
-        $body = substr($response, $pos + 2 * strlen($crlf));
+                // split header and body
+                $pos = strpos($response, $crlf . $crlf);
+                if($pos === false)
+                    return($response);
+                $header = substr($response, 0, $pos);
+                $body = substr($response, $pos + 2 * strlen($crlf));
 
-        // parse headers
-        $headers = array();
-        $lines = explode($crlf, $header);
-        foreach($lines as $line) {
-            if(($pos = strpos($line, ':')) !== false) {
-                $key = strtolower(trim(substr($line, 0, $pos)));
-                $value = trim(substr($line, $pos+1));
-                $headers[$key] = $value;
-                if(strcmp($key, "set-cookie") == 0) {
-                    if(($pos = strpos($value, '=')) !== false) {
-                        $key = trim(substr($value, 0, $pos));
-                        $value = trim(substr($value, $pos+1));
-                        $this->_cookies[$key] = $value;
+                // parse headers
+                $headers = array();
+                $lines = explode($crlf, $header);
+                foreach($lines as $line) {
+                    if(($pos = strpos($line, ':')) !== false) {
+                        $key = strtolower(trim(substr($line, 0, $pos)));
+                        $value = trim(substr($line, $pos+1));
+                        $headers[$key] = $value;
+                        if(strcmp($key, "set-cookie") == 0) {
+                            if(($pos = strpos($value, '=')) !== false) {
+                                $key = trim(substr($value, 0, $pos));
+                                $value = trim(substr($value, $pos+1));
+                                $this->_cookies[$key] = $value;
+                            }
+                        }
                     }
                 }
-            }
-        }
 
-        // redirection?
-        if(isset($headers['location']))
-        {
-            $http = new HTTPRequest($headers['location'], $this->_cookies);
-            return($http->DownloadToString());
-        }
-        else
-        {
-            return($body);
+                // redirection?
+                if(isset($headers['location']))
+                {
+                    $http = new HTTPRequest($headers['location'], $this->_cookies);
+                    return($http->DownloadToString());
+                }
+                else
+                {
+                    return($body);
+                }
+            }
+            else {
+                return(FALSE);
+            }
+        } catch (Exception $exception) {
+            $this->_errstr = $exception->getMessage();
+            $this->_errno  =  $exception->getCode();
+            return(FALSE);
         }
     }
 }
