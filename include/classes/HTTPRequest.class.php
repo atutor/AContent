@@ -15,8 +15,8 @@ class HTTPRequest
     var $_uri;        // request URI
     var $_port;        // port
     var $_cookies = array();    // array of cookies
-    var $_errstr;
-    var $_errno;
+    var $_errstr = '';
+    var $_errno = 0;
 
     // scan url
     function _scan_url()
@@ -126,7 +126,7 @@ class HTTPRequest
             }
         } catch (Exception $exception) {
             $this->_errstr = $exception->getMessage();
-            $this->_errno  =  $exception->getCode();
+            $this->_errno  = $exception->getCode();
             return(FALSE);
         }
     }

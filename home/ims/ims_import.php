@@ -810,7 +810,8 @@ if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
 
 if (isset($_REQUEST['url']) && ($_REQUEST['url'] != 'http://') ) {
 	$http_req = new HTTPRequest($_REQUEST['url'], array());
-	if ($content = $http_req->DownloadToString()) {
+	$content = $http_req->DownloadToString();
+	if (!$http_req->_errno && $content) {
 		$filename = substr(time(), -6). '.zip';
 		$full_filename = TR_CONTENT_DIR . $filename;
 
