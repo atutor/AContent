@@ -1,0 +1,101 @@
+/* IE Styles */
+
+
+.center-content {
+  	margin:-1px 0 -21px 0;
+
+}
+
+.topnavlistcontainer{
+	height:1.8em;
+}
+
+.search_top{
+	white-space:nowrap;
+	font-size:.8em;
+	width:40em;
+	float:right;
+	margin-right:8.5em;
+}
+
+div#subnavlistcontainer{
+	margin-left:2em;
+margin-top:1em;
+}
+
+ul#subnavlist li{
+
+  	zoom:100%;
+	display:inline;
+margin-left:.5em;
+
+}
+
+#guide_box{
+	width:15%;
+	background-color:#ffffff;
+}
+.results{
+	margin-left:5em;
+}
+
+.navigation a
+{
+  	zoom:100%;
+  	padding-top:.4em;
+  	padding-bottom:.6em;
+  	
+} 
+div#sub-menu {
+	margin-top:-.2em;
+	height:2.3em;
+}
+ul.navigation li
+{
+	zoom:100%;
+  	display: inline;
+  	padding-top:.0em;
+margin-left:.5em;
+
+}
+ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
+  	padding-top:.4em;
+  	padding-bottom:.6em;
+
+               
+}
+.course{
+	margin-left:6em;
+}
+
+dl.form_layout dt{
+	text-align:center; 
+	float:left;
+}
+
+dl.form_layout dd{
+	margin-left: 12em;
+
+}
+
+div#shortcuts{
+	width: 7em;
+	float:right;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-bottom:1px solid #cccccc;
+
+}
+#shortcuts ul {
+	list-style-type:  none;
+
+}
+#shortcuts li{
+	display: inline;
+}
+a#back-to {
+padding-top:-2px;
+  	padding-left: 10px;
+	padding-right:10px;
+	padding-bottom:12px;
+}
