@@ -12,19 +12,80 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
+if(isset($_POST['submit'])) {
+	unset($_POST['submit']);
+	unset($action);
+	store_steps($step);
+	$step++;
+	return;
+}
+
+$file = '../include/config.inc.php';
+
+unset($errors);
+unset($progress);
+
+if ( file_exists($file) ) {
+	@chmod($file, 0666);
+	if (!is_writeable($file)) {
+		$errors[] = '<strong>' . $file . '</strong> is not writeable. Use <kbd>chmod a+rw '.$file.'</kbd> to change permissions.';
+	}else{
+		$progress[] = '<strong>' . $file . '</strong> is writeable.';
+	}
+} else {
+	$errors[] = '<strong>' . $file . '</strong> does not exist.';
+}
+
 print_progress($step);
 
+echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
+
+if (isset($errors)) {
+	if (isset($progress)) {
+		print_feedback($progress);
+	}
+	print_errors($errors);
+
+	echo'<input type="hidden" name="step" value="'.$step.'" />';
+
+	unset($_POST['step']);
+	unset($_POST['action']);
+	unset($errors);
+	print_hidden($step);
+
+	echo '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>';
+
+	echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
+
+} else {
+
+	if (!copy('../../'.$_POST['step1']['old_path'] . '/include/config.inc.php', '../include/config.inc.php')) {
+		echo '<input type="hidden" name="step" value="'.$step.'" />';
+
+		print_feedback($progress);
+
+		$errors[] = 'include/config.inc.php cannot be written! Please verify that the file exists and is writeable. On Unix issue the command <kbd>chmod a+rw include/config.inc.php</kbd> to make the file writeable. On Windows edit the file\'s properties ensuring that the <kbd>Read-only</kbd> attribute is <em>not</em> checked and that <kbd>Everyone</kbd> access permissions are given to that file.';
+		print_errors($errors);
+
+		echo '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>';
+
+		echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
+
+	} else {
+		echo '<input type="hidden" name="step" value="'.$step.'" />';
+		print_hidden($step);
+
+		$progress[] =  'Data has been saved successfully.';
+
+		@chmod('../include/config.inc.php', 0444);
+
+		print_feedback($progress);
+
+		echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p>';
+		
+	}
+}
+
 ?>
-<p><strong>Congratulations on your upgrade of AContent <?php echo $new_version; ?><i>!</i></strong></p>
 
-<p>It is important that you login as the AContent administrator to review and set any new System Configuration options.</p>
-<p>For security reasons,  after you have confirmed the installation was successful, it is also important that you delete the <kbd>install/</kbd> directory and reset the<kbd> /include/config.inc.php</kbd> file to read-only. On Linux/Unix systems, use <kbd>chmod a-w include/config.inc.php</kbd>.</p>
-<p>See the <a href="http://www.atutor.ca/forum/18/1.html">Support Forums</a> on <a href="http://www.atutor.ca/acontent/">atutor.ca</a> for additional help &amp; support.</p>
-
-<br />
-
-<form method="get" action="../index.php">
-	<div align="center">
-		<input type="submit" name="submit" value="&raquo; Go To AContent!" class="button" />
-	</div>
 </form>

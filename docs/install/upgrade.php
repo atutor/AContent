@@ -32,7 +32,6 @@ if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 }
 session_start();
 require('include/upgrade_header.php');
-
 if ($step == 1) {
 	if (!$new_version) {
 		echo 'You cannot access this page directly. <a href="index.php">Upgrade from here</a> using the <em>Upgrade</em> button.';
@@ -59,16 +58,21 @@ if ($step == 4) {
 	require('include/step4.php');
 }
 if ($step == 5) {
-	// in:  copy the config file
+	// in:  copy the content if needed
 	// out: -
 	require('include/ustep4.php');
 }
+if ($step == 6) {
+	// in:  copy the config file
+	// out: -
+	require('include/ustep5.php');
+}
 /* anonymous data collection */
-if ($step == 6) {	
+if ($step == 7) {	
 	require('include/step6.php');
 }
-if ($step == 7) {
-	require('include/ustep5.php');
+if ($step == 8) {
+	require('include/ustep6.php');
 }
 require('include/footer.inc.php');
 ?>

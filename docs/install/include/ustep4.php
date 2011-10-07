@@ -1,91 +1,80 @@
 <?php
 /************************************************************************/
-/* AContent                                                             */
+/* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
-/* Inclusive Design Institute                                           */
-/*                                                                      */
+/* Copyright (c) 2002-2010                                              */
+/* http://atutor.ca                                                     */
 /* This program is free software. You can redistribute it and/or        */
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
+// $Id: ustep4.php 10055 2010-06-29 20:30:24Z cindy $
+
+ignore_user_abort(true); 
+@set_time_limit(0); 
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
-if(isset($_POST['submit'])) {
-	unset($_POST['submit']);
-	unset($action);
-	store_steps($step);
-	$step++;
-	return;
-}
-
-$file = '../include/config.inc.php';
-
-unset($errors);
-unset($progress);
-
-if ( file_exists($file) ) {
-	@chmod($file, 0666);
-	if (!is_writeable($file)) {
-		$errors[] = '<strong>' . $file . '</strong> is not writeable. Use <kbd>chmod a+rw '.$file.'</kbd> to change permissions.';
-	}else{
-		$progress[] = '<strong>' . $file . '</strong> is writeable.';
+if (isset($_POST['submit'])) {
+	if (!isset($errors)) {
+		unset($_POST['submit']);
+		unset($action);
+		store_steps($step);
+		$step++;
+		return;
 	}
-} else {
-	$errors[] = '<strong>' . $file . '</strong> does not exist.';
 }
 
 print_progress($step);
 
-echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
+/* try copying the content over from the old dir to the new one */
+require('../include/classes/FileUtility.class.php'); // for copys()
 
-if (isset($errors)) {
-	if (isset($progress)) {
-		print_feedback($progress);
+$content_dir = urldecode(trim($_POST['step4']['content_dir']));
+$_POST['step4']['copy_from'] = urldecode(trim($_POST['step4']['copy_from'])) . DIRECTORY_SEPARATOR;
+
+//copy if copy_from is not empty
+if ($_POST['step4']['copy_from'] && ($_POST['step4']['copy_from'] != DIRECTORY_SEPARATOR)) {
+	if (is_dir($_POST['step4']['copy_from'])) {
+		$files = scandir($_POST['step4']['copy_from']);
+
+		foreach ($files as $file) {
+			if ($file == '.' || $file == '..') { continue; }
+			if (is_dir($_POST['step4']['copy_from'] . $file)) {
+				FileUtility::copys($_POST['step4']['copy_from'] . $file, $content_dir . $file);
+				if (is_dir($content_dir.$course)) {			
+					$progress[] = 'Course content directory <b>'.$file.'</b> copied successfully.';
+				} else {
+					$errors[] = 'Course content directory <b>'.$file.'</b> <strong>NOT</strong> copied.';
+				}
+			} else {
+				// a regular file
+				copy($_POST['step4']['copy_from'] . $file, $content_dir  .$file);
+			}
+		}
 	}
-	print_errors($errors);
-
-	echo'<input type="hidden" name="step" value="'.$step.'" />';
-
-	unset($_POST['step']);
-	unset($_POST['action']);
-	unset($errors);
-	print_hidden($step);
-
-	echo '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>';
-
-	echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
-
 } else {
+	$progress[] = 'Using existing content directory <strong>'.$content_dir.'</strong>.';
+}
 
-	if (!copy('../../'.$_POST['step1']['old_path'] . '/include/config.inc.php', '../include/config.inc.php')) {
-		echo '<input type="hidden" name="step" value="'.$step.'" />';
+if (isset($progress)) {
+	print_feedback($progress);
+}
+if (isset($errors)) {
+	print_errors($errors);
+}
 
-		print_feedback($progress);
-
-		$errors[] = 'include/config.inc.php cannot be written! Please verify that the file exists and is writeable. On Unix issue the command <kbd>chmod a+rw include/config.inc.php</kbd> to make the file writeable. On Windows edit the file\'s properties ensuring that the <kbd>Read-only</kbd> attribute is <em>not</em> checked and that <kbd>Everyone</kbd> access permissions are given to that file.';
-		print_errors($errors);
-
-		echo '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>';
-
-		echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
-
-	} else {
-		echo '<input type="hidden" name="step" value="'.$step.'" />';
-		print_hidden($step);
-
-		$progress[] =  'Data has been saved successfully.';
-
-		@chmod('../include/config.inc.php', 0444);
-
-		print_feedback($progress);
-
-		echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p>';
-		
-	}
+if ($_POST['step1']['cache_dir'] != '') {
+	define('CACHE_DIR', urldecode($_POST['step1']['cache_dir']));
+	define('CACHE_ON', 1);
+	require('../include/phpCache/phpCache.inc.php');
+	cache_gc(NULL, 1, true);
 }
 
 ?>
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<input type="hidden" name="step" value="<?php echo $step;?>" />
+<?php print_hidden($step); ?>
 
+<br /><br /><p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p>
 </form>

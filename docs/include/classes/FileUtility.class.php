@@ -43,9 +43,9 @@ class FileUtility {
 			if (($entry == '.') || ($entry == '..')) {
 				continue;
 			}
-	
+			
 			if (is_dir("$source/$entry") && $dest!=="$source/$entry") {
-				copys("$source/$entry", "$dest/$entry");
+				FileUtility::copys("$source/$entry", "$dest/$entry");
 			} else {
 				@copy("$source/$entry", "$dest/$entry");
 			}
