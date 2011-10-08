@@ -827,7 +827,7 @@ if (isset($_REQUEST['url']) && ($_REQUEST['url'] != 'http://') ) {
 		fclose($fp);
 	}
 	else {
-		$msg->addError(array('IMPORT_FAILED', $http_req->_errno . ": " . $http_req->_errstr));
+		$msg->addError(array('INVALID_INPUT', '"'.$_REQUEST['url'] . '" HTTPRequest error ' . $http_req->_errstr));
 	}
 	$_FILES['file']['name']     = $filename;
 	$_FILES['file']['tmp_name'] = $full_filename;
