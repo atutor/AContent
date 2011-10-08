@@ -825,7 +825,10 @@ if (isset($_REQUEST['url']) && ($_REQUEST['url'] != 'http://') ) {
 			exit;
 		}
 		fclose($fp);
-	}	
+	}
+	else {
+		$msg->addError(array('IMPORT_FAILED', $http_req->_errno . ": " . $http_req->_errstr));
+	}
 	$_FILES['file']['name']     = $filename;
 	$_FILES['file']['tmp_name'] = $full_filename;
 	$_FILES['file']['size']     = strlen($content);
