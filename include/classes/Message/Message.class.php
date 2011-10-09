@@ -97,16 +97,30 @@ class Message {
 			
 				/* this is an array with terms to replace */
 				$first = array_shift($item);
-				$result = _AT($first); // lets translate the code
-				
-				if ($result == '') { // if the code is not in the db lets just print out the code for easier trackdown
-					$result = '[' . $first . ']';
+				$format_specifier = _AT($first); // lets translate the code
+
+				if ($format_specifier == '') { // if the code is not in the db lets just print out the code for easier trackdown
+					$format_specifier = '[' . $first . ']';
 				}
-										
-				$terms = $item;
-			
-				/* replace the tokens with the terms */
-				$result = vsprintf($result, $terms);
+
+				/* replace the format-specifier tokens in DB language_text.text field with the terms */
+				$result = vsprintf($format_specifier, $item);
+				/* Improve code quality. Detect specifiers that are not used.
+				   This will highlight language_text.term entries that are missing format-specifiers */
+				$match_fs = array();
+				$count_fs = preg_match_all('/[^\d]%[^%]|\s]/', $format_specifier, $match_fs);
+				$count_item = count($item);
+				if (strcmp($result, $format_specifier) == 0 || $count_item != $count_fs) {
+					// $item array has elements that appear to have been ignored so give a warning
+					trigger_error('ERROR: language_text term '.$first.' is missing one or more format specifiers. Expected '
+					 .$count_item.' but got '.$count_fs);
+					// now add the missed elements to the message
+					$idx = 0;
+					foreach($item as $element) {
+					    if ($idx++ >= $count_fs)
+							$result .= ' ' . $element;
+					}
+				}
 				
 			} else {
 				$result = _AT($item);
