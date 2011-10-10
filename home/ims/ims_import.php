@@ -565,7 +565,7 @@ function removeCommonPath($items){
 			if (isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
 				$items[$current_identifier]['a4a_import_enabled'] = true;
 			}
-		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
+		} else if (($name == 'item') && array_key_exists('identifierref', $attrs) && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
 		} else if (($name == 'item') && ($attrs['identifier'])) {
 			$path[] = $attrs['identifier'];
@@ -596,7 +596,7 @@ function removeCommonPath($items){
 			//if there is a dependency, attach it to the item array['file']
 			$items[$current_identifier]['dependency'][] = $attrs['identifierref'];
 		}
-		if (($name == 'item') && ($attrs['parameters'] != '')) {
+		if (($name == 'item') && array_key_exists('parameters', $attrs) && ($attrs['parameters'] != '')) {
 			$items[$attrs['identifierref']]['test_message'] = $attrs['parameters'];
 		}
 		if ($name=='file'){
