@@ -529,6 +529,7 @@ function removeCommonPath($items){
 			}
 
 			//save the actual content base path
+			$sizeofrp = array();
 			if (in_array('..', $temp_path)){
 				$sizeofrp = array_count_values($temp_path);
 			}
@@ -548,7 +549,7 @@ function removeCommonPath($items){
 			}
 
 			//real content path
-			if($sizeofrp['..'] > 0 && !empty($all_package_base_path)){
+			if(array_key_exists('..', $sizeofrp) && $sizeofrp['..'] > 0 && !empty($all_package_base_path)){
 				for ($i=0; $i<$sizeofrp['..']; $i++){
 					array_pop($all_package_base_path);
 				}
