@@ -237,7 +237,7 @@ function checkResources($import_path){
 		}
 
 		//validate the xml by its schema
-		if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
+		if (isset($fileinfo['type']) && preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
 			$qti = new QTIParser($fileinfo['type']);
 			$xml_content = @file_get_contents($import_path . $fileinfo['href']);
 			$qti->parse($xml_content); //will add error to $msg if failed			
