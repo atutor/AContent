@@ -15,7 +15,7 @@ sleep(1);
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 session_write_close();
-if ($_GET['tile']) {
+if (isset($_GET['tile']) && $_GET['tile']) {
 	$lang_variable = 'tile_progress';
 } else {
 	$lang_variable = 'upload_progress';
@@ -51,7 +51,7 @@ if (!$_GET['frame']) {  ?>
 </iframe>
 <?php } else { 
 	$tmp_dir = ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR;
-	if (!$_GET['t']) {
+	if (isset ($_GET['t']) && !$_GET['t']) {
 		$newest_file_name = '';
 		$newest_file_time = 0;
 		// get the name of the temp file.
@@ -74,7 +74,7 @@ if (!$_GET['frame']) {  ?>
 	}
 	// not sure where these are displayed in the progress popup
 	echo '<small>';
-	if ($size == '') {
+	if (isset($size) && $size == '') {
 		echo '<em>'._AT('unknown').' </em>  '._AT('kb');
 	} else {
 		echo number_format($size, 2).' '._AT('kb');
