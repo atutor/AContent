@@ -455,7 +455,7 @@ function removeCommonPath($items){
 		global $course_primary_lang;
 		
 		// get language from CONTENT PACKAGE
-		if (substr($element_path[count($element_path)-1], -6) == ':title' && substr($name, -11) == ':langstring') {
+		if (count($element_path) > 0 && substr($element_path[count($element_path)-1], -6) == ':title' && substr($name, -11) == ':langstring') {
 			$course_primary_lang = trim($attrs['xml:lang']);
 		}
 		
