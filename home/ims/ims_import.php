@@ -502,9 +502,9 @@ function removeCommonPath($items){
 				$attrs['href'] = urldecode($attrs['href']);
 				$items[$current_identifier]['href'] = $attrs['href'];
 			}
+			$temp_path = pathinfo($attrs['href']);
 			if ($temp_path['extension'] == 'html') {
-				//$temp_path = pathinfo($attrs['href']);
-					$temp_path = explode('/', $temp_path['dirname']);
+				$temp_path = explode('/', $temp_path['dirname']);
 				if (empty($package_base_path)){
 			   		$package_base_path = $temp_path;
             	}
