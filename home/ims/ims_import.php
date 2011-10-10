@@ -633,17 +633,19 @@ function removeCommonPath($items){
 
 		// added by Cindy Li on Jan 10, 2010
 		// Extract course title, description and primary language for a newly-created course
-		if (substr($element_path[count($element_path)-2], -6) == ':title') {
-			if (substr($element_path[count($element_path)-1], -7) == ':string' ||
-			    substr($element_path[count($element_path)-1], -11) == ':langstring') {
-				$course_title = trim($my_data);
+		if (count($element_path) >= 2) {
+			if (substr($element_path[count($element_path)-2], -6) == ':title') {
+				if (substr($element_path[count($element_path)-1], -7) == ':string' ||
+					substr($element_path[count($element_path)-1], -11) == ':langstring') {
+					$course_title = trim($my_data);
+				}
 			}
-		}
 		
-		if (substr($element_path[count($element_path)-2], -12) == ':description') {
-			if (substr($element_path[count($element_path)-1], -7) == ':string' ||
-			    substr($element_path[count($element_path)-1], -11) == ':langstring') {
-				$course_description = trim($my_data);
+			if (substr($element_path[count($element_path)-2], -12) == ':description') {
+				if (substr($element_path[count($element_path)-1], -7) == ':string' ||
+					substr($element_path[count($element_path)-1], -11) == ':langstring') {
+					$course_description = trim($my_data);
+				}
 			}
 		}
 		
