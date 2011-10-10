@@ -498,7 +498,7 @@ function removeCommonPath($items){
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
 			// we take the `href` from the first `<file>` element.
-			if (isset($items[$current_identifier]) && ($items[$current_identifier]['href'] == '')) {
+			if (isset($items[$current_identifier]) && isset($items[$current_identifier]['href']) && ($items[$current_identifier]['href'] == '')) {
 				$attrs['href'] = urldecode($attrs['href']);
 				$items[$current_identifier]['href'] = $attrs['href'];
 			}
@@ -573,7 +573,7 @@ function removeCommonPath($items){
 		} else if (($name == 'resource')) {
 			$current_identifier = $attrs['identifier'];
 			$items[$current_identifier]['type'] = $attrs['type'];
-			if ($attrs['href']) {
+			if (isset($attrs['href'])) {
 				$attrs['href'] = urldecode($attrs['href']);
 
 				$items[$attrs['identifier']]['href'] = $attrs['href'];
