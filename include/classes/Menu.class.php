@@ -122,7 +122,7 @@ class Menu {
 				// replace the required constants in link
 				$row['link'] = Utility::replaceConstants($row['link']);
 				list($url, $param) = Utility::separateURLAndParam($row['link']);
-				if (Utility::authenticate($row['user_requirement'], false)) {
+				if (Utility::authenticate(array_key_exists('user_requirement', $row) ? $row['user_requirement'] : NULL, false)) {
 					$this->pages[TR_NAV_TOP][] = array('url' => $_base_path.$row['link'], 
 				                                   'title' => _AT($row['title_var']),
 					                               'param' => $param);
