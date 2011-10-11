@@ -20,6 +20,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 // after adding/removing the course from "My Courses"
 list($caller_url, $url_param) = Utility::getRefererURLAndParams();
 
+$keywords = array();
 if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
 
@@ -43,9 +44,9 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	$end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
 ?>
       <li class="course" style="font-weight:bold">
-        <div><?php echo ((strstr($caller_script, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
+        <div><?php echo ((strpos($caller_url, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. (isset($this->search_text) ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
         <?php  
-        if($_SESSION['user_id']){ ?>
+        if(array_key_exists('user_id', $_SESSION) && $_SESSION['user_id']){ ?>
           <span style="float: right"><img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />&nbsp;&nbsp;&nbsp;<?php echo _AT('authoring_img_info'); ?></span>
           <?php } ?>
         </div>
@@ -66,17 +67,17 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 ?>
       <li class="course">
 
-<?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
+<?php if (isset($user_role) && array_key_exists('role', $user_role) && $user_role['role'] == TR_USERROLE_AUTHOR) {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" />
 <?php } else  {?>
           <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/others_course.png" alt="<?php echo _AT('others_course'); ?>" title="<?php echo _AT('others_course'); ?>" />
 <?php } ?>
           <a href="<?php echo TR_BASE_HREF; ?>home/course/index.php?_course_id=<?php echo $row['course_id']; ?>"><?php echo Utility::highlightKeywords($row['title'], $keywords); ?></a>
-<?php if ($user_role['role'] == TR_USERROLE_VIEWER) {?>
+<?php if (isset($user_role) && array_key_exists('role', $user_role) && $user_role['role'] == TR_USERROLE_VIEWER) {?>
           <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=remove<?php echo SEP; ?>cid=<?php echo $row['course_id']; ?>">
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_remove.png" alt='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' title='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' border="0" />
           </a>
-<?php } if ($user_role['role'] == NULL && $_SESSION['user_id']>0) {?>
+<?php } if (isset($user_role) && array_key_exists('role', $user_role) &&  $user_role['role'] == NULL && array_key_exists('user_id', $_SESSION) && $_SESSION['user_id']>0) {?>
           <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=add<?php echo SEP; ?>cid=<?php echo $row['course_id'];?>">
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_add.png" alt="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" title="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" border="0" />
           </a>
