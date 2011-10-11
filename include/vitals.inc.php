@@ -240,7 +240,7 @@ if ($_course_id > 0)
 		
 		if ($user_courses_row && $user_courses_row['last_cid'] > 0) 
 			$_SESSION['s_cid'] = $user_courses_row['last_cid'];
-		else if ($_content_id > 0)
+		else if (isset($_content_id) && $_content_id > 0)
 			$_SESSION['s_cid'] = $_content_id;
 		else // first time accessing this course, no last cid yet
 			unset($_SESSION['s_cid']);
