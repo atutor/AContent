@@ -739,12 +739,16 @@ function removeCommonPath($items){
 					}
 	
 				} else {
-					$order[$parent_item_id] ++;
+					if (array_key_exists($parent_item_id, $order))
+						$order[$parent_item_id] ++;
+					else
+						$order[$parent_item_id] = 1;
+
 					$item_tmpl = array(	'title'				=> $data,
 										'parent_content_id' => $parent_item_id,
 										'ordering'			=> $order[$parent_item_id]-1);
 					//append other array values if it exists
-					if (is_array($items[$current_item_id])){
+					if (array_key_exists($current_item_id, $items) && is_array($items[$current_item_id])){
 						$items[$current_item_id] = array_merge($items[$current_item_id], $item_tmpl);
 					} else {
 						$items[$current_item_id] = $item_tmpl;
