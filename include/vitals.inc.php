@@ -13,7 +13,7 @@
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 define('TR_DEVEL', 1);
-define('TR_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
+define('TR_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -150,7 +150,8 @@ if ($myLang->isRTL()) {
 	// set default template paths:
 	$savant = new Savant2();
 
-	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && $_SESSION['user_id']>0) 
+	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) 
+	    && isset($_SESSION['user_id']) && $_SESSION['user_id']>0) 
 	{
 		if (!is_dir(TR_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']))
 		{
@@ -270,11 +271,11 @@ if(isset($_COOKIE["flash"])){
     $_SESSION['flash'] = $_COOKIE["flash"];
 
     //delete the cookie
-    AContent.setcookie("flash",'',time()-3600);
+    setcookie("flash",'',time()-3600);
 }
 
 if (!isset($_SESSION["flash"])) {
-	$_custom_head .= '
+	$_custom_head = '
 		<script type="text/javascript">
 		<!--
 
