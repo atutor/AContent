@@ -303,7 +303,8 @@ class Utility {
 	public static function getRefererURLAndParams() {
 		$caller_url_parts = explode('/', $_SERVER['PHP_SELF']); 
 		$caller_script = $caller_url_parts[count($caller_url_parts)-1];
-		
+		$url_param = '';
+
 		if (count($_GET) > 0)
 		{
 			foreach ($_GET as $param => $value)
@@ -311,12 +312,11 @@ class Utility {
 				if ($param == 'action' || $param == 'cid') 
 					continue;
 				else
-					$url_param .= $param.'='.urlencode($value).'&';
+					$url_param .= ($url_param != '' ? '&' : '').$param.'='.urlencode($value);
 			}
 		}
 		
-		$caller_url = $caller_script. '?'.(isset($url_param) ? $url_param : '');
-		$url_param = substr($url_param, 0, -1);
+		$caller_url = $caller_script. '?'.$url_param;
 		
 		return array($caller_url, $url_param);
 	}
