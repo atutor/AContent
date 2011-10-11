@@ -58,7 +58,8 @@ $lang_charset = "UTF-8";
 $mtime = microtime(); 
 $mtime = explode(' ', $mtime); 
 $mtime = $mtime[1] + $mtime[0]; 
-$starttime = $mtime; 
+global $starttime;
+$starttime = $mtime;
 //Timer Ends
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -84,7 +85,7 @@ $starttime = $mtime;
 	<![endif]-->
 <?php echo $this->rtl_css; ?>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_href; ?>include/jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.2.4.min.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
@@ -92,7 +93,7 @@ $starttime = $mtime;
 <?php echo $this->custom_css; ?>
 </head>
 
-<body onload="<?php echo $this->onload; ?>">
+<body onload="<?php echo isset($this->onload) ? $this->onload : ''; ?>">
 
 <div id="liquid-round">
   
@@ -100,7 +101,7 @@ $starttime = $mtime;
 <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo array_key_exists('cid', $_REQUEST) ? $_REQUEST['cid'] : ''  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 	<span id="logininfo">
         <?php
         if (isset($this->user_name))
@@ -203,13 +204,13 @@ foreach ($this->top_level_pages as $page) {
 
   <div id="sequence-links">
     <?php //if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-    <?php if ($this->sequence_links['resume']): ?>
+    <?php if (isset($this->sequence_links) && $this->sequence_links['resume']): ?>
     <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
     <?php else:
-          if ($this->sequence_links['previous']): ?>
+          if (isset($this->sequence_links) && $this->sequence_links['previous']): ?>
     <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img-size-ascdesc" /></a>
     <?php endif;
-          if ($this->sequence_links['next']): ?>
+          if (isset($this->sequence_links) && $this->sequence_links['next']): ?>
     <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
     <?php endif; ?>
     <?php endif; ?>
@@ -315,7 +316,7 @@ foreach ($this->top_level_pages as $page) {
       <?php global $msg; $msg->printAll(); ?>
       </div>
 
-      <?php if (count($this->sub_level_pages) > 0): ?>
+      <?php if (isset($this->sub_level_pages) && count($this->sub_level_pages) > 0): ?>
 
 <!-- <div id="topnavlistcontainer">
 	<ul id="topnavlist">
