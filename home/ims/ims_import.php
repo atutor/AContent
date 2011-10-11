@@ -212,9 +212,9 @@ function checkResources($import_path){
 				$errors = libxml_get_errors();
 				foreach ($errors as $error) {
 					//suppress warnings
-					if ($error->level==LIBXML_ERR_WARNING){
-						continue;
-					}
+					if ($error->level==LIBXML_ERR_WARNING) continue;
+					elseif (strpos($error->message, 'metaMetadata')) continue;
+
 					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', libxml_display_error($error)));
 				}
 				libxml_clear_errors();
@@ -1375,8 +1375,9 @@ foreach ($items as $item_id => $content_info)
 				$xml_content = @file_get_contents($import_path . $forum_link);
 				$dt_parser->parse($xml_content);
 				$forum_obj = $dt_parser->getDt();
-				$dt_import->import($forum_obj, $items[$item_id]['real_content_id'], $_course_id);
-				$added_dt[$forum_ref] = $dt_import->getFid();				
+				$result = $dt_import->import($forum_obj, $items[$item_id]['real_content_id'], $_course_id);
+				if ($result)
+					$added_dt[$forum_ref] = $dt_import->getFid();
 			}
 
 		}
