@@ -300,56 +300,58 @@ function rehash($items){
 	$temp_popped_items = array();
 	$rehashed_items = array();	//the reconstructed array
 	foreach($items as $id => $content){
-		$parent_obj = $items[$content['parent_content_id']];
-		$rehashed_items[$id] = $content;	//copy
-		if (isset($parent_page_maps[$content['parent_content_id']])){
-			$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
-			$rehashed_items [$id]['ordering']++;
-		} 
-		//If its parent page is a top page and have an identiferref
-		elseif (isset($parent_obj) && isset($parent_obj['href'])){			
-			if (!isset($parent_obj['href'])){
-				//check if this top page is already a folder, if so, next.
-				continue;
-			}
-			//else, make its parent page to a folder
-			$new_item['title'] = $parent_obj['title'];
-			//check if this parent has been modified, if so, chnage it
-			if (isset($parent_page_maps[$parent_obj['parent_content_id']])){
-			    $new_item['parent_content_id'] = $parent_page_maps[$parent_obj['parent_content_id']];
-			} else {
-    			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
-            }
-			//all ordering needs to be +1 because we are creating a new folder on top of
-			//everything, except the first page.
-			$new_item['ordering'] = $parent_obj['ordering'];
-			if ($new_item['parent_content_id']!='0'){
-				$new_item['ordering']++;
+		if (isset($content['parent_content_id'])) {
+			$parent_obj = $items[$content['parent_content_id']];
+			$rehashed_items[$id] = $content;	//copy
+			if (isset($parent_page_maps[$content['parent_content_id']])){
+				$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+				$rehashed_items [$id]['ordering']++;
 			} 
+			//If its parent page is a top page and have an identiferref
+			elseif (isset($parent_obj) && isset($parent_obj['href'])){			
+				if (!isset($parent_obj['href'])){
+					//check if this top page is already a folder, if so, next.
+					continue;
+				}
+				//else, make its parent page to a folder
+				$new_item['title'] = $parent_obj['title'];
+				//check if this parent has been modified, if so, chnage it
+				if (isset($parent_page_maps[$parent_obj['parent_content_id']])){
+					$new_item['parent_content_id'] = $parent_page_maps[$parent_obj['parent_content_id']];
+				} else {
+					$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
+		        }
+				//all ordering needs to be +1 because we are creating a new folder on top of
+				//everything, except the first page.
+				$new_item['ordering'] = $parent_obj['ordering'];
+				if ($new_item['parent_content_id']!='0'){
+					$new_item['ordering']++;
+				} 
 
-    		//assign this new parent folder to the pending items array
-			$new_item_name = $content['parent_content_id'].'_FOLDER';
-			//a not so brilliant way to append the folder in its appropriate position
-			$reordered_hashed_items = array();  //use to store the new rehashed item with the correct item order
-			foreach($rehashed_items as $rh_id=>$rh_content){
-			    if ($rh_id == $content['parent_content_id']){
-			        //add the folder in before the parent subpage.
-			        $reordered_hashed_items[$new_item_name] = $new_item;
-			    }
-			    $reordered_hashed_items[$rh_id] = $rh_content;  //clone
+				//assign this new parent folder to the pending items array
+				$new_item_name = $content['parent_content_id'].'_FOLDER';
+				//a not so brilliant way to append the folder in its appropriate position
+				$reordered_hashed_items = array();  //use to store the new rehashed item with the correct item order
+				foreach($rehashed_items as $rh_id=>$rh_content){
+					if ($rh_id == $content['parent_content_id']){
+					    //add the folder in before the parent subpage.
+					    $reordered_hashed_items[$new_item_name] = $new_item;
+					}
+					$reordered_hashed_items[$rh_id] = $rh_content;  //clone
+				}
+				$rehashed_items = $reordered_hashed_items;  //replace it back
+				unset($reordered_hashed_items);
+				$parent_page_maps[$content['parent_content_id']] = $new_item_name;  //save this page on the hash map
+
+				//reconstruct the parent
+				$rehashed_items[$content['parent_content_id']]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+				$rehashed_items[$content['parent_content_id']]['ordering'] = 0; //always the first one.
+
+				//reconstruct itself
+				$rehashed_items[$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+				$rehashed_items[$id]['ordering']++;
+
 			}
-			$rehashed_items = $reordered_hashed_items;  //replace it back
-			unset($reordered_hashed_items);
-			$parent_page_maps[$content['parent_content_id']] = $new_item_name;  //save this page on the hash map
-
-			//reconstruct the parent
-			$rehashed_items[$content['parent_content_id']]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
-			$rehashed_items[$content['parent_content_id']]['ordering'] = 0; //always the first one.
-
-			//reconstruct itself
-			$rehashed_items[$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
-			$rehashed_items[$id]['ordering']++;
-
 		}
 	}
 	return $rehashed_items;
