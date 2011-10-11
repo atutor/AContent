@@ -361,7 +361,7 @@ function rehash($items){
  * @param   array   contains the breakdown of all resources in the XML
  */
 function removeCommonPath($items){
-    $common_path; 
+    $common_path = ''; 
     $quit = false;  //a flag that is set if it's not the first time being run.
 
     $filearray = array();
@@ -996,6 +996,8 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 xml_parser_free($xml_parser);
 
+$contains_glossary_terms = false;
+
 // Check if all the files exists in the manifest, iff it's a IMS CC package.
 if ($content_type == 'IMS Common Cartridge') {
 	checkResources($import_path);
@@ -1048,9 +1050,9 @@ else $_course_id = $_POST['_course_id'];
 /* the package name will be the dir where the content for this package will be put, as a result */
 /* the 'content_path' field in the content table will be set to this path. */
 /* $package_base_name_url comes from the URL file name (NOT the file name of the actual file we open)*/
-if (!$package_base_name && $package_base_name_url) {
+if (!isset($package_base_name) && isset($package_base_name_url)) {
 	$package_base_name = substr($package_base_name_url, -6);
-} else if (!$package_base_name) {
+} else if (!isset($package_base_name)) {
 	$package_base_name = substr($_FILES['file']['name'], 0, -4);
 }
 
@@ -1091,7 +1093,7 @@ foreach ($items as $item_id => $content_info)
 	$content_formatting = 1;	//CONTENT_TYPE_CONTENT
 
 	//don't want to display glossary as a page
-	if ($content_info['href']== $glossary_path . 'glossary.xml'){
+	if ($content_info['href']== 'glossary.xml'){
 		continue;
 	}
 
