@@ -147,26 +147,30 @@ class ContentUtility {
 		
 		// .flv
 		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.flv\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
-		$media_replace[] ="<object>\n".
-		                  "  <div>\n".
-		                  "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.flv\"></a>\n".
-		                  "  </div>\n".
-		                  "  <div style=\"margin-top:-2em;\">\n".
-		                  "    <a href=\"##MEDIA1##.flv\">##MEDIA1##.flv</a>\n".
-		                  "  </div>\n".
-		                  "</object>";
+		
+		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
+			$media_replace[] = "<div>\n".
+		                       "  <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.flv\"></a>\n".
+		                       "</div>\n";
+		} else {
+			$media_replace[] = "<div>\n".
+		                       "  <a href=\"##MEDIA1##.flv\">##MEDIA1##.flv</a>\n".
+		                       "</div>\n";
+		}
 		
 		// .mp4
 		preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mp4\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
-		//$media_replace[] ="<a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp4\"></a>";
-		$media_replace[] ="<object>\n".
-		                  "  <div>\n".
-		                  "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.mp4\"></a>\n".
-		                  "  </div>\n".
-		                  "  <div style=\"margin-top:-2em;\">\n".
-		                  "    <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
-		                  "  </div>\n".
-		                  "</object>";
+
+		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
+			$media_replace[] = "<div>\n".
+		                       "  <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.mp4\"></a>\n".
+		                       "</div>\n";
+		} else {
+			$media_replace[] = "<div>\n".
+		                       "  <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
+		                       "</div>\n";
+		}
+		
 		// Executing the replace
 		for ($i=0;$i<count($media_replace);$i++){
 			foreach($media_matches[$i] as $media)
