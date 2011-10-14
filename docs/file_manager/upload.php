@@ -96,7 +96,8 @@ if (isset($_POST['submit'])) {
 					$_FILES['uploadedfile']['name'] = substr(time(), -4).'.'.$_FILES['uploadedfile']['name'];
 
 					$f = array('FILE_EXISTS',
-									substr($_FILES['uploadedfile']['name'], 5));
+									substr($_FILES['uploadedfile']['name'], 5),
+									$_FILES['uploadedfile']['name']);
 					$msg->addFeedback($f);
 				}
 

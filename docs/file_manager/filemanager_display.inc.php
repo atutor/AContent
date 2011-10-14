@@ -204,7 +204,7 @@ if (TRUE || $framed != TRUE) {
 					<th class="fl-uploader-file-name">File Name</th>
 					<th class="fl-uploader-file-size">Size</th>
 					<th class="fl-uploader-file-actions"></th>
-				</tr>u
+				</tr>
             </table>
             
             <!-- File Queue body, which is the default container for the FileQueueView component -->
@@ -326,7 +326,7 @@ if (TRUE || $framed != TRUE) {
                         jQuery('#uploader-error-container').html("");
                     },
                     afterUploadComplete: function () {
-                        window.location = "<?php echo TR_BASE_HREF; ?>file_manager/index.php?pathext=<?php echo $pathext . SEP . '_course_id=' . $_course_id; ?>";
+                        window.location = "<?php echo TR_BASE_HREF . 'file_manager/index.php?popup='.$popup.SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$cid.SEP.'a_type='.$a_type.SEP.'_course_id='.$_course_id; ?>"
                     }
     		    },
     		    components: {
