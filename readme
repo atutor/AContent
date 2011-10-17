@@ -1,0 +1,29 @@
+//////////////
+// AContent README
+
+////////
+//About AContent
+AContent is an elearning content authoring tool and repository. It can be used to author learning content that will import into many elearning environments. AContent can be used to package content as IMS Content Packages, or as IMS Common Cartridges, standards that are supported by many learning systems. It can also be used to create test and question packages, based on the IMS QTI standard. It can also be used to develop AccessForAll adapted content that produces content that will adapt to individuals based on their specific learning preferences. Via its web service, AContent integrates seamlessly with ATutor, or with other learning environments, allowing content to be searched, imported into the system, and exported back to the repository. 
+
+////////
+//Installing AContent
+
+AContent installation is much the same as an ATutor installation. Follow the ATutor installation instructions at:
+http://atutor.ca/atutor/docs/installation.php
+
+////////
+//Installing AContent from a GitHub Clone*
+
+Installing AContent from a Github clone requires one additional step not described in the standard installation instructions. Before starting an install, an empty include/config.inc.php file needs to be created. From within the AContent directory that is created when AContent is cloned, at the command prompt issue the command:
+
+touch include/config.inc.php
+
+Then follow the standard installation instructions found at the link above.
+
+///////
+// AContent Installation & Integration with ATutor
+See the integration video on YouTube at:
+http://www.youtube.com/watch?v=ir3wNaCjSvY
+
+
+
