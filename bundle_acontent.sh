@@ -1,18 +1,19 @@
 #! /bin/csh -f
 #########################################################################
 # AContent bundle script                                                  #
-# ./bundle [VERSION] to specify an optional version number              #
+# ./bundle_acontent.sh [VERSION] to specify an optional version number              #
 # Author: Greg Gay - IDI, July 2010                              #
 #########################################################################
-
-
+# Updated Oct 16 2011 for GitHub GG
+#
+#
 set now = `date +"%Y_%m_%d"`
 set acontent_dir = "AContent_$now"
 set bundle = "AContent"
-set svndir = "http://svn.atutor.ca/repos/transformable2/trunk/docs/"
-set svnexec = "svn"
+set gitdir = "git://github.com/atutor/AContent.git"
+set gitexec = "git"
 
-echo "\033[1mAContent Bundle Script [for CVS 1.3.1+] \033[0m"
+echo "\033[1mAContent Bundle Script [for GitHub] \033[0m"
 echo "--------------------"
 
 if ($#argv > 0) then
@@ -46,10 +47,10 @@ if (-e $acontent_dir) then
 endif
 sleep 1
 
-echo "\nExporting from SVN/ to $acontent_dir"
+echo "\nExporting from GitHub/ to $acontent_dir"
 mkdir $acontent_dir
-$svnexec --force export $svndir
-mv 'docs' $acontent_dir/AContent
+$gitexec clone $gitdir
+mv 'AContent' $acontent_dir/AContent
 sleep 1
 
 echo "\nDumping language_text"
@@ -73,8 +74,9 @@ echo "\nDisabling AT_DEVEL_TRANSLATE if enabled."
 sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $acontent_dir/vitals.inc.php > $acontent_dir/AContent/include/vitals.inc.php
 sleep 1
 
+set date = `date`
 echo -n "<?php "'$svn_data = '"'" >> $acontent_dir/AContent/svn.php
-$svnexec log  -q -r HEAD http://svn.atutor.ca/repos/transformable2/trunk/  >> $acontent_dir/AContent/svn.php
+echo $date  >> $acontent_dir/AContent/svn.php
 echo -n "';?>" >> $acontent_dir/AContent/svn.php
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $acontent_dir/AContent/"
