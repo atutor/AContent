@@ -43,6 +43,7 @@ if (isset($_GET['action'], $_GET['cid']) && $_SESSION['user_id'] > 0)
 //	$is_my_courses = true; 
 //}
 
+$is_for_category = false;
 if (isset($catid)) {
 	$courses = $coursesDAO->getByCategory($catid);
 	$is_for_category = true;
@@ -52,7 +53,7 @@ if (isset($catid)) {
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 
-$curr_page_num = intval($_GET['p']);
+$curr_page_num = intval(isset($_GET['p']) ? $_GET['p'] : 0);
 if (!$curr_page_num) {
 	$curr_page_num = 1;
 }
