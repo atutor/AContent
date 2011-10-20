@@ -269,6 +269,7 @@ class ContentDAO extends DAO {
 	private function isFieldsValid($action_type, $row_id, $title)
 	{
 		global $msg;
+		$result = true;
 		
 		$missing_fields = array();
 		
@@ -284,14 +285,11 @@ class ContentDAO extends DAO {
 		
 		if ($missing_fields)
 		{
-			$missing_fields = implode(', ', $missing_fields);
-			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+			$msg->addError(array('EMPTY_FIELDS', implode(', ', $missing_fields)));
+			$result = false;
 		}
 		
-		if (!$msg->containsErrors())
-			return true;
-		else
-			return false;
+		return $result;
 	}
 
 }
