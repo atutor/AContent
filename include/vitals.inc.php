@@ -247,7 +247,7 @@ if ($_course_id > 0)
 	}
 	else // guest
 	{
-		$_SESSION['s_cid'] = $_content_id;
+		if (isset($_content_id)) $_SESSION['s_cid'] = $_content_id;
 	}
 }
 
@@ -260,7 +260,7 @@ if ($_course_id > 0)
 	include_once(TR_INCLUDE_PATH. '../home/classes/ContentManager.class.php');
 	
 	$contentManager = new ContentManager($_course_id);
-	$_sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
+	$_sequence_links = isset($_content_id) ? $contentManager->generateSequenceCrumbs($_content_id) : NULL;
 }
 
 /*** 10. register pages based on user's priviledge ***/
