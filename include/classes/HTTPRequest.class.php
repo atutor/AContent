@@ -51,10 +51,6 @@ class HTTPRequest
         $this->_url = $url;
         $this->_scan_url();
         $this->_cookies = $cookies;
-		trigger_error("HTTPRequest(\"" . $url . "\"");
-		foreach($cookies as $key => $value) {
-			trigger_error("Cookie: " . $key . "=" . $value );
-		}
     }
 
     // download URL to string
