@@ -47,7 +47,7 @@ if (!$_GET['frame']) {  ?>
 <table border="0" align="center">
 <tr>
 	<td><img src="<?php echo TR_BASE_HREF; ?>images/transfer.gif" height="20" width="90" alt="<?php echo _AT($lang_variable); ?>"></td>
-	<td valign="middle"><iframe src="home/prog.php?frame=1" width="100" height="25" frameborder="0" scrolling="no" marginwidth="0" marginheight="1">
+	<td valign="middle"><iframe src="<?php echo TR_BASE_HREF; ?>home/prog.php?frame=1" width="100" height="25" frameborder="0" scrolling="no" marginwidth="0" marginheight="1">
 </iframe>
 <?php } else { 
 	$tmp_dir = ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR;
