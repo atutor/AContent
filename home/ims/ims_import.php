@@ -800,7 +800,7 @@ if (!isset($_POST['submit']) && !isset($_POST['cancel']) && !isset($_GET['oauth_
 	exit;
 }
 
-$cid = intval($_POST['cid']);
+$cid = isset($_POST['cid']) ? intval($_POST['cid']) : 0;
 
 //If user chooses to ignore validation.
 if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
