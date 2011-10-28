@@ -208,14 +208,14 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
  * $_SESSION['s_cid']: record the last content_id on (user_id + course_id) basis
  * $_sequence_links: resume/first/next/previous content links
  */ 
-if (intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
-else if (intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
+if (isset($_REQUEST['_cid']) && intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
+else if (isset($_POST['_cid']) && intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
 
-if (intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
-else if (intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
+if (isset($_REQUEST['_course_id']) && intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
+else if (isset($_POST['_course_id']) && intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
 
 // find course_id thru content_id
-if ($_content_id > 0)
+if (isset($_content_id) && $_content_id > 0)
 {
 	include_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 	$contentDAO = new ContentDAO();
@@ -229,7 +229,7 @@ if ($_content_id > 0)
 //     @see ContentUtility::saveLastCid()
 // for the users who don't have the current course in "my courses" list,
 //     set the session var as $_GET['cid']
-if ($_course_id > 0)
+if (isset($_course_id) && $_course_id > 0)
 {
 	if ($_SESSION['user_id'] > 0)
 	{
@@ -252,7 +252,7 @@ if ($_course_id > 0)
 
 // Generate contentManager. 
 // Must be called after generating $_SESSION['s_cid'] as it's used in contentManager class
-if ($_course_id > 0)
+if (isset($_course_id) && $_course_id > 0)
 {
 	global $contentManager;
 	
