@@ -502,9 +502,9 @@ function removeCommonPath($items){
 				$attrs['href'] = urldecode($attrs['href']);
 				$items[$current_identifier]['href'] = $attrs['href'];
 			}
+			$temp_path = pathinfo($attrs['href']);
 			if ($temp_path['extension'] == 'html') {
-				//$temp_path = pathinfo($attrs['href']);
-					$temp_path = explode('/', $temp_path['dirname']);
+				$temp_path = explode('/', $temp_path['dirname']);
 				if (empty($package_base_path)){
 			   		$package_base_path = $temp_path;
             	}
@@ -529,6 +529,7 @@ function removeCommonPath($items){
 			}
 
 			//save the actual content base path
+			$sizeofrp = array();
 			if (in_array('..', $temp_path)){
 				$sizeofrp = array_count_values($temp_path);
 			}
@@ -548,7 +549,7 @@ function removeCommonPath($items){
 			}
 
 			//real content path
-			if($sizeofrp['..'] > 0 && !empty($all_package_base_path)){
+			if(array_key_exists('..', $sizeofrp) && $sizeofrp['..'] > 0 && !empty($all_package_base_path)){
 				for ($i=0; $i<$sizeofrp['..']; $i++){
 					array_pop($all_package_base_path);
 				}
