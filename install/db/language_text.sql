@@ -66,7 +66,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FILE_TOO_BIG','The f
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FIRST_LAST_NAME_UNIQUE','First, second, and last names combination must be unique.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_FOLDER_NOT_CREATED','The folder \" %s \" could not be created.','2010-04-01 15:23:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_ID_ZERO','Content ID was zero, or was missing.','2010-05-20 12:08:10','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_CARTRIDGE_FAILED','Import failed. Does not appear to be a valid content package or common cartridge.','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_CARTRIDGE_FAILED','Import failed. Does not appear to be a valid content package or common cartridge: %s','2011-10-09 16:47:00','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_IMPORT_FAILED','Import Failed','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_CHECKBOX_STATUS','Invalid checkbox status.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_INVALID_FORMAT','Invalid format.','2010-01-27 15:48:35','');
