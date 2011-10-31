@@ -845,7 +845,6 @@ if ($ext != 'zip') {
 } else if ($_FILES['file']['size'] == 0) {
 	$msg->addError('IMPORTFILE_EMPTY');
 } 
-$msg->printAll();
 if ($msg->containsErrors()) {
 	if (isset($_GET['tile'])) {
 		header('Location: '.$_base_path.'tools/tile/index.php');
