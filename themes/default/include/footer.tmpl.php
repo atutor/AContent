@@ -12,7 +12,7 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
-global $languageManager, $_my_uri;
+global $languageManager, $_my_uri, $starttime;
 
 if ($this->course_id > 0) { ?>
         <div style="clear:both;text-align:right;" id="gototop">		

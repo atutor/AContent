@@ -60,9 +60,9 @@ else
 	$rows = $priviledgesDAO->getPublicPrivileges();
 }
 
-foreach ($rows as $row)
-	$privs[$row['privilege_id']] = $row['user_requirement'];
-
+foreach ($rows as $row) {
+	$privs[$row['privilege_id']] = array_key_exists('user_requirement', $row) ? $row['user_requirement'] : NULL;
+}
 /* initialize pages accessed by public */
 //$_pages[TR_NAV_PUBLIC] = array('index.php' => array('parent'=>TR_NAV_PUBLIC));
 

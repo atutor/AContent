@@ -40,9 +40,11 @@ class WeblinksParser {
 	// public
 	// @return	true if parsed successfully, false otherwise
 	function parse($xml_data) {
+		$result = false;
 		$this->element_path   = array();
 		$this->character_data = '';
-		xml_parse($this->parser, $xml_data, TRUE);		
+		$result = xml_parse($this->parser, $xml_data, TRUE);
+		return $result;
 	}
 
 	// private
@@ -62,7 +64,6 @@ class WeblinksParser {
 	function endElement($parser, $name) {
 		//check element path
 		$current_pos = count($this->element_path) - 1;
-		$last_element = $this->element_path[$current_pos - 1];
 
 		switch($name) {
 			case 'title':

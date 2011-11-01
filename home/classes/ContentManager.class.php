@@ -457,7 +457,8 @@ class ContentManager
 		                    WHERE content_id=$content_id) AS ct 
 		             LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id
 		            ORDER BY t.title";
-		return $this->dao->execute($sql);
+		$result = $this->dao->execute($sql);
+		return $result;
 	}
 
 	function & cleanOutput($value) {
@@ -574,7 +575,7 @@ class ContentManager
 		
 		$first = $this->getNextContent(0); // get first
 		
-		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
+		if (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING'] && $first) {
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}
 		if ($first) {
@@ -582,10 +583,10 @@ class ContentManager
 			$sequence_links['first'] = $first;
 		}
 
-		if (!$cid && $_SESSION['s_cid']) {
+		if (!$cid && array_key_exists('s_cid', $_SESSION) && $_SESSION['s_cid']) {
 			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
-			if ($_SESSION['prefs']['PREF_NUMBERING']) {
+			if (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING']) {
 				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
 			}
 
@@ -598,7 +599,7 @@ class ContentManager
 			}
 			$next = $this->getNextContent($cid ? $cid : 0);
 
-			if ($_SESSION['prefs']['PREF_NUMBERING']) {
+			if (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING']) {
 				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
 				$next['title'] = $this->getNumbering($next['content_id']).' '.$next['title'];
 			}
@@ -830,9 +831,10 @@ initContentMenu();
 		if (!isset($temp_path)) {
 			if ($cid) {
 				$temp_path	= $this->getContentPath($cid);
-			} else {
+			} elseif (array_key_exists('s_cid', $_SESSION)) {
 				$temp_path	= $this->getContentPath($_SESSION['s_cid']);
-			}
+			} else
+				$temp_path = array();
 		}
 
 		$highlighted = array();
@@ -869,7 +871,7 @@ initContentMenu();
 
 				$on = false;
 
-				if ( (($_SESSION['s_cid'] != $content['content_id']) || ($_SESSION['s_cid'] != $cid)) && ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)) 
+				if ( ((array_key_exists('s_cid', $_SESSION) && $_SESSION['s_cid'] != $content['content_id']) || (array_key_exists('s_cid', $_SESSION) && $_SESSION['s_cid'] != $cid)) && ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)) 
 				{ // non-current content nodes with content type "CONTENT_TYPE_CONTENT"
 					if (isset($highlighted[$content['content_id']])) {
 						$link .= '<strong>';
@@ -891,7 +893,7 @@ initContentMenu();
 //					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					$link .= $img_link . ' <a href="'.$in_link.'" title="';
 					$base_title_length = 29;
-					if ($_SESSION['prefs']['PREF_NUMBERING']) {
+					if (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING']) {
 //						$link .= $path.$counter.' ';
 						$base_title_length = 24;
 					}
@@ -907,7 +909,7 @@ initContentMenu();
 						$link .= $content['title'];
 					else
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
-						         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
+						         (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 						         $content['title'].'</span>';
 					
 					$link .= '</a>';
@@ -923,7 +925,7 @@ initContentMenu();
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
 					$base_title_length = 26;
-					if ($_SESSION['prefs']['PREF_NUMBERING']) {
+					if (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING']) {
 						$base_title_length = 21;
 					}
 					
@@ -936,7 +938,7 @@ initContentMenu();
 					{ // current content page
 						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.
-						         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter : '').
+						         (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter : '').
 						         $content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
@@ -944,7 +946,7 @@ initContentMenu();
 						}
 //						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
-						         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
+						         (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 						         $content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
@@ -973,7 +975,7 @@ initContentMenu();
 							$link .= $content['title'];
 						else
 							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
-							         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
+							         (array_key_exists('PREF_NUMBERING', $_SESSION['prefs']) && $_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 							         $content['title'].'</span>';
 						
 						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
@@ -1023,7 +1025,7 @@ initContentMenu();
 						$children[$depth] = 1;
 					}
 
-					if ($_SESSION['s_cid'] == $content['content_id']) {
+					if (array_key_exists('s_cid', $_SESSION) && $_SESSION['s_cid'] == $content['content_id']) {
 						if (is_array($this->_menu[$content['content_id']])) {
 							$_SESSION['menu'][$content['content_id']] = 1;
 						}

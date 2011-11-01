@@ -300,56 +300,58 @@ function rehash($items){
 	$temp_popped_items = array();
 	$rehashed_items = array();	//the reconstructed array
 	foreach($items as $id => $content){
-		$parent_obj = $items[$content['parent_content_id']];
-		$rehashed_items[$id] = $content;	//copy
-		if (isset($parent_page_maps[$content['parent_content_id']])){
-			$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
-			$rehashed_items [$id]['ordering']++;
-		} 
-		//If its parent page is a top page and have an identiferref
-		elseif (isset($parent_obj) && isset($parent_obj['href'])){			
-			if (!isset($parent_obj['href'])){
-				//check if this top page is already a folder, if so, next.
-				continue;
-			}
-			//else, make its parent page to a folder
-			$new_item['title'] = $parent_obj['title'];
-			//check if this parent has been modified, if so, chnage it
-			if (isset($parent_page_maps[$parent_obj['parent_content_id']])){
-			    $new_item['parent_content_id'] = $parent_page_maps[$parent_obj['parent_content_id']];
-			} else {
-    			$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
-            }
-			//all ordering needs to be +1 because we are creating a new folder on top of
-			//everything, except the first page.
-			$new_item['ordering'] = $parent_obj['ordering'];
-			if ($new_item['parent_content_id']!='0'){
-				$new_item['ordering']++;
+		if (isset($content['parent_content_id'])) {
+			$parent_obj = $items[$content['parent_content_id']];
+			$rehashed_items[$id] = $content;	//copy
+			if (isset($parent_page_maps[$content['parent_content_id']])){
+				$rehashed_items [$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+				$rehashed_items [$id]['ordering']++;
 			} 
+			//If its parent page is a top page and have an identiferref
+			elseif (isset($parent_obj) && isset($parent_obj['href'])){			
+				if (!isset($parent_obj['href'])){
+					//check if this top page is already a folder, if so, next.
+					continue;
+				}
+				//else, make its parent page to a folder
+				$new_item['title'] = $parent_obj['title'];
+				//check if this parent has been modified, if so, chnage it
+				if (isset($parent_page_maps[$parent_obj['parent_content_id']])){
+					$new_item['parent_content_id'] = $parent_page_maps[$parent_obj['parent_content_id']];
+				} else {
+					$new_item['parent_content_id'] = $parent_obj['parent_content_id'];
+		        }
+				//all ordering needs to be +1 because we are creating a new folder on top of
+				//everything, except the first page.
+				$new_item['ordering'] = $parent_obj['ordering'];
+				if ($new_item['parent_content_id']!='0'){
+					$new_item['ordering']++;
+				} 
 
-    		//assign this new parent folder to the pending items array
-			$new_item_name = $content['parent_content_id'].'_FOLDER';
-			//a not so brilliant way to append the folder in its appropriate position
-			$reordered_hashed_items = array();  //use to store the new rehashed item with the correct item order
-			foreach($rehashed_items as $rh_id=>$rh_content){
-			    if ($rh_id == $content['parent_content_id']){
-			        //add the folder in before the parent subpage.
-			        $reordered_hashed_items[$new_item_name] = $new_item;
-			    }
-			    $reordered_hashed_items[$rh_id] = $rh_content;  //clone
+				//assign this new parent folder to the pending items array
+				$new_item_name = $content['parent_content_id'].'_FOLDER';
+				//a not so brilliant way to append the folder in its appropriate position
+				$reordered_hashed_items = array();  //use to store the new rehashed item with the correct item order
+				foreach($rehashed_items as $rh_id=>$rh_content){
+					if ($rh_id == $content['parent_content_id']){
+					    //add the folder in before the parent subpage.
+					    $reordered_hashed_items[$new_item_name] = $new_item;
+					}
+					$reordered_hashed_items[$rh_id] = $rh_content;  //clone
+				}
+				$rehashed_items = $reordered_hashed_items;  //replace it back
+				unset($reordered_hashed_items);
+				$parent_page_maps[$content['parent_content_id']] = $new_item_name;  //save this page on the hash map
+
+				//reconstruct the parent
+				$rehashed_items[$content['parent_content_id']]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+				$rehashed_items[$content['parent_content_id']]['ordering'] = 0; //always the first one.
+
+				//reconstruct itself
+				$rehashed_items[$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
+				$rehashed_items[$id]['ordering']++;
+
 			}
-			$rehashed_items = $reordered_hashed_items;  //replace it back
-			unset($reordered_hashed_items);
-			$parent_page_maps[$content['parent_content_id']] = $new_item_name;  //save this page on the hash map
-
-			//reconstruct the parent
-			$rehashed_items[$content['parent_content_id']]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
-			$rehashed_items[$content['parent_content_id']]['ordering'] = 0; //always the first one.
-
-			//reconstruct itself
-			$rehashed_items[$id]['parent_content_id'] = $parent_page_maps[$content['parent_content_id']];
-			$rehashed_items[$id]['ordering']++;
-
 		}
 	}
 	return $rehashed_items;
@@ -361,7 +363,7 @@ function rehash($items){
  * @param   array   contains the breakdown of all resources in the XML
  */
 function removeCommonPath($items){
-    $common_path; 
+    $common_path = ''; 
     $quit = false;  //a flag that is set if it's not the first time being run.
 
     $filearray = array();
@@ -715,7 +717,7 @@ function removeCommonPath($items){
 		global $current_identifier;
 
 		$str_trimmed_data = trim($data);
-		
+
 		if (!empty($str_trimmed_data)) {
 			$size = count($path);
 			if ($size > 0) {
@@ -726,8 +728,7 @@ function removeCommonPath($items){
 					$parent_item_id = 0;
 				}
 
-				if (isset($items[$current_item_id]['parent_content_id']) && is_array($items[$current_item_id])) {
-
+				if (array_key_exists($current_item_id, $items) && is_array($items[$current_item_id]) && isset($items[$current_item_id]['parent_content_id'])) {
 					/* this item already exists, append the title		*/
 					/* this fixes {\n, \t, `, &} characters in elements */
 
@@ -740,12 +741,16 @@ function removeCommonPath($items){
 					}
 	
 				} else {
-					$order[$parent_item_id] ++;
+					if (array_key_exists($parent_item_id, $order))
+						$order[$parent_item_id] ++;
+					else
+						$order[$parent_item_id] = 1;
+
 					$item_tmpl = array(	'title'				=> $data,
 										'parent_content_id' => $parent_item_id,
 										'ordering'			=> $order[$parent_item_id]-1);
 					//append other array values if it exists
-					if (is_array($items[$current_item_id])){
+					if (array_key_exists($current_item_id, $items) && is_array($items[$current_item_id])){
 						$items[$current_item_id] = array_merge($items[$current_item_id], $item_tmpl);
 					} else {
 						$items[$current_item_id] = $item_tmpl;
@@ -833,7 +838,7 @@ if (isset($_REQUEST['url']) && ($_REQUEST['url'] != 'http://') ) {
     $package_base_name_url = md5(time());
 }
 $ext = pathinfo($_FILES['file']['name']);
-$ext = $ext['extension'];
+$ext = array_key_exists('extension', $ext) ? $ext['extension'] : '';
 
 if ($ext != 'zip') {
 	$msg->addError('IMPORTDIR_IMS_NOTVALID');
@@ -853,7 +858,7 @@ if ($msg->containsErrors()) {
 	} else {
 		header('Location: '.$_SERVER['HTTP_REFERER']);
 	}
-	if (file_exists($full_filename)) @unlink($full_filename);
+	if (isset($full_filename) && file_exists($full_filename)) @unlink($full_filename);
 	exit;
 }
 
@@ -992,6 +997,8 @@ if (!xml_parse($xml_parser, $ims_manifest_xml, true)) {
 }
 xml_parser_free($xml_parser);
 
+$contains_glossary_terms = false;
+
 // Check if all the files exists in the manifest, iff it's a IMS CC package.
 if ($content_type == 'IMS Common Cartridge') {
 	checkResources($import_path);
@@ -1044,9 +1051,9 @@ else $_course_id = $_POST['_course_id'];
 /* the package name will be the dir where the content for this package will be put, as a result */
 /* the 'content_path' field in the content table will be set to this path. */
 /* $package_base_name_url comes from the URL file name (NOT the file name of the actual file we open)*/
-if (!$package_base_name && $package_base_name_url) {
+if (!isset($package_base_name) && isset($package_base_name_url)) {
 	$package_base_name = substr($package_base_name_url, -6);
-} else if (!$package_base_name) {
+} else if (!isset($package_base_name)) {
 	$package_base_name = substr($_FILES['file']['name'], 0, -4);
 }
 
@@ -1082,17 +1089,18 @@ $common_path = removeCommonPath($items);
 $items = rehash($items);
 //debug($items);exit;
 foreach ($items as $item_id => $content_info) 
-{	
+{
 	//formatting field, default 1
 	$content_formatting = 1;	//CONTENT_TYPE_CONTENT
+	$lti_offset[$content_info['parent_content_id']] = 0;
 
 	//don't want to display glossary as a page
-	if ($content_info['href']== $glossary_path . 'glossary.xml'){
+	if (isset($content_info['href']) && $content_info['href'] == 'glossary.xml'){
 		continue;
 	}
 
 	//if discussion tools, add it to the list of unhandled dts
-	if ($content_info['type']=='imsdt_xmlv1p0'){
+	if (isset($content_info['type']) && $content_info['type'] == 'imsdt_xmlv1p0'){
 		//if it will be taken care after (has dependency), then move along.
 		if (in_array($item_id, $avail_dt)){
 			$lti_offset[$content_info['parent_content_id']]++;
@@ -1116,14 +1124,14 @@ foreach ($items as $item_id => $content_info)
 	
 	//check dependency immediately, then handles it
 	$head = '';
-	if (is_array($content_info['dependency']) && !empty($content_info['dependency'])){
+	if (isset($content_info['dependency']) && is_array($content_info['dependency']) && !empty($content_info['dependency'])){
 		foreach($content_info['dependency'] as $dependency_ref){
 			//check if this is a discussion tool dependency
-			if ($items[$dependency_ref]['type']=='imsdt_xmlv1p0'){
+			if (array_key_exists($dependency_ref, $items) && $items[$dependency_ref]['type']=='imsdt_xmlv1p0'){
 				$items[$item_id]['forum'][$dependency_ref] = $items[$dependency_ref]['href'];
 			}
 			//check if this is a QTI dependency
-			if (strpos($items[$dependency_ref]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
+			if (array_key_exists($dependency_ref, $items) && strpos($items[$dependency_ref]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
 				$items[$item_id]['tests'][$dependency_ref] = $items[$dependency_ref]['href'];
 			}
 		}
@@ -1131,7 +1139,7 @@ foreach ($items as $item_id => $content_info)
 
 
 	// remote href
-	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
+	if (isset($content_info['href']) && preg_match('/^http.*:\/\//', trim($content_info['href'])) )
 	{
 		$content = '<a href="'.$content_info['href'].'" target="_blank">'.$content_info['title'].'</a>';
 	}
@@ -1140,7 +1148,7 @@ foreach ($items as $item_id => $content_info)
 		if ($content_type == 'IMS Common Cartridge'){
 			//to handle import with purely images but nothing else
 			//don't need a content base path for it.
-			$content_new_path = $content_info['new_path'];
+			$content_new_path = isset($content_info['new_path']) ? $content_info['new_path'] : '';
 			$content_info['new_path'] = '';
 		}
 		if (isset($content_info['href'], $xml_base_path)) {
@@ -1252,7 +1260,7 @@ foreach ($items as $item_id => $content_info)
 	}
 	$content_parent_id = $cid;
 	if ($content_info['parent_content_id'] !== 0) {
-		$content_parent_id = $items[$content_info['parent_content_id']]['real_content_id'];
+		$content_parent_id = isset($items[$content_info['parent_content_id']]) ? $items[$content_info['parent_content_id']]['real_content_id'] : 0;
 		//if it's not there, use $cid
 		if (!$content_parent_id){
 			$content_parent_id = $cid;
@@ -1282,20 +1290,21 @@ foreach ($items as $item_id => $content_info)
 	}
 
 	//handles weblinks
-	if ($content_info['type']=='imswl_xmlv1p0'){
+	if (isset($content_info['type']) && $content_info['type']=='imswl_xmlv1p0'){
 		$weblinks_parser = new WeblinksParser();
-		$xml_content = @file_get_contents($import_path . $content_info['href']);
-		$weblinks_parser->parse($xml_content);
-		$content_info['title'] = $weblinks_parser->getTitle();
-		$content = $weblinks_parser->getUrl();
-		$content_folder_type = CONTENT_TYPE_WEBLINK;
-		$content_formatting = 2;
+		$xml_content = @file_get_contents($import_path . $content_info['file'][0]);
+		if ($weblinks_parser->parse($xml_content)) {
+			$content_info['title'] = $weblinks_parser->getTitle();
+			$content = $weblinks_parser->getUrl();
+			$content_folder_type = CONTENT_TYPE_WEBLINK;
+			$content_formatting = 2;
+		}
 	}
 
 
 	//if this file is a test_xml, create a blank page instead, for imscc.
-	if (preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href']) 
-		|| preg_match('/imsqti\_(.*)/', $content_info['type'])) {
+	if ((isset($content_info['href']) && preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $content_info['href'])) 
+		|| (isset($content_info['type']) && preg_match('/imsqti\_(.*)/', $content_info['type']))) {
 		$content = ' ';
 	} 
 
@@ -1304,15 +1313,17 @@ foreach ($items as $item_id => $content_info)
 	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
 		$content_folder_type = (!isset($content_info['type'])?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
-	
-	$items[$item_id]['real_content_id'] = $contentDAO->Create($_course_id, intval($content_parent_id), 
-	                    ($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1),
-	                    0, $content_formatting, "", $content_info['new_path'], $content_info['title'],
-	                    $content, $head, 1, $content_info['test_message'], $content_folder_type);
-
-
+	$result = $contentDAO->Create($_course_id, intval($content_parent_id), 
+		($content_info['ordering'] + $my_offset - (array_key_exists($content_info['parent_content_id'], $lti_offset) ? $lti_offset[$content_info['parent_content_id']] : 0) + 1),
+		0, $content_formatting, "", $content_info['new_path'], $content_info['title'],
+		$content, $head, 1, array_key_exists('test_message',$content_info) ? $content_info['test_message'] : '', $content_folder_type);
+	if ($result)
+			$items[$item_id]['real_content_id'] = $result;
+	else {
+		$msg->addError(array('IMPORT_CARTRIDGE_FAILED', 'course_id='.$_course_id.', $item_id='.$item_id.', $content_parent_id='.$content_parent_id.', title="'.$content_info['title'].'"'."\n"));
+	}
 	/* get the tests associated with this content */
-	if (!empty($items[$item_id]['tests']) || strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
+	if (!empty($items[$item_id]['tests']) || (isset($items[$item_id]['type']) && strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false)){
 		$qti_import = new QTIImport($import_path);
 		if (isset($items[$item_id]['tests'])){
 			$loop_var = $items[$item_id]['tests'];
@@ -1380,7 +1391,7 @@ foreach ($items as $item_id => $content_info)
 			}
 
 		}
-	} elseif ($items[$item_id]['type']=='imsdt_xmlv1p0'){
+	} elseif (isset($items[$item_id]['type']) && $items[$item_id]['type']=='imsdt_xmlv1p0'){
 		//optimize this, repeated codes as above
 		$dt_parser = new DiscussionToolsParser();
 		$dt_import = new DiscussionToolsImport();
