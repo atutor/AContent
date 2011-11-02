@@ -108,7 +108,7 @@ class Message {
 				/* Improve code quality. Detect specifiers that are not used.
 				   This will highlight language_text.term entries that are missing format-specifiers */
 				$match_fs = array();
-				$count_fs = preg_match_all('/[^\d]%[^%]|\s]/', $format_specifier, $match_fs);
+				$count_fs = preg_match_all('/(%.*?[a-zA-Z])/', $format_specifier, $match_fs);
 				$count_item = count($item);
 				if (strcmp($result, $format_specifier) == 0 || $count_item != $count_fs) {
 					// $item array has elements that appear to have been ignored so give a warning
