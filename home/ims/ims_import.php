@@ -213,7 +213,6 @@ function checkResources($import_path){
 				foreach ($errors as $error) {
 					//suppress warnings
 					if ($error->level==LIBXML_ERR_WARNING) continue;
-					elseif (strpos($error->message, 'metaMetadata')) continue;
 
 					$msg->addError(array('IMPORT_CARTRIDGE_FAILED', libxml_display_error($error)));
 				}
