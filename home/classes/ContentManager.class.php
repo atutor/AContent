@@ -39,6 +39,7 @@ class ContentManager
 	var $content_length;
 	var $dao;
 	var $contentDAO;
+	
 
 	/* constructor	*/
 	function ContentManager($course_id) {
@@ -48,6 +49,9 @@ class ContentManager
 		$this->course_id = $course_id;
 		$this->dao = new DAO();
 		$this->contentDAO = new ContentDAO();
+		
+		
+		
 		
 		/* x could be the ordering or even the content_id	*/
 		/* don't really need the ordering anyway.			*/
@@ -68,18 +72,24 @@ class ContentManager
 
 		$rows = $this->contentDAO->getContentByCourseID($this->course_id);
 		
+		
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
+				
+				
+				
 				$num_sections++;
 				$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 															'ordering'	=> $row['ordering'], 
 															'title'		=> htmlspecialchars($row['title']),
-															'content_type' => $row['content_type']);
+															'content_type' => $row['content_type'],
+															'optional' => $row['optional']);
 	
 				$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
 														'title'				=> htmlspecialchars($row['title']),
 														'ordering'			=> $row['ordering'],
-														'content_type' => $row['content_type']);
+														'content_type' => $row['content_type'],
+														'optional' => $row['optional']);
 	
 				/* 
 				 * add test content asscioations
@@ -859,6 +869,7 @@ initContentMenu();
 			echo '<div id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
+				
 				$link = '';
 				//tests do not have content id
 				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
@@ -917,8 +928,16 @@ initContentMenu();
 					
 					// instructors have privilege to delete content
 					if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !isset($content['test_id']) && !Utility::isMobileTheme()) {
-						$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						//catia
+						if($content['optional'] == 1) 
+						//1 the content is optional
+							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						else
+						//0 the content is mandatory
+							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="mandatory page"/>';
+						
 					}
+					
 				} 
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
@@ -949,7 +968,15 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
-							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+								
+								//catia
+							if($content['optional'] == 1) 
+							//1 the content is optional
+								$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							else
+							//0 the content is mandatory
+								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="Mandatory content" style="margin-left:2px;"/>';
+							
 						}
 					}
 					else

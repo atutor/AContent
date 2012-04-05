@@ -159,6 +159,7 @@ if ($current_tab == 0 || $current_tab == 2)
     load_editor($simple, false, "none");    
 }
 
+
 //TODO*************BOLOGNA****************REMOVE ME**************/
 //loading toolbar for insert discussion topic or web link into the content
 //if ($current_tab == 0){

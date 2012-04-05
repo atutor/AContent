@@ -1,0 +1,78 @@
+#content{
+	color:						#333;
+	line-height:				1.5em;
+	background-color:			#FFF;
+	text-align:					justify;
+}
+
+#content h1{
+	background:					#365778;
+    margin-bottom:				10px;
+    margin-top:					20px;
+
+	color:						#FFF;
+}
+
+#content h2{
+	background:					#008d46;
+    margin-bottom:				10px;
+    margin-top:					20px;
+
+	color:						#FFF;
+}
+
+#content h3, #content h4, #content h5, #content h6{
+	background:					#d2232c;
+    margin-bottom:				10px;
+    margin-top:					20px;
+
+	color:						#FFF;
+}
+
+#content h1, #content h2, #content h3,
+#content h4, #content h5, #content h6{
+    background-image:			url(italy/c_led2.png), url(italy/c_archivio3.png);
+    background-repeat:			no-repeat;
+    background-position:		left center, right center;
+
+    font-size:					0.875em;
+    height:						32px;
+    line-height:				32px;
+    padding:					0px;
+    padding-left:				20px;
+}
+
+#content ul{
+	margin-top:					30px;
+	list-style-image:			url(italy/list.png);
+}
+#content ul li{
+	padding:					3px;
+}
+
+#content a:link{
+	text-decoration:			none;
+	color:						#295376;
+	background:					transparent;
+}
+#content a:visited{
+	color:						#5a306b;
+}
+#content a:hover, #content a:active{
+	text-decoration:			underline;
+	color:						#B00000;	
+}
+#content .img{
+	-webkit-transform: rotate(3deg);
+	-moz-transform: rotate(3deg);
+}
+#content .img:hover{
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+}
+.header .modelContent{
+	height:						80px;
+	background-image:			url(italy/repubblica.png);
+	background-repeat:			no-repeat;
+	background-position:		right top;
+}

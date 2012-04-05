@@ -102,6 +102,30 @@ class ContentForumsAssocDAO extends DAO {
 		}
 	}
 	
+	
+	
+	/**
+	* Delete row by forum ID and content ID
+	* @access  public
+	* @param   forumID, contentID
+	* @return  true or false
+	* @author  Cindy Qi Li
+	*/
+	function Delete($forumID, $contentID) {
+	 $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
+	             WHERE content_id = '".$contentID."' AND forum_id = '".$forumID."'";
+		if ($this->execute($sql)) {
+			// update the courses.modified_date to the current timestamp
+			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+			$coursesDAO = new CoursesDAO();
+			$coursesDAO->updateModifiedDate($contentID, "content_id");
+			return true;
+		} else {
+			$msg->addError('DB_NOT_UPDATED');
+			return false;
+		}
+	}
+	
 	/**
 	* Return rows by content ID
 	* @access  public

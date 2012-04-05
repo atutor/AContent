@@ -31,7 +31,10 @@ function get_tabs() {
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
 	$tabs[1] = array('metadata',    		'properties.inc.php',    'p');
 	$tabs[2] = array('alternative_content', 'alternatives.inc.php',  'l');	
-	$tabs[3] = array('tests',               'tests.inc.php',         't');	
+	$tabs[3] = array('tests',               'tests.inc.php',         't');
+	//catia
+	//$tabs[4] = array('forums', '');
+	
 	
 	return $tabs;
 }

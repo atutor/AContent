@@ -1,0 +1,140 @@
+/*
+ *	VISUALIZZAZIONE FORM MODULO
+ */
+#dnd_themod{
+	text-align:					center;
+}
+
+#dnd_themod #listatemi{
+	margin:						0px auto;
+	width:						99%;
+	margin-bottom:				10px;
+}
+
+#dnd_themod #themeScreenshot{
+	max-width:					200px;
+}
+
+#dnd_themod #applicaTemaLezione_btn, #dnd_themod #applicaTemaCorso_btn{
+	
+	/*border:						1px solid #333;*/
+	padding:					5px;
+	margin-top:					10px;
+	
+	background:					#F7F7F7;
+	border:						1px solid #999;
+	
+    /* CSS3 */
+    border-radius:              2px;
+    /* Safari and chrome */
+    -webkit-border-radius:      2px;
+    /* Firefox */
+    -moz-border-radius:         2px;
+    /* Linux browsers */
+    -khtml-border-radius:       2px;
+}
+
+#dnd_themod #applicaTemaLezione_btn:hover, #dnd_themod #applicaTemaCorso_btn:hover{
+	background:					#FFFFE0;
+	-moz-box-shadow:			0 0 5px gold;
+	-webkit-box-shadow:			0 0 5px gold;
+	box-shadow:					0 0 5px gold;
+}
+
+#dnd_themod #applicaTemaLezione_btn{
+	margin-bottom:				10px;
+}
+
+/*
+ *	VISUALIZZAZIONE ANTEPRIMA CONTENUTO ACONTENT
+ */
+#content-text{
+	margin:						0 auto;
+}
+#content-text{
+	padding:					10px;
+}
+
+/*
+ *	FORM MODIFICA CONTENUTI (MODELLI)
+ */
+
+#content-text #dnd{
+	padding:					10px;
+	border:						1px dashed transparent;
+}
+
+/*
+ * Stile della pagina di configurazione
+ */
+.dnd_themod_system_fieldset{
+	border:						1px solid #CCC;
+
+    /* CSS3 */
+    border-radius:              2px;
+    /* Safari and chrome */
+    -webkit-border-radius:      2px;
+    /* Firefox */
+    -moz-border-radius:         2px;
+    /* Linux browsers */
+    -khtml-border-radius:       2px;
+}
+.dnd_themod_system_fieldset legend{
+	background:					#FFF;
+	border:						1px solid #CCC;
+	padding:					5px;
+	padding-left:				15px;
+	padding-right:				15px;
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+}
+.dnd_themod_system_fieldset table{
+	width:						100%;
+}
+.dnd_themod_system_fieldset table td:first-child{
+	width:						39%;
+}
+
+
+.boxModelToolbox{
+	background:					#FFF;
+	text-align:					right;
+}
+.boxModelToolbox ul{
+	padding:					0px;
+	margin:						0px;
+	list-style: 				none;
+	padding:					15px;
+	padding-left:				0px;
+	padding-right:				0px;
+}
+.boxModelToolbox ul li{
+	text-align:					right;
+	padding:					15px;
+	margin:						0px;
+	list-style: 				none;
+	display:					inline;
+}
+.boxModelToolbox ul li:hover{
+	background:					#F7F7F7;
+	cursor:						pointer;
+}
+.boxModelToolbox ul #modelPaste{
+	display:					none;
+}
+
+.insert_image:hover{
+	cursor:						default;
+}
+
+.model{
+	background-color:			#FFF;
+	width: 						100%;
+}

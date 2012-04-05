@@ -1,0 +1,13 @@
+; * indica i campi obbligatori
+
+; Nome pubblico del modello (se non specificato verrà usato il nome del tema)
+name		= "Canada";
+
+; Descrizione del modello (note ..)
+description	= "Canada";
+
+; Autore
+author		= "Mauro Donadio mauro.donadio@studio.unibo.it";
+
+; * versione di AContent
+core		= "1.2";

@@ -1,0 +1,79 @@
+#content{
+	color:						#333;
+	line-height:				1.5em;
+	background-color:			#FFF;
+	text-align:					justify;
+}
+
+#content h1{
+	background:					#18578d;
+	padding:					10px;
+    margin-bottom:				10px;
+    margin-top:					20px;
+
+	color:						#FFF;
+
+	border:						1px solid #cccccc;
+    /* CSS3 */
+    border-radius:              2px;
+    /* Safari and chrome */
+    -webkit-border-radius:      2px;
+    /* Firefox */
+    -moz-border-radius:         2px;
+    /* Linux browsers */
+    -khtml-border-radius:       2px;
+}
+
+#content h2{
+	color:						#000;
+	border-bottom:				1px solid #000;
+	padding-bottom:				0px;
+    margin-bottom:				10px;
+    margin-top:					20px;
+}
+
+#content h3, #content h4, #content h5, #content h6{
+	padding:					5px;
+
+	background-color:			#555;
+	background-image:			url('canada/h-square.gif');
+	background-repeat:			no-repeat;
+	background-position:		left top;
+	color:						#FFF;
+	font-size:					1em;
+	font-weight:				700;
+	margin-bottom:				5px;
+	margin-left:				0;
+	margin-right:				0;
+	padding:					3px 3px 3px 25px;
+
+    margin-bottom:				10px;
+    margin-top:					20px;
+}
+
+#content ul{
+	margin-top:					30px;
+	list-style-image:			url(canada/list.gif);
+}
+#content ul li{
+	padding:					3px;
+}
+
+#content a:link{
+	text-decoration:			none;
+	color:						#295376;
+	background:					transparent;
+}
+#content a:visited{
+	color:						#5a306b;
+}
+#content a:hover, #content a:active{
+	text-decoration:			underline;
+	color:						#B00000;	
+}
+.header .modelContent{
+	height:						30px;
+	background-image:			url(canada/wmms.gif);
+	background-repeat:			no-repeat;
+	background-position:		right top;
+}

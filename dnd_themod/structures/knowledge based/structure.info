@@ -1,0 +1,56 @@
+; structure
+name = struct1
+
+; description
+description	= Structure with one page 
+
+; * Autore
+author		= Catia Prandi
+
+; * versione di AContent
+core		= 1.2
+
+; page template
+
+pageTemplName[] = overview
+min_overview = 0
+max_overview = 1
+
+
+pageTemplName[] = goals
+min_goals = 1
+max_goals = 1
+
+
+pageTemplName[] = contents
+min_contents = 1
+max_contents = 3
+
+
+contents[] = content
+min_content = 4
+max_content = 6
+
+contents[] = forum_1
+min_forum_1 = 1
+max_forum_1 = 1
+
+pageTemplName[] = self_assesment
+min_self_assesment = 1
+max_self_assesment = 1
+
+pageTemplName[] = references
+min_references = 1
+max_references = 1
+
+; test page
+testName[] = self_assesment
+
+; forum page
+forumName[] = forum_1
+
+
+
+
+
+
