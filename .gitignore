@@ -1,8 +1,0 @@
-#files created for deploy
-build.properties
-build.xml
-
-#file created by IDE (Aptana)
-.settings
-.buildpath
-.project
