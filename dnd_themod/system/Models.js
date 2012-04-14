@@ -140,69 +140,9 @@
 
 		});
 
-		
-		$('#attivaModelli_btn').bind("pageTemplateStruct", function(event) {
-			  alert("cippa2");
-			  //if($('#attivaModelli_btn').is(':checked')) {
-					
-					// disabilito ORDINA MODELLI				
-					$('#ordinaModelli_btn').attr('disabled','disabled');
-
-					$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/models.css" type="text/css" />');
-
-					// cut and paste toolBar
-					base.before(boxModel + boxModelToolbox);
-
-					// CUT & PASTE
-
-					// cookie name
-					var c_name		= 'modelClipboard';
-
-					// leggo il cookie
-					var i,x,y,ARRcookies=document.cookie.split(";");
-					for (i=0;i<ARRcookies.length;i++){
-						x	= ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
-						y	= ARRcookies[i].substr(ARRcookies[i].indexOf("=")+1);
-						x	= x.replace(/^\s+|\s+$/g,"");
-						if (x==c_name){
-							if(unescape(y) != '')
-								$('#modelPaste').css('display','inline');
-						}
-					}
-		
-					// riempo il box con i modelli disponibili solo nel caso
-					// si scelga di visualizzare i modelli
-					var m = '';
-
-					var count = 0;
-					<?php
-						
-						foreach($listaModelli as $key => $value) {
-							echo 'count++;';
-							echo '$(".boxModel").append($("<li>"));';
-							echo 'm = m + "<li><table id=\"'.$key.'\"><tr><td><img src=\"'.$dnd_themod.'/models/'.$key.'/screenshot.png\" /></td></tr><td class=\"desc\">'.$value['name'].'</td></tr></table></li>";';
-						}
-					?>
-
-					alert("change "+ count);
-					$(".boxModel ul").append(m);
-
-					// mostro il box dei modelli
-					$('.boxModel').slideToggle('slow', function(){
-						$(this).css('display','block');
-					});
-
-					visualizzaModelli();
-
-				
-		});
-
-		
-		
-		
-		
+	
 		$('#attivaModelli_btn').change(function (event) {
-			alert("caccA ");
+			
 			if($('#attivaModelli_btn').is(':checked')) {
 				
 				// disabilito ORDINA MODELLI				
@@ -244,7 +184,6 @@
 					}
 				?>
 
-				alert("change "+ count);
 				$(".boxModel ul").append(m);
 
 				// mostro il box dei modelli
