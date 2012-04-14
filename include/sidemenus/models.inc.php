@@ -14,11 +14,14 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/PrivilegesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
 
 global $savant;
 
 $contentDAO		= new ContentDAO();
 $privilegesDAO	= new PrivilegesDAO();
+$coursesDAO = new CoursesDAO();
 $output = '';
 
 ?>
@@ -56,13 +59,36 @@ $user_priv	= $privilegesDAO->getUserPrivileges($_SESSION['user_id']);
 $is_author	= $user_priv[1]['is_author'];
 
 // prendo la lista dei temi disponibili validi
-$listaModelli	= $mod->getListaModelli();
 
+$listaModelli = array();
+
+if($_content_id != "" && $_course_id != "") {
+	
+	$course = $coursesDAO->get($_course_id);
+	$content = $contentDAO->get($_content_id);
+	
+	if($course['structure']!='') {
+		$structManager = new StructureManager($course['structure']);
+		$array = $structManager->getContent($content['title']);
+		$listaModelli = $mod->modelloConforme($array);
+			
+	}  else {
+		$listaModelli = $mod->getListaModelli();
+	}
+
+}
+
+
+
+
+	
+//}
 // chiamo la funzione che crea il modulo grafico di selezione del tema
-$resArray		= $mod->createUI($listaModelli);
+//$listaModelli
+$resArray		= $mod->createUI();
 
 // array contenente il contenuto corrente (testo, eader, bit che indica che l'header è incluso)
-//$content	= getContent($contentDAO, $cid);
+//$content	= getContent(DAO, $cid);
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

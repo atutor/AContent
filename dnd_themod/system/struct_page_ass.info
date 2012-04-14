@@ -8,7 +8,6 @@ content[] = title_2_columns
 content[] = title_3_columns
 content[] = title_image
 content[] = title_image_text
-content[] = unordered_list
 
 references[] = unordered_list
 

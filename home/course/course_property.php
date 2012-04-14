@@ -78,8 +78,6 @@ else if($_POST['submit']){
 			
 			
 			exit;
-
-		
 			
 	}
 }
@@ -112,6 +110,7 @@ require(TR_INCLUDE_PATH.'footer.inc.php');
 function createStruct($page_temp, $struc_manag, $id_folder, $course_id) {
 		
 		$contentDAO = new ContentDAO();
+		$coursesDAO = new CoursesDAO();
 		
 		foreach ($page_temp as $page) {
 			
@@ -139,7 +138,12 @@ function createStruct($page_temp, $struc_manag, $id_folder, $course_id) {
 					$contentDAO->UpdateField($content_id, 'content_parent_id', $id_folder);
 				}
 				
+				//update the field 'optional'
 				$contentDAO->UpdateField($content_id, 'optional', $opt);
+				
+				//update the field 'structure'
+				$coursesDAO->UpdateField($course_id, 'structure', $_POST['_struct_name']);
+				
 				
 				if($struc_manag->isForum($page)) {
 					$forums_dao = new ForumsDAO();

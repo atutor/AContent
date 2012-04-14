@@ -30,12 +30,15 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] == 0) {
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/my_courses.inc.php';
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/category.inc.php';
 	// mostro il menu modelli
+	
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/models.inc.php';
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/themes.inc.php';
 	//catia
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/structures.inc.php';
+	
 }
 
 $savant->assign('side_menu', $side_menu);
 $savant->display('include/side_menu.tmpl.php');
+
 ?>

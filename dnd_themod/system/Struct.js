@@ -3,11 +3,6 @@
 document.getElementById('subnavlistcontainer').style.display = 'none';
 
 
-function mioAlert(name) {
-	
-	alert(name);
-}
-
 
 function openPrev (pageName) {
 

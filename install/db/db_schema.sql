@@ -78,6 +78,7 @@ CREATE TABLE `courses` (
   `side_menu` VARCHAR( 255 ) NOT NULL default '',
   `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `structure` TEXT NOT NULL,
   PRIMARY KEY  (`course_id`),
   FULLTEXT(`title`, `description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

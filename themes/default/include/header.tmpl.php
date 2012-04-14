@@ -61,6 +61,8 @@ $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime; 
 //Timer Ends
 
+
+
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
@@ -94,6 +96,8 @@ $starttime = $mtime;
 
 <body onload="<?php echo $this->onload; ?>">
 
+
+
 <div id="liquid-round">
   
  <div class="center-content">
@@ -121,6 +125,9 @@ $starttime = $mtime;
         }
         ?>
   </span>
+  
+  
+  
   <div id="banner">
  
   </div>
@@ -129,6 +136,7 @@ $starttime = $mtime;
   <!-- the main navigation. in our case, tabs -->
     <ul class="navigation">
 <?php 
+
 foreach ($this->top_level_pages as $page) {
 	if (strpos($page['url'], '?') > 0)  {
 		$url_without_param = substr($page['url'], 0, strpos($page['url'], '?'));
@@ -141,6 +149,7 @@ foreach ($this->top_level_pages as $page) {
 <?php } else { ?>
       <li class="navigation"><a href="<?php echo $page['url']; ?>"  title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
 <?php } // endif
+
 } //endforeach ?>
     </ul>
   </div>
@@ -154,7 +163,7 @@ foreach ($this->top_level_pages as $page) {
     <?php else: ?>
       <li><a href="<?php echo $page['url']; ?>"  title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
     <?php endif; ?>
-    <?php endforeach; ?>
+    <?php endforeach;?>
     </ul>
   </div>
 -->
@@ -183,6 +192,8 @@ foreach ($this->top_level_pages as $page) {
       </form>
       </div>
   </div>
+  
+  
 <!-- 
 <div>
 	<div id="breadcrumbs">
@@ -197,6 +208,7 @@ foreach ($this->top_level_pages as $page) {
 	<?php } ?>
 </div>
 !-->
+
 
   <div id="ajax-msg">
   </div>
@@ -216,6 +228,8 @@ foreach ($this->top_level_pages as $page) {
 <?php // } ?>
     &nbsp;
   </div>
+  
+ 
 
   <!-- guide -->
   <?php if (isset($this->guide)) {  ?>
@@ -233,6 +247,7 @@ foreach ($this->top_level_pages as $page) {
       <?php } ?>
     <?php } ?>
   <?php } ?>
+  
   <?php if (isset($this->course_id) && $this->course_id > 0) {?>
     <!--  <div id="course-tools">-->
       <?php if ($this->isAuthor) { // only for authors ?>
@@ -261,6 +276,9 @@ foreach ($this->top_level_pages as $page) {
  </div>
     <?php }?>
 
+
+
+
 <?php //if ($this->course_id > 0) { ?>
   <div id="contentwrapper">
     <?php //if ((isset($this->course_id) && $this->course_id > 0)): ?>
@@ -275,6 +293,7 @@ foreach ($this->top_level_pages as $page) {
       }
       //]]>
       </script>
+      
       <?php require(TR_INCLUDE_PATH.'side_menu.inc.php'); ?>
       <script type="text/javascript">
       //<![CDATA[
@@ -283,6 +302,8 @@ foreach ($this->top_level_pages as $page) {
       </script>
     </div>
 	<?php //endif; ?>
+
+
 
     <div id="contentcolumn"
     <?php if (isset($this->course_id) && $this->course_id <= 0): ?>

@@ -59,6 +59,9 @@ $_pages = $menu->getAllPages();   // add "param" element into $_pages items
 //debug($_current_root_page);
 //debug($_current_page);
 
+
+
+
 $savant->assign('path', $_breadcrumb_path);
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('current_top_level_page', $_current_root_page);
@@ -90,6 +93,8 @@ if ($myLang->isRTL()) {
 	$savant->assign('rtl_css', '');
 }
 
+
+
 $_tmp_base_href = TR_BASE_HREF;
 if (isset($course_base_href) || isset($content_base_href)) {
 	$_tmp_base_href .= $course_base_href;
@@ -109,6 +114,9 @@ $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
+
+
+
 
 // course categories for search tool
 require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
@@ -137,14 +145,17 @@ $savant->assign('custom_css', $custom_css);
 if ($onload) $savant->assign('onload', $onload);
 $savant->assign('course_id', $_course_id);
 
+
+
 if ($framed || $popup) {
 	$savant->assign('framed', 1);
     $savant->assign('popup', 1);
-
-	$savant->display('include/fm_header.tmpl.php');
+    $savant->display('include/fm_header.tmpl.php');
 
 } else {
-    $savant->display('include/header.tmpl.php');
+	$savant->display('include/header.tmpl.php');
 }
+
+
 
 ?>

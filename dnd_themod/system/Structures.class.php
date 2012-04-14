@@ -23,7 +23,7 @@
 		 * @access  public
 		 * @param   mod_path: associative array containing the paths list
 		 * @return  none
-		 * @author  Mauro Donadio
+		 * @author  Catia Prandi
 		 */
 
 		public function __construct($mod_path) {

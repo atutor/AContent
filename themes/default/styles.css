@@ -387,7 +387,7 @@ h2 #title {
 }
 a#back-to {
   padding-left: 20px;
-  background-image: url(images/back.gif);
+  /*background-image: url(images/back.gif);*/
   background-repeat: no-repeat;
   background-position: 0px 0px;
 }

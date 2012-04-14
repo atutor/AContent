@@ -87,9 +87,10 @@ class StructureManager
 			}
 		} else if($this->isForum($page)) 
 			return 'At this content is associated a forum';
-		
+		else if($this->isTest($page))
+			return 'At this content is associated a test';
 		else
-			return 'Choose the page template';
+			return 'null';
 		
 	}
 	
@@ -334,9 +335,7 @@ class StructureManager
 		return $this->page_temp;
 	}
 	
-	
-	
-	/* Access: PRIVATE */
+
 	function getContent($page) {
 		$filename = realpath(TR_INCLUDE_PATH. '../dnd_themod').'/system/struct_page_ass.info';
 		if(is_file($filename)) {

@@ -110,7 +110,7 @@
 		 * 
 		 * */
 		
-		private function modelloConforme($dir = array()){
+		function modelloConforme($dir = array()){
 			
 			// scandisco tutti i modelli esistenti
 		
@@ -176,7 +176,7 @@
 		 *	output:	none 
 		 * */
 
-		public function createUI($listaModelli){
+		public function createUI(){
 
 
 			$ui		= '';
