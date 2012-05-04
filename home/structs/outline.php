@@ -38,9 +38,21 @@ require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
 include TR_INCLUDE_PATH. '../dnd_themod/system/'.'Struct.js';
 
 	
+$structs = explode("_", $_struct_name);
 
-$structManager = new StructureManager($_struct_name);
-$structManager->printPreview();
+$flag_button = false;
+$count = count($structs);
+$i = 1;
+foreach ($structs as $s) {
+		if($i == $count)
+			$flag_button = true;
+			
+		$structManager = new StructureManager($s);
+		$structManager->printPreview($flag_button, $_struct_name);
+		echo '</br>';
+		$i++;
+}
+		
 
 
 

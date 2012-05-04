@@ -34,6 +34,7 @@ CREATE TABLE `content` (
   `content_type` TINYINT(1) UNSIGNED NOT NULL,
   `theme` TEXT NOT NULL,
   `optional` BOOLEAN NOT NULL default '1',
+  `structure` TEXT NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`),
   FULLTEXT(keywords, title, text)
@@ -78,7 +79,6 @@ CREATE TABLE `courses` (
   `side_menu` VARCHAR( 255 ) NOT NULL default '',
   `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
   `modified_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `structure` TEXT NOT NULL,
   PRIMARY KEY  (`course_id`),
   FULLTEXT(`title`, `description`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

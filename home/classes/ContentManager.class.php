@@ -235,6 +235,7 @@ class ContentManager
 			$this->getContentPathRecursive($parent_id, $path);
 		}
 	}
+	
 
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, 
 	                    $related, $formatting, $head = '', $use_customized_head = 0, 
@@ -717,6 +718,9 @@ function initContentMenu() {
 		{
 			echo "\n".'
   <div class="menuedit">
+  	<a href="'.$_base_path.'home/editor/edit_content_struct.php?_course_id='.$_course_id.'">
+      <img id="img_create_top_folder" src="'.$_base_path.'images/addstruct.gif" alt="Add top structure" title="Add top structure" style="border:0;height:1.2em" />
+    </a>'."\n".'
     <a href="'.$_base_path.'home/editor/edit_content_folder.php?_course_id='.$_course_id.'">
       <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
     </a>'."\n".'

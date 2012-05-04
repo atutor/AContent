@@ -21,7 +21,7 @@ global $savant;
 
 $contentDAO		= new ContentDAO();
 $privilegesDAO	= new PrivilegesDAO();
-$coursesDAO = new CoursesDAO();
+//$coursesDAO = new CoursesDAO();
 $output = '';
 
 ?>
@@ -64,11 +64,11 @@ $listaModelli = array();
 
 if($_content_id != "" && $_course_id != "") {
 	
-	$course = $coursesDAO->get($_course_id);
+	//$course = $coursesDAO->get($_course_id);
 	$content = $contentDAO->get($_content_id);
 	
-	if($course['structure']!='') {
-		$structManager = new StructureManager($course['structure']);
+	if($content['structure']!='') {
+		$structManager = new StructureManager($content['structure']);
 		$array = $structManager->getContent($content['title']);
 		$listaModelli = $mod->modelloConforme($array);
 			

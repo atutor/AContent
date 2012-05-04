@@ -21,11 +21,13 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 
 global $_course_id;
 
 $coursesDAO = new CoursesDAO();
 $contentDAO = new ContentDAO();
+
 
 if ($_course_id > 0) {
 	Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
@@ -63,15 +65,40 @@ else if($_POST['submit']){
 			{
 				
 				if(isset($_POST['_struct_name'])) {
-		
-					$struc_manag = new StructureManager($_POST['_struct_name']);
-					$page_temp = $struc_manag->get_page_temp();
 					
-					createStruct($page_temp, $struc_manag, -1, $course_id);
+					//$struc_manag = new StructureManager($_POST['_struct_name']);
+					//$page_temp = $struc_manag->get_page_temp();
 					
+					//createStruct($page_temp, $struc_manag, -1, $course_id);
 					
-			}
-			
+					//die($_POST['_struct_name']);
+					$structs = explode("_", $_POST['_struct_name']);
+					//if(count($structs) > 1) {
+						
+						foreach ($structs as $s) {
+							$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $s, 'null', null, 0, null, 1);
+								
+							$struc_manag = new StructureManager($s);
+							$page_temp = $struc_manag->get_page_temp();
+						
+							$struc_manag->createStruct($page_temp, $content_id , $course_id);
+						}
+								
+					/*} else {
+							
+							$struc_manag = new StructureManager($_POST['_struct_name']);
+							$page_temp = $struc_manag->get_page_temp();
+								
+							$struc_manag->createStruct($page_temp, -1 , $course_id);
+						}*/
+					
+				} 
+				
+				
+				
+				
+				
+				
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			
 			header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$course_id);
@@ -79,8 +106,8 @@ else if($_POST['submit']){
 			
 			exit;
 			
+			}
 	}
-}
 	
 	
 }
@@ -107,69 +134,6 @@ require(TR_INCLUDE_PATH.'footer.inc.php');
 
 
 
-function createStruct($page_temp, $struc_manag, $id_folder, $course_id) {
-		
-		$contentDAO = new ContentDAO();
-		$coursesDAO = new CoursesDAO();
-		
-		foreach ($page_temp as $page) {
-			
-			$max = $struc_manag->getMax($page);
-			$min = $struc_manag->getMin($page);
-			
-			for($i=0; $i<$max; $i++) {
-				
-				// if $opt = '1' the page is optional
-			    // else the page is mandatory
-				$opt = 	($i < $min) ? 0 : 1; 
-			
-				$content_type = 0;
-				if($struc_manag->isFolder($page))
-					$content_type = 1;
-				
-				$body = $struc_manag->getBody($page);
-				$title = $struc_manag->getTitle($page);
-					
-				if($id_folder == -1) {
-					$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $title, $body, null, 0, null, $content_type);
-					
-				} else {
-					$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $title, $body, null, 0, null, $content_type);
-					$contentDAO->UpdateField($content_id, 'content_parent_id', $id_folder);
-				}
-				
-				//update the field 'optional'
-				$contentDAO->UpdateField($content_id, 'optional', $opt);
-				
-				//update the field 'structure'
-				$coursesDAO->UpdateField($course_id, 'structure', $_POST['_struct_name']);
-				
-				
-				if($struc_manag->isForum($page)) {
-					$forums_dao = new ForumsDAO();
-					$forum_course = new ForumsCoursesDAO();
-					$forum_content = new ContentForumsAssocDAO();
-					
-					$forum_id = $forums_dao->Create($page, 'This is the description of the forum');
-					$forum_content->Create($content_id, $forum_id);
-					$forum_course->Create($forum_id, $course_id);
-				} else if($struc_manag->isTest($page)) {
-					$testsDAO = new TestsDAO();
-					$test_ass_cont = new ContentTestsAssocDAO();
-					
-					$test_id = $testsDAO->Create($course_id, $page, 'This is the test description');
-					$test_ass_cont->Create($content_id, $test_id);
-					
-				} else if($content_type == 1) {
-					//the content is a folder
-					$child = $struc_manag->getChild($page);
-					$id_folder = $content_id;
-					createStruct($child, $struc_manag, $id_folder, $course_id);
-					$id_folder = -1;
-				} 
-			
-			}
-				
-		}
-	}
+
+
 ?>

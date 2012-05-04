@@ -120,7 +120,7 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 	$_pages['home/structs/outline.php']['parent'] = 'home/index.php';
 	
 	if(isset($_struct_name)) 
-		$_pages['home/structs/outline.php']['title'] = '"'. $_struct_name . '" structure outline';
+		$_pages['home/structs/outline.php']['title'] = '"'. $_struct_name . ' based" structure outline';
 	
 		
 	
@@ -165,6 +165,10 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		$_pages['home/editor/edit_content_folder.php']['title_var'] = 'edit_content_folder';
 		$_pages['home/editor/edit_content_folder.php']['parent']    = 'home/index.php';
 		$_pages['home/editor/edit_content_folder.php']['guide']     = 'TR_HELP_EDIT_CONTENT_FOLDER';
+		
+		$_pages['home/editor/edit_content_struct.php']['title'] = 'Edit content structure';
+		$_pages['home/editor/edit_content_struct.php']['parent']    = 'home/index.php';
+		//$_pages['home/editor/edit_content_folder.php']['guide']     = 'TR_HELP_EDIT_CONTENT_FOLDER';
 		
 		$_pages['home/editor/delete_content.php']['title_var'] = 'delete_content';
 		$_pages['home/editor/delete_content.php']['parent']    = 'home/index.php';

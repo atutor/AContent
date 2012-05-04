@@ -56,21 +56,67 @@ if (!is_array($structsList)) {
 	$output = _AT('none_found');
 } else {
 	$num_of_courses = count($structsList);
-
-    $output .= '<ol class="remove-margin-left">'."\n";
 	
-	foreach ($structsList as $name => $val) {
-				
-				//$val['name']
+	
+    $output .= '<ol class="remove-margin-left">'."\n";
+   	$output .=  '<p style="">Simple structures: </p>';
+	
+   	$simpleList = array();
+   	
+	foreach ($structsList as $val) {
+		
 		$output .= ' <li title="'.$val['name'].'"> '."\n";
 		$output .= ' <a href="'. TR_BASE_HREF.'home/structs/outline.php?_struct_name='.$val['name'].'">'."\n";
 		$output .= $val['name'];
 		$output .= ' </a>'."\n";
     	$output .= '  </li>'."\n";
     	
+    	$simpleList[] = $val['name'];
+    }
+  
+   $output .=  '<p style="">Complex structures: </p>';
+	
+	$size = sizeof($simpleList);
+	
+	//this is not completely correct
+	for($i=0; $i<$size; $i++) {
+		$structs = $simpleList[$i];
 		
+		if(($i+1) == $size) {
+			$stop = $i-1;
+			$start = 0;
+		} else {
+			$stop = $size;
+			$start= $i+1;
+		}
+		for($j=$start; $j<$stop; $j++) {
+			
+			
+			$structs .= '_'.$simpleList[$j];
+			
+			$output .= ' <li title="'.$structs.'"> '."\n";
+			$output .= ' <a href="'. TR_BASE_HREF.'home/structs/outline.php?_struct_name='.$structs.'">'."\n";
+			$output .= $structs;
+			$output .= ' </a>'."\n";
+    		$output .= '  </li>'."\n";
+    		
+			if(($j+1) == $size) {
+				
+				$stop = $i;
+				$j = 0;
+			}
+			
+		}
+
 		
-	} // end of foreach; 
+	}
+		
+	
+	
+    
+    
+	
+	
 }
 
 $output .= '</ol>'."\n";

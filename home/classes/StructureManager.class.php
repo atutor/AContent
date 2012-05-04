@@ -15,6 +15,14 @@
 if (!defined('TR_INCLUDE_PATH')) exit;
 
 require_once(TR_INCLUDE_PATH. 'classes/Utility.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+
 
 class StructureManager
 {
@@ -57,7 +65,8 @@ class StructureManager
 	
 	function dislayTest($page, $i) {
 		echo '<div id="folder_'.$page.$i.'" style="margin-left: 15px;">';
-		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/clr.gif" alt="">';
+		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
+		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
 		echo '<img class="img-size-tree" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_end.gif">';
 		echo '<img class="img-size-tree" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_horizontal.gif">';
 		echo '<img alt="test" title="test" src="'.TR_BASE_HREF.'/images/check.gif">';
@@ -97,7 +106,8 @@ class StructureManager
 	
 	function getTitle($page) {
 		if($this->isForum($page) || $this->isTest($page))
-			return 'content with '.$page;
+			return $page;
+			//return 'content with '.$page;
 		else 
 			return $page;
 	} 
@@ -174,12 +184,24 @@ class StructureManager
 		
 	}
 	
+	function isPageTemp($page) {
+		foreach ($this->page_temp as $p)
+			if($page == $p)
+				return true;
+		
+		return false;	
+		
+	}
 	
-	function printPreview() {
+	function printPreview($flag_button, $structs) {
 		
 		
 		
 		echo '<div>'."\n";
+		//echo '<img class="img-size-tree" width="16" height="16" border="0" src="http://localhost/AContentEdu/images/tree/tree_space.gif" alt="">
+		echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
+		
+		echo '<p style="display:inline; border-style: solid; border-color: grey; border-width:1px;">'.$this->name.'</p>';
 		//echo '<script type="text/javascript" src="../dnd_themod/system/Struct.js"></script>';
 		
 		echo '<strong>';
@@ -188,12 +210,14 @@ class StructureManager
 		
 		
 		
+		if($flag_button) {
+			echo '<form action="home/course/course_property.php" method="get">';
+			echo '<input type="hidden" name="_struct_name" value="'.$structs.'" />';
 		
-		echo '<form action="home/course/course_property.php" method="get">';
-		echo '<input type="hidden" name="_struct_name" value="'.$this->name.'" />';
-		echo '<input type="submit" value="Create course with this structure" style="margin: 50px; margin-right: 100px; float: right;"></input> ';
+			echo '<input type="submit" value="Create course with this structure" style="margin: 50px; margin-right: 100px; float: right;" />';
 		//Create lesson with this structure
-		echo '</input>';
+		}
+		//echo '</input>';
 		echo '</strong>';
 		
 		echo '</div>';
@@ -206,10 +230,6 @@ class StructureManager
 	function printStruct($array, $folder) {
 				
 		global $_base_path;
-		
-		
-			
-		
 		
 		if($array == null) 
 			$array = $this->page_temp;
@@ -226,9 +246,14 @@ class StructureManager
 			for($i=0; $i<$max; $i++) {
 			
 				echo '<div>';
-				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/clr.gif"/>';
-				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_end.gif"/>';
-				
+				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
+				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
+				if($i == ($max-1))
+					echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_end.gif"/>';
+				else 
+					echo '<img class="img-size-tree" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_split.gif">';
+					
+					
 				if($this->isFolder($page)) 
 					$this->insertToogle($page, $i, 'expand');
 				else if($this->isTest($page))
@@ -242,15 +267,15 @@ class StructureManager
 				
 				echo '<span style="margin-left:0.3cm; margin-right:0.2cm">';
 				
-				if($this->isTest($page) || $this->isForum($page))
-					echo 'content with ';
+				/*if($this->isTest($page) || $this->isForum($page))
+					echo 'content with ';*/
 				
 				echo $page.' ';
 			
 				
 				if($folder != -1 && !$this->isTest($page) && !$this->isForum($page))
 					echo ($folder+1).'.'. ($i+1);
-				else if($this->isFolder($page))
+				else if($this->isFolder($page) && $this->getMax($page)!=1)
 					echo ($i+1);
 				
 					
@@ -262,21 +287,16 @@ class StructureManager
 					$child = $this->getChild($page);
 					//$child = $this->info[$page];
 								
-							echo '<div style="margin-left: 15px; display: none;" id="folder_'.$page.$i.'" >';
-							$this->printStruct($child, $i);
+					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$page.$i.'" >';
+					$this->printStruct($child, $i);
 									
-							echo '</div>';
+					echo '</div>';
 				} else if($this->isTest($page)) {
 					$this->dislayTest($page, $i);
-				} else {
+				} /*else {
 					$this->createPreview($page, $i); 
-				}
-				
-					
-				
-					
-					
-					
+				}*/
+		
 				echo '</div>';
 				
 				
@@ -337,7 +357,8 @@ class StructureManager
 	
 
 	function getContent($page) {
-		$filename = realpath(TR_INCLUDE_PATH. '../dnd_themod').'/system/struct_page_ass.info';
+		//$filename = realpath(TR_INCLUDE_PATH. '../dnd_themod').'/system/struct_page_ass.info';
+		$filename = $this->path.'/struct_pages_ass.info';
 		if(is_file($filename)) {
 			$struct_page_ass = parse_ini_file($filename);
 			return $struct_page_ass[$page];
@@ -347,8 +368,80 @@ class StructureManager
 	}
 	
 	
+	function createStruct($page_temp, $id_folder, $course_id) {
+		
+		$contentDAO = new ContentDAO();
+		$coursesDAO = new CoursesDAO();
+		
+		foreach ($page_temp as $page) {
+		
+			$max = $this->getMax($page);
+			$min = $this->getMin($page);
+		
+			for($i=0; $i<$max; $i++) {
+			
+				// if $opt = '1' the page is optional
+			    // else the page is mandatory
+				$opt = 	($i < $min) ? 0 : 1; 
+			
+				$content_type = 0;
+				if($this->isFolder($page))
+					$content_type = 1;
+				
+				$body = $this->getBody($page);
+				
+				$title = $this->getTitle($page);
+					
+				if($id_folder == -1) {
+					$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $title, $body, null, 0, null, $content_type);
+					
+				} else {
+					$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $title, $body, null, 0, null, $content_type);
+					$contentDAO->UpdateField($content_id, 'content_parent_id', $id_folder);
+				}
+				
+				//update the field 'optional'
+				$contentDAO->UpdateField($content_id, 'optional', $opt);
+				//update the field 'structure'
+				$contentDAO->UpdateField($content_id, 'structure', $this->getName());
+			
+				if($this->isForum($page)) {
+					$forums_dao = new ForumsDAO();
+					$forum_course = new ForumsCoursesDAO();
+					$forum_content = new ContentForumsAssocDAO();
+					
+					$forum_id = $forums_dao->Create($page, 'This is the description of the forum');
+					
+					$forum_content->Create($content_id, $forum_id);
+					
+					$forum_course->Create($forum_id, $course_id);
+					
+				} else if($this->isTest($page)) {
+					$testsDAO = new TestsDAO();
+					$test_ass_cont = new ContentTestsAssocDAO();
+					
+					$test_id = $testsDAO->Create($course_id, $page, 'This is the test description');
+					$test_ass_cont->Create($content_id, $test_id);
+					
+				} else if($content_type == 1) {
+					//the content is a folder
+					$child = $this->getChild($page);
+				
+					
+					$this->createStruct($child, $content_id, $course_id);
+					
+					
+				} 
+				
+			}
+		
+		}
+		
+	}
+	
+	
 	function getChild($folder) {
-		 return $this->info[$folder];
+		return $this->info[$folder];
 	}
 	
 	
@@ -356,8 +449,8 @@ class StructureManager
 	/* Access: PRIVATE */
 	function getSrcImgPage($page) {
 		
-		$pages_template = $this->getContent($page);
 		
+		$pages_template = $this->getContent($page);
 		$previews = array();
 		
 		foreach ($pages_template as $page_template) {

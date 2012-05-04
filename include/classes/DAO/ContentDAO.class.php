@@ -237,6 +237,8 @@ class ContentDAO extends DAO {
 		         WHERE course_id=$courseID 
 		         ORDER BY content_parent_id, ordering";
 		
+		//ORDER BY content_parent_id, ordering
+		
 		return $this->execute($sql);
 	}
 

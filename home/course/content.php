@@ -14,7 +14,7 @@ define('TR_INCLUDE_PATH', '../../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
-require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 global $_current_user, $_course_id, $_content_id, $contentManager;
 
@@ -214,9 +214,9 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 		if($content == 'null') {
 			if(isset($_current_user) && $_current_user->isAuthor($course_id)) {
 			
-					$coursesDAO = new CoursesDAO();
-					
-					$row = $coursesDAO->get($courseid);
+					//$coursesDAO = new CoursesDAO();
+					$contentDAO = new ContentDAO();
+					$row = $contentDAO->get($cid);
 					
 					if($row['structure']!='') {
 						$content = '<script language="javascript" type="text/javascript">$(\'#attivaModelli_btn\').prop(\'checked\', true).trigger("change");</script>';
