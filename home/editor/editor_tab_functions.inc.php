@@ -98,6 +98,8 @@ function populate_a4a($cid, $content, $formatting){
 	
 	// Defining alternatives is only available for content type "html".
 	// But don't clean up the a4a tables at other content types in case the user needs them back at html.
+	
+	
 	if ($formatting <> 1) return;
 
 	include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
@@ -174,6 +176,7 @@ function save_changes($redir, $current_tab) {
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['_cid']	= intval($_POST['_cid']);
 	
+	
 	$_POST['alternatives'] = intval($_POST['alternatives']);
 	
 	$_POST['title'] = trim($_POST['title']);
@@ -225,6 +228,7 @@ function save_changes($redir, $current_tab) {
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
+			
 			$cid = $contentManager->addContent($_course_id,
 												  $_POST['pid'],
 												  $_POST['ordering'],
@@ -237,12 +241,21 @@ function save_changes($redir, $current_tab) {
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
 												  $content_type_pref);
+												  
 			$_POST['_cid']    = $cid;
 			$_REQUEST['_cid'] = $cid;
 		}
-        // re-populate a4a tables based on the new content
-		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
+		
+		
+        
+        
 		if ($cid == 0) return;
+		
+		// re-populate a4a tables based on the new content
+		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
+		
+		
+		
 //	}
 
 	/* insert glossary terms */

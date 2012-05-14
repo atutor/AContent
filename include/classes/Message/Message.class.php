@@ -423,6 +423,7 @@ class Message {
 	 * Method which simply check if a particular message type exists in the session obj
 	 */
 	function containsErrors() {
+		
 		return $this->abstractContains('error');
 	}
 	

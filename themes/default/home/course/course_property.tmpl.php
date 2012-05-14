@@ -58,112 +58,18 @@ require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 			<td align="left"><label for="description"><?php echo _AT('description'); ?></label></td>
 			<td align="left"><textarea id="description" cols="45" rows="2" name="description"><?php if (isset($_POST['description'])) echo stripslashes(htmlspecialchars($_POST['description'])); else echo stripslashes(htmlspecialchars($this->course_row['description'])); ?></textarea></td>
 		</tr>
-		<!--  catia -->
-		<!-- <tr>
+		<!--  catia GOAL -->
+		<!--  <tr>
 			<td align="left"><label for="goals"><?php echo 'Goals' ?></label></td>
 			<td align="left"><input type="text" id="goals" cols="45" rows="2" name="goals">
-		</tr> -->
+		</tr> 
 		
 		
-		<!-- <tr>
+		<tr>
 		<td align="left"><p>Goals</p></td>
 		<td>
 			<fieldset>
-				<legend>Choose the lesson's goals</legend> -->
-						<!-- 
-						<div style="display:inline-block">
-						<input id="memorizzare" type="checkbox" />
-						<label for="memorizzare">memorizzare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="classificare" type="checkbox" />classificare</input>
-						<label for="classificare">classificare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="ordinare" type="checkbox" />
-						<label for="ordinare">ordinare</label>
-						</div>
-						<div style="display:inline-block">						
-						<input id="applicare" type="checkbox" />
-						<label for="applicare">applicare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="rievocare" type="checkbox" />
-						<label for="rievocare">rievocare</label>
-						</div>
-						<div style="display:inline-block">
-							<input id="riconoscere" type="checkbox" />
-							<label for="riconoscere">riconoscere</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="tradurre" type="checkbox" />
-						<label for="tradurre">tradurre</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="eseguire" type="checkbox" />
-						<label for="eseguire">eseguire</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="applicare" type="checkbox" />
-						<label for="applicare">applicare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="verificare" type="checkbox" />
-						<label for="verificare">verificare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="interpretare" type="checkbox" />
-						<label for="interpretare">interpretare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="esemplificare" type="checkbox" />
-						<label for="esemplificare">esemplificare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="classificare" type="checkbox" />
-						<label for="classificare">classificare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="riassumere" type="checkbox" />
-						<label for="riassumere">riassumere</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="comparare" type="checkbox" />
-						<label for="comparare">comparare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="spiegare" type="checkbox" />
-						<label for="spiegare">spiegare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="tentare soluzioni" type="checkbox" />
-						<label for="tentare soluzioni">tentare soluzioni</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="formulare ipotesi" type="checkbox" />
-						<label for="formulare ipotesi">formulare ipotesi</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="riconoscere problemi chiave" type="checkbox"></input>
-						<label for="riconoscere problemi chiave">riconoscere problemi chiave</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="generare" type="checkbox" />
-						<label for="generare">generare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="pianificare" type="checkbox" />
-						<label for="pianificare">pianificare</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="produrre" type="checkbox"></input>
-						<label for="produrre">produrre</label>
-						</div>
-						<div style="display:inline-block">
-						<input id="formulare soluzioni nuove" type="checkbox"></input>
-						<label for="formulare soluzioni nuove">formulare soluzioni nuove</label>
-						</div>
-						 -->
+				<legend>Choose the lesson's goals</legend>
 						 <?php 
 						 /*$goals_manager = new GoalsManager();
 						 
@@ -176,12 +82,13 @@ require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 						 		echo '<label for="'.$goal.'">'.$goal.'</label>';
 								echo '</div>';
 								
-						 	}*/
+						 	}
+						 */
 						 ?>
 						
 				
-			<!--</fieldset>
-			</td> 
+			</fieldset>
+			
 		</td>	
 		</tr>-->
 		

@@ -22,6 +22,8 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
 $cid = $_content_id;
+
+
 $dao = new DAO();
 
 if ($_POST) {

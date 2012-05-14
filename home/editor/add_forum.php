@@ -16,9 +16,6 @@ Utility::authenticate(TR_PRIV_ISAUTHOR);
 $cid = $_POST['cid'];
 $crid = $_POST['crid'];
 
-echo $cid;
-echo $crid;
-
 
 $popup = intval($_GET['popup']);
 

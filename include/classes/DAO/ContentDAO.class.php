@@ -29,10 +29,11 @@ class ContentDAO extends DAO {
 	                       $content_type)
 	{
 		global $addslashes, $msg;
-
+		
 		if ($this->isFieldsValid('create', $course_id, $title))
 		{
 			/* insert into the db */
+			
 			$sql = "INSERT INTO ".TABLE_PREFIX."content
 			              (course_id,
 			               content_parent_id,
@@ -63,14 +64,16 @@ class ContentDAO extends DAO {
 			               ".$use_customized_head.",
 			               '".$addslashes($test_message)."',
 			               ".$content_type.")";
-
+			
 			if (!$this->execute($sql))
 			{
+				
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
 			}
 			else
 			{
+				
 				$cid = mysql_insert_id();
 				
 				// update the courses.modified_date to the current timestamp
@@ -288,14 +291,20 @@ class ContentDAO extends DAO {
 		if ($missing_fields)
 		{
 			$missing_fields = implode(', ', $missing_fields);
+			
 			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+			
 		}
 		
 		if (!$msg->containsErrors())
 			return true;
 		else
 			return false;
+			
+		
 	}
+	
+	
 
 }
 ?>

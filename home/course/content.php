@@ -238,7 +238,7 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	}
 
     $content = ContentUtility::formatContent($content, $content_row['formatting']);
-
+    
 	$content_array = ContentUtility::getContentTable($content, $content_row['formatting']);
 	
 	$savant->assign('content_table', $content_array[0]);

@@ -34,15 +34,17 @@ $cid = $_content_id;
 $crid = $_course_id;
 
 
+$popup = intval($_GET['popup']);
+
 if ($cid == 0) {
 	require(TR_INCLUDE_PATH.'header.inc.php');
 	$msg->printInfos('NO_PAGE_CONTENT');
-	require (TR_INCLUDE_PATH.'footer.inc.php');
+	//require (TR_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 
-$popup = intval($_GET['popup']);
+
 
 require(TR_INCLUDE_PATH.'header.inc.php');
 

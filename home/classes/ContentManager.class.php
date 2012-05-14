@@ -251,12 +251,14 @@ class ContentManager
 		         WHERE ordering>=$ordering 
 		           AND content_parent_id=$content_parent_id 
 		           AND course_id=$_course_id";
+		 
 		$this->contentDAO->execute($sql);
-
+		
 		/* main topics all have minor_num = 0 */
 		$cid = $this->contentDAO->Create($_course_id, $content_parent_id, $ordering, 0, $formatting,
 		                          $keywords, '', $title, $text, $head, $use_customized_head,
 		                          $test_message, $content_type);
+		
 		return $cid;
 	}
 	

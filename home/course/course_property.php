@@ -82,6 +82,7 @@ else if($_POST['submit']){
 							$page_temp = $struc_manag->get_page_temp();
 						
 							$struc_manag->createStruct($page_temp, $content_id , $course_id);
+							
 						}
 								
 					/*} else {
@@ -92,7 +93,64 @@ else if($_POST['submit']){
 							$struc_manag->createStruct($page_temp, -1 , $course_id);
 						}*/
 					
-				} 
+				} else {
+					$goals_manag = new GoalsManager();
+					$struct = '';
+					// = array();
+					
+					foreach ($goals_manag->getGoals() as $goal) {
+					
+					
+					$goal =  str_replace(' ', '_', $goal);
+					
+					
+					if(isset($_POST[$goal])) {
+							$goal =  str_replace('_', ' ', $goal);
+							$type = $goals_manag->getType($goal);
+						
+							if($struct == "")
+								$struct .= $type;
+							else {
+								$flag = true;
+								foreach (explode("_", $struct) as $s) {
+									if($type == $s) {
+										$flag = false;
+										
+									}
+								}
+								
+								if($flag)
+									$struct .= '_'.$type;
+								
+							}
+						}
+					}
+					
+					
+					
+					if($struct != '') {
+						$structs = explode("_", $struct);
+						//if(count($structs) > 1) {
+							//
+							foreach ($structs as $s) {
+								$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $s, 'null', null, 0, null, 1);
+								
+								$struc_manag = new StructureManager($s);
+								$page_temp = $struc_manag->get_page_temp();
+								$struc_manag->createStruct($page_temp, $content_id, $course_id);
+								//createStruct($page_temp, $struc_manag, $content_id , $course_id);
+							}
+							
+						
+							
+					}
+					
+					
+						
+					////die("struttura " .$structs);
+					
+					
+				}
 				
 				
 				
