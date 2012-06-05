@@ -428,6 +428,9 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	$_pages['tests/create_question_ordering.php']['title_var'] = 'create_new_question';
 	$_pages['tests/create_question_ordering.php']['parent']    = 'tests/question_db.php';
 	
+	$_pages['tests/create_question_fillinblanks.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_fillinblanks.php']['parent']    = 'tests/question_db.php';
+	
 	$_pages['tests/edit_question_truefalse.php']['title_var'] = 'edit_question';
 	$_pages['tests/edit_question_truefalse.php']['parent']    = 'tests/question_db.php';
 	
@@ -452,8 +455,13 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	$_pages['tests/edit_question_ordering.php']['title_var'] = 'edit_question';
 	$_pages['tests/edit_question_ordering.php']['parent']    = 'tests/question_db.php';
 	
+	$_pages['tests/edit_question_fillinblanks.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_fillinblanks.php']['parent']    = 'tests/question_db.php';
+	
 	$_pages['tests/delete_question.php']['title_var'] = 'delete';
 	$_pages['tests/delete_question.php']['parent'] = 'tests/question_db.php';
+	
+	
 }
 
 // file manager

@@ -1,0 +1,20 @@
+overview[] = overview_knowledge 
+
+goals[] = goals_knowledge 
+
+content[] = plain_text
+content[] = title_text
+content[] = title_2_columns
+content[] = title_3_columns
+content[] = title_image
+content[] = title_image_text
+
+retrieval_for_learning[] = plain_text
+
+references[] = unordered_list
+
+self_assesment[] = true_or_false
+self_assesment[] = multiple_choise
+self_assesment[] = matching_graphical
+self_assesment[] = matching_simple
+

@@ -71,7 +71,7 @@ class StructureManager
 		echo '<img class="img-size-tree" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_horizontal.gif">';
 		echo '<img alt="test" title="test" src="'.TR_BASE_HREF.'/images/check.gif">';
 		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/clr.gif" alt="">';
-		echo '<span>'.$page.' test</span>';
+		echo '<span>'.$page.'</span>';
 		echo '</div>';
 	}
 	

@@ -45,12 +45,6 @@
 			$this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
 			$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
 
-			/*
-			echo '<script type="text/javascript">';
-				echo 'alert("Mauro Donadioioioioio!");';
-			echo '</script>';
-			*/
-
 			//
 			if(isset($_POST['cid'], $_POST['action'], $_POST['text']) AND htmlentities($_POST['action']) == 'saveModelContent'){
 				$this->applicaModelloContenuto();

@@ -1,0 +1,66 @@
+; structure
+name = meta-competency based
+
+; description
+description	= 
+
+; * Autore
+author		= Catia Prandi
+
+; * versione di AContent
+core		= 1.2
+
+; page template
+
+pageTemplName[] = overview
+min_overview = 0
+max_overview = 1
+
+
+pageTemplName[] = goals
+min_goals = 1
+max_goals = 1
+
+pageTemplName[] = contents
+min_contents = 1
+max_contents = x
+
+
+contents[] = content
+min_content = 1
+max_content = x
+
+pageTemplName[] = activities
+min_activities = 1
+max_activities = x
+
+activities[] = activity
+min_activity = 1
+max_activity = x
+
+pageTemplName[] = eTivities
+min_eTivities = 0
+max_eTivities = 1
+
+eTivities[] = eTivity
+min_eTivity = 0
+max_eTivity = 1
+
+pageTemplName[] = assesment
+min_assesment = 1
+max_assesment = 1
+
+pageTemplName[] = references
+min_references = 1
+max_references = 1
+
+; test page
+testName[] = assesment
+
+
+
+
+
+
+
+

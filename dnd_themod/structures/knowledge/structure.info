@@ -1,0 +1,60 @@
+; structure
+name = knowledge based
+
+; description
+description	= 
+
+; * Autore
+author		= Catia Prandi
+
+; * versione di AContent
+core		= 1.2
+
+; page template
+
+pageTemplName[] = overview
+min_overview = 1
+max_overview = 1
+
+
+pageTemplName[] = goals
+min_goals = 1
+max_goals = 1
+
+
+pageTemplName[] = contents
+min_contents = 1
+max_contents = x
+
+
+contents[] = content
+min_content = 2
+max_content = x
+
+contents[] = forum
+min_forum = 0
+max_forum = 1
+
+pageTemplName[] = self_assesment
+min_self_assesment = 1
+max_self_assesment = 1
+
+pageTemplName[] = retrieval_for_learning
+min_retrieval_for_learning = 0
+max_retrieval_for_learning = 1
+
+pageTemplName[] = references
+min_references = 1
+max_references = 1
+
+; test page
+testName[] = self_assesment
+
+; forum page
+forumName[] = forum
+
+
+
+
+
+
