@@ -4,7 +4,9 @@
 	$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/dnd_themod.css" type="text/css" />');
 	
 	// se il contenuto attuale ha un tema, lo applico
+
 	if("<?php echo $content_theme; ?>" != ''){
+		
 		current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
 		$('head').append('<link rel="stylesheet" href="' + current_theme + '" type="text/css" />');
 	}

@@ -195,8 +195,6 @@ class StructureManager
 	
 	function printPreview($flag_button, $structs) {
 		
-		
-		
 		echo '<div>'."\n";
 		//echo '<img class="img-size-tree" width="16" height="16" border="0" src="http://localhost/AContentEdu/images/tree/tree_space.gif" alt="">
 		echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';

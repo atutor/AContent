@@ -524,6 +524,7 @@ function TestQuestionCounter($increment = FALSE) {
 
 		// print the question specific template
 		$row['question'] = ContentUtility::formatContent($row['question'], 1);
+		
 		$this->assignDisplayVariables($row, $response);
 		$this->savant->display('tests/test_questions/' . $this->sPrefix . '.tmpl.php');
 		

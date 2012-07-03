@@ -46,6 +46,13 @@ define('TR_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questio
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
 							'', '', '', '', '', '', '', '', '', '', 0, 0)");
+//catia
+//Question for Fill in the blanks
+define('TR_SQL_QUESTION_FILLINBLANKS', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES ( NULL, %d, %d, 9, '%s', '%s', 
+							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
+							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0)");
+
 
 //Question for Matching Simple
 define('TR_SQL_QUESTION_MATCHING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 5, '%s', '%s', 

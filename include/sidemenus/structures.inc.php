@@ -74,7 +74,7 @@ if (!is_array($structsList)) {
     	$simpleList[] = $val['name'];
     }
   
-   $output .=  '<p style="">Complex structures: </p>';
+   /*$output .=  '<p style="">Complex structures: </p>';
 	
 	$size = sizeof($simpleList);
 	
@@ -109,7 +109,7 @@ if (!is_array($structsList)) {
 		}
 
 		
-	}
+	}*/
 		
 	
 	
