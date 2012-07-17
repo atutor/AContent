@@ -1,0 +1,26 @@
+Informazioni_sul_modulo[] = info_comp_dig
+
+Obiettivi_generali[] = obiet_comp_dig
+
+Obiettivi_specifici[] = obiet_arg_comp_dig
+
+Elenco_degli_argomenti[] = unordered_list
+
+Linee_guida_per_il_docente[] = plain_text
+
+Contenuto[] = plain_text
+Contenuto[] = title_image
+Contenuto[] = title_image_text
+Contenuto[] = title_subtitle
+Contenuto[] = title_text
+
+Attività[] = title_text
+
+
+Bibliografia[] = biblio_comp_dig
+
+Prova_finale[] = multiple_choise
+Prova_finale[] = matching_graphical
+Prova_finale[] = matching_simple
+Prova_finale[] = open_ended
+
