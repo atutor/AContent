@@ -93,7 +93,13 @@ else if($_POST['submit']){
 							$struc_manag->createStruct($page_temp, -1 , $course_id);
 						}*/
 					
-				} else {
+				} 
+				
+				
+				/** goals 
+				 * 
+				 
+				 else {
 					$goals_manag = new GoalsManager();
 					$struct = '';
 					// = array();
@@ -151,6 +157,9 @@ else if($_POST['submit']){
 					
 					
 				}
+				
+				*
+				*/
 				
 				
 				
