@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<structure name="meta-competency">
+  <folder max="x" min="1" name="activities">
+    <page max="x" min="1" name="activity">
+      <page_templates>
+        <page_template name="plain_text"/>
+        <page_template name="title_text"/>
+        <page_template name="title_2_columns"/>
+        <page_template name="title_3_columns"/>
+        <page_template name="title_image"/>
+        <page_template name="title_image_text"/>
+      </page_templates>
+    </page>
+  </folder>
+  <page max="1" min="0" name="overview">
+    <page_templates>
+      <page_template name="overview_meta-competency"/>
+    </page_templates>
+  </page>
+  <page max="1" min="1" name="references">
+    <page_templates>
+      <page_template name="unordered_list"/>
+    </page_templates>
+  </page>
+  <page max="1" min="1" name="goals">
+    <page_templates>
+      <page_template name="goals_meta-competency"/>
+    </page_templates>
+  </page>
+  <page max="1" min="1" name="assesment">
+    <page_templates/>
+	<tests>
+		<test>true_or_false</test>
+		<test>multiple_choise</test>		
+		<test>matching_simple</test>
+		<test>matching_graphical</test>
+	</tests>
+  </page>
+  <folder max="1" min="0" name="eTivities">
+    <page max="1" min="0" name="eTivity">
+      <tests/>
+      <page_templates/>
+    </page>
+  </folder>
+  <folder max="x" min="1" name="contents">
+    <page max="x" min="1" name="content">
+      <page_templates/>
+    </page>
+  </folder>
+</structure>
