@@ -116,20 +116,39 @@
 				if(is_dir($isdir)){
 			
 					// controllo esista il file .info e lo parso
-					$isfile	= $isdir.'/theme.info';
+					
+					//$isfile	= $isdir.'/theme.info';
 			
-					if(is_file($isfile)){
+					$xml_file = $isdir.'/layout.xml';
+					if(is_file($xml_file)) {
+						$xml = simplexml_load_file($xml_file);
+						
+						foreach($xml->children() as $child) {
+							$name = $child->getName();
+							if($name == "release") {
+								$info['core'] = $child->version;
+								
+							}
+							$info[$name] = $child;
+						}
+						
+						
+					//}
+					
+					
+					//if(is_file($isfile)){
 
-						$info	= parse_ini_file($isdir.'/theme.info');
-		
+						//$info	= parse_ini_file($isdir.'/theme.info');
+						
 						// se non è stato specificato un nome, utilizzo quello della cartella
 						if(!$info['name'])
 							$info['name'] = $item;
 
 						// controllo il "core"
 						if(!$info['core'])
+							
 							continue;
-						else{
+						else {
 
 							$vfile	= explode('.', $info['core']);
 							$vcore	= explode('.', VERSION);
@@ -139,13 +158,15 @@
 							if($vfile[0] < $vcore[0])
 								// non compatibile!
 								continue;
-							elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
+							elseif(strtolower($vfile[1]) != 'x' and $vfile[1] < $vcore[1]) 
 								// non compatibile!
 								continue;
+							
 						}
 		
 						// inserisco le info del tema corrente all'interno di un vettore
 						$temi[$item] = $info;
+						
 					}
 				}
 			}

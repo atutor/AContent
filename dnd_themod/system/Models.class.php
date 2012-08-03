@@ -91,7 +91,6 @@
 
 			// chiamo la funzione che valida i modelli disponibili
 			$listaModelli	= $this->modelloConforme($dir);
-
 			return $listaModelli;
 		}
 
@@ -116,11 +115,24 @@
 				if(is_dir($isdir)){
 			
 					// controllo esista il file .info e lo parso
-					$isfile	= $isdir.'/model.info';
+					$xml_file = $isdir.'/page_template.xml';
+					if(is_file($xml_file)) {
+						$xml = simplexml_load_file($xml_file);
+						
+						foreach($xml->children() as $child) {
+							$name = $child->getName();
+							if($name == "release") {
+								$info['core'] = $child->version;
+								
+							}
+							$info[$name] = $child;
+						}
+						
+					//$isfile	= $isdir.'/model.info';
 			
-					if(is_file($isfile)){
+					//if(is_file($isfile)){
 
-						$info	= parse_ini_file($isdir.'/model.info');
+						//$info	= parse_ini_file($isdir.'/model.info');
 		
 						// se non è stato specificato un nome, utilizzo quello della cartella
 						if(!$info['name'])

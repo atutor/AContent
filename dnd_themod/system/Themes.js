@@ -23,7 +23,7 @@
 
 
 	$(document).ready(function() {
-
+		
 		// questa riga ci consente di mostrare il form solo se JS e' abilitato
 		// il selettore dipende dal nome del modulo (che, nel file della lingua, e' personalizzabile)
 		var titolo_modulo	= "<?php echo _AT('themes'); ?>";

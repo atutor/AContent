@@ -2,10 +2,10 @@
 name = creative based
 
 ; description
-description	= 
+description	= creative based
 
 ; * Autore
-author		= Catia Prandi
+author		= Catia Prandi catia.prandi2@unibo.it
 
 ; * versione di AContent
 core		= 1.2
@@ -44,6 +44,8 @@ max_eTivity = x
 pageTemplName[] = references
 min_references = 1
 max_references = 1
+
+testName[] = eTivity
 
 
 

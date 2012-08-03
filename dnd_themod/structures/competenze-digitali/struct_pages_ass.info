@@ -16,8 +16,18 @@ Contenuto[] = title_text
 
 Attività[] = title_text
 
+Bibliografia[] = unordered_list
 
-Bibliografia[] = biblio_comp_dig
+Sitografia[] = unordered_list
+
+
+Strumenti[] = title_text
+
+Approfondimento[] = plain_text
+Approfondimento[] = title_image
+Approfondimento[] = title_image_text
+Approfondimento[] = title_subtitle
+Approfondimento[] = title_text
 
 Prova_finale[] = multiple_choise
 Prova_finale[] = matching_graphical

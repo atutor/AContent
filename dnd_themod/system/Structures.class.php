@@ -108,11 +108,22 @@
 				if(is_dir($isdir)){
 			
 					// controllo esista il file .info e lo parso
-					$isfile	= $isdir.'/structure.info';
-			
-					if(is_file($isfile)){
+					//$isfile	= $isdir.'/structure.info';
+					$xml_file = $isdir.'/structure.xml';
+					if(is_file($xml_file)) {
+						$xml = simplexml_load_file($xml_file);
+						
+						foreach($xml->children() as $child) {
+							$name = $child->getName();
+							if($name == "release") {
+								$info['core'] = $child->version;
+								
+							}
+							$info[$name] = $child;
+						}
+					//if(is_file($isfile)){
 
-						$info	= parse_ini_file($isdir.'/structure.info');
+						//$info	= parse_ini_file($isdir.'/structure.info');
 						
 						// se non è stato specificato un nome, utilizzo quello della cartella
 						if(!$info['name'] || $info['name'] != $item)

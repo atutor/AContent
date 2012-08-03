@@ -2,10 +2,10 @@
 name = meta-competency based
 
 ; description
-description	= 
+description	= meta-competency based
 
 ; * Autore
-author		= Catia Prandi
+author		= Catia Prandi catia.prandi2@unibo.it
 
 ; * versione di AContent
 core		= 1.2
@@ -57,6 +57,7 @@ max_references = 1
 ; test page
 testName[] = assesment
 
+testName[] = eTivity
 
 
 

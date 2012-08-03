@@ -10,8 +10,8 @@ activity[] = title_image_text
 references[] = unordered_list
 
 
-e-activity[] = true_or_false
-e-activity[] = multiple_choise
-e-activity[] = matching_graphical
-e-activity[] = matching_simple
+eTivity[] = true_or_false
+eTivity[] = multiple_choise
+eTivity[] = matching_graphical
+eTivity[] = matching_simple
 

@@ -91,6 +91,7 @@ $apply_lesson_theme		= $config['apply_to_the_lesson'];
 
 include $mod_path['dnd_themod_sys'].'Themes.js';
 
+
 ######################################
 #	RESTITUISCO L'OUTPUT
 ######################################

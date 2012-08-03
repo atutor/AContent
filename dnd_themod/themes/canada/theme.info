@@ -7,7 +7,9 @@ name		= "Canada";
 description	= "Canada";
 
 ; Autore
-author		= "Mauro Donadio mauro.donadio@studio.unibo.it";
+	author		= "Mauro Donadio mauro.donadio@studio.unibo.it";
+
+Mauro Donadio mauro.donadio@studio.unibo.it
 
 ; * versione di AContent
 core		= "1.2";

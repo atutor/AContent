@@ -39,14 +39,6 @@ class StructureManager
 	var $path;
 	
 	var $info;
-
-	//constant
-	var $pageTemplName = 'pageTemplName';
-	
-	var $testName = 'testName';
-	
-	var $forumName = 'forumName';
-	
 	
 
 	
@@ -63,27 +55,28 @@ class StructureManager
 	
 	}
 	
-	function dislayTest($page, $i) {
-		echo '<div id="folder_'.$page.$i.'" style="margin-left: 15px;">';
+	function dislayTest($name, $i) {
+		echo '<div id="folder_'.$name.$i.'" style="margin-left: 15px;">';
 		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
 		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
 		echo '<img class="img-size-tree" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_end.gif">';
 		echo '<img class="img-size-tree" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_horizontal.gif">';
 		echo '<img alt="test" title="test" src="'.TR_BASE_HREF.'/images/check.gif">';
 		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/clr.gif" alt="">';
-		echo '<span>'.$page.'</span>';
+		echo '<span>'.$name.'</span>';
 		echo '</div>';
 	}
 	
 	
 	function getBody($page) {
 		
-		$contents = $this->getContent($page);
-		if(count($contents)==1) {
-			$path_page = realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/models/';;
-		
-			$file = $path_page . $contents[0] .'/'.$contents[0].'.html';
+		$content = $this->getContent($page);
+		if(count($content)==1) {
+			
+			$path_page = realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/models/';
+ 			$file = $path_page . $content[0] .'/'.$content[0].'.html';
 			if(is_file($file)) {
+				
 				$text = file_get_contents($file);
 				$find =  strpos($text, 'src="dnd_image"');
 				
@@ -93,71 +86,52 @@ class StructureManager
 					 else 	
 						return $text;
 				
+				
 			}
-		} else if($this->isForum($page)) 
+			
+		} else if($this->hasForum($page)) 
 			return 'At this content is associated a forum';
-		else if($this->isTest($page))
+		else if($this->hasTest($page))
 			return 'At this content is associated a test';
-		else
+		else {
 			return 'null';
-		
+		}
 	}
 	
 	
-	function getTitle($page) {
-		if($this->isForum($page) || $this->isTest($page))
+	/*function getTitle($page) {
+		if($this->hasForum($page) || $this->hasTest($page))
 			return $page;
 			//return 'content with '.$page;
 		else 
 			return $page;
-	} 
+	} */
 	
-	function isForum($page) {
+	function hasForum($page) {
 		
-		foreach ($this->forums as $forum) {
-			if($page == $forum) {
-				return true;
-				
-			} 
-		}
+		if($page->forum)
+			return true;
+				 
 		
 		return false;
 	}
 
-	function isTest($page) {
+	function hasTest($page) {
 		
-		
-		foreach ($this->tests as $test) {
-			
-			if($page == $test) 
+		if(count($page->tests->children()) > 0) 
 				return true;
-				
-		}
 		
 		return false;
 	}
 	
 	function isFolder($page) {
 		
-		if($this->info[$page] != null)
+		if($page->page || $page->folder)
 			return true;
 		else 
 			return false;
 	}
 	
-	function getMin($page) {
-		return $this->info['min_'.$page];
-	}
-	
-	function getMax($page) {
-		$max = $this->info['max_'.$page];
-		if($max == null || $max == 'x' || $max == '')
-			$max = $this->info['min_'.$page]+ 1;
-			
-		return $max;
-		
-		
-	}
 	
 	function getName() {
 		return $this->name;
@@ -170,13 +144,19 @@ class StructureManager
 	
 		if(is_dir($this->path)) {
 			
-			$file	= $this->path.'/structure.info';
+			//$file	= $this->path.'/structure.info';
+			$file = $this->path.'/content.xml';
+			//$xml = simplexml_load_file($file);
 			if(is_file($file)){
-				$this->info	= parse_ini_file($file);
+				//$this->info	= parse_ini_file($file);
+				$xml = simplexml_load_file($file);
 				
-				$this->page_temp = $this->info[$this->pageTemplName];
-				$this->tests = $this->info[$this->testName];
-				$this->forums = $this->info[$this->forumName];
+				
+				foreach($xml->children() as $child) {
+						#$attrs = $child->attributes();
+						$this->page_temp[] =  $child;//$attrs[2];
+				}
+			
 			 	
 			}
 			
@@ -184,14 +164,14 @@ class StructureManager
 		
 	}
 	
-	function isPageTemp($page) {
+	/*function isPageTemp($page) {
 		foreach ($this->page_temp as $p)
 			if($page == $p)
 				return true;
 		
 		return false;	
 		
-	}
+	}*/
 	
 	function printPreview($flag_button, $structs) {
 		
@@ -215,11 +195,10 @@ class StructureManager
 			echo '<input type="submit" value="Create course with this structure" style="margin: 50px; margin-right: 100px; float: right;" />';
 		//Create lesson with this structure
 		}
-		//echo '</input>';
+		
 		echo '</strong>';
 		
 		echo '</div>';
-		
 		
 	}
 	
@@ -231,14 +210,14 @@ class StructureManager
 		
 		if($array == null) 
 			$array = $this->page_temp;
-	
+			
 		
 		foreach ($array as $page) {
 			
-			$max = $this->info['max_'.$page];
-			$min = $this->info['min_'.$page];
-			
-			if($max == 'x')
+			$name = $page['name'];
+			$min = $page['min'];
+			$max = $page['max'];
+			if($max == 'x' || $max == 'n')
 				$max = $min + 1;
 			
 			for($i=0; $i<$max; $i++) {
@@ -253,47 +232,35 @@ class StructureManager
 					
 					
 				if($this->isFolder($page)) 
-					$this->insertToogle($page, $i, 'expand');
-				else if($this->isTest($page))
-					$this->insertToogle($page, $i, 'collapse');
+					$this->insertToogle($name, $i, 'expand');
+				else if($this->hasTest($page))
+					$this->insertToogle($name, $i, 'collapse');
 				else 
 					echo '<img class="img-size-tree" style="margin-left: 1px;" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_horizontal.gif">';
 				
-				
-				//echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="/AContent_BEAT/images/clr.gif">';
-				
-				
 				echo '<span style="margin-left:0.3cm; margin-right:0.2cm">';
-				
-				/*if($this->isTest($page) || $this->isForum($page))
-					echo 'content with ';*/
-				
-				echo $page.' ';
+				echo $name.' ';
 			
 				
-				if($folder != -1 && !$this->isTest($page) && !$this->isForum($page))
+				if($folder != -1 && !$this->hasTest($page) && !$this->hasForum($page))
 					echo ($folder+1).'.'. ($i+1);
-				else if($this->isFolder($page) && $this->getMax($page)!=1)
+				else if($this->isFolder($page) && $max != 1)
 					echo ($i+1);
 				
 					
 				echo '</span>';
 				
-				$this->insertIcons($page, $min, $i);
+				$this->insertIcons($min, $i);
 				
 				if($this->isFolder($page)) {
-					$child = $this->getChild($page);
-					//$child = $this->info[$page];
-								
-					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$page.$i.'" >';
-					$this->printStruct($child, $i);
+					
+					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$name.$i.'" >';
+					$this->printStruct($page->children(), $i);
 									
 					echo '</div>';
-				} else if($this->isTest($page)) {
-					$this->dislayTest($page, $i);
-				} /*else {
-					$this->createPreview($page, $i); 
-				}*/
+				} else if($this->hasTest($page)) {
+					$this->dislayTest($name, $i);
+				} 
 		
 				echo '</div>';
 				
@@ -327,42 +294,41 @@ class StructureManager
 	}
 	
 	
-	function createPreview($page, $i) {
-		echo '<input id="prev-inp-'.$page.$i.'" type="image" onclick="openPrev(\''.$page.$i.'\');" title="preview of page template" style="margin-left:0.2cm;" height="16" width="16" border="0" alt="preview of page template" src="'.TR_BASE_HREF.'images/preview.png"/>';
-		echo '<input id="hide-prev-inp-'.$page.$i.'" type="image" onclick="closePrev(\''.$page.$i.'\');" title="hide preview of page template" style="margin-left:0.2cm; display: none;" height="16" width="16" border="0" alt="hide preview of page template" src="'.TR_BASE_HREF.'images/hidePreview.png"/>';
-		echo '<div id="prev-'.$page.$i.'" style="margin: 10px; margin-left: 30px;display: none ;border-style: solid; border-width:1px; border-color: grey;">'; //display: none
-
-		$res = $this->getSrcImgPage($page);
-			
-		if(count($res) == 0) {
-			echo '<p style="color: red;">Preview not found</p>';
-		}
-
-			
-		foreach ($res as $prewiew) {
-
-			echo '<img style="margin: 10px;" width="70" height="70" src="'.$prewiew.'" title="preview of the page template: '.$page.'" >';
-			echo '</img>';
-
-		}
-		echo '</div>';
-	}
-	
 	function get_page_temp() {
 		
 		return $this->page_temp;
 	}
 	
 
-	function getContent($page) {
-		//$filename = realpath(TR_INCLUDE_PATH. '../dnd_themod').'/system/struct_page_ass.info';
-		$filename = $this->path.'/struct_pages_ass.info';
-		if(is_file($filename)) {
-			$struct_page_ass = parse_ini_file($filename);
-			return $struct_page_ass[$page];
-		} else	
-			return null;
+	function getContentByTitle($title) {
+		$file = $this->path.'/content.xml';
+		//echo("PALLE ");
+		if(is_file($file)){
+			$xml = simplexml_load_file($file);
+			$pages = $xml->xpath('//page');
+			while(list( , $node) = each($pages)) {
+				echo "PINO ".$node['name'];
+   				if($node['name'] == $title)
+   					return $node;
+			}
+				
+		}
+		return null;
+	}
 	
+
+	function getContent($page) {
+		
+		if($this->isFolder($page))
+			return null;
+		
+		$content = array();
+		$children = $page->page_templates->children();
+		foreach ($children as $child) {
+			$content[] = $child['name'];
+		}
+
+		return $content;
 	}
 	
 	
@@ -373,9 +339,11 @@ class StructureManager
 		
 		foreach ($page_temp as $page) {
 		
-			$max = $this->getMax($page);
-			$min = $this->getMin($page);
-		
+			//ToDo change here
+			$min = $page['min'];
+			$max = $page['max'];
+			if($max == 'x' || $max == 'n') $max = $min + 1;
+			
 			for($i=0; $i<$max; $i++) {
 			
 				// if $opt = '1' the page is optional
@@ -388,7 +356,7 @@ class StructureManager
 				
 				$body = $this->getBody($page);
 				
-				$title = $this->getTitle($page);
+				$title = $page['name'];
 					
 				if($id_folder == -1) {
 					$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $title, $body, null, 0, null, $content_type);
@@ -403,22 +371,22 @@ class StructureManager
 				//update the field 'structure'
 				$contentDAO->UpdateField($content_id, 'structure', $this->getName());
 			
-				if($this->isForum($page)) {
+				if($this->hasForum($page)) {
 					$forums_dao = new ForumsDAO();
 					$forum_course = new ForumsCoursesDAO();
 					$forum_content = new ContentForumsAssocDAO();
 					
-					$forum_id = $forums_dao->Create($page, 'This is the description of the forum');
+					$forum_id = $forums_dao->Create($page['name'], 'This is the description of the forum');
 					
 					$forum_content->Create($content_id, $forum_id);
 					
 					$forum_course->Create($forum_id, $course_id);
 					
-				} else if($this->isTest($page)) {
+				} else if($this->hasTest($page)) {
 					$testsDAO = new TestsDAO();
 					$test_ass_cont = new ContentTestsAssocDAO();
 					
-					$test_id = $testsDAO->Create($course_id, $page, 'This is the test description');
+					$test_id = $testsDAO->Create($course_id, $page['name'], 'This is the test description');
 					$test_ass_cont->Create($content_id, $test_id);
 					
 				} else if($content_type == 1) {
@@ -439,13 +407,13 @@ class StructureManager
 	
 	
 	function getChild($folder) {
-		return $this->info[$folder];
+		return $folder->children();
 	}
 	
 	
 	
 	/* Access: PRIVATE */
-	function getSrcImgPage($page) {
+	/*function getSrcImgPage($page) {
 		
 		
 		$pages_template = $this->getContent($page);
@@ -455,56 +423,24 @@ class StructureManager
 			$img = TR_BASE_HREF . 'dnd_themod/models/' . $page_template . '/screenshot.png';
 			$previews[] = $img;
 		}
-		
-		
-		/*$file_headers = @get_headers($file);
-		if($file_headers[0] == 'HTTP/1.1 404 Not Found') {
-		    return "";
-		}
-		else {
-   			 return $file;
-		}*/
+	
 		
 		return $previews;
 		
-		
-	}
+	}*/
 	
 	/* Access: PRIVATE */
-	function insertIcons($page, $min, $i){
+	function insertIcons($min, $i){
 
-		
-		//$min = $this->info['min_'.$page];
-		//$max = $this->info['max_'.$page];
-		
-		//if($min == 1 && $max == 1)
 		if($i < $min)
 			echo '<img title="the page is mandatory" border="0" alt="" src="'.TR_BASE_HREF.'images/must.jpeg"/>';
 		else 
 			echo '<img title="the page can be deleted" height="14" width="14" border="0" alt="" src="'.TR_BASE_HREF.'images/bad.gif"/>';
-		//else {
-			//if($max == null)
-				//$max = 'x';
-			//echo '<span style="margin-top: 4px; margin-bottom: 4px; padding-left: 2px; padding-right: 2px;  border-style:dotted; border-width:1px" title="the page must be insert at least '.$min.' times and at most '. $max.' times">';
-			//echo '<span style="margin-right:0.1cm; font-family:Courier New; font-size: 85%;">min='. $min .'</span>';
-			//if($max != 'x' )
-				//echo '<span style="font-family:Courier New; font-size: 85%;">max='. $max .'</span>';
-			//echo '</span>';
-			//echo '(min='.$min.', max='.$max.')';
-		//}
+		
 		
 	}
 
 	
-	
-	
-	
-	
-	
-
-
-
-
 }
 
 ?>

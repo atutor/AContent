@@ -80,8 +80,8 @@ else if($_POST['submit']){
 								
 							$struc_manag = new StructureManager($s);
 							$page_temp = $struc_manag->get_page_temp();
-						
 							$struc_manag->createStruct($page_temp, $content_id , $course_id);
+						
 							
 						}
 								

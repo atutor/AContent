@@ -69,11 +69,12 @@ if($_content_id != "" && $_course_id != "") {
 	
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
-		$array = $structManager->getContent($content['title']);
+		$array = $structManager->getContentByTitle($content['title']);
 		$listaModelli = $mod->modelloConforme($array);
 			
 	}  else {
 		$listaModelli = $mod->getListaModelli();
+		
 	}
 
 }
@@ -86,6 +87,7 @@ if($_content_id != "" && $_course_id != "") {
 // chiamo la funzione che crea il modulo grafico di selezione del tema
 //$listaModelli
 $resArray		= $mod->createUI();
+
 
 // array contenente il contenuto corrente (testo, eader, bit che indica che l'header è incluso)
 //$content	= getContent(DAO, $cid);
@@ -116,6 +118,8 @@ if($cid == '' AND isset($_GET['_cid']) AND $_GET['_cid'] != '')
 #	SCRIPT JQUERY DEL MODULO
 ######################################
 include $mod_path['dnd_themod_sys'].'Models.js';
+
+
 
 ######################################
 #	RESTITUISCO L'OUTPUT

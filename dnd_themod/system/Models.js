@@ -9,7 +9,8 @@
 								</div>';
 
 	$(document).ready(function(){
-	//document.onload = function() {
+
+		//document.onload = function() {
 		// questa riga ci consente di mostrare il form solo se JS e' abilitato
 		// il selettore dipende dal nome del modulo (che, nel file della lingua, e' personalizzabile)
 		var titolo_modulo	= "<?php echo _AT('models'); ?>";
@@ -17,10 +18,14 @@
 
 		// se l'utente e' un autore autenticato
 		// mostro il modulo
+		
 		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php"){
 			$('#menu_' + titolo_modulo + ' form').show();
+			
 		}else{
-			$('#menu_' + titolo_modulo).hide();
+			//CACCHIO
+			$('#menu_' + titolo_modulo + ' form').show();
+			//$('#menu_' + titolo_modulo + ' form').hide();
 			//$('#menu_' + titolo_modulo).prev().hide();
 			//$('#menu_' + titolo_modulo).siblings('br').slice(-1).remove();
 		}
@@ -188,7 +193,9 @@
 
 				// mostro il box dei modelli
 				$('.boxModel').slideToggle('slow', function(){
+					
 					$(this).css('display','block');
+				
 				});
 
 				visualizzaModelli();

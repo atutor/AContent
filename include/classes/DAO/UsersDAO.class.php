@@ -37,7 +37,7 @@ class UsersDAO extends DAO {
 	{
 		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users 
 		         WHERE (login='".$login."' OR email='".$login."') 
-		           AND SHA1(CONCAT(password, '".$_SESSION[token]."'))='".$pwd."'";
+		           AND SHA1(CONCAT(password, '".$_SESSION['token']."'))='".$pwd."'";
 
 		$rows = $this->execute($sql);
 		if (is_array($rows))

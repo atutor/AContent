@@ -206,10 +206,8 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	if (intval($_GET['alternative']) > 0) {
 		$content = ContentUtility::applyAlternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
 	} else {
-		/*qui*/
 		
 		$content = ContentUtility::applyAlternatives($cid, $content_row['text']);
-		
 		
 		if($content == 'null') {
 			if(isset($_current_user) && $_current_user->isAuthor($course_id)) {
@@ -221,10 +219,6 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 					if($row['structure']!='') {
 						$content = '<script language="javascript" type="text/javascript">$(\'#attivaModelli_btn\').prop(\'checked\', true).trigger("change");</script>';
 						
-						//$(document).ready( function (){  
-						//.prop("checked",true)
-						//$(\'#attivaModelli_btn\').attr(\'checked\', true);
-						//$(\'#attivaModelli_btn\').triggerHandler(\'change\');
 					} 
 					
 			} else {
@@ -238,7 +232,6 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	}
 
     $content = ContentUtility::formatContent($content, $content_row['formatting']);
-    
 	$content_array = ContentUtility::getContentTable($content, $content_row['formatting']);
 	
 	$savant->assign('content_table', $content_array[0]);

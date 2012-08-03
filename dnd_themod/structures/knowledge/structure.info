@@ -2,10 +2,10 @@
 name = knowledge based
 
 ; description
-description	= 
+description	= knowledge based
 
 ; * Autore
-author		= Catia Prandi
+author		= Catia Prandi catia.prandi2@unibo.it
 
 ; * versione di AContent
 core		= 1.2
