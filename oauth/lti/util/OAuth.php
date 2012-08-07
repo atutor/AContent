@@ -5,11 +5,9 @@ $OAuth_last_computed_siguature = false;
 
 /* Generic exception class
  */
-/*
 class OAuthException extends Exception {
   // pass
 }
-*/
 
 class OAuthConsumer {
   public $key;
@@ -18,6 +16,7 @@ class OAuthConsumer {
   function __construct($key, $secret, $callback_url=NULL) {
     $this->key = $key;
     $this->secret = $secret;
+	
     $this->callback_url = $callback_url;
   }
 
@@ -59,6 +58,7 @@ class OAuthToken {
 class OAuthSignatureMethod {
   public function check_signature(&$request, $consumer, $token, $signature) {
     $built = $this->build_signature($request, $consumer, $token);
+
     return $built == $signature;
   }
 }
@@ -598,6 +598,7 @@ class OAuthServer {
     $signature_method = $this->get_signature_method($request);
 
     $signature = $request->get_parameter('oauth_signature');
+
     $valid_sig = $signature_method->check_signature(
       $request,
       $consumer,

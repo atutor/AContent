@@ -8,6 +8,7 @@ require_once(TR_INCLUDE_PATH. 'classes/DAO/OAuthServerConsumersDAO.class.php');
 
 /* Generic exception class
  */
+/*
 class OAuthException extends Exception {
   function __construct($exception)
   {
@@ -15,7 +16,7 @@ class OAuthException extends Exception {
   	exit;
   }
 }
-
+*/
 class OAuthConsumer {
   public $key;
   public $secret;

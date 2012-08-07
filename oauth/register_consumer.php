@@ -26,13 +26,13 @@ else
 	$expire_threshold = intval($_GET['expire']);
 	
 	$oAuthServerConsumersDAO = new OAuthServerConsumersDAO();
-	
+
 	$consumer_info = $oAuthServerConsumersDAO->getByConsumer($consumer);
-	
+
 	if (!is_array($consumer_info))
 	{ // new consumer. save consumer and generate consumer key and secret
-		$consumer_id = $oAuthServerConsumersDAO->Create($consumer, $expire_threshold);
-		$consumer_info = $oAuthServerConsumersDAO->get($consumer_id);
+		$consumer_id	= $oAuthServerConsumersDAO->Create($consumer, $expire_threshold);
+		$consumer_info	= $oAuthServerConsumersDAO->get($consumer_id);
 	}
 	else 
 	{ // existing consumer

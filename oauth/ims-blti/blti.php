@@ -69,7 +69,8 @@ class BLTI {
             $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
                 ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
                 '='.
-                "'".mysql_real_escape_string($oauth_consumer_key)."'";
+                "'".htmlentities($oauth_consumer_key)."'";
+
             $result = mysql_query($sql);
             $num_rows = mysql_num_rows($result);
             if ( $num_rows != 1 ) {
