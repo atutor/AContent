@@ -79,6 +79,13 @@ $starttime = $mtime;
 	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	<script type="text/javascript">
+		// check if AContent is into an iframe
+		// if so, include the "iframe" stylesheet to hide header, side menu and footer
+		// The use of another css instead of a media="print" is to keep separate the two objectives: print, iframe.
+		if (top != self)
+			document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_iframe.css" type="text/css" />');
+	</script>
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
