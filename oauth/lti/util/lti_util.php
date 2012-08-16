@@ -63,6 +63,7 @@ class BLTI {
         // look it up in a database from parameters we are given
         $secret = false;
         $row = false;
+		
         if ( is_string($parm) ) {
             $secret = $parm;
         } else if ( ! is_array($parm) ) {
@@ -70,8 +71,11 @@ class BLTI {
             return;
         } else {
 
-			mysql_connect("localhost", "editore", "editante");
-			mysql_select_db("AContent");
+			define('TR_INCLUDE_PATH', '../../include/');
+			include_once(TR_INCLUDE_PATH.'config.inc.php');
+
+			mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
+			mysql_select_db(DB_NAME);
 
             $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
                 ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
@@ -344,6 +348,7 @@ class BLTI {
     }
 
     function dump() {
+
         if ( ! $this->valid or $this->info == false ) return "Context not valid\n";
         $ret = "";
         if ( $this->isInstructor() ) {
@@ -367,8 +372,68 @@ class BLTI {
         $ret .= "getCourseID() = ".$this->getCourseID()."\n";
         $ret .= "getOutcomeSourceDID() = ".$this->getOutcomeSourceDID()."\n";
         $ret .= "getOutcomeService() = ".$this->getOutcomeService()."\n";
+		$ret .= "aContent_LiveContentLink() = ".$this->aContent_LiveContentLink_TP()."\n";
         return $ret;
     }
+
+	// return the database structure
+	// encoded with htmlentities()
+	private function aContent_LiveContentLink_TP(){
+
+		// call to a specific DAO method returning
+		// the requested data structure
+		define('AT_INCLUDE_PATH', '../../include/');
+		include AT_INCLUDE_PATH . 'classes/DAO/AContent_LiveContentLinkDAO.class.php';
+
+		/*
+		echo '<div>';
+			// gets the selected content id
+			//print_r(AContent_LiveContentLinkDAO::getContent('20'));
+			print_r(AContent_LiveContentLinkDAO::getCourse('3'));
+		echo '</div><br />';
+		*/
+
+		// create doctype
+
+		/*
+		$dom = new DOMDocument("1.0");
+		//set the document encoding
+		$dom->encoding = 'utf-8';
+		//set xml version 
+		$dom->xmlVersion = '1.0'; 
+
+		// create ROOT element
+		$root = $dom->createElement("AContent_LiveContentLink");
+		$dom->appendChild($root);
+		
+			// FOR EACH CONTENT ID
+			$content_id = $dom->createElement("content_id");
+			$root->appendChild($content_id);
+				$attribute = $dom->createAttribute("id");
+				$content_id->appendChild($attribute);
+					$value = $dom->createTextNode("content_id_value");
+					$attribute->appendChild($value);
+
+			// FOR EACH DATABASE FIELD OF THE CONTENT ID
+			$field = $dom->createElement("field_name");
+			$content_id->appendChild($field);
+				$value = $dom->createTextNode("field value");
+				$field->appendChild($value);
+		*/
+		// save and display tree
+
+		// import single content
+		//	return AContent_LiveContentLinkDAO::getContent('20', 0);
+
+		$course_id	= $this->info['tile_course_id'];
+		// 1 course, 0 lesson
+		$course		= $this->info['course'];
+
+		return AContent_LiveContentLinkDAO::getContent($course_id, $course);
+
+		// import entire lesson
+		//return AContent_LiveContentLinkDAO::getCourse('3', 0);
+	}
 
 }
 
