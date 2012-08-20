@@ -8,27 +8,23 @@
 								<img src="<?php echo $dnd_themod; ?>system/bottom.png" class="moveModelBottom" alt="move bottom" />\
 								</div>';
 
-	$(document).ready(function(){
-
-		//document.onload = function() {
+	$(document).ready(function(){ 
+		
 		// questa riga ci consente di mostrare il form solo se JS e' abilitato
 		// il selettore dipende dal nome del modulo (che, nel file della lingua, e' personalizzabile)
 		var titolo_modulo	= "<?php echo _AT('models'); ?>";
 		titolo_modulo		= titolo_modulo.replace(/ /g, '');
-
+		
 		// se l'utente e' un autore autenticato
 		// mostro il modulo
 		
-		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php"){
+		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php")
+			//$('#dnd_moduli').show();
 			$('#menu_' + titolo_modulo + ' form').show();
-			
-		}else{
-			//CACCHIO
-			$('#menu_' + titolo_modulo + ' form').show();
-			//$('#menu_' + titolo_modulo + ' form').hide();
-			//$('#menu_' + titolo_modulo).prev().hide();
-			//$('#menu_' + titolo_modulo).siblings('br').slice(-1).remove();
-		}
+		else
+			//$('#dnd_moduli').hide();
+			$('#menu_' + titolo_modulo + ' form').hide();
+		
 
 		/*
 		if($('#view').is('*'))
@@ -181,14 +177,17 @@
 
 				var count = 0;
 				<?php
+						
+						
+				foreach($listaModelli as $key => $value) {
 					
-					foreach($listaModelli as $key => $value) {
-						echo 'count++;';
-						echo '$(".boxModel").append($("<li>"));';
-						echo 'm = m + "<li><table id=\"'.$key.'\"><tr><td><img src=\"'.$dnd_themod.'/models/'.$key.'/screenshot.png\" /></td></tr><td class=\"desc\">'.$value['name'].'</td></tr></table></li>";';
-					}
+					echo 'count++;';
+					echo '$(".boxModel").append($("<li>"));';
+					echo 'm = m + "<li><table id=\"'.$key.'\"><tr><td><img src=\"'.$dnd_themod.'models/'.$key.'/screenshot.png\" /></td></tr><td class=\"desc\">'.$value['name'].'</td></tr></table></li>";';
+				}		
 				?>
-
+				//QUI!!
+			
 				$(".boxModel ul").append(m);
 
 				// mostro il box dei modelli
@@ -390,39 +389,16 @@
 
 
 		$("#body_text_ifr").live("mouseover", function(){
-			//var a = $('#body_text').contents().text();
-			//a = a.find('plain_text').css('color','gold');
-			//alert(a.html());
-			//var a = tinyMCE.activeEditor.getContent();
-			//var a = tinyMCE.activeEditor.getContent({format : 'raw'});
+			
 			var oldContent	= tinyMCE.activeEditor.getContent();
-			
-			//newContent = oldContent.replace('a','@');
-			
+	
 			var newContent;
-			
-			//$('.page-title').html(a);
-			//alert(a);
-			
+				
 			tinyMCE.activeEditor.setContent(newContent);
-			//var a = tinyMCE.get('.modelContent').getContent();
-
-			//$('.page-title').html(a);
-			/*
-			var a = tinyMCE.activeEditor.getContent({format : 'raw'});
-
-			a.find(".modelContent").live("mouseover", function(){
-				$(this).css('background','red');
-			});
-			*/
+			
 
 		});
-		/*
-		$("#body_text_ifr").contents().find(".modelContent").live("mouseover", function(){
-			alert('aaaaaaa');
-		});*/
-
-
+		
 		/*
 		*	Correggo un fastidiosissimo bug di progettazione dei browser:
 		* 	quando scorro verticalmente i contenuti di un div (in questo caso dei modelli)
@@ -434,7 +410,7 @@
 			mouseover: function() {
     			$('body').css('overflow','hidden');
     			$('body').css('padding-right','15px');
-    			//$('body').css('display','block');
+    			
   			},
   			mouseout: function() {
     			$('body').css('overflow','auto');
@@ -455,8 +431,7 @@
 			$.post(url, {mID: modelID}, function(structure){
 
 				if(afterNoModel == 0){
-					//$('.model:first').before('<div class="model ' + modelID + '" id="newModel">' + creaModello(structure) + "</div>");
-					//$('.model:first').before('<table class="model ' + modelID + '" id="newModel"><tr><td>' + creaModello(structure) + "</td></tr></table>");
+				
 					if(base.children(":first").is("*")){
 						base.children(":first").before(creaModello(structure, modelID));
 					}else{
@@ -467,23 +442,11 @@
 				}
 
 				// aggiorno la visualizzazione dell'anteprima temi
-/*
-				if($('.view').is('*')){
 
-					$('#newModel').fadeIn(1, function(){
-						var text = $('#content-text').html();
-
-						// aggiungo anche il tag "dnd" che, dal testo orignale di "content-text" non esiste						
-						$('.view').html("<div id=\"dnd\">" + text + "</div>");
-					});
-
-				}else{
-					*/
-					// inserisco il modello
-					$('#newModel').fadeIn(300);
-				//}
-
-				// sostituisco l'immagine del modello nell'immagine di default
+				
+				// inserisco il modello
+				$('#newModel').fadeIn(300);
+			
 
 				$('#content-text .model img').each(function(index) {
 					if($(this).attr('src') == 'dnd_image'){
@@ -500,7 +463,6 @@
 			var url			= "<?php echo $dnd_themod; ?>" + "system/AJAX_actions.php";
 			var vcid		= "<?php echo $cid; ?>";
 			var vaction		= 'saveModelContent';
-			//var vtext		= duplicatedTextFix();
 			
 			var vtext		= $('#content-text').html();
 
@@ -543,42 +505,7 @@
 
 			return;
 
-			// se e' impostato un tema (quindi esiste un ID "dnd")
-			/*
-			if($('#content-text #dnd').is('*')){
-				var dad	= $('#dnd');
-			}else{
-				var dad	= $('#content-text');
-			}
 
-			// per fare in modo che i modelli assumano il tema assegnato alla lezione
-			// devono esserre contenuti nel div "#dnd".
-			// per differenziare i modelli dal "vecchio contenuto" ho inserito tutto dentro content-text;
-			// i "vecchi contenuti" sono dentro oldContent e i nuovi modelli sono dentro newModel ma tutti dentro #dnd
-
-			// se noModel (il "vecchio contenuto") non e' presente, lo aggiungo
-			if(!$('.noModel').is('*')){
-				dad.html('<div class="model noModel">' + dad.html());
-				//creaModello(dad.html()));
-			}else{
-				$('.noModel').addClass('model');
-			}
-
-			// rendo visibili tutti i modelli personalizzati
-			// per ogni tag
-			$('.customModel').each(function(index) {
-				$(this).removeClass('customModel');
-				$(this).addClass('model');
-			});
-
-			// mostro la X di eliminazione del modello
-			//$('.modelContent').before(removeModelTopBar);
-			$('.modelContent').before(removeModelTopBar);
-			//$('.removeModelTopBar').show();
-			
-			//$('.modelContent').append(sortTools);
-			$('.model').append(sortTools);
-			*/
 		}
 		
 		function nascondiModelli(){
@@ -606,12 +533,8 @@
 				// verifico sia unique rispetto ai suoi figli!
 				//while(element.next().is('*')){
 					while(element.next().is('*')){
-					//alert("contenuto iniziale: " + element.html());
 
 					element.html(uniqChildren(element));
-
-					//alert("contenuto finale: " + $(this).html());
-
 					element = element.next();
 				}
 			});
@@ -630,47 +553,15 @@
 
 				// se esiste
 				if($.inArray($(this).attr('id'), c) > -1){
-					//alert('duplicato: ' + $(this).attr('id'));
-					//alert($(this).html());
 					$(this).parent().html($(this).html());
 					$(this).remove();
-					//alert($(this).html());
-					//$(this).css('border-left','20px solid blue');
 				}else{
-					//alert('originale: ' + $(this).attr('id'));
 					c.push($(this).attr('id'));
-					//$(this).css('color','black');
 				}
 				
 				res = $(this).html();
 			});
-//alert(res);
 			return res;
 		}
-
-		// scrivo nella textarea
-		//$('form[name="form"] textarea').html('<div style="background:red">Mauro</div>');
-
-		//$('mceContentBody iframe').contents().append('<div style="background:red">Mauro</div>');
-
-		/*
-		 *	Aggiungo gli estremi
-		 */
-		//$('#content-text').append('<div class="bottom-stripe"></div>');
-		//$('#content-text').prepend('<div id=".boxModel"></div>');
-		/*
-		$('#bottom-stripe').live("hover", function(){
-			
-			$('#bottom-stripe').css('height','100');
-			$('#bottom-stripe').css('background','#EEE');
-		});
-		*/
-
-/*
-		$(".noModel").sortable({
-			placeholder: "ui-state-highlight";
-		});
-		$(".noModel").disableSelection();
-*/
 	});
 </script>

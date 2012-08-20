@@ -79,15 +79,11 @@ if($_content_id != "" && $_course_id != "") {
 
 }
 
-
-
-
-	
+	           
 //}
 // chiamo la funzione che crea il modulo grafico di selezione del tema
 //$listaModelli
-$resArray		= $mod->createUI();
-
+$output	= $mod->createUI();
 
 // array contenente il contenuto corrente (testo, eader, bit che indica che l'header è incluso)
 //$content	= getContent(DAO, $cid);
@@ -110,7 +106,7 @@ $except	= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 // id contenuto
 $cid	= $this->cid;
 // se non presente, prendo il _cid (id del contenuto in fase di modifica)
-if($cid == '' AND isset($_GET['_cid']) AND $_GET['_cid'] != '')
+if($cid == '' and isset($_GET['_cid'])and $_GET['_cid'] != '')
 	$cid = htmlentities($_GET['_cid']);
 
 
@@ -118,17 +114,16 @@ if($cid == '' AND isset($_GET['_cid']) AND $_GET['_cid'] != '')
 #	SCRIPT JQUERY DEL MODULO
 ######################################
 include $mod_path['dnd_themod_sys'].'Models.js';
-
-
-
+include $mod_path['dnd_themod_sys'].'prova.js';
 ######################################
 #	RESTITUISCO L'OUTPUT
 ######################################
 
 // restituisco l'output
-$output		= $resArray;
+
 
 $savant->assign('title', _AT('models'));
+
 
 $savant->assign('dropdown_contents', $output);
 //$savant->assign('default_status', "hide");

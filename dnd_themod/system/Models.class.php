@@ -121,11 +121,10 @@
 						
 						foreach($xml->children() as $child) {
 							$name = $child->getName();
-							if($name == "release") {
-								$info['core'] = $child->version;
-								
-							}
-							$info[$name] = $child;
+							if($name == "release") 
+								$info['core'] = trim($child->version);
+							else
+								$info[$name] = trim($child);
 						}
 						
 					//$isfile	= $isdir.'/model.info';
@@ -136,7 +135,7 @@
 		
 						// se non è stato specificato un nome, utilizzo quello della cartella
 						if(!$info['name'])
-							$info['name'] = $item;
+							$info['name'] = trim($item);
 						
 						// riduco il nome ad un numero di caratteri accettabile
 						$limit	= 15;
@@ -168,6 +167,11 @@
 					}
 				}
 			}
+			
+			foreach ($modelli as $value => $key) {
+				
+				
+			}
 		
 			return $modelli;
 		}
@@ -184,10 +188,10 @@
 
 		public function createUI(){
 
-
+			
 			$ui		= '';
-
-			$ui		.= '<form action="" onsubmit="return false" method="post" style="display: none" id="dnd_moduli">';
+			//style="display: none"
+			$ui		.= '<form action="" onsubmit="return false" method="post" id="dnd_moduli"  >';
 
 			$ui		.= '<div>';
 
@@ -203,6 +207,7 @@
 
 			$ui		.= '<noscript><div>'._AT('no_js').'</div></noscript>';
 		
+			
 			return $ui;
 		}
 
