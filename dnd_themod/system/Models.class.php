@@ -25,7 +25,7 @@
 		private $course_id	= '';
 		private $uniq		= 'dnd';
 
-		// cartelle e documenti da escludere dalla lista dei temi presenti
+		// folders and documents to be excluded from the list of the models
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 
@@ -81,40 +81,40 @@
 			$listaModelli	= array();
 			$dir			= array();
 
-			// leggo la lista dei modelli disponibili
+			// read the list of available themes
 			$dir		= scandir($this->mod_path['models_dir_int']);
 
-			// sottraggo i file da escludere dalla lista dei modelli disponibili
+			// subtract files to be excluded from the list of available themes
 			$dir		= array_diff($dir, $this->except);
 
 			$dir		= array_merge(array(),$dir);
 
-			// chiamo la funzione che valida i modelli disponibili
+			// call the function that validates the available themes
 			$listaModelli	= $this->modelloConforme($dir);
 			return $listaModelli;
 		}
 
 		/*
-		 * 	La seguente funzione legge dal filesystem i modelli esistenti e li valida
-		 * 	secondo criteri preimpostati (es. confronto tra versione del modello e del core)
-		 * 	restituendo un vettore di modelli validi e disponibili.
-		 *	input:	$dir[]			lista dei modelli disponibili
-		 * 	output:	lista dei modelli disponibili scremata in base alla compatiblità di ogni modello
+		 * 	The following function reads from the filesystem existing models and validates them
+		 * 	according to pre-set criteria (eg comparison between version of the model and core)
+		 * 	and returns an array of available and valid models.
+		 *	input:	$dir[]			list of available models
+		 * 	output:	list of available models skimmed according to the compatibility of each model
 		 * 
 		 * */
 		
 		function modelloConforme($dir = array()){
 			
-			// scandisco tutti i modelli esistenti
+			// scan all existing themes
 		
 			foreach($dir as $item){
 
 				$isdir	= $this->mod_path['models_dir_int'].$item;
 			
-				// controllo che l'elemento sia una directory
+				// checking if the element is a directory
 				if(is_dir($isdir)){
 			
-					// controllo esista il file .info e lo parso
+					// check if exists the .info file and parse it
 					$xml_file = $isdir.'/page_template.xml';
 					if(is_file($xml_file)) {
 						$xml = simplexml_load_file($xml_file);
@@ -133,18 +133,18 @@
 
 						//$info	= parse_ini_file($isdir.'/model.info');
 		
-						// se non è stato specificato un nome, utilizzo quello della cartella
+						// if you did not specify a name, use the folder name
 						if(!$info['name'])
 							$info['name'] = trim($item);
 						
-						// riduco il nome ad un numero di caratteri accettabile
+						// reduce the name length to 15 characters
 						$limit	= 15;
 						if(strlen($info['name']) >= $limit){
 							$info['name']	= substr($info['name'], 0, ($limit-2));
 							$info['name']	.= '..';
 						}
 
-						// controllo il "core"
+						// check the "core"
 						if(!$info['core'])
 							continue;
 						else{
@@ -152,17 +152,17 @@
 							$vfile	= explode('.', $info['core']);
 							$vcore	= explode('.', VERSION);
 			
-							// controllo superficiale per la compatibilità della versione
-							// bloccando il ciclo alla prima incompatibilità trovata
+							// cursory check for version compatibility
+							// stopping the cycle to the first incompatibility found
 							if($vfile[0] < $vcore[0])
-								// non compatibile!
+								// not compatible!
 								continue;
 							elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
-								// non compatibile!
+								// not compatible!
 								continue;
 						}
 		
-						// inserisco le info del modello corrente all'interno di un vettore
+						// put the info of the current model into an array
 						$modelli[$item] = $info;
 					}
 				}
@@ -178,11 +178,11 @@
 
 
 		/*
-		 * 	La seguente funzione provvede alla generazione di un form per mostrare
-		 *	graficamente all'utente la lista di temi a disposizione.
-		 * 	Il form viene restituito dalla funzione e, successivamente, integrato
-		 * 	all'output del presente modulo.
-		 *	input:	$listaTemi[]	lista dei temi disponibili verificati
+		 * 	The following function provides for the generation of a form
+		 *	to graphically show the user the list of available models.
+		 * 	The form is returned by the function and, then,
+		 * 	integrated the output of this model.
+		 *	input:	$listaModelli[]	list of available models
 		 *	output:	none 
 		 * */
 
@@ -227,7 +227,7 @@
 
 			$contentDAO = new ContentDAO();
 
-			// scrivo sul db
+			// write on db
 			$contentDAO->UpdateField($cid, "text", $text);
 
 			// page redirect
@@ -249,11 +249,12 @@
 			return $struct;
 		}
 
-				/*
+
+		/*
 		 *	exaggeration
-		 *	TinyMCE non è preciso con i carriage return, quindi, cerco di riparare
-		 *	alle differenze di visualizzazione tra TinyMCE e l'anteprima di AContent.
-		 *	text	= testo da ripulire
+		 *	TinyMCE is not precise with the carriage return, then, I try to repair
+		 *	the display differences between TinyMCE and AContent preview.
+		 *	text	= text to clean up
 		*/
 	
 		private function textFixPHP($text = ''){
@@ -265,8 +266,6 @@
 			$text	= str_replace('<p>', "<div>", $text);
 			$text	= str_replace('</p>', "</div>", $text);
 			*/
-			
-			// rimuovo i doppi header che si vanno a creare
 			
 	
 			return $text;		
