@@ -25,7 +25,7 @@
 		private $course_id	= '';
 		private $uniq		= 'dnd';
 
-		// cartelle e documenti da escludere dalla lista dei temi presenti
+		// folders and documents to be excluded from the list of the themes
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 
@@ -83,39 +83,39 @@
 			$listaTemi	= array();
 			$dir		= array();
 
-			// leggo la lista dei temi disponibili
+			// read the list of available themes
 			$dir		= scandir($this->mod_path['themes_dir_int']);
 
-			// sottraggo i file da escludere dalla lista dei temi disponibili
+			// subtract files to be excluded from the list of available themes
 			$dir		= array_diff($dir, $this->except);
 
-			// chiamo la funzione che valida i temi disponibili
+			// call the function that validates the available themes
 			$listaTemi	= $this->temaConforme($dir);
 
 			return $listaTemi;
 		}
 
 		/*
-		 * 	La seguente funzione legge dal filesystem i temi esistenti e li valida
-		 * 	secondo criteri preimpostati (es. confronto tra versione del tema e del core)
-		 * 	restituendo un vettore di temi validi e disponibili.
-		 *	input:	$dir[]			lista dei temi disponibili
-		 * 	output:	lista dei temi disponibili scremata in base alla compatiblità di ogni tema
+		 * 	The following function reads from the filesystem existing themes and validates them
+		 * 	according to pre-set criteria (eg comparison between version of the theme and core)
+		 * 	and returns an array of available and valid themes.
+		 *	input:	$dir[]			list of available themes
+		 * 	output:	list of available themes skimmed according to the compatibility of each theme
 		 * 
 		 * */
 		
 		private function temaConforme($dir = array()){
 			
-			// scandisco tutti i temi esistenti
+			// scan all existing themes
 		
 			foreach($dir as $item){
 			
 				$isdir	= $this->mod_path['themes_dir_int'].$item;
 			
-				// controllo che l'elemento sia una directory
+				// checking if the element is a directory
 				if(is_dir($isdir)){
 			
-					// controllo esista il file .info e lo parso
+					// check if exists the .info file and parse it
 					
 					//$isfile	= $isdir.'/theme.info';
 			
@@ -140,11 +140,11 @@
 
 						//$info	= parse_ini_file($isdir.'/theme.info');
 						
-						// se non è stato specificato un nome, utilizzo quello della cartella
+						// if you did not specify a name, use the folder name
 						if(!$info['name'])
 							$info['name'] = $item;
 
-						// controllo il "core"
+						// check the "core"
 						if(!$info['core'])
 							
 							continue;
@@ -153,18 +153,18 @@
 							$vfile	= explode('.', $info['core']);
 							$vcore	= explode('.', VERSION);
 			
-							// controllo superficiale per la compatibilità della versione
-							// bloccando il ciclo alla prima incompatibilità trovata
+							// cursory check for version compatibility
+							// stopping the cycle to the first incompatibility found
 							if($vfile[0] < $vcore[0])
-								// non compatibile!
+								// not compatible!
 								continue;
 							elseif(strtolower($vfile[1]) != 'x' and $vfile[1] < $vcore[1]) 
-								// non compatibile!
+								// not compatible!
 								continue;
 							
 						}
 		
-						// inserisco le info del tema corrente all'interno di un vettore
+						// put the info of the current theme into an array
 						$temi[$item] = $info;
 						
 					}
@@ -176,11 +176,11 @@
 
 
 		/*
-		 * 	La seguente funzione provvede alla generazione di un form per mostrare
-		 *	graficamente all'utente la lista di temi a disposizione.
-		 * 	Il form viene restituito dalla funzione e, successivamente, integrato
-		 * 	all'output del presente modulo.
-		 *	input:	$listaTemi[]	lista dei temi disponibili verificati
+		 * 	The following function provides for the generation of a form
+		 *	to graphically show the user the list of themes available.
+		 * 	The form is returned by the function and, then,
+		 * 	integrated the output of this module.
+		 *	input:	$listaTemi[]	list of available themes
 		 *	output:	none 
 		 * */
 
@@ -196,12 +196,12 @@
 			$ui		.= '<label for="listatemi">'._AT('theme_select').'</label>';
 			$ui		.= '<select name="listatemi" id="listatemi">';
 		
-			// opzione di default (null)
+			// default option (null)
 			$ui		.= '<option selected="selected">';
 			$ui		.= ' - ';
 			$ui		.= '</option>';
 			
-			// inserisco fra le opzioni tutti i temi a disposizione
+			// put all the available themes into the dropdown menu
 			foreach($listaTemi as $tname => $tval){
 		
 				$ui	.= '<option value="'.$tname.'">';
@@ -220,7 +220,7 @@
 		
 			$ui		.= '<div><input type="submit" value="'._AT('theme_course_apply').'" id="applicaTemaCorso_btn" name="applicaTemaCorso_btn" /></div>';
 
-			// aggiungo questa opzione solo se è stata impostata
+			// add this option only if you have set it
 			if($this->config['apply_to_the_lesson'] == 0)
 				$display = 'display:none';
 
@@ -262,7 +262,7 @@
 
 			$lezioni	= $contentDAO->getContentByCourseID($this->course_id);
 
-			// per ogni lezione con quel codice di corso, imposto / sovrascrivo lo stile delle lezioni
+			// for each lesson with that code of course, set / override the style of lessons
 
 			for($i = 0; $i < count($lezioni); $i++){
 
@@ -281,31 +281,19 @@
 				$text = strrev($text);
 	
 				$text		= '<div id="content">'.$text.'</div>';
-				/*
-				echo '<div style="position:absolute">';
-				echo '--> '.var_dump($text);
-				echo '</div><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />';
-				*/
 					
-				// pulisco il testo dal <div id="dnd" e lo aggiungo:
-				// non e' detto che tutte le lezioni abbiano il tag, quindi, lo tolgo a tutti e lo riaggiungo (piu' sicuro anche se piu' oneroso)
+				// clean up the text from <div id="dnd" and add it:
+				// it does not mean that all classes have the tag,
+				// then, take it off to all the add it again (more safe even if most "expensive")
 	
-				// pulisco il testo dal tag
-				$text		= $this->clearContent($text);
-
-				// lo aggiungo
-				/*
-				if($theme_name != ''){
-					$text		= '<div id="'.$this->uniq.'">'.$text.'<div id="anteprima-footer"> </div></div>';
-				}*/
+				// clean up the text from the tag
+				$text		= $this->clearCon
 	
-				// scrivo sul db
+				// write on db
 				$contentDAO->UpdateField($cid, 'text', $text);
 				$contentDAO->UpdateField($cid, 'theme', $theme_name);
 			}
 			
-			//die();
-
 			// page redirect
 			echo '<script type="text/javascript">';
 				echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
@@ -355,20 +343,14 @@
 
 			$text		= '<div id="content">'.$text.'</div>';
 
-			// pulisco il testo dal <div id="dnd" e lo aggiungo:
-			// non e' detto che tutte le lezioni abbiano il tag, quindi, lo tolgo a tutti e lo riaggiungo (piu' sicuro anche se piu' oneroso)
+			// clean up the text from <div id="dnd" and add it:
+			// it does not mean that all classes have the tag,
+			// then, take it off to all the add it again (more safe even if most "expensive")
 
-			// pulisco il testo dal tag
+			// clean up the text from the tag
 			$text		= $this->clearContent($text);
 
-			// lo aggiungo
-			/*
-			if($theme_name != ''){
-				//$text		= '<div id="'.$this->uniq.'">'.$text.'<div id="anteprima-footer"> </div></div>';
-				$text		= '<div id="'.$this->uniq.'">'.$text.'<div id="anteprima-footer"> </div></div>';
-			}*/
-
-			// scrivo sul db
+			// write on db
 			$contentDAO->UpdateField($this->content_id, 'text', $text);
 			$contentDAO->UpdateField($this->content_id, 'theme', $theme_name);
 
@@ -379,16 +361,16 @@
 		}
 
 		/*
-		 *	Funzione che pulisce il contenuto passato come parametro.
-		 *	La pulizia consiste nella rimozione del blocco <div id="dnd"><div id="anteprima-footer"></div> incorporato dal tema
+		 *	Function that cleans the content passed as a parameter.
+		 *	Cleaning is the removal of the block <div id="dnd"> <div id="anteprima-footer"> </ div> built by theme
 		 */
 	
 		private function clearContent($content = ''){
 	
-			// elimino il div
+			// delete the div
 			$content	= str_replace('<div id="'.$this->uniq.'">','', $content);
 	
-			// elimino completamente il footer dal testo
+			// completely delete the footer from the text
 			$content	= preg_replace('/<div id="anteprima-footer">(.*)<\/div><\/div>/Uis', '', $content);
 	
 			return $content;
@@ -396,9 +378,9 @@
 
 		/*
 		 *	exaggeration
-		 *	TinyMCE non è preciso con i carriage return, quindi, cerco di riparare
-		 *	alle differenze di visualizzazione tra TinyMCE e l'anteprima di AContent.
-		 *	text	= testo da ripulire
+		 *	TinyMCE is not precise with the carriage return, then, I try to repair
+		 *	the display differences between TinyMCE and AContent preview.
+		 *	text	= text to clean up
 		*/
 	
 		private function textFixPHP($text = ''){
