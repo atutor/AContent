@@ -1,5 +1,5 @@
 /*
- *	VISUALIZZAZIONE FORM MODULO
+ *	FORM MODULE
  */
 #dnd_themod{
 	text-align:					center;
@@ -46,7 +46,7 @@
 }
 
 /*
- *	VISUALIZZAZIONE ANTEPRIMA CONTENUTO ACONTENT
+ *	SHOW ACONTENT CONTENT PREVIEW
  */
 #content-text{
 	margin:						0 auto;
@@ -56,7 +56,7 @@
 }
 
 /*
- *	FORM MODIFICA CONTENUTI (MODELLI)
+ *	CONTENT EDIT FORM (MODELS)
  */
 
 #content-text #dnd{
@@ -65,7 +65,7 @@
 }
 
 /*
- * Stile della pagina di configurazione
+ * config page style
  */
 .dnd_themod_system_fieldset{
 	border:						1px solid #CCC;
