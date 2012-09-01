@@ -177,7 +177,7 @@
 
 		/*
 		 * 	The following function provides for the generation of a form
-		 *	to graphically show the user the list of themes available.
+		 *	to graphically show the user the list of available themes.
 		 * 	The form is returned by the function and, then,
 		 * 	integrated the output of this module.
 		 *	input:	$listaTemi[]	list of available themes
