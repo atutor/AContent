@@ -38,12 +38,10 @@ $mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
 $mod_path['structs_dir']		= $mod_path['dnd_themod']		. 'structures/';
 $mod_path['structs_dir_int']	= $mod_path['dnd_themod_int']	. 'structures/';
 
-// includo immediatamente il file "applicaTema" così che possa ereditare variabili e costanti definite dal sistema
 include_once($mod_path['dnd_themod_sys'].'Structures.class.php');
 
 list($caller_url, $url_param) = Utility::getRefererURLAndParams();
 
-// istanzio la classe Themes (che chiama il costruttore) 
 
 $structs	= new Structures($mod_path);
 
@@ -52,7 +50,6 @@ $structsList = $structs->getStructsList();
 $output	= '';
 		
 if (!is_array($structsList)) {
-	$num_of_structs = 0;
 	$output = _AT('none_found');
 } else {
 	$num_of_courses = count($structsList);
@@ -66,7 +63,7 @@ if (!is_array($structsList)) {
 	foreach ($structsList as $val) {
 		
 		$output .= ' <li title="'.$val['name'].'"> '."\n";
-		$output .= ' <a href="'. TR_BASE_HREF.'home/structs/outline.php?_struct_name='.$val['name'].'">'."\n";
+		$output .= ' <a href="'. TR_BASE_HREF.'home/structs/outline.php?_struct_name='.$val['short_name'].'">'."\n";
 		$output .= $val['name'];
 		$output .= ' </a>'."\n";
     	$output .= '  </li>'."\n";
@@ -74,48 +71,6 @@ if (!is_array($structsList)) {
     	$simpleList[] = $val['name'];
     }
   
-   /*$output .=  '<p style="">Complex structures: </p>';
-	
-	$size = sizeof($simpleList);
-	
-	//this is not completely correct
-	for($i=0; $i<$size; $i++) {
-		$structs = $simpleList[$i];
-		
-		if(($i+1) == $size) {
-			$stop = $i-1;
-			$start = 0;
-		} else {
-			$stop = $size;
-			$start= $i+1;
-		}
-		for($j=$start; $j<$stop; $j++) {
-			
-			
-			$structs .= '_'.$simpleList[$j];
-			
-			$output .= ' <li title="'.$structs.'"> '."\n";
-			$output .= ' <a href="'. TR_BASE_HREF.'home/structs/outline.php?_struct_name='.$structs.'">'."\n";
-			$output .= $structs;
-			$output .= ' </a>'."\n";
-    		$output .= '  </li>'."\n";
-    		
-			if(($j+1) == $size) {
-				
-				$stop = $i;
-				$j = 0;
-			}
-			
-		}
-
-		
-	}*/
-		
-	
-	
-    
-    
-	
 	
 }
 

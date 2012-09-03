@@ -34,6 +34,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['illegal_extentions'] = str_replace(array('  ', ' '), array(' ','|'), $_POST['illegal_extentions']);
 		$_POST['latex_server']       = (trim($_POST['latex_server'])==''?$_config['latex_server']:trim($_POST['latex_server']));
 		$_POST['use_captcha']        = $_POST['use_captcha'] ? 1 : 0;
+		
 	
 		//check that all values have been set	
 		if (!$_POST['site_name']) {
@@ -60,6 +61,7 @@ if (isset($_POST['cancel'])) {
 			$_config['illegal_extentions'] = $addslashes($_POST['illegal_extentions']);
 			$_config['latex_server'] = $addslashes($_POST['latex_server']);
 			$_config['use_captcha'] = $_POST['use_captcha'];
+			
 		}
 		
 		// set $_config['pref_defaults']
@@ -75,6 +77,7 @@ if (isset($_POST['cancel'])) {
 		$_config['latex_server'] = $_config_defaults['latex_server'];
 		$_config['use_captcha'] = $_config_defaults['use_captcha'];
 		$_config['pref_defaults'] = $_config_defaults['pref_defaults'];
+		
 	}
 		
 	if (!$msg->containsErrors()) {

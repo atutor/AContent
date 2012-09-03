@@ -126,7 +126,8 @@
 						//$info	= parse_ini_file($isdir.'/structure.info');
 						
 						// se non è stato specificato un nome, utilizzo quello della cartella
-						if(!$info['name'] || $info['name'] != $item)
+						$info['short_name'] = $item;
+						if(!$info['name'])
 							$info['name'] = $item;
 
 						// controllo il "core"
