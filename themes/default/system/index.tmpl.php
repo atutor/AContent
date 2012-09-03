@@ -32,7 +32,7 @@
 global $onload, $_config;
 $onload = 'document.form.site_name.focus();';
 
-require(TR_INCLUDE_PATH.'header.inc.php'); 
+require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">

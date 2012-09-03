@@ -10,15 +10,11 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+if (!defined('TR_INCLUDE_PATH')) { exit; }
+global $_course_id;
+
+
 ?>
-
-<div align="center">
-	<?php output_tabs($current_tab); ?>
+<div class="row">
+	<p>lippa</p>
 </div>
-<div class="input-form" style="width: 95%;">
-	<?php include('course_start_tabs/'.$tabs[$current_tab][1]); ?>
-	
-	
-</div>
-
-

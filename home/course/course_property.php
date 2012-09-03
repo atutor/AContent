@@ -21,7 +21,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
-require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
+//require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 
 global $_course_id;
 

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
@@ -10,15 +10,16 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+if (!defined('TR_INCLUDE_PATH')) { exit; }
+global $_course_id;
+
 ?>
 
-<div align="center">
-	<?php output_tabs($current_tab); ?>
-</div>
-<div class="input-form" style="width: 95%;">
-	<?php include('course_start_tabs/'.$tabs[$current_tab][1]); ?>
-	
-	
-</div>
-
-
+<fieldset class="group_form">
+	<legend class="group_form"><?php echo _AT('create_content'); ?></legend>
+		<table class="form_data">
+			<tr><td>
+			<?php echo _AT('create_content_2', TR_BASE_HREF.'home/editor/edit_content.php?_course_id='.$_course_id, TR_BASE_HREF.'home/editor/edit_content_folder.php?_course_id='.$_course_id); ?>
+			</td></tr>
+		</table>
+</fieldset> 
