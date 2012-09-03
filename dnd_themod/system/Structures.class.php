@@ -13,7 +13,7 @@
 		private $course_id	= '';
 		private $uniq		= 'dnd';
 
-		// cartelle e documenti da escludere dalla lista dei temi presenti
+		// folders and documents to be excluded from the list of the themes
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 
@@ -75,24 +75,24 @@
 			$structsList	= array();
 			$dir		= array();
 
-			// leggo la lista dei temi disponibili
+			// read the list of available structures
 			$dir		= scandir($this->mod_path['structs_dir_int']);
 
-			// sottraggo i file da escludere dalla lista dei temi disponibili
+			// subtract files to be excluded from the list of available structures
 			$dir		= array_diff($dir, $this->except);
 			
-			// chiamo la funzione che valida le strutture disponibili
+			// call the function that validates the available structures
 			$structsList	= $this->checkStructs($dir);
 			
 			return $structsList;
 		}
 
 		/*
-		 * 	La seguente funzione legge dal filesystem i temi esistenti e li valida
-		 * 	secondo criteri preimpostati (es. confronto tra versione del tema e del core)
-		 * 	restituendo un vettore di temi validi e disponibili.
-		 *	input:	$dir[]			lista dei temi disponibili
-		 * 	output:	lista dei temi disponibili scremata in base alla compatiblità di ogni tema
+		 * 	The following function reads from the filesystem existing structures and validates them
+		 * 	according to pre-set criteria (eg comparison between version of the theme and core)
+		 * 	and returns an array of available and valid structures.
+		 *	input:	$dir[]			list of available structures
+		 * 	output:	list of available structures skimmed according to the compatibility of each structure
 		 * 
 		 * */
 		
@@ -104,10 +104,10 @@
 				
 				
 				
-				// controllo che l'elemento sia una directory
+				// checking if the element is a directory
 				if(is_dir($isdir)){
 			
-					// controllo esista il file .info e lo parso
+					// check if exists the .info file and parse it
 					//$isfile	= $isdir.'/structure.info';
 					$xml_file = $isdir.'/structure.xml';
 					if(is_file($xml_file)) {
@@ -125,12 +125,11 @@
 
 						//$info	= parse_ini_file($isdir.'/structure.info');
 						
-						// se non è stato specificato un nome, utilizzo quello della cartella
 						$info['short_name'] = $item;
 						if(!$info['name'])
 							$info['name'] = $item;
 
-						// controllo il "core"
+						// check the "core"
 						if(!$info['core'])
 							continue;
 						else {
@@ -138,19 +137,19 @@
 							$vfile	= explode('.', $info['core']);
 							$vcore	= explode('.', VERSION);
 			
-							// controllo superficiale per la compatibilità della versione
-							// bloccando il ciclo alla prima incompatibilità trovata
+							// cursory check for version compatibility
+							// stopping the cycle to the first incompatibility found
 							if($vfile[0] < $vcore[0])
-								// non compatibile!
+								// not compatible!
 								continue;
 							elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
-								// non compatibile!
+								// not compatible!
 								continue;
 						}
 						
 		
 						
-						// inserisco le info del tema corrente all'interno di un vettore
+						// put the info of the current structure into an array
 						$structs[$item] = $info;
 						
 						

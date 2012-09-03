@@ -46,19 +46,16 @@ $mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
 $mod_path['models_dir']		= $mod_path['dnd_themod']		. 'models/';
 $mod_path['models_dir_int']	= $mod_path['dnd_themod_int']	. 'models/';
 
-// includo immediatamente il file "applicaTema" così che possa ereditare variabili e costanti definite dal sistema
+// include the file "applicaModello" so that he can inherit variables and constants defined by the system
 include_once($mod_path['dnd_themod_sys'].'Models.class.php');
 
-// istanzio la classe Themes (che chiama il costruttore) 
+// instantiate the class Models (which calls the constructor)
 $mod		= new Models($mod_path);
-
-// includo le classi necessarie
-//require_once($mod_path['dnd_themod_int'].'system/applicaTema.inc.php');
 
 $user_priv	= $privilegesDAO->getUserPrivileges($_SESSION['user_id']);
 $is_author	= $user_priv[1]['is_author'];
 
-// prendo la lista dei temi disponibili validi
+// take the list of available valid models
 
 $listaModelli = array();
 
@@ -81,57 +78,41 @@ if($_content_id != "" && $_course_id != "") {
 
 	           
 //}
-// chiamo la funzione che crea il modulo grafico di selezione del tema
-//$listaModelli
+// call the function that creates the graphics module selection
 $output	= $mod->createUI();
 
-// array contenente il contenuto corrente (testo, eader, bit che indica che l'header è incluso)
-//$content	= getContent(DAO, $cid);
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// percorso del modulo
 $dnd_themod		= TR_BASE_HREF.'dnd_themod/';
 $dnd_themod_int	= TR_INCLUDE_PATH.'../dnd_themod/';
 
-// percorso contenente la lista dei temi
+// path containing the models list
 $model_dir		= $dnd_themod.'models/';
 $model_dir_int	= $dnd_themod_int.'models/';
 
-// directory e i file system da escludere dalla lista dei temi presenti
+// directory and file systems to be excluded from the models list
 $except	= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
-// id contenuto
+// content id
 $cid	= $this->cid;
-// se non presente, prendo il _cid (id del contenuto in fase di modifica)
+// if not present, take the _cid (content id to be edited)
 if($cid == '' and isset($_GET['_cid'])and $_GET['_cid'] != '')
 	$cid = htmlentities($_GET['_cid']);
 
 
 ######################################
-#	SCRIPT JQUERY DEL MODULO
+#	JQUERY SCRIPT MODULE
 ######################################
 include $mod_path['dnd_themod_sys'].'Models.js';
 include $mod_path['dnd_themod_sys'].'prova.js';
-######################################
-#	RESTITUISCO L'OUTPUT
-######################################
 
-// restituisco l'output
-
+######################################
+#	RETURN OUTPUT
+######################################
 
 $savant->assign('title', _AT('models'));
 
 
 $savant->assign('dropdown_contents', $output);
-//$savant->assign('default_status', "hide");
 
 $savant->display('include/box.tmpl.php');
-/*
-echo '<div style="position:absolute; background:white"></pre>';
-	var_dump($_SESSION);
-echo '</pre></div>';
-*/
+
 ?>

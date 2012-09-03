@@ -1,28 +1,6 @@
-/*
-#content-text #dnd:hover{
-	border:						1px solid transparent;
-}
-*/
-/*
-#content-text{
-
-	border:						1px dashed transparent;
-*/
-    /* CSS3 */
-/*    border-radius:              5px;*/
-    /* Safari and chrome */
-/*    -webkit-border-radius:      5px;*/
-    /* Firefox */
-/*    -moz-border-radius:         5px;*/
-    /* Linux browsers */
-/*    -khtml-border-radius:       5px;*/
-/*
-}
-*/
-
 /*########################################
-	Riquadro che mostra la lista di
-	modelli disponibili
+	Box that displays
+	a list of available models
 ########################################*/
 
 .boxModel{
@@ -129,10 +107,10 @@
 }
 
 /*########################################
-	Riquadro singolo modello
+	Single box model
 ########################################*/
 
-/* riquadro */
+/* box */
 .model, .noModel{
 	/*padding:					10px;*/
 
@@ -144,13 +122,13 @@
 	width: 						100%;
 }
 
-/* barra pulsante elimnia modulo (inizialmente nascosto) */
+/* button "delete module" (initially hidden) */
 .model .removeModelTopBar{
 	background:					transparent;
 	/*display:					none;*/
 }
 
-/* linguetta 'X' di eliminazione modello */
+/* label 'X' of "delete module" */
 .model .removeModel{
 	text-align:					center;
 	background:					#FFF;
@@ -187,13 +165,13 @@
     
 }
 
-/* effetto hover linguetta 'X' */
+/* hover label 'X' */
 .model .removeModel:hover{
 	background:					#FDD;
 	cursor:						pointer;
 }
 
-/* contenuto generico del modello */
+/* generic model content */
 .model .modelContent{
 
 	padding:					10px;
@@ -220,7 +198,7 @@
     -khtml-border-radius:			0px 3px 3px 3px;
 }
 
-/* effetto hover contenuto generico del modello */
+/* hover generic content */
 .model .modelContent:hover{
 
 	border:						1px dashed #CCC;
@@ -233,7 +211,7 @@
 	background:					#F0F8FF;
 }
 
-/* ogni nuovo modello creato deve passare da hidden a visible */
+/* each new model must become visible */
 #newModel{
 	display:					none;
 }
@@ -267,7 +245,7 @@
 
 
 
-/* vecchio contenuto */
+/* old content */
 .oldContent{
 
 	border:						1px dashed #DDD;
@@ -285,22 +263,7 @@
 	margin:						0px;
 }
 
-/* effetto hover del vecchio contenuto */
+/* hover of old content */
 .oldContent:hover{
 	border:						1px dashed #008;
 }
-
-/*########################################*/
-
-/* modello applicato al contenuto E testo appena creato da modello*/
-/*
-#content-text .model:hover, .modelContent:hover{
-
-	border:						1px dashed #F00;
-
-    border-radius:              5px;
-    -webkit-border-radius:      5px;
-    -moz-border-radius:         5px;
-    -khtml-border-radius:       5px;
-}
-*/

@@ -1,9 +1,9 @@
 <script type="text/javascript">
 
-	// applico un mio foglio di stile per formattare dnd_themod
+	// Apply a custom stylesheet to format "dnd_themod"
 	$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/dnd_themod.css" type="text/css" />');
 	
-	// se il contenuto attuale ha un tema, lo applico
+	// if the current content has a theme, just apply it!
 
 	if("<?php echo $content_theme; ?>" != ''){
 		
@@ -13,24 +13,21 @@
 
 
 	var DEFAULT_SCREENSHOT	= '<?php echo $dnd_themod; ?>system/noTheme.png';
-	// creo un valore univoco da assegnare come classe generale
-	// do not change (fixed for "Models" too)
-	//var uniq		= 'dnd';
+
 	var uniq		= 'content-text';
-	// creo un eventuale footer
-	//var footer	= "<div id=\"anteprima-footer\"> </div>";
+
 	var footer	= "";
 
 
 	$(document).ready(function() {
 		
-		// questa riga ci consente di mostrare il form solo se JS e' abilitato
-		// il selettore dipende dal nome del modulo (che, nel file della lingua, e' personalizzabile)
+		// this row allow to show the form just if JS is enabled
+		// il selector depends by the module name (customizable in the language file)
 		var titolo_modulo	= "<?php echo _AT('themes'); ?>";
 		titolo_modulo		= titolo_modulo.replace(/ /g, '');
 		
-		// se l'utente e' un autore autenticato
-		// mostro il modulo
+		// if the user is an authenticated author
+		// show the module
 		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php"){
 			$('#menu_' + titolo_modulo + ' form').show();
 		}else{
@@ -67,7 +64,7 @@
 
 		var path	= "<?php echo htmlentities($_SERVER['PHP_SELF']); ?>";
 
-		// se siamo in 'system'
+		// if we are in 'system'
 		if(path.indexOf('/system/') >= 0){
 			
 			var disabled	= '';
@@ -93,11 +90,11 @@
 		
 		/*
 		 *	exaggeration
-		 *	TinyMCE non è preciso con i carriage return, quindi, cerco di riparare
-		 *	alle differenze di visualizzazione tra TinyMCE e l'anteprima di AContent.
+		 *	TinyMCE is not precise with the carriage return, then, I try to repair
+		 *	the display differences between TinyMCE and AContent preview.
 		 *
-		 *	IN QUESTO CASO CORREGGO SOLAMENTE LA VISUALIZZAZIONE DEL CONTENUTO SALVATO
-		 *	DA TINYMCE E VISUALIZZATO DA ACONTENT
+		 *	IN THIS CASE I JUST CORRECT THE SAVED CONTENT SHOWN
+		 *	BY TINYMCE AND DISPLAYED BY ACONTENT
 		*/
 		if ($('#content-text').is('*')){
 			text	= $('#content-text').html();
@@ -107,49 +104,34 @@
 			$('#content-text').html(text);
 		}
 		
-		// imposto la screenshot per il tema di default
+		// set the default screenshot
 		$('#themeScreenshot').attr('src',DEFAULT_SCREENSHOT);
 		
 		/**
-		 *	Gestione dell'anteprima dei temi 
-		 *	visualizzo il tema scelto in fase di editing o di anteprima del contenuto
-		 * 	resetto il tema e riporto l'utente al tema principale
+		 *	Themes pewview management
+		 *	show the theme when editing or in content preview
+		 * 	reset the theme and redirect the user to the main theme
 		 */
 
 		$('#listatemi').change(function() {
 
 			str = $(this).val();
 
-			// rimuovo il tema precedente
+			// remove the previous theme
 
 			$('#dnd_themod_themes').remove();
 			$('#dnd_themod_view').remove();
 			/////////////////////////////
 			
-			// pulisco l'anteprima per non lasciare accodamenti di anteprime
-			//$("#view").remove();
+			// clean the preview to not leave stacks of previews
 			$('#content-text').removeClass('view');
-
-			//*****************************************************************
-			//$('#content-text').attr('name', uniq);
-
-/*
-			// se il contenuto attuale ha un tema, lo disabilito (lo elimino)
-			if("<?php echo $content_theme; ?>" != ''){
-				current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
-				$('head link').each(function(link) {
-					if($(this).attr('href') == current_theme)
-						$(this).attr('href', 'ViewMode');
-				});
-			}
-			*/
 
 			switch(str){
 
-				// rimuovo il tag "LINK" relativo al tema applicato
+				// remove the "LINK" tag related to the applied theme
 				case '-':
 
-					// se il contenuto attuale ha un tema, lo disabilito (lo elimino)
+					// if the current content has a theme, disable it (delete it)
 					if("<?php echo $content_theme; ?>" != ''){
 						current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
 						$('head link').each(function(link) {
@@ -158,18 +140,17 @@
 						});
 					}
 
-					// imposto la screenshot
+					// set the screenshot
 					$('#themeScreenshot').attr('src', DEFAULT_SCREENSHOT);
 
-					// rimuovo il tema precedente
+					// remove the previous theme
 					$('#dnd_themod_themes').remove();
 					$('#dnd_themod_view').remove();
 
-					// nascondo l'anteprima
-					//$("#view").hide();
+					// hide the preview
 					$('#content-text').removeClass('view');
 
-					// nascondo l'anteprima in fase di editing o in fase di anteprima del contenuto
+					// hide the preview when editing or in content preview
 					if ($('form[name="form"]').is('*'))
 						main = $('form[name="form"]');
 					else if ($('#content-text').is('*'))
@@ -186,23 +167,22 @@
 
 				default:
 
-					// se il contenuto attuale ha un tema, lo disabilito (lo elimino)
+					// if the current content has a theme, disable it (delete it)
 					if("<?php echo $content_theme; ?>" != ''){
 						current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
 						$('head link').each(function(link) {
 							if($(this).attr('href') == current_theme)
 								$(this).attr('href', 'ViewMode');
 						});
-						
-						//alert('rimosso tema ' + current_theme);
+
 					}
 
-					// imposto la screenshot, SE ESISTE
+					// set the screenshot, if it exists
 					percorso_screenshot = '<?php echo $themes_dir; ?>' + str;
 					immagine			= percorso_screenshot + '/screenshot.png';
 
 					$.ajax({
-						// controllo se esiste
+						// check if it exists
 					    url:	immagine,
 					    esiste: false,
 					    type:	'HEAD',
@@ -218,35 +198,32 @@
 							}
 					});
 
-					// se il tema non è già applicato, lo applico
-					//if(!esiste){
-						
-						// includo il CSS che resetta le impostazioni di default
+						// include the CSS that resets the default settings
 						$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/themes.css" type="text/css" id="dnd_themod_themes" />');
 
-						// includo il CSS desiderato
+						// include the choosen CSS
 						$('head').append('<link rel="stylesheet" href="<?php echo $themes_dir; ?>' + str + '/' + str + '.css" type="text/css" id="dnd_themod_view" />');
 						var c = '<div id="content">' + $('#content-text').html() + '</div>';
 						$('#content-text').html(c);
 
-						// posso visualizzare l'anteprima in fase di editing o in fase di anteprima del contenuto
-						// per fare questa distinzione devo verificare l'esistenza del FORM name = "form" o dell'ID #content-text (fase di anteprima del contenuto)
+						// can show the preview during editing or during the content preview
+						// to do this I have to check the FORM name = "form" existence or the ID #content-text existence (during the content preview)
 
-						// anteprima in fase di editing
+						// editing preview
 						if ($('form[name="form"]').is('*')){
-							// prendo il contenuto
+							// take the content
 							text = $('#body_text').text();
 
-							// nascondo il contenuto della pagina attuale
+							// hide the current page content
 							main = $('form[name="form"]');
 						}
-						// anteprima in fase di anteprima del contenuto
+						// preview during the content preview
 						else if ($('#content-text').is('*')){
 
-							// prendo il contenuto
+							// take the content
 							text = $('#content-text').html();
 
-							// nascondo il contenuto della pagina attuale
+							// hide the current page content
 							main = $('#content-text');
 						}else
 							main = null;
@@ -255,13 +232,13 @@
 
 							var formatType = '<?php echo $formatContent; ?>';
 
-							// se il testo viene visualizzato in Plain Text
-							// l'anteprima dovra rispettare la richiesta di visualizzazione
-							// per l'HTML e il Web Link non ci sono problemi
+							// if the text is displayed in Plain Text
+							// the preview will have to comply with the display request
+							// no problems for HTML and Web Link
 							if(formatType == 0)
 								text = jQuery(text).text();
 							else{
-								// pulisco il testo per l'anteprima (TinyMCE ha problemi con i carriage return)
+								// clean up the text for the preview (TinyMCE has problems with carriage return)
 								//text	= jQuery(text).text();
 								text	= textFixJS(text);
 							}
@@ -270,21 +247,15 @@
 							//main.after('<div id="view">' + text);
 							$('#content-text').addClass('view');
 							
-							//main.hide();
-
-							// mostro la pagina di anteprima
-							//$("#view").show();
-						//}
-
-					} // IF -> se il tema non è già applicato, lo applico
+					} // IF -> if the theme is not already applied, it will do it!
 			} // switch
 		});
 		
 		/*
 		 *	exaggeration
-		 *	TinyMCE non è preciso con i carriage return, quindi, cerco di riparare
-		 *	alle differenze di visualizzazione tra TinyMCE e l'anteprima di AContent.
-		 *	text	= testo da ripulire
+		 *	TinyMCE is not precise with the carriage return, then, I try to repair
+		 *	the display differences between TinyMCE and AContent preview.
+		 *	text	= text to clean up
 		*/
 		function textFixJS(text){
 			text	= text.replace(/<p>&nbsp;<\/p>/g, "<br />");

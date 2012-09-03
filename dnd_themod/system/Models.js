@@ -10,13 +10,13 @@
 
 	$(document).ready(function(){ 
 		
-		// questa riga ci consente di mostrare il form solo se JS e' abilitato
-		// il selettore dipende dal nome del modulo (che, nel file della lingua, e' personalizzabile)
+		// this row allow to show the form just if JS is enabled
+		// il selector depends by the module name (customizable in the language file)
 		var titolo_modulo	= "<?php echo _AT('models'); ?>";
 		titolo_modulo		= titolo_modulo.replace(/ /g, '');
 		
-		// se l'utente e' un autore autenticato
-		// mostro il modulo
+		// if the user is an authenticated author
+		// show the module
 		
 		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php")
 			//$('#dnd_moduli').show();
@@ -34,28 +34,14 @@
 			base			= $('#content-text');
 
 		////////////////////////////////////////
-		//	INCLUSIONI / DICHIARAZIONI / DEFINIZIONI
+		//	INCLUSIONS / DECLARATIONS / DEFINITIONS
 		////////////////////////////////////////
 
 		var boxModel			= '<div class="boxModel"><ul></ul></div>';
 
-		// considero i modelli solo in fase di anteprima dei contenuti
+		// consider only models during the content preview
 
-		// determino se sono in fase di modifica o in fase di anteprima del contenuto
-		// TEXTAREA
-		/*
-		if($('#body_text').is('*')){
-			// fase di modfica
-			base		= $('#body_text');
-		}else{
-			// anteprima del contenuto
-			base		= $('#content-text');
-		}
-
-		base			= $('#content-text');
-		*/
-
-		// inserisco in testa al contenuto testuale il box relativo ai modelli
+		// put on the content top the model box
 		boxModelToolbox = "<div class=\"boxModelToolbox\"><ul>";
 
 		// paste
@@ -68,7 +54,7 @@
 
 
 		////////////////////////////////////////
-		//	EVENTO ATTIVAZIONE / DISATTIVAZIONE MODELLI
+		//	MODELS EVENT ON / OFF
 		////////////////////////////////////////
 
 		$('#modelCopy').live("click", function(){
@@ -83,7 +69,7 @@
 			var value		= allModels;
 			var exdays		= '1';
 
-			// creo il cookie
+			// create  cookie
 			var exdate		= new Date();
 			exdate.setDate(exdate.getDate() + exdays);
 			var c_value		= escape(value) + ((exdays==null) ? "" : "; expires="+exdate.toUTCString());
@@ -99,7 +85,7 @@
 
 			var c_name		= 'modelClipboard';
 	
-			// leggo il cookie
+			// read cookie
 			var i,x,y,ARRcookies=document.cookie.split(";");
 			for (i=0;i<ARRcookies.length;i++){
 				x	= ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
@@ -113,20 +99,20 @@
 				}
 			}
 
-			// se ci sono gia' altri modelli
-			// chiedo se si vuole aggiungere la clipboard in testa
+			// if there are already other models
+			// ask if you want to add the clipboard in head
 			if($('.model').attr('class') != 'model noModel'){
 				if(!confirm("<?php echo _AT('add_to_existing_models'); ?>") ) {
             		return false;
 		  		}
 		  	}
 
-			// aggiungi modelli
+			// add models
 			//$('#dnd').html(Models + $('#dnd').html());
 			var m = Models.split('|');
 
 			var dopoNoModel = 0;
-			// il ciclo parte da 1 in quanto il primo elemento è ''
+			// the cycle starts from 1 because the first element is ''
 			for(i=1; i<m.length; i++){
 				var modelID = m[i].replace("model ", "");
 				
@@ -136,7 +122,7 @@
 					aggiungiModello(modelID, dopoNoModel);
 			}
 			
-			// salva nuovo contenuto
+			// save the new content
 			salvaModificheContenuto();
 
 		});
@@ -146,7 +132,7 @@
 			
 			if($('#attivaModelli_btn').is(':checked')) {
 				
-				// disabilito ORDINA MODELLI				
+				// disable SORT MODELS
 				$('#ordinaModelli_btn').attr('disabled','disabled');
 
 				$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/models.css" type="text/css" />');
@@ -159,7 +145,7 @@
 				// cookie name
 				var c_name		= 'modelClipboard';
 
-				// leggo il cookie
+				// read cookie
 				var i,x,y,ARRcookies=document.cookie.split(";");
 				for (i=0;i<ARRcookies.length;i++){
 					x	= ARRcookies[i].substr(0,ARRcookies[i].indexOf("="));
@@ -171,8 +157,8 @@
 					}
 				}
 	
-				// riempo il box con i modelli disponibili solo nel caso
-				// si scelga di visualizzare i modelli
+				// fill the box with the models available
+				// choose to view models
 				var m = '';
 
 				var count = 0;
@@ -186,11 +172,11 @@
 					echo 'm = m + "<li><table id=\"'.$key.'\"><tr><td><img src=\"'.$dnd_themod.'models/'.$key.'/screenshot.png\" /></td></tr><td class=\"desc\">'.$value['name'].'</td></tr></table></li>";';
 				}		
 				?>
-				//QUI!!
+				//HERE!!
 			
 				$(".boxModel ul").append(m);
 
-				// mostro il box dei modelli
+				// show models box
 				$('.boxModel').slideToggle('slow', function(){
 					
 					$(this).css('display','block');
@@ -201,24 +187,24 @@
 
 			}else{
 				
-				// disabilito temporaneamente il pulsante modelli
+				// temporarily turn off the models button
 				$('#attivaModelli_btn').attr("disabled", "disabled");
 
 				nascondiModelli();
 
-				// mostro il box dei modelli
+				// show models box
 
 				$('.boxModel').slideToggle('slow', function(){
 
-					// rimuovo il box del cut & paste dal DOM
+					// remove the "cut" box & paste it from DOM
 					$('.boxModelToolbox').remove();
-					// rimuovo il boxModel dal DOM
+					// remove the boxModel from DOM
 					$('.boxModel').remove();
 
-					// salvo il documento
+					// save the content
 					salvaModificheContenuto();
 
-					// rimuovo il foglio di stile
+					// remove the stylesheet
 					var modelStylesheet	= $('link[href="<?php echo $dnd_themod; ?>system/models.css"]');
 					modelStylesheet.remove();
 
@@ -234,7 +220,7 @@
 		$('#ordinaModelli_btn').click(function(){
 			if($('#ordinaModelli_btn').is(':checked')){
 
-				// disabilito ATTIVA MODELLI
+				// disable MODELS ACTIVATE
 				$('#attivaModelli_btn').attr('disabled', 'disabled');
 
 				$('.noModel').addClass('noModelSorting');
@@ -249,17 +235,17 @@
 
 				//$('.boxModelToolbox').hide();
 				
-				// disabilito ATTIVA MODELLI
+				// disable MODELS ACTIVATE
 				$('#ordinaModelli_btn').attr('disabled', 'disabled');
 
 				$('.noModel').removeClass('noModelSorting');
 
-				// mostro il box dei modelli
+				// show box models
 				
-				// rimuovo il boxModel dal DOM
+				// remove the boxModel from DOM
 				$('.boxModel').remove();
 
-				// salvo il documento
+				// save the file
 				/*
 				var url			= "<?php echo $dnd_themod; ?>" + "system/AJAX_actions.php";
 				var vcid		= "<?php echo $cid; ?>";
@@ -277,7 +263,7 @@
 				*/
 				salvaModificheContenuto();
 
-				// rimuovo il foglio di stile
+				// remove the stylesheet
 				var modelStylesheet	= $('link[href="<?php echo $dnd_themod; ?>system/models.css"]');
 				modelStylesheet.remove();
 			}
@@ -285,7 +271,7 @@
 
 
 		////////////////////////////////////////
-		//	ORDINAMENTO MODELLI
+		//	MODELS SORTING
 		////////////////////////////////////////
 
 		// top
@@ -349,29 +335,29 @@
 		});
 
 		////////////////////////////////////////
-		//	AGGIUNGO UN NUOVO MODELLO
+		//	ADD A NEW MODEL
 		////////////////////////////////////////
 
 		$('.boxModel li').live("click", function(){
 
 			var structure	= "";
 
-			// prendo il nome del modello che si desidera inserire
+			// take the name of the template you want to insert
 			var modelID		= $(this).find('table').attr('id');
 			
-			// aggiungi modello
+			// add model
 			aggiungiModello(modelID, 0);
 
 		});
 
 		////////////////////////////////////////
-		//	ELIMINO IL MODELLO SELEZIONATO
+		//	DELETE SELECTED MODEL
 		////////////////////////////////////////
 
 		$('.removeModel').live("click", function(){
 
 
-			// effetto slideUp
+			// slideUp effect
 			/*
 			$(this).parent().parent().slideUp(300,function(){
 				$(this).remove();
@@ -379,7 +365,7 @@
 			*/
 			var modello	= $(this).parents('.model');
 
-			// effetto fade
+			// fade effect
 
 			modello.fadeOut(300, function(){
 				modello.remove();
@@ -400,10 +386,9 @@
 		});
 		
 		/*
-		*	Correggo un fastidiosissimo bug di progettazione dei browser:
-		* 	quando scorro verticalmente i contenuti di un div (in questo caso dei modelli)
-		* 	e arrivo in fondo, il focus viene automaticamente preso dalla pagina che scorre
-		* 	fastidiosamente in basso. 
+		*	Fix an annoying behavior of browsers:
+		*	when I vertically scroll the contents of a div (in this case the model)
+		*	and reach the bottom, the focus is automatically taken from the page that scrolls.
 		*/
 		$(".boxModel").live({
 
@@ -420,14 +405,14 @@
 
 
 		/*######################################
-			FUNZIONI
+			FUNCTIONS
 		######################################*/
 		
 		function aggiungiModello(modelID, afterNoModel){
 
 			var url			= "<?php echo $dnd_themod; ?>" + "system/AJAX_actions.php";
 
-			// structure non e' altro che il mero codice HTML del modello
+			// structure is nothing else the mere HTML code model
 			$.post(url, {mID: modelID}, function(structure){
 
 				if(afterNoModel == 0){
@@ -441,10 +426,10 @@
 					$('.noModel').after('<div class="model ' + modelID + '" id="newModel">' + creaModello(structure, modelID) + "</div>");
 				}
 
-				// aggiorno la visualizzazione dell'anteprima temi
+				// upgrade to models preview
 
 				
-				// inserisco il modello
+				// insert the model
 				$('#newModel').fadeIn(300);
 			
 
@@ -468,7 +453,7 @@
 
 			$.post(url, {cid: vcid, text: vtext, action: vaction}, function(data){
 
-				// riabilito il pulsante modelli
+				// enable the models button
 				$('#attivaModelli_btn').removeAttr("disabled");
 				$('#ordinaModelli_btn').removeAttr('disabled');
 
@@ -491,18 +476,15 @@
 		
 		function visualizzaModelli() {
 
-			// mostro le opzioni dei modelli (elimina, ordina)
+			// show the models options (delete, sort)
 			$('.model').each(function(index) {
-				// mostro la X di eliminazione del modello
+				// show the "X"
 				$(this).find(' tr:first').before("<tr><td>" + removeModelTopBar);
 
-				// mostro la barra di ordinamento
+				// show the sorting bar
 				$(this).append("<tr><td>" + sortTools);
 			});
 			
-			// incapsulo il contenuto esistente in un "noModel"
-			//base..css('background','lightgreen');
-
 			return;
 
 
@@ -511,10 +493,10 @@
 		function nascondiModelli(){
 
 			$('.model').each(function(index) {
-				// nascondo la X di eliminazione del modello
+				// hide the "X"
 				$(this).find(' tr:first').remove();
 
-				// rimuovo la barra di ordinamento
+				// remove the sorting bar
 				$(this).find(' tr:last').remove();
 			});
 
@@ -523,17 +505,16 @@
 
 		function duplicatedTextFix(){
 
-			// parto dal primo
+			// start from the first
 			$('#content-text div[id*="_header_"]:first').each(function() {
 
-				// primo
-				var element = $(this);
+					// first
+					var element = $(this);
 	
-				// per ogni altro elemento
-				// verifico sia unique rispetto ai suoi figli!
-				//while(element.next().is('*')){
+					// for every other element
+					// check if it is unique respect to her children!
 					while(element.next().is('*')){
-
+	
 					element.html(uniqChildren(element));
 					element = element.next();
 				}
@@ -551,7 +532,7 @@
 
 			element.find('[id*="_header_"]').each(function() {
 
-				// se esiste
+				// if it exists
 				if($.inArray($(this).attr('id'), c) > -1){
 					$(this).parent().html($(this).html());
 					$(this).remove();
