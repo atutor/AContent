@@ -287,7 +287,7 @@
 				// then, take it off to all the add it again (more safe even if most "expensive")
 	
 				// clean up the text from the tag
-				$text		= $this->clearCon
+				$text    = $this->clearContent($text);
 	
 				// write on db
 				$contentDAO->UpdateField($cid, 'text', $text);
