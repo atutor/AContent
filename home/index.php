@@ -16,6 +16,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
 
+
 global $_current_user;
 
 // clean up the session vars from the previous course

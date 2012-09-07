@@ -267,7 +267,9 @@ if ($_course_id > 0)
 	include_once(TR_INCLUDE_PATH. '../home/classes/ContentManager.class.php');
 	
 	$contentManager = new ContentManager($_course_id);
+	//echo("CIPPA ".count($contentManager->_menu_in_order));
 	$_sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
+	
 }
 
 /*** 10. register pages based on user's priviledge ***/

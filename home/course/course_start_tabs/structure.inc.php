@@ -49,11 +49,15 @@ if (!is_array($structsList) || count($structsList) == 0) {
 
 <!--  -->
 <div style=" weight: 10%; margin: 10px;">
-	<p style="font-style:italic;">Choose the structure to use as model for your lesson:</p>
+<p style="font-style:italic;">The structures available are:</p>
+
+<!-- <p >Choose the structure to use as model for your lesson:</p> -->
 	
 	
 	<div style="margin: 10px;">
-	<?php foreach ($structsList as $val) { 
+	<?php 
+		$value = "";
+		foreach ($structsList as $val) { 
 		  	if(isset($_POST['struct']) && $_POST['struct'] == $val['short_name'])
 				$check = true;
 			else 
@@ -62,28 +66,36 @@ if (!is_array($structsList) || count($structsList) == 0) {
 	
 	
 		<div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
-		<input  type="checkbox" id="<?php echo $val['short_name'];?>" name="struct" value="<?php echo $val['short_name'];?>" onclick="document.form.submit();" <?php if($check) echo 'checked="checked";'?>/>
-		<label for="<?php echo $val['short_name'];?>"><?php echo $val['name'];?></label><br />
+		<!--<input  type="checkbox" id="<?php echo $val['short_name'];?>" name="struct" value="<?php echo $val['short_name'];?>" onclick="document.form.submit();" <?php if($check) echo 'checked="checked";'?>/>-->
+		
+		<ul>
+		<li id="<?php echo $val['short_name'];?>"> <?php echo $val['name'];?> </li>
+
+		<!-- <label for="<?php echo $val['short_name'];?>"><?php echo $val['name'];?></label><br />-->
 		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;">Description:</span>
 					<?php echo $val['description']; ?></p>
-			
-			<?php if(isset($_POST['struct']) && $_POST['struct'] == $val['short_name']) { 
+		
 					
-					echo '<div style="font-size:95%; margin-left: 10px; ">';
+					<div style="font-size:95%; margin-left: 10px;">
 					
-					echo '<p style="font-style:italic;">Outline:</>';
-					$struc_manag = new StructureManager($_POST['struct']);
-					$struc_manag->printPreview(false, $_POST['struct']);
-					echo '</div>';
-			} ?>
+						<a title="outline_collapsed" id="a_outline_<?php echo $val['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $val['short_name'];?>', 'Hide outline', 'Show outline'); " href="javascript:void(0)">Show outline</a>
+						<div style="display: none;" id="div_outline_<?php echo $val['short_name'];?>">
+							<?php $struc_manag = new StructureManager($val['short_name']);
+							$struc_manag->printPreview(false, $val['short_name']); ?>
+						</div>
+			</ul>
 			</div>
 <?php } ?>
-<!-- style="margin: 50px; margin-right: 100px; float: right;" -->
 
 
 </div>
 
+<input type="hidden" name="struct" />
+<input type="hidden" name="current_tab" value="1" />
+
 </div>
+<input type="submit" class= "submit" name="create_struct" value="Create course with the selected structure" style="margin: 20px; position: relative; left: 65%;"  />
+
 <!--  -->
 
 

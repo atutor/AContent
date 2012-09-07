@@ -332,8 +332,8 @@ INSERT INTO `language_text` VALUES ('en', '_template','create','Create','2010-03
 INSERT INTO `language_text` VALUES ('en', '_template','create_category','Create Category','2010-03-22 15:57:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','create_content','Create Content','2010-06-11 15:07:06','');
 INSERT INTO `language_text` VALUES ('en', '_template','create_content_1','<span style=\"font-weight:bold\">Method 1</span>: Use','2010-06-11 15:06:33','');
-/* changed the line below: deleted "<span style=\"font-weight:bold\">Create Lesson</span>:" */
-INSERT INTO `language_text` VALUES ('en', '_template','create_content_2','Manually <a href=\"%1s\">create a content page</a> or <a href=\"%2s\">create a content folder</a>. <br />These tools are also available at side menu \"Content Navigation\" as \"Add top page\" or \"Add top folder\" links.','2010-06-25 11:19:02','');
+/* changed the line below: deleted "" */
+INSERT INTO `language_text` VALUES ('en', '_template','create_content_2','<span style=\"font-weight:bold\">Create Lesson</span>: manually <a href=\"%1s\">create a content page</a> or <a href=\"%2s\">create a content folder</a>. <br />These tools are also available at side menu \"Content Navigation\" as \"Add top page\" or \"Add top folder\" links.','2010-06-25 11:19:02','');
 INSERT INTO `language_text` VALUES ('en', '_template','create_course','Create Lesson','2010-06-07 12:41:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','create_course_1','<span style=\"font-weight:bold\">Create New Lesson</span>: Create a lesson by using','2010-06-25 11:21:41','');
 INSERT INTO `language_text` VALUES ('en', '_template','create_course_2','<span style=\"font-weight:bold\">Import Existing Lesson</span>: Import a content package of common cartridge. Or, if you have the Web address directly to a content package common cartridge, enter it into the URL field to import it directly from the Web.','2010-06-25 11:22:38','');

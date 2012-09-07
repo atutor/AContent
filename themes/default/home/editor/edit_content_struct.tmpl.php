@@ -51,7 +51,7 @@ if ($this->shortcuts):
 			} else {
 			
 				foreach ($structsList as $struct) {
-					echo '<input type="radio" name="title" id="'.$struct['name'].'" class="formfield" value="'.$struct['name'].'"/>';
+					echo '<input type="radio" name="title" id="'.$struct['name'].'" class="formfield" value="'.$struct['short_name'].'"/>';
 					echo '<label for="'.$struct['name'].'">'.$struct['name'].'</label>';
 					echo '</br>';
 				}

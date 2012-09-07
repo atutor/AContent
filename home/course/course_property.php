@@ -71,7 +71,6 @@ else if($_POST['submit']){
 					
 					//createStruct($page_temp, $struc_manag, -1, $course_id);
 					
-					//die($_POST['_struct_name']);
 					$structs = explode("_", $_POST['_struct_name']);
 					//if(count($structs) > 1) {
 						
@@ -151,20 +150,10 @@ else if($_POST['submit']){
 							
 					}
 					
-					
-						
-					////die("struttura " .$structs);
-					
-					
 				}
 				
 				*
-				*/
-				
-				
-				
-				
-				
+				*/		
 				
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			

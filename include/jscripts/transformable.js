@@ -153,6 +153,23 @@ trans.utility.selected;
   };
   
   
+  //catia
+  //toogle structure outline  (in create course)
+  trans.utility.toggleOutline = function (struct_name, expand_text, collapse_text)
+  {
+	  if (jQuery("#a_outline_"+struct_name).attr("title") == "outline_collapsed") {
+		  jQuery("#a_outline_"+struct_name).attr("title", "outline_expanded");
+		  jQuery("#a_outline_"+struct_name).text(expand_text);
+		  
+	    }
+	    else {
+	      jQuery("#a_outline_"+struct_name).attr("title", "outline_collapsed");
+	      jQuery("#a_outline_"+struct_name).text(collapse_text);
+	    }
+	    
+	    jQuery("#div_outline_"+struct_name).slideToggle();
+	  
+  };
   
   // toggle content folder in side menu "content navigation"
   trans.utility.toggleFolder = function (cid, expand_text, collapse_text, course_id)

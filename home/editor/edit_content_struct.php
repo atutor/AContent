@@ -85,7 +85,6 @@ if ($_POST['submit'])
 			                                   1,
 			                                   CONTENT_TYPE_FOLDER);
 			
-			
 		    $struc_manag = new StructureManager($_POST['title']);	     
 		    $page_temp = $struc_manag->get_page_temp();
 			

@@ -548,6 +548,7 @@ class ContentManager
 	 * @return an array of the next content node
 	 */
 	function getNextContent($content_id) {
+		//echo("dentro a get");
 		if (is_array($this->_menu_in_order))
 		{
 			// find out the location of the $content_id
@@ -575,8 +576,10 @@ class ContentManager
 				    	         'ordering'		=> $this->_menu_info[$this->_menu_in_order[$i]]['ordering'],
 				        	     'title'		=> $this->_menu_info[$this->_menu_in_order[$i]]['title']));
 			}
-		}
+		} 
+		
 		return NULL;
+		
 	}
 	
 	/* @See include/header.inc.php */
@@ -586,7 +589,7 @@ class ContentManager
 		$sequence_links = array();
 		
 		$first = $this->getNextContent(0); // get first
-		
+		//echo("TITOLO : ". $first['title']);
 		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}

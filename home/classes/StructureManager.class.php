@@ -307,7 +307,6 @@ class StructureManager
 			$xml = simplexml_load_file($file);
 			$pages = $xml->xpath('//page');
 			while(list( , $node) = each($pages)) {
-				echo "PINO ".$node['name'];
    				if($node['name'] == $title)
    					return $node;
 			}
