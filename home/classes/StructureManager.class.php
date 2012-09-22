@@ -300,15 +300,17 @@ class StructureManager
 	}
 	
 
-	function getContentByTitle($title) {
+	/** 
+	 * **/
+	function getPageTemplatesItem($title) {
 		$file = $this->path.'/content.xml';
-		//echo("PALLE ");
 		if(is_file($file)){
 			$xml = simplexml_load_file($file);
 			$pages = $xml->xpath('//page');
 			while(list( , $node) = each($pages)) {
-   				if($node['name'] == $title)
-   					return $node;
+   				if($node['name'] == $title) {
+   					return $node->children();
+   				}
 			}
 				
 		}

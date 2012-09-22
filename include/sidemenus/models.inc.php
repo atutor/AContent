@@ -66,13 +66,14 @@ if($_content_id != "" && $_course_id != "") {
 	
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
-		$array = $structManager->getContentByTitle($content['title']);
-		$listaModelli = $mod->modelloConforme($array);
-			
-	}  else {
-		$listaModelli = $mod->getListaModelli();
+		$item = $structManager->getPageTemplatesItem($content['title']);
+		$listaModelli = $mod->getPageTemplates($item);
 		
-	}
+		
+			
+	}  else 
+		$listaModelli = $mod->getListaModelli();
+	
 
 }
 

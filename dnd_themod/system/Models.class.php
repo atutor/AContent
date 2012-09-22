@@ -94,6 +94,80 @@
 			return $listaModelli;
 		}
 
+		
+		function getPageTemplates($item) {
+			$pages = array();
+			foreach ($item->children() as $child) {
+				 $name = (string)$child['name'];
+				 $pages[$name] = $this->checkPageTemplate($child['name']);
+			}
+
+			return $pages;
+		}
+		
+		function checkPageTemplate($name) {
+			$info = null;
+			$isdir = $this->mod_path['models_dir_int'].$name;
+			
+				// checking if the element is a directory
+				if(is_dir($isdir)){
+					// check if exists the .info file and parse it
+					$xml_file = $isdir.'/page_template.xml';
+					if(is_file($xml_file)) {
+						$xml = simplexml_load_file($xml_file);
+						
+						foreach($xml->children() as $child) {
+							$name = $child->getName();
+							if($name == "release") 
+								$info['core'] = trim($child->version);
+							else
+								$info[$name] = trim($child);
+						}
+						
+						// if you did not specify a name, use the folder name
+						if(!$info['name'])
+							$info['name'] = trim($item);
+						
+						// reduce the name length to 15 characters
+						$limit	= 15;
+						if(strlen($info['name']) >= $limit){
+							$info['name']	= substr($info['name'], 0, ($limit-2));
+							$info['name']	.= '..';
+						}
+
+						// check the "core"
+						if(!$info['core'])
+							continue;
+						else{
+
+							$vfile	= explode('.', $info['core']);
+							$vcore	= explode('.', VERSION);
+			
+							// cursory check for version compatibility
+							// stopping the cycle to the first incompatibility found
+							if($vfile[0] < $vcore[0])
+								// not compatible!
+								continue;
+							elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
+								// not compatible!
+								continue;
+						}
+		
+						// put the info of the current model into an array
+						//$modelli[$item] = $info;
+					}
+				}
+			
+			/*echo("qui");
+			foreach ($info as $key=>$value) {
+				echo ("a ".$key ." b ". $value);
+			}*/
+			return $info;
+		}
+		
+		
+		
+		
 		/*
 		 * 	The following function reads from the filesystem existing models and validates them
 		 * 	according to pre-set criteria (eg comparison between version of the model and core)
@@ -106,10 +180,9 @@
 		function modelloConforme($dir = array()){
 			
 			// scan all existing themes
-		
-			foreach($dir as $item){
-
-				$isdir	= $this->mod_path['models_dir_int'].$item;
+			$modelli = array();
+			foreach($dir as $item)  {
+/*				$isdir	= $this->mod_path['models_dir_int'].$item;
 			
 				// checking if the element is a directory
 				if(is_dir($isdir)){
@@ -160,16 +233,11 @@
 							elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
 								// not compatible!
 								continue;
-						}
+						}*/
 		
 						// put the info of the current model into an array
-						$modelli[$item] = $info;
-					}
-				}
-			}
-			
-			foreach ($modelli as $value => $key) {
-				
+						
+						$modelli[$item] = $this->checkPageTemplate($item);
 				
 			}
 		

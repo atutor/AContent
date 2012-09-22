@@ -121,9 +121,7 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 	
 	if(isset($_struct_name)) 
 		$_pages['home/structs/outline.php']['title'] = '"'. $_struct_name . ' based" structure outline';
-	
-		
-	
+
 	
 	if (isset($_current_user) && $_current_user->isAuthor())
 	{

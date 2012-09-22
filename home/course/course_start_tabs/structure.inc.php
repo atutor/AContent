@@ -94,13 +94,13 @@ if (!is_array($structsList) || count($structsList) == 0) {
 <input type="hidden" name="current_tab" value="1" />
 
 </div>
-<input type="submit" class= "submit" name="create_struct" value="Create course with the selected structure" style="margin: 20px; position: relative; left: 65%;"  />
+<!--  input type="submit" class= "submit" name="create_struct" value="Create course with one or more structure" style="margin: 20px; position: relative; left: 65%;"  />
+-->
 
-<!--  -->
+<!-- cambia qui!!! -->
+<?php echo _AT('create_content_3', TR_BASE_HREF.'home/editor/edit_content_struct.php?_course_id='.$_course_id, "");
 
-
-
-<?php }?>
+} ?>
 	
 		
 	
