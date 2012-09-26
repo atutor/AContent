@@ -17,13 +17,13 @@ require(TR_INCLUDE_PATH.'vitals.inc.php');
 $prev_page_temp = $_GET["prev"];
 
 $mod_path					= array();
-$mod_path['dnd_themod']		= TR_BASE_HREF . 'dnd_themod/';
+$mod_path['templates']		= TR_BASE_HREF . 'templates/';
 
-$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-$mod_path['models_dir']		= $mod_path['dnd_themod']		. 'models/';
+$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+$mod_path['models_dir']		= $mod_path['templates']		. 'models/';
 
-$mod_path['models_dir_int']	= $mod_path['dnd_themod_int']	. 'models/';
+$mod_path['models_dir_int']	= $mod_path['templates_int']	. 'models/';
 $path = $mod_path['models_dir'] . $prev_page_temp . '/';
 $path_int = $mod_path['models_dir_int'] . $prev_page_temp . '/';
 

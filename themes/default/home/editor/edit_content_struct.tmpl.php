@@ -34,13 +34,13 @@ if ($this->shortcuts):
 		
 		<?php  
 			
-			$mod_path['dnd_themod']		= realpath(TR_BASE_HREF			. 'dnd_themod').'/';
-			$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-			$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-			$mod_path['structs_dir']		= $mod_path['dnd_themod']		. 'structures/';
-			$mod_path['structs_dir_int']	= $mod_path['dnd_themod_int']	. 'structures/';
+			$mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
+			$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+			$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+			$mod_path['structs_dir']		= $mod_path['templates']		. 'structures/';
+			$mod_path['structs_dir_int']	= $mod_path['templates_int']	. 'structures/';
 
-			include_once($mod_path['dnd_themod_sys'].'Structures.class.php');
+			include_once($mod_path['templates_sys'].'Structures.class.php');
 			
 			$structs	= new Structures($mod_path);
 

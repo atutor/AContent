@@ -1,18 +1,17 @@
 <script type="text/javascript">
 
-	// Apply a custom stylesheet to format "dnd_themod"
-	$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/dnd_themod.css" type="text/css" />');
+	// Apply a custom stylesheet to format "templates"
+	$('head').append('<link rel="stylesheet" href="<?php echo $templates; ?>system/templates.css" type="text/css" />');
 	
-	// if the current content has a theme, just apply it!
-
-	if("<?php echo $content_theme; ?>" != ''){
+	// if the current content has a layout, just apply it!
+        if("<?php echo $content_layout; ?>" != ''){
 		
-		current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
-		$('head').append('<link rel="stylesheet" href="' + current_theme + '" type="text/css" />');
+		current_layout	= "<?php echo $layout_dir.$content_layout.'/'.$content_layout.'.css'; ?>";
+		$('head').append('<link rel="stylesheet" href="' + current_layout + '" type="text/css" />');
 	}
 
 
-	var DEFAULT_SCREENSHOT	= '<?php echo $dnd_themod; ?>system/noTheme.png';
+	var DEFAULT_SCREENSHOT	= '<?php echo $templates; ?>system/nolayout.png';
 
 	var uniq		= 'content-text';
 
@@ -23,21 +22,17 @@
 		
 		// this row allow to show the form just if JS is enabled
 		// il selector depends by the module name (customizable in the language file)
-		var titolo_modulo	= "<?php echo _AT('themes'); ?>";
-		titolo_modulo		= titolo_modulo.replace(/ /g, '');
+		var module_name	= "<?php echo _AT('layout'); ?>";
+		module_name		= module_name.replace(/ /g, '');
 		
 		// if the user is an authenticated author
 		// show the module
-		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php"){
-			$('#menu_' + titolo_modulo + ' form').show();
-		}else{
-			$('#menu_' + titolo_modulo).hide();
-			//$('#menu_' + titolo_modulo).prev().hide();
-			//$('#menu_' + titolo_modulo).siblings('br').slice(-1).remove();
-		}
-
-
-		var url		= "dnd_themod/system/AJAX_actions.php";
+		if("<?php echo $is_author; ?>" == 1 && "<?php echo basename($_SERVER['PHP_SELF']); ?>" == "content.php")
+			$('#menu_' + module_name + ' form').show();
+		else
+			$('#menu_' + module_name).hide();
+		
+                var url		= "templates/system/AJAX_actions.php";
 
 
 		// HIDE / SHOW "APPLY TO THE LESSON" BUTTON
@@ -45,7 +40,7 @@
 		
 		$("#apply_lesson_on").live("click", function() {
 			// show the button
-			$("#applicaTemaLezione_btn").show();
+			$("#apply_layout_to_content").show();
 
 
 			$.post(url, { dnd_request: "759e647ad85438ed2669dbabfb77a602"}, function(data) {
@@ -53,7 +48,7 @@
 		});
 		$("#apply_lesson_off").live("click", function() {
 			// hide the button
-			$("#applicaTemaLezione_btn").hide();
+			$("#apply_layout_to_content").hide();
 
 			$.post(url, { dnd_request: "c1388816ccd2cc64905595c526ca678b"}, function(data) {
 			});
@@ -70,14 +65,14 @@
 			var disabled	= '';
 			var enabled		= '';
 
-			if("<?php echo $apply_lesson_theme; ?>" == 0){
+			if("<?php echo $apply_lesson_layout; ?>" == 0){
 				disabled	= "checked=\"checked\"";
 			}else
 				enabled		= "checked=\"checked\"";
 
-			$(".form-data tr:last").before("<tr><td colspan=\"2\"><fieldset class=\"dnd_themod_system_fieldset\"><legend><?php echo _AT('themes'); ?></legend>\
+			$(".form-data tr:last").before("<tr><td colspan=\"2\"><fieldset class=\"templates_system_fieldset\"><legend><?php echo _AT('layout'); ?></legend>\
 										<table><tr>\
-										<td align=\"left\"><?php echo _AT('theme_lesson_apply'); ?></td>\
+										<td align=\"left\"><?php echo _AT('layout_content_apply'); ?></td>\
 										<td align=\"left\">\
 											<input type=\"radio\" name=\"apply_lesson\" id=\"apply_lesson_off\" " + disabled + " />\
 											<label for=\"apply_lesson_on\"><?php echo _AT('disabled'); ?></label> \
@@ -105,47 +100,46 @@
 		}
 		
 		// set the default screenshot
-		$('#themeScreenshot').attr('src',DEFAULT_SCREENSHOT);
+		$('#layoutcreenshot').attr('src',DEFAULT_SCREENSHOT);
 		
 		/**
-		 *	Themes pewview management
-		 *	show the theme when editing or in content preview
-		 * 	reset the theme and redirect the user to the main theme
+		 *	layout pewview management
+		 *	show the layout when editing or in content preview
+		 * 	reset the layout and redirect the user to the main layout
 		 */
 
-		$('#listatemi').change(function() {
+		$('#layout_list').change(function() {
 
 			str = $(this).val();
 
-			// remove the previous theme
+			// remove the previous layout
 
-			$('#dnd_themod_themes').remove();
-			$('#dnd_themod_view').remove();
-			/////////////////////////////
+			$('#templates_layout').remove();
+			$('#templates_view').remove();
 			
 			// clean the preview to not leave stacks of previews
 			$('#content-text').removeClass('view');
 
 			switch(str){
 
-				// remove the "LINK" tag related to the applied theme
+				// remove the "LINK" tag related to the applied layout
 				case '-':
 
-					// if the current content has a theme, disable it (delete it)
-					if("<?php echo $content_theme; ?>" != ''){
-						current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
+					// if the current content has a layout, disable it (delete it)
+					if("<?php echo $content_layout; ?>" != ''){
+						current_layout	= "<?php echo $layout_dir.$content_layout.'/'.$content_layout.'.css'; ?>";
 						$('head link').each(function(link) {
 							if($(this).attr('href') == 'ViewMode')
-								$(this).attr('href', current_theme);
+								$(this).attr('href', current_layout);
 						});
 					}
 
 					// set the screenshot
-					$('#themeScreenshot').attr('src', DEFAULT_SCREENSHOT);
+					$('#layoutcreenshot').attr('src', DEFAULT_SCREENSHOT);
 
-					// remove the previous theme
-					$('#dnd_themod_themes').remove();
-					$('#dnd_themod_view').remove();
+					// remove the previous layout
+					$('#templates_layout').remove();
+					$('#templates_view').remove();
 
 					// hide the preview
 					$('#content-text').removeClass('view');
@@ -167,18 +161,18 @@
 
 				default:
 
-					// if the current content has a theme, disable it (delete it)
-					if("<?php echo $content_theme; ?>" != ''){
-						current_theme	= "<?php echo $themes_dir.$content_theme.'/'.$content_theme.'.css'; ?>";
+					// if the current content has a layout, disable it (delete it)
+					if("<?php echo $content_layout; ?>" != ''){
+						current_layout	= "<?php echo $layout_dir.$content_layout.'/'.$content_layout.'.css'; ?>";
 						$('head link').each(function(link) {
-							if($(this).attr('href') == current_theme)
+							if($(this).attr('href') == current_layout)
 								$(this).attr('href', 'ViewMode');
 						});
 
 					}
 
 					// set the screenshot, if it exists
-					percorso_screenshot = '<?php echo $themes_dir; ?>' + str;
+					percorso_screenshot = '<?php echo $layout_dir; ?>' + str;
 					immagine			= percorso_screenshot + '/screenshot.png';
 
 					$.ajax({
@@ -188,21 +182,21 @@
 					    type:	'HEAD',
 					    error:
 					        function(){
-					        	$('#themeScreenshot').attr('src', DEFAULT_SCREENSHOT);
+					        	$('#layoutcreenshot').attr('src', DEFAULT_SCREENSHOT);
 								return;
 					        },
 					    success:
 					        function(){
-					            $('#themeScreenshot').attr('src', immagine);
+					            $('#layoutcreenshot').attr('src', immagine);
 					            return;
 							}
 					});
 
 						// include the CSS that resets the default settings
-						$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/themes.css" type="text/css" id="dnd_themod_themes" />');
+						$('head').append('<link rel="stylesheet" href="<?php echo $templates; ?>system/layout.css" type="text/css" id="templates_layout" />');
 
 						// include the choosen CSS
-						$('head').append('<link rel="stylesheet" href="<?php echo $themes_dir; ?>' + str + '/' + str + '.css" type="text/css" id="dnd_themod_view" />');
+						$('head').append('<link rel="stylesheet" href="<?php echo $layout_dir; ?>' + str + '/' + str + '.css" type="text/css" id="templates_view" />');
 						var c = '<div id="content">' + $('#content-text').html() + '</div>';
 						$('#content-text').html(c);
 
@@ -247,7 +241,7 @@
 							//main.after('<div id="view">' + text);
 							$('#content-text').addClass('view');
 							
-					} // IF -> if the theme is not already applied, it will do it!
+					} // IF -> if the layout is not already applied, it will do it!
 			} // switch
 		});
 		

@@ -241,7 +241,7 @@
 		public function getModelStructure($modelID = ''){
 			$struct	= '';
 
-			$file	= '../../dnd_themod/models/'.$modelID.'/'.$modelID.'.html';
+			$file	= '../../templates/models/'.$modelID.'/'.$modelID.'.html';
 
 			if(file_exists($file))
 				$struct	= file_get_contents($file);

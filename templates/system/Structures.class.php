@@ -37,9 +37,9 @@
 			//$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
 
 			//
-			/*if(isset($_POST['listatemi'], $_POST['applicaTemaCorso_btn']))
+			/*if(isset($_POST['layout_list'], $_POST['apply_layout_to_course']))
 				$this->applicaTemaCorso();
-			elseif(isset($_POST['listatemi'], $_POST['applicaTemaLezione_btn']))
+			elseif(isset($_POST['layout_list'], $_POST['apply_layout_to_content']))
 				$this->applicaTemaLezione();
 			*/
 			

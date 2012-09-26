@@ -1,21 +1,21 @@
 /*
  *	FORM MODULE
  */
-#dnd_themod{
+#templates{
 	text-align:					center;
 }
 
-#dnd_themod #listatemi{
+#templates #layout_list{
 	margin:						0px auto;
 	width:						99%;
 	margin-bottom:				10px;
 }
 
-#dnd_themod #themeScreenshot{
+#templates #themeScreenshot{
 	max-width:					200px;
 }
 
-#dnd_themod #applicaTemaLezione_btn, #dnd_themod #applicaTemaCorso_btn{
+#templates #apply_layout_to_content, #templates #apply_layout_to_course{
 	
 	/*border:						1px solid #333;*/
 	padding:					5px;
@@ -34,14 +34,14 @@
     -khtml-border-radius:       2px;
 }
 
-#dnd_themod #applicaTemaLezione_btn:hover, #dnd_themod #applicaTemaCorso_btn:hover{
+#templates #apply_layout_to_content:hover, #templates #apply_layout_to_course:hover{
 	background:					#FFFFE0;
 	-moz-box-shadow:			0 0 5px gold;
 	-webkit-box-shadow:			0 0 5px gold;
 	box-shadow:					0 0 5px gold;
 }
 
-#dnd_themod #applicaTemaLezione_btn{
+#templates #apply_layout_to_content{
 	margin-bottom:				10px;
 }
 
@@ -67,7 +67,7 @@
 /*
  * config page style
  */
-.dnd_themod_system_fieldset{
+.templates_system_fieldset{
 	border:						1px solid #CCC;
 
     /* CSS3 */
@@ -79,7 +79,7 @@
     /* Linux browsers */
     -khtml-border-radius:       2px;
 }
-.dnd_themod_system_fieldset legend{
+.templates_system_fieldset legend{
 	background:					#FFF;
 	border:						1px solid #CCC;
 	padding:					5px;
@@ -95,10 +95,10 @@
     /* Linux browsers */
     -khtml-border-radius:       3px;
 }
-.dnd_themod_system_fieldset table{
+.templates_system_fieldset table{
 	width:						100%;
 }
-.dnd_themod_system_fieldset table td:first-child{
+.templates_system_fieldset table td:first-child{
 	width:						39%;
 }
 

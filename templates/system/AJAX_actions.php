@@ -24,7 +24,7 @@
 	function writeINIfile($config = 0){
 
 		$fp		= fopen('config.ini','w');
-		//$fp		= fopen('http://localhost/AContent_1.2/dnd_themod/system/config.ini','w');
+		//$fp		= fopen('http://localhost/AContent_1.2/templates/system/config.ini','w');
 
 		foreach($config as $key => $value){
 			fwrite($fp, $key.' = '.$value.';');

@@ -2,10 +2,10 @@
 
 	var removeModelTopBar	= '<div class="removeModelTopBar"><div class="removeModel">X</div></div>';
 	var sortTools			= '<div class="sortTools">\
-								<img src="<?php echo $dnd_themod; ?>system/top.png" class="moveModelTop" alt="move top" />\
-								<img src="<?php echo $dnd_themod; ?>system/up.png" class="moveModelUp" alt="move up" />\
-								<img src="<?php echo $dnd_themod; ?>system/down.png" class="moveModelDown" alt="move down" />\
-								<img src="<?php echo $dnd_themod; ?>system/bottom.png" class="moveModelBottom" alt="move bottom" />\
+								<img src="<?php echo $templates; ?>system/top.png" class="moveModelTop" alt="move top" />\
+								<img src="<?php echo $templates; ?>system/up.png" class="moveModelUp" alt="move up" />\
+								<img src="<?php echo $templates; ?>system/down.png" class="moveModelDown" alt="move down" />\
+								<img src="<?php echo $templates; ?>system/bottom.png" class="moveModelBottom" alt="move bottom" />\
 								</div>';
 
 	$(document).ready(function(){ 
@@ -45,10 +45,10 @@
 		boxModelToolbox = "<div class=\"boxModelToolbox\"><ul>";
 
 		// paste
-		boxModelToolbox = boxModelToolbox + "<li id=\"modelPaste\"><img src=\"<?php echo $dnd_themod; ?>system/paste.png\" title=\"<?php echo _AT('paste'); ?>\" alt=\"\" /> <?php echo _AT('paste_model_sequence'); ?></li>";
+		boxModelToolbox = boxModelToolbox + "<li id=\"modelPaste\"><img src=\"<?php echo $templates; ?>system/paste.png\" title=\"<?php echo _AT('paste'); ?>\" alt=\"\" /> <?php echo _AT('paste_model_sequence'); ?></li>";
 		
 		// copy
-		boxModelToolbox	= boxModelToolbox + "<li id=\"modelCopy\"><img src=\"<?php echo $dnd_themod; ?>system/copy.png\" title=\"<?php echo _AT('copy'); ?>\" alt=\"\" /> <?php echo _AT('copy_model_sequence'); ?></li>";
+		boxModelToolbox	= boxModelToolbox + "<li id=\"modelCopy\"><img src=\"<?php echo $templates; ?>system/copy.png\" title=\"<?php echo _AT('copy'); ?>\" alt=\"\" /> <?php echo _AT('copy_model_sequence'); ?></li>";
 		
 		boxModelToolbox = boxModelToolbox + "</ul></div>";
 
@@ -135,7 +135,7 @@
 				// disable SORT MODELS
 				$('#ordinaModelli_btn').attr('disabled','disabled');
 
-				$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/models.css" type="text/css" />');
+				$('head').append('<link rel="stylesheet" href="<?php echo $templates; ?>system/models.css" type="text/css" />');
 
 				// cut and paste toolBar
 				base.before(boxModel + boxModelToolbox);
@@ -169,7 +169,7 @@
 					
 					echo 'count++;';
 					echo '$(".boxModel").append($("<li>"));';
-					echo 'm = m + "<li><table id=\"'.$key.'\"><tr><td><img src=\"'.$dnd_themod.'models/'.$key.'/screenshot.png\" /></td></tr><td class=\"desc\">'.$value['name'].'</td></tr></table></li>";';
+					echo 'm = m + "<li><table id=\"'.$key.'\"><tr><td><img src=\"'.$templates.'models/'.$key.'/screenshot.png\" /></td></tr><td class=\"desc\">'.$value['name'].'</td></tr></table></li>";';
 				}		
 				?>
 				//HERE!!
@@ -205,7 +205,7 @@
 					salvaModificheContenuto();
 
 					// remove the stylesheet
-					var modelStylesheet	= $('link[href="<?php echo $dnd_themod; ?>system/models.css"]');
+					var modelStylesheet	= $('link[href="<?php echo $templates; ?>system/models.css"]');
 					modelStylesheet.remove();
 
 				});
@@ -225,7 +225,7 @@
 
 				$('.noModel').addClass('noModelSorting');
 				
-				$('head').append('<link rel="stylesheet" href="<?php echo $dnd_themod; ?>system/models.css" type="text/css" />');
+				$('head').append('<link rel="stylesheet" href="<?php echo $templates; ?>system/models.css" type="text/css" />');
 
 				visualizzaModelli();
 				
@@ -247,7 +247,7 @@
 
 				// save the file
 				/*
-				var url			= "<?php echo $dnd_themod; ?>" + "system/AJAX_actions.php";
+				var url			= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
 				var vcid		= "<?php echo $cid; ?>";
 				var vaction		= 'saveModelContent';
 				//var vtext		= base.html();
@@ -264,7 +264,7 @@
 				salvaModificheContenuto();
 
 				// remove the stylesheet
-				var modelStylesheet	= $('link[href="<?php echo $dnd_themod; ?>system/models.css"]');
+				var modelStylesheet	= $('link[href="<?php echo $templates; ?>system/models.css"]');
 				modelStylesheet.remove();
 			}
 		});
@@ -410,7 +410,7 @@
 		
 		function aggiungiModello(modelID, afterNoModel){
 
-			var url			= "<?php echo $dnd_themod; ?>" + "system/AJAX_actions.php";
+			var url			= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
 
 			// structure is nothing else the mere HTML code model
 			$.post(url, {mID: modelID}, function(structure){
@@ -435,7 +435,7 @@
 
 				$('#content-text .model img').each(function(index) {
 					if($(this).attr('src') == 'dnd_image'){
-						$(this).attr('src', "<?php echo $dnd_themod.'system/model_image.png'; ?>");
+						$(this).attr('src', "<?php echo $templates.'system/model_image.png'; ?>");
 						$(this).addClass("insert_image");
 					}
 				});
@@ -445,7 +445,7 @@
 		}
 		
 		function salvaModificheContenuto(){
-			var url			= "<?php echo $dnd_themod; ?>" + "system/AJAX_actions.php";
+			var url			= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
 			var vcid		= "<?php echo $cid; ?>";
 			var vaction		= 'saveModelContent';
 			

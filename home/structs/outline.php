@@ -21,11 +21,11 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 
 /*
 $mod_path					= array();
-$mod_path['dnd_themod']		= realpath(TR_BASE_HREF			. 'dnd_themod').'/';
-$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-$mod_path['structs_dir']		= $mod_path['dnd_themod']		. 'structures/';
-$mod_path['structs_dir_int']	= $mod_path['dnd_themod_int']	. 'structures/';
+$mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
+$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+$mod_path['structs_dir']		= $mod_path['templates']		. 'structures/';
+$mod_path['structs_dir_int']	= $mod_path['templates_int']	. 'structures/';
 
 $path = $mod_path['structs_dir_int'] . $_struct_name;*/
 
@@ -35,7 +35,7 @@ require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
 
 
 
-include TR_INCLUDE_PATH. '../dnd_themod/system/'.'Struct.js';
+include TR_INCLUDE_PATH. '../templates/system/'.'Struct.js';
 
 	
 $structs = explode("_", $_struct_name);

@@ -26,7 +26,7 @@ class GoalsManager
 	
 	/* constructor	*/
 	function GoalsManager() {
-		$this->path = realpath(TR_INCLUDE_PATH. '../dnd_themod').'/goals/goals.info';
+		$this->path = realpath(TR_INCLUDE_PATH. '../templates').'/goals/goals.info';
 		if(!is_file($this->path)) 
 			throw new Exception("Error: file \"goals.info\" not found!");
 		else
