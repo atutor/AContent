@@ -834,7 +834,7 @@ INSERT INTO `language_text` (`language_code`, `variable`, `term`, `text`, `revis
 ('en', 'page_template', 'copy', 0x636f7079, '0000-00-00 00:00:00', 'templates'),
 ('en', 'layout', 'layout', 'Layout template', '2011-11-30 00:00:00', 'templates'),
 ('en', 'page_template', 'copy_page_template_sequence', 0x636f7079206d6f64656c2073657175656e6365, '0000-00-00 00:00:00', 'templates'),
-('en', 'page_template', 'page_templates', 0x506167652074656d706c61746573, '2011-12-07 00:00:00', 'templates'),
+('en', 'page_template', 'page_template', 0x506167652074656d706c61746573, '2011-12-07 00:00:00', 'templates'),
 ('en', 'page_template', 'no_set_copied', 0x6e6f2073657420636f7069656421, '0000-00-00 00:00:00', 'templates'),
 ('en', 'page_template', 'paste', 0x7061737465, '0000-00-00 00:00:00', 'templates'),
 ('en', 'page_template', 'paste_page_template_sequence', 0x7061737465206d6f64656c2073657175656e6365, '0000-00-00 00:00:00', 'templates'),

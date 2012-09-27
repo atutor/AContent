@@ -56,7 +56,7 @@
 }
 
 /*
- *	CONTENT EDIT FORM (MODELS)
+ *	CONTENT EDIT FORM (page_template)
  */
 
 #content-text #dnd{
@@ -103,11 +103,11 @@
 }
 
 
-.boxModelToolbox{
+.boxPageTemplateToolbox{
 	background:					#FFF;
 	text-align:					right;
 }
-.boxModelToolbox ul{
+.boxPageTemplateToolbox ul{
 	padding:					0px;
 	margin:						0px;
 	list-style: 				none;
@@ -115,18 +115,18 @@
 	padding-left:				0px;
 	padding-right:				0px;
 }
-.boxModelToolbox ul li{
+.boxPageTemplateToolbox ul li{
 	text-align:					right;
 	padding:					15px;
 	margin:						0px;
 	list-style: 				none;
 	display:					inline;
 }
-.boxModelToolbox ul li:hover{
+.boxPageTemplateToolbox ul li:hover{
 	background:					#F7F7F7;
 	cursor:						pointer;
 }
-.boxModelToolbox ul #modelPaste{
+.boxPageTemplateToolbox ul #pageTemplatePaste{
 	display:					none;
 }
 
@@ -134,7 +134,7 @@
 	cursor:						default;
 }
 
-.model{
+.page_template{
 	background-color:			#FFF;
 	width: 						100%;
 }

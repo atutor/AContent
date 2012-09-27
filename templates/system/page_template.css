@@ -1,9 +1,9 @@
 /*########################################
 	Box that displays
-	a list of available models
+	a list of available page_template
 ########################################*/
 
-.boxModel{
+.boxPageTemplate{
 
 	display:					none;
 	
@@ -38,19 +38,19 @@
     text-align:					center;
     margin:						0px auto;
 }
-.boxModel *{
+.boxPageTemplate *{
 	padding:					0px;
 	margin:						0px auto;
 	
 	list-style:					none;
 	text-align:					center;
 }
-.boxModel ul{
+.boxPageTemplate ul{
 	width:						auto;
 	min-width:					120px;
 
 }
-.boxModel ul li{
+.boxPageTemplate ul li{
 
 	padding:					0px;
 	margin:						0px auto !important;
@@ -64,7 +64,7 @@
 	
 }
 
-.boxModel ul li table .desc{
+.boxPageTemplate ul li table .desc{
 	width:						120px;
 	margin:						0px auto;
 
@@ -77,13 +77,13 @@
 	/*overflow:					hidden;*/
 }
 
-.boxModel img{
+.boxPageTemplate img{
 	border:						1px solid transparent;
 	width:						80px;
 	height:						80px;
 	padding:					10px;
 }
-.boxModel li:link, .boxModel li:visited{
+.boxPageTemplate li:link, .boxPageTemplate li:visited{
 	padding:					40px;
 	border:						1px solid blue;
 	
@@ -98,7 +98,7 @@
     -khtml-border-radius:       3px;
 }
 
-.boxModel li:hover, .boxModel li:active{
+.boxPageTemplate li:hover, .boxPageTemplate li:active{
 
 	cursor:						pointer;
 	background-color:			#FFF;
@@ -111,25 +111,25 @@
 ########################################*/
 
 /* box */
-.model, .noModel{
+.page_template, .noPageTemplate{
 	/*padding:					10px;*/
 
 	margin-top:					10px;
 	margin-bottom:				10px;
 }
-.model{
+.page_template{
 	background-color:			#FFF;
 	width: 						100%;
 }
 
 /* button "delete module" (initially hidden) */
-.model .removeModelTopBar{
+.page_template .removePageTemplateTopBar{
 	background:					transparent;
 	/*display:					none;*/
 }
 
 /* label 'X' of "delete module" */
-.model .removeModel{
+.page_template .removePageTemplate{
 	text-align:					center;
 	background:					#FFF;
 	width:						40px;
@@ -166,13 +166,13 @@
 }
 
 /* hover label 'X' */
-.model .removeModel:hover{
+.page_template .removePageTemplate:hover{
 	background:					#FDD;
 	cursor:						pointer;
 }
 
 /* generic model content */
-.model .modelContent{
+.page_template .pageTemplateContent{
 
 	padding:					10px;
 	padding-bottom:				10px;
@@ -199,24 +199,24 @@
 }
 
 /* hover generic content */
-.model .modelContent:hover{
+.page_template .pageTemplateContent:hover{
 
 	border:						1px dashed #CCC;
 }
-/*.noModel:hover{*/
-.noModel{
+/*.noPageTemplate:hover{*/
+.noPageTemplate{
 	background:					#F0F8FF;
 }
-.noModelSorting{
+.nopage_templateorting{
 	background:					#F0F8FF;
 }
 
 /* each new model must become visible */
-#newModel{
+#newPageTemplate{
 	display:					none;
 }
 
-.model .sortTools{
+.page_template .sortTools{
 	/*border-top:					1px solid #EEE;*/
 	padding:					5px;
 	padding-top:				10px;
@@ -224,18 +224,18 @@
 	padding-right:				0px;
 	text-align:					right;
 }
-.model .sortTools img{
+.page_template .sortTools img{
 	cursor:						pointer;
 }
-.model .sortTools img{
+.page_template .sortTools img{
 	padding-right:				10px;
 }
-.model .sortTools img:last-child{
+.page_template .sortTools img:last-child{
 	padding-right:				0px;
 }
 
 /* textarea */
-#body_text .modelContent:hover{
+#body_text .pageTemplateContent:hover{
 	background-color:			#F0F8FF;
 }
 

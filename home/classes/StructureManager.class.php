@@ -73,7 +73,7 @@ class StructureManager
 		$content = $this->getContent($page);
 		if(count($content)==1) {
 			
-			$path_page = realpath(TR_INCLUDE_PATH		. '../templates').'/models/';
+			$path_page = realpath(TR_INCLUDE_PATH		. '../templates').'/page_template/';
  			$file = $path_page . $content[0] .'/'.$content[0].'.html';
 			if(is_file($file)) {
 				
@@ -81,8 +81,8 @@ class StructureManager
 				$find =  strpos($text, 'src="dnd_image"');
 				
 				if($find) 
-						 //$resp[] = str_replace('src="dnd_image', 'src="/templates/system/model_image.png"');
-						return str_replace('src="dnd_image', 'src="'.TR_BASE_HREF.'templates/system/model_image.png"', $text);
+						 //$resp[] = str_replace('src="dnd_image', 'src="/templates/system/page_template_image.png"');
+						return str_replace('src="dnd_image', 'src="'.TR_BASE_HREF.'templates/system/page_template_image.png"', $text);
 					 else 	
 						return $text;
 				
@@ -420,7 +420,7 @@ class StructureManager
 		$previews = array();
 		
 		foreach ($pages_template as $page_template) {
-			$img = TR_BASE_HREF . 'templates/models/' . $page_template . '/screenshot.png';
+			$img = TR_BASE_HREF . 'templates/page_template/' . $page_template . '/screenshot.png';
 			$previews[] = $img;
 		}
 	

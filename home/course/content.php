@@ -216,10 +216,10 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 					$contentDAO = new ContentDAO();
 					$row = $contentDAO->get($cid);
 					
-					if($row['structure']!='') {
-						$content = '<script language="javascript" type="text/javascript">$(\'#attivaModelli_btn\').prop(\'checked\', true).trigger("change");</script>';
+					if($row['structure']!='') 
+						$content = '<script language="javascript" type="text/javascript">$(\'#activate_page_template\').prop(\'checked\', true).trigger("change");</script>';
 						
-					} 
+					
 					
 			} else {
 				$content = '';

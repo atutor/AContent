@@ -55,7 +55,7 @@
 	content:					'Alma Mater Studiorum - Università di Bologna - Scienze e Tecnologie Informatiche';
 }
 
-#content .header .modelContent{
+#content .header .pageTemplateContent{
 	background-color:			#73C78B;
 	background-image:			url(seti/testata.png);
 	background-repeat:			no-repeat;
