@@ -1,6 +1,6 @@
 <?php
 
-	class Themes{
+	class Layout{
 
 
 		/**
@@ -23,9 +23,9 @@
 		private $config		= array();
 		private $content_id	= '';
 		private $course_id	= '';
-		private $uniq		= 'dnd';
+		private $uniq		= 'templates';
 
-		// folders and documents to be excluded from the list of the themes
+		// folders and documents to be excluded from the list of the layout
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 
@@ -46,11 +46,10 @@
 			$this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
 			$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
 
-			//
-			if(isset($_POST['listatemi'], $_POST['applicaTemaCorso_btn']))
-				$this->applicaTemaCorso();
-			elseif(isset($_POST['listatemi'], $_POST['applicaTemaLezione_btn']))
-				$this->applicaTemaLezione();
+			if(isset($_POST['layout_list'], $_POST['apply_layout_to_course']))
+				$this->applyLayoutToCourse();
+			elseif(isset($_POST['layout_list'], $_POST['apply_layout_to_content']))
+				$this->applyLayoutToContent();
 
 			$this->mod_path		= $mod_path;
 
@@ -72,52 +71,53 @@
 		}
 
 		/*
-		 * Read loaded themes creating a list of available themes
+		 * Read loaded layout creating a list of available layout
 		 * input:	none
 		 * output:	none
 		 * 
 		 * */
 
-		public function getListaTemi(){
+		public function getLayoutList(){
 
-			$listaTemi	= array();
+			$layout_list	= array();
 			$dir		= array();
 
-			// read the list of available themes
-			$dir		= scandir($this->mod_path['themes_dir_int']);
-
-			// subtract files to be excluded from the list of available themes
+			// read the list of available layout
+                        $dir		= scandir($this->mod_path['layout_dir_int']);
+                      
+			// subtract files to be excluded from the list of available layout
 			$dir		= array_diff($dir, $this->except);
-
-			// call the function that validates the available themes
-			$listaTemi	= $this->temaConforme($dir);
-
-			return $listaTemi;
+                       
+                        
+			// call the function that validates the available layout
+			$layout_list	= $this->validated_layout($dir);
+                        
+			return $layout_list;
 		}
 
 		/*
-		 * 	The following function reads from the filesystem existing themes and validates them
-		 * 	according to pre-set criteria (eg comparison between version of the theme and core)
-		 * 	and returns an array of available and valid themes.
-		 *	input:	$dir[]			list of available themes
-		 * 	output:	list of available themes skimmed according to the compatibility of each theme
+		 * 	The following function reads from the filesystem existing layout and validates them
+		 * 	according to pre-set criteria (eg comparison between version of the layout and core)
+		 * 	and returns an array of available and valid layout.
+		 *	input:	$dir[]			list of available layout
+		 * 	output:	list of available layout skimmed according to the compatibility of each layout
 		 * 
 		 * */
 		
-		private function temaConforme($dir = array()){
+		private function validated_layout($dir = array()){
 			
-			// scan all existing themes
-		
+			// scan all existing layout
+                        
+                        $layouts = array();
+                    
 			foreach($dir as $item){
-			
-				$isdir	= $this->mod_path['themes_dir_int'].$item;
+		
+				$isdir	= $this->mod_path['layout_dir_int'].$item;
 			
 				// checking if the element is a directory
 				if(is_dir($isdir)){
 			
 					// check if exists the .info file and parse it
-					
-					//$isfile	= $isdir.'/theme.info';
 			
 					$xml_file = $isdir.'/layout.xml';
 					if(is_file($xml_file)) {
@@ -131,14 +131,6 @@
 							}
 							$info[$name] = $child;
 						}
-						
-						
-					//}
-					
-					
-					//if(is_file($isfile)){
-
-						//$info	= parse_ini_file($isdir.'/theme.info');
 						
 						// if you did not specify a name, use the folder name
 						if(!$info['name'])
@@ -164,45 +156,44 @@
 							
 						}
 		
-						// put the info of the current theme into an array
-						$temi[$item] = $info;
+						// put the info of the current layout into an array
+						$layouts[$item] = $info;
 						
 					}
 				}
 			}
 		
-			return $temi;
+			return $layouts;
 		}
 
 
 		/*
 		 * 	The following function provides for the generation of a form
-		 *	to graphically show the user the list of available themes.
+		 *	to graphically show the user the list of available layout.
 		 * 	The form is returned by the function and, then,
 		 * 	integrated the output of this module.
-		 *	input:	$listaTemi[]	list of available themes
+		 *	input:	$layout_list[]	list of available layout
 		 *	output:	none 
 		 * */
 
-		public function createUI($listaTemi){
+		public function createUI($layout_list){
 
 			$ui		= '';
 		
-			//$ui		.= '<form action="" id="dnd_themod" onsubmit="return false" method="post" style="display: none">';
-			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="dnd_themod" method="post" style="display: none">';
+			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
 		
 			// select
 		
-			$ui		.= '<label for="listatemi">'._AT('theme_select').'</label>';
-			$ui		.= '<select name="listatemi" id="listatemi">';
+			$ui		.= '<label for="layout_list">'._AT('layout_select').'</label>';
+			$ui		.= '<select name="layout_list" id="layout_list">';
 		
 			// default option (null)
 			$ui		.= '<option selected="selected">';
 			$ui		.= ' - ';
 			$ui		.= '</option>';
 			
-			// put all the available themes into the dropdown menu
-			foreach($listaTemi as $tname => $tval){
+			// put all the available layout into the dropdown menu
+			foreach($layout_list as $tname => $tval){
 		
 				$ui	.= '<option value="'.$tname.'">';
 					$ui	.= $tval['name'];
@@ -216,17 +207,20 @@
 			
 			$ui		.= '<div>';
 		
-			$ui		.= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="themeScreenshot" /></div>';
+			$ui		.= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
 		
-			$ui		.= '<div><input type="submit" value="'._AT('theme_course_apply').'" id="applicaTemaCorso_btn" name="applicaTemaCorso_btn" /></div>';
-
-			// add this option only if you have set it
-			if($this->config['apply_to_the_lesson'] == 0)
+                        if($this->config['apply_to_the_lesson'] == 0)
 				$display = 'display:none';
 
-			$ui		.= '<div><input type="submit" style="'.$display.'" value="'._AT('theme_lesson_apply').'" id="applicaTemaLezione_btn" name="applicaTemaLezione_btn" /></div>';
+			$ui		.= '<div><input type="submit" style="'.$display.'" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" /></div>';
 		
 			$ui		.= '</div>';
+                        
+                        
+			$ui		.= '<div><input type="submit" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" /></div>';
+
+			// add this option only if you have set it
+			
 			
 			$ui		.= '</form>';
 			
@@ -240,34 +234,34 @@
 		 *
 		 */
 
-		private function applicaTemaCorso(){
+		private function applyLayoutToCourse(){
 
 			define("TR_INCLUDE_PATH", "../../include/");
 
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
-			$tema_selezionato	= (isset($_POST['listatemi']) ? htmlentities($_POST['listatemi']) : '-');
+			$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
 
-			// theme reset
-			if($tema_selezionato == '-'){
-				$theme_name		= '';
+			// layout reset
+			if($selected_layout == '-'){
+				$layout_name		= '';
 			}else{
-				// new theme
-				$theme_name		= $tema_selezionato;
+				// new layout
+				$layout_name		= $selected_layout;
 			}
 
 
 			$contentDAO = new ContentDAO();
 
-			$lezioni	= $contentDAO->getContentByCourseID($this->course_id);
+			$content	= $contentDAO->getContentByCourseID($this->course_id);
 
 			// for each lesson with that code of course, set / override the style of lessons
 
-			for($i = 0; $i < count($lezioni); $i++){
+			for($i = 0; $i < count($content); $i++){
 
-				$cid		= $lezioni[$i]['content_id'];
-				$text		= $this->textFixPHP($lezioni[$i]['text']);
+				$cid		= $content[$i]['content_id'];
+				$text		= $this->textFixPHP($content[$i]['text']);
 
 				if(strstr($text, '<div id="content">')){
 					$text = str_replace('<div id="content">','',$text, $count);
@@ -291,7 +285,7 @@
 	
 				// write on db
 				$contentDAO->UpdateField($cid, 'text', $text);
-				$contentDAO->UpdateField($cid, 'theme', $theme_name);
+				$contentDAO->UpdateField($cid, 'layout', $layout_name);
 			}
 			
 			// page redirect
@@ -305,30 +299,30 @@
 		 * 
 		 */
 
-		private function applicaTemaLezione(){
+		private function applyLayoutToContent(){
 
 			define("TR_INCLUDE_PATH", "../../include/");
 
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
-			$tema_selezionato	= (isset($_POST['listatemi']) ? htmlentities($_POST['listatemi']) : '-');
+			$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
 
-			// theme reset
-			if($tema_selezionato == '-'){
-				$theme_name		= '';
+			// layout reset
+			if($selected_layout == '-'){
+				$layout_name		= '';
 			}else{
-				// new theme
-				$theme_name		= $tema_selezionato;
+				// new layout
+				$layout_name		= $selected_layout;
 			}
 
 
 
 			$contentDAO = new ContentDAO();
 
-			$lezioni	= $contentDAO->get($this->content_id);
+			$content	= $contentDAO->get($this->content_id);
 
-			$text		= $this->textFixPHP($lezioni['text']);
+			$text		= $this->textFixPHP($content['text']);
 
 			if(strstr($text, '<div id="content">')){
 				$text = str_replace('<div id="content">','',$text, $count);
@@ -352,7 +346,7 @@
 
 			// write on db
 			$contentDAO->UpdateField($this->content_id, 'text', $text);
-			$contentDAO->UpdateField($this->content_id, 'theme', $theme_name);
+			$contentDAO->UpdateField($this->content_id, 'layout', $layout_name);
 
 			// page redirect
 			echo '<script type="text/javascript">';
@@ -362,7 +356,7 @@
 
 		/*
 		 *	Function that cleans the content passed as a parameter.
-		 *	Cleaning is the removal of the block <div id="dnd"> <div id="anteprima-footer"> </ div> built by theme
+		 *	Cleaning is the removal of the block <div id="dnd"> <div id="anteprima-footer"> </ div> built by layout
 		 */
 	
 		private function clearContent($content = ''){
@@ -386,43 +380,7 @@
 		private function textFixPHP($text = ''){
 	
 			// JUMP
-
-			/*
-			$text	= str_replace('<p>&nbsp;</p>', "<br />", $text);
-			$text	= str_replace('<p></p>', "<br />", $text);
-			$text	= str_replace('<br>', "<br />", $text);
-			$text	= str_replace('<p>', "<div>", $text);
-			$text	= str_replace('</p>', "</div>", $text);
-			*/
-	
 			return $text;		
-		}
-
-
-		public function exportTheme($_content_id = '', $_course_id = ''){
-			die('Ho bloccato Themes.class.php perch&#232; va parametrizzata!');
-			$stylesheet	= '';
-			
-			$stylesheet = file_get_contents('../../dnd_themod/themes/unibo/unibo.css');
-			
-			$stylesheet	= str_replace('#'.$this->uniq, 'body', $stylesheet);
-			
-			//var_dump($stylesheet);
-/*
-			if($_content_id == '')
-				echo 'tratto il caso del corso intero';
-			else
-				echo 'tratto il caso della lezione';
- */
-/*
-			echo '<pre>';
-				print_r(get_defined_vars());
-			echo '</pre>';
-*/
-			//die();
-
-
-			return $stylesheet;
 		}
 
 		public function appendStyle($rows, $zipfile, $_content_id = ''){
@@ -432,82 +390,42 @@
 
 			$styles			= array();
 			$stylesheet		= '';
-			/*
-			echo $_content_id;
-			var_dump($rows);
-			die();
-			*/
+			
 			for($i=0; $i < count($rows); $i++){
 
-				if($rows[$i]['theme'] != ''){
+				if($rows[$i]['layout'] != ''){
 					// In another version, AContent requires 'commoncartridge' as folder
-					$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['theme'].'.css" type="text/css" />'.$rows[$i]['head'];
-					//$rows[$i]['head']					= '<link rel="stylesheet" href="'.$rows[$i]['theme'].'.css" type="text/css" />'.$rows[$i]['head'];
+					$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
+					//$rows[$i]['head']					= '<link rel="stylesheet" href="'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 					$rows[$i]['use_customized_head']	= '1';
 
 					// create image folder
-
-						/*
-						echo $src;
-						echo '<br />';
-						echo $dst;
-						echo '<br />';
-						*/
-
-						/*
-						$dir = opendir($src);
-						while(false !== ( $file = readdir($dir)) ) { 
-					        if (( $file != '.' ) && ( $file != '..' )) {
-					            //copy($src . '/' . $file, $dst . '/' . $file);
-								$zipfile->add_file($src . '/' . $file, $dst . '/' . $file);
-						    } 
-						}
-						closedir($dir);
-						*/
-					/*
-					echo '<hr />';
-					echo 'content_id = '.$_content_id;
-					echo '<br />';
-					echo '$rows[$i][\'content_id\'] = '.$rows[$i]['content_id'];
-					echo '<br />';
-					echo 'styles = ';
-					print_r($styles);
-					echo '<br />';
-					*/
-
 					// if it's a new style to add
 					if(($_content_id != '' AND $_content_id == $rows[$i]['content_id']) OR $_content_id == ''){
-						//if(!in_array($rows[$i]['theme'], $styles)){
 						
-						//echo '<div>FIRST STEP</div>';
 
-						$styles[]		= $rows[$i]['theme'];
+						$styles[]		= $rows[$i]['layout'];
 
-						//if(($_content_id != '' AND $_content_id == $rows[$i]['content_id']) OR $_content_id == ''){
-						if(in_array($rows[$i]['theme'], $styles)){
-							//echo '<div>-SECOND STEP</div>';
+						if(in_array($rows[$i]['layout'], $styles)){
+							
 
-							if($stylesheet = file_get_contents('../../dnd_themod/themes/'.$rows[$i]['theme'].'/'.$rows[$i]['theme'].'.css')){
+							if($stylesheet = file_get_contents('../../templates/layout/'.$rows[$i]['layout'].'/'.$rows[$i]['layout'].'.css')){
 								
-								//echo '<div>THIRD (LAST) STEP</div>';
 								$stylesheet	= str_replace('#'.$this->uniq, 'body', $stylesheet);
-								$zipfile->add_file($stylesheet, 'resources/commoncartridge/'.$rows[$i]['theme'].'.css');
+								$zipfile->add_file($stylesheet, 'resources/commoncartridge/'.$rows[$i]['layout'].'.css');
 
 								// add images folder
-								$src	= '../../dnd_themod/themes/'.$rows[$i]['theme'].'/'.$rows[$i]['theme'].'/';
-								//$dst	= 'resources/commoncartridge/'.$rows[$i]['theme'].'/';
-								$dst	= 'resources/commoncartridge/'.$rows[$i]['theme'].'/';
+								$src	= '../../templates/layout/'.$rows[$i]['layout'].'/'.$rows[$i]['layout'].'/';
+								$dst	= 'resources/commoncartridge/'.$rows[$i]['layout'].'/';
 		
-								$zipfile->create_dir('resources/commoncartridge/'.$rows[$i]['theme'].'/');
+								$zipfile->create_dir('resources/commoncartridge/'.$rows[$i]['layout'].'/');
 								$zipfile->add_dir($src, $dst);
 							}
 						}
-					}//else{
-						//echo '<div>BACK STEP</div>';
-					//}
+					}
 				}
 			}
-			//die('END');
+			
 
 			return $rows;
 		}

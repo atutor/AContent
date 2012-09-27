@@ -70,7 +70,7 @@
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
 }
-.header .modelContent{
+.header .pageTemplateContent{
 	height:						80px;
 	background-image:			url(italy/repubblica.png);
 	background-repeat:			no-repeat;

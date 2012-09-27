@@ -189,18 +189,18 @@ $rows = $contentDAO->getContentByCourseID($course_id);
 
 
 /***************************************
- * dnd_themod
- * add the theme, if present
+ * templates
+ * add the layout, if present
  * donadiomauro@gmail.com
  * 
  * */
-include_once(TR_INCLUDE_PATH . '../dnd_themod/system/Themes.class.php');
+include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
 
-$dnd_themod_theme	= new Themes('');
+$templates_theme	= new Layout('');
 
-// Array containing content and properties (such as content_id, course_id, theme ..)
-// the 'theme' property is required to add the proper content into the manifest file
-$rows				= $dnd_themod_theme->appendStyle($rows, $zipfile, $_content_id);
+// Array containing content and properties (such as content_id, course_id, layout ..)
+// the 'layout' property is required to add the proper content into the manifest file
+$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
 
 /***************************************/
 
@@ -338,7 +338,7 @@ $html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE
 
 
 /***************************************
- * dnd_themod
+ * templates
  * add content into the manifest file
  * donadiomauro@gmail.com
  * 
@@ -350,19 +350,19 @@ $mnf	.= "<metadata/>\n";
 	// take all .css documents in "commoncartridge" folder
 	$css	= array();
 	for($i=0; $i < count($rows); $i++){
-		if(!in_array($rows[$i]['theme'], $css) AND $rows[$i]['theme'] != null){
+		if(!in_array($rows[$i]['layout'], $css) AND $rows[$i]['layout'] != null){
 
-			$css[]	= $rows[$i]['theme'];
+			$css[]	= $rows[$i]['layout'];
 
 			// add the .css file
-			$mnf	.= "\n<file href=\"resources/commoncartridge/".$rows[$i]['theme'].".css\"/>\n";
+			$mnf	.= "\n<file href=\"resources/commoncartridge/".$rows[$i]['layout'].".css\"/>\n";
 
 			// add all the style folder content
-				// get all theme images
-				$images = glob("../../dnd_themod/themes/".$rows[$i]['theme']."/".$rows[$i]['theme']."/*.*");
+				// get all layout images
+				$images = glob("../../templates/layout/".$rows[$i]['layout']."/".$rows[$i]['layout']."/*.*");
 
 				for($j=0; $j<count($images); $j++){
-					$mnf	.= "<file href=\"resources/commoncartridge/".$rows[$i]['theme']."/".basename($images[$j])."\"/>\n";
+					$mnf	.= "<file href=\"resources/commoncartridge/".$rows[$i]['layout']."/".basename($images[$j])."\"/>\n";
 				}
 		}
 	}

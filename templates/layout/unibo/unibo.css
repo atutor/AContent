@@ -50,7 +50,7 @@
 	content:					'Alma Mater Studiorum - Università di Bologna';
 }
 
-#content .header .modelContent{
+#content .header .pageTemplateContent{
 	background-color:			#cc0000;
 	background-image:			url(unibo/testata.gif);
 	background-repeat:			no-repeat;

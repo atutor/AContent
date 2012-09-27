@@ -1,6 +1,6 @@
 <?php
 
-	class Models{
+	class page_template{
 
 
 		/**
@@ -25,7 +25,7 @@
 		private $course_id	= '';
 		private $uniq		= 'dnd';
 
-		// folders and documents to be excluded from the list of the models
+		// folders and documents to be excluded from the list of the page_template
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 
@@ -46,8 +46,8 @@
 			$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
 
 			//
-			if(isset($_POST['cid'], $_POST['action'], $_POST['text']) AND htmlentities($_POST['action']) == 'saveModelContent'){
-				$this->applicaModelloContenuto();
+			if(isset($_POST['cid'], $_POST['action'], $_POST['text']) AND htmlentities($_POST['action']) == 'savePageTemplateContent'){
+				$this->applyPageTemplateToContent();
 			}
 
 			$this->mod_path		= $mod_path;
@@ -76,13 +76,13 @@
 		 * 
 		 * */
 
-		public function getListaModelli(){
+		public function getPageTemplateList(){
 
-			$listaModelli	= array();
+			$page_template_list	= array();
 			$dir			= array();
 
 			// read the list of available themes
-			$dir		= scandir($this->mod_path['models_dir_int']);
+			$dir		= scandir($this->mod_path['page_template_dir_int']);
 
 			// subtract files to be excluded from the list of available themes
 			$dir		= array_diff($dir, $this->except);
@@ -90,8 +90,8 @@
 			$dir		= array_merge(array(),$dir);
 
 			// call the function that validates the available themes
-			$listaModelli	= $this->modelloConforme($dir);
-			return $listaModelli;
+			$page_template_list	= $this->validatedPageTemplate($dir);
+			return $page_template_list;
 		}
 
 		
@@ -169,20 +169,27 @@
 		
 		
 		/*
-		 * 	The following function reads from the filesystem existing models and validates them
+		 * 	The following function reads from the filesystem existing page_template and validates them
 		 * 	according to pre-set criteria (eg comparison between version of the model and core)
-		 * 	and returns an array of available and valid models.
-		 *	input:	$dir[]			list of available models
-		 * 	output:	list of available models skimmed according to the compatibility of each model
+		 * 	and returns an array of available and valid page_template.
+		 *	input:	$dir[]			list of available page_template
+		 * 	output:	list of available page_template skimmed according to the compatibility of each model
 		 * 
 		 * */
 		
-		function modelloConforme($dir = array()){
+		function validatedPageTemplate($dir = array()){
 			
 			// scan all existing themes
+<<<<<<< HEAD:dnd_themod/system/Models.class.php
 			$modelli = array();
 			foreach($dir as $item)  {
 /*				$isdir	= $this->mod_path['models_dir_int'].$item;
+=======
+                        $page_template = array();
+			foreach($dir as $item){
+
+				$isdir	= $this->mod_path['page_template_dir_int'].$item;
+>>>>>>> upstream/master:templates/system/Page_template.class.php
 			
 				// checking if the element is a directory
 				if(is_dir($isdir)){
@@ -200,13 +207,6 @@
 								$info[$name] = trim($child);
 						}
 						
-					//$isfile	= $isdir.'/model.info';
-			
-					//if(is_file($isfile)){
-
-						//$info	= parse_ini_file($isdir.'/model.info');
-		
-						// if you did not specify a name, use the folder name
 						if(!$info['name'])
 							$info['name'] = trim($item);
 						
@@ -236,21 +236,31 @@
 						}*/
 		
 						// put the info of the current model into an array
+<<<<<<< HEAD:dnd_themod/system/Models.class.php
 						
 						$modelli[$item] = $this->checkPageTemplate($item);
+=======
+						$page_template[$item] = $info;
+					}
+				}
+			}
+			
+			foreach ($page_template as $value => $key) {
+				
+>>>>>>> upstream/master:templates/system/Page_template.class.php
 				
 			}
 		
-			return $modelli;
+			return $page_template;
 		}
 
 
 		/*
 		 * 	The following function provides for the generation of a form
-		 *	to graphically show the user the list of available models.
+		 *	to graphically show the user the list of available page_template.
 		 * 	The form is returned by the function and, then,
 		 * 	integrated the output of this model.
-		 *	input:	$listaModelli[]	list of available models
+		 *	input:	$pageTemplateList[]	list of available page_template
 		 *	output:	none 
 		 * */
 
@@ -259,15 +269,15 @@
 			
 			$ui		= '';
 			//style="display: none"
-			$ui		.= '<form action="" onsubmit="return false" method="post" id="dnd_moduli"  >';
+			$ui		.= '<form action="" onsubmit="return false" method="post" id="page_template_box"  >';
 
 			$ui		.= '<div>';
 
-			$ui		.= '<div><input type="checkbox" value="'._AT('activate_models').'" id="attivaModelli_btn" />';
-			$ui		.= '<label for="attivaModelli_btn"> '._AT('activate_models').'</label></div>';
+			$ui		.= '<div><input type="checkbox" value="'._AT('activate_page_template').'" id="activate_page_template" />';
+			$ui		.= '<label for="activate_page_template"> '._AT('activate_page_template').'</label></div>';
 	
-			$ui		.= '<div><input type="checkbox" value="'._AT('arrange_models').'" id="ordinaModelli_btn" />';
-			$ui		.= '<label for="ordinaModelli_btn"> '._AT('arrange_models').'</label></div>';
+			$ui		.= '<div><input type="checkbox" value="'._AT('arrange_page_template').'" id="orderPageTemplate" />';
+			$ui		.= '<label for="orderPageTemplate"> '._AT('arrange_page_template').'</label></div>';
 
 			$ui		.= '</div>';
 
@@ -280,7 +290,7 @@
 		}
 
 
-		private function applicaModelloContenuto(){
+		private function applyPageTemplateToContent(){
 
 			$cid	= htmlentities($_POST['cid']);
 			$text	= $this->textFixPHP($_POST['text']);
@@ -306,10 +316,10 @@
 			return;
 		}
 
-		public function getModelStructure($modelID = ''){
+		public function getpage_templatetructure($pageTemplateID = ''){
 			$struct	= '';
 
-			$file	= '../../dnd_themod/models/'.$modelID.'/'.$modelID.'.html';
+			$file	= '../../templates/page_template/'.$pageTemplateID.'/'.$pageTemplateID.'.html';
 
 			if(file_exists($file))
 				$struct	= file_get_contents($file);
@@ -326,16 +336,7 @@
 		*/
 	
 		private function textFixPHP($text = ''){
-
-			/*
-			$text	= str_replace('<p>&nbsp;</p>', "<br />", $text);
-			$text	= str_replace('<p></p>', "<br />", $text);
-			$text	= str_replace('<br>', "<br />", $text);
-			$text	= str_replace('<p>', "<div>", $text);
-			$text	= str_replace('</p>', "</div>", $text);
-			*/
-			
-	
+		
 			return $text;		
 		}
 

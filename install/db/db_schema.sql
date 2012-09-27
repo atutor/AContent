@@ -32,7 +32,7 @@ CREATE TABLE `content` (
   `use_customized_head` TINYINT(4) NOT NULL,
   `test_message` TEXT NOT NULL,
   `content_type` TINYINT(1) UNSIGNED NOT NULL,
-  `theme` TEXT NOT NULL,
+  `layout` TEXT NOT NULL,
   `optional` BOOLEAN NOT NULL default '1',
   `structure` TEXT NOT NULL,
   PRIMARY KEY  (`content_id`),

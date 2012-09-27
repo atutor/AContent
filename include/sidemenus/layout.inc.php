@@ -35,23 +35,24 @@ $_content_id	= $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_con
 // paths settings
 
 $mod_path					= array();
-$mod_path['dnd_themod']		= realpath(TR_BASE_HREF			. 'dnd_themod').'/';
-$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-$mod_path['themes_dir']		= $mod_path['dnd_themod']		. 'themes/';
-$mod_path['themes_dir_int']	= $mod_path['dnd_themod_int']	. 'themes/';
+$mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
+$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+$mod_path['layout_dir']		= $mod_path['templates']		. 'layout/';
+$mod_path['layout_dir_int']	= $mod_path['templates_int']	. 'layout/';
 
 // include the file "applicaTema" so that he can inherit variables and constants defined by the system
-include_once($mod_path['dnd_themod_sys'].'Themes.class.php');
+include_once($mod_path['templates_sys'].'Layout.class.php');
 
-// instantiate the class Themes (which calls the constructor)
-$the		= new Themes($mod_path);
+// instantiate the class layout (which calls the constructor)
+$layout		= new Layout($mod_path);
 
-// take the list of available valid themes
-$listaTemi	= $the->getListaTemi();
+// take the list of available valid layout
+$layout_list	= $layout->getLayoutList();
 
-// call the function that creates the graphics module theme selection
-$resArray	= $the->createUI($listaTemi);
+
+// call the function that creates the graphics module layout selection
+$resArray	= $layout->createUI($layout_list);
 
 // array containing the current contents (text, header, bit that indicates that the header is included)
 $content	= getContent($contentDAO, $cid);
@@ -72,28 +73,27 @@ $formatContent	= $content['formatting'];
 
 $course_id		= $content['course_id'];
 
-$content_theme	= $content['theme'];
+$content_layout	= $content['layout'];
 
 
 
-$dnd_themod		= TR_BASE_HREF.'dnd_themod/';
-$dnd_themod_int	= $mod_path['dnd_themod_int'];
-$dnd_themod_sys	= $mod_path['dnd_themod_sys'];
-// path containing the themes list
-$themes_dir		= $dnd_themod.'themes/';
-$themes_dir_int	= $dnd_themod_int.'themes/';
+$templates		= TR_BASE_HREF.'templates/';
+$templates_int	= $mod_path['templates_int'];
+$templates_sys	= $mod_path['templates_sys'];
+// path containing the layout list
+$layout_dir		= $templates.'layout/';
+$layout_dir_int	= $templates_int.'layout/';
 
-$config					= parse_ini_file($mod_path['dnd_themod_sys'].'config.ini');
-$apply_lesson_theme		= $config['apply_to_the_lesson'];
+$config					= parse_ini_file($mod_path['templates_sys'].'config.ini');
+$apply_lesson_layout		= $config['apply_to_the_lesson'];
 
-include $mod_path['dnd_themod_sys'].'Themes.js';
+include $mod_path['templates_sys'].'Layout.js';
 
 
 ######################################
 #	RETURN THE OUTPUT
 ######################################
 
-// restituisco l'output
 $output		= $resArray;
 
 if ($output == '') {
@@ -103,7 +103,7 @@ if ($output == '') {
 // title of the side block
 // if there is no translation in the choosen language, use the default one
 
-$savant->assign('title', _AT('themes'));
+$savant->assign('title', _AT('layout'));
 
 // content
 
@@ -118,7 +118,7 @@ $savant->display('include/box.tmpl.php');
 /*
  * Take the values of the current contents
  * $text		: must be handled and used in the preview
- * $head 		: if the theme should be overwritten, this is done in JQuery
+ * $head 		: if the layout should be overwritten, this is done in JQuery
  * $formatting	: need to know how to show the preview (Plain Text, HTML, Web Link)
  */
 
@@ -131,7 +131,7 @@ function getContent($contentDAO, $cid){
 		$content['head']				= $db['head'];
 		$content['formatting']			= $db['formatting'];
 		$content['course_id']			= $db['course_id'];
-		$content['theme']				= $db['theme'];
+		$content['layout']				= $db['layout'];
 		
 		return $content;
 	}else

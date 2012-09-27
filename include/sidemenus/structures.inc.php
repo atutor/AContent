@@ -32,13 +32,18 @@ $_content_id	= $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_con
 // paths settings
 
 $mod_path					= array();
-$mod_path['dnd_themod']		= realpath(TR_BASE_HREF			. 'dnd_themod').'/';
-$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-$mod_path['structs_dir']		= $mod_path['dnd_themod']		. 'structures/';
-$mod_path['structs_dir_int']	= $mod_path['dnd_themod_int']	. 'structures/';
+$mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
+$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+$mod_path['structs_dir']		= $mod_path['templates']		. 'structures/';
+$mod_path['structs_dir_int']	= $mod_path['templates_int']	. 'structures/';
 
+<<<<<<< HEAD
 include_once($mod_path['dnd_themod_sys'].'Structures.class.php');
+=======
+// includo immediatamente il file "applicaTema" così che possa ereditare variabili e costanti definite dal sistema
+include_once($mod_path['templates_sys'].'Structures.class.php');
+>>>>>>> upstream/master
 
 list($caller_url, $url_param) = Utility::getRefererURLAndParams();
 

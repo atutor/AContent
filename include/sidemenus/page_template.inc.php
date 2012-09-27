@@ -40,24 +40,24 @@ $_content_id	= $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_con
 // paths settings
 
 $mod_path					= array();
-$mod_path['dnd_themod']		= realpath(TR_BASE_HREF			. 'dnd_themod').'/';
-$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-$mod_path['models_dir']		= $mod_path['dnd_themod']		. 'models/';
-$mod_path['models_dir_int']	= $mod_path['dnd_themod_int']	. 'models/';
+$mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
+$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+$mod_path['page_template_dir']		= $mod_path['templates']		. 'page_template/';
+$mod_path['page_template_dir_int']	= $mod_path['templates_int']	. 'page_template/';
 
-// include the file "applicaModello" so that he can inherit variables and constants defined by the system
-include_once($mod_path['dnd_themod_sys'].'Models.class.php');
+// include the file "apply_model" so that he can inherit variables and constants defined by the system
+include_once($mod_path['templates_sys'].'Page_template.class.php');
 
-// instantiate the class Models (which calls the constructor)
-$mod		= new Models($mod_path);
+// instantiate the class page_template (which calls the constructor)
+$mod		= new page_template($mod_path);
 
 $user_priv	= $privilegesDAO->getUserPrivileges($_SESSION['user_id']);
 $is_author	= $user_priv[1]['is_author'];
 
-// take the list of available valid models
+// take the list of available valid page_template
 
-$listaModelli = array();
+$pageTemplateList = array();
 
 if($_content_id != "" && $_course_id != "") {
 	
@@ -66,6 +66,7 @@ if($_content_id != "" && $_course_id != "") {
 	
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
+<<<<<<< HEAD:include/sidemenus/models.inc.php
 		$item = $structManager->getPageTemplatesItem($content['title']);
 		$listaModelli = $mod->getPageTemplates($item);
 		
@@ -74,6 +75,15 @@ if($_content_id != "" && $_course_id != "") {
 	}  else 
 		$listaModelli = $mod->getListaModelli();
 	
+=======
+		$array = $structManager->getContentByTitle($content['title']);
+		$pageTemplateList = $mod->validatedPageTemplate($array);
+			
+	}  else {
+		$pageTemplateList = $mod->getPageTemplateList();
+		
+	}
+>>>>>>> upstream/master:include/sidemenus/page_template.inc.php
 
 }
 
@@ -82,14 +92,14 @@ if($_content_id != "" && $_course_id != "") {
 // call the function that creates the graphics module selection
 $output	= $mod->createUI();
 
-$dnd_themod		= TR_BASE_HREF.'dnd_themod/';
-$dnd_themod_int	= TR_INCLUDE_PATH.'../dnd_themod/';
+$templates		= TR_BASE_HREF.'templates/';
+$templates_int	= TR_INCLUDE_PATH.'../templates/';
 
-// path containing the models list
-$model_dir		= $dnd_themod.'models/';
-$model_dir_int	= $dnd_themod_int.'models/';
+// path containing the page_template list
+$page_template_dir		= $templates.'page_template/';
+$page_template_dir_int	= $templates_int.'page_template/';
 
-// directory and file systems to be excluded from the models list
+// directory and file systems to be excluded from the page_template list
 $except	= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 // content id
@@ -102,14 +112,13 @@ if($cid == '' and isset($_GET['_cid'])and $_GET['_cid'] != '')
 ######################################
 #	JQUERY SCRIPT MODULE
 ######################################
-include $mod_path['dnd_themod_sys'].'Models.js';
-include $mod_path['dnd_themod_sys'].'prova.js';
+include $mod_path['templates_sys'].'Page_template.js';
 
 ######################################
 #	RETURN OUTPUT
 ######################################
 
-$savant->assign('title', _AT('models'));
+$savant->assign('title', _AT('page_template'));
 
 
 $savant->assign('dropdown_contents', $output);

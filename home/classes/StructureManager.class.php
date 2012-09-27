@@ -45,7 +45,7 @@ class StructureManager
 	/* constructor	*/
 	function StructureManager($name) {
 	
-		$this->path = realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/structures/' . $name;
+		$this->path = realpath(TR_INCLUDE_PATH		. '../templates').'/structures/' . $name;
 		if(!is_dir($this->path)) 
 			throw new Exception("Error: the name of the struct doesn't corrispond to a dir");
 		
@@ -73,7 +73,7 @@ class StructureManager
 		$content = $this->getContent($page);
 		if(count($content)==1) {
 			
-			$path_page = realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/models/';
+			$path_page = realpath(TR_INCLUDE_PATH		. '../templates').'/page_template/';
  			$file = $path_page . $content[0] .'/'.$content[0].'.html';
 			if(is_file($file)) {
 				
@@ -81,8 +81,8 @@ class StructureManager
 				$find =  strpos($text, 'src="dnd_image"');
 				
 				if($find) 
-						 //$resp[] = str_replace('src="dnd_image', 'src="/dnd_themod/system/model_image.png"');
-						return str_replace('src="dnd_image', 'src="'.TR_BASE_HREF.'dnd_themod/system/model_image.png"', $text);
+						 //$resp[] = str_replace('src="dnd_image', 'src="/templates/system/page_template_image.png"');
+						return str_replace('src="dnd_image', 'src="'.TR_BASE_HREF.'templates/system/page_template_image.png"', $text);
 					 else 	
 						return $text;
 				
@@ -180,7 +180,7 @@ class StructureManager
 		echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
 		
 		echo '<p style="display:inline; border-style: solid; border-color: grey; border-width:1px;">'.$this->name.'</p>';
-		//echo '<script type="text/javascript" src="../dnd_themod/system/Struct.js"></script>';
+		//echo '<script type="text/javascript" src="../templates/system/Struct.js"></script>';
 		
 		echo '<strong>';
 		
@@ -421,7 +421,7 @@ class StructureManager
 		$previews = array();
 		
 		foreach ($pages_template as $page_template) {
-			$img = TR_BASE_HREF . 'dnd_themod/models/' . $page_template . '/screenshot.png';
+			$img = TR_BASE_HREF . 'templates/page_template/' . $page_template . '/screenshot.png';
 			$previews[] = $img;
 		}
 	
