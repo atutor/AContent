@@ -1,6 +1,6 @@
 <?php
 
-	class page_template{
+	class Page_template {
 
 
 		/**
@@ -23,7 +23,7 @@
 		private $config		= array();
 		private $content_id	= '';
 		private $course_id	= '';
-		private $uniq		= 'dnd';
+		private $uniq		= 'templates';
 
 		// folders and documents to be excluded from the list of the page_template
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
@@ -180,77 +180,13 @@
 		function validatedPageTemplate($dir = array()){
 			
 			// scan all existing themes
-<<<<<<< HEAD:dnd_themod/system/Models.class.php
-			$modelli = array();
-			foreach($dir as $item)  {
-/*				$isdir	= $this->mod_path['models_dir_int'].$item;
-=======
-                        $page_template = array();
-			foreach($dir as $item){
-
-				$isdir	= $this->mod_path['page_template_dir_int'].$item;
->>>>>>> upstream/master:templates/system/Page_template.class.php
-			
-				// checking if the element is a directory
-				if(is_dir($isdir)){
-			
-					// check if exists the .info file and parse it
-					$xml_file = $isdir.'/page_template.xml';
-					if(is_file($xml_file)) {
-						$xml = simplexml_load_file($xml_file);
-						
-						foreach($xml->children() as $child) {
-							$name = $child->getName();
-							if($name == "release") 
-								$info['core'] = trim($child->version);
-							else
-								$info[$name] = trim($child);
-						}
-						
-						if(!$info['name'])
-							$info['name'] = trim($item);
-						
-						// reduce the name length to 15 characters
-						$limit	= 15;
-						if(strlen($info['name']) >= $limit){
-							$info['name']	= substr($info['name'], 0, ($limit-2));
-							$info['name']	.= '..';
-						}
-
-						// check the "core"
-						if(!$info['core'])
-							continue;
-						else{
-
-							$vfile	= explode('.', $info['core']);
-							$vcore	= explode('.', VERSION);
-			
-							// cursory check for version compatibility
-							// stopping the cycle to the first incompatibility found
-							if($vfile[0] < $vcore[0])
-								// not compatible!
-								continue;
-							elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
-								// not compatible!
-								continue;
-						}*/
-		
-						// put the info of the current model into an array
-<<<<<<< HEAD:dnd_themod/system/Models.class.php
-						
-						$modelli[$item] = $this->checkPageTemplate($item);
-=======
-						$page_template[$item] = $info;
-					}
-				}
-			}
-			
-			foreach ($page_template as $value => $key) {
+			$page_template = array();
+			foreach($dir as $item)  {				
 				
->>>>>>> upstream/master:templates/system/Page_template.class.php
+                            $page_template[$item] = $this->checkPageTemplate($item);
+                            
+                        }
 				
-			}
-		
 			return $page_template;
 		}
 

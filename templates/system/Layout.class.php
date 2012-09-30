@@ -167,6 +167,14 @@
 		}
 
 
+                
+                
+                
+                
+                
+                
+                
+                
 		/*
 		 * 	The following function provides for the generation of a form
 		 *	to graphically show the user the list of available layout.
@@ -176,7 +184,59 @@
 		 *	output:	none 
 		 * */
 
-		public function createUI($layout_list){
+                public function createUI($layout_list){
+
+			$ui		= '';
+		
+			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
+		
+			// select
+                        $ui             .= '<div style="margin: 10px;">';
+			$ui		.= '<p>'._AT('layout_select').'</p>';
+			//$ui		.= '<select name="layout_list" id="layout_list">';
+			
+			// put all the available layout into the dropdown menu
+			foreach($layout_list as $tname => $tval){
+                                
+                                $ui .= '<span>'; 
+                                $ui .= '<input type="checkbox" name="'.$tname.'" value="'.$tval['name'].'">'.$tval['name'].'<br>';
+				$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';
+                                /*$ui	.= '<option value="'.$tname.'">';
+					$ui	.= $tval['name'];
+				$ui	.= '</option>';*/
+                                $ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
+                                $ui .= '</span>'; 
+			}
+			
+			//$ui		.= '</select>';
+			$ui .= '</div>';
+			// fine select
+			
+			$ui		.= '<div>';
+		
+			$ui		.= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
+		
+                       /* if($this->config['apply_to_the_lesson'] == 0)
+				$display = 'display:none';*/
+
+			$ui		.= '<div><input type="submit" style="'.$display.'" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" /></div>';
+		
+			$ui		.= '</div>';
+                        
+                        
+			$ui		.= '<div><input type="submit" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" /></div>';
+
+			// add this option only if you have set it
+			
+			
+			$ui		.= '</form>';
+			
+			$ui		.= '<noscript><div>'._AT('no_js').'</div></noscript>';
+		
+			return $ui;
+		}
+                
+		/*public function createUI($layout_list){
 
 			$ui		= '';
 		
@@ -227,7 +287,7 @@
 			$ui		.= '<noscript><div>'._AT('no_js').'</div></noscript>';
 		
 			return $ui;
-		}
+		}*/
 
 
 		/*

@@ -44,7 +44,7 @@
 		include_once('Page_template.class.php');
 
 		$contentID	= htmlentities($_POST['cid']);
-		$mod		= new page_template('');
+		$mod		= new Page_template('');
 
 		//$mod->getpage_templatetructure($contentID);
 
@@ -63,7 +63,7 @@
 
 		$pageTempalteID	= htmlentities($_POST['mID']);
 
-		$mod		= new page_template('');
+		$mod		= new Page_template('');
 
 		$res		= $mod->getpage_templatetructure($pageTempalteID);
 		

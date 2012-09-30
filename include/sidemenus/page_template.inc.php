@@ -50,7 +50,7 @@ $mod_path['page_template_dir_int']	= $mod_path['templates_int']	. 'page_template
 include_once($mod_path['templates_sys'].'Page_template.class.php');
 
 // instantiate the class page_template (which calls the constructor)
-$mod		= new page_template($mod_path);
+$mod		= new Page_template($mod_path);
 
 $user_priv	= $privilegesDAO->getUserPrivileges($_SESSION['user_id']);
 $is_author	= $user_priv[1]['is_author'];
@@ -66,16 +66,7 @@ if($_content_id != "" && $_course_id != "") {
 	
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
-<<<<<<< HEAD:include/sidemenus/models.inc.php
-		$item = $structManager->getPageTemplatesItem($content['title']);
-		$listaModelli = $mod->getPageTemplates($item);
-		
-		
-			
-	}  else 
-		$listaModelli = $mod->getListaModelli();
-	
-=======
+
 		$array = $structManager->getContentByTitle($content['title']);
 		$pageTemplateList = $mod->validatedPageTemplate($array);
 			
@@ -83,7 +74,7 @@ if($_content_id != "" && $_course_id != "") {
 		$pageTemplateList = $mod->getPageTemplateList();
 		
 	}
->>>>>>> upstream/master:include/sidemenus/page_template.inc.php
+
 
 }
 

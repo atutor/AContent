@@ -29,9 +29,11 @@ function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
-	$tabs[1] = array('metadata',    		'properties.inc.php',    'p');
-	$tabs[2] = array('alternative_content', 'alternatives.inc.php',  'l');	
-	$tabs[3] = array('tests',               'tests.inc.php',         't');
+        $tabs[1] = array('layout', 'layout.inc.php', 'l');
+        $tabs[2] = array('page_template', 'page_template.inc.php', 'g');
+	$tabs[3] = array('metadata',    		'properties.inc.php',    'p');
+	$tabs[4] = array('alternative_content', 'alternatives.inc.php',  'a');	
+	$tabs[5] = array('tests',               'tests.inc.php',         't');
 	//catia
 	//$tabs[4] = array('forums', '');
 	
