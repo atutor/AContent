@@ -17,7 +17,7 @@ function get_tabs() {
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('manually',       		'manually.inc.php',          'm');
 	$tabs[1] = array('structure',    		'structure.inc.php',    's');
-	$tabs[2] = array('wizard', 'wizard.inc.php',  'w');	
+        $tabs[2] = array('wizard', 'wizard.inc.php',  'w');	
 	
 	
 	return $tabs;

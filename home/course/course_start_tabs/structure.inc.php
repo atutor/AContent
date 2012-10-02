@@ -21,13 +21,13 @@ global $_course_id;
 $contentDAO = new ContentDAO();
 
 $mod_path					= array();
-$mod_path['dnd_themod']		= realpath(TR_BASE_HREF			. 'dnd_themod').'/';
-$mod_path['dnd_themod_int']	= realpath(TR_INCLUDE_PATH		. '../dnd_themod').'/';
-$mod_path['dnd_themod_sys']	= $mod_path['dnd_themod_int']	. 'system/';
-$mod_path['structs_dir']		= $mod_path['dnd_themod']		. 'structures/';
-$mod_path['structs_dir_int']	= $mod_path['dnd_themod_int']	. 'structures/';
+$mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
+$mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
+$mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
+$mod_path['structs_dir']		= $mod_path['templates']		. 'structures/';
+$mod_path['structs_dir_int']	= $mod_path['templates_int']	. 'structures/';
 
-include_once($mod_path['dnd_themod_sys'].'Structures.class.php');
+include_once($mod_path['templates_sys'].'Structures.class.php');
 
 $structs	= new Structures($mod_path);
 
@@ -47,11 +47,8 @@ if (!is_array($structsList) || count($structsList) == 0) {
 	
 ?>
 
-<!--  -->
 <div style=" weight: 10%; margin: 10px;">
 <p style="font-style:italic;">The structures available are:</p>
-
-<!-- <p >Choose the structure to use as model for your lesson:</p> -->
 	
 	
 	<div style="margin: 10px;">
@@ -66,12 +63,10 @@ if (!is_array($structsList) || count($structsList) == 0) {
 	
 	
 		<div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
-		<!--<input  type="checkbox" id="<?php echo $val['short_name'];?>" name="struct" value="<?php echo $val['short_name'];?>" onclick="document.form.submit();" <?php if($check) echo 'checked="checked";'?>/>-->
 		
 		<ul>
 		<li id="<?php echo $val['short_name'];?>"> <?php echo $val['name'];?> </li>
 
-		<!-- <label for="<?php echo $val['short_name'];?>"><?php echo $val['name'];?></label><br />-->
 		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;">Description:</span>
 					<?php echo $val['description']; ?></p>
 		
@@ -94,10 +89,7 @@ if (!is_array($structsList) || count($structsList) == 0) {
 <input type="hidden" name="current_tab" value="1" />
 
 </div>
-<!--  input type="submit" class= "submit" name="create_struct" value="Create course with one or more structure" style="margin: 20px; position: relative; left: 65%;"  />
--->
 
-<!-- cambia qui!!! -->
 <?php echo _AT('create_content_3', TR_BASE_HREF.'home/editor/edit_content_struct.php?_course_id='.$_course_id, "");
 
 } ?>
