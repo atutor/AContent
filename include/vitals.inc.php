@@ -503,15 +503,4 @@ function query_bit( $bitfield, $bit ) {
 	}
 	return ( $bitfield & $bit ) ? true : false;
 }
-
-/**
- * Convert special characters in a string to HTML entities.
- * @param   A string variable which will be
- * @return  Array of values with converted special characters to HTML entities
- * @author  Alexey Novak
- * @date    Oct 9, 2012
- */
-function convertHtmlSpecialChars($str) {
-    return htmlspecialchars($str, ENT_QUOTES, 'UTF-8');
-}
 ?>
