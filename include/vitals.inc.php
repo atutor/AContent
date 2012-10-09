@@ -503,4 +503,17 @@ function query_bit( $bitfield, $bit ) {
 	}
 	return ( $bitfield & $bit ) ? true : false;
 }
+
+/**
+ * Convert special characters to HTML entities. Function to use on $_GET variables to prevent cross site scripting
+ * @param   Array of values which contain special characters
+ * @return  Array of values with converted special characters to HTML entities
+ * @author  Alexey Novak
+ * @date    Oct 9, 2012
+ */
+function convertHtmlSpecialChars(&$array) {
+    foreach ($array as &$value) {
+        $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
+    }
+}
 ?>

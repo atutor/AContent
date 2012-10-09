@@ -33,9 +33,7 @@ if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 
 <?
 // Do not allow cross-site scripting
-foreach (array($_GET['pathext'], $_GET['popup'], $_GET['framed'], $_GET['file']) as &$value) {
-    $value = htmlspecialchars($value, ENT_QUOTES, 'UTF-8');
-}
+convertHtmlSpecialChars($_GET);
 ?>
 
 <a href="index.php?framed=<?php echo SEP; ?>popup=<?php echo SEP; ?>pathext=<?php echo $_GET['pathext'].SEP . 'popup=' . $_GET['popup'] . SEP . 'framed=' . $_GET['framed'].SEP.'_course_id='.$_course_id; ?>" target="_top"><?php echo _AT('return_file_manager'); ?></a> 
