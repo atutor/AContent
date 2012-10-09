@@ -31,17 +31,12 @@ if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 <body>
 <p align="bottom">
 
-<?
-// Do not allow cross-site scripting
-convertHtmlSpecialChars($_GET);
-?>
-
-<a href="index.php?framed=<?php echo SEP; ?>popup=<?php echo SEP; ?>pathext=<?php echo $_GET['pathext'].SEP . 'popup=' . $_GET['popup'] . SEP . 'framed=' . $_GET['framed'].SEP.'_course_id='.$_course_id; ?>" target="_top"><?php echo _AT('return_file_manager'); ?></a> 
+<a href="index.php?framed=<?php echo SEP; ?>popup=<?php echo SEP; ?>pathext=<?php echo convertHtmlSpecialChars($_GET['pathext']).SEP . 'popup=' . convertHtmlSpecialChars($_GET['popup']) . SEP . 'framed=' . convertHtmlSpecialChars($_GET['framed']).SEP.'_course_id='.$_course_id; ?>" target="_top"><?php echo _AT('return_file_manager'); ?></a> 
 <?php if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE): ?>
 	 | 
-	<a href="<?php echo $get_file; ?>@/<?php echo $_GET['file']; ?>" target="_top"><?php echo _AT('download_file'); ?></a>
+	<a href="<?php echo $get_file; ?>@/<?php echo convertHtmlSpecialChars($_GET['file']); ?>" target="_top"><?php echo _AT('download_file'); ?></a>
 <?php endif; ?> |
-<a href="<?php echo $get_file; ?><?php echo $_GET['file']; ?>" target="_top"><?php echo _AT('remove_frame'); ?></a>
+<a href="<?php echo $get_file; ?><?php echo convertHtmlSpecialChars($_GET['file']); ?>" target="_top"><?php echo _AT('remove_frame'); ?></a>
 </p>
 
 </body>
