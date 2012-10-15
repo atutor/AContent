@@ -35,6 +35,15 @@ if (isset($_POST['cancel'])) {
 		$_POST['latex_server']       = (trim($_POST['latex_server'])==''?$_config['latex_server']:trim($_POST['latex_server']));
 		$_POST['use_captcha']        = $_POST['use_captcha'] ? 1 : 0;
 		
+/* Control the general approach chosen by the user for the template */               
+// ENABLE 1
+// DISABLE 0
+// PERSONAL 4
+               if($_POST['enable_template'] != TR_STATUS_PERSONAL)
+                    $_POST['enable_template']  = $_POST['enable_template'] ? 1 : 0;
+               else{
+                   $_POST['enable_template']  = TR_STATUS_PERSONAL;
+               }
 	
 		//check that all values have been set	
 		if (!$_POST['site_name']) {
