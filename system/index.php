@@ -86,6 +86,11 @@ if (isset($_POST['cancel'])) {
 		$_config['latex_server'] = $_config_defaults['latex_server'];
 		$_config['use_captcha'] = $_config_defaults['use_captcha'];
 		$_config['pref_defaults'] = $_config_defaults['pref_defaults'];
+                /* Command template*/
+                $_config['enable_template']  = $_config_defaults['enable_template'];           
+                $_config['enable_template_layout']  = $_config_defaults['enable_template'];  
+                $_config['enable_template_page']  = $_config_defaults['enable_template'];  
+                $_config['enable_template_structure']  = $_config_defaults['enable_template'];  
 		
 	}
 		
