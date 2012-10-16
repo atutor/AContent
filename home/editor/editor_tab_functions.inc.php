@@ -28,6 +28,38 @@ function in_array_cin($strItem, $arItems)
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
+
+/* Check if the page template_layout and are enabled or disabled */
+        include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+        $dao = new DAO();
+        
+        $inc=0; 
+        $tabs[$inc] = array('content',       		'edit.inc.php',          'n');
+        
+        $sql="SELECT value FROM ".TABLE_PREFIX."config WHERE name='enable_template_layout'";
+        $result=$dao->execute($sql);
+        if(is_array($result))
+        {
+            foreach ($result as $support) {
+                if($support['value']==TR_STATUS_ENABLED)
+                    $tabs[++$inc] = array('layout', 'layout.inc.php', 'l');
+            }  
+        }
+        $sql="SELECT value FROM ".TABLE_PREFIX."config WHERE name='enable_template_page'";
+        $result=$dao->execute($sql);
+        if(is_array($result))
+        {
+            foreach ($result as $support) {
+                if($support['value']==TR_STATUS_ENABLED)
+                    $tabs[++$inc] = array('page_template', 'page_template.inc.php', 'g');
+            }  
+        }
+
+	$tabs[++$inc] = array('metadata',    		'properties.inc.php',    'p');
+	$tabs[++$inc] = array('alternative_content', 'alternatives.inc.php',  'a');	
+	$tabs[++$inc] = array('tests',               'tests.inc.php',         't');
+
+   /* DEFAULT IS TO PROF
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
         $tabs[1] = array('layout', 'layout.inc.php', 'l');
         $tabs[2] = array('page_template', 'page_template.inc.php', 'g');
@@ -36,8 +68,10 @@ function get_tabs() {
 	$tabs[5] = array('tests',               'tests.inc.php',         't');
 	//catia
 	//$tabs[4] = array('forums', '');
-	
-	
+    * 
+    * END DEFAULT
+    */
+
 	return $tabs;
 }
 
