@@ -70,6 +70,39 @@ if (isset($_POST['cancel'])) {
 			$_config['illegal_extentions'] = $addslashes($_POST['illegal_extentions']);
 			$_config['latex_server'] = $addslashes($_POST['latex_server']);
 			$_config['use_captcha'] = $_POST['use_captcha'];
+                        
+                        /* Inserting commands for the three checkboxes that manage the choice of template */                        
+                        $_config['enable_template']  = $_POST['enable_template'];
+                        if( $_POST['enable_template'] == TR_STATUS_ENABLED){
+                            $_config['enable_template_layout']  = $_POST['enable_template'];
+                            $_config['enable_template_page']  =$_POST['enable_template'];
+                            $_config['enable_template_structure']  = $_POST['enable_template'];     
+                        }elseif($_POST['enable_template']== TR_STATUS_DISABLED){
+                            $_config['enable_template_layout']  =$_POST['enable_template'];
+                            $_config['enable_template_page']  = $_POST['enable_template'];
+                            $_config['enable_template_structure']  =$_POST['enable_template'];
+                        }else{
+                            if($_POST['enable_template_layout']==TR_STATUS_ENABLED)
+                            {
+                                $_config['enable_template_layout'] = $_POST['enable_template_layout'];
+                                $_POST['enable_template_layout']=TR_STATUS_ENABLED;
+                            }
+                            else
+                                $_config['enable_template_layout'] = TR_STATUS_DISABLED;
+
+                            if($_POST['enable_template_page']==TR_STATUS_ENABLED)
+                            {
+                                $_config['enable_template_page'] = $_POST['enable_template_page'];
+                                $_POST['enable_template_page']=TR_STATUS_ENABLED;
+                            }
+                            else
+                                $_config['enable_template_page'] = TR_STATUS_DISABLED;
+
+                            if($_POST['enable_template_structure']==TR_STATUS_ENABLED)
+                                $_config['enable_template_structure'] = $_POST['enable_template_structure'];
+                            else
+                                $_config['enable_template_structure'] = TR_STATUS_DISABLED;  
+                        }  
 			
 		}
 		
