@@ -44,7 +44,7 @@ $layout_list	= $layout->getLayoutList();
 
 
 // call the function that creates the graphics module layout selection
-$resArray	= $layout->createUI($layout_list);
+$output = $layout->createUI($layout_list);
 
 // array containing the current contents (text, header, bit that indicates that the header is included)
 $content	= getContent($contentDAO, $cid);
@@ -95,7 +95,6 @@ else
 
 echo '</p>';
 
-$output		= $resArray;
 
 if ($output == '') {
 	$output = _AT('none_found');

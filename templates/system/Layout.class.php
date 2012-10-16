@@ -196,18 +196,47 @@
 			//$ui		.= '<select name="layout_list" id="layout_list">';
 			
 			// put all the available layout into the dropdown menu
-			foreach($layout_list as $tname => $tval){
+			/*
                                 
                                 $ui .= '<span>'; 
                                 $ui .= '<input type="checkbox" name="'.$tname.'" value="'.$tval['name'].'">'.$tval['name'].'<br>';
 				$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';
-                                /*$ui	.= '<option value="'.$tname.'">';
-					$ui	.= $tval['name'];
-				$ui	.= '</option>';*/
+                               
                                 $ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
                                 $ui .= '</span>'; 
-			}
-			
+			}*/
+                        $ui .= '<table class="data" rules="cols" summary="">';
+                        $ui .= '<thead>
+                                <tr>
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Icone</th>
+                                </tr>
+                                </thead>';
+          
+                        $ui .= '<tbody>';
+                        foreach($layout_list as $tname => $tval){
+                            $ui .= '<tr>';
+                            
+                            $ui .= '<td><input type="checkbox" name="'.$tval['short_nsme'].'" value="'.$tval['short_name'].'"></td>';
+			    //$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';
+                               
+                            //$ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
+                            $ui .= '<td>'.$tval['name'].'</td>';
+                            $ui .= '<td>'.$tval['description'].'</td>';
+                            $ui .= '<td><img src="'.TR_BASE_HREF.'/templates/page_template/'.$tval['short_name'].'" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></td>';
+                            
+                            $ui .= '</tr>'; 
+
+                            
+                            
+                            
+                        }
+			$ui .= '</tbody>';
+                        
+                        $ui .= '</table>';
+                        
 			//$ui		.= '</select>';
 			$ui .= '</div>';
 			// fine select
