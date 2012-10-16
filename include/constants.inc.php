@@ -52,6 +52,7 @@ define('TR_STATUS_DISABLED', 0);
 define('TR_STATUS_ENABLED', 1);
 define('TR_STATUS_DEFAULT', 2);
 define('TR_STATUS_UNCONFIRMED', 3);
+define('TR_STATUS_PERSONAL', 4);
 
 // User role
 define('TR_USERROLE_AUTHOR', 1);
