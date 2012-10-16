@@ -34,7 +34,6 @@ $onload = 'document.form.site_name.focus();';
 
 require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
-
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 
 <div class="input-form">
@@ -126,13 +125,62 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 			<td align="left"><label for="latex_server"><?php echo _AT('latex_server'); ?></label>:</td>
 			<td align="left"><input id="latex_server" name="latex_server" size="50" type="text" value="<?php if (isset($_POST['latex_server'])) echo stripslashes(htmlspecialchars($_POST['latex_server'])); else echo stripslashes(htmlspecialchars($this->config['latex_server'])); ?>" /></td>
 		</tr>
+                
+<!--
+     Inserting a new radio button to enable or disable make the three template
+     Layout / Page / Structure
+-->
+<!-- RADIO BUTTON FOR THE SETTING OF ALL THREE TEMPLATE -->
+                <tr>
+                    <td aling="left"><label for="enable_template"><?php echo _AT('enable_template'); ?></label></td>
+                    <td aling="left">
+                        <input type="radio" onClick="show('all');" name="enable_template" id="statusD" value="<?php echo TR_STATUS_DISABLED; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_DISABLED) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_DISABLED)) echo 'checked="checked"'; ?> /><label for="statusD"><?php echo _AT('disabled'); ?></label> 
+                        <input type="radio" onClick="show('all');" name="enable_template" id="statusE" value="<?php echo TR_STATUS_ENABLED; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_ENABLED) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_ENABLED)) echo 'checked="checked"'; ?> /><label for="statusE"><?php echo _AT('enabled'); ?></label>	        
+                        <input type="radio" onClick="show('personal');" name="enable_template" id="e_p" value="<?php echo TR_STATUS_PERSONAL; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_PERSONAL) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_PERSONAL)) echo 'checked="checked"'; ?> /><label for="statusD"><?php echo _AT('personal_setting'); ?></label> 
+                    </td>         
+                </tr>
+
+                <tr>
+			<td align="left" colspan="2">
+				<small>&middot; <?php echo _AT('default_use_template'); ?></small>
+			</td>
+		</tr>
+
+                <INPUT TYPE="hidden" name="nascosto" id="hidden" 
+                value="<?php if($_POST['enable_template']==TR_STATUS_PERSONAL) echo TR_STATUS_PERSONAL; ?>">
+                </input>
+                
+                <script language="javascript" type="text/javascript">
+                    function show(val){
+                        if(val=="all"){
+                            document.getElementById('check_template').style.display='none';
+                            document.getElementById('label_enable').style.display='none';
+                            
+                        }
+                        else{
+                            document.getElementById('check_template').style.display='inline';
+                            document.getElementById('label_enable').style.display='inline';
+                        }
+                    }    
+                 </script>
+
+                <tr>
+                    <td aling="left"><label id="label_enable" <?php if((isset($_POST['enable_template']) && $_POST['enable_template']== TR_STATUS_PERSONAL) || (!isset($_POST['enable_template'])&& $this->config['enable_template']==TR_STATUS_PERSONAL)){ echo 'style="display:inline"';}else{ echo 'style="display:none"';}?> > <?php echo _AT('choice_template'); ?></label></td>
+                    <td aling="left">
+                        <div id="check_template" <?php if((isset($_POST['enable_template']) && $_POST['enable_template']== TR_STATUS_PERSONAL) || (!isset($_POST['enable_template'])&& $this->config['enable_template']==TR_STATUS_PERSONAL)){echo 'style="display:inline"';}else{ echo 'style="display:none"';} ?> >
+                        <input type="checkbox" name="enable_template_layout"  value="<?php echo TR_STATUS_ENABLED; ?>" <?php if((isset($_POST['enable_template_layout']) && $_POST['enable_template_layout']== TR_STATUS_ENABLED) || (!isset($_POST['enable_template_layout'])&& $this->config['enable_template_layout']==TR_STATUS_ENABLED)) echo 'checked="checked"';?>/><label><?php echo _AT('template_layout'); ?></label>
+		        <input type="checkbox" name="enable_template_page"  value="<?php echo TR_STATUS_ENABLED; ?>" <?php if((isset($_POST['enable_template_page']) && $_POST['enable_template_page']== TR_STATUS_ENABLED) || (!isset($_POST['enable_template_page'])&& $this->config['enable_template_page']==TR_STATUS_ENABLED)) echo 'checked="checked"';?>/><label><?php echo _AT('template_page'); ?></label>
+                        <input type="checkbox" name="enable_template_structure"  value="<?php echo TR_STATUS_ENABLED; ?>" <?php if((isset($_POST['enable_template_structure']) && $_POST['enable_template_structure']== TR_STATUS_ENABLED) || (!isset($_POST['enable_template_structure'])&& $this->config['enable_template_structure']==TR_STATUS_ENABLED)) echo 'checked="checked"';?>/><label><?php echo _AT('template_structure'); ?></label>
+                        </div>
+                    </td>         
+                </tr>
 
 		<tr>
 			<td align="left" colspan="2">
 				<small>&middot; <?php echo _AT('latex_server_info'); ?></small>
 			</td>
 		</tr>
-		
+                
 		<tr>
 			<td colspan="2">
 			<p class="submit_button">
