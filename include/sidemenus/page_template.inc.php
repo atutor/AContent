@@ -66,6 +66,7 @@ if($_content_id != "" && $_course_id != "") {
 	
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
+                die('qui '.$content['title']);
 
 		$array = $structManager->getContentByTitle($content['title']);
 		$pageTemplateList = $mod->validatedPageTemplate($array);

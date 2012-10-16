@@ -172,12 +172,12 @@
 					}
 
 					// set the screenshot, if it exists
-					percorso_screenshot = '<?php echo $layout_dir; ?>' + str;
-					immagine			= percorso_screenshot + '/screenshot.png';
+					path_screenshot = '<?php echo $layout_dir; ?>' + str;
+					image			= path_screenshot + '/screenshot.png';
 
 					$.ajax({
 						// check if it exists
-					    url:	immagine,
+					    url:	image,
 					    esiste: false,
 					    type:	'HEAD',
 					    error:
@@ -187,7 +187,7 @@
 					        },
 					    success:
 					        function(){
-					            $('#layoutcreenshot').attr('src', immagine);
+					            $('#layoutcreenshot').attr('src', image);
 					            return;
 							}
 					});
