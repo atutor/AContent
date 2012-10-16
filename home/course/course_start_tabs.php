@@ -13,13 +13,33 @@
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 function get_tabs() {
-	//these are the _AT(x) variable names and their include file
+//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
+    
+    /* DEFAULT PROF
 	$tabs[0] = array('manually',       		'manually.inc.php',          'm');
 	$tabs[1] = array('structure',    		'structure.inc.php',    's');
-        $tabs[2] = array('wizard', 'wizard.inc.php',  'w');	
-	
-	
+        $tabs[2] = array('wizard', 'wizard.inc.php',  'w');
+     */
+
+/* Check whether the template_structure is enabled or disabled */
+        include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+        $dao = new DAO();
+        
+        $inc=0;
+        $tabs[$inc] = array('manually',       		'manually.inc.php',          'm');    
+/* I do not see the tab if the table structure ac_config the value is 0 (disable) */
+        $sql="SELECT value FROM ".TABLE_PREFIX."config WHERE name='enable_template_structure'";
+        $result=$dao->execute($sql);
+        if(is_array($result))
+        {
+            foreach ($result as $support) {
+                if($support['value']==TR_STATUS_ENABLED)
+                    $tabs[++$inc] = array('structure',    		'structure.inc.php',    's');
+            }  
+        }
+        $tabs[++$inc] = array('wizard', 'wizard.inc.php',  'w');
+       
 	return $tabs;
 }
 
