@@ -94,5 +94,5 @@ if (!is_array($structsList) || count($structsList) == 0) {
 
 } ?>
 	
-		
+	
 	

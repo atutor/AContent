@@ -107,7 +107,7 @@
 		
 		function checkPageTemplate($name) {
 			$info = null;
-			$isdir = $this->mod_path['models_dir_int'].$name;
+			$isdir = $this->mod_path['page_template_dir_int'].$name;
 			
 				// checking if the element is a directory
 				if(is_dir($isdir)){
