@@ -14,6 +14,8 @@ define('TR_INCLUDE_PATH', '../include/');
 include(TR_INCLUDE_PATH.'vitals.inc.php');
 include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
 
+redirectNotLoggedinUsers();
+
 if ($_POST['value'] == '')
 {
 	$rtn['status'] = 'fail';
