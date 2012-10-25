@@ -494,6 +494,23 @@ function convertAmp($input){
     return str_replace('&', '&amp;', $input);
 }
 
+
+/**
+ * Redirects user to index.php if user is not loggedin
+ * @param   None
+ * @return  None
+ * @author  Alexey Novak
+ * @date    Oct 5, 2012
+ */
+function redirectNotLoggedinUsers() {
+    if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] < 1) {
+        global $msg;
+        $msg->addError('LOGIN_REQUIRED');
+        header('Location: index.php');
+        exit;
+    }
+}
+
 function query_bit( $bitfield, $bit ) {
 	if (!is_int($bitfield)) {
 		$bitfield = intval($bitfield);
