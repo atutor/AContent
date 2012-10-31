@@ -90,6 +90,20 @@ $starttime = $mtime;
 	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
+	<script type="text/javascript">
+		// check if AContent is into an iframe
+		// if so, include the "iframe" stylesheet to hide header, side menu and footer
+		// The use of another css instead of a media="print" is to keep separate the two objectives: print, iframe.
+		if (top != self){
+			document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_iframe.css" type="text/css" />');
+			jQuery(document).ready(function() {
+				//alert(jQuery(document).height());
+				jQuery("#content_frame", window.parent.document).height(jQuery(document).height());
+				jQuery("#content_frame", window.parent.document).attr('scrolling', 'no');
+				//jQuery("#content_frame").contents().find("body").height()
+			});
+		}
+	</script>
 </head>
 
 <body onload="<?php echo $this->onload; ?>">
