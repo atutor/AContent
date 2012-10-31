@@ -1,37 +1,24 @@
 <?php
-// Modified from http://oauth.googlecode.com/svn/code/php/
-
 // vim: foldmethod=marker
-if (!defined('TR_INCLUDE_PATH')) exit;
 
-require_once(TR_INCLUDE_PATH. 'classes/DAO/OAuthServerConsumersDAO.class.php');
+$OAuth_last_computed_siguature = false;
 
 /* Generic exception class
  */
 /*
 class OAuthException extends Exception {
-  function __construct($exception)
-  {
-  	echo 'error='.urlencode($exception);
-  	exit;
-  }
+  // pass
 }
 */
+
 class OAuthConsumer {
   public $key;
   public $secret;
 
   function __construct($key, $secret, $callback_url=NULL) {
-    // check if the consumer is registered
-  	$oAuthServerConsumersDAO = new OAuthServerConsumersDAO();
-  	$consumer = $oAuthServerConsumersDAO->getByConsumerKeyAndSecret($key, $secret);
-  	
-  	if (!is_array($consumer)) throw new OAuthException('Consumer is not registered.');
-  	else {
-	  	$this->key = $key;
-	    $this->secret = $secret;
-	    $this->callback_url = $callback_url;
-  	}
+    $this->key = $key;
+    $this->secret = $secret;
+    $this->callback_url = $callback_url;
   }
 
   function __toString() {
@@ -82,6 +69,9 @@ class OAuthSignatureMethod_HMAC_SHA1 extends OAuthSignatureMethod {
   }
 
   public function build_signature($request, $consumer, $token) {
+    global $OAuth_last_computed_signature;
+    $OAuth_last_computed_signature = false;
+
     $base_string = $request->get_signature_base_string();
     $request->base_string = $base_string;
 
@@ -93,8 +83,11 @@ class OAuthSignatureMethod_HMAC_SHA1 extends OAuthSignatureMethod {
     $key_parts = OAuthUtil::urlencode_rfc3986($key_parts);
     $key = implode('&', $key_parts);
 
-    return base64_encode(hash_hmac('sha1', $base_string, $key, true));
+    $computed_signature = base64_encode(hash_hmac('sha1', $base_string, $key, true));
+    $OAuth_last_computed_signature = $computed_signature;
+    return $computed_signature;
   }
+
 }
 
 class OAuthSignatureMethod_PLAINTEXT extends OAuthSignatureMethod {
@@ -208,10 +201,14 @@ class OAuthRequest {
     $scheme = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
               ? 'http'
               : 'https';
+    $port = "";
+    if ( $_SERVER['SERVER_PORT'] != "80" && $_SERVER['SERVER_PORT'] != "443" &&
+        strpos(':', $_SERVER['HTTP_HOST']) < 0 ) {
+      $port =  ':' . $_SERVER['SERVER_PORT'] ;
+    }
     @$http_url or $http_url = $scheme .
                               '://' . $_SERVER['HTTP_HOST'] .
-                              ':' .
-                              $_SERVER['SERVER_PORT'] .
+                              $port .
                               $_SERVER['REQUEST_URI'];
     @$http_method or $http_method = $_SERVER['REQUEST_METHOD'];
 
@@ -226,17 +223,18 @@ class OAuthRequest {
       // Parse the query-string to find GET parameters
       $parameters = OAuthUtil::parse_parameters($_SERVER['QUERY_STRING']);
 
-      // It's a POST request of the proper content-type, so parse POST
-      // parameters and add those overriding any duplicates from GET
-      if ($http_method == "POST"
-          && @strstr($request_headers["Content-Type"],
-                     "application/x-www-form-urlencoded")
-          ) {
-        $post_data = OAuthUtil::parse_parameters(
-          file_get_contents(self::$POST_INPUT)
-        );
-        $parameters = array_merge($parameters, $post_data);
+      $ourpost = $_POST;
+      // Deal with magic_quotes
+      // http://www.php.net/manual/en/security.magicquotes.disabling.php
+      if ( get_magic_quotes_gpc() ) {
+         $outpost = array();
+         foreach ($_POST as $k => $v) {
+            $v = stripslashes($v);
+            $ourpost[$k] = $v;
+         }
       }
+     // Add POST Parameters if they exist
+      $parameters = array_merge($parameters, $ourpost);
 
       // We have a Authorization-header with OAuth data. Parse the header
       // and add those overriding any duplicates from GET or POST
@@ -265,6 +263,14 @@ class OAuthRequest {
       $defaults['oauth_token'] = $token->key;
 
     $parameters = array_merge($defaults, $parameters);
+
+    // Parse the query-string to find and add GET parameters
+    $parts = parse_url($http_url);
+    if ( $parts['query'] ) {
+      $qparms = OAuthUtil::parse_parameters($parts['query']);
+      $parameters = array_merge($qparms, $parameters);
+    }
+     
 
     return new OAuthRequest($http_method, $http_url, $parameters);
   }
@@ -438,7 +444,7 @@ class OAuthRequest {
 }
 
 class OAuthServer {
-  protected $timestamp_threshold; // in seconds, five minutes
+  protected $timestamp_threshold = 300; // in seconds, five minutes
   protected $version = 1.0;             // hi blaine
   protected $signature_methods = array();
 
@@ -486,21 +492,20 @@ class OAuthServer {
     // requires authorized request token
     $token = $this->get_token($request, $consumer, "request");
 
+
     $this->check_signature($request, $consumer, $token);
 
-    if ($this->data_store->lookup_authenticate_request_token($token))
-    {
-    	$new_token = $this->data_store->new_access_token($token, $consumer);
-    	return $new_token;
-    }
-    else
-    	throw new OAuthException("User authenticate is not performed.");
+    $new_token = $this->data_store->new_access_token($token, $consumer);
+
+    return $new_token;
   }
 
   /**
    * verify an api call, checks all the parameters
    */
   public function verify_request(&$request) {
+    global $OAuth_last_computed_signature;
+    $OAuth_last_computed_signature = false;
     $this->get_version($request);
     $consumer = $this->get_consumer($request);
     $token = $this->get_token($request, $consumer, "access");
@@ -565,6 +570,7 @@ class OAuthServer {
    */
   private function get_token(&$request, $consumer, $token_type="access") {
     $token_field = @$request->get_parameter('oauth_token');
+    if ( !$token_field) return false;
     $token = $this->data_store->lookup_token(
       $consumer, $token_type, $token_field
     );
@@ -580,14 +586,15 @@ class OAuthServer {
    */
   private function check_signature(&$request, $consumer, $token) {
     // this should probably be in a different method
+    global $OAuth_last_computed_signature;
+    $OAuth_last_computed_signature = false;
+
     $timestamp = @$request->get_parameter('oauth_timestamp');
     $nonce = @$request->get_parameter('oauth_nonce');
-	
-    $this->timestamp_threshold = $this->data_store->lookup_expire_threshold($consumer);
-    
+
     $this->check_timestamp($timestamp);
     $this->check_nonce($consumer, $token, $nonce, $timestamp);
-    
+
     $signature_method = $this->get_signature_method($request);
 
     $signature = $request->get_parameter('oauth_signature');
@@ -599,7 +606,11 @@ class OAuthServer {
     );
 
     if (!$valid_sig) {
-      throw new OAuthException("Invalid signature");
+      $ex_text = "Invalid signature";
+      if ( $OAuth_last_computed_signature ) {
+          $ex_text = $ex_text . " ours= $OAuth_last_computed_signature yours=$signature";
+      }
+      throw new OAuthException($ex_text);
     }
   }
 
@@ -608,9 +619,8 @@ class OAuthServer {
    */
   private function check_timestamp($timestamp) {
     // verify that timestamp is recentish
-    // when threshold is 0, never expire
     $now = time();
-    if ($this->timestamp_threshold <> 0 && $now - $timestamp > $this->timestamp_threshold) {
+    if ($now - $timestamp > $this->timestamp_threshold) {
       throw new OAuthException(
         "Expired timestamp, yours $timestamp, ours $now"
       );
@@ -740,11 +750,11 @@ class OAuthUtil {
   public static function parse_parameters( $input ) {
     if (!isset($input) || !$input) return array();
 
-    $pairs = explode('&', $input);
+    $pairs = split('&', $input);
 
     $parsed_parameters = array();
     foreach ($pairs as $pair) {
-      $split = explode('=', $pair, 2);
+      $split = split('=', $pair, 2);
       $parameter = OAuthUtil::urldecode_rfc3986($split[0]);
       $value = isset($split[1]) ? OAuthUtil::urldecode_rfc3986($split[1]) : '';
 
