@@ -1,4 +1,5 @@
 <?php
+        global $lay;
 
 	class Layout{
 
@@ -24,7 +25,7 @@
 		private $content_id	= '';
 		private $course_id	= '';
 		private $uniq		= 'templates';
-
+                
 		// folders and documents to be excluded from the list of the layout
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
@@ -39,23 +40,29 @@
 		 */
 
 		public function __construct($mod_path){
-
 			global $_course_id, $_content_id;
 
 			/* content id of an optional chapter */
 			$this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
 			$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
-
+/* OLD VERSION
 			if(isset($_POST['layout_list'], $_POST['apply_layout_to_course']))
 				$this->applyLayoutToCourse();
 			elseif(isset($_POST['layout_list'], $_POST['apply_layout_to_content']))
 				$this->applyLayoutToContent();
-
+*/
+//New
+     
+                        if(isset($_POST['apply_layout_to_course']))
+				$this->applyLayoutToCourse();
+			elseif(isset($_POST['apply_layout_to_content']))
+				$this->applyLayoutToContent();
+                        
 			$this->mod_path		= $mod_path;
 
 			if($this->mod_path != '')
 				$this->config		= parse_ini_file($this->mod_path['syspath'].'config.ini');
-
+                      
 			return;
 		}
 
@@ -165,16 +172,7 @@
 		
 			return $layouts;
 		}
-
-
-                
-                
-                
-                
-                
-                
-                
-                
+    
 		/*
 		 * 	The following function provides for the generation of a form
 		 *	to graphically show the user the list of available layout.
@@ -184,27 +182,16 @@
 		 *	output:	none 
 		 * */
 
-                public function createUI($layout_list){
-
+                public function createUI($layout_list,$_content_id){
+                    
+                        $IDcontent=$_content_id;
+                    
 			$ui		= '';
-		
 			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
 		
 			// select
                         $ui             .= '<div style="margin: 10px;">';
-			$ui		.= '<p>'._AT('layout_select').'</p>';
-			//$ui		.= '<select name="layout_list" id="layout_list">';
-			
-			// put all the available layout into the dropdown menu
-			/*
-                                
-                                $ui .= '<span>'; 
-                                $ui .= '<input type="checkbox" name="'.$tname.'" value="'.$tval['name'].'">'.$tval['name'].'<br>';
-				$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';
-                               
-                                $ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
-                                $ui .= '</span>'; 
-			}*/
+		
                         $ui .= '<table class="data" rules="cols" summary="">';
                         $ui .= '<thead>
                                 <tr>
@@ -214,115 +201,87 @@
                                 <th scope="col">Icone</th>
                                 </tr>
                                 </thead>';
-          
+         
                         $ui .= '<tbody>';
+                        $ui .= '<tr>';
+                        $ui .= '<td id="radio_nothing" name="'.$_content_id.'" title="nothing"><input id="radio_nothing" type="radio" name="radio_layout" value=""></td>';
+                        $ui .= '<td>Nothing</td>';
+                        $ui .= '<td>Without layout</td>';
+                       
+                        $ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" title="Nothing Screenshot" id="layoutscreenshot"  /></td></div>';       
+                        $ui .= '</tr>'; 
+                        $ui .= '</tr>';
+                        
                         foreach($layout_list as $tname => $tval){
-                            $ui .= '<tr>';
+                           // $ui .= '<div id="radio">';
                             
-                            $ui .= '<td><input type="checkbox" name="'.$tval['short_nsme'].'" value="'.$tval['short_name'].'"></td>';
-			    //$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';
-                               
+                            
+                            // MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
+                   $ui .= '<tr>';
+  $ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
+      <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
+          </td>';
+
+   /*                         //title="'.$tname.'" name="'.$_content_id.'"
+                            $ui .= '<tr>';
+                            $ui .= '<td>
+                                
+      <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
+          </td>';*/
+                            
+                            //$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';          
                             //$ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
                             $ui .= '<td>'.$tval['name'].'</td>';
                             $ui .= '<td>'.$tval['description'].'</td>';
-                            $ui .= '<td><img src="'.TR_BASE_HREF.'/templates/page_template/'.$tval['short_name'].'" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></td>';
-                            
-                            $ui .= '</tr>'; 
-
-                            
-                            
-                            
+// my edits(ceppini matteo)  prof--> $ui .= '<td><img src="'.TR_BASE_HREF.'/templates/page_template/'.$tval['short_name'].'" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></td>';
+                            if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
+                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '</tr>'; 
+                            }elseif($tname != unibo){
+                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '</tr>'; 
+                            }else{
+                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '</tr>'; 
+                            }
+                           // $ui .='</div>';
                         }
+                        
 			$ui .= '</tbody>';
                         
                         $ui .= '</table>';
                         
 			//$ui		.= '</select>';
 			$ui .= '</div>';
-			// fine select
+			// end select
 			
+                        $ui .= '<div id="content">';
+                        
+                        $ui .= '</div>';
+                        
+                        
 			$ui		.= '<div>';
 		
-			$ui		.= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
-		
-                       /* if($this->config['apply_to_the_lesson'] == 0)
-				$display = 'display:none';*/
-
-			$ui		.= '<div><input type="submit" style="'.$display.'" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" /></div>';
+			$ui		.= '<div><input type="submit" style="width:250px;" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" /></div>';
 		
 			$ui		.= '</div>';
-                        
-                        
-			$ui		.= '<div><input type="submit" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" /></div>';
+                        // Spacing of the buttons
+                        $ui .='<div style="padding:5px;"></div>';
+			$ui		.= '<div><input type="submit" style="width:250px;" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" /></div>';
 
-			// add this option only if you have set it
-			
-			
-			$ui		.= '</form>';
-			
-			$ui		.= '<noscript><div>'._AT('no_js').'</div></noscript>';
-		
+			$ui	.= '</form>';  
+	              
+                           	
+        
+			$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
+                
+                          
+                        
+                        //$ui .='<script type="text/javascript" src="/AContent/templates/system/Layout_new.js"></script>';
+                        
 			return $ui;
 		}
                 
-		/*public function createUI($layout_list){
-
-			$ui		= '';
-		
-			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
-		
-			// select
-		
-			$ui		.= '<label for="layout_list">'._AT('layout_select').'</label>';
-			$ui		.= '<select name="layout_list" id="layout_list">';
-		
-			// default option (null)
-			$ui		.= '<option selected="selected">';
-			$ui		.= ' - ';
-			$ui		.= '</option>';
-			
-			// put all the available layout into the dropdown menu
-			foreach($layout_list as $tname => $tval){
-		
-				$ui	.= '<option value="'.$tname.'">';
-					$ui	.= $tval['name'];
-				$ui	.= '</option>';
-			
-			}
-			
-			$ui		.= '</select>';
-			
-			// fine select
-			
-			$ui		.= '<div>';
-		
-			$ui		.= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
-		
-                        if($this->config['apply_to_the_lesson'] == 0)
-				$display = 'display:none';
-
-			$ui		.= '<div><input type="submit" style="'.$display.'" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" /></div>';
-		
-			$ui		.= '</div>';
-                        
-                        
-			$ui		.= '<div><input type="submit" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" /></div>';
-
-			// add this option only if you have set it
-			
-			
-			$ui		.= '</form>';
-			
-			$ui		.= '<noscript><div>'._AT('no_js').'</div></noscript>';
-		
-			return $ui;
-		}*/
-
-
-		/*
-		 *
-		 */
-
 		private function applyLayoutToCourse(){
 
 			define("TR_INCLUDE_PATH", "../../include/");
@@ -330,8 +289,7 @@
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
-			$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
-
+/* OLD VERSION 		$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
 			// layout reset
 			if($selected_layout == '-'){
 				$layout_name		= '';
@@ -339,7 +297,7 @@
 				// new layout
 				$layout_name		= $selected_layout;
 			}
-
+                        */
 
 			$contentDAO = new ContentDAO();
 
@@ -371,7 +329,12 @@
 	
 				// clean up the text from the tag
 				$text    = $this->clearContent($text);
-	
+                                
+                                // insert the value entered by the user in the radio button to choose
+                                $layout_name=$_POST['radio_layout'];
+                             // $layout_name=$_POST[''.$_content_id.''];  
+                                
+                                
 				// write on db
 				$contentDAO->UpdateField($cid, 'text', $text);
 				$contentDAO->UpdateField($cid, 'layout', $layout_name);
@@ -389,23 +352,12 @@
 		 */
 
 		private function applyLayoutToContent(){
-
 			define("TR_INCLUDE_PATH", "../../include/");
 
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 			$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
-
-			// layout reset
-			if($selected_layout == '-'){
-				$layout_name		= '';
-			}else{
-				// new layout
-				$layout_name		= $selected_layout;
-			}
-
-
 
 			$contentDAO = new ContentDAO();
 
@@ -429,9 +381,15 @@
 			// clean up the text from <div id="dnd" and add it:
 			// it does not mean that all classes have the tag,
 			// then, take it off to all the add it again (more safe even if most "expensive")
-
+       
 			// clean up the text from the tag
 			$text		= $this->clearContent($text);
+
+                        // insert the value entered by the user in the radio button to choose
+                        $layout_name= $_POST['radio_layout'];
+                       
+                       // echo "layouT:";
+                    //    echo $_POST['radio_layout'];
 
 			// write on db
 			$contentDAO->UpdateField($this->content_id, 'text', $text);
@@ -471,7 +429,32 @@
 			// JUMP
 			return $text;		
 		}
+                
+                public function content_text($cid){
+                    
+                        define("TR_INCLUDE_PATH", "../../include/");
+			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+                    
+                        $contentDAO = new ContentDAO();
+                        
+                        $sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+                        $result=$contentDAO->execute($sql);
+                        if(is_array($result))
+                        {
 
+                            foreach ($result as $support) {
+                               //echo $support['head']; //CORRETTO RESTITUISCE IL VALORE DEL LAYOUT SCELTO
+                               $text=$support['text'];
+                               break;
+                            }  
+                        }    
+                        
+
+                        return $text;
+                }
+                
+                
 		public function appendStyle($rows, $zipfile, $_content_id = ''){
 
 			// $_content_id		determinates if packing the lesson or the entire course
@@ -484,7 +467,7 @@
 
 				if($rows[$i]['layout'] != ''){
 					// In another version, AContent requires 'commoncartridge' as folder
-					$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
+//					$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 					//$rows[$i]['head']					= '<link rel="stylesheet" href="'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 					$rows[$i]['use_customized_head']	= '1';
 
