@@ -38,17 +38,26 @@
 		 */
 
 		public function __construct($mod_path){
-
+//echo "entra in construct";
 			global $_course_id, $_content_id;
-
+                        
 			/* content id of an optional chapter */
 			$this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
 			$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
-
+                       
 			//
-			if(isset($_POST['cid'], $_POST['action'], $_POST['text']) AND htmlentities($_POST['action']) == 'savePageTemplateContent'){
+			if(isset($_POST['cid'], $_POST['text'])){
+                            echo "entra";
 				$this->applyPageTemplateToContent();
 			}
+                     
+                        // prova 30/10/2012
+                        if(isset($_POST['save_page_templates']))
+                        {
+                            echo "click salva";
+                            $this->applyPageTemplateToContent();
+                        }
+                        
 
 			$this->mod_path		= $mod_path;
 
@@ -56,15 +65,131 @@
 				$this->config		= parse_ini_file($this->mod_path['syspath'].'config.ini');
 
 			return;
-		}
+		}              
+     
+                public function view_page_templates($whit_content)
+                {	         
+                    $this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
+		    $this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
+                    
+                    $template="templates";
 
-		/*
+                    if(isset($_POST['activate_page_template_php'])){
+                        // form if using save as button                        
+                        echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="prova" method="post" style="display: none" onsubmit="return false">';
+
+                        //05/11/2012
+                        // this gets the cid value from the hidden field added to createUI()
+                        $cid = $_POST['value_cid'];
+
+                        // added css for labels that become buttons       
+                        echo '<link rel="stylesheet" type="text/css" href="/AContent/themes/default/forms.css">';
+                                
+                        echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+
+                        echo '<li id="deactivate_page_template" style="display: inline;">';
+                        echo '<label style="margin-right:61px; margin-left:2px;">'._AT('label_deactivate_page_template').'</label>';
+                        echo '<label class="label_button">'._AT('deactivate_page_template').'</label>';
+                        echo '</li>';
+                        
+                        echo '<li id="activate_page_template" style="display: none;">';
+                        echo '<label style="margin-right:34px; margin-left:2px;">'._AT('label_active_page_template').'</label>';
+                        echo '<label class="label_button">'._AT('activate_page_template').'</label>';
+                        echo '</li>';
+                        
+                        // display the button if there is only arrange content
+                        if($whit_content!=0){
+                            echo '<li id="orderPageTemplate" style="display: inline;">';
+                            echo '<div style="padding:5px;"></div>';
+                            echo '<label style="margin-right:20px; padding-left:2px; padding-right:3px;">'._AT('label_arrange_page_template').'</label>';
+                                echo '<label class="label_button">'._AT('arrange_page_template').'</label>';
+                            echo '</li>';
+                          //  echo '<div style="padding:5px;"></div>';
+
+                        }else{
+                            
+                            echo '<li id="orderPageTemplate" style="display: none;">';
+                            echo '<div style="padding:5px;"></div>';
+                            echo '<label style="margin-right:20px; padding-left:2px; padding-right:3px;">'._AT('label_arrange_page_template').'</label>';
+                                echo '<label class="label_button">'._AT('arrange_page_template').'</label>';
+                            echo '</li>';
+                            //echo '<div style="padding:5px;"></div>';
+                      }
+                       
+                        echo '<div style="padding:5px;"></div>';
+                        
+                        //  code for save (LABEL by DEFAULT /// this also code for the button)
+                        echo '<li id="savePageTemplate" style="display: inline;" name="'.$cid.'">';
+                            echo '<label id="label_save" name="'.$_SERVER['REQUEST_URI'].'" style="margin-right:61px; margin-left:2px;">'._AT('label_save_page_template').'</label>';
+                         echo '<label class="label_button">'._AT('save').'</label>';
+                        // BUTTON   echo '<input type="submit" value="save" id="save_page_templates" name="save_page_templates" />';
+                        echo '</li>';                          
+                        echo '</div>';
+                 
+
+                        echo '<script type="text/javascript" src="/AContent/templates/system/Page_template_new.js"></script>';
+                        $pageTemplateList=$this->getPageTemplateList();
+                        echo '<link rel="stylesheet" href="/AContent/templates/system/page_template.css" type="text/css" />';
+                        // avoid the input when the array is empty
+                        if($pageTemplateList != null){
+                       
+                        echo '<div class="boxTotal">';    
+                            echo '<div class="boxPageTemplate" style="display: block;" >';
+                            echo '<ul>';
+                            foreach ($pageTemplateList as $key => $value)
+                            {
+                                echo '<li>';              
+                                         echo '<table id="'.$key.'" >';
+                                                echo '<tr>';
+                                                    echo '<td>';
+                                                        echo '<img style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="ERRORE img" />';
+                                                    echo '</td>';
+                                                echo '</tr>';
+                                                echo '<tr>';
+                                                    echo '<td class="desc">';
+                                                        echo $value['name'];
+                                                    echo '</td>';
+                                                echo '</tr>';
+                                    echo '</table>';
+                                echo '</li>';  
+                                           
+                            }
+                            echo '</ul>';
+                            echo '</div>'; // div boxPageTemplate  
+                            // two button PASTE and COPY
+                            echo '<div class="boxPageTemplateTool">';
+                                echo '<ul>';
+                                echo '</ul>';
+
+                                echo '<ul>';
+                                    echo '<li id="pageTemplatePaste" style="display: none;">';
+                                        echo '<img alt="error paste" title="paste" src="/AContent/templates/system/paste.png">';
+                                        echo _AT('paste_page_template');
+                                    echo '</li>';
+                                    echo '<li id="pageTemplateCopy">';
+                                        echo '<img alt="error copy" title="copy" src="/AContent/templates/system/copy.png">';
+                                        echo _AT('copy_page_template');
+                                    echo '</li>';
+                                echo '</ul>';
+                            echo '</div>';
+                     echo '</div>'; // div boxTotal
+
+                     echo '<div id="content-text">';
+
+                     echo '</div>';
+                     echo '</form>';
+                  }  
+            }
+          }
+         
+ /*
 		 * Open the configuration file reading the parameters
 		 * input:	none
 		 * output:	none
 		 * 
 		 * */
 
+        
 		public function getConfig(){
 			return $this->config;
 		}
@@ -77,7 +202,6 @@
 		 * */
 
 		public function getPageTemplateList(){
-
 			$page_template_list	= array();
 			$dir			= array();
 
@@ -91,6 +215,7 @@
 
 			// call the function that validates the available themes
 			$page_template_list	= $this->validatedPageTemplate($dir);
+
 			return $page_template_list;
 		}
 
@@ -107,10 +232,10 @@
 		
 		function checkPageTemplate($name) {
 			$info = null;
-			$isdir = $this->mod_path['models_dir_int'].$name;
-			
+			$isdir = $this->mod_path['page_template_dir_int'].$name;
 				// checking if the element is a directory
 				if(is_dir($isdir)){
+                                   // echo "is_dir";
 					// check if exists the .info file and parse it
 					$xml_file = $isdir.'/page_template.xml';
 					if(is_file($xml_file)) {
@@ -156,12 +281,7 @@
 						// put the info of the current model into an array
 						//$modelli[$item] = $info;
 					}
-				}
-			
-			/*echo("qui");
-			foreach ($info as $key=>$value) {
-				echo ("a ".$key ." b ". $value);
-			}*/
+				}			
 			return $info;
 		}
 		
@@ -184,7 +304,6 @@
 			foreach($dir as $item)  {				
 				
                             $page_template[$item] = $this->checkPageTemplate($item);
-                            
                         }
 				
 			return $page_template;
@@ -200,37 +319,91 @@
 		 *	output:	none 
 		 * */
 
-		public function createUI(){
+public function createUI($sup,$cid){
+                    		
+			$ui = '';
+	/* old version	//style="display: none"
+			$ui .= '<form id="templates" action="'.$_SERVER['REQUEST_URI'].'" style="display: none" onsubmit="return false" method="post" id="page_template_box"  >';
 
-			
-			$ui		= '';
-			//style="display: none"
-			$ui		.= '<form action="" onsubmit="return false" method="post" id="page_template_box"  >';
+			$ui .= '<div>';
 
-			$ui		.= '<div>';
-
-			$ui		.= '<div><input type="checkbox" value="'._AT('activate_page_template').'" id="activate_page_template" />';
-			$ui		.= '<label for="activate_page_template"> '._AT('activate_page_template').'</label></div>';
+			$ui .= '<div><input type="checkbox" value="'._AT('activate_page_template').'" id="activate_page_template" />';
+			$ui .= '<label for="activate_page_template"> '._AT('activate_page_template').'</label></div>';
 	
-			$ui		.= '<div><input type="checkbox" value="'._AT('arrange_page_template').'" id="orderPageTemplate" />';
-			$ui		.= '<label for="orderPageTemplate"> '._AT('arrange_page_template').'</label></div>';
+			$ui .= '<div><input type="checkbox" value="'._AT('arrange_page_template').'" id="orderPageTemplate" />';
+			$ui .= '<label for="orderPageTemplate"> '._AT('arrange_page_template').'</label></div>';
 
-			$ui		.= '</div>';
+			$ui .= '</div>';
 
-			$ui		.= '</form>';
+			$ui .= '</form>';
 
-			$ui		.= '<noscript><div>'._AT('no_js').'</div></noscript>';
+			$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';*/
 		
-			
-			return $ui;
-		}
+   //     mio prima del 25/10/2012                
+                        
+                        $ui .='<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none" onsubmit="return false">';
+                        
+                        $ui .= '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+    
 
+// 05/11/2012 prova modifica grafica 
+                        $ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">Click here to open the preview of all the page templates availables<br>
+                             or make changes to page templates already included</label><br><div style="padding:5px;"></div>
+                            <input type="submit" style="width:250px;" value="Active page template functions" id="activate_page_template_php" name="activate_page_template_php" />';
+                        
+             /*           $ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">'._AT('label_active_page_template').'</label>
+                            <input type="submit" style="width:250px;" value="'._AT('activate_page_template').'" id="activate_page_template_php" name="activate_page_template_php" />';
+                        
+                        
+                        // Spacing of the buttons
+                        $ui .='<div style="padding:3px;"></div>';
+                        
+   // 05/11/2012 prova modifica grafica                   
+                        if($sup!=0){                        
+                        $ui .='<label id="label_arr_page_template_php" style="margin-right:9px;">'._AT('label_arrange_page_template').'</label>
+               <input type="submit" style="width:250px;" value="'._AT('arrange_page_template').'" id="arrange_page_template_php" name="arrange_page_template_php" />';
 
-		private function applyPageTemplateToContent(){
+                        }
+                       $ui .= '</div>'; */
+                       
+                //05/11/2012 inserisco campo nascosto per il passaggio di cid-->content_id
+                       $ui .= '<input name="value_cid" type="hidden" value="'.$cid.'" >';
+                       
+                       $ui .='</form>';
+                        
+                       $ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
 
-			$cid	= htmlentities($_POST['cid']);
-			$text	= $this->textFixPHP($_POST['text']);
+//**********************************************************                        
+       // 25/10/2012        
+        /*
+                        
+   $ui .= '<div style="margin: 10px;">';
+   $ui .= '<script type="text/javascript" src="/AContent/templates/system/PAGE.js"></script>';
+   $ui .= '<label style="margin-right:15px;">'._AT('label_active_page_template').'</label>
+    <label style="width:250px; font-size:bold; color:#000;" id="activate_page_template" name="activate_page_template">'._AT('activate_page_template').'</label>';
+    // Spacing of the buttons
+    $ui .='<div style="padding:3px;"></div>';
+    
+    $ui .='<label style="margin-right:9px;">'._AT('label_arrange_page_template').'</label>
+    <label href="" style="width:250px; font-size:bold; color:#000;" id="arrange_page_template" name="arrange_page_template">'._AT('arrange_page_template').'</label>';
+   */
+			return $ui;                  
+		}		
 
+                private function applyPageTemplateToContent(){
+                    
+                   // echo 'entra in applyPageTemplate';
+                    
+                    
+                    if(isset($_POST['cid']))
+                        
+                        echo $_POST['body_text'];
+			$cid	= htmlentities($_POST['_cid']);
+			$text	= $this->textFixPHP($_POST['body_text']);
+echo $_POST['content-text'];
+                        echo $cid;
+                        echo $text;
+                        
 			if(strlen($text) == 0)
 				return;
 
@@ -245,21 +418,38 @@
 			$contentDAO->UpdateField($cid, "text", $text);
 
 			// page redirect
-			echo '<script type="text/javascript">';
+	/*		echo '<script type="text/javascript">';
 				echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
-			echo '</script>';
+			echo '</script>';*/
 
 			return;
 		}
+                
+                
+                public function applyPageTemplate($cid,$text){
+                    define("TR_INCLUDE_PATH", "../../include/");
+//die("asdasdasdasdsdas");
+			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+
+			$contentDAO = new ContentDAO();
+
+			// write on db
+			$contentDAO->UpdateField($cid, "text", $text);
+
+
+			return;
+
+                }
 
 		public function getpage_templatetructure($pageTemplateID = ''){
 			$struct	= '';
 
-			$file	= '../../templates/page_template/'.$pageTemplateID.'/'.$pageTemplateID.'.html';
+                        $file = '../../templates/page_template/'.$pageTemplateID.'/'.$pageTemplateID.'.html';
 
-			if(file_exists($file))
-				$struct	= file_get_contents($file);
-
+                        if(file_exists($file))   
+                            $struct	= file_get_contents($file);
+                                                    
 			return $struct;
 		}
 
@@ -275,6 +465,13 @@
 		
 			return $text;		
 		}
+                
+                
+                
+                
+                
+                
+               
 
-	}
+	}     
 ?>
