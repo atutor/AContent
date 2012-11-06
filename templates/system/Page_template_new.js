@@ -469,11 +469,11 @@ $('#savePageTemplate').css('display','inline');
               saveChangeInContent(cid);
               // Page redirect
               window.location = server;
-
+              
              });                
                 
                 
-                
+           
                 
                 
                 
@@ -496,12 +496,19 @@ alert(vtext);
 
 //alert(vtext);
 
+  
+    
+    /*alert(cid);
+    alert(vtext);
+    alert(vaction);*/
 
-                        var url ="/AContent/templates/system/AJAX_actions.php";                     
-                        
-                        $.post(url, {cid: vcid, text: vtext, action: vaction}, function(data){});
+
+                    var url ="/AContent/templates/system/AJAX_actions.php";                     
+        setTimeout(function(){$.post(url, {cid: vcid, text: vtext, action: vaction}, function(){});},100);      
+              //   alert($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}));
+              //   
                         //new
-                       // $.post(url,{cid:vcid,text:vtext},function(data){});
+                   //     $.post(url,{cid:vcid,text:vtext},function(data){});
                         
                         
 		}
