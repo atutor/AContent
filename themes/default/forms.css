@@ -8,6 +8,24 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
+label.label_button{
+    background-color:#F0F1FF; 
+   /* padding:3px 6px 3px 6px;*/
+    box-shadow: 0.1em 0.1em 0.2em #999999; 
+    border-radius: 0.3em 0.3em 0.3em 0.3em;          
+    cursor:pointer;
+    
+    padding-bottom: 2px;
+    display:inline-block;
+    text-align: center;
+    width: 190px;
+    height: 18px;
+    
+}
+label.label_button:hover{
+    background-color: #FFDAB9;
+    font-weight:bold; 
+}
 
 div.left-col {
 	width: 65%; 
@@ -16,8 +34,23 @@ div.left-col {
 	min-width:550px;
 	margin-left:auto;
 	margin-right:auto;
-
 }
+
+/* command entry for images in the layout template, user section */
+img.layout_img_big{
+    padding-left:50px;
+    width: 100px;
+    height: 48px;
+}
+img.layout_img_small{
+    padding-left: 77px;
+    width: auto;
+    height: 48px;
+}
+
+
+
+
 
 div.right-col {
 	width: 25%; 
