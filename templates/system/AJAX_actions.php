@@ -37,19 +37,57 @@
 
 	######################################
 	#	page_template
-	######################################
-	
-	if(isset($_POST['cid'], $_POST['action'], $_POST['text']) AND htmlentities($_POST['action']) == 'savePageTemplateContent'){
-
+	######################################      
+//OLD VERSION
+        /*
+if(isset($_POST['cid'], $_POST['action'], $_POST['text']) AND htmlentities($_POST['action']) == 'savePageTemplateContent'){
 		include_once('Page_template.class.php');
 
 		$contentID	= htmlentities($_POST['cid']);
 		$mod		= new Page_template('');
 
-		//$mod->getpage_templatetructure($contentID);
+		$mod->getpage_templatetructure($contentID);
 
 		return;
-	}	
+	}	*/
+// NEW VERSION 31/12/2012
+        //pagetemplate
+        //die($_POST['cid']);
+        
+        // AND htmlentities($_POST['action']) == 'savePageTemplateContent'
+        
+if(isset($_POST['cid'], $_POST['action'], $_POST['text'])){
+        include_once('Page_template.class.php');
+
+        //echo "AJAX scrittura su DB";
+        
+        $contentID	= htmlentities($_POST['cid']);
+        $mod		= new Page_template('');
+        $text = $_POST['text'];
+        
+        $mod->applyPageTemplate($contentID,$text);
+        $m='<p>asdas</p>';
+return $text;
+       // return;
+}
+
+//06/11/2012
+/*
+if(isset($_POST['cid'],$_POST['text'])){
+    include_once('Page_template.class.php');
+
+        echo "AJAX scrittura su DB";
+        
+        $contentID	= htmlentities($_POST['cid']);
+        $mod		= new Page_template('');
+        $text = $_POST['text'];
+        
+        $mod->applyPageTemplate($contentID,$text);
+
+        return;
+    
+}        
+*/
 	
 	
 	
@@ -60,7 +98,7 @@
 	if(isset($_POST['mID'])){
 
 		include_once('Page_template.class.php');
-
+                
 		$pageTempalteID	= htmlentities($_POST['mID']);
 
 		$mod		= new Page_template('');
@@ -71,4 +109,21 @@
 
 		return;
 	}
+        
+        
+        
+        //CM function that extracts content from the db
+        if(isset($_POST['content']))
+        {
+            
+            include_once('Layout.class.php');
+            $cid=$_POST['content'];
+            $con = new Layout('');
+
+            $result=$con->content_text($cid);
+                    
+            echo $result;          
+        }
+        
+        
 ?>
