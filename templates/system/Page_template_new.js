@@ -467,13 +467,18 @@ $('#savePageTemplate').css('display','inline');
                         $('.sortTools').css('visibility','hidden');
 
               saveChangeInContent(cid);
-              // Page redirect
-              window.location = server;
               
+              // Page redirect
+              //alert(server);
+              setTimeout(function(){window.location = server; },1000);
+          
+          ///AContent/home/course/content.php?_cid=6
+            //window.location = "/AContent/home/course/content.php?_cid=6";
+
              });                
                 
                 
-           
+   
                 
                 
                 
@@ -505,7 +510,8 @@ alert(vtext);
 
                     var url ="/AContent/templates/system/AJAX_actions.php";                     
         setTimeout(function(){$.post(url, {cid: vcid, text: vtext, action: vaction}, function(){});},100);      
-              //   alert($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}));
+        //  setTimeout($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}),10)       
+               //  alert($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}));
               //   
                         //new
                    //     $.post(url,{cid:vcid,text:vtext},function(data){});
