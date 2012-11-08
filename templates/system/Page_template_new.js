@@ -150,6 +150,7 @@ $('#label_act_page_template_php').css('display','none');
 ////////////////////////////////////////
 
 		$('#orderPageTemplate').live("click",function(){
+                    $('#success').css('display','none');
                     $('.removePageTemplateTopBar').css('display','inline');
                     $('.sortTools').css('visibility','visible');
                     $('.pageTemplateContent').css('border','1px solid #DDDDDD');                  
@@ -225,6 +226,10 @@ $('#label_act_page_template_php').css('display','none');
 
 		$('.boxPageTemplate li').live("click", function(){
 
+
+
+
+
 			var structure	= "";
                         
                         num_layout_select++;
@@ -245,7 +250,6 @@ $('#label_act_page_template_php').css('display','none');
 ////////////////////////////////////////
 
 		$('.removePageTemplate').live("click", function(){
-
 
 			// slideUp effect
 			/*
@@ -270,7 +274,16 @@ $('#label_act_page_template_php').css('display','none');
 
 			page_template.fadeOut(300, function(){
 				page_template.remove();
+                                var supp= $('#content-previous').html();
+                                //alert(supp);
+                                if(supp==''){
+                                    $('#whit-cont').css('display','none');
+                                    $('#whit-cont-pre').css('display','none');
+                                    $('#no-cont-pre').css('display','inline');
+                                }
 			});
+                         
+
 
 		});
 
@@ -305,6 +318,11 @@ $('#label_act_page_template_php').css('display','none');
 
 
  $('#deactivate_page_template').live("click",function(){
+     
+     $('#success').css('display','none');
+     
+     
+     
      // death list page template
      $('.boxTotal').css('display','none');
     // alert(num_layout_select);
@@ -330,6 +348,10 @@ $('#label_act_page_template_php').css('display','none');
 
 
 $('#activate_page_template').live("click",function(){
+    $('#success').css('display','none');
+     //$("#server-msg").css('display','none');
+    
+    
     $('.boxTotal').css('display','inline');
    /* if(num_layout_select>0){
                 $('#orderPageTemplate').css('display','inline');
@@ -468,21 +490,43 @@ $('#savePageTemplate').css('display','inline');
 
               saveChangeInContent(cid);
               
+              $('.unsaved').css('display','none');
+              
+              $('#activate_page_template').css('display','inline');
+     
+              $('#deactivate_page_template').css('display','none');
+                
+              $('.boxTotal').css('display','none');
+              
+              
+              $('#success').css('display','inline');
+                
+           //   var support= createLabelSuccess(); 
+               //alert(support); 
+           //   $("#server-msg").append(createLabelSuccess());
+                
               // Page redirect
-              //alert(server);
-              setTimeout(function(){window.location = server; },1000);
+             // alert(server);
+              setTimeout(function(){window.location = server; },150);
           
-          ///AContent/home/course/content.php?_cid=6
-            //window.location = "/AContent/home/course/content.php?_cid=6";
-
-             });                
-                
-                
+             });
+             
+function createLabelSuccess()
+{
    
+  
+
+label= '<link type="text/css" rel="stylesheet" href="/AContent/themes/default/form.css">';    
+label= label + '<div id="success" style="display:none; ">';
+label= label + '<label  class="success_label">Action completed successfully.</label>';
+label= label + '</div>';
+    
+    
+    
+    return label;
+}
                 
-                
-                
-		
+	
 		function saveChangeInContent(cid){
 		       // /*var url			= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
 			var vcid		= cid;
@@ -494,14 +538,38 @@ $('#savePageTemplate').css('display','inline');
 alert(cont);
 alert("sasassasas")
 alert(vtext);
-   */                     
-                        
-                        if(cont!=null)
+   */        
+             
+                        if(cont!=null){
+                            $('#content-previous').append(vtext);
                             vtext=cont+vtext;
+                        }
+                        else{
+                           // alert("entra"); ok entra
+                         
+                            //content-previous nn esiste
+                            $('#whit-cont-pre').append(vtext);
+                        }
 
-//alert(vtext);
-
-  
+                        
+                         
+                      //  alert(vtext);
+                      
+                        if(vtext!=''){
+                            //alert("entra");
+                            //$('#content-previous').append(vtext);
+                            $('#whit-cont').css('display','none');
+                            $('#whit-cont-pre').css('display','inline');
+                            $('#no-cont').css('display','none');
+                            $('#no-cont-pre').css('display','none');
+                        }else{
+                            $('#whit-cont').css('display','none');
+                            $('#no-cont-pre').css('display','inline');
+                            $('#no-cont').css('display','none');
+                        }
+                            
+                            
+                            $('#content-text').remove();
     
     /*alert(cid);
     alert(vtext);
