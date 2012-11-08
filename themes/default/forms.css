@@ -8,6 +8,21 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
+label.success_label{
+    display:inline-block;
+    text-align: center;
+    background-color: #F2FCF0;
+    border: 1px solid #17B506;
+    border-radius: 0.3em 0.3em 0.3em 0.3em;
+    color: #595241;
+    font-weight: bold;
+    margin-left: 220px;
+    padding: 5px;
+    width: 300px;
+}
+
+
+
 label.label_button{
     background-color:#F0F1FF; 
    /* padding:3px 6px 3px 6px;*/
