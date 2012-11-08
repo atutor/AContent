@@ -36,7 +36,6 @@ $output = '';
 ######################################
 #	Variables declarations / definitions
 ######################################
-
 global $_course_id, $_content_id;
 
 $_course_id		= $course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
@@ -142,11 +141,22 @@ $result=$dao->execute($sql);
     
     // call the function that creates the graphics module selection
     // step content length and the value cid-->content_id
-    $output	= $mod->createUI($sup,$cid); 
+    $output	= $mod->createUI($sup,$cid);
+echo '<link type="text/css" rel="stylesheet" href="/AContent/themes/default/form.css">';    
+echo '<div id="success" style="display:none;">';
+echo '<label  class="success_label">Action completed successfully.</label>';
+echo '</div>';
 
-if($sup==0){ 
+echo '<div id="no-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+echo '<div style="margin-left:10px;"><b>No content</b> associated</div>';
+echo '</div>';
+
+echo '<div id="whit-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+echo '<div style="margin-left:10px;">Content associated:</div></div>';
+
+if($sup<=24){ 
     echo '<div style="margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
-    echo '<b>No content</b> associated';
+    echo '<div id="no-cont"><b>No content</b> associated</div>';
     echo '</div>';
     $whit_content=0;
     $mod->view_page_templates($whit_content);
@@ -154,7 +164,7 @@ if($sup==0){
 else{
     echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$content_layout.'/'.$content_layout.'.css">';
     echo '<div style="margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
-    echo 'Content associated: ';
+    echo '<div id="whit-cont">Content associated: </div>';
     // I insert a new div to try not to lose the old contents in the case of rescue
     echo '<div id="content-previous">';
         echo $content_page;
@@ -164,6 +174,8 @@ else{
     $whit_content=1;
     $mod->view_page_templates($whit_content);
 }
+
+
 
 
 
