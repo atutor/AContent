@@ -1,6 +1,5 @@
 DROP TABLE language_text;
 # Table structure for table 'language_text'
-#
 
 CREATE TABLE `language_text` (
   `language_code` varchar(5) NOT NULL default '',
@@ -855,4 +854,27 @@ INSERT INTO `language_text` (`language_code`, `variable`, `term`, `text`, `revis
 ('en', 'layout', 'layout_content_apply', 'Apply layout to this content', '2011-11-30 00:00:00', 'templates'),
 ('en', 'layout', 'layout_select', 0x53656c6563742061206c61796f757420746f2070726576696577, '2011-11-30 00:00:00', 'templates');
 
+
+INSERT INTO `language_text` VALUES ('en', '_template','enable_template','Allow the use of all templates or make a personal choice:','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','enabled',' Disabled','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','disabled',' Personal setting','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','personal_setting',' Personal setting','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','default_use_template',' Default: Enable','2012-11-09 16:49:00','');
+
+INSERT INTO `language_text` VALUES ('en', '_template','choice_template','Enable:','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','template_layout',' Layout','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','template_page',' Page','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','template_structure',' Structure','2012-11-09 16:49:00','');
+
+INSERT INTO `language_text` VALUES ('en', '_template','label_deactivate_page_template','Disable preview page templates:','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','deactivate_page_template','Deactivate page template','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','label_active_page_template','View a preview of the page template:','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','activate_page_template','Activate page templates','2012-11-09 16:49:00','');
+
+INSERT INTO `language_text` VALUES ('en', '_template','label_arrange_page_template','To change the page template selected:','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','arrange_page_template','Arrange page templates','2012-11-09 16:49:00','');
+
+
+INSERT INTO `language_text` VALUES ('en', '_template','copy_page_template','Copy model sequence','2012-11-09 16:49:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','paste_page_template','Paste model sequence','2012-11-09 16:49:00','');
 
