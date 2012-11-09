@@ -235,6 +235,9 @@
 		function checkPageTemplate($name) {
 			$info = null;
 			$isdir = $this->mod_path['page_template_dir_int'].$name;
+         /*da qui*/               
+
+
 				// checking if the element is a directory
 				if(is_dir($isdir)){
                                    // echo "is_dir";
@@ -402,7 +405,7 @@ public function createUI($sup,$cid){
                         echo $_POST['body_text'];
 			$cid	= htmlentities($_POST['_cid']);
 			$text	= $this->textFixPHP($_POST['body_text']);
-echo $_POST['content-text'];
+//echo $_POST['content-text'];
                         echo $cid;
                         echo $text;
                         
