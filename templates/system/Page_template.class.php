@@ -118,6 +118,8 @@
                        
                         echo '<div style="padding:5px;"></div>';
                         
+                        //echo $_SERVER['REQUEST_URI']; /AContent/home/editor/edit_content.php?_cid=6
+
                         //  code for save (LABEL by DEFAULT /// this also code for the button)
                         echo '<li id="savePageTemplate" style="display: inline;" name="'.$cid.'">';
                             echo '<label id="label_save" name="'.$_SERVER['REQUEST_URI'].'" style="margin-right:61px; margin-left:2px;">'._AT('label_save_page_template').'</label>';
@@ -425,15 +427,25 @@ echo $_POST['content-text'];
 			return;
 		}
                 
-                
-                public function applyPageTemplate($cid,$text){
+             public function control(){
+                 
+                 
+                 
+             }
+
+
+
+
+
+
+             public function applyPageTemplate($cid,$text){
                     define("TR_INCLUDE_PATH", "../../include/");
 //die("asdasdasdasdsdas");
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 			$contentDAO = new ContentDAO();
-
+                        
 			// write on db
 			$contentDAO->UpdateField($cid, "text", $text);
 
@@ -452,7 +464,7 @@ echo $_POST['content-text'];
                                                     
 			return $struct;
 		}
-
+                
 
 		/*
 		 *	exaggeration

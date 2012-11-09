@@ -5,11 +5,11 @@
 	text-align:					justify;
 }
 
-#content h1, #content h2, #content h3,
+#content h1 #content h2, #content h3,
 #content h4, #content h5, #content h6{
 	/*#af0d1a*/
-	
-	color:						#333;				
+
+        color:						#333;				
 	padding:					5px;
 	padding-left:				0px;
 

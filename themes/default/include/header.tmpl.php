@@ -80,8 +80,8 @@ $starttime = $mtime;
 	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
-	<!--[if IE]>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />   
+<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 <?php echo $this->rtl_css; ?>
@@ -331,7 +331,12 @@ foreach ($this->top_level_pages as $page) {
 
       <!-- the page title -->
       <a name="content" title="<?php echo _AT('content'); ?>"></a>
-      <h2 class="page-title"><?php echo $this->page_title; ?></h2>
+
+      <!-- Provo a mettere di default i layout del canada -->
+      <h2 class="page-title"><?php echo $this->page_title;?></h2>
+      
+      
+      
       <div id="server-msg">
       <?php global $msg; $msg->printAll(); ?>
       </div>

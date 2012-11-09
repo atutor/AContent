@@ -1,18 +1,28 @@
 <script type="text/javascript">
 
 	var removePageTemplateTopBar	= '<div class="removePageTemplateTopBar"><div class="removePageTemplate">X</div></div>';
-	var sortTools			= '<div class="sortTools">\
+/* OLD	var sortTools			= '<div class="sortTools">\
 								<img src="<?php echo $templates; ?>system/top.png" class="movePageTemplateTop" alt="move top" />\
 								<img src="<?php echo $templates; ?>system/up.png" class="movePageTemplateUp" alt="move up" />\
 								<img src="<?php echo $templates; ?>system/down.png" class="movePageTemplateDown" alt="move down" />\
 								<img src="<?php echo $templates; ?>system/bottom.png" class="movePageTemplateBottom" alt="move bottom" />\
-								</div>';
+								</div>'; */
+// new 22/10/2012
+var sortTools= '<div class="sortTools"><img src="/AContent/templates/system/top.png" class="movePageTemplateTop" alt="move top" /><img src="/AContent/templates/system/up.png" class="movePageTemplateUp" alt="move up" /><img src="/AContent/templates/system/down.png" class="movePageTemplateDown" alt="move down" /><img src="/AContent/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" /></div>';
+
 
 	$(document).ready(function(){ 
 		
 		// this row allow to show the form just if JS is enabled
 		// il selector depends by the module name (customizable in the language file)
-		var module_name	= "<?php echo _AT('page_template'); ?>";
+//OLD		var module_name	= "<?php echo _AT('page_template'); ?>";
+
+// new
+                <$php $support=_AT('page_template'); ?>
+                var module_name	= '<?php echo $support; ?>';
+
+
+
 		module_name		= module_name.replace(/ /g, '');
 		
 		// if the user is an authenticated author
@@ -57,7 +67,7 @@
 
 		$('#pageTemplateCopy').live("click", function(){
 
-			var allpage_template	= '';
+			var allpage_template = '';
 
 			$('.page_template').each(function(index) {
 				allpage_template = allpage_template + "|" + $(this).attr('class');
@@ -329,6 +339,7 @@
 			
 			// add page_template
 			addPageTemplate(pageTempalteID, 0);
+                       
 
 		});
 
@@ -446,11 +457,12 @@
 
 			page_template = '<table style="width:100%" class="page_template ' + pageTempalteID + '" id="newPageTemplate">';
 				
-				page_template = page_template + '<tr><td>' + removePageTemplateTopBar;
+                        page_template = page_template + '<tr><td>' + removePageTemplateTopBar;
 
-				page_template = page_template + '<tr><td class="pageTemplateContent">' + contenuto + '</tr></td>';
+                        page_template = page_template + '<tr><td class="pageTemplateContent">' + contenuto + '</tr></td>';
 
-			 	page_template = page_template + '<tr><td>' + sortTools + '</tr></td>';
+                        page_template = page_template + '<tr><td>' + sortTools + '</tr></td>';
+                        
 			page_template = page_template + '</table>';
 
 			return page_template;

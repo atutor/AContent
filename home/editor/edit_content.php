@@ -21,9 +21,8 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
+/* In $cid abbiamo il numero della pagina aperta*/
 $cid = $_content_id;
-
-
 $dao = new DAO();
 
 if ($_POST) {
@@ -52,7 +51,7 @@ if ($_POST['close'] || $_GET['close']) {
 	header('Location: '.TR_BASE_HREF.'home/course/content.php?_cid='.$_content_id);
 	exit;
 }
-	
+
 $tabs = get_tabs();	
 $num_tabs = count($tabs);
 for ($i=0; $i < $num_tabs; $i++) {
@@ -105,8 +104,7 @@ if($current_tab == 0) {
     $_custom_head .= '
     <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'include/jscripts/infusion/framework/fss/css/fss-layout.css" />
     <link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'include/jscripts/infusion/framework/fss/css/fss-text.css" />
-    <script type="text/javascript" src="'.$_base_path.'home/editor/js/edit.js"></script>
-    ';
+    <script type="text/javascript" src="'.$_base_path.'home/editor/js/edit.js"></script>';
 }
 
 if ($cid) {
@@ -139,6 +137,7 @@ if ($cid) {
 	}
 }
 
+/* TAB 0 --> Content *//* TAB 2 --> Page */
 if (($current_tab == 0) || ($current_tab == 2)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
@@ -210,8 +209,8 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['body_text']  = $content_row['text'];
 			$_POST['weblink_text'] = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
-			$_POST['test_message'] = $content_row['test_message'];
-
+			$_POST['test_message'] = $content_row['test_message'];                     
+                        
 //			$_POST['day']   = substr($content_row['release_date'], 8, 2);
 //			$_POST['month'] = substr($content_row['release_date'], 5, 2);
 //			$_POST['year']  = substr($content_row['release_date'], 0, 4);
@@ -262,7 +261,11 @@ $pid = intval($_REQUEST['pid']);
         echo '<input type="hidden" name="displayhead" id="displayhead" value="'.AT_print($_POST['displayhead'], 'input.hidden').'" />';
         echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.AT_print($_POST['complexeditor'], 'input.hidden').'" />';
         echo '<input type="hidden" name="formatting" value="'.AT_print($_POST['formatting'], 'input.hidden').'" />';
-	}
+	
+ //echo '<input type="hidden" name="box" value="'.htmlspecialchars($stripslashes($_POST['box'])).'" />';
+        
+        
+        }
 
 	echo '<input type="hidden" name="ordering" value="'.AT_print($_POST['ordering'], 'input.hidden').'" />';
 	echo '<input type="hidden" name="pid" value="'.$pid.'" />';
@@ -396,7 +399,7 @@ $pid = intval($_REQUEST['pid']);
 
 <div class="input-form" style="width: 95%;">
 
-	<?php if ($changes_made): ?>
+<?php if ($changes_made): ?>
 		<div class="unsaved">
 			<span style="color:red;"><?php echo _AT('save_changes_unsaved'); ?></span> 
 			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" style="border: 1px solid red;" /> 
@@ -409,7 +412,9 @@ $pid = intval($_REQUEST['pid']);
 			<?php //if ($cid) { echo _AT('save_changes_saved'); } ?> <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?> alt-s" accesskey="s" class="button"/> <input type="submit" name="close" value="<?php echo _AT('close'); ?>"  class="button"/> <input type="checkbox" style="border:0px;" id="close" name="save_n_close" value="1" <?php if ($_SESSION['save_n_close']) { echo 'checked="checked"'; } ?>/><label for="close"><?php echo _AT('close_after_saving'); ?></label>
 		</div>
 	<?php endif; ?>
-	<?php include('editor_tabs/'.$tabs[$current_tab][1]); ?>
+    
+	<?php include('editor_tabs/'.$tabs[$current_tab][1]); ?>	
+
 </div>
 </form>
 

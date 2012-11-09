@@ -66,9 +66,9 @@ if(isset($_POST['cid'], $_POST['action'], $_POST['text'])){
         $text = $_POST['text'];
         
         $mod->applyPageTemplate($contentID,$text);
-        $m='<p>asdas</p>';
-return $text;
-       // return;
+        //$m='<p>asdas</p>';
+//return $text;
+        return;
 }
 
 //06/11/2012
@@ -86,11 +86,14 @@ if(isset($_POST['cid'],$_POST['text'])){
 
         return;
     
-}        
-*/
+}     */
+if(isset($_POST['control'])){
+    $mod		= new Page_template('');
+    $res		= $mod->control();
+}
+
 	
-	
-	
+		
 	######################################
 	#	Get model internal structure (pure HTML)
 	######################################

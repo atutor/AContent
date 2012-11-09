@@ -112,7 +112,6 @@ include $mod_path['templates_sys'].'Page_template.js';
 
 $savant->assign('title', _AT('page_template'));
 
-
 $savant->assign('dropdown_contents', $output);
 
 $savant->display('include/box.tmpl.php');

@@ -43,12 +43,11 @@ $layout		= new Layout($mod_path);
 $layout_list	= $layout->getLayoutList();
 
 
-// call the function that creates the graphics module layout selection
-$output = $layout->createUI($layout_list);
-
 // array containing the current contents (text, header, bit that indicates that the header is included)
 $content	= getContent($contentDAO, $cid);
 
+// call the function that creates the graphics module layout selection
+$output = $layout->createUI($layout_list,$_content_id);
 ######################################
 #	JQUERY SCRIPT MODULE
 ######################################
@@ -65,8 +64,6 @@ $formatContent	= $content['formatting'];
 $course_id		= $content['course_id'];
 
 $content_layout	= $content['layout'];
-
-
 
 $templates		= TR_BASE_HREF.'templates/';
 $templates_int	= $mod_path['templates_int'];
@@ -86,7 +83,7 @@ include $mod_path['templates_sys'].'Layout.js';
 ######################################
 
 
-echo '<p style="margin: 10px; margin-top: 20px; margin-bottom: 15px;">'; 
+echo '<p style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">'; 
 
 if($content_layout == null) 
     echo '<b>No layout</b> associated to this content';

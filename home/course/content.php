@@ -208,7 +208,6 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	} else {
 		
 		$content = ContentUtility::applyAlternatives($cid, $content_row['text']);
-		
 		if($content == 'null') {
 			if(isset($_current_user) && $_current_user->isAuthor($course_id)) {
 			

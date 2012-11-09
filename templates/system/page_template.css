@@ -1,10 +1,37 @@
 /*########################################
+   Codice per i bottoni paste e copy
+########################################*/
+.boxPageTemplateTool {
+    background: none repeat scroll 0 0 #FFFFFF;
+    text-align: right;
+}
+.boxPageTemplateTool ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 15px 0;
+}
+.boxPageTemplateTool ul li {
+    display: inline;
+    list-style: none outside none;
+    margin: 0;
+    padding: 15px;
+    text-align: right;
+}
+.boxPageTemplateTool ul li:hover {
+    background: none repeat scroll 0 0 #F7F7F7;
+    cursor: pointer;
+}
+.boxPageTemplateTool ul #modelPaste {
+    display: none;
+}
+
+
+/*########################################
 	Box that displays
 	a list of available page_template
 ########################################*/
 
 .boxPageTemplate{
-
 	display:					none;
 	
 	background:					#F7F7F7;

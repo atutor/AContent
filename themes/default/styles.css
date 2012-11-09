@@ -17,6 +17,22 @@
   src: local('Droid Sans'), url('fonts/DroidSans-Bold.ttf') format('truetype');
 }
 
+div.activ_template_page{
+    background-color: #efefef;
+    display: block;
+}
+img.table_template_page{
+    position:relative;
+    width: 80px;
+    height: 90px;
+    padding: 10px;
+}
+img.table_template_page:hover{
+    background-color:white;
+    
+}
+
+
 @font-face {
   font-family: 'Droid Sans';
   font-style: normal;
