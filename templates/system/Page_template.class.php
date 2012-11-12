@@ -38,7 +38,6 @@
 		 */
 
 		public function __construct($mod_path){
-//echo "entra in construct";
 			global $_course_id, $_content_id;
                         
 			/* content id of an optional chapter */
@@ -51,10 +50,9 @@
 				$this->applyPageTemplateToContent();
 			}
                      
-                        // prova 30/10/2012
+                        // test 30/10/2012
                         if(isset($_POST['save_page_templates']))
                         {
-                            echo "click salva";
                             $this->applyPageTemplateToContent();
                         }
                         
@@ -134,74 +132,49 @@
                         $pageTemplateList = array();
                         
                         // NEW 12/11/2012
+   
+                        // Db calls to get the values ​​of the structure and title
+                        define('TR_INCLUDE_PATH', '../../include/');
+                        include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+                        require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+                        require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+                        require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
+                        Utility::authenticate(TR_PRIV_ISAUTHOR);
+                        $dao = new DAO();
 
-/*
-// instantiate the class page_template (which calls the constructor)
-$mod		= new Page_template($mod_path);
+                        $sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+                        $result=$dao->execute($sql);
 
-$user_priv	= $privilegesDAO->getUserPrivileges($_SESSION['user_id']);
-$is_author	= $user_priv[1]['is_author'];*/
+                            if(is_array($result))
+                            {
+                                foreach ($result as $support) {
+                                   $content=$support['structure'];
+                                   break;
+                                }  
+                            }
+                        $sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+                        $result=$dao->execute($sql);
 
-//if($_content_id != "" && $_course_id != "") {
-	
-	//$course = $coursesDAO->get($_course_id);
-    
-    // OLD 12/11/2012
-    
-//	$content = $contentDAO->get($_content_id);
-define('TR_INCLUDE_PATH', '../../include/');
-include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
-require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
-require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
-require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
-Utility::authenticate(TR_PRIV_ISAUTHOR);
-$dao = new DAO();
+                            if(is_array($result))
+                            {
+                                foreach ($result as $support) {
+                                   $title=$support['title'];
+                                   break;
+                                }  
+                            }  
+                                 //echo $content['structure'];              
+                                if($content!='') {
 
-$sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-$result=$dao->execute($sql);
+                                        $structManager = new StructureManager($content);
 
-    if(is_array($result))
-    {
-        foreach ($result as $support) {
-           $content=$support['structure'];
-           break;
-        }  
-    }
-$sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-$result=$dao->execute($sql);
-  
-    if(is_array($result))
-    {
-        foreach ($result as $support) {
-           $title=$support['title'];
-           break;
-        }  
-    }  
-         //echo $content['structure'];              
-	if($content!='') {
-         //   die('if '.$title);  OK --> Contenuto
-         //   die('if '.$content);  OK --> Competenze-Digitali
-          
-		$structManager = new StructureManager($content);
-                
-            //die('SM '.$structManager);    
-                $item=$structManager->getPageTemplatesItem($title);
-		$array = $structManager->getContent($item);
-                //die('assa');   
-               
-		$pageTemplateList = $this->validatedPageTemplate($array);
-			
-	}  else {
-             //die('else '.$content['title']); //ok entra
-		$pageTemplateList = $this->getPageTemplateList();
-		
-	}
-        
-       // die($pageTemplateList); // ARRAY
+                                        $item=$structManager->getPageTemplatesItem($title);
+                                        $array = $structManager->getContent($item);
 
-/*
-}else                        
-    $pageTemplateList=$this->getPageTemplateList();*/
+                                //	$pageTemplateList = $this->validatedPageTemplate($array);
+
+                                }
+
+                        $pageTemplateList = $this->getPageTemplateList();
 
                         echo '<link rel="stylesheet" href="/AContent/templates/system/page_template.css" type="text/css" />';
                         // avoid the input when the array is empty
@@ -212,20 +185,41 @@ $result=$dao->execute($sql);
                             echo '<ul>';
                             foreach ($pageTemplateList as $key => $value)
                             {
-                                echo '<li>';              
-                                         echo '<table id="'.$key.'" >';
-                                                echo '<tr>';
-                                                    echo '<td>';
-                                                        echo '<img style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="ERRORE img" />';
-                                                    echo '</td>';
-                                                echo '</tr>';
-                                                echo '<tr>';
-                                                    echo '<td class="desc">';
-                                                        echo $value['name'];
-                                                    echo '</td>';
-                                                echo '</tr>';
-                                    echo '</table>';
-                                echo '</li>';  
+                                if($content!=''){
+                                    if(in_array($key,$array)){
+                                        echo '<li>';              
+                                             echo '<table id="'.$key.'" >';
+                                                    echo '<tr>';
+                                                        echo '<td>';
+                                                            echo '<img style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="ERRORE img" />';
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                                    echo '<tr>';
+                                                        echo '<td class="desc">';
+                                                            echo $value['name'];
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                        echo '</table>';
+                                    echo '</li>';  
+                                    }
+                                }else{
+                                
+                                
+                                    echo '<li>';              
+                                             echo '<table id="'.$key.'" >';
+                                                    echo '<tr>';
+                                                        echo '<td>';
+                                                            echo '<img style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="ERRORE img" />';
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                                    echo '<tr>';
+                                                        echo '<td class="desc">';
+                                                            echo $value['name'];
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                        echo '</table>';
+                                    echo '</li>';  
+                                }
                                            
                             }
                             echo '</ul>';
@@ -252,7 +246,7 @@ $result=$dao->execute($sql);
 
                      echo '</div>';
                      echo '</form>';
-                  }  
+                 }    
             }
           }
          
@@ -287,6 +281,8 @@ $result=$dao->execute($sql);
 
 			$dir		= array_merge(array(),$dir);
 
+                      //  die($dir);//ARRAY
+                        
 			// call the function that validates the available themes
 			$page_template_list	= $this->validatedPageTemplate($dir);
 
@@ -308,18 +304,19 @@ $result=$dao->execute($sql);
 			$info = null;
 			$isdir = $this->mod_path['page_template_dir_int'].$name;
          /*da qui*/               
-
-
+                        
 				// checking if the element is a directory
 				if(is_dir($isdir)){
-                                   // echo "is_dir";
+                                   // echo "is_dir"; //OK enter
 					// check if exists the .info file and parse it
 					$xml_file = $isdir.'/page_template.xml';
 					if(is_file($xml_file)) {
+                                         //   echo " dentro xml "; OK enter
 						$xml = simplexml_load_file($xml_file);
 						
 						foreach($xml->children() as $child) {
 							$name = $child->getName();
+                                                        //echo "foreach "; 30
 							if($name == "release") 
 								$info['core'] = trim($child->version);
 							else
@@ -358,7 +355,10 @@ $result=$dao->execute($sql);
 						// put the info of the current model into an array
 						//$modelli[$item] = $info;
 					}
-				}			
+				}	
+                              //  echo $info;// ARRAY
+                             //   echo $info['name'];
+                                
 			return $info;
 		}
 		
@@ -378,9 +378,13 @@ $result=$dao->execute($sql);
 			
 			// scan all existing themes
 			$page_template = array();
-			foreach($dir as $item)  {				
-				
+			foreach($dir as $item)  {
+                            
+				//die($item); // plain_text con struttura
+                                                // goals_creative senza struttura
+                            
                             $page_template[$item] = $this->checkPageTemplate($item);
+                            
                         }
 				
 			return $page_template;
