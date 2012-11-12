@@ -62,9 +62,9 @@ $is_author	= $user_priv[1]['is_author'];
 
 $pageTemplateList = array();
 
-/*
+/* //OLD
 if($_content_id != "" && $_course_id != "") {
-	
+/*	
 	//$course = $coursesDAO->get($_course_id);
     
     // OLD 12/11/2012
@@ -93,11 +93,12 @@ if($_content_id != "" && $_course_id != "") {
 		$pageTemplateList = $mod->getPageTemplateList();
 		//die('mat5 '.$pageTemplateList); // mat 5ARRAY
 	}
-
-
 }*/
 
-$content_page	= $content['text'];	           
+// new 12/11/2012
+
+$content_page	= $content['text'];
+
 //}
 
 $templates		= TR_BASE_HREF.'templates/';
@@ -139,6 +140,19 @@ $savant->display('include/box.tmpl.php');
  */
 $content_layout = $content['layout']; // Retrieving the value of the layout
 
+$sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+$result=$dao->execute($sql);
+
+    if(is_array($result))
+    {
+        foreach ($result as $support) {
+           //echo $support['head']; 
+           $layout=$support['layout'];
+           break;
+        }  
+    }
+
+
 $sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
 $result=$dao->execute($sql);
 
@@ -177,12 +191,12 @@ if($sup<=24){
     $mod->view_page_templates($whit_content);
 }
 else{
-    echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$content_layout.'/'.$content_layout.'.css">';
+    echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$layout.'/'.$layout.'.css">';
     echo '<div style="margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
     echo '<div id="whit-cont">Content associated: </div>';
     // I insert a new div to try not to lose the old contents in the case of rescue
     echo '<div id="content-previous">';
-        echo $content_page;
+        echo $text;
     echo '</div>';
     echo'</div>';
     
