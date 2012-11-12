@@ -62,25 +62,40 @@ $is_author	= $user_priv[1]['is_author'];
 
 $pageTemplateList = array();
 
+/*
 if($_content_id != "" && $_course_id != "") {
 	
 	//$course = $coursesDAO->get($_course_id);
+    
+    // OLD 12/11/2012
+    
 	$content = $contentDAO->get($_content_id);
-	
+ 
+	//die('mat'.$content['structure']); competenze digitali
+        //die('mat2'.$content['title']); //contenuto
+ 
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
-                die('qui '.$content['title']);
-
+                //die('qui '.$content['title']);
+                
+               // die('mat3 '.$structManager); // NN COMPARE
+               
 		$array = $structManager->getContentByTitle($content['title']);
+                
+                
+                
+               // die('mat4'.$array); // NN COMPARE
+                
 		$pageTemplateList = $mod->validatedPageTemplate($array);
-			
+		// die('mat5'.$pageTemplateList); // NN COMPARE
+                
 	}  else {
 		$pageTemplateList = $mod->getPageTemplateList();
-		
+		//die('mat5 '.$pageTemplateList); // mat 5ARRAY
 	}
 
 
-}
+}*/
 
 $content_page	= $content['text'];	           
 //}
