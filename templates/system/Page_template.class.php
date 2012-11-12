@@ -130,7 +130,79 @@
                  
 
                         echo '<script type="text/javascript" src="/AContent/templates/system/Page_template_new.js"></script>';
-                        $pageTemplateList=$this->getPageTemplateList();
+                        
+                        $pageTemplateList = array();
+                        
+                        // NEW 12/11/2012
+
+/*
+// instantiate the class page_template (which calls the constructor)
+$mod		= new Page_template($mod_path);
+
+$user_priv	= $privilegesDAO->getUserPrivileges($_SESSION['user_id']);
+$is_author	= $user_priv[1]['is_author'];*/
+
+//if($_content_id != "" && $_course_id != "") {
+	
+	//$course = $coursesDAO->get($_course_id);
+    
+    // OLD 12/11/2012
+    
+//	$content = $contentDAO->get($_content_id);
+define('TR_INCLUDE_PATH', '../../include/');
+include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+$dao = new DAO();
+
+$sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+$result=$dao->execute($sql);
+
+    if(is_array($result))
+    {
+        foreach ($result as $support) {
+           $content=$support['structure'];
+           break;
+        }  
+    }
+$sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+$result=$dao->execute($sql);
+  
+    if(is_array($result))
+    {
+        foreach ($result as $support) {
+           $title=$support['title'];
+           break;
+        }  
+    }  
+         //echo $content['structure'];              
+	if($content!='') {
+         //   die('if '.$title);  OK --> Contenuto
+         //   die('if '.$content);  OK --> Competenze-Digitali
+          
+		$structManager = new StructureManager($content);
+                
+            //die('SM '.$structManager);    
+                $item=$structManager->getPageTemplatesItem($title);
+		$array = $structManager->getContent($item);
+                //die('assa');   
+               
+		$pageTemplateList = $this->validatedPageTemplate($array);
+			
+	}  else {
+             //die('else '.$content['title']); //ok entra
+		$pageTemplateList = $this->getPageTemplateList();
+		
+	}
+        
+       // die($pageTemplateList); // ARRAY
+
+/*
+}else                        
+    $pageTemplateList=$this->getPageTemplateList();*/
+
                         echo '<link rel="stylesheet" href="/AContent/templates/system/page_template.css" type="text/css" />';
                         // avoid the input when the array is empty
                         if($pageTemplateList != null){
@@ -344,14 +416,14 @@ public function createUI($sup,$cid){
 
 			$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';*/
 		
-   //     mio prima del 25/10/2012                
+   //     MC 25/10/2012                
                         
                         $ui .='<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none" onsubmit="return false">';
                         
                         $ui .= '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
     
 
-// 05/11/2012 prova modifica grafica 
+// 05/11/2012 test graphical editing
                         $ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">Click here to open the preview of all the page templates availables<br>
                              or make changes to page templates already included</label><br><div style="padding:5px;"></div>
                             <input type="submit" style="width:250px;" value="Active page template functions" id="activate_page_template_php" name="activate_page_template_php" />';
@@ -363,7 +435,7 @@ public function createUI($sup,$cid){
                         // Spacing of the buttons
                         $ui .='<div style="padding:3px;"></div>';
                         
-   // 05/11/2012 prova modifica grafica                   
+   // 05/11/2012 test graphical editing                  
                         if($sup!=0){                        
                         $ui .='<label id="label_arr_page_template_php" style="margin-right:9px;">'._AT('label_arrange_page_template').'</label>
                <input type="submit" style="width:250px;" value="'._AT('arrange_page_template').'" id="arrange_page_template_php" name="arrange_page_template_php" />';
@@ -371,7 +443,7 @@ public function createUI($sup,$cid){
                         }
                        $ui .= '</div>'; */
                        
-                //05/11/2012 inserisco campo nascosto per il passaggio di cid-->content_id
+                //05/11/2012 I insert hidden field for the passage of cid-->content_id
                        $ui .= '<input name="value_cid" type="hidden" value="'.$cid.'" >';
                        
                        $ui .='</form>';
