@@ -145,34 +145,33 @@
                         $sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
                         $result=$dao->execute($sql);
 
-                            if(is_array($result))
-                            {
-                                foreach ($result as $support) {
-                                   $content=$support['structure'];
-                                   break;
-                                }  
-                            }
+                        if(is_array($result))
+                        {
+                            foreach ($result as $support) {
+                               $content=$support['structure'];
+                               break;
+                            }  
+                        }
                         $sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
                         $result=$dao->execute($sql);
-
-                            if(is_array($result))
-                            {
-                                foreach ($result as $support) {
-                                   $title=$support['title'];
-                                   break;
-                                }  
+                        if(is_array($result))
+                        {
+                            foreach ($result as $support) {
+                               $title=$support['title'];
+                               break;
                             }  
-                                 //echo $content['structure'];              
-                                if($content!='') {
+                        }  
+                        //echo $content['structure'];              
+                        if($content!='') {
+                        // Upload the array of default page template structure
+                                $structManager = new StructureManager($content);
 
-                                        $structManager = new StructureManager($content);
+                                $item=$structManager->getPageTemplatesItem($title);
+                                $array = $structManager->getContent($item);
 
-                                        $item=$structManager->getPageTemplatesItem($title);
-                                        $array = $structManager->getContent($item);
+                        //	$pageTemplateList = $this->validatedPageTemplate($array);
 
-                                //	$pageTemplateList = $this->validatedPageTemplate($array);
-
-                                }
+                        }
 
                         $pageTemplateList = $this->getPageTemplateList();
 
@@ -185,6 +184,8 @@
                             echo '<ul>';
                             foreach ($pageTemplateList as $key => $value)
                             {
+                                //Check if there is a structure and search if the page template belongs
+                                // scanned array of predefined structure
                                 if($content!=''){
                                     if(in_array($key,$array)){
                                         echo '<li>';              
