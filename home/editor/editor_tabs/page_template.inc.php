@@ -62,40 +62,27 @@ $is_author	= $user_priv[1]['is_author'];
 
 $pageTemplateList = array();
 
-/* //OLD
+
+/*  //OLD
+ *  Now the command is run in the file Page_template.class.php 
+ *
 if($_content_id != "" && $_course_id != "") {
-/*	
-	//$course = $coursesDAO->get($_course_id);
-    
-    // OLD 12/11/2012
-    
+	
 	$content = $contentDAO->get($_content_id);
- 
-	//die('mat'.$content['structure']); competenze digitali
-        //die('mat2'.$content['title']); //contenuto
  
 	if($content['structure']!='') {
 		$structManager = new StructureManager($content['structure']);
-                //die('qui '.$content['title']);
-                
-               // die('mat3 '.$structManager); // NN COMPARE
-               
+
 		$array = $structManager->getContentByTitle($content['title']);
-                
-                
-                
-               // die('mat4'.$array); // NN COMPARE
-                
+
 		$pageTemplateList = $mod->validatedPageTemplate($array);
-		// die('mat5'.$pageTemplateList); // NN COMPARE
                 
 	}  else {
 		$pageTemplateList = $mod->getPageTemplateList();
-		//die('mat5 '.$pageTemplateList); // mat 5ARRAY
 	}
 }*/
 
-// new 12/11/2012
+
 
 $content_page	= $content['text'];
 
@@ -220,16 +207,5 @@ if ($output == '') {
 
 // content
 echo $output;
-
-
-
-//$mod->save_page_temp();
-//PROVA 19/10/2012 / 22/10/2012
-/*
-$output2=$mod->view_page_templates();
-echo $output2;*/
-
-//$mod->view_page_templates();
-
 
 ?>
