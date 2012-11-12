@@ -454,7 +454,7 @@ public function createUI($sup,$cid){
                         
                        $ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
 
-//**********************************************************                        
+                      
        // 25/10/2012        
         /*
                         
@@ -473,7 +473,7 @@ public function createUI($sup,$cid){
 
                 private function applyPageTemplateToContent(){
                     
-                   // echo 'entra in applyPageTemplate';
+                   // echo 'enter applyPageTemplate';
                     
                     
                     if(isset($_POST['cid']))
@@ -506,20 +506,11 @@ public function createUI($sup,$cid){
 			return;
 		}
                 
-             public function control(){
-                 
-                 
-                 
-             }
-
-
-
-
-
+             public function control(){}
 
              public function applyPageTemplate($cid,$text){
                     define("TR_INCLUDE_PATH", "../../include/");
-//die("asdasdasdasdsdas");
+
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
@@ -557,12 +548,6 @@ public function createUI($sup,$cid){
 			return $text;		
 		}
                 
-                
-                
-                
-                
-                
-               
 
 	}     
 ?>

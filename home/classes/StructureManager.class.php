@@ -319,14 +319,17 @@ class StructureManager
 	
 
 	function getContent($page) {
-		
+		//die('gC');
 		if($this->isFolder($page))
 			return null;
 		
+                
+                
 		$content = array();
 		$children = $page->page_templates->children();
 		foreach ($children as $child) {
 			$content[] = $child['name'];
+                       // die($child['name']);
 		}
 
 		return $content;

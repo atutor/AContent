@@ -261,6 +261,48 @@ function save_changes($redir, $current_tab) {
 			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message']);
+                                                            
+//ceppini matteo 09/11/2012
+                       /*
+$first_part='<table style="width: 100%; display: table;" class="page_template linee_guida">
+                <tbody>
+                    <tr>
+                        <td>
+                        <div class="removePageTemplateTopBar" style="display: none;">
+                        <div class="removePageTemplate">X</div>
+                        </div>
+                        </td>
+                    </tr><tr><td class="pageTemplateContent" style="border: medium none;">';
+$second_part='</tr></td>
+            <tr>
+                <td>
+                    <div style="visibility: hidden;" class="sortTools">
+                            <img src="/AContent/templates/system/top.png" class="movePageTemplateTop" alt="move top">
+                            <img src="/AContent/templates/system/up.png" class="movePageTemplateUp" alt="move up">
+                            <img src="/AContent/templates/system/down.png" class="movePageTemplateDown" alt="move down">
+                            <img src="/AContent/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom">
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>';
+if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
+  //$control_string="non trovata";
+    $first_part= $first_part. $_POST['body_text'];
+    $control_string= $first_part. $second_part;
+    $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                        $_POST['keywords'], $_POST['formatting'], 
+                                        $_POST['head'], $_POST['use_customized_head'], 
+                                        $_POST['test_message']);
+}else{
+$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
+                                        $_POST['keywords'], $_POST['formatting'], 
+                                        $_POST['head'], $_POST['use_customized_head'], 
+                                        $_POST['test_message']);
+}*/
+
+                    
+                    
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
