@@ -38,7 +38,8 @@ function get_tabs() {
                     $tabs[++$inc] = array('structure',    		'structure.inc.php',    's');
             }  
         }
-        $tabs[++$inc] = array('wizard', 'wizard.inc.php',  'w');
+        
+//        $tabs[++$inc] = array('wizard', 'wizard.inc.php',  'w');
        
 	return $tabs;
 }
