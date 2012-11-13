@@ -455,6 +455,8 @@ public function createUI($sup,$cid){
                 //05/11/2012 I insert hidden field for the passage of cid-->content_id
                        $ui .= '<input name="value_cid" type="hidden" value="'.$cid.'" >';
                        
+                      // $ui .= '<input name="value_BASE" type="hidden" value="'.$cid.'" >';
+                       
                        $ui .='</form>';
                         
                        $ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';

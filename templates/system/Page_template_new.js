@@ -15,12 +15,25 @@ var num_layout_select=0; // for layout control
 								<img src="<?php echo $templates; ?>system/bottom.png" class="movePageTemplateBottom" alt="move bottom" />\
 								</div>';*/
 //  var sortTools= '<div class="sortTools"><img src="<?php echo TR_BASE_HREF ?>/templates/system/top.png" class="movePageTemplateTop" alt="move top" /><img src="/AContent/templates/system/up.png" class="movePageTemplateUp" alt="move up" /><img src="/AContent/templates/system/down.png" class="movePageTemplateDown" alt="move down" /><img src="/AContent/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" /></div>';
-var sortTools= '<div class="sortTools"><img src="<?php echo TR_BASE_HREF ?>/templates/system/top.png" class="movePageTemplateTop" alt="move top" /><img src="<?php echo TR_BASE_HREF ?>/templates/system/up.png" class="movePageTemplateUp" alt="move up" /><img src="<?php echo TR_BASE_HREF ?>/templates/system/down.png" class="movePageTemplateDown" alt="move down" /><img src="<?php echo TR_BASE_HREF ?>/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" /></div>';
+
+var app=location.pathname;
+
+var acontent = app.split('/');
+
+var path= "/"+acontent[1];
+
+var sortTools= '<div class="sortTools">\n\
+<img src="'+ path + '/templates/system/top.png" class="movePageTemplateTop" alt="move top" />\n\
+<img src="'+ path + '/templates/system/up.png" class="movePageTemplateUp" alt="move up" />\n\
+<img src="'+ path + '/templates/system/down.png" class="movePageTemplateDown" alt="move down" />\n\
+<img src="'+ path + '/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" />\n\
+</div>';
+
 
 $(document).ready(function(){ 
 
 
-// 25/10/2012 prova per eliminare i due bottoni gestiti in PHP
+// 25/10/2012 prova per eliminare i due bottoni gestiti in PHPapp.split('/');
 $('#activate_page_template_php').css('display','none');
 $('#arrange_page_template_php').css('display','none');
 $('#label_arr_page_template_php').css('display','none');
@@ -225,10 +238,6 @@ $('#label_act_page_template_php').css('display','none');
 ////////////////////////////////////////
 
 		$('.boxPageTemplate li').live("click", function(){
-
-
-
-
 
 			var structure	= "";
                         
@@ -436,8 +445,9 @@ $('#savePageTemplate').css('display','inline');
 
                      
 			//var url	= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
-                        var url ="<?php echo TR_BASE_HREF ?>/templates/system/AJAX_actions.php";
-
+                      var url = path + "/templates/system/AJAX_actions.php";
+                        
+//var url ="/AContent/templates/system/AJAX_actions.php"; OKKKKKK
 
 			// structure is nothing else the mere HTML code page_template
 			$.post(url, {mID: pageTempalteID}, function(structure){
@@ -465,7 +475,7 @@ $('#savePageTemplate').css('display','inline');
                                 $('#content-text .page_template img').each(function(index) {
 					if($(this).attr('src') == 'dnd_image'){
                                             // old <?php echo $templates.
-						$(this).attr('src', "/AContent/templates/system/page_template_image.png");
+						$(this).attr('src',path + "/templates/system/page_template_image.png");
 						$(this).addClass("insert_image");
 					}
 				});
@@ -516,7 +526,7 @@ function createLabelSuccess()
    
   
 
-label= '<link type="text/css" rel="stylesheet" href="/AContent/themes/default/form.css">';    
+label= '<link type="text/css" rel="stylesheet" href="'+ path + '/themes/default/form.css">';    
 label= label + '<div id="success" style="display:none; ">';
 label= label + '<label  class="success_label">Action completed successfully.</label>';
 label= label + '</div>';
@@ -576,7 +586,7 @@ alert(vtext);
     alert(vaction);*/
 
 
-                    var url ="/AContent/templates/system/AJAX_actions.php";                     
+                    var url =path+"/templates/system/AJAX_actions.php";                     
         setTimeout(function(){$.post(url, {cid: vcid, text: vtext, action: vaction}, function(){});},100);      
         //  setTimeout($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}),10)       
                //  alert($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}));

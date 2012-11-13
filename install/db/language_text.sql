@@ -879,5 +879,5 @@ INSERT INTO `language_text` VALUES ('en', '_template','label_save_page_template'
 INSERT INTO `language_text` VALUES ('en', '_template','copy_page_template','Copy model sequence','2012-11-09 16:49:00','');
 INSERT INTO `language_text` VALUES ('en', '_template','paste_page_template','Paste model sequence','2012-11-09 16:49:00','');
 
-INSERT INTO `language_text`(`language_code`, `variable`, `term`, `text`, `revised_date`, `context`) VALUES ('en','_template','label_active_first_part','Click here to open the preview of all the page templates availables','2012-11-13 09:58:00','');
-INSERT INTO `language_text`(`language_code`, `variable`, `term`, `text`, `revised_date`, `context`) VALUES ('en','_template','label_active_second_part','or make changes to page templates already included','2012-11-13 09:59:00','')
+INSERT INTO `language_text` VALUES ('en','_template','label_active_first_part','Click here to open the preview of all the page templates availables','2012-11-13 09:58:00','');
+INSERT INTO `language_text` VALUES ('en','_template','label_active_second_part','or make changes to page templates already included','2012-11-13 09:59:00','');
