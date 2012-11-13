@@ -543,9 +543,9 @@ INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculat
 INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_structure','1');
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_layout','1');
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_page','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_structure','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_layout','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_page','1');
 
 #End Access4All setup 
 
