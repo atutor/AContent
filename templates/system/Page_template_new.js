@@ -14,8 +14,8 @@ var num_layout_select=0; // for layout control
 								<img src="<?php echo $templates; ?>system/down.png" class="movePageTemplateDown" alt="move down" />\
 								<img src="<?php echo $templates; ?>system/bottom.png" class="movePageTemplateBottom" alt="move bottom" />\
 								</div>';*/
-
-        var sortTools= '<div class="sortTools"><img src="/AContent/templates/system/top.png" class="movePageTemplateTop" alt="move top" /><img src="/AContent/templates/system/up.png" class="movePageTemplateUp" alt="move up" /><img src="/AContent/templates/system/down.png" class="movePageTemplateDown" alt="move down" /><img src="/AContent/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" /></div>';
+//  var sortTools= '<div class="sortTools"><img src="<?php echo TR_BASE_HREF ?>/templates/system/top.png" class="movePageTemplateTop" alt="move top" /><img src="/AContent/templates/system/up.png" class="movePageTemplateUp" alt="move up" /><img src="/AContent/templates/system/down.png" class="movePageTemplateDown" alt="move down" /><img src="/AContent/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" /></div>';
+var sortTools= '<div class="sortTools"><img src="<?php echo TR_BASE_HREF ?>/templates/system/top.png" class="movePageTemplateTop" alt="move top" /><img src="<?php echo TR_BASE_HREF ?>/templates/system/up.png" class="movePageTemplateUp" alt="move up" /><img src="<?php echo TR_BASE_HREF ?>/templates/system/down.png" class="movePageTemplateDown" alt="move down" /><img src="<?php echo TR_BASE_HREF ?>/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" /></div>';
 
 $(document).ready(function(){ 
 
@@ -436,7 +436,7 @@ $('#savePageTemplate').css('display','inline');
 
                      
 			//var url	= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
-                        var url ="/AContent/templates/system/AJAX_actions.php";
+                        var url ="<?php echo TR_BASE_HREF ?>/templates/system/AJAX_actions.php";
 
 
 			// structure is nothing else the mere HTML code page_template

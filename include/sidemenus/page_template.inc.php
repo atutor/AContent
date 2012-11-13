@@ -104,7 +104,7 @@ if($cid == '' and isset($_GET['_cid'])and $_GET['_cid'] != '')
 ######################################
 #	JQUERY SCRIPT MODULE
 ######################################
-include $mod_path['templates_sys'].'Page_template.js';
+//include $mod_path['templates_sys'].'Page_template.js';
 
 ######################################
 #	RETURN OUTPUT

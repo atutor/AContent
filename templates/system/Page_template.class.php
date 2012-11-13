@@ -74,14 +74,14 @@
 
                     if(isset($_POST['activate_page_template_php'])){
                         // form if using save as button                        
-                        echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="prova" method="post" style="display: none" onsubmit="return false">';
+                        echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="test" method="post" style="display: none" onsubmit="return false">';
 
                         //05/11/2012
                         // this gets the cid value from the hidden field added to createUI()
                         $cid = $_POST['value_cid'];
 
                         // added css for labels that become buttons       
-                        echo '<link rel="stylesheet" type="text/css" href="/AContent/themes/default/forms.css">';
+                        echo '<link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'/themes/default/forms.css">';
                                 
                         echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
 
@@ -127,7 +127,7 @@
                         echo '</div>';
                  
 
-                        echo '<script type="text/javascript" src="/AContent/templates/system/Page_template_new.js"></script>';
+                        echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template_new.js"></script>';
                         
                         $pageTemplateList = array();
                         
@@ -175,7 +175,7 @@
 
                         $pageTemplateList = $this->getPageTemplateList();
 
-                        echo '<link rel="stylesheet" href="/AContent/templates/system/page_template.css" type="text/css" />';
+                        echo '<link rel="stylesheet" href="'.TR_BASE_HREF.'/templates/system/page_template.css" type="text/css" />';
                         // avoid the input when the array is empty
                         if($pageTemplateList != null){
                        
@@ -232,11 +232,12 @@
 
                                 echo '<ul>';
                                     echo '<li id="pageTemplatePaste" style="display: none;">';
-                                        echo '<img alt="error paste" title="paste" src="/AContent/templates/system/paste.png">';
+                                        
+                                        echo '<img alt="error paste" title="paste" src="'.TR_BASE_HREF.'/templates/system/paste.png">';
                                         echo _AT('paste_page_template');
                                     echo '</li>';
                                     echo '<li id="pageTemplateCopy">';
-                                        echo '<img alt="error copy" title="copy" src="/AContent/templates/system/copy.png">';
+                                        echo '<img alt="error copy" title="copy" src="'.TR_BASE_HREF.'/templates/system/copy.png">';
                                         echo _AT('copy_page_template');
                                     echo '</li>';
                                 echo '</ul>';
@@ -429,9 +430,12 @@ public function createUI($sup,$cid){
     
 
 // 05/11/2012 test graphical editing
-                        $ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">Click here to open the preview of all the page templates availables<br>
-                             or make changes to page templates already included</label><br><div style="padding:5px;"></div>
+                        $ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">'._AT('label_active_first_part').'<br>
+                             '._AT('label_active_second_part').'</label><br><div style="padding:5px;"></div>
                             <input type="submit" style="width:250px;" value="Active page template functions" id="activate_page_template_php" name="activate_page_template_php" />';
+                       
+// _AT('label_active_first_part') --> Click here to open the preview of all the page templates availables
+//_AT('label_active_second_part') --> or make changes to page templates already included
                         
              /*           $ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">'._AT('label_active_page_template').'</label>
                             <input type="submit" style="width:250px;" value="'._AT('activate_page_template').'" id="activate_page_template_php" name="activate_page_template_php" />';

@@ -543,6 +543,10 @@ INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculat
 INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
+INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_structure','1');
+INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_layout','1');
+INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_page','1');
+
 #End Access4All setup 
 
 -- Dumping data for table `languages`
@@ -1091,6 +1095,3 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 INSERT INTO `users` (`user_id`, `login`, `password`, `user_group_id`, `first_name`, `last_name`, `web_service_id`, `status`, `create_date`) VALUES (1, 'ATutor', '0cbab2aec26a53b0107487d43b1b8eb29384ad10', 2, 'ATutor', 'ATutor', '90c3cd6f656739969847f3a99ac0f3c7', 1, now());
 
 
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_structure','1');
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_layout','1');
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_page','1');

@@ -111,7 +111,7 @@ if($cid == '' and isset($_GET['_cid'])and $_GET['_cid'] != '')
 ######################################
 #	JQUERY SCRIPT MODULE
 ######################################
-include $mod_path['templates_sys'].'Page_template.js';
+//include $mod_path['templates_sys'].'Page_template.js';
 
 ######################################
 #	RETURN OUTPUT
@@ -158,7 +158,7 @@ $result=$dao->execute($sql);
     // call the function that creates the graphics module selection
     // step content length and the value cid-->content_id
     $output	= $mod->createUI($sup,$cid);
-echo '<link type="text/css" rel="stylesheet" href="/AContent/themes/default/form.css">';    
+echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'/themes/default/form.css">';    
 echo '<div id="success" style="display:none;">';
 echo '<label  class="success_label">Action completed successfully.</label>';
 echo '</div>';

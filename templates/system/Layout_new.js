@@ -97,7 +97,7 @@ $('input[id="apply_layout_to_course"]').live("click",function(){
 
 function addLayoutTemplate(cid,layout){
 
-    var url ="/AContent/templates/system/AJAX_actions.php";
+    var url ="<?php echo TR_BASE_HREF ?>/templates/system/AJAX_actions.php";
 
     $.post(url, {content: cid}, function(structure){
         base.append(createLayoutTemplate(layout,structure));
@@ -113,12 +113,12 @@ function createLayoutTemplate(layout,structure)
 
     if(structure.length>24){
         layout_template= layout_template + 'Preview ' + layout + ':';
-        layout_template= layout_template + '<link rel="stylesheet" href="/AContent/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+        layout_template= layout_template + '<link rel="stylesheet" href="<?php echo TR_BASE_HREF ?>/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
         layout_template= layout_template + '<p>'+structure+'</p>';
     }else{
         layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
         layout_template= layout_template + 'Preview ' + layout + ':';
-        layout_template= layout_template + '<link rel="stylesheet" href="/AContent/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+        layout_template= layout_template + '<link rel="stylesheet" href="<?php echo TR_BASE_HREF ?>/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
         layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
     }   
     layout_template =layout_template + '</div>';
