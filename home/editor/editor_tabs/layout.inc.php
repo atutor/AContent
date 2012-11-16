@@ -131,3 +131,6 @@ function getContent($contentDAO, $cid){
 }
 
 ?>
+<script>
+$('.unsaved').css('display','none');
+</script>

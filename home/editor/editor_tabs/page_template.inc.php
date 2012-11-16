@@ -171,7 +171,7 @@ echo '<div id="whit-cont-pre" style="display:none; margin: 10px; margin-top: 20p
 echo '<div style="margin-left:10px;">Content associated:</div></div>';
 
 if($sup<=24){ 
-    echo '<div style="margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+    echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
     echo '<div id="no-cont"><b>No content</b> associated</div>';
     echo '</div>';
     $whit_content=0;
@@ -179,7 +179,7 @@ if($sup<=24){
 }
 else{
     echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$layout.'/'.$layout.'.css">';
-    echo '<div style="margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+    echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
     echo '<div id="whit-cont">Content associated: </div>';
     // I insert a new div to try not to lose the old contents in the case of rescue
     echo '<div id="content-previous">';
@@ -209,3 +209,6 @@ if ($output == '') {
 echo $output;
 
 ?>
+<script>
+$('.unsaved').css('display','none');
+</script>

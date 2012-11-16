@@ -190,7 +190,16 @@
 			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
 		
 			// select
-                        $ui             .= '<div style="margin: 10px;">';
+                        $ui             .= '<div style="margin: 5px;">';
+                        
+                        // NUOVA POSIZIONE DEI PULSANTI     
+$ui .= '<input type="submit" style="width:250px;" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" />';
+
+// Spacing of the buttons
+//$ui .='<div style="padding:5px;"></div>';
+$ui		.= '<input type="submit" style="width:250px; margin-left:15px;" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" />';
+
+$ui             .= '<div style="margin: 10px;">';
 		
                         $ui .= '<table class="data" rules="cols" summary="">';
                         $ui .= '<thead>
@@ -259,16 +268,9 @@
                         
                         $ui .= '</div>';
                         
-                        
-			$ui		.= '<div>';
-		
-			$ui		.= '<div><input type="submit" style="width:250px;" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" /></div>';
-		
-			$ui		.= '</div>';
-                        // Spacing of the buttons
-                        $ui .='<div style="padding:5px;"></div>';
-			$ui		.= '<div><input type="submit" style="width:250px;" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" /></div>';
-
+                        /*
+			POSIZIONE VECCHIA DEI PULSANTI SOTTO LA TABELLA
+                        */
 			$ui	.= '</form>';  
 	              
                            	
@@ -310,9 +312,9 @@
 				$cid		= $content[$i]['content_id'];
 				$text		= $this->textFixPHP($content[$i]['text']);
 
-				if(strstr($text, '<div id="content">')){
+			/*	if(strstr($text, '<div id="content">')){
 					$text = str_replace('<div id="content">','',$text, $count);
-				}
+				}*/
 	
 				$text = strrev($text);
 	
@@ -321,7 +323,7 @@
 				
 				$text = strrev($text);
 	
-				$text		= '<div id="content">'.$text.'</div>';
+				//$text		= '<div id="content">'.$text.'</div>';
 					
 				// clean up the text from <div id="dnd" and add it:
 				// it does not mean that all classes have the tag,
@@ -336,7 +338,7 @@
                                 
                                 
 				// write on db
-				$contentDAO->UpdateField($cid, 'text', $text);
+			//	$contentDAO->UpdateField($cid, 'text', $text);
 				$contentDAO->UpdateField($cid, 'layout', $layout_name);
 			}
 			
@@ -365,9 +367,9 @@
 
 			$text		= $this->textFixPHP($content['text']);
 
-			if(strstr($text, '<div id="content">')){
+		/*	if(strstr($text, '<div id="content">')){
 				$text = str_replace('<div id="content">','',$text, $count);
-			}
+			}*/
 
 			$text = strrev($text);
 
@@ -376,7 +378,7 @@
 			
 			$text = strrev($text);
 
-			$text		= '<div id="content">'.$text.'</div>';
+			//$text		= '<div id="content">'.$text.'</div>';
 
 			// clean up the text from <div id="dnd" and add it:
 			// it does not mean that all classes have the tag,
@@ -392,7 +394,7 @@
                     //    echo $_POST['radio_layout'];
 
 			// write on db
-			$contentDAO->UpdateField($this->content_id, 'text', $text);
+		//	$contentDAO->UpdateField($this->content_id, 'text', $text);
 			$contentDAO->UpdateField($this->content_id, 'layout', $layout_name);
 
 			// page redirect
