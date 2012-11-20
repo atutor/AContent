@@ -93,9 +93,9 @@ class StructureManager
 			return 'At this content is associated a forum';
 		else if($this->hasTest($page))
 			return 'At this content is associated a test';
-		else {
-			return 'null';
-		}
+		//else {
+			//return 'null';
+		//}
 	}
 	
 	

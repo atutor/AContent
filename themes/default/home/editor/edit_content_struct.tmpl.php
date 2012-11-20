@@ -50,11 +50,54 @@ if ($this->shortcuts):
 					$output = _AT('none_found');
 			} else {
 			
+                            echo '<div style=" weight: 10%; margin: 10px;">';
+                            
+                            
 				foreach ($structsList as $struct) {
 					echo '<input type="radio" name="title" id="'.$struct['name'].'" class="formfield" value="'.$struct['short_name'].'"/>';
 					echo '<label for="'.$struct['name'].'">'.$struct['name'].'</label>';
+                                        $value = "";
+                                        
+                                        
+                                        
+		foreach ($structsList as $val) { 
+		  	if(isset($_POST['struct']) && $_POST['struct'] == $val['short_name'])
+				$check = true;
+			else 
+				$check = false;
+                                        
+                        if($val['name'] == $struct['name']){
+                  ?>                      
+                <div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
+		
+		
+	<!--	<li id="<?php echo $val['short_name'];?>"> <?php echo $val['name'];?> </li> -->
+
+		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;">Description:</span>
+                <?php echo $val['description']; ?></p>
+
+
+                <div style="font-size:95%; margin-left: 10px;">
+
+                        <a title="outline_collapsed" id="a_outline_<?php echo $val['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $val['short_name'];?>', 'Hide outline', 'Show outline'); " href="javascript:void(0)">Show outline</a>
+                        <div style="display: none;" id="div_outline_<?php echo $val['short_name'];?>">
+                                <?php $struc_manag = new StructureManager($val['short_name']);
+                                $struc_manag->printPreview(false, $val['short_name']); ?>
+                        </div>
+            
+            </div>
+                </div>
+
+                                        <?php 
+                                        }
+                }
+                                        
+                                        
 					echo '</br>';
 				}
+                            
+                            echo '</div>';    
+                                
 			}
 		
 		?>

@@ -261,11 +261,11 @@ function save_changes($redir, $current_tab) {
 			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message']);
-                                                            
+/*                                                            
 //ceppini matteo 09/11/2012
 // 13/11/2012                        
 // 14/11/2012  
-      /*            
+                
 $first_part='<table style="width: 100%; display: table;" class="page_template linee_guida">
                 <tbody>
                     <tr>
@@ -290,8 +290,8 @@ $second_part='</tr></td>
         </tbody>
     </table>';
 
-*/
-/*
+
+
 
 if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
   //$control_string="non trovata";
@@ -310,9 +310,9 @@ $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_st
                                         $_POST['head'], $_POST['use_customized_head'], 
                                         $_POST['test_message']);
 }
-*/                        
+                      
 // IDEA SOTTARRE AL NUOVO TESTO QUELLO PRECEDENTE E CONTROLLARE SE CONTIENE TESTO E POI RACCHIUDERLO
-                        /*
+                        
 define('TR_INCLUDE_PATH', '../../include/');
 global $associated_forum, $_course_id, $_content_id;
 include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
@@ -329,7 +329,7 @@ $result=$dao->execute($sql);
            $text=$support['text'];
            break;
         }  
-    }*/
+    }
     //************************************************
     // In $text ho il vecchio contenuto               
     // In $orig_body_text ho tutto il nuovo contenuto 
@@ -338,12 +338,12 @@ $result=$dao->execute($sql);
     //$appoggio=substr($orig_body_text, $text); NON VA
     //$appogio=substr_compare($orig_body_text, $text);
     
-  /*  $rr= strlen($text);
+    $rr= strlen($text);
     $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $rr, 
                                                 $_POST['keywords'], $_POST['formatting'], 
                                                 $_POST['head'], $_POST['use_customized_head'], 
-                                                $_POST['test_message']);*/
-  /*  if(!empty($text)){
+                                                $_POST['test_message']);
+    if(!empty($text)){
        // $appoggio=str_replace($text,"",$orig_body_text);
         
      //   $appoggio=str_ireplace($orig_body_text, "", $text);

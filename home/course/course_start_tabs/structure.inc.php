@@ -45,54 +45,22 @@ if (!is_array($structsList) || count($structsList) == 0) {
 	$check = false;
 	 
 	
-?>
-
-<div style=" weight: 10%; margin: 10px;">
-<p style="font-style:italic;">The structures available are:</p>
-	
-	
-	<div style="margin: 10px;">
-	<?php 
-		$value = "";
-		foreach ($structsList as $val) { 
-		  	if(isset($_POST['struct']) && $_POST['struct'] == $val['short_name'])
-				$check = true;
-			else 
-				$check = false;
-	?>
-	
-	
-		<div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
-		
-		<ul>
-		<li id="<?php echo $val['short_name'];?>"> <?php echo $val['name'];?> </li>
-
-		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;">Description:</span>
-					<?php echo $val['description']; ?></p>
-		
-					
-					<div style="font-size:95%; margin-left: 10px;">
-					
-						<a title="outline_collapsed" id="a_outline_<?php echo $val['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $val['short_name'];?>', 'Hide outline', 'Show outline'); " href="javascript:void(0)">Show outline</a>
-						<div style="display: none;" id="div_outline_<?php echo $val['short_name'];?>">
-							<?php $struc_manag = new StructureManager($val['short_name']);
-							$struc_manag->printPreview(false, $val['short_name']); ?>
-						</div>
-			</ul>
-			</div>
-<?php } ?>
 
 
-</div>
+
+ } ?>
+
+
+
 
 <input type="hidden" name="struct" />
 <input type="hidden" name="current_tab" value="1" />
 
-</div>
 
+<div style=" weight: 10%; margin: 10px;">
 <?php echo _AT('create_content_3', TR_BASE_HREF.'home/editor/edit_content_struct.php?_course_id='.$_course_id, "");
 
-} ?>
-	
+ ?>
+	</div>
 	
 	
