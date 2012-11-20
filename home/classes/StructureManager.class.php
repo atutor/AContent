@@ -271,7 +271,7 @@ class StructureManager
 		
 		
 	}
-	
+/* OLD	
 	function insertToogle($page,$i,$value ) {
 		
 		$tree_expand_icon = $_base_path.'images/tree/tree_expand.gif';
@@ -292,7 +292,28 @@ class StructureManager
 		echo '<img id="tree_icon_'.$page.$i.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.$_base_path.'images/tree/tree_'.$value.'.gif">';
 		echo '</a>';
 	}
-	
+*/
+    // NEW    
+        function insertToogle($page,$i,$value ) {
+		
+		$tree_expand_icon = TR_BASE_HREF.'images/tree/tree_expand.gif';
+		$tree_collapse_icon = TR_BASE_HREF.'images/tree/tree_collapse.gif';
+		
+		
+		echo '
+		<script>
+		function initContentMenu() {
+  			var tree_collapse_icon = "'.TR_BASE_HREF.'images/tree/tree_collapse.gif";
+  			var tree_expand_icon = "'.TR_BASE_HREF.'images/tree/tree_expand.gif";
+			
+		};
+		</script>
+		';
+		
+		echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolderStruct(\''.$i.'\', \''.$page.'\', \''._AT('expand').'\', \''._AT('collapse').'\', \''.$tree_expand_icon.'\', \''.$tree_collapse_icon.'\' ); ">';
+		echo '<img id="tree_icon_'.$page.$i.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.TR_BASE_HREF.'images/tree/tree_'.$value.'.gif">';
+		echo '</a>';
+	}
 	
 	function get_page_temp() {
 		
