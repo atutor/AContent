@@ -587,7 +587,8 @@ alert(vtext);
 
 
                     var url =path+"/templates/system/AJAX_actions.php";                     
-        setTimeout(function(){$.post(url, {cid: vcid, text: vtext, action: vaction}, function(){});},100);      
+        //setTimeout(function(){$.post(url, {cid: vcid, text: vtext, action: vaction}, function(){});},100); 
+        $.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}).complete();     
         //  setTimeout($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}),10)       
                //  alert($.post(url, {cid: vcid, text: vtext, action: vaction}, function(){}));
               //   
