@@ -74,7 +74,7 @@
 
                     if(isset($_POST['activate_page_template_php'])){
                         // form if using save as button                        
-                        echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="test" method="post" style="display: none" onsubmit="return false">';
+                        echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="test" method="post" style="display: none;" onsubmit="return false">';
 
                         //05/11/2012
                         // this gets the cid value from the hidden field added to createUI()
@@ -115,6 +115,11 @@
                       }
                        
                         echo '<div style="padding:5px;"></div>';
+                        
+                     
+                        
+                        
+                        
                         
                         //echo $_SERVER['REQUEST_URI']; /AContent/home/editor/edit_content.php?_cid=6
 
@@ -247,6 +252,11 @@
                      echo '<div id="content-text">';
 
                      echo '</div>';
+                     
+                     
+                     
+                     
+                     
                      echo '</form>';
                  }    
             }
@@ -558,3 +568,6 @@ public function createUI($sup,$cid){
 
 	}     
 ?>
+<script>
+$('.unsaved').css('display','none');
+</script>   

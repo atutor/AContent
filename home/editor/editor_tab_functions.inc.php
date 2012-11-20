@@ -261,9 +261,11 @@ function save_changes($redir, $current_tab) {
 			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message']);
-                                                            
+/*                                                            
 //ceppini matteo 09/11/2012
-                       /*
+// 13/11/2012                        
+// 14/11/2012  
+                
 $first_part='<table style="width: 100%; display: table;" class="page_template linee_guida">
                 <tbody>
                     <tr>
@@ -277,15 +279,20 @@ $second_part='</tr></td>
             <tr>
                 <td>
                     <div style="visibility: hidden;" class="sortTools">
-                            <img src="/AContent/templates/system/top.png" class="movePageTemplateTop" alt="move top">
-                            <img src="/AContent/templates/system/up.png" class="movePageTemplateUp" alt="move up">
-                            <img src="/AContent/templates/system/down.png" class="movePageTemplateDown" alt="move down">
-                            <img src="/AContent/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom">
+                            <img src="'.TR_BASE_HREF.'/templates/system/top.png" class="movePageTemplateTop" alt="move top">
+                            <img src="'.TR_BASE_HREF.'/templates/system/up.png" class="movePageTemplateUp" alt="move up">
+                            <img src="'.TR_BASE_HREF.'/templates/system/down.png" class="movePageTemplateDown" alt="move down">
+                            <img src="'.TR_BASE_HREF.'/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom">
                     </div>
+                        
                 </td>
             </tr>
         </tbody>
     </table>';
+
+
+
+
 if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
   //$control_string="non trovata";
     $first_part= $first_part. $_POST['body_text'];
@@ -295,14 +302,101 @@ if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
                                         $_POST['head'], $_POST['use_customized_head'], 
                                         $_POST['test_message']);
 }else{
-$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
+  $first_part= $first_part. $_POST['body_text'];
+  $second_part='</tbody></table>';
+  $control_string= $first_part. $second_part;
+$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
                                         $_POST['keywords'], $_POST['formatting'], 
                                         $_POST['head'], $_POST['use_customized_head'], 
                                         $_POST['test_message']);
-}*/
+}
+                      
+// IDEA SOTTARRE AL NUOVO TESTO QUELLO PRECEDENTE E CONTROLLARE SE CONTIENE TESTO E POI RACCHIUDERLO
+                        
+define('TR_INCLUDE_PATH', '../../include/');
+global $associated_forum, $_course_id, $_content_id;
+include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+$dao = new DAO();
+$cid = $_POST['_cid'];
+$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+$result=$dao->execute($sql);
+    if(is_array($result))
+    {
+        foreach ($result as $support) {
+           $text=$support['text'];
+           break;
+        }  
+    }
+    //************************************************
+    // In $text ho il vecchio contenuto               
+    // In $orig_body_text ho tutto il nuovo contenuto 
+    //************************************************
+    
+    //$appoggio=substr($orig_body_text, $text); NON VA
+    //$appogio=substr_compare($orig_body_text, $text);
+    
+    $rr= strlen($text);
+    $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $rr, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+    if(!empty($text)){
+       // $appoggio=str_replace($text,"",$orig_body_text);
+        
+     //   $appoggio=str_ireplace($orig_body_text, "", $text);
+        // appoggio-->contenuto vecchio
+      //  die($text);
+      //  $appoggio=substr($orig_body_text,strlen($appoggio));
+        $a=(string)$text;
+        $lunghezza=strlen($a);
+       // die($lunghezza);
+        
+       $rrrr=str_replace($orig_body_text,"",$text);
+        
+        $appoggio=substr($orig_body_text,$lunghezza);
+        $appoggio=strip_tags($appoggio);
+       // die($appoggio);
+        
+        if(strstr($appoggio,'removePageTemplateTopBar')===false){
+          //$control_string="non trovata";
+            $first_part=$first_part. '<br>';
+            $first_part= $first_part. $appoggio;
+            $appoggio= $first_part. $second_part;
+            $control_string=$rrrr. $appoggio;
+            //die($rrrr);
+            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+        }else{
+            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $orig_body_text, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
 
-                    
-                    
+        }   
+    }else{
+        if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
+          
+            $first_part= $first_part. $_POST['body_text'];
+            $control_string= $first_part. $second_part;
+            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+        }else{
+          $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+        }
+    }*/
+    
+    
+                                           
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
