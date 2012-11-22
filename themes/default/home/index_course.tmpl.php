@@ -46,7 +46,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	$start_num = ($this->curr_page_num - 1) * RESULTS_PER_PAGE;
 	$end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
 ?>
-      <li class="course" style="font-weight:bold">
+      <li class="course" style="font-weight:bold"> <!-- Lessons 1-6 of 6 -->
         <div><?php echo ((strstr($caller_script, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
         <?php  
         if($_SESSION['user_id']){ ?>

@@ -22,6 +22,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] == 0) {
 	// anonymous user
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/getting_start.inc.php';
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/category.inc.php';
+        $side_menu[] = TR_INCLUDE_PATH.'sidemenus/structures.inc.php';
 } else {
 	// authenticated user
 	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/my_courses.inc.php';
@@ -31,7 +32,7 @@ if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] == 0) {
 	//$side_menu[] = TR_INCLUDE_PATH.'sidemenus/page_template.inc.php';
 	//$side_menu[] = TR_INCLUDE_PATH.'sidemenus/layout.inc.php';
 	//catia
-	//$side_menu[] = TR_INCLUDE_PATH.'sidemenus/structures.inc.php';
+	$side_menu[] = TR_INCLUDE_PATH.'sidemenus/structures.inc.php';
 	
 }
 

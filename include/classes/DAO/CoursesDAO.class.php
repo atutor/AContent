@@ -266,10 +266,29 @@ class CoursesDAO extends DAO {
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
 		         WHERE category_id=".$categoryID."
-		           AND access='public'
+		         AND access='public'
 		         ORDER BY title";
 		return $rows = $this->execute($sql);
 	}
+        
+        /**
+	 * Return course information by given structure name
+	 * @param   name structure
+	 * @return  course row
+	 * @author  Ceppini Matteo
+	 */
+	public function getByStructure($name_struct)
+	{
+		$sql = "SELECT DISTINCT CONTENT.course_id,COURSES.title  FROM ".TABLE_PREFIX."content AS CONTENT,".TABLE_PREFIX."courses AS COURSES
+		         WHERE structure='".$name_struct."' AND COURSES.course_id = CONTENT.course_id
+		         ORDER BY CONTENT.course_id";
+		return $rows = $this->execute($sql);
+	}
+        
+        
+        
+        
+        
 
 	/**
 	 * Return the array of (category_id, num_of_courses)

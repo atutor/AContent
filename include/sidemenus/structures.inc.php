@@ -58,19 +58,39 @@ if (!is_array($structsList)) {
 	
 	
     $output .= '<ol class="remove-margin-left">'."\n";
-   	$output .=  '<p style="">Simple structures: </p>';
+   	//$output .=  '<p style="">Simple structures: </p>';
 	
    	$simpleList = array();
    	
+        
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+$dao = new DAO();
+        
 	foreach ($structsList as $val) {
-		
-		$output .= ' <li title="'.$val['name'].'"> '."\n";
-		$output .= ' <a href="'. TR_BASE_HREF.'home/structs/outline.php?_struct_name='.$val['short_name'].'">'."\n";
-		$output .= $val['name'];
-		$output .= ' </a>'."\n";
-    	$output .= '  </li>'."\n";
+         // die($val['short_name']);  competenze-digitali                                       
+         //    $sql="SELECT count(distinct course_id) AS number FROM ".TABLE_PREFIX."content WHERE structure=".$val['short_name']."";
+          $prova="competenze-digitali";
+            $sql = "SELECT count(distinct course_id) AS number FROM ".TABLE_PREFIX."content WHERE structure='".$val['short_name']."'";
+            $result=$dao->execute($sql);
+            if(is_array($result))
+            {
+                foreach ($result as $support) {
+                   $num_struct=$support['number'];
+                   break;
+                }  
+            }
+            
+            $output .= ' <li title="'.$val['name'].'"> '."\n";
+            $output .= ' <a href="'. TR_BASE_HREF.'home/index.php?stuid='.$val['short_name'].'">'."\n";
+            $output .= $val['name'];
+
+            $output .= '('.$num_struct.')';
+            $output .= ' </a>'."\n";
+            $output .= '  </li>'."\n";
     	
-    	$simpleList[] = $val['name'];
+            $simpleList[] = $val['name'];
     }
   
 	
