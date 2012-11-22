@@ -62,10 +62,9 @@ if (!is_array($structsList)) {
 	
    	$simpleList = array();
    	
- /*      
+     
 require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
-Utility::authenticate(TR_PRIV_ISAUTHOR);*/
 $dao = new DAO();
         
 	foreach ($structsList as $val) {
