@@ -52,6 +52,7 @@ if (isset($catid)) {
 }
 
 // 22/11/2012
+/*
 $name_struct=$_GET['stuid'];
 if(isset($_GET['stuid'])){
     //die($name_struct); OK Competenze digitali
@@ -59,7 +60,7 @@ if(isset($_GET['stuid'])){
     $is_for_category = false;
     //die($courses);
 }
-
+*/
 
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
