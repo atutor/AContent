@@ -37,7 +37,7 @@ class UsersDAO extends DAO {
 	{
 		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users 
 		         WHERE (login='".$login."' OR email='".$login."') 
-		           AND SHA1(CONCAT(password, '".$_SESSION[token]."'))='".$pwd."'";
+		           AND SHA1(CONCAT(password, '".$_SESSION['token']."'))='".$pwd."'";
 
 		$rows = $this->execute($sql);
 		if (is_array($rows))
@@ -474,7 +474,13 @@ class UsersDAO extends DAO {
 	 */
 	public function setPassword($userID, $password)
 	{
-		$sql = "Update ".TABLE_PREFIX."users SET password='".$password."' WHERE user_id='".$userID."'";
+		global $addslashes;
+
+		$userID = intval($userID);
+		$password = $addslashes($password);
+
+		$sql = "Update ".TABLE_PREFIX."users SET password='".$password."' WHERE user_id=".$userID;
+
 		return $this->execute($sql);
 	}
 
