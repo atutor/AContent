@@ -90,7 +90,7 @@ $result=$dao->execute($sql);
            $choice_layout=$support['layout'];
            break;
         }  
-    }
+    }   
 ?>
 
 <div id="content">
