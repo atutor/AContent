@@ -127,6 +127,11 @@ $savant->display('include/box.tmpl.php');
  */
 $content_layout = $content['layout']; // Retrieving the value of the layout
 
+if($cid==null){
+    echo '<div id="error">';
+    echo '<h4>The following errors occurred:</h4><ul>';
+    echo '<li>Please save the content before proceeding to define "Page templates".</li></ul></div>';
+}else{
 $sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
 $result=$dao->execute($sql);
 
@@ -207,7 +212,7 @@ if ($output == '') {
 
 // content
 echo $output;
-
+}
 ?>
 <script>
 $('.unsaved').css('display','none');
