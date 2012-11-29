@@ -144,7 +144,7 @@ $starttime = $mtime;
     <ul class="navigation">
 <?php 
 foreach ($this->top_level_pages as $page) {
-//debug($page);
+
 	if (strpos($page['url'], '?') > 0)  {
 		$url_without_param = substr($page['url'], 0, strpos($page['url'], '?'));
 	} else {
@@ -157,7 +157,6 @@ foreach ($this->top_level_pages as $page) {
 
 	<?php
 	
-	//debug($_course_id);
 		if(!isset($this->course_id) && (strstr($page['url'],"tests") || strstr($page['url'],"file_manager"))){ 
 		// don't display tests and file manager for admins when not in a lesson
 		}else{ ?>

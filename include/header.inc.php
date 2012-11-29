@@ -49,15 +49,6 @@ $_sub_menus = $menu->getSubMenus();
 $back_to_page = $menu->getBackToPage();
 $_pages = $menu->getAllPages();   // add "param" element into $_pages items
 
-//debug($_base_path.$current_page);
-//debug($back_to_page);
-//debug($_sub_menus);
-//exit;
-
-//debug($_top_level_pages);
-//debug($_all_pages);
-//debug($_current_root_page);
-//debug($_current_page);
 
 $savant->assign('path', $_breadcrumb_path);
 $savant->assign('top_level_pages', $_top_level_pages);
