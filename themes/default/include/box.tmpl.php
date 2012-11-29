@@ -1,7 +1,7 @@
 <?php 
 if (!defined('TR_INCLUDE_PATH')) { exit; } 
 global $_base_path;
-//debug($this->default_status);
+
 $compact_title = str_replace(array(' ', '(', ')', '&nbsp;', '.'), array('','','','', ''), $this->title);
 if (!isset($this->default_status)) $this->default_status = "show";
 ?>

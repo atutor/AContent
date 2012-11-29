@@ -189,7 +189,7 @@ if (isset($top_num) && $top_num != (int) $top_num) {
 }
 
 $_tool_shortcuts = ContentUtility::getToolShortcuts($content_row);
-//debug($_tool_shortcuts);
+
 //if it has test and forum associated with it, still display it even if the content is empty
 if ($content_row['text'] == '' && empty($content_test_ids)){
 	$msg->addInfo('NO_PAGE_CONTENT');

@@ -168,7 +168,7 @@ class Menu {
 			// re-direct to first $_pages URL
 			foreach ($this->pages[TR_NAV_TOP] as $page)
 			{
-//				debug($_base_path.$this->current_page);debug($page);
+
 				if ($_base_path.$this->current_page != $page['url'])
 				{
 					header('Location: '.$page['url']);

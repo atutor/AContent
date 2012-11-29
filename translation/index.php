@@ -24,7 +24,7 @@ global $msg, $addslashes;
 $dao = new DAO();
 $languagesDAO = new LanguagesDAO();
 $languageTextDAO = new LanguageTextDAO();
-//debug($_REQUEST);exit;
+
 if (isset($_REQUEST['reset_filter'])) unset($_REQUEST);
 
 if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))

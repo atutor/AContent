@@ -260,15 +260,11 @@ if ($package_base_path) {
 //Dependency handling
 //$media_items = array();
 $xml_items = array();
-//foreach($attributes as $resource=>$attrs){
-//	if ($attrs['type'] != 'webcontent'){
-//		$media_items[$attrs['identifier']] = $attrs['file'];
-//	}
-//}
+
 
 //Check if the files exist, if so, warn the user.
 $existing_files = isQTIFileExist($attributes);
-//debug($existing_files);
+
 if (!$overwrite && !empty($existing_files)){
 	$existing_files = implode('<br/>', $existing_files);
 	require_once(TR_INCLUDE_PATH.'header.inc.php');
@@ -297,7 +293,6 @@ if (!$overwrite && !empty($existing_files)){
 $qti_import = new QTIImport($import_path);
 $qti_import->importQuestions($attributes);
 
-//debug('done');
 FileUtility::clr_dir(TR_CONTENT_DIR . 'import/'.$_course_id);
 if (!$msg->containsErrors()) {
 	$msg->addFeedback('IMPORT_SUCCEEDED');

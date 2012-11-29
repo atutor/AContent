@@ -596,7 +596,6 @@ function paste_from_file() {
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile_paste']['tmp_name']);
 			//LAW
-//			debug($_POST);
 			$msg->addFeedback('FILE_PASTED');
 
 		}

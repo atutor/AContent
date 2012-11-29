@@ -208,9 +208,7 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
  * $_SESSION['s_cid']: record the last content_id on (user_id + course_id) basis
  * $_sequence_links: resume/first/next/previous content links
  */ 
-//debug($_REQUEST);
-//debug($_POST);
-//exit;
+
 if (isset($_REQUEST['_cid']) && intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
 else if (isset($_POST['_cid']) && intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
 

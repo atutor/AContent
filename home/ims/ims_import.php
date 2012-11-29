@@ -1086,7 +1086,7 @@ $lti_offset = array();	//since we don't need lti tools, the ordering needs to be
 //reorder the items stack
 $common_path = removeCommonPath($items);
 $items = rehash($items);
-//debug($items);exit;
+
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1

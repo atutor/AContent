@@ -97,9 +97,7 @@ class QTIImport {
 				//set test title
 				$this->title = $xml->title;
 
-//if ($attrs[href] =='56B1BEDC-A820-7AA8-A21D-F32017189445/56B1BEDC-A820-7AA8-A21D-F32017189445.xml'){
-//	debug($xml, 'attributes');
-//}
+
 				//import file, should we use file href? or jsut this href?
 				//Aug 25, use both, so then it can check for respondus media as well.
 				foreach($attrs['file'] as $file_id => $file_name){
@@ -160,7 +158,7 @@ class QTIImport {
 
 		//			unset($qti_import);
 					$this->constructParams($test_obj);
-//debug($xml->getQuestionType($loopcounter), 'lp_'.$loopcounter);
+
 					//Create questions
 					$this->getQuestionType($xml->getQuestionType($loopcounter));
 
@@ -187,7 +185,7 @@ class QTIImport {
 				$this->copyMedia($attrs['file'], $xml_items);
 			}
 		}
-//debug($qids, 'qids');
+
 		return $qids;
 	}
 
@@ -233,7 +231,7 @@ class QTIImport {
 //			$sql = vsprintf(AT_SQL_TEST, $sql_params);
 //			$result = mysql_query($sql, $db);
 //			$tid = mysql_insert_id($db);
-		//debug($qti_import->weights, 'weights');			
+			
 		return $tid;
 	}
 
