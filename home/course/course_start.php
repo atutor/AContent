@@ -27,7 +27,8 @@ $msg->addInfo('NO_CONTENT_IN_COURSE');
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 
-if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+if (isset($_current_user) && ($_current_user->isAuthor($_course_id) || $_current_user->isAdmin())) {
+	$savant->assign('isAdmin', $_current_user->isAdmin() );
 	$savant->assign('course_id', $_course_id);
 	$savant->display('home/course/course_start.tmpl.php');
 }

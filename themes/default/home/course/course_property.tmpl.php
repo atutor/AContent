@@ -2,15 +2,16 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-
+global $_current_user;
 global $languageManager;
+
 require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 ?>
 
@@ -24,6 +25,24 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 		<tr>
 			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?></td>
 		</tr>
+		<?php if($_current_user->isAdmin()) { ?>
+		<tr>
+			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
+			<label for="this_author"><?php echo  _AT('assign_author'); ?></label>:</td>
+			<td align="left">
+			<select name="this_author" id="this_author">
+			<?php
+			foreach ($this->isauthor as $author){
+				if($author['user_id'] == $this->course_row['user_id']){
+	 				echo '<option value="'.$author['user_id'].'" selected="selected">'.$author['first_name'].' '.$author['last_name'].' ('.$author['login'].')</option>';
+	 			}else{
+	 				echo '<option value="'.$author['user_id'].'">'.$author['first_name'].' '.$author['last_name'].' ('.$author['login'].')</option>';	 		
+	 			}
+			}?>
+			</select>
+			</td>
+		</tr>
+		<?php } ?>
 
 		<tr>
 			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -136,7 +136,7 @@ $starttime = $mtime;
         ?>
   </span>
   <div id="banner">
- 
+
   </div>
 
   <div class="topnavlistcontainer">
@@ -144,6 +144,7 @@ $starttime = $mtime;
     <ul class="navigation">
 <?php 
 foreach ($this->top_level_pages as $page) {
+//debug($page);
 	if (strpos($page['url'], '?') > 0)  {
 		$url_without_param = substr($page['url'], 0, strpos($page['url'], '?'));
 	} else {
@@ -153,7 +154,15 @@ foreach ($this->top_level_pages as $page) {
 ?>
       <li class="navigation"><a href="<?php echo $page['url']; ?>" title="<?php echo $page['title']; ?>" class="active"><?php echo $page['title']; ?></a></li>
 <?php } else { ?>
+
+	<?php
+	
+	//debug($_course_id);
+		if(!isset($this->course_id) && (strstr($page['url'],"tests") || strstr($page['url'],"file_manager"))){ 
+		// don't display tests and file manager for admins when not in a lesson
+		}else{ ?>
       <li class="navigation"><a href="<?php echo $page['url']; ?>"  title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+      	<?php } ?>
 <?php } // endif
 } //endforeach ?>
     </ul>
@@ -249,7 +258,7 @@ foreach ($this->top_level_pages as $page) {
   <?php } ?>
   <?php if (isset($this->course_id) && $this->course_id > 0) {?>
     <!--  <div id="course-tools">-->
-      <?php if ($this->isAuthor) { // only for authors ?>
+      <?php if ($this->isAuthor || $this->isAdmin) { // only for authors or admins ?>
       <li><a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0"  class="shortcut_icon"/>
         </a>
@@ -324,6 +333,12 @@ foreach ($this->top_level_pages as $page) {
 
       <!-- the page title -->
       <a name="content" title="<?php echo _AT('content'); ?>"></a>
+       <?php
+global $_current_user;
+ if($_current_user->isAdmin() && $_SESSION['course_id']){
+ 	echo '<br /><small><strong>'._AT('course_owner').':'.$this->course_owner['first_name'].' '.$this->course_owner['last_name'].' ('.$this->course_owner['login'].')</strong></small>';
+	}
+ ?>
       <h2 class="page-title"><?php echo $this->page_title; ?></h2>
       <div id="server-msg">
       <?php global $msg; $msg->printAll(); ?>

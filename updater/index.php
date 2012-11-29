@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -17,6 +17,7 @@ require_once('classes/PatchListParser.class.php');
 require_once(TR_INCLUDE_PATH. 'classes/FileUtility.class.php');
 require_once(TR_INCLUDE_PATH. 'classes/DAO/PatchesDAO.class.php');
 require_once('include/common.inc.php');
+unset($_SESSION['course_id']);
 
 set_time_limit(0);
 

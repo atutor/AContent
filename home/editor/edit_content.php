@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -30,6 +30,9 @@ if ($_POST) {
 	$do_check = FALSE;
 }
 
+if($_current_user->isAdmin()){
+$savant->assign('isAdmin', $_current_user->isAdmin());
+}
 require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 
 if ($_POST['close'] || $_GET['close']) {

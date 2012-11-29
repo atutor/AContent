@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -15,6 +15,7 @@ include_once(TR_INCLUDE_PATH.'vitals.inc.php');
 include_once(TR_INCLUDE_PATH.'classes/DAO/ConfigDAO.class.php');
 include_once(TR_INCLUDE_PATH.'classes/DAO/ThemesDAO.class.php');
 include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+unset($_SESSION['course_id']);
 
 // handle submit
 if (isset($_POST['cancel'])) {

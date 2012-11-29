@@ -116,7 +116,7 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 	$_pages['home/course/outline.php']['parent']    = 'home/index.php';
 	$_pages['home/course/outline.php']['title_var'] = 'outline';
 	
-	if (isset($_current_user) && $_current_user->isAuthor())
+	if (isset($_current_user) && ($_current_user->isAuthor() || $_current_user->isAdmin()))
 	{
 		if (!isset($_course_id) || $_course_id == 0) {
 			$_pages['home/index.php']['children']  = array_merge(array('home/create_course.php'), isset($_pages['home/index.php']['children']) ? $_pages['home/index.php']['children'] : array());
