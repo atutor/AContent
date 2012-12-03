@@ -11,10 +11,11 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
-global $_course_id;
 
 
 ?>
-<div class="row">
-	<p>lippa</p>
+<div style=" weight: 10%; margin: 10px;">
+    <?php
+    $savant->display('home/course/course_wizard_goals.tmpl.php');
+    ?>
 </div>

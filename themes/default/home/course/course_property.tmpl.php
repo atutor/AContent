@@ -59,14 +59,14 @@ require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 			<td align="left"><textarea id="description" cols="45" rows="2" name="description"><?php if (isset($_POST['description'])) echo stripslashes(htmlspecialchars($_POST['description'])); else echo stripslashes(htmlspecialchars($this->course_row['description'])); ?></textarea></td>
 		</tr>
 		<!--  catia GOAL -->
-		<!--  
+                <!--
 		<tr>
 		<td align="left"><p>Goals</p></td>
 		<td>
 			<fieldset>
 				<legend>Choose the lesson's goals</legend>
-						 <?php 
-						 /*$goals_manager = new GoalsManager();
+						<?php 
+						/*$goals_manager = new GoalsManager();
 						 
 						 $goals = $goals_manager->getGoals();
 						 	foreach ($goals as $goal) {
@@ -84,7 +84,7 @@ require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 			</fieldset>
 			
 		</td>	
-		</tr> -->
+		</tr>
 		
 		<tr>
 			<td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>
@@ -97,7 +97,7 @@ require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 			  <label for="hide_course"><?php echo _AT('hide_course'); ?></label>
 			</td>
 		</tr>
-
+-->
 		<tr>
 			<td colspan="2">
 			

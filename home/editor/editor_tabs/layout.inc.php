@@ -81,7 +81,11 @@ include $mod_path['templates_sys'].'Layout.js';
 ######################################
 #	RETURN THE OUTPUT
 ######################################
-
+if($cid==null){
+    echo '<div id="error">';
+    echo '<h4>The following errors occurred:</h4><ul>';
+    echo '<li>Please save the content before proceeding to define "Layout templates".</li></ul></div>';
+}else{
 
 echo '<p style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">'; 
 
@@ -102,7 +106,7 @@ if ($output == '') {
 
 // content
 echo $output;
-
+}
 ######################################
 #	PHP FUNCTIONS
 ######################################
