@@ -186,6 +186,24 @@ trans.editor = trans.editor || {};
             textArea.show();
         }	
     };
+    
+    
+    var forumTool = function () {
+    	
+    	var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
+		theCode += '<form action="'+trans.base_href+'home/editor/forums_tool.php?popup=1" name="accessform" method="post"> \n';
+		theCode += '<input type="hidden" name="_cid" value="'+jQuery("input[name=\_cid]").val()+'" /> \n';
+       	theCode += '<textarea name="body_text" style="display:none">' + tinyMCE.activeEditor.getContent() + '</textarea>\n';
+		theCode += '<input type="submit" style="display:none" /></form> \n';  
+		theCode += '</body></html> \n';
+		accessWin = window.open('', 'accessibilityWin',  'menubar=0,scrollbars=1,resizable=1,width=600,height=600');
+		accessWin.document.writeln(theCode);
+		accessWin.document.close();
+    	return false;
+    	
+    	
+    	
+    };
 
     //click function to launch preview window
     var previewTool = function () {
@@ -219,9 +237,12 @@ trans.editor = trans.editor || {};
     //set up click handlers and show/hide appropriate tools via setupPage
     var initialize = function () {
         jQuery("#previewtool").click(previewTool);
+        
+        //catia
+        jQuery("#forumtool").click(forumTool);
+        
         jQuery(".tool").click(launchTool);
         jQuery("#formatting_radios > input").click(setupPage);
-        headTool.enabledTitle = trans.editor.head_enabled_title;
         headTool.disabledTitle = trans.editor.head_disabled_title;
         pasteTool.enabledTitle = trans.editor.paste_enabled_title;
         pasteTool.disabledTitle = trans.editor.paste_disabled_title;

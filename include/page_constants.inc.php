@@ -26,7 +26,7 @@
  Because the Utility::authenticate on the following each page section 
  messes up the oauth user authentication. 
 */
-global $oauth_import, $_course_id, $_content_id;
+global $oauth_import, $_course_id, $_content_id, $_struct_name;
 if ($oauth_import) return;
 
 // constants to map privileges.privilege_id, used to load constant pages
@@ -116,9 +116,15 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 	$_pages['home/course/outline.php']['parent']    = 'home/index.php';
 	$_pages['home/course/outline.php']['title_var'] = 'outline';
 	
+	// catia
+	$_pages['home/structs/outline.php']['parent'] = 'home/index.php';
+	
+	if(isset($_struct_name)) 
+		$_pages['home/structs/outline.php']['title'] = '"'. $_struct_name . ' based" structure outline';
+
 	if (isset($_current_user) && ($_current_user->isAuthor() || $_current_user->isAdmin()))
 	{
-		if (!isset($_course_id) || $_course_id == 0) {
+		if ((!isset($_course_id) || $_course_id == 0)) {
 			$_pages['home/index.php']['children']  = array_merge(array('home/create_course.php'), isset($_pages['home/index.php']['children']) ? $_pages['home/index.php']['children'] : array());
 			
 			$_pages['home/create_course.php']['title_var'] = 'create_course';
@@ -153,12 +159,24 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		$_pages['home/editor/edit_content_folder.php']['parent']    = 'home/index.php';
 		$_pages['home/editor/edit_content_folder.php']['guide']     = 'TR_HELP_EDIT_CONTENT_FOLDER';
 		
+		$_pages['home/editor/edit_content_struct.php']['title'] = 'Edit content structure';
+		$_pages['home/editor/edit_content_struct.php']['parent']    = 'home/index.php';
+		//$_pages['home/editor/edit_content_folder.php']['guide']     = 'TR_HELP_EDIT_CONTENT_FOLDER';
+		
 		$_pages['home/editor/delete_content.php']['title_var'] = 'delete_content';
 		$_pages['home/editor/delete_content.php']['parent']    = 'home/index.php';
 		$_pages['home/editor/delete_content.php']['guide']     = 'TR_HELP_DELETE_CONTENT';
 		
 		$_pages['home/editor/preview.php']['title_var'] = 'preview';
 		$_pages['home/editor/preview.php']['parent']    = 'home/editor/edit_content.php';
+		
+		//catia
+		$_pages['home/editor/forums_tool.php']['title'] = 'Forum tool';
+		$_pages['home/editor/forums_tool.php']['parent'] = 'home/editor/edit_content.php';
+		
+		$_pages['home/editor/add_forum.php']['title'] = 'Create Forum';
+		$_pages['home/editor/add_forum.php']['parent'] = 'home/editor/forums_tool.php';
+		
 		
 		$_pages['home/editor/accessibility.php']['title_var'] = 'accessibility';
 		$_pages['home/editor/accessibility.php']['parent']    = 'home/editor/edit_content.php';
@@ -195,6 +213,8 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 		$_pages['file_manager/index.php']['title_var']    = 'file_manager';
 		$_pages['file_manager/index.php']['parent']   = 'home/index.php';
 		$_pages['file_manager/index.php']['guide']     = 'TR_HELP_FILE_MANAGER';
+		
+		
 
 	}
 }
@@ -401,6 +421,9 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	$_pages['tests/create_question_ordering.php']['title_var'] = 'create_new_question';
 	$_pages['tests/create_question_ordering.php']['parent']    = 'tests/question_db.php';
 	
+	$_pages['tests/create_question_fillinblanks.php']['title_var'] = 'create_new_question';
+	$_pages['tests/create_question_fillinblanks.php']['parent']    = 'tests/question_db.php';
+	
 	$_pages['tests/edit_question_truefalse.php']['title_var'] = 'edit_question';
 	$_pages['tests/edit_question_truefalse.php']['parent']    = 'tests/question_db.php';
 	
@@ -425,8 +448,13 @@ if (array_key_exists(TR_PRIV_MANAGE_TESTS, $privs) && Utility::authenticate($pri
 	$_pages['tests/edit_question_ordering.php']['title_var'] = 'edit_question';
 	$_pages['tests/edit_question_ordering.php']['parent']    = 'tests/question_db.php';
 	
+	$_pages['tests/edit_question_fillinblanks.php']['title_var'] = 'edit_question';
+	$_pages['tests/edit_question_fillinblanks.php']['parent']    = 'tests/question_db.php';
+	
 	$_pages['tests/delete_question.php']['title_var'] = 'delete';
 	$_pages['tests/delete_question.php']['parent'] = 'tests/question_db.php';
+	
+	
 }
 
 // file manager

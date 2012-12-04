@@ -32,6 +32,9 @@ CREATE TABLE `content` (
   `use_customized_head` TINYINT(4) NOT NULL,
   `test_message` TEXT NOT NULL,
   `content_type` TINYINT(1) UNSIGNED NOT NULL,
+  `layout` TEXT NOT NULL,
+  `optional` BOOLEAN NOT NULL default '1',
+  `structure` TEXT NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`),
   FULLTEXT(keywords, title, text)
@@ -539,6 +542,10 @@ INSERT INTO `config` (`name`, `value`) VALUES('atlas', 'http://maps.google.ca/')
 INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculateforfree.com/');
 INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
+
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_structure','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_layout','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_page','1');
 
 #End Access4All setup 
 
@@ -1086,3 +1093,5 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 
 # insert default atutor account
 INSERT INTO `users` (`user_id`, `login`, `password`, `user_group_id`, `first_name`, `last_name`, `web_service_id`, `status`, `create_date`) VALUES (1, 'ATutor', '0cbab2aec26a53b0107487d43b1b8eb29384ad10', 2, 'ATutor', 'ATutor', '90c3cd6f656739969847f3a99ac0f3c7', 1, now());
+
+

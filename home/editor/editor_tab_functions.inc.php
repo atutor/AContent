@@ -28,11 +28,50 @@ function in_array_cin($strItem, $arItems)
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
+
+/* Check if the page template_layout and are enabled or disabled */
+        include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+        $dao = new DAO();
+        
+        $inc=0; 
+        $tabs[$inc] = array('content',       		'edit.inc.php',          'n');
+        
+        $sql="SELECT value FROM ".TABLE_PREFIX."config WHERE name='enable_template_layout'";
+        $result=$dao->execute($sql);
+        if(is_array($result))
+        {
+            foreach ($result as $support) {
+                if($support['value']==TR_STATUS_ENABLED)
+                    $tabs[++$inc] = array('layout', 'layout.inc.php', 'l');
+            }  
+        }
+        $sql="SELECT value FROM ".TABLE_PREFIX."config WHERE name='enable_template_page'";
+        $result=$dao->execute($sql);
+        if(is_array($result))
+        {
+            foreach ($result as $support) {
+                if($support['value']==TR_STATUS_ENABLED)
+                    $tabs[++$inc] = array('page_template', 'page_template.inc.php', 'g');
+            }  
+        }
+
+	$tabs[++$inc] = array('metadata',    		'properties.inc.php',    'p');
+	$tabs[++$inc] = array('alternative_content', 'alternatives.inc.php',  'a');	
+	$tabs[++$inc] = array('tests',               'tests.inc.php',         't');
+
+   /* DEFAULT IS TO PROF
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
-	$tabs[1] = array('metadata',    		'properties.inc.php',    'p');
-	$tabs[2] = array('alternative_content', 'alternatives.inc.php',  'l');	
-	$tabs[3] = array('tests',               'tests.inc.php',         't');	
-	
+        $tabs[1] = array('layout', 'layout.inc.php', 'l');
+        $tabs[2] = array('page_template', 'page_template.inc.php', 'g');
+	$tabs[3] = array('metadata',    		'properties.inc.php',    'p');
+	$tabs[4] = array('alternative_content', 'alternatives.inc.php',  'a');	
+	$tabs[5] = array('tests',               'tests.inc.php',         't');
+	//catia
+	//$tabs[4] = array('forums', '');
+    * 
+    * END DEFAULT
+    */
+
 	return $tabs;
 }
 
@@ -95,6 +134,8 @@ function populate_a4a($cid, $content, $formatting){
 	
 	// Defining alternatives is only available for content type "html".
 	// But don't clean up the a4a tables at other content types in case the user needs them back at html.
+	
+	
 	if ($formatting <> 1) return;
 
 	include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
@@ -171,6 +212,7 @@ function save_changes($redir, $current_tab) {
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['_cid']	= intval($_POST['_cid']);
 	
+	
 	$_POST['alternatives'] = intval($_POST['alternatives']);
 	
 	$_POST['title'] = trim($_POST['title']);
@@ -219,10 +261,145 @@ function save_changes($redir, $current_tab) {
 			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message']);
+/*                                                            
+//ceppini matteo 09/11/2012
+// 13/11/2012                        
+// 14/11/2012  
+                
+$first_part='<table style="width: 100%; display: table;" class="page_template linee_guida">
+                <tbody>
+                    <tr>
+                        <td>
+                        <div class="removePageTemplateTopBar" style="display: none;">
+                        <div class="removePageTemplate">X</div>
+                        </div>
+                        </td>
+                    </tr><tr><td class="pageTemplateContent" style="border: medium none;">';
+$second_part='</tr></td>
+            <tr>
+                <td>
+                    <div style="visibility: hidden;" class="sortTools">
+                            <img src="'.TR_BASE_HREF.'/templates/system/top.png" class="movePageTemplateTop" alt="move top">
+                            <img src="'.TR_BASE_HREF.'/templates/system/up.png" class="movePageTemplateUp" alt="move up">
+                            <img src="'.TR_BASE_HREF.'/templates/system/down.png" class="movePageTemplateDown" alt="move down">
+                            <img src="'.TR_BASE_HREF.'/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom">
+                    </div>
+                        
+                </td>
+            </tr>
+        </tbody>
+    </table>';
+
+
+
+
+if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
+  //$control_string="non trovata";
+    $first_part= $first_part. $_POST['body_text'];
+    $control_string= $first_part. $second_part;
+    $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                        $_POST['keywords'], $_POST['formatting'], 
+                                        $_POST['head'], $_POST['use_customized_head'], 
+                                        $_POST['test_message']);
+}else{
+  $first_part= $first_part. $_POST['body_text'];
+  $second_part='</tbody></table>';
+  $control_string= $first_part. $second_part;
+$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                        $_POST['keywords'], $_POST['formatting'], 
+                                        $_POST['head'], $_POST['use_customized_head'], 
+                                        $_POST['test_message']);
+}
+                      
+// IDEA SOTTARRE AL NUOVO TESTO QUELLO PRECEDENTE E CONTROLLARE SE CONTIENE TESTO E POI RACCHIUDERLO
+                        
+define('TR_INCLUDE_PATH', '../../include/');
+global $associated_forum, $_course_id, $_content_id;
+include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+Utility::authenticate(TR_PRIV_ISAUTHOR);
+$dao = new DAO();
+$cid = $_POST['_cid'];
+$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+$result=$dao->execute($sql);
+    if(is_array($result))
+    {
+        foreach ($result as $support) {
+           $text=$support['text'];
+           break;
+        }  
+    }
+    //************************************************
+    // In $text ho il vecchio contenuto               
+    // In $orig_body_text ho tutto il nuovo contenuto 
+    //************************************************
+    
+    //$appoggio=substr($orig_body_text, $text); NON VA
+    //$appogio=substr_compare($orig_body_text, $text);
+    
+    $rr= strlen($text);
+    $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $rr, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+    if(!empty($text)){
+       // $appoggio=str_replace($text,"",$orig_body_text);
+        
+     //   $appoggio=str_ireplace($orig_body_text, "", $text);
+        // appoggio-->contenuto vecchio
+      //  die($text);
+      //  $appoggio=substr($orig_body_text,strlen($appoggio));
+        $a=(string)$text;
+        $lunghezza=strlen($a);
+       // die($lunghezza);
+        
+       $rrrr=str_replace($orig_body_text,"",$text);
+        
+        $appoggio=substr($orig_body_text,$lunghezza);
+        $appoggio=strip_tags($appoggio);
+       // die($appoggio);
+        
+        if(strstr($appoggio,'removePageTemplateTopBar')===false){
+          //$control_string="non trovata";
+            $first_part=$first_part. '<br>';
+            $first_part= $first_part. $appoggio;
+            $appoggio= $first_part. $second_part;
+            $control_string=$rrrr. $appoggio;
+            //die($rrrr);
+            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+        }else{
+            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $orig_body_text, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+
+        }   
+    }else{
+        if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
+          
+            $first_part= $first_part. $_POST['body_text'];
+            $control_string= $first_part. $second_part;
+            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+        }else{
+          $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
+                                                $_POST['keywords'], $_POST['formatting'], 
+                                                $_POST['head'], $_POST['use_customized_head'], 
+                                                $_POST['test_message']);
+        }
+    }*/
+    
+    
+                                           
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
-
 			$cid = $contentManager->addContent($_course_id,
 												  $_POST['pid'],
 												  $_POST['ordering'],
@@ -235,12 +412,21 @@ function save_changes($redir, $current_tab) {
 												  $_POST['use_customized_head'],
 												  $_POST['test_message'],
 												  $content_type_pref);
+												  
 			$_POST['_cid']    = $cid;
 			$_REQUEST['_cid'] = $cid;
 		}
-        // re-populate a4a tables based on the new content
-		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
+		
+		
+        
+        
 		if ($cid == 0) return;
+		
+		// re-populate a4a tables based on the new content
+		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
+		
+		
+		
 //	}
 
 	/* insert glossary terms */

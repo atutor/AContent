@@ -1,0 +1,21 @@
+.view{
+	border:						1px solid #EEE;
+	width:						90%;
+	margin:						0 auto;
+	margin-top:					10px;
+	margin-bottom:				40px;
+	padding:					20px;
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+
+	-moz-box-shadow:			0 0 5px #EEE;
+	-webkit-box-shadow:			0 0 5px #EEE;
+	box-shadow:					0 0 5px #EEE;
+}

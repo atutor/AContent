@@ -1,0 +1,16 @@
+; * indica i campi obbligatori
+
+; * Nome pubblico del modello
+name		= Title and text
+
+; * Descrizione del modello (note ..)
+description	= Title and text
+
+; * Autore
+author		= Mauro Donadio mauro.donadio@studio.unibo.it
+
+; * versione di AContent
+core		= 1.2
+
+; file / cartelle necessarie
+; files[]		=

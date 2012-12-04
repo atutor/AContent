@@ -1,0 +1,56 @@
+; structure
+name = creative based
+
+; description
+description	= creative based
+
+; * Autore
+author		= Catia Prandi catia.prandi2@unibo.it
+
+; * versione di AContent
+core		= 1.2
+
+; page template
+
+pageTemplName[] = overview
+min_overview = 1
+max_overview = 1
+
+
+pageTemplName[] = goals
+min_goals = 1
+max_goals = 1
+
+
+pageTemplName[] = activities
+min_activities = 1
+max_activities= x
+
+
+activities[] = activity
+min_activity = 1
+max_activity = x
+
+
+pageTemplName[] = eTivities
+min_eTivities = 1
+max_eTivities = x
+
+eTivities[] = eTivity
+min_eTivity = 1
+max_eTivity = x
+
+
+pageTemplName[] = references
+min_references = 1
+max_references = 1
+
+testName[] = eTivity
+
+
+
+
+
+
+
+

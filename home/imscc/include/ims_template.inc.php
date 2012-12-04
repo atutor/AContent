@@ -112,8 +112,15 @@ function print_organizations($parent_id,
 			} else {
 				$link .= '<item identifier="MANIFEST01_ITEM'.$content['content_id'].'" identifierref="MANIFEST01_RESOURCE'.$content['content_id'].'">'."\n";
 				$link .= $prefix.$space.'<title>'.$content['title'].'</title>'."\n$prefix$space";
+				
+				
+				
 			}
 			$html_link = '<a href="resources/'.$content['content_path'].$content['content_id'].'.html" target="body">'.$content['title'].'</a>';
+			
+			
+			
+			
 			
 			/* save the content as HTML files */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
@@ -151,20 +158,36 @@ function print_organizations($parent_id,
 					}
 				}
 				$forums_dependency .= $prefix.$space.'<dependency identifierref="Forum'.$current_forum['forum_id'].'_R" />';
+				
+				//catia
+				$link .= '<item identifier="MANIFEST01_ITEM_FORUM'.$current_forum['forum_id'].'" identifierref="Forum'.$current_forum['forum_id'].'_R">';
+				$link .= '<title>'.$current_forum['title'].'</title>';
+				$link .= '</item>';
+				
             }
 
 			 /** Test dependency **/
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+			require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
+			
 			$contentTestsAssocDAO = new ContentTestsAssocDAO();
+			$testDAO = new TestsDAO();
 			
 //			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
 //			$result = mysql_query($sql, $db);
 //			while ($row = mysql_fetch_assoc($result)){
 			$rows = $contentTestsAssocDAO->getByContent($content['content_id']);
+			
 			if (is_array($rows)) {
 				//add test dependency on top of forum dependency
 				foreach ($rows as $row)
 					$forums_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
+			
+					$link .= '<item identifier="MANIFEST01_ITEM_TEST'.$row['test_id'].'" identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'">';
+					$test = $testDAO->get($row['test_id']);
+					$link .= '<title>'.$test['title'].'</title>';
+					$link .= '</item>';
+			
 			}
 
 
@@ -499,6 +522,7 @@ function print_organizations($parent_id,
 
 //TODO***************BOLOGNA******************REMOVE ME***************/
 /* Export Forum */
+
 function print_resources_forum() {
 
     global $forum_list, $zipfile, $resources;           //$forum_list contiene tutti i forum DISTINTI associati ai contenuti. caricato in print_organizations()

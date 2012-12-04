@@ -12,7 +12,7 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
-define('TR_DEVEL', 1);
+define('TR_DEVEL', 0);
 define('TR_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
@@ -208,15 +208,19 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
  * $_SESSION['s_cid']: record the last content_id on (user_id + course_id) basis
  * $_sequence_links: resume/first/next/previous content links
  */ 
+if (intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
+else if (intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
 
-if (isset($_REQUEST['_cid']) && intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
-else if (isset($_POST['_cid']) && intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
+if (intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
+else if (intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
 
-if (isset($_REQUEST['_course_id']) && intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
-else if (isset($_POST['_course_id']) && intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
+/*
+ * catia
+ */
+$_struct_name = strval($_REQUEST['_struct_name']);
 
 // find course_id thru content_id
-if (isset($_content_id) && $_content_id > 0)
+if ($_content_id > 0)
 {
 	include_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 	$contentDAO = new ContentDAO();
@@ -230,7 +234,7 @@ if (isset($_content_id) && $_content_id > 0)
 //     @see ContentUtility::saveLastCid()
 // for the users who don't have the current course in "my courses" list,
 //     set the session var as $_GET['cid']
-if (isset($_course_id) && $_course_id > 0)
+if ($_course_id > 0)
 {
 	if ($_SESSION['user_id'] > 0)
 	{
@@ -253,14 +257,16 @@ if (isset($_course_id) && $_course_id > 0)
 
 // Generate contentManager. 
 // Must be called after generating $_SESSION['s_cid'] as it's used in contentManager class
-if (isset($_course_id) && $_course_id > 0)
+if ($_course_id > 0)
 {
 	global $contentManager;
 	
 	include_once(TR_INCLUDE_PATH. '../home/classes/ContentManager.class.php');
 	
 	$contentManager = new ContentManager($_course_id);
+	//echo("CIPPA ".count($contentManager->_menu_in_order));
 	$_sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
+	
 }
 
 /*** 10. register pages based on user's priviledge ***/

@@ -1,0 +1,140 @@
+/*
+ *	FORM MODULE
+ */
+#templates{
+	text-align:					center;
+}
+
+#templates #layout_list{
+	margin:						0px auto;
+	width:						99%;
+	margin-bottom:				10px;
+}
+
+#templates #themeScreenshot{
+	max-width:					200px;
+}
+
+#templates #apply_layout_to_content, #templates #apply_layout_to_course{
+	
+	/*border:						1px solid #333;*/
+	padding:					5px;
+	margin-top:					10px;
+	
+	background:					#F7F7F7;
+	border:						1px solid #999;
+	
+    /* CSS3 */
+    border-radius:              2px;
+    /* Safari and chrome */
+    -webkit-border-radius:      2px;
+    /* Firefox */
+    -moz-border-radius:         2px;
+    /* Linux browsers */
+    -khtml-border-radius:       2px;
+}
+
+#templates #apply_layout_to_content:hover, #templates #apply_layout_to_course:hover{
+	background:					#FFFFE0;
+	-moz-box-shadow:			0 0 5px gold;
+	-webkit-box-shadow:			0 0 5px gold;
+	box-shadow:					0 0 5px gold;
+}
+
+#templates #apply_layout_to_content{
+	margin-bottom:				10px;
+}
+
+/*
+ *	SHOW ACONTENT CONTENT PREVIEW
+ */
+#content-text{
+	margin:						0 auto;
+}
+#content-text{
+	padding:					10px;
+}
+
+/*
+ *	CONTENT EDIT FORM (page_template)
+ */
+
+#content-text #dnd{
+	padding:					10px;
+	border:						1px dashed transparent;
+}
+
+/*
+ * config page style
+ */
+.templates_system_fieldset{
+	border:						1px solid #CCC;
+
+    /* CSS3 */
+    border-radius:              2px;
+    /* Safari and chrome */
+    -webkit-border-radius:      2px;
+    /* Firefox */
+    -moz-border-radius:         2px;
+    /* Linux browsers */
+    -khtml-border-radius:       2px;
+}
+.templates_system_fieldset legend{
+	background:					#FFF;
+	border:						1px solid #CCC;
+	padding:					5px;
+	padding-left:				15px;
+	padding-right:				15px;
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+}
+.templates_system_fieldset table{
+	width:						100%;
+}
+.templates_system_fieldset table td:first-child{
+	width:						39%;
+}
+
+
+.boxPageTemplateToolbox{
+	background:					#FFF;
+	text-align:					right;
+}
+.boxPageTemplateToolbox ul{
+	padding:					0px;
+	margin:						0px;
+	list-style: 				none;
+	padding:					15px;
+	padding-left:				0px;
+	padding-right:				0px;
+}
+.boxPageTemplateToolbox ul li{
+	text-align:					right;
+	padding:					15px;
+	margin:						0px;
+	list-style: 				none;
+	display:					inline;
+}
+.boxPageTemplateToolbox ul li:hover{
+	background:					#F7F7F7;
+	cursor:						pointer;
+}
+.boxPageTemplateToolbox ul #pageTemplatePaste{
+	display:					none;
+}
+
+.insert_image:hover{
+	cursor:						default;
+}
+
+.page_template{
+	background-color:			#FFF;
+	width: 						100%;
+}

@@ -23,14 +23,13 @@ if ($_course_id <= 0)
 	exit;
 }
 
-if (isset($_sequence_links['resume']['url']))
+
+if (isset($_sequence_links['resume']['url'])) {
 	$url = $_sequence_links['resume']['url'];
-else if (isset($_sequence_links['first']['url']))
+} else if (isset($_sequence_links['first']['url'])) {
 	$url = $_sequence_links['first']['url'];
-else
-{
+} else
 	$url = TR_BASE_HREF.'home/course/course_start.php?_course_id='.$_course_id;
-}
 
 header('Location: '.$url);
 ?>

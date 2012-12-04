@@ -125,6 +125,24 @@ $parser->set_element_handler('openHandler','closeHandler');
 $contentDAO = new ContentDAO();
 $rows = $contentDAO->getContentByCourseID($course_id);
 
+
+
+/***************************************
+ * templates
+ * add the layout, if present
+ * donadiomauro@gmail.com
+ * 
+ * */
+include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
+
+$templates_theme	= new Layout('');
+
+// Array containing content and properties (such as content_id, course_id, layout ..)
+// the 'layout' property is required to add the proper content into the manifest file
+$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
+
+/***************************************/
+
 //if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
 //	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 //} else {
@@ -149,6 +167,7 @@ if ($cid) {
 	/* filter out the top level sections that we don't want */
 	$top_level = $content[$top_content_parent_id];
 	foreach($top_level as $page) {
+
 		if ($page['content_id'] == $cid) {
 			$content[$top_content_parent_id] = array($page);
 		} else {
@@ -165,9 +184,9 @@ $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
 
-
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
+
 
 $test_ids = array();	//global array to store all the test ids
 
@@ -228,9 +247,49 @@ $organizations_str = ob_get_contents();
 ob_end_clean();
 // end of modified by Cindy Qi Li on Jan 12, 2010
 
+
+/***************************************
+ * templates
+ * add content into the manifest file
+ * donadiomauro@gmail.com
+ * 
+ * */
+
+$mnf	= '';
+$mnf	.= "<resource identifier=\"MANIFEST01_RESOURCE".rand()."\" type=\"webcontent\">\n";
+$mnf	.= "<metadata/>\n";
+	// take all .css documents in "commoncartridge" folder
+	$css	= array();
+	for($i=0; $i < count($rows); $i++){
+		if(!in_array($rows[$i]['layout'], $css) AND $rows[$i]['layout'] != null){
+
+			$css[]	= $rows[$i]['layout'];
+
+			// add the .css file
+			$mnf	.= "\n<file href=\"resources/commoncartridge/".$rows[$i]['layout'].".css\"/>\n";
+
+			// add all the style folder content
+				// get all layout images
+				$images = glob("../../templates/layout/".$rows[$i]['layout']."/".$rows[$i]['layout']."/*.*");
+
+				for($j=0; $j<count($images); $j++){
+					$mnf	.= "<file href=\"resources/commoncartridge/".$rows[$i]['layout']."/".basename($images[$j])."\"/>\n";
+				}
+		}
+	}
+$mnf	.= "\n</resource>";
+
+$resources .= $mnf;
+
+
+/***************************************/
+
+
+
+
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}', '{GLOSSARY}',	'{RESOURCES}', '{TEST_ITEMS}', '{COURSE_TITLE}'),
-									array($organizations_str, $glossary_manifest_xml,	$resources, $test_xml_items, $ims_course_title),
+									array($organizations_str, $glossary_manifest_xml, $resources, $test_xml_items, $ims_course_title),
 									$ims_template_xml['final']);
 
 // generate the vcard for the instructor/author

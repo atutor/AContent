@@ -39,6 +39,7 @@ class ContentManager
 	var $content_length;
 	var $dao;
 	var $contentDAO;
+	
 
 	/* constructor	*/
 	function ContentManager($course_id) {
@@ -48,6 +49,9 @@ class ContentManager
 		$this->course_id = $course_id;
 		$this->dao = new DAO();
 		$this->contentDAO = new ContentDAO();
+		
+		
+		
 		
 		/* x could be the ordering or even the content_id	*/
 		/* don't really need the ordering anyway.			*/
@@ -68,18 +72,24 @@ class ContentManager
 
 		$rows = $this->contentDAO->getContentByCourseID($this->course_id);
 		
+		
 		if (is_array($rows)) {
 			foreach ($rows as $row) {
+				
+				
+				
 				$num_sections++;
 				$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 															'ordering'	=> $row['ordering'], 
 															'title'		=> htmlspecialchars($row['title']),
-															'content_type' => $row['content_type']);
+															'content_type' => $row['content_type'],
+															'optional' => $row['optional']);
 	
 				$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
 														'title'				=> htmlspecialchars($row['title']),
 														'ordering'			=> $row['ordering'],
-														'content_type' => $row['content_type']);
+														'content_type' => $row['content_type'],
+														'optional' => $row['optional']);
 	
 				/* 
 				 * add test content asscioations
@@ -225,6 +235,7 @@ class ContentManager
 			$this->getContentPathRecursive($parent_id, $path);
 		}
 	}
+	
 
 	function addContent($course_id, $content_parent_id, $ordering, $title, $text, $keywords, 
 	                    $related, $formatting, $head = '', $use_customized_head = 0, 
@@ -240,12 +251,14 @@ class ContentManager
 		         WHERE ordering>=$ordering 
 		           AND content_parent_id=$content_parent_id 
 		           AND course_id=$_course_id";
+		 
 		$this->contentDAO->execute($sql);
-
+		
 		/* main topics all have minor_num = 0 */
 		$cid = $this->contentDAO->Create($_course_id, $content_parent_id, $ordering, 0, $formatting,
 		                          $keywords, '', $title, $text, $head, $use_customized_head,
 		                          $test_message, $content_type);
+		
 		return $cid;
 	}
 	
@@ -535,6 +548,7 @@ class ContentManager
 	 * @return an array of the next content node
 	 */
 	function getNextContent($content_id) {
+		//echo("dentro a get");
 		if (is_array($this->_menu_in_order))
 		{
 			// find out the location of the $content_id
@@ -562,8 +576,10 @@ class ContentManager
 				    	         'ordering'		=> $this->_menu_info[$this->_menu_in_order[$i]]['ordering'],
 				        	     'title'		=> $this->_menu_info[$this->_menu_in_order[$i]]['title']));
 			}
-		}
+		} 
+		
 		return NULL;
+		
 	}
 	
 	/* @See include/header.inc.php */
@@ -573,7 +589,7 @@ class ContentManager
 		$sequence_links = array();
 		
 		$first = $this->getNextContent(0); // get first
-		
+		//echo("TITOLO : ". $first['title']);
 		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}
@@ -707,6 +723,9 @@ function initContentMenu() {
 		{
 			echo "\n".'
   <div class="menuedit">
+  	<a href="'.$_base_path.'home/editor/edit_content_struct.php?_course_id='.$_course_id.'">
+      <img id="img_create_top_folder" src="'.$_base_path.'images/addstruct.gif" alt="Add top structure" title="Add top structure" style="border:0;height:1.2em" />
+    </a>'."\n".'
     <a href="'.$_base_path.'home/editor/edit_content_folder.php?_course_id='.$_course_id.'">
       <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
     </a>'."\n".'
@@ -859,6 +878,7 @@ initContentMenu();
 			echo '<div id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {
+				
 				$link = '';
 				//tests do not have content id
 				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
@@ -917,8 +937,15 @@ initContentMenu();
 					
 					// instructors have privilege to delete content
 					if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !isset($content['test_id']) && !Utility::isMobileTheme()) {
-						$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+					//catia
+						if($content['optional'] == 1) 
+						//1 the content is optional
+							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						else
+						//0 the content is mandatory
+							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="mandatory page"/>';
 					}
+					
 				} 
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
@@ -949,7 +976,14 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
-							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+						
+								//catia
+							if($content['optional'] == 1) 
+							//1 the content is optional
+								$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							else
+							//0 the content is mandatory
+								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="Mandatory content" style="margin-left:2px;"/>';
 						}
 					}
 					else

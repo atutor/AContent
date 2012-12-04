@@ -1,0 +1,296 @@
+/*########################################
+   Codice per i bottoni paste e copy
+########################################*/
+.boxPageTemplateTool {
+    background: none repeat scroll 0 0 #FFFFFF;
+    text-align: right;
+}
+.boxPageTemplateTool ul {
+    list-style: none outside none;
+    margin: 0;
+    padding: 15px 0;
+}
+.boxPageTemplateTool ul li {
+    display: inline;
+    list-style: none outside none;
+    margin: 0;
+    padding: 15px;
+    text-align: right;
+}
+.boxPageTemplateTool ul li:hover {
+    background: none repeat scroll 0 0 #F7F7F7;
+    cursor: pointer;
+}
+.boxPageTemplateTool ul #modelPaste {
+    display: none;
+}
+
+
+/*########################################
+	Box that displays
+	a list of available page_template
+########################################*/
+
+.boxPageTemplate{
+	display:					none;
+	
+	background:					#F7F7F7;
+	border:						1px solid #DDD;
+
+	vertical-align:				top;
+
+	margin:						0px auto;
+	margin-bottom:				10px;
+	margin-top:					10px;
+
+	height:						300px;
+
+	width:						100%;
+
+	overflow:					auto;
+	overflow-y:					scroll;
+	overflow-x:					hidden;
+	-ms-overflow-y:				scroll;
+	-ms-overflow-x:				hidden;
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+    
+    text-align:					center;
+    margin:						0px auto;
+}
+.boxPageTemplate *{
+	padding:					0px;
+	margin:						0px auto;
+	
+	list-style:					none;
+	text-align:					center;
+}
+.boxPageTemplate ul{
+	width:						auto;
+	min-width:					120px;
+
+}
+.boxPageTemplate ul li{
+
+	padding:					0px;
+	margin:						0px auto !important;
+	border:						1px solid transparent;
+
+	height:						136px;
+	width:						120px;
+
+	display:					inline;
+	float:						left;
+	
+}
+
+.boxPageTemplate ul li table .desc{
+	width:						120px;
+	margin:						0px auto;
+
+	padding-top:				5px;
+	padding-bottom:				5px;
+
+	border-top:					1px solid #EEE;
+
+	line-height:				20px;
+	/*overflow:					hidden;*/
+}
+
+.boxPageTemplate img{
+	border:						1px solid transparent;
+	width:						80px;
+	height:						80px;
+	padding:					10px;
+}
+.boxPageTemplate li:link, .boxPageTemplate li:visited{
+	padding:					40px;
+	border:						1px solid blue;
+	
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+}
+
+.boxPageTemplate li:hover, .boxPageTemplate li:active{
+
+	cursor:						pointer;
+	background-color:			#FFF;
+
+	border:						1px solid #DDD;
+}
+
+/*########################################
+	Single box model
+########################################*/
+
+/* box */
+.page_template, .noPageTemplate{
+	/*padding:					10px;*/
+
+	margin-top:					10px;
+	margin-bottom:				10px;
+}
+.page_template{
+	background-color:			#FFF;
+	width: 						100%;
+}
+
+/* button "delete module" (initially hidden) */
+.page_template .removePageTemplateTopBar{
+	background:					transparent;
+	/*display:					none;*/
+}
+
+/* label 'X' of "delete module" */
+.page_template .removePageTemplate{
+	text-align:					center;
+	background:					#FFF;
+	width:						40px;
+	min-width:					40px;
+	height:						25px;
+	line-height:				25px;
+
+	border:						1px solid #CCC;
+	border-bottom:				0;
+	border-collapse:			collapse;
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+
+	/* === */
+    
+    border-bottom-left-radius:			0px;
+    border-bottom-right-radius:			0px;
+
+    -webkit-border-bottom-left-radius:	0px;
+    -webkit-border-bottom-right-radius:	0px;
+
+    -moz-border-radius-bottomleft:		0px;
+    -moz-border-radius-bottomleft:		0px;
+    
+    -khtml-border-radius:				3px 3px 0px 0px;
+    
+}
+
+/* hover label 'X' */
+.page_template .removePageTemplate:hover{
+	background:					#FDD;
+	cursor:						pointer;
+}
+
+/* generic model content */
+.page_template .pageTemplateContent{
+
+	padding:					10px;
+	padding-bottom:				10px;
+	padding-top:				15px;
+
+
+	border:						1px solid #DDD;
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+
+	/* === */
+
+    border-top-left-radius:			0px;
+	-webkit-border-top-left-radius:	0px;
+    -moz-border-radius-topleft:		0px;
+    -khtml-border-radius:			0px 3px 3px 3px;
+}
+
+/* hover generic content */
+.page_template .pageTemplateContent:hover{
+
+	border:						1px dashed #CCC;
+}
+/*.noPageTemplate:hover{*/
+.noPageTemplate{
+	background:					#F0F8FF;
+}
+.nopage_templateorting{
+	background:					#F0F8FF;
+}
+
+/* each new model must become visible */
+#newPageTemplate{
+	display:					none;
+}
+
+.page_template .sortTools{
+	/*border-top:					1px solid #EEE;*/
+	padding:					5px;
+	padding-top:				10px;
+	padding-bottom:				0px;
+	padding-right:				0px;
+	text-align:					right;
+}
+.page_template .sortTools img{
+	cursor:						pointer;
+}
+.page_template .sortTools img{
+	padding-right:				10px;
+}
+.page_template .sortTools img:last-child{
+	padding-right:				0px;
+}
+
+/* textarea */
+#body_text .pageTemplateContent:hover{
+	background-color:			#F0F8FF;
+}
+
+
+
+
+
+
+
+/* old content */
+.oldContent{
+
+	border:						1px dashed #DDD;
+
+    /* CSS3 */
+    border-radius:              5px;
+    /* Safari and chrome */
+    -webkit-border-radius:      5px;
+    /* Firefox */
+    -moz-border-radius:         5px;
+    /* Linux browsers */
+    -khtml-border-radius:       5px;
+
+	padding:					10px;
+	margin:						0px;
+}
+
+/* hover of old content */
+.oldContent:hover{
+	border:						1px dashed #008;
+}

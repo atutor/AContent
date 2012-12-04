@@ -23,7 +23,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 
 	<div class="row">
 		<select name="preset_num">
-			<optgroup label="<?php echo _AT('presets'); ?>">
+			<optgroup label="<?php echo _AT('presets'); ?>" >
 			<?php // presets
 				foreach ($this->likert_preset as $val => $preset) {
 					echo '<option value="'.$val.'">'.$preset[0].' - '.$preset[count($preset)-1].'</option>';

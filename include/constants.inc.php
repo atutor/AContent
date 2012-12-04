@@ -28,6 +28,7 @@ $_config_defaults['default_language']   = 'en';
 $_config_defaults['use_captcha']		= 0;	//use captcha?
 $_config_defaults['latex_server']       = 'http://www.atutor.ca/cgi/mimetex.cgi?'; // the full URL to an external LaTeX parse
 $_config_defaults['pref_defaults']      = 'a:1:{s:10:"PREF_THEME";s:7:"default";}';
+$_config_defaults['enable_template']    = 1; //use template 
 $_config = $_config_defaults;
 
 define('VERSION',		'1.2');
@@ -51,6 +52,7 @@ define('TR_STATUS_DISABLED', 0);
 define('TR_STATUS_ENABLED', 1);
 define('TR_STATUS_DEFAULT', 2);
 define('TR_STATUS_UNCONFIRMED', 3);
+define('TR_STATUS_PERSONAL', 4);
 
 // User role
 define('TR_USERROLE_AUTHOR', 1);

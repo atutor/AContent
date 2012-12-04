@@ -14,10 +14,13 @@ define('TR_INCLUDE_PATH', '../../include/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 global $_current_user, $_course_id, $_content_id, $contentManager;
 
 $cid = $_content_id;
+$courseid = $_course_id;
+
 
 if ($cid == 0) {
 	header('Location: '.$_base_href.'index.php');
@@ -203,11 +206,31 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	if (intval($_GET['alternative']) > 0) {
 		$content = ContentUtility::applyAlternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
 	} else {
+		
 		$content = ContentUtility::applyAlternatives($cid, $content_row['text']);
+	/*	if($content == 'null') {
+			if(isset($_current_user) && $_current_user->isAuthor($course_id)) {
+			
+					//$coursesDAO = new CoursesDAO();
+					$contentDAO = new ContentDAO();
+					$row = $contentDAO->get($cid);
+					
+					if($row['structure']!='') 
+						$content = '<script language="javascript" type="text/javascript">$(\'#activate_page_template\').prop(\'checked\', true).trigger("change");</script>';
+						
+					
+					
+			} else {
+				$content = '';
+				$msg->addInfo('NO_PAGE_CONTENT');
+			}
+		}*/
+				
+		
+		
 	}
 
     $content = ContentUtility::formatContent($content, $content_row['formatting']);
-
 	$content_array = ContentUtility::getContentTable($content, $content_row['formatting']);
 	
 	$savant->assign('content_table', $content_array[0]);
@@ -232,9 +255,14 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	}
 }
 
+
+
 $savant->assign('content_info', _AT('page_info', AT_date(_AT('page_info_date_format'), $content_row['last_modified'], TR_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], TR_DATE_MYSQL_DATETIME)));
 $savant->assign('course_id', $_course_id);
-$savant->assign('isAdmin', $_current_user->isAdmin());
+if ($_current_user) {
+	$savant->assign('isAdmin', $_current_user->isAdmin());
+}
+
 require(TR_INCLUDE_PATH.'header.inc.php');
 
 $savant->display('home/course/content.tmpl.php');

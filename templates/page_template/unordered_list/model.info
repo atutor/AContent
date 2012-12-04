@@ -1,0 +1,16 @@
+; * indica i campi obbligatori
+
+; * Nome pubblico del modello
+name		= Unordered list
+
+; * Descrizione del modello (note ..)
+description	= Unordered list
+
+; * Autore
+author		= Mauro Donadio mauro.donadio@studio.unibo.it
+
+; * versione di AContent
+core		= 1.2
+
+; file / cartelle necessarie
+; files[]		=

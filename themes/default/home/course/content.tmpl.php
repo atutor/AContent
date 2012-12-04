@@ -66,9 +66,42 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 	echo $this->content_table;
 ?>
 
-<div id="content-text">
-	<?php echo $this->body; ?>
+
+
+    <!-- old
+    <div id="content-text">
+    -->
+<?php
+// code for the selection of chosen by layout
+define('TR_INCLUDE_PATH', '../../include/');
+global $associated_forum, $_course_id, $_content_id;
+include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+
+$dao = new DAO();
+$cid = $_content_id;
+$sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+$result=$dao->execute($sql);
+    if(is_array($result))
+    {
+        foreach ($result as $support) {
+           //echo $support['head'];
+           $choice_layout=$support['layout'];
+           break;
+        }  
+    }   
+?>
+
+<div id="content">
+  <!--  <div id="content"> -->
+<link  rel="stylesheet" href="<?php echo TR_BASE_HREF; ?>templates/layout/<?php echo $choice_layout; ?>/<?php echo $choice_layout; ?>.css"  type="text/css" />
+            <?php echo $this->body; ?>
+   <!-- </div> -->
 </div>
+
+
+
 
 <?php if (!empty($this->test_ids)): ?>
 <div id="content-test" class="input-form">

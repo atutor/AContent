@@ -50,6 +50,9 @@ $back_to_page = $menu->getBackToPage();
 $_pages = $menu->getAllPages();   // add "param" element into $_pages items
 
 
+
+
+
 $savant->assign('path', $_breadcrumb_path);
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('current_top_level_page', $_current_root_page);
@@ -63,7 +66,7 @@ if (isset($_pages[$current_page]['title'])) {
 	$_page_title = _AT($_all_pages[$current_page]['title_var']);
 }
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
-if($_current_user->isAdmin()  && $_SESSION['course_id']){
+if($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
 	$owner_dao = new DAO();
 	$sql = "SELECT U.first_name, U.last_name, U.login, U.user_id FROM ".TABLE_PREFIX."users U, ".TABLE_PREFIX."courses C WHERE C.course_id = $_SESSION[course_id] AND C.user_id = U.user_id";
 	$course_owner = $owner_dao->execute($sql);
@@ -89,6 +92,8 @@ if ($myLang->isRTL()) {
 	$savant->assign('rtl_css', '');
 }
 
+
+
 $_tmp_base_href = TR_BASE_HREF;
 if (isset($course_base_href) || isset($content_base_href)) {
 	$_tmp_base_href .= $course_base_href;
@@ -108,6 +113,9 @@ $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
+
+
+
 
 // course categories for search tool
 require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
@@ -139,11 +147,10 @@ $savant->assign('course_id', $_course_id);
 if ($framed || $popup) {
 	$savant->assign('framed', 1);
     $savant->assign('popup', 1);
-
-	$savant->display('include/fm_header.tmpl.php');
+    $savant->display('include/fm_header.tmpl.php');
 
 } else {
-    $savant->display('include/header.tmpl.php');
+	$savant->display('include/header.tmpl.php');
 }
 
 ?>
