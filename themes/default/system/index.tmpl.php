@@ -125,8 +125,12 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 			<td align="left"><label for="latex_server"><?php echo _AT('latex_server'); ?></label>:</td>
 			<td align="left"><input id="latex_server" name="latex_server" size="50" type="text" value="<?php if (isset($_POST['latex_server'])) echo stripslashes(htmlspecialchars($_POST['latex_server'])); else echo stripslashes(htmlspecialchars($this->config['latex_server'])); ?>" /></td>
 		</tr>
-                
-<!--
+		<tr>
+			<td align="left" colspan="2">
+				<small>&middot; <?php echo _AT('latex_server_info'); ?></small>
+			</td>
+		</tr>
+               <!--
      Inserting a new radio button to enable or disable make the three template
      Layout / Page / Structure
 -->
@@ -175,12 +179,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
                     </td>         
                 </tr>
 
-		<tr>
-			<td align="left" colspan="2">
-				<small>&middot; <?php echo _AT('latex_server_info'); ?></small>
-			</td>
-		</tr>
-                
+ 
 		<tr>
 			<td colspan="2">
 			<p class="submit_button">
