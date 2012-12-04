@@ -35,6 +35,16 @@ if (isset($_POST['cancel'])) {
 		$_POST['illegal_extentions'] = str_replace(array('  ', ' '), array(' ','|'), $_POST['illegal_extentions']);
 		$_POST['latex_server']       = (trim($_POST['latex_server'])==''?$_config['latex_server']:trim($_POST['latex_server']));
 		$_POST['use_captcha']        = $_POST['use_captcha'] ? 1 : 0;
+		
+/* Control the general approach chosen by the user for the template */               
+// ENABLE 1
+// DISABLE 0
+// PERSONAL 4
+               if($_POST['enable_template'] != TR_STATUS_PERSONAL)
+                    $_POST['enable_template']  = $_POST['enable_template'] ? 1 : 0;
+               else{
+                   $_POST['enable_template']  = TR_STATUS_PERSONAL;
+               }
 	
 		//check that all values have been set	
 		if (!$_POST['site_name']) {
@@ -61,6 +71,40 @@ if (isset($_POST['cancel'])) {
 			$_config['illegal_extentions'] = $addslashes($_POST['illegal_extentions']);
 			$_config['latex_server'] = $addslashes($_POST['latex_server']);
 			$_config['use_captcha'] = $_POST['use_captcha'];
+                        
+                        /* Inserting commands for the three checkboxes that manage the choice of template */                        
+                        $_config['enable_template']  = $_POST['enable_template'];
+                        if( $_POST['enable_template'] == TR_STATUS_ENABLED){
+                            $_config['enable_template_layout']  = $_POST['enable_template'];
+                            $_config['enable_template_page']  =$_POST['enable_template'];
+                            $_config['enable_template_structure']  = $_POST['enable_template'];     
+                        }elseif($_POST['enable_template']== TR_STATUS_DISABLED){
+                            $_config['enable_template_layout']  =$_POST['enable_template'];
+                            $_config['enable_template_page']  = $_POST['enable_template'];
+                            $_config['enable_template_structure']  =$_POST['enable_template'];
+                        }else{
+                            if($_POST['enable_template_layout']==TR_STATUS_ENABLED)
+                            {
+                                $_config['enable_template_layout'] = $_POST['enable_template_layout'];
+                                $_POST['enable_template_layout']=TR_STATUS_ENABLED;
+                            }
+                            else
+                                $_config['enable_template_layout'] = TR_STATUS_DISABLED;
+
+                            if($_POST['enable_template_page']==TR_STATUS_ENABLED)
+                            {
+                                $_config['enable_template_page'] = $_POST['enable_template_page'];
+                                $_POST['enable_template_page']=TR_STATUS_ENABLED;
+                            }
+                            else
+                                $_config['enable_template_page'] = TR_STATUS_DISABLED;
+
+                            if($_POST['enable_template_structure']==TR_STATUS_ENABLED)
+                                $_config['enable_template_structure'] = $_POST['enable_template_structure'];
+                            else
+                                $_config['enable_template_structure'] = TR_STATUS_DISABLED;  
+                        }  
+			
 		}
 		
 		// set $_config['pref_defaults']
@@ -76,6 +120,12 @@ if (isset($_POST['cancel'])) {
 		$_config['latex_server'] = $_config_defaults['latex_server'];
 		$_config['use_captcha'] = $_config_defaults['use_captcha'];
 		$_config['pref_defaults'] = $_config_defaults['pref_defaults'];
+                /* Command template*/
+                $_config['enable_template']  = $_config_defaults['enable_template'];           
+                $_config['enable_template_layout']  = $_config_defaults['enable_template'];  
+                $_config['enable_template_page']  = $_config_defaults['enable_template'];  
+                $_config['enable_template_structure']  = $_config_defaults['enable_template'];  
+		
 	}
 		
 	if (!$msg->containsErrors()) {

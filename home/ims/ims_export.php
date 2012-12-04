@@ -186,6 +186,24 @@ $parser->set_element_handler('openHandler','closeHandler');
 $contentDAO = new ContentDAO();
 $rows = $contentDAO->getContentByCourseID($course_id);
 
+
+
+/***************************************
+ * templates
+ * add the layout, if present
+ * donadiomauro@gmail.com
+ * 
+ * */
+include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
+
+$templates_theme	= new Layout('');
+
+// Array containing content and properties (such as content_id, course_id, layout ..)
+// the 'layout' property is required to add the proper content into the manifest file
+$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
+
+/***************************************/
+
 //if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
 //	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 //} else {
@@ -315,6 +333,43 @@ $frame = str_replace(	array('{COURSE_TITLE}',		'{FIRST_ID}', '{PATH}', '{COURSE_
 $html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
 							   array($ims_course_title, $course_language_charset, $course_language_code),
 							   $html_mainheader);
+
+
+/***************************************
+ * templates
+ * add content into the manifest file
+ * donadiomauro@gmail.com
+ * 
+ * */
+
+$mnf	= '';
+$mnf	.= "<resource identifier=\"MANIFEST01_RESOURCE".rand()."\" type=\"webcontent\">\n";
+$mnf	.= "<metadata/>\n";
+	// take all .css documents in "commoncartridge" folder
+	$css	= array();
+	for($i=0; $i < count($rows); $i++){
+		if(!in_array($rows[$i]['layout'], $css) AND $rows[$i]['layout'] != null){
+
+			$css[]	= $rows[$i]['layout'];
+
+			// add the .css file
+			$mnf	.= "\n<file href=\"resources/commoncartridge/".$rows[$i]['layout'].".css\"/>\n";
+
+			// add all the style folder content
+				// get all layout images
+				$images = glob("../../templates/layout/".$rows[$i]['layout']."/".$rows[$i]['layout']."/*.*");
+
+				for($j=0; $j<count($images); $j++){
+					$mnf	.= "<file href=\"resources/commoncartridge/".$rows[$i]['layout']."/".basename($images[$j])."\"/>\n";
+				}
+		}
+	}
+$mnf	.= "\n</resource>";
+
+$resources .= $mnf;
+
+
+/***************************************/
 
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURSE_TITLE}'),

@@ -152,9 +152,29 @@ trans.utility.selected;
     }
   };
   
+  
+  //catia
+  //toogle structure outline  (in create course)
+  trans.utility.toggleOutline = function (struct_name, expand_text, collapse_text)
+  {
+	  if (jQuery("#a_outline_"+struct_name).attr("title") == "outline_collapsed") {
+		  jQuery("#a_outline_"+struct_name).attr("title", "outline_expanded");
+		  jQuery("#a_outline_"+struct_name).text(expand_text);
+		  
+	    }
+	    else {
+	      jQuery("#a_outline_"+struct_name).attr("title", "outline_collapsed");
+	      jQuery("#a_outline_"+struct_name).text(collapse_text);
+	    }
+	    
+	    jQuery("#div_outline_"+struct_name).slideToggle();
+	  
+  };
+  
   // toggle content folder in side menu "content navigation"
   trans.utility.toggleFolder = function (cid, expand_text, collapse_text, course_id)
   {
+	  
     if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
       jQuery("#tree_icon"+cid).attr("src", tree_expand_icon);
       jQuery("#tree_icon"+cid).attr("alt", expand_text);
@@ -169,6 +189,25 @@ trans.utility.selected;
     }
     
     jQuery("#folder"+cid).slideToggle();
+  };
+  
+  trans.utility.toggleFolderStruct = function (count, pageid, expand_text, collapse_text, tree_collapse_icon, tree_expand_icon)
+  {
+	 
+	 
+	  if (jQuery("#tree_icon_"+pageid+count).attr("src") == tree_collapse_icon) {
+		  
+		  jQuery("#tree_icon_"+pageid+count).attr("src", tree_expand_icon);
+	      jQuery("#tree_icon_"+pageid+count).attr("alt", expand_text);
+	      jQuery("#tree_icon_"+pageid+count).attr("title", expand_text);
+	  } else {
+		  
+		  jQuery("#tree_icon_"+pageid+count).attr("src", tree_collapse_icon);
+	      jQuery("#tree_icon_"+pageid+count).attr("alt", collapse_text);
+	      jQuery("#tree_icon_"+pageid+count).attr("title", collapse_text);
+	  }
+	  
+	  jQuery("#folder_"+pageid+count).slideToggle();
   };
   
   // toggle elements in side menu

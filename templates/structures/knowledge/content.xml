@@ -1,0 +1,48 @@
+<?xml version="1.0" ?>
+<structure name="knowledge">
+  <page max="1" min="1" name="overview">
+    <page_templates>
+      <page_template name="overview_knowledge"/>
+    </page_templates>
+  </page>
+  <page max="1" min="1" name="goals">
+    <page_templates>
+      <page_template name="goals_knowledge"/>
+    </page_templates>
+  </page>
+  <page max="1" min="1" name="references">
+    <page_templates>
+      <page_template name="unordered_list"/>
+    </page_templates>
+  </page>
+  <folder max="x" min="1" name="contents">
+    <page max="x" min="2" name="content">
+      <page_templates>
+        <page_template name="plain_text"/>
+        <page_template name="title_text"/>
+        <page_template name="title_2_columns"/>
+        <page_template name="title_3_columns"/>
+        <page_template name="title_image"/>
+        <page_template name="title_image_text"/>
+      </page_templates>
+    </page>
+	<page max="1" min="1" name="self_assesment">
+    <page_templates/>
+	<tests>
+      <test name="true_or_false"/>
+      <test name="multiple_choise"/>
+      <test name="matching_graphical"/>
+      <test name="matching_simple"/>
+    </tests>
+  	</page>
+    <page max="1" min="0" name="forum">
+      <page_templates/>
+	  <forum name="forum"/>
+    </page>
+  </folder>
+	<page max="1" min="0" name="retrieval_for_learning">
+    <page_templates>
+      <page_template name="plain_text"/>
+    </page_templates>
+  </page>
+</structure>

@@ -13,10 +13,17 @@ global $_current_user;
 global $languageManager;
 
 require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
+require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$this->course_id; ?>" name="form">
 <input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
+<?php if(isset( $_REQUEST['_struct_name'])) { 
+
+ 	echo '<input type="hidden" name="_struct_name" value="'. $_REQUEST['_struct_name']. '" />';
+}
+?>
+
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('course_property'); ?></legend>
@@ -70,6 +77,33 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 			<td align="left"><label for="description"><?php echo _AT('description'); ?></label></td>
 			<td align="left"><textarea id="description" cols="45" rows="2" name="description"><?php if (isset($_POST['description'])) echo stripslashes(htmlspecialchars($_POST['description'])); else echo stripslashes(htmlspecialchars($this->course_row['description'])); ?></textarea></td>
 		</tr>
+		<!--  catia GOAL -->
+		<!--  
+		<tr>
+		<td align="left"><p>Goals</p></td>
+		<td>
+			<fieldset>
+				<legend>Choose the lesson's goals</legend>
+						 <?php 
+						 /*$goals_manager = new GoalsManager();
+						 
+						 $goals = $goals_manager->getGoals();
+						 	foreach ($goals as $goal) {
+						 		
+						 		echo '<div style="display:inline-block">';
+						 		echo '<input id="'.$goal.'" type="checkbox" name="'.$goal.'"></input>';
+						 		echo '<label for="'.$goal.'">'.$goal.'</label>';
+								echo '</div>';
+								
+						 	}*/
+						 
+						 ?>
+						
+				
+			</fieldset>
+			
+		</td>	
+		</tr> -->
 		
 		<tr>
 			<td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>
@@ -85,9 +119,12 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 
 		<tr>
 			<td colspan="2">
+			
+			
 			<p class="submit_button">
-				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" class="submit" /> 
+				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" class="submit" />
 				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" class="submit" />
+				
 			</p>
 			</td>
 		</tr>

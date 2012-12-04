@@ -17,6 +17,22 @@
   src: local('Droid Sans'), url('fonts/DroidSans-Bold.ttf') format('truetype');
 }
 
+div.activ_template_page{
+    background-color: #efefef;
+    display: block;
+}
+img.table_template_page{
+    position:relative;
+    width: 80px;
+    height: 90px;
+    padding: 10px;
+}
+img.table_template_page:hover{
+    background-color:white;
+    
+}
+
+
 @font-face {
   font-family: 'Droid Sans';
   font-style: normal;
@@ -27,6 +43,7 @@
 html,body{
   height:100%;
 }
+
 /* main body attributes */
 body {
   font-family: 'Droid Sans', Cantarell, Tahoma, Geneva,sans-serif;;
@@ -387,7 +404,7 @@ h2 #title {
 }
 a#back-to {
   padding-left: 20px;
-  background-image: url(images/back.gif);
+  /*background-image: url(images/back.gif);*/
   background-repeat: no-repeat;
   background-position: 0px 0px;
 }

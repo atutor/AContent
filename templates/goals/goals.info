@@ -1,0 +1,10 @@
+type[] = knowledge
+type[] = meta-competency
+type[] = creative
+
+knowledge = remembering, classifying, listing, executing task/exercise, retrieving
+
+meta-competency = outlining, recognising, interpreting, carryng out, applying/implementing, verifing/testing, explaining, exemplifing, summarizing
+
+creative = comparizing, describing, finding solutions, hypotesising, recognize key problems, designing, planning, producing/constructing, inventing/devising
+

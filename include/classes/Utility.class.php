@@ -157,7 +157,7 @@ class Utility {
 		global $_current_user, $_course_id, $msg, $oauth_import;
 		
 		// Add isAdmin() to allow all privileges for admins
-		if ($privilegeToValidate == '' || $privilegeToValidate == 0 || $_current_user->isAdmin()) return true;
+		if ($privilegeToValidate == '' || $privilegeToValidate == 0 || ($_current_user && $_current_user->isAdmin())) return true;
 		
 		$authenticated = true; // default
 		/* make sure the user is the author of the current course */

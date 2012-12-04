@@ -25,6 +25,10 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 
 
 <div class="input-form">
+<div id="feedback">
+	<p>This version is a prototype for the BEAT project. Don't use it as a repository!</p>
+	<p>To get more information contact: catia.prandi2_at_unibo.it</p>
+</div>
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 <?php if (is_array($this->courses)) { ?>
   <div class="results">
@@ -42,7 +46,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	$start_num = ($this->curr_page_num - 1) * RESULTS_PER_PAGE;
 	$end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
 ?>
-      <li class="course" style="font-weight:bold">
+      <li class="course" style="font-weight:bold"> <!-- Lessons 1-6 of 6 -->
         <div><?php echo ((strstr($caller_script, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
         <?php  
         if($_SESSION['user_id']){ ?>
@@ -112,5 +116,7 @@ else {
 //	echo _AT("no_results_for_keywords", $this->search_text);
 	echo _AT("none_found");
 } // end of else?>
+
+
 </fieldset>
 </div>

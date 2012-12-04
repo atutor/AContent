@@ -11,18 +11,14 @@
 /************************************************************************/
 
 ?>
-	<div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_content'); ?></legend>
-		<table class="form_data">
-		<!-- tr><td>
-		<?php echo _AT('create_content_1'); ?>
-		<a href="home/course/content_wizard.php"><?php echo _AT('content_wizard'); ?></a><br /><br />
-		</td></tr -->
 
-		<tr><td>
-		<?php echo _AT('create_content_2', TR_BASE_HREF.'home/editor/edit_content.php?_course_id='.$this->course_id, TR_BASE_HREF.'home/editor/edit_content_folder.php?_course_id='.$this->course_id); ?>
-		</td></tr>
-		</table>
-	</fieldset>
-	</div>
+<div align="center">
+	<?php output_tabs($current_tab); ?>
+</div>
+<div class="input-form" style="width: 95%;">
+	<?php include('course_start_tabs/'.$tabs[$current_tab][1]); ?>
+	
+	
+</div>
+
 

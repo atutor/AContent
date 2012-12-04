@@ -16,6 +16,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
 
+
 global $_current_user;
 
 // clean up the session vars from the previous course
@@ -49,6 +50,16 @@ if (isset($catid)) {
 } else {
 	$courses = $coursesDAO->getByMostRecent();
 }
+
+// 22/11/2012
+
+$name_struct=$_GET['stuid'];
+if(isset($_GET['stuid'])){
+    //die($name_struct); OK Competenze digitali
+    $courses = $coursesDAO->getByStructure($name_struct);
+}
+
+
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 

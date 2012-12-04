@@ -1,0 +1,87 @@
+<?xml version="1.0" ?>
+<structure name="competenze-digitali">
+  <folder max="1" min="0" name="Approfondimenti">
+    <page max="x" min="1" name="Approfondimento">
+      <page_templates>
+        <page_template name="plain_text"/>
+        <page_template name="title_image"/>
+        <page_template name="title_image_text"/>
+        <page_template name="title_subtitle"/>
+        <page_template name="title_text"/>
+      </page_templates>
+    </page>
+  </folder>
+  <page max="1" min="1" name="Linee_guida_per_il_docente">
+    <page_templates>
+      <page_template name="plain_text"/>
+    </page_templates>
+  </page>
+  <folder max="1" min="1" name="Argomenti">
+    <folder max="x" min="1" name="Nome_Argomento">
+      <page max="x" min="0" name="Attività">
+        <page_templates>
+          <page_template name="title_text"/>
+        </page_templates>
+      </page>
+      <page max="x" min="1" name="Contenuto">
+        <page_templates>
+          <page_template name="plain_text"/>
+          <page_template name="title_image"/>
+          <page_template name="title_image_text"/>
+          <page_template name="title_subtitle"/>
+          <page_template name="title_text"/>
+        </page_templates>
+      </page>
+      <page max="x" min="0" name="Valutazione/Autovalutazione">
+        <page_templates/>
+		<tests/>
+      </page>
+      <page max="1" min="1" name="Obiettivi_specifici">
+        <page_templates>
+          <page_template name="obiet_arg_comp_dig"/>
+        </page_templates>
+      </page>
+    </folder>
+  </folder>
+  <page max="1" min="1" name="Informazioni_sul_modulo">
+    <page_templates>
+      <page_template name="info_comp_dig"/>
+    </page_templates>
+  </page>
+  <folder max="1" min="1" name="Riferimenti">
+    <page max="1" min="1" name="Bibliografia">
+      <page_templates>
+        <page_template name="unordered_list"/>
+      </page_templates>
+    </page>
+    <page max="1" min="0" name="Strumenti">
+      <page_templates>
+        <page_template name="title_text"/>
+      </page_templates>
+    </page>
+    <page max="1" min="1" name="Sitografia">
+      <page_templates>
+        <page_template name="unordered_list"/>
+      </page_templates>
+    </page>
+  </folder>
+  <page max="1" min="1" name="Prova_finale">
+	<page_templates/>   
+ 	<tests>
+      <test name="multiple_choise"/>
+      <test name="matching_graphical"/>
+      <test name="matching_simple"/>
+      <test name="open_ended"/>
+    </tests>
+  </page>
+  <page max="1" min="0" name="Elenco_degli_argomenti">
+    <page_templates>
+      <page_template name="unordered_list"/>
+    </page_templates>
+  </page>
+  <page max="1" min="1" name="Obiettivi_generali">
+    <page_templates>
+      <page_template name="obiet_comp_dig"/>
+    </page_templates>
+  </page>
+</structure>
