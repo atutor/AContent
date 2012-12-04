@@ -214,7 +214,7 @@ $ui             .= '<div style="margin: 10px;">';
                         $ui .= '<tbody>';
                         $ui .= '<tr>';
                         $ui .= '<td id="radio_nothing" name="'.$_content_id.'" title="nothing"><input id="radio_nothing" type="radio" name="radio_layout" value=""></td>';
-                        $ui .= '<td>Nothing</td>';
+                        $ui .= '<td><label for="radio_nothing">Nothing</label></td>';
                         $ui .= '<td>Without layout</td>';
                        
                         $ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" title="Nothing Screenshot" id="layoutscreenshot"  /></td></div>';       
@@ -240,7 +240,7 @@ $ui             .= '<div style="margin: 10px;">';
                             
                             //$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';          
                             //$ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
-                            $ui .= '<td>'.$tval['name'].'</td>';
+                            $ui .= '<td><label for="radio_'.$tname.'">'.$tval['name'].'</label></td>';
                             $ui .= '<td>'.$tval['description'].'</td>';
 // my edits(ceppini matteo)  prof--> $ui .= '<td><img src="'.TR_BASE_HREF.'/templates/page_template/'.$tval['short_name'].'" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></td>';
                             if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
