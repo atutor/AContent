@@ -400,11 +400,6 @@ $result=$dao->execute($sql);
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
-<<<<<<< HEAD
-
-=======
-			
->>>>>>> BolognaEAT/master
 			$cid = $contentManager->addContent($_course_id,
 												  $_POST['pid'],
 												  $_POST['ordering'],
