@@ -78,7 +78,7 @@ global $associated_forum, $_course_id, $_content_id;
 include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
-Utility::authenticate(TR_PRIV_ISAUTHOR);
+
 $dao = new DAO();
 $cid = $_content_id;
 $sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
