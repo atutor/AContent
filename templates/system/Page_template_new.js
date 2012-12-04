@@ -551,11 +551,7 @@ label= label + '</div>';
                         var vtext		= $('#content-text').html();
                           
                         var cont= $('#content-previous').html();
-/*                        
-alert(cont);
-alert("sasassasas")
-alert(vtext);
-   */        
+     
              
                         if(cont!=null){
                             $('#content-previous').append(vtext);

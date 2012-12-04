@@ -81,7 +81,7 @@ class TestQuestions {
 		$question_classes[7] = 'MultianswerQuestion';
 		$question_classes[8] = 'MatchingddQuestion';
 		//catia
-		$question_classes[9] = 'FillinBlanksQuestion';
+		//$question_classes[9] = 'FillinBlanksQuestion';
 		
 		return $question_classes;
 	}

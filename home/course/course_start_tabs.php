@@ -39,7 +39,8 @@ function get_tabs() {
             }  
         }
         
-        $tabs[++$inc] = array('wizard', 'wizard.inc.php',  'w');
+        //future feature
+        //$tabs[++$inc] = array('wizard', 'wizard.inc.php',  'w');
        
 	return $tabs;
 }
