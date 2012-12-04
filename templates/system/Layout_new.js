@@ -28,7 +28,7 @@ $('#radio_canada').live("click",function(){
 
     var cid = $('#radio_canada').attr('name');
     
-    alert(cid);
+     //alert(cid);
     addLayoutTemplate(cid,"canada");
     layout_click="canada";
    
@@ -128,6 +128,6 @@ function createLayoutTemplate(layout,structure)
         layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
     }   
     layout_template =layout_template + '</div>';
-    alert(layout_template);
+    //alert(layout_template);
     return layout_template;
 }

@@ -452,8 +452,8 @@ $('#savePageTemplate').css('display','inline');
                      
 			//var url	= "<?php echo $templates; ?>" + "system/AJAX_actions.php";
                       var url = path + "/templates/system/AJAX_actions.php";
-                        alert(url);
-                        alert(window.location.href);
+                        //alert(url);
+                        //alert(window.location.href);
 //var url ="/AContent/templates/system/AJAX_actions.php"; OKKKKKK
 
 			// structure is nothing else the mere HTML code page_template
