@@ -1,5 +1,5 @@
 <?php
-        global $lay;
+	global $lay;
 
 	class Layout{
 
@@ -18,18 +18,16 @@
 		/*
 		 * Variables declarations / definitions
 		 * 
-		 * */
+		 */
 
 		private $mod_path	= array();
 		private $config		= array();
 		private $content_id	= '';
 		private $course_id	= '';
 		private $uniq		= 'templates';
-                
+
 		// folders and documents to be excluded from the list of the layout
 		private $except		= array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
-
-
 
 		/**
 		 * Constructor: sets the main variables used (paths, ..)
@@ -45,24 +43,18 @@
 			/* content id of an optional chapter */
 			$this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
 			$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
-/* OLD VERSION
-			if(isset($_POST['layout_list'], $_POST['apply_layout_to_course']))
+
+			if(isset($_POST['apply_layout_to_course'])) {
 				$this->applyLayoutToCourse();
-			elseif(isset($_POST['layout_list'], $_POST['apply_layout_to_content']))
+			} elseif(isset($_POST['apply_layout_to_content'])) {
 				$this->applyLayoutToContent();
-*/
-//New
-     
-                        if(isset($_POST['apply_layout_to_course']))
-				$this->applyLayoutToCourse();
-			elseif(isset($_POST['apply_layout_to_content']))
-				$this->applyLayoutToContent();
-                        
+			}
+
 			$this->mod_path		= $mod_path;
 
 			if($this->mod_path != '')
 				$this->config		= parse_ini_file($this->mod_path['syspath'].'config.ini');
-                      
+
 			return;
 		}
 
@@ -71,7 +63,7 @@
 		 * input:	none
 		 * output:	none
 		 * 
-		 * */
+		 */
 
 		public function getConfig(){
 			return $this->config;
@@ -82,7 +74,7 @@
 		 * input:	none
 		 * output:	none
 		 * 
-		 * */
+		 */
 
 		public function getLayoutList(){
 
@@ -90,15 +82,14 @@
 			$dir		= array();
 
 			// read the list of available layout
-                        $dir		= scandir($this->mod_path['layout_dir_int']);
-                      
+			$dir		= scandir($this->mod_path['layout_dir_int']);
+
 			// subtract files to be excluded from the list of available layout
 			$dir		= array_diff($dir, $this->except);
-                       
-                        
+
 			// call the function that validates the available layout
 			$layout_list	= $this->validated_layout($dir);
-                        
+
 			return $layout_list;
 		}
 
@@ -109,16 +100,14 @@
 		 *	input:	$dir[]			list of available layout
 		 * 	output:	list of available layout skimmed according to the compatibility of each layout
 		 * 
-		 * */
+		 */
 		
 		private function validated_layout($dir = array()){
 			
 			// scan all existing layout
-                        
-                        $layouts = array();
-                    
+			$layouts = array();
+
 			foreach($dir as $item){
-		
 				$isdir	= $this->mod_path['layout_dir_int'].$item;
 			
 				// checking if the element is a directory
@@ -172,7 +161,7 @@
 		
 			return $layouts;
 		}
-    
+
 		/*
 		 * 	The following function provides for the generation of a form
 		 *	to graphically show the user the list of available layout.
@@ -180,132 +169,97 @@
 		 * 	integrated the output of this module.
 		 *	input:	$layout_list[]	list of available layout
 		 *	output:	none 
-		 * */
+		 */
 
-                public function createUI($layout_list,$_content_id){
-                    
-                        $IDcontent=$_content_id;
-                    
-			$ui		= '';
-			$ui		.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
+		public function createUI($layout_list,$_content_id){
+			$IDcontent=$_content_id;
+
+			$ui = '';
+			$ui.= '<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none">';
 		
 			// select
-                        $ui             .= '<div style="margin: 5px;">';
-                        
-                        // NUOVA POSIZIONE DEI PULSANTI     
-$ui .= '<input type="submit" style="width:250px;" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" />';
+			$ui .= '<div style="margin: 5px;">';
 
-// Spacing of the buttons
-//$ui .='<div style="padding:5px;"></div>';
-$ui		.= '<input type="submit" style="width:250px; margin-left:15px;" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" />';
+			// NUOVA POSIZIONE DEI PULSANTI     
+			$ui .= '<input type="submit" style="width:250px;" value="'._AT('layout_content_apply').'" id="apply_layout_to_content" name="apply_layout_to_content" />';
 
-$ui             .= '<div style="margin: 10px;">';
+			$ui .= '<input type="submit" style="width:250px; margin-left:15px;" value="'._AT('layout_course_apply').'" id="apply_layout_to_course" name="apply_layout_to_course" />';
+
+			$ui .= '<div style="margin: 10px;">';
 		
-                        $ui .= '<table class="data" rules="cols" summary="">';
-                        $ui .= '<thead>
-                                <tr>
-                                <th scope="col">&nbsp;</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Icone</th>
-                                </tr>
-                                </thead>';
-         
-                        $ui .= '<tbody>';
-                        $ui .= '<tr>';
-                        $ui .= '<td id="radio_nothing" name="'.$_content_id.'" title="nothing"><input id="radio_nothing" type="radio" name="radio_layout" value=""></td>';
-                        $ui .= '<td><label for="radio_nothing">Nothing</label></td>';
-                        $ui .= '<td>Without layout</td>';
-                       
-                        $ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" alt="Nothing Screenshot" title="Nothing Screenshot" /></td></div>';
-                        $ui .= '</tr>'; 
-                        $ui .= '</tr>';
-                        
-                        foreach($layout_list as $tname => $tval){
-                           // $ui .= '<div id="radio">';
-                            
-                            
-                            // MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
-                   $ui .= '<tr>';
-  $ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
-      <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
-          </td>';
+			$ui .= '<table class="data" rules="cols" summary="">';
+			$ui .= '<thead>
+                        <tr>
+                            <th scope="col">&nbsp;</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Icone</th>
+                        </tr>
+                    </thead>';
 
-                            $ui .= '<td><label for="radio_'.$tname.'">'.$tval['name'].'</label></td>';
-                            $ui .= '<td>'.$tval['description'].'</td>';
-                            if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
-                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
-                                $ui .= '</tr>'; 
-                            }elseif($tname != 'unibo'){
-                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
-                                $ui .= '</tr>'; 
-                            }else{
-                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
-                                $ui .= '</tr>'; 
-                            }
-                           // $ui .='</div>';
-                        }
-                        
+			$ui .= '<tbody>';
+			$ui .= '<tr>';
+			$ui .= '<td id="radio_nothing" name="'.$_content_id.'" title="nothing"><input id="radio_nothing" type="radio" name="radio_layout" value=""></td>';
+			$ui .= '<td><label for="radio_nothing">Nothing</label></td>';
+			$ui .= '<td>Without layout</td>';
+
+			$ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" alt="Nothing Screenshot" title="Nothing Screenshot" /></td></div>';
+			$ui .= '</tr>'; 
+			$ui .= '</tr>';
+
+			foreach($layout_list as $tname => $tval) {
+				// MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
+				$ui .= '<tr>';
+				$ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
+                            <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
+                        </td>';
+
+				$ui .= '<td><label for="radio_'.$tname.'">'.$tval['name'].'</label></td>';
+				$ui .= '<td>'.$tval['description'].'</td>';
+				if ($tname!='seti' && $tname!='windows'&& $tname!='unibo') {
+					$ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
+					$ui .= '</tr>'; 
+				} elseif($tname != 'unibo') {
+					$ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
+					$ui .= '</tr>'; 
+				} else {
+					$ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
+					$ui .= '</tr>'; 
+				}
+			}
+
 			$ui .= '</tbody>';
-                        
-                        $ui .= '</table>';
-                        
-			//$ui		.= '</select>';
+			$ui .= '</table>';
 			$ui .= '</div>';
 			// end select
-			
-                        $ui .= '<div id="content">';
-                        
-                        $ui .= '</div>';
-                        
-                        /*
-			POSIZIONE VECCHIA DEI PULSANTI SOTTO LA TABELLA
-                        */
+
+			$ui .= '<div id="content">';
+			$ui .= '</div>';
+
+			// POSIZIONE VECCHIA DEI PULSANTI SOTTO LA TABELLA
 			$ui	.= '</form>';  
-	              
-                           	
-        
+
 			$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
-                
-                          
-                        
-                        //$ui .='<script type="text/javascript" src="/AContent/templates/system/Layout_new.js"></script>';
-                        
+
 			return $ui;
 		}
-                
-		private function applyLayoutToCourse(){
 
+		private function applyLayoutToCourse(){
 			define("TR_INCLUDE_PATH", "../../include/");
 
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
-
-/* OLD VERSION 		$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
-			// layout reset
-			if($selected_layout == '-'){
-				$layout_name		= '';
-			}else{
-				// new layout
-				$layout_name		= $selected_layout;
-			}
-                        */
 
 			$contentDAO = new ContentDAO();
 
 			$content	= $contentDAO->getContentByCourseID($this->course_id);
 
 			// for each lesson with that code of course, set / override the style of lessons
-
 			for($i = 0; $i < count($content); $i++){
 
 				$cid		= $content[$i]['content_id'];
 				$text		= $this->textFixPHP($content[$i]['text']);
 
-			/*	if(strstr($text, '<div id="content">')){
-					$text = str_replace('<div id="content">','',$text, $count);
-				}*/
-	
 				$text = strrev($text);
 	
 				for($j=0; $j<$count; $j++)
@@ -321,27 +275,19 @@ $ui             .= '<div style="margin: 10px;">';
 	
 				// clean up the text from the tag
 				$text    = $this->clearContent($text);
-                                
-                                // insert the value entered by the user in the radio button to choose
-                                $layout_name=$_POST['radio_layout'];
-                             // $layout_name=$_POST[''.$_content_id.''];  
-                                
-                                
+
+				// insert the value entered by the user in the radio button to choose
+				$layout_name=$_POST['radio_layout'];
+
 				// write on db
-			//	$contentDAO->UpdateField($cid, 'text', $text);
 				$contentDAO->UpdateField($cid, 'layout', $layout_name);
 			}
 			
 			// page redirect
 			echo '<script type="text/javascript">';
-				echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
+			echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
 			echo '</script>';
-
 		}
-
-		/*
-		 * 
-		 */
 
 		private function applyLayoutToContent(){
 			define("TR_INCLUDE_PATH", "../../include/");
@@ -357,10 +303,6 @@ $ui             .= '<div style="margin: 10px;">';
 
 			$text		= $this->textFixPHP($content['text']);
 
-		/*	if(strstr($text, '<div id="content">')){
-				$text = str_replace('<div id="content">','',$text, $count);
-			}*/
-
 			$text = strrev($text);
 
 			for($i=0; $i<$count; $i++)
@@ -368,28 +310,18 @@ $ui             .= '<div style="margin: 10px;">';
 			
 			$text = strrev($text);
 
-			//$text		= '<div id="content">'.$text.'</div>';
-
-			// clean up the text from <div id="dnd" and add it:
-			// it does not mean that all classes have the tag,
-			// then, take it off to all the add it again (more safe even if most "expensive")
-       
 			// clean up the text from the tag
 			$text		= $this->clearContent($text);
 
-                        // insert the value entered by the user in the radio button to choose
-                        $layout_name= $_POST['radio_layout'];
-                       
-                       // echo "layouT:";
-                    //    echo $_POST['radio_layout'];
+			// insert the value entered by the user in the radio button to choose
+			$layout_name= $_POST['radio_layout'];
 
 			// write on db
-		//	$contentDAO->UpdateField($this->content_id, 'text', $text);
 			$contentDAO->UpdateField($this->content_id, 'layout', $layout_name);
 
 			// page redirect
 			echo '<script type="text/javascript">';
-				echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
+			echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
 			echo '</script>';
 		}
 
@@ -417,40 +349,29 @@ $ui             .= '<div style="margin: 10px;">';
 		*/
 	
 		private function textFixPHP($text = ''){
-	
-			// JUMP
 			return $text;		
 		}
-                
-                public function content_text($cid){
-                    
-                        define("TR_INCLUDE_PATH", "../../include/");
+
+		public function content_text($cid){
+			define("TR_INCLUDE_PATH", "../../include/");
 			require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
-                    
-                        $contentDAO = new ContentDAO();
-                        
-                        $sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-                        $result=$contentDAO->execute($sql);
-                        if(is_array($result))
-                        {
 
-                            foreach ($result as $support) {
-                               //echo $support['head']; //CORRETTO RESTITUISCE IL VALORE DEL LAYOUT SCELTO
-                               $text=$support['text'];
-                               break;
-                            }  
-                        }    
-                        
+			$contentDAO = new ContentDAO();
 
-                        return $text;
-                }
-                
-                
+			$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+			$result=$contentDAO->execute($sql);
+			if(is_array($result)) {
+				foreach ($result as $support) {
+					$text=$support['text'];
+					break;
+				}  
+			}
+
+			return $text;
+		}
+
 		public function appendStyle($rows, $zipfile, $_content_id = ''){
-
-			// $_content_id		determinates if packing the lesson or the entire course
-			// $row				complete lessons list for a specific course
 
 			$styles			= array();
 			$stylesheet		= '';
@@ -459,8 +380,6 @@ $ui             .= '<div style="margin: 10px;">';
 
 				if($rows[$i]['layout'] != ''){
 					// In another version, AContent requires 'commoncartridge' as folder
-//					$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
-					//$rows[$i]['head']					= '<link rel="stylesheet" href="'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 					$rows[$i]['use_customized_head']	= '1';
 
 					// create image folder
