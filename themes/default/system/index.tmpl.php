@@ -150,7 +150,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 			</td>
 		</tr>
 
-                <INPUT TYPE="hidden" name="nascosto" id="hidden" 
+                <input type="hidden" name="nascosto" id="hidden" 
                 value="<?php if($_POST['enable_template']==TR_STATUS_PERSONAL) echo TR_STATUS_PERSONAL; ?>">
                 </input>
                 
