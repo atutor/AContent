@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 var app=location.pathname;
-var acontent = app.split('/');
-var path= "/"+acontent[1];
+var ap=window.location.href;
+var a=ap.split('/');
+var path= "/"+a[3]+"/"+a[4];
 
 base = $('#content');
 var layout_click;
@@ -26,6 +27,8 @@ $('#radio_canada').live("click",function(){
 
 
     var cid = $('#radio_canada').attr('name');
+    
+    alert(cid);
     addLayoutTemplate(cid,"canada");
     layout_click="canada";
    
@@ -111,20 +114,20 @@ function addLayoutTemplate(cid,layout){
 
 function createLayoutTemplate(layout,structure)
 {
-   
+
    layout_template='<div id="newLayoutTemplate" style="margin: 10px; margin-bottom: 15px;">';
 
     if(structure.length>24){
         layout_template= layout_template + 'Preview ' + layout + ':';
-        layout_template= layout_template + '<link rel="stylesheet" href="'+path+'"/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+        layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
         layout_template= layout_template + '<p>'+structure+'</p>';
     }else{
         layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
         layout_template= layout_template + 'Preview ' + layout + ':';
-        layout_template= layout_template + '<link rel="stylesheet" href="'+path+'"/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+        layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
         layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
     }   
     layout_template =layout_template + '</div>';
-    
+    alert(layout_template);
     return layout_template;
 }

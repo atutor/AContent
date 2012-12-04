@@ -279,7 +279,7 @@ $ui             .= '<div style="margin: 10px;">';
                 
                           
                         
-                        //$ui .='<script type="text/javascript" src="/AContent/templates/system/Layout_new.js"></script>';
+                        $ui .='<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Layout_new.js"></script>';
                         
 			return $ui;
 		}

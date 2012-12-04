@@ -60,7 +60,6 @@ if(isset($_GET['stuid'])){
 }
 
 
-
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 
 $curr_page_num = intval($_GET['p']);

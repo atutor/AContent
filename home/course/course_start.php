@@ -112,7 +112,7 @@ if(isset($_POST['struct']) && isset($_POST['create_struct'])) {
 <?php 
 
 }
-
+/*
 // 26/11/2012 CM
 $goals_manag = new GoalsManager();
 $struct = '';
@@ -150,7 +150,7 @@ if(isset($_POST[$goal])) {
         exit;       
     }
 
-}
+}*/
 require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>
 
