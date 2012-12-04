@@ -237,11 +237,17 @@
 			$ui .= '</div>';
 
 			// POSIZIONE VECCHIA DEI PULSANTI SOTTO LA TABELLA
-			$ui	.= '</form>';  
+                        $ui	.= '</form>';
 
-			$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
-
-			return $ui;
+                           
+        
+                        $ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
+                
+                          
+                        
+                        $ui .='<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Layout_new.js"></script>';
+                        
+                        return $ui;
 		}
 
 		private function applyLayoutToCourse(){
