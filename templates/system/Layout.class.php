@@ -217,7 +217,7 @@ $ui             .= '<div style="margin: 10px;">';
                         $ui .= '<td><label for="radio_nothing">Nothing</label></td>';
                         $ui .= '<td>Without layout</td>';
                        
-                        $ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" title="Nothing Screenshot" id="layoutscreenshot"  /></td></div>';       
+                        $ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" alt="Nothing Screenshot" title="Nothing Screenshot" /></td></div>';
                         $ui .= '</tr>'; 
                         $ui .= '</tr>';
                         
@@ -231,26 +231,16 @@ $ui             .= '<div style="margin: 10px;">';
       <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
           </td>';
 
-   /*                         //title="'.$tname.'" name="'.$_content_id.'"
-                            $ui .= '<tr>';
-                            $ui .= '<td>
-                                
-      <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
-          </td>';*/
-                            
-                            //$ui .= '<p style= "margin: 10px; margin-top:0px;">Description: '.$tval['description'].'</p>';          
-                            //$ui .= '<div><img src="" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></div>';
                             $ui .= '<td><label for="radio_'.$tname.'">'.$tval['name'].'</label></td>';
                             $ui .= '<td>'.$tval['description'].'</td>';
-// my edits(ceppini matteo)  prof--> $ui .= '<td><img src="'.TR_BASE_HREF.'/templates/page_template/'.$tval['short_name'].'" alt="Screenshot" desc="Screenshot" title="Screenshot" id="layoutcreenshot" /></td>';
                             if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
-                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
                                 $ui .= '</tr>'; 
-                            }elseif($tname != unibo){
-                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                            }elseif($tname != 'unibo'){
+                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
                                 $ui .= '</tr>'; 
                             }else{
-                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Screenshot of '.$tname.'" desc="Screenshot of '.$tname.'" title="Screenshot of '.$tname.'" /></td></div>';
                                 $ui .= '</tr>'; 
                             }
                            // $ui .='</div>';
