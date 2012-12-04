@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -156,7 +156,8 @@ class Utility {
 	public static function authenticate($privilegeToValidate, $printMsg=true) {
 		global $_current_user, $_course_id, $msg, $oauth_import;
 		
-		if ($privilegeToValidate == '' || $privilegeToValidate == 0) return true;
+		// Add isAdmin() to allow all privileges for admins
+		if ($privilegeToValidate == '' || $privilegeToValidate == 0 || ($_current_user && $_current_user->isAdmin())) return true;
 		
 		$authenticated = true; // default
 		/* make sure the user is the author of the current course */

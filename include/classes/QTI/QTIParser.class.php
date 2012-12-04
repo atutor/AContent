@@ -86,7 +86,7 @@ class QTIParser {
 	// private
 	function startElement($parser, $name, $attributes) {
 		global $msg;
-//		debug($attributes, $name );
+
 		//save attributes.
 		switch($name) {
 			case 'section':
@@ -217,7 +217,6 @@ class QTIParser {
 					//for matching, where there are groups
 					//keep in mind that Respondus handles this by using response_lid
 					$this->groups[$this->item_num][] = $this->reconstructRelativePath($this->mat_content[$this->item_num]);
-//					debug($this->character_data, 'harris - groups');
 				} elseif (in_array('presentation', $this->element_path)){
 					$this->question[$this->item_num] = $this->reconstructRelativePath($this->mat_content[$this->item_num]);
 				} elseif (in_array('itemfeedback', $this->element_path)){
@@ -246,8 +245,6 @@ class QTIParser {
 
 				//closing this tag means a selection of choices have ended.  Assign the correct answer in this case.
 				$tv = $this->temp_answer[$this->attributes[$this->item_num]['varequal']['respident']];
-//				debug($tv, 'harris'.$this->item_num);
-//				debug($this->answers_for_matching[$this->item_num], 'answers');
 
 				//If matching, then attribute = 'Respondus_correct'; otherwise it is 'que_score'
 				if ($this->getQuestionType($this->item_num) == 5){
@@ -306,7 +303,7 @@ class QTIParser {
 			default:
 				break;
 		}
-//		debug($this->element_path, "Ele Path");
+
 
 		//pop stack and reset character data, o/w it will stack up
 		array_pop($this->element_path);

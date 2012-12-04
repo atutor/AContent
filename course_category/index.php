@@ -13,6 +13,7 @@
 define('TR_INCLUDE_PATH', '../include/');
 include(TR_INCLUDE_PATH.'vitals.inc.php');
 include(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
+unset($_SESSION['course_id']);
 
 $courseCategoriesDAO = new CourseCategoriesDAO();
 

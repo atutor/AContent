@@ -1027,14 +1027,20 @@ if (!isset($_POST['_course_id']))
 	}else{
 		$course_primary_lang = DEFAULT_LANGUAGE_CODE;
 	}
-	$_course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $course_title, $course_description, 
+	if(isset($_POST['this_author'])){
+		$this_author = intval($_POST['this_author']);
+	}else{
+		$this_author = $_SESSION['user_id'];
+	}
+	
+	$_course_id = $coursesDAO->Create($this_author, 'top', $access, $course_title, $course_description, 
 	             '', '', '', '', $course_primary_lang, '', '');
 	
 	check_available_size($_course_id);
 
 	// insert author role into table "user_courses"
 	$userCoursesDAO = new UserCoursesDAO();
-	$userCoursesDAO->Create($_SESSION['user_id'], $_course_id, TR_USERROLE_AUTHOR, 0);
+	$userCoursesDAO->Create($this_author, $_course_id, TR_USERROLE_AUTHOR, 0);
 }
 else $_course_id = $_POST['_course_id'];
 
@@ -1080,7 +1086,7 @@ $lti_offset = array();	//since we don't need lti tools, the ordering needs to be
 //reorder the items stack
 $common_path = removeCommonPath($items);
 $items = rehash($items);
-//debug($items);exit;
+
 foreach ($items as $item_id => $content_info) 
 {	
 	//formatting field, default 1

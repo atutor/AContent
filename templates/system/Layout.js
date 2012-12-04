@@ -76,9 +76,9 @@
 										<td align=\"left\"><?php echo _AT('layout_content_apply'); ?></td>\
 										<td align=\"left\">\
 											<input type=\"radio\" name=\"apply_lesson\" id=\"apply_lesson_off\" " + disabled + " />\
-											<label for=\"apply_lesson_on\"><?php echo _AT('disabled'); ?></label> \
+											<label for=\"apply_lesson_off\"><?php echo _AT('disabled'); ?></label> \
 											<input type=\"radio\" name=\"apply_lesson\" id=\"apply_lesson_on\" " + enabled + " />\
-											<label for=\"apply_lesson_off\"><?php echo _AT('enabled'); ?></label>\
+											<label for=\"apply_lesson_on\"><?php echo _AT('enabled'); ?></label>\
 										</td>\
 										</tr></table>\
 									</fieldset></tr>");

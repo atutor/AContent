@@ -184,10 +184,6 @@ $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
 
-
-//debug($imsmanifest_xml);
-//exit;
-
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
 

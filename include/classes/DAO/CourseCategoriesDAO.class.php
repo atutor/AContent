@@ -73,6 +73,7 @@ class CourseCategoriesDAO extends DAO {
 		global $addslashes, $msg;
 		
 		$categoryName = $addslashes(trim($categoryName));
+		$categoryID = intval($categoryID);
 		
 		if ($this->isFieldsValid($categoryName, $categoryID, 'update')) {
 			$sql = "UPDATE ".TABLE_PREFIX."course_categories 

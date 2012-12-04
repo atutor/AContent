@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -12,9 +12,9 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 /* available header.tmpl.php variables:
- * $this->lang_code			the ISO language code
- * SITE_NAME				the site name from the config file
- * $this->page_title		the name of this page to use in the <title>
+ * $this->lang_code         the ISO language code
+ * SITE_NAME            the site name from the config file
+ * $this->page_title      the name of this page to use in the <title>
  * top_level_pages           array(array('url', 'title'))     the top level pages. AContent default creates tabs.
  * current_top_level_page    string                           full url to the current top level page in "top_leve_pages"
  * path                      array(array('url', 'title'))     the breadcrumb path to the current page.
@@ -23,32 +23,32 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * section_title             string                           the name of the current section. either name of the course, administration, my start page, etc.
  * page_title                string                           the title of the current page.
  * user_name                 string                           name of login user
- * $this->lang_charset		the ISO language character set
- * $this->base_path			the absolute path to this AContent installation
- * $this->theme				the directory name of the current theme
- * $this->custom_head		the custom head script used in <head> section
- * $this->$onload			the html body onload event
- * $this->shortcuts		array of editor tools available title:url:icon
- * $this->content_base_href	the <base href> to use for this page
- * $this->rtl_css			if set, the path to the RTL style sheet
- * $this->icon			the path to a course icon
- * $this->banner_style		-deprecated-
- * $this->base_href			the full url to this AContent installation
- * $this->onload			javascript onload() calls
- * $this->img				the absolute path to this theme's images/ directory
- * $this->sequence_links	associative array of 'previous', 'next', and/or 'resume' links
- * $this->path				associative array of path to this page: aka bread crumbs
- * $this->rel_url			the relative url from the installation root to this page
- * $this->nav_courses		associative array of this user's enrolled courses
- * $this->section_title		the title of this section (course, public, admin, my start page)
- * $this->top_level_pages	associative array of the top level navigation
- * $this->current_top_level_page	the full path to the current top level page with file name
- * $this->sub_level_pages			associate array of sub level navigation
- * $this->back_to_page				if set, the path and file name to the part of this page (if parent is not a top level nav)
- * $this->current_sub_level_page	the full path to the current sub level page with file name
- * $this->guide				the full path and file name to the guide page
- * $this->user_name			string, the name of the current login user
- * $this->isAuthor			boolean, whether the current login user is the author of the selected course. Only passed in when there is login user and selected course
+ * $this->lang_charset      the ISO language character set
+ * $this->base_path         the absolute path to this AContent installation
+ * $this->theme            the directory name of the current theme
+ * $this->custom_head      the custom head script used in <head> section
+ * $this->$onload         the html body onload event
+ * $this->shortcuts      array of editor tools available title:url:icon
+ * $this->content_base_href   the <base href> to use for this page
+ * $this->rtl_css         if set, the path to the RTL style sheet
+ * $this->icon         the path to a course icon
+ * $this->banner_style      -deprecated-
+ * $this->base_href         the full url to this AContent installation
+ * $this->onload         javascript onload() calls
+ * $this->img            the absolute path to this theme's images/ directory
+ * $this->sequence_links   associative array of 'previous', 'next', and/or 'resume' links
+ * $this->path            associative array of path to this page: aka bread crumbs
+ * $this->rel_url         the relative url from the installation root to this page
+ * $this->nav_courses      associative array of this user's enrolled courses
+ * $this->section_title      the title of this section (course, public, admin, my start page)
+ * $this->top_level_pages   associative array of the top level navigation
+ * $this->current_top_level_page   the full path to the current top level page with file name
+ * $this->sub_level_pages         associate array of sub level navigation
+ * $this->back_to_page            if set, the path and file name to the part of this page (if parent is not a top level nav)
+ * $this->current_sub_level_page   the full path to the current sub level page with file name
+ * $this->guide            the full path and file name to the guide page
+ * $this->user_name         string, the name of the current login user
+ * $this->isAuthor         boolean, whether the current login user is the author of the selected course. Only passed in when there is login user and selected course
  * ======================================
  * back_to_page              array('url', 'title')            the link back to the part of the current page, if needed.
  */
@@ -68,30 +68,44 @@ $starttime = $mtime;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
 
 <head>
-	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
-	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
-	<meta name="Generator" content="AContent - Copyright 2010 by IDRC/IDI http://inclusivedesign.ca/" />
-	<meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
-	<meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any system that supports IMS content interoperability standards." />
-	<base href="<?php echo $this->content_base_href; ?>" />
+   <title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
+   <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
+   <meta name="Generator" content="AContent - Copyright 2010 by IDRC/IDI http://inclusivedesign.ca/" />
+   <meta name="keywords" content="AContent, free, open source, elearning, authoring, common cartridge, content package, QTI, AccessForAll, AFA, repository" />
+   <meta name="description" content="AContent is a standards compliant Web-based elearning content authoring tool and repository that can be used with any system that supports IMS content interoperability standards." />
+   <base href="<?php echo $this->content_base_href; ?>" />
 
-	<!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css' /> -->
-	<link rel="icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
-	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css'; ?>" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />   
+   <!-- <link href='http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold' rel='stylesheet' type='text/css' /> -->
+   <link rel="icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
+   <link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
+   <link rel="stylesheet" href="<?php echo $this->base_path.'include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css'; ?>" type="text/css" />
+   <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+   <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />   
 <!--[if IE]>
-	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
-	<![endif]-->
+     <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
+   <![endif]-->
 <?php echo $this->rtl_css; ?>
-	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_href; ?>include/jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.2.4.min.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
+   <script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+   <script src="<?php echo $this->base_href; ?>include/jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js" type="text/javascript"></script>
+   <script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+   <script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.2.4.min.js" type="text/javascript"></script>
+   <script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
+   <script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
+   <script type="text/javascript">
+      // check if AContent is into an iframe
+      // if so, include the "iframe" stylesheet to hide header, side menu and footer
+      // The use of another css instead of a media="print" is to keep separate the two objectives: print, iframe.
+      if (top != self){
+         document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_iframe.css" type="text/css" />');
+         jQuery(document).ready(function() {
+            //alert(jQuery(document).height());
+            jQuery("#content_frame", window.parent.document).height(jQuery(document).height());
+            jQuery("#content_frame", window.parent.document).attr('scrolling', 'no');
+            //jQuery("#content_frame").contents().find("body").height()
+         });
+      }
+   </script>
 </head>
 
 <body onload="<?php echo $this->onload; ?>">
@@ -102,25 +116,25 @@ $starttime = $mtime;
   
  <div class="center-content">
 <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+   <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-	<span id="logininfo">
+   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+   <span id="logininfo">
         <?php
         if (isset($this->user_name))
         {
           echo _AT('logged_in_as'). ' '.$this->user_name;
         ?>
-				&nbsp;&nbsp;
-				<a href="<?php echo TR_BASE_HREF; ?>logout.php" ><?php echo _AT('logout'); ?></a>
+            &nbsp;&nbsp;
+            <a href="<?php echo TR_BASE_HREF; ?>logout.php" ><?php echo _AT('logout'); ?></a>
         <?php
         }
         else
         {
         ?>
-				<a href="<?php echo TR_BASE_HREF; ?>login.php" ><?php echo _AT('login'); ?></a>
-				&nbsp;&nbsp;
-				<a href="<?php echo TR_BASE_HREF; ?>register.php" ><?php echo _AT('register'); ?></a>
+            <a href="<?php echo TR_BASE_HREF; ?>login.php" ><?php echo _AT('login'); ?></a>
+            &nbsp;&nbsp;
+            <a href="<?php echo TR_BASE_HREF; ?>register.php" ><?php echo _AT('register'); ?></a>
         <?php
         }
         ?>
@@ -129,7 +143,7 @@ $starttime = $mtime;
   
   
   <div id="banner">
- 
+
   </div>
 
   <div class="topnavlistcontainer">
@@ -138,16 +152,24 @@ $starttime = $mtime;
 <?php 
 
 foreach ($this->top_level_pages as $page) {
-	if (strpos($page['url'], '?') > 0)  {
-		$url_without_param = substr($page['url'], 0, strpos($page['url'], '?'));
-	} else {
-		$url_without_param = $page['url'];
-	}
-	if ($url_without_param == $this->current_top_level_page) { 
+
+   if (strpos($page['url'], '?') > 0)  {
+      $url_without_param = substr($page['url'], 0, strpos($page['url'], '?'));
+   } else {
+      $url_without_param = $page['url'];
+   }
+   if ($url_without_param == $this->current_top_level_page) { 
 ?>
       <li class="navigation"><a href="<?php echo $page['url']; ?>" title="<?php echo $page['title']; ?>" class="active"><?php echo $page['title']; ?></a></li>
 <?php } else { ?>
+
+   <?php
+   
+      if(!isset($this->course_id) && (strstr($page['url'],"tests") || strstr($page['url'],"file_manager"))){ 
+      // don't display tests and file manager for admins when not in a lesson
+      }else{ ?>
       <li class="navigation"><a href="<?php echo $page['url']; ?>"  title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+         <?php } ?>
 <?php } // endif
 
 } //endforeach ?>
@@ -169,7 +191,7 @@ foreach ($this->top_level_pages as $page) {
 -->
 
 
-	<!-- the sub navigation and guide -->
+   <!-- the sub navigation and guide -->
   <div id="sub-menu">
    
       <div class="search_top">
@@ -196,16 +218,16 @@ foreach ($this->top_level_pages as $page) {
   
 <!-- 
 <div>
-	<div id="breadcrumbs">
-		<?php if (is_array($this->path)) {?>
-		<?php foreach ($this->path as $page){ ?>
-			<a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
-		<?php }} echo $this->page_title; ?>
-	</div>
+   <div id="breadcrumbs">
+      <?php if (is_array($this->path)) {?>
+      <?php foreach ($this->path as $page){ ?>
+         <a href="<?php echo $page['url']; ?>"><?php echo $page['title']; ?></a> > 
+      <?php }} echo $this->page_title; ?>
+   </div>
 
-	<?php if (isset($this->guide)) {?>
-		<a href="<?php echo $this->guide; ?>" id="guide" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;"><em><?php echo $this->page_title; ?></em></a>
-	<?php } ?>
+   <?php if (isset($this->guide)) {?>
+      <a href="<?php echo $this->guide; ?>" id="guide" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;"><em><?php echo $this->page_title; ?></em></a>
+   <?php } ?>
 </div>
 !-->
 
@@ -243,14 +265,14 @@ foreach ($this->top_level_pages as $page) {
     <ul>
   <?php if (is_array($this->tool_shortcuts)){ ?>
       <?php foreach ($this->tool_shortcuts as $link){ ?>
-	<li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+   <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
       <?php } ?>
     <?php } ?>
   <?php } ?>
   
   <?php if (isset($this->course_id) && $this->course_id > 0) {?>
     <!--  <div id="course-tools">-->
-      <?php if ($this->isAuthor) { // only for authors ?>
+      <?php if ($this->isAuthor || $this->isAdmin) { // only for authors or admins ?>
       <li><a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0"  class="shortcut_icon"/>
         </a>
@@ -276,9 +298,6 @@ foreach ($this->top_level_pages as $page) {
  </div>
     <?php }?>
 
-
-
-
 <?php //if ($this->course_id > 0) { ?>
   <div id="contentwrapper">
     <?php //if ((isset($this->course_id) && $this->course_id > 0)): ?>
@@ -301,9 +320,7 @@ foreach ($this->top_level_pages as $page) {
       //]]>
       </script>
     </div>
-	<?php //endif; ?>
-
-
+   <?php //endif; ?>
 
     <div id="contentcolumn"
     <?php if (isset($this->course_id) && $this->course_id <= 0): ?>
@@ -318,7 +335,7 @@ foreach ($this->top_level_pages as $page) {
         //<![CDATA[
         var state = trans.utility.getcookie("side-menu");
         if (state && (state == 'none')) {
-        	trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" />","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" />", "", "show");
+           trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" />","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" />", "", "show");
         } else {
             document.getElementById('contentcolumn').id="contentcolumn_shiftright";
             trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" />","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" />", "", "hide");
@@ -331,12 +348,13 @@ foreach ($this->top_level_pages as $page) {
 
       <!-- the page title -->
       <a name="content" title="<?php echo _AT('content'); ?>"></a>
-
-      <!-- Provo a mettere di default i layout del canada -->
-      <h2 class="page-title"><?php echo $this->page_title;?></h2>
-      
-      
-      
+      <?php
+      global $_current_user;
+      if ($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
+         echo '<br /><small><strong>'._AT('course_owner').':'.$this->course_owner['first_name'].' '.$this->course_owner['last_name'].' ('.$this->course_owner['login'].')</strong></small>';
+         }
+      ?>
+      <h2 class="page-title"><?php echo $this->page_title; ?></h2>
       <div id="server-msg">
       <?php global $msg; $msg->printAll(); ?>
       </div>
@@ -344,20 +362,20 @@ foreach ($this->top_level_pages as $page) {
       <?php if (count($this->sub_level_pages) > 0): ?>
 
 <!-- <div id="topnavlistcontainer">
-	<ul id="topnavlist">
-		<?php $accesscounter = 0; //initialize ?>
-		<?php foreach ($this->top_level_pages as $page): ?>
-			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-			<?php if ($page['url'] == $this->current_top_level_page): ?>
-				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
-			<?php else: ?>
-				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
-			<?php endif; ?>
-			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-		<?php endforeach; ?>
-	</ul>
+   <ul id="topnavlist">
+      <?php $accesscounter = 0; //initialize ?>
+      <?php foreach ($this->top_level_pages as $page): ?>
+         <?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+         <?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+         <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+         <?php if ($page['url'] == $this->current_top_level_page): ?>
+            <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
+         <?php else: ?>
+            <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
+         <?php endif; ?>
+         <?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+      <?php endforeach; ?>
+   </ul>
 </div> -->
    
 <?php endif; ?>
@@ -370,19 +388,19 @@ foreach ($this->top_level_pages as $page) {
 <?php if (is_array($this->sub_menus) && count($this->sub_menus) > 0): ?>
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
-	  <?php if (isset($this->back_to_page)): ?>
-	    <div id="subnavbacktopage">	  
-	      <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.png"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;" />'; ?></a> 
-	    </div>
-	  <?php endif; ?>
-	<ul id="subnavlist">
+     <?php if (isset($this->back_to_page)): ?>
+       <div id="subnavbacktopage">     
+         <a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo '<img src="'.TR_BASE_HREF.'images/arrowicon.png"  alt="'._AT('back_to').':'.$this->back_to_page['title'].'" title="'._AT('back_to').':'.$this->back_to_page['title'].'" style="vertical-align:center;" />'; ?></a> 
+       </div>
+     <?php endif; ?>
+   <ul id="subnavlist">
       <?php $num_pages = count($this->sub_menus); ?>
       <?php for ($i=0; $i<$num_pages; $i++): ?>
-	  <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
+     <?php list($sub_menu_url, $param) = Utility::separateURLAndParam($this->sub_menus[$i]['url']);
       if ($sub_menu_url == $this->current_page): ?>
-	<li class="active"><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
+   <li class="active"><strong><?php echo $this->sub_menus[$i]['title']; ?></strong></li>
       <?php else: ?>
-	<li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
+   <li><a href="<?php echo $this->sub_menus[$i]['url']; ?>"><?php echo $this->sub_menus[$i]['title']; ?></a></li>
       <?php endif; ?>
       <?php if ($i < $num_pages-1): ?>
       <?php endif; ?>

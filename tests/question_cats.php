@@ -21,7 +21,7 @@ global $_course_id, $msg;
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 
 if (isset($_POST['edit'], $_POST['category'])) {
-//	debug('question_cats_manage.php?catid='.$_POST['category'].'&_course_id='.$_course_id);exit;
+
 	header('Location: question_cats_manage.php?catid='.$_POST['category'].'&_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['delete'], $_POST['category'])) {

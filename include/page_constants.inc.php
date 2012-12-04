@@ -122,19 +122,14 @@ if (array_key_exists(TR_PRIV_HOME, $privs) && Utility::authenticate($privs[TR_PR
 	if(isset($_struct_name)) 
 		$_pages['home/structs/outline.php']['title'] = '"'. $_struct_name . ' based" structure outline';
 
-	
-	if (isset($_current_user) && $_current_user->isAuthor())
+	if (isset($_current_user) && ($_current_user->isAuthor() || $_current_user->isAdmin()))
 	{
 		if ((!isset($_course_id) || $_course_id == 0)) {
-			
-			
 			$_pages['home/index.php']['children']  = array_merge(array('home/create_course.php'), isset($_pages['home/index.php']['children']) ? $_pages['home/index.php']['children'] : array());
 			
 			$_pages['home/create_course.php']['title_var'] = 'create_course';
 			$_pages['home/create_course.php']['parent']    = 'home/index.php';
 			$_pages['home/create_course.php']['guide']    = 'TR_HELP_CREATE_COURSE';
-			
-
 		}
 
 		$_pages['home/course/course_start.php']['title_var'] = 'course_start';

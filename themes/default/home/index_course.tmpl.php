@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -91,6 +91,19 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
           <a href="<?php echo TR_BASE_HREF; ?>home/imscc/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
             <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export_cc.png" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT('download_common_cartridge'); ?>" border="0" />
           </a>
+
+<?php 
+global $_current_user;
+if(isset($_SESSION['user_id']) ){
+if($_current_user->isAdmin($_SESSION['user_id']) == 1 || $user_role['role'] == TR_USERROLE_AUTHOR){ ?>
+
+      <a href="<?php echo TR_BASE_HREF; ?>home/course/del_course.php?_course_id=<?php echo $row['course_id']; ?>">
+        <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $this->theme?>/images/delete.gif" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
+        </a>
+        
+<?php }
+	}
+ ?>    
 
         <div><?php echo $description; ?></div>
       </li>				

@@ -274,7 +274,7 @@ if ($package_base_path) {
 	$package_base_path = implode('/', $package_base_path);
 }
 
-//debug($attributes);
+
 //Dependency handling
 //$media_items = array();
 $xml_items = array();
@@ -286,7 +286,7 @@ $xml_items = array();
 
 //Check if the files exist, if so, warn the user.
 $existing_files = isQTIFileExist($attributes);
-//debug($existing_files);
+
 if (!$overwrite && !empty($existing_files)){
 	$existing_files = implode('<br/>', $existing_files);
 	require_once(TR_INCLUDE_PATH.'header.inc.php');
@@ -325,14 +325,11 @@ foreach ($qids as $order=>$qid){
 		$weight = 0;
 	}
 	$new_order = $order + 1;
-//	$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
-//			"(test_id, question_id, weight, ordering, required) " .
-//			"VALUES ($tid, $qid, $weight, $new_order, 0)";
-//	$result = mysql_query($sql, $db);
+
 	$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
 	$testsQuestionsAssocDAO->Create($tid, $qid, $weight, $new_order);
 }
-//debug('imported test');
+
 if (!$msg->containsErrors()) {
 	$msg->addFeedback('IMPORT_SUCCEEDED');
 }

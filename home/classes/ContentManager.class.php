@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -242,7 +242,7 @@ class ContentManager
 	                    $test_message = '', $content_type = CONTENT_TYPE_CONTENT) {
 		global $_current_user, $_course_id;
 		
-	    if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
+	    if (!isset($_current_user) || (!$_current_user->isAuthor($this->course_id) && !$_current_user->isAdmin())) {
 			return false;
 		}
 
@@ -266,7 +266,7 @@ class ContentManager
 	                     $head, $use_customized_head, $test_message) {
 	    global $_current_user;
 	    
-		if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
+		if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id) && !$_current_user->isAdmin()) {
 			return FALSE;
 		}
 
@@ -277,7 +277,7 @@ class ContentManager
 	function moveContent($content_id, $new_content_parent_id, $new_content_ordering) {
 		global $msg, $_current_user, $_course_id;
 		
-	    if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
+	    if (!isset($_current_user) || (!$_current_user->isAuthor($this->course_id) && !$_current_user->isAdmin())) {
 			return FALSE;
 		}
 
@@ -351,7 +351,7 @@ class ContentManager
 	function deleteContent($content_id) {
 		global $_current_user, $_course_id;
 		
-		if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id)) {
+		if (!isset($_current_user) || !$_current_user->isAuthor($this->course_id) && !$_current_user->isAdmin()) {
 			return false;
 		}
 
@@ -719,7 +719,7 @@ function initContentMenu() {
 		// if change the location of this line, change function switchEditMode(), else condition accordingly
 		echo '<div id="editable_table">';
 		
-		if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme())
+		if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme())
 		{
 			echo "\n".'
   <div class="menuedit">
@@ -936,15 +936,14 @@ initContentMenu();
 					}
 					
 					// instructors have privilege to delete content
-					if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !isset($content['test_id']) && !Utility::isMobileTheme()) {
-						//catia
+					if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !isset($content['test_id']) && !Utility::isMobileTheme()) {
+					//catia
 						if($content['optional'] == 1) 
 						//1 the content is optional
 							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						else
 						//0 the content is mandatory
 							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="mandatory page"/>';
-						
 					}
 					
 				} 
@@ -976,8 +975,8 @@ initContentMenu();
 						         $content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
-						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
-								
+						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
+						
 								//catia
 							if($content['optional'] == 1) 
 							//1 the content is optional
@@ -985,7 +984,6 @@ initContentMenu();
 							else
 							//0 the content is mandatory
 								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="Mandatory content" style="margin-left:2px;"/>';
-							
 						}
 					}
 					else
@@ -993,7 +991,7 @@ initContentMenu();
 //						$link .= '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolder(\''.$content['content_id'].$from.'\'); "><img src="'.$_base_path.'images/clr.gif" alt="'._AT('content_folder').': '.$content['title'].'" height="1" width="1" border="0" /></a>'."\n";
 						
 						$full_title = $content['title'];
-						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
+						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
 //							$link .= '<a href="'.$_base_path.url_rewrite("editor/edit_content_folder.php?_cid=".$content['content_id']).'" title="'.$full_title. _AT('click_edit').'">'."\n";
 							$link .= '<a href="'.$_base_path.'home/editor/edit_content_folder.php?_cid='.$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
 						}
@@ -1012,7 +1010,7 @@ initContentMenu();
 							         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 							         $content['title'].'</span>';
 						
-						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
+						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
 							$link .= '</a>'."\n";
 						}
 						else {
@@ -1020,7 +1018,7 @@ initContentMenu();
 						}
 						
 						// instructors have privilege to delete content
-						if (isset($_current_user) && $_current_user->isAuthor($this->course_id) && !Utility::isMobileTheme()) {
+						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
 							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';

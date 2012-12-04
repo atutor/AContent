@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -17,12 +17,14 @@ include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 include_once(TR_INCLUDE_PATH.'classes/DAO/LanguagesDAO.class.php');
 include_once(TR_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
 
+unset($_SESSION['course_id']);
+
 global $msg, $addslashes;
 
 $dao = new DAO();
 $languagesDAO = new LanguagesDAO();
 $languageTextDAO = new LanguageTextDAO();
-//debug($_REQUEST);exit;
+
 if (isset($_REQUEST['reset_filter'])) unset($_REQUEST);
 
 if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))

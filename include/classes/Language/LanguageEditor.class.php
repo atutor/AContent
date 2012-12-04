@@ -61,14 +61,6 @@ class LanguageEditor extends Language {
 
 		$sql	= "UPDATE ".TABLE_PREFIX."language_text SET text='$text', revised_date=NOW() WHERE language_code='$code' AND variable='$variable' AND term='$term'";
 
-		/*
-		if (mysql_query($sql, $this->db)) {
-			return TRUE;
-		} else {
-			debug(mysql_error($this->db));
-			return FALSE;
-		}
-		*/
 	}
 
 	// public

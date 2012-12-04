@@ -30,7 +30,8 @@ if ($_course_id <= 0)
 }
 
 
-if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+if (isset($_current_user) && ($_current_user->isAuthor($_course_id) || $_current_user->isAdmin())) {
+	$savant->assign('isAdmin', $_current_user->isAdmin() );
 	$savant->assign('course_id', $_course_id);
 	
 }

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -675,7 +675,7 @@ class ContentUtility {
 		
 		if (((!$content_row['content_parent_id'] && ($_SESSION['packaging'] == 'top'))
 		      || ($_SESSION['packaging'] == 'all'))
-			  || (isset($_current_user) && $_current_user->isAuthor($_course_id))) {
+			  || (isset($_current_user) && ($_current_user->isAuthor($_course_id)|| $_current_user->isAdmin()))) {
 		
 			$tool_shortcuts[] = array(
 				  'title' => _AT('export_content_in_cp'), 
@@ -687,7 +687,7 @@ class ContentUtility {
 				  'icon' => $_base_href . 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/export_cc.png');
 		}
 		
-		if (isset($_current_user) && $_current_user->isAuthor($_course_id)) {
+		if (isset($_current_user) && ($_current_user->isAuthor($_course_id) || $_current_user->isAdmin())) {
 			if ($content_row['content_type'] == CONTENT_TYPE_CONTENT || $content_row['content_type'] == CONTENT_TYPE_WEBLINK) {
 				$tool_shortcuts[] = array(
 					  'title' => _AT('edit_this_page'),   

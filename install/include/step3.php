@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -114,13 +114,14 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 		// for admin account
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
-		        (login, password, user_group_id, email, web_service_id, create_date)
+		        (login, password, user_group_id, email, web_service_id, create_date, is_author)
 		        VALUES ('".$addslashes($_POST[admin_username])."', 
 		                '".$_POST[form_admin_password_hidden]."', 
 		                1, 
 		                '".$addslashes($_POST[admin_email])."', 
 		                '".substr(md5(uniqid(rand(), true)),0,32)."', 
-		                NOW())";
+		                NOW(),
+		                '1')";
 		$result= mysql_query($sql, $db);
 
 		// for author account

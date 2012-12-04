@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -49,15 +49,6 @@ $_sub_menus = $menu->getSubMenus();
 $back_to_page = $menu->getBackToPage();
 $_pages = $menu->getAllPages();   // add "param" element into $_pages items
 
-//debug($_base_path.$current_page);
-//debug($back_to_page);
-//debug($_sub_menus);
-//exit;
-
-//debug($_top_level_pages);
-//debug($_all_pages);
-//debug($_current_root_page);
-//debug($_current_page);
 
 
 
@@ -75,7 +66,12 @@ if (isset($_pages[$current_page]['title'])) {
 	$_page_title = _AT($_all_pages[$current_page]['title_var']);
 }
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
-
+if($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
+	$owner_dao = new DAO();
+	$sql = "SELECT U.first_name, U.last_name, U.login, U.user_id FROM ".TABLE_PREFIX."users U, ".TABLE_PREFIX."courses C WHERE C.course_id = $_SESSION[course_id] AND C.user_id = U.user_id";
+	$course_owner = $owner_dao->execute($sql);
+	$savant->assign('course_owner', $course_owner['0']);
+}
 if ($_course_id > 0) {
 	$sequence_links = $contentManager->generateSequenceCrumbs($_content_id);
 	$savant->assign('sequence_links', $sequence_links);
@@ -85,6 +81,9 @@ if (isset($_current_user))
 {
   $savant->assign('user_name', $_current_user->getUserName());
   if ($_course_id > 0) $savant->assign('isAuthor', $_current_user->isAuthor($_course_id));
+  if( $_current_user->isAdmin()){
+  	$savant->assign('isAdmin',  $_current_user->isAdmin());
+  }
 }
 
 if ($myLang->isRTL()) {
@@ -145,8 +144,6 @@ $savant->assign('custom_css', $custom_css);
 if ($onload) $savant->assign('onload', $onload);
 $savant->assign('course_id', $_course_id);
 
-
-
 if ($framed || $popup) {
 	$savant->assign('framed', 1);
     $savant->assign('popup', 1);
@@ -155,7 +152,5 @@ if ($framed || $popup) {
 } else {
 	$savant->display('include/header.tmpl.php');
 }
-
-
 
 ?>

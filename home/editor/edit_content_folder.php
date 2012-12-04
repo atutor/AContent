@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -17,6 +17,8 @@ require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
 global $_content_id, $_content_id, $contentManager, $_course_id;
 $cid = $_content_id;
+
+
 
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
@@ -103,14 +105,14 @@ if ($cid > 0)
 		require (TR_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	} /* else: */
-	
+
 	/* the "heading navigation": */
 	$path	= $contentManager->getContentPath($cid);
 	
 	if ($content_row['content_path']) {
 		$content_base_href = $content_row['content_path'].'/';
 	}
-	
+
 	$parent_headings = '';
 	$num_in_path = count($path);
 	

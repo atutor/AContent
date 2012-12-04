@@ -80,7 +80,6 @@ if (is_array($results))
 }
 else $last_rec_number = $total_num;
 
-//debug($results);exit;
 $restWebServiceOutput = new RESTWebServiceOutput($results, $total_num, $last_rec_number);
 echo $restWebServiceOutput->getWebServiceOutput();
 ?>

@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -12,12 +12,17 @@
 
 global $_current_user;
 
-if (isset($_current_user) && $_current_user->isAuthor())
+if (isset($_current_user) && ($_current_user->isAuthor() || $_current_user->isAdmin()))
 {
+
+
+
 ?>
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_course'); ?></legend>
 	<form name="form1" method="post" action="home/ims/ims_import.php" enctype="multipart/form-data" onsubmit="openWindow('<?php echo TR_BASE_HREF; ?>home/prog.php');">
+	
+
 		<input type="hidden" name="allow_test_import" value="1" />
 		<input type="hidden" name="allow_a4a_import" value="1" />
 		<table class="form_data">
@@ -28,6 +33,17 @@ if (isset($_current_user) && $_current_user->isAuthor())
 
 		<tr><td>
 		<?php echo _AT('create_course_2'); ?>
+		</td></tr>
+		<tr><td>
+		<?php		
+			if($_current_user->isAdmin()){
+				echo '<label for="this_author">'. _AT('assign_author').'</label> <select name="this_author" id="this_author">';
+				foreach ($this->isauthor as $author){
+				 echo '<option value="'.$author['user_id'].'">'.$author['first_name'].' '.$author['last_name'].' ('.$author['login'].')</option>';
+				}
+				echo '</select>';
+			}
+			?>
 		</td></tr>
 		<tr><td>
 			<label for="to_file"><?php echo _AT('upload_content_package'); ?></label>

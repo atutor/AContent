@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -400,7 +400,6 @@ $result=$dao->execute($sql);
 			$cid = $_POST['_cid'];
 		} else {
 			/* insert new */
-			
 			$cid = $contentManager->addContent($_course_id,
 												  $_POST['pid'],
 												  $_POST['ordering'],
@@ -783,7 +782,6 @@ function paste_from_file() {
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile_paste']['tmp_name']);
 			//LAW
-//			debug($_POST);
 			$msg->addFeedback('FILE_PASTED');
 
 		}

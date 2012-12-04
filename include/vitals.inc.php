@@ -2,7 +2,7 @@
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
-/* Copyright (c) 2010                                                   */
+/* Copyright (c) 2013                                                   */
 /* Inclusive Design Institute                                           */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -214,13 +214,10 @@ else if (intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
 if (intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
 else if (intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
 
-
 /*
  * catia
  */
 $_struct_name = strval($_REQUEST['_struct_name']);
-
-
 
 // find course_id thru content_id
 if ($_content_id > 0)
@@ -502,6 +499,24 @@ function htmlentities_utf8($str, $use_nl2br=true){
 function convertAmp($input){
     $input = str_replace('&amp;', '&', $input); //convert everything to '&' first
     return str_replace('&', '&amp;', $input);
+}
+
+
+/**
+ * Redirects user to index.php if user is not loggedin
+ * @param   None
+ * @return  None
+ * @author  Alexey Novak
+ * @date    Oct 5, 2012
+ */
+function redirectNotLoggedinUsers() {
+
+    if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] < 1) {
+        global $msg;
+        $msg->addError('LOGIN_REQUIRED');
+        header('Location: index.php');
+        exit;
+    }
 }
 
 function query_bit( $bitfield, $bit ) {
