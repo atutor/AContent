@@ -17,94 +17,10 @@ while(cont!=a.length-3){
 base = $('#content');
 var layout_click;
 
-// Control LAYUOT NOTHING
-$('#radio_nothing').live("click",function(){
-    $('#newLayoutTemplate').remove();
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');
-
-    var cid = $('#radio_nothing').attr('name');
-    
-    alert(cid);
-    addLayoutTemplate(cid,"nothing");
-    layout_click="nothing";
-});
-
-/*  Control LAYOUT CANADA   */
-$('#radio_canada').live("click",function(){
-    $('#newLayoutTemplate').remove();
-
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
-
-    $('input[id="radio-canada"]').attr('checked','checked');
-    $('input[id="radio-canada"]').attr('disabled','disabled');
 
 
-    var cid = $('#radio_canada').attr('name');
-    
-    alert(cid);
-    addLayoutTemplate(cid,"canada");
-    layout_click="canada";
-   
-});
 
-/*  Control LAYOUT ITALY   */
-$('#radio_italy').live("click",function(){
-    $('#newLayoutTemplate').remove();
-    
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
 
-    $('input[id="radio-italy"]').attr('checked','checked');
-    $('input[id="radio-italy"]').attr('disabled','disabled');
-    
-    var cid = $('#radio_italy').attr('name');
-    addLayoutTemplate(cid,"italy");
-    layout_click="italy";
-  
-});
-
-/*  Control LAYOUT SETI   */
-$('#radio_seti').live("click",function(){
-    $('#newLayoutTemplate').remove();
-    
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
-    
-    $('input[id="radio-seti"]').attr('checked','checked');
-    $('input[id="radio-seti"]').attr('disabled','disabled');
-
-    var cid = $('#radio_seti').attr('name');
-    addLayoutTemplate(cid,"seti");
-    layout_click="seti";
-    
-});
-
-/*  Control LAYOUT UNIBO   */
-$('#radio_unibo').live("click",function(){
-    $('#newLayoutTemplate').remove();
-
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
-
-    $('input[id="radio-unibo"]').attr('checked','checked');
-    $('input[id="radio-unibo"]').attr('disabled','disabled');
-
-    var cid = $('#radio_unibo').attr('name');
-    addLayoutTemplate(cid,"unibo");
-    layout_click="unibo";
-
-});
-
-/*  Control LAYOUT WINDOWS   */
-$('#radio_windows').live("click",function(){
-    $('#newLayoutTemplate').remove();
-
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
-
-    $('input[id="radio-windows"]').attr('checked','checked');
-    $('input[id="radio-windows"]').attr('disabled','disabled');
-
-    var cid = $('#radio_windows').attr('name');
-    addLayoutTemplate(cid,"windows");
-    layout_click="windows";
-});
 
 
 $('input[id="apply_layout_to_content"]').live("click",function(){
@@ -113,6 +29,25 @@ $('input[id="apply_layout_to_content"]').live("click",function(){
 $('input[id="apply_layout_to_course"]').live("click",function(){
     $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');  
 });
+
+
+
+
+function preview(lay){
+
+    $('#newLayoutTemplate').remove();
+
+    $('input[id="radio-'+lay+'"]').removeAttr('disabled'); 
+
+   $('input[id="radio-'+lay+'"]').attr('checked','checked');
+   $('input[id="radio-'+lay+'"]').attr('disabled','disabled');
+
+    var cid = $("#radio_"+lay).attr('name');
+    addLayoutTemplate(cid,lay);
+    layout_click=lay;
+    
+}
+
 
 function addLayoutTemplate(cid,layout){
 

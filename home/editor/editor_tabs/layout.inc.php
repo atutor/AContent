@@ -75,7 +75,7 @@ $layout_dir_int	= $templates_int.'layout/';
 $config					= parse_ini_file($mod_path['templates_sys'].'config.ini');
 $apply_lesson_layout		= $config['apply_to_the_lesson'];
 
-include $mod_path['templates_sys'].'Layout.js';
+//include $mod_path['templates_sys'].'Layout.js';
 
 
 ######################################

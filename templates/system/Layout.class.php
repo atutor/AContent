@@ -225,9 +225,9 @@ $ui             .= '<div style="margin: 10px;">';
                         foreach($layout_list as $tname => $tval){
                            
                            // $ui .= '<div id="radio">';
-
+//
                             // MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
-                   $ui .= '<tr onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\')">';
+                   $ui .= '<tr onclick="preview(\''.$tname.'\');" onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\');">';
                   
   $ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
       <input id="radio-'.$tname.'" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="'.$tname.'">
