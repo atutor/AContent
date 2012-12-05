@@ -882,3 +882,5 @@ INSERT INTO `language_text` VALUES ('en', '_template','paste_page_template','Pas
 
 INSERT INTO `language_text` VALUES ('en','_template','label_active_first_part','Click here to open the preview of all the page templates availables','2012-11-13 09:58:00','');
 INSERT INTO `language_text` VALUES ('en','_template','label_active_second_part','or make changes to page templates already included','2012-11-13 09:59:00','');
+
+INSERT INTO `language_text` VALUES ('en','_template','img_layout_icon','Layout Icon %1s','2012-12-05 12:10:00','');

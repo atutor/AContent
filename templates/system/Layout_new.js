@@ -5,7 +5,14 @@
 var app=location.pathname;
 var ap=window.location.href;
 var a=ap.split('/');
-var path= "/"+a[3]+"/"+a[4];
+var path=a[0];
+var cont=1;
+
+
+while(cont!=a.length-3){
+    path= path + "/" + a[cont];
+    cont++;
+}
 
 base = $('#content');
 var layout_click;
@@ -128,6 +135,5 @@ function createLayoutTemplate(layout,structure)
         layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
     }   
     layout_template =layout_template + '</div>';
-    alert(layout_template);
     return layout_template;
 }
