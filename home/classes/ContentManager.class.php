@@ -943,7 +943,7 @@ initContentMenu();
 							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 						else
 						//0 the content is mandatory
-							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="mandatory page"/>';
+							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="'._AT('mandatory_content').'"/>';
 					}
 					
 				} 
@@ -983,7 +983,7 @@ initContentMenu();
 								$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
 							else
 							//0 the content is mandatory
-								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="Mandatory content" style="margin-left:2px;"/>';
+								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="'._AT('mandatory_content').'" style="margin-left:2px;"/>';
 						}
 					}
 					else
