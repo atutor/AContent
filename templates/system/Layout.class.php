@@ -199,7 +199,7 @@
 
 			$ui .= '<tbody>';
 			$ui .= '<tr>';
-			$ui .= '<td id="radio_nothing" name="'.$_content_id.'" title="nothing"><input id="radio_nothing" type="radio" name="radio_layout" value=""></td>';
+			$ui .= '<td name="'.$_content_id.'" title="nothing"><input id="radio_nothing" type="radio" name="radio_layout" value=""></td>';
 			$ui .= '<td><label for="radio_nothing">Nothing</label></td>';
 			$ui .= '<td>Without layout</td>';
 
@@ -210,8 +210,8 @@
 			foreach($layout_list as $tname => $tval) {
 				// MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
 				$ui .= '<tr>';
-				$ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
-                            <input id="radio-'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
+				$ui .= '<td name="'.$_content_id.'" title="'.$tname.'">
+                            <input id="radio_'.$tname.'" type="radio" name="radio_layout" value="'.$tname.'">
                         </td>';
 
 				$ui .= '<td><label for="radio_'.$tname.'">'.$tval['name'].'</label></td>';
