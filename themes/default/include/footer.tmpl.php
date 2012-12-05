@@ -75,11 +75,6 @@ if($languageManager->getNumEnabledLanguages() > 1) {
   <div class="bottom"></div>
   <!--  bottom for liquid-round theme -->
   </div>
-  
-   <div align="center" style="clear:both; margin-left:auto; margin-right:auto; width:40em;">
-		<p >For more info contact: <span style="color:blue;">catia.prandi2_at_unibo.it</p>
-		<br>
-	</div>
       <div id="logo">
       <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
     </div>
