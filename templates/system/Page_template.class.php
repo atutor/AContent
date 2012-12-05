@@ -197,7 +197,7 @@
                                              echo '<table id="'.$key.'" >';
                                                     echo '<tr>';
                                                         echo '<td>';
-                                                            echo '<img style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="ERRORE img" />';
+                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$key).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" />';
                                                         echo '</td>';
                                                     echo '</tr>';
                                                     echo '<tr>';
@@ -215,7 +215,7 @@
                                              echo '<table id="'.$key.'" >';
                                                     echo '<tr>';
                                                         echo '<td>';
-                                                            echo '<img style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="ERRORE img" />';
+                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$key).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" />';
                                                         echo '</td>';
                                                     echo '</tr>';
                                                     echo '<tr>';

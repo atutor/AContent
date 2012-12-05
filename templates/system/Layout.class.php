@@ -238,13 +238,13 @@ $ui             .= '<div style="margin: 10px;">';
                             $ui .= '<td>'.$tval['description'].'</td>';
 
                             if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
-                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'"  title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
                                 $ui .= '</tr>'; 
                             }elseif($tname != unibo){
-                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'"  title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
                                 $ui .= '</tr>'; 
                             }else{
-                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
                                 $ui .= '</tr>'; 
                             }
 

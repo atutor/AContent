@@ -884,3 +884,6 @@ INSERT INTO `language_text` VALUES ('en','_template','label_active_first_part','
 INSERT INTO `language_text` VALUES ('en','_template','label_active_second_part','or make changes to page templates already included','2012-11-13 09:59:00','');
 
 INSERT INTO `language_text` VALUES ('en','_template','img_layout_icon','Layout Icon %1s','2012-12-05 12:10:00','');
+
+INSERT INTO `language_text` VALUES ('en','_template','img_pagetemplate_icon','%1s Thumbnail','2012-12-05 12:10:00','');
+INSERT INTO `language_text` VALUES ('en','_template','img_title_pagetemplate_icon','Click the %1s thumbnail to display a preview below','2012-12-05 12:10:00','');
