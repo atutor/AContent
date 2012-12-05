@@ -108,7 +108,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_msgs', 'TR_ERROR_QTI_WRONG_PACKAGE', 'Import failed.  Please note that Transformable only supports QTI 1.2.1 import.', '2010-03-30 15:10:06', ''),
 ('en', '_msgs', 'TR_ERROR_REMOVE_WRITE_PERMISSION', 'Please remove write permission from the listed files.', '2010-01-27 15:48:35', 'error msg'),
 ('en', '_msgs', 'TR_ERROR_SAME_LOCATION', 'You cannot move content to its current location.', '2010-08-24 11:56:17', ''),
-('en', '_msgs', 'TR_ERROR_SAVE_BEFORE_PROCEED', 'Please save the content before proceeding to define \"Adapted Content\".', '2010-06-10 13:30:31', ''),
+('en', '_msgs', 'TR_ERROR_SAVE_BEFORE_PROCEED', 'Please save the content before proceeding.', '2010-06-10 13:30:31', ''),
 ('en', '_msgs', 'TR_ERROR_SECRET_ERROR', 'Letters or numbers entered from the CAPTCHA image are incorrect. Try again.', '2010-01-27 15:48:35', ''),
 ('en', '_msgs', 'TR_ERROR_SELECT_ONE_ITEM', 'Only <em>one</em> item must be selected.', '2010-01-27 15:48:35', ''),
 ('en', '_msgs', 'TR_ERROR_SENDING_ERROR', 'There was an error sending the email message.', '2010-01-27 15:48:35', ''),
@@ -922,7 +922,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_PATCH_XML_NOT_FOUND'
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_QTI_WRONG_PACKAGE','Import failed.  Please note that Transformable only supports QTI 1.2.1 import.','2010-03-30 15:10:06','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_REMOVE_WRITE_PERMISSION','Please remove write permission from the listed files.','2010-01-27 15:48:35','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_SAME_LOCATION','You cannot move content to its current location.','2010-08-24 11:56:17','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_SAVE_BEFORE_PROCEED','Please save the content before proceeding to define \"Adapted Content\".','2010-06-10 13:30:31','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_SAVE_BEFORE_PROCEED','Please save the content before proceeding.','2010-06-10 13:30:31','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_SECRET_ERROR','Letters or numbers entered from the CAPTCHA image are incorrect. Try again.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_SELECT_ONE_ITEM','Only <em>one</em> item must be selected.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_ERROR_SENDING_ERROR','There was an error sending the email message.','2010-01-27 15:48:35','');

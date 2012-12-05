@@ -24,6 +24,12 @@ global $_course_id, $_content_id;
 $_course_id		= $course_id = (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
 $_content_id	= $cid = isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id; /* content id of an optional chapter */
 
+if ($cid == 0) {
+	$msg->printErrors('SAVE_BEFORE_PROCEED');
+	require_once(TR_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 // paths settings
 
 $mod_path					= array();
