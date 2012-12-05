@@ -116,7 +116,10 @@
 				echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template_new.js"></script>';
 
 				$pageTemplateList = array();
+                                
+/*                                
    
+<<<<<<< HEAD
 				// Db calls to get the values ​​of the structure and title
 				define('TR_INCLUDE_PATH', '../../include/');
 				include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
@@ -233,7 +236,134 @@
 			}
 		}
 
- 		/*
+*/
+
+                        // Db calls to get the values ​​of the structure and title
+                        define('TR_INCLUDE_PATH', '../../include/');
+                        include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+                        require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+                        require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+                        require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
+                        Utility::authenticate(TR_PRIV_ISAUTHOR);
+                        $dao = new DAO();
+
+                        $sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+                        $result=$dao->execute($sql);
+
+                        if(is_array($result))
+                        {
+                            foreach ($result as $support) {
+                               $content=$support['structure'];
+                               break;
+                            }  
+                        }
+                        $sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
+                        $result=$dao->execute($sql);
+                        if(is_array($result))
+                        {
+                            foreach ($result as $support) {
+                               $title=$support['title'];
+                               break;
+                            }  
+                        }  
+                        //echo $content['structure'];              
+                        if($content!='') {
+                        // Upload the array of default page template structure
+                                $structManager = new StructureManager($content);
+
+                                $item=$structManager->getPageTemplatesItem($title);
+                                $array = $structManager->getContent($item);
+
+                        //	$pageTemplateList = $this->validatedPageTemplate($array);
+
+                        }
+
+                        $pageTemplateList = $this->getPageTemplateList();
+
+                        echo '<link rel="stylesheet" href="'.TR_BASE_HREF.'/templates/system/page_template.css" type="text/css" />';
+                        // avoid the input when the array is empty
+                        if($pageTemplateList != null){
+                       
+                        echo '<div class="boxTotal">';    
+                            echo '<div class="boxPageTemplate" style="display: block;" >';
+                            echo '<ul>';
+                            foreach ($pageTemplateList as $key => $value)
+                            {
+                                //Check if there is a structure and search if the page template belongs
+                                // scanned array of predefined structure
+                                if($content!=''){
+                                    if(in_array($key,$array)){
+                                        echo '<li>';              
+                                             echo '<table id="'.$key.'" >';
+                                                    echo '<tr>';
+                                                        echo '<td>';
+                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$key).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" />';
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                                    echo '<tr>';
+                                                        echo '<td class="desc">';
+                                                            echo $value['name'];
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                        echo '</table>';
+                                    echo '</li>';  
+                                    }
+                                }else{
+                                
+                                
+                                    echo '<li>';              
+                                             echo '<table id="'.$key.'" >';
+                                                    echo '<tr>';
+                                                        echo '<td>';
+                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$key).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" />';
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                                    echo '<tr>';
+                                                        echo '<td class="desc">';
+                                                            echo $value['name'];
+                                                        echo '</td>';
+                                                    echo '</tr>';
+                                        echo '</table>';
+                                    echo '</li>';  
+                                }
+                                           
+                            }
+                            echo '</ul>';
+                            echo '</div>'; // div boxPageTemplate  
+                            // two button PASTE and COPY
+                            echo '<div class="boxPageTemplateTool">';
+                                echo '<ul>';
+                                echo '</ul>';
+
+                                echo '<ul>';
+                                    echo '<li id="pageTemplatePaste" style="display: none;">';
+                                        
+                                        echo '<img alt="error paste" title="paste" src="'.TR_BASE_HREF.'/templates/system/paste.png">';
+                                        echo _AT('paste_page_template');
+                                    echo '</li>';
+                                    echo '<li id="pageTemplateCopy">';
+                                        echo '<img alt="error copy" title="copy" src="'.TR_BASE_HREF.'/templates/system/copy.png">';
+                                        echo _AT('copy_page_template');
+                                    echo '</li>';
+                                echo '</ul>';
+                            echo '</div>';
+                     echo '</div>'; // div boxTotal
+
+                     echo '<div id="content-text">';
+
+                     echo '</div>';
+                     
+                     
+                     
+                     
+                     
+                     echo '</form>';
+                 }    
+            }
+          }
+         
+ /*
+>>>>>>> matteoceppini/master
 		 * Open the configuration file reading the parameters
 		 * input:	none
 		 * output:	none
@@ -314,7 +444,7 @@
 
 					// check the "core"
 					if(!$info['core']) {
-						continue;
+						return null;
 					} else {
 						$vfile	= explode('.', $info['core']);
 						$vcore	= explode('.', VERSION);
@@ -323,10 +453,10 @@
 						// stopping the cycle to the first incompatibility found
 						if($vfile[0] < $vcore[0]) {
 							// not compatible!
-							continue;
+							return null;
 						} elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1]) {
 							// not compatible!
-							continue;
+							return null;
 						}
 					}
 				}

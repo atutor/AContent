@@ -254,9 +254,9 @@
                         foreach($layout_list as $tname => $tval){
                            
                            // $ui .= '<div id="radio">';
-
+//
                             // MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
-                   $ui .= '<tr onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\')">';
+                   $ui .= '<tr onclick="preview(\''.$tname.'\');" onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\');">';
                   
   $ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
       <input id="radio-'.$tname.'" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="'.$tname.'">
@@ -267,13 +267,13 @@
                             $ui .= '<td>'.$tval['description'].'</td>';
 
                             if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
-                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'"  title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
                                 $ui .= '</tr>'; 
                             }elseif($tname != unibo){
-                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'"  title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
                                 $ui .= '</tr>'; 
                             }else{
-                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
                                 $ui .= '</tr>'; 
                             }
 
