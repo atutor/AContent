@@ -25,10 +25,6 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 
 
 <div class="input-form">
-<div id="feedback">
-	<p>This version is a prototype for the BEAT project. Don't use it as a repository!</p>
-	<p>To get more information contact: catia.prandi2_at_unibo.it</p>
-</div>
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 <?php if (is_array($this->courses)) { ?>
   <div class="results">
