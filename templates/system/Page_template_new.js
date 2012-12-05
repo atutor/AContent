@@ -22,10 +22,17 @@ var acontent = app.split('/');
 
 var path= "/"+acontent[1];
 */
+var app=location.pathname;
 var ap=window.location.href;
-
 var a=ap.split('/');
-var path= "/"+a[3]+"/"+a[4];
+var path=a[0];
+var cont=1;
+
+
+while(cont!=a.length-3){
+    path= path + "/" + a[cont];
+    cont++;
+}
 
 
 var sortTools= '<div class="sortTools">\n\

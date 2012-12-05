@@ -187,6 +187,7 @@
 
 			$ui .= '<div style="margin: 10px;">';
 		
+/*<<<<<<< HEAD
 			$ui .= '<table class="data" rules="cols" summary="">';
 			$ui .= '<thead>
                         <tr>
@@ -227,6 +228,57 @@
 					$ui .= '</tr>'; 
 				}
 			}
+*/
+
+                        $ui .= '<table class="data" rules="cols" summary="">';
+                        $ui .= '<thead>
+                                <tr>
+                                <th scope="col">&nbsp;</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Description</th>
+                                <th scope="col">Icone</th>
+                                </tr>
+                                </thead>';
+         
+                        $ui .= '<tbody>';
+                         $ui .= '<tr onmousedown="document.form[\'radio-nothing\'].checked=!document.form[\'radio-nothing\'].checked;togglerowhighlight(this,\'radio-nothing\')">';
+                        $ui .= '<td id="radio_nothing"  name="'.$_content_id.'" title="nothing"><input id="radio-nothing" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value=""></td>';
+                        $ui .= '<td><label for="radio-nothing" style="cursor:pointer;">Nothing</label></td>';
+                       $ui .= '<td>Without layout</td>';
+                       
+                        $ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" title="'._AT('img_layout_icon','nothing').'" id="layoutscreenshot"  /></td></div>';       
+                        $ui .= '</tr>'; 
+                        $ui .= '</tr>';
+                        
+                        
+                        foreach($layout_list as $tname => $tval){
+                           
+                           // $ui .= '<div id="radio">';
+
+                            // MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
+                   $ui .= '<tr onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\')">';
+                  
+  $ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
+      <input id="radio-'.$tname.'" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="'.$tname.'">
+          </td>';
+
+   
+                            $ui .= '<td><label style="cursor:pointer;" for="radio-'.$tname.'">'.$tval['name'].'</label></td>';
+                            $ui .= '<td>'.$tval['description'].'</td>';
+
+                            if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
+                                $ui .= '<td><div><img class="layout_img_big" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '</tr>'; 
+                            }elseif($tname != unibo){
+                                $ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="'._AT('img_layout_icon',$tname).'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '</tr>'; 
+                            }else{
+                                 $ui .= '<td><div><img  src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="Error Screenshot '.$tname.'" desc="Screenshot '.$tname.'" title="Screenshot '.$tname.'" id="layoutscreenshot"  /></td></div>';       
+                                $ui .= '</tr>'; 
+                            }
+
+                        }
+                        
 
 			$ui .= '</tbody>';
 			$ui .= '</table>';
@@ -245,7 +297,7 @@
                 
                           
                         
-                        $ui .='<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Layout_new.js"></script>';
+                        $ui .='<script type="text/javascript" src="'.TR_BASE_HREF.'templates/system/Layout_new.js"></script>';
                         
                         return $ui;
 		}

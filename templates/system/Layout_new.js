@@ -5,7 +5,14 @@
 var app=location.pathname;
 var ap=window.location.href;
 var a=ap.split('/');
-var path= "/"+a[3]+"/"+a[4];
+var path=a[0];
+var cont=1;
+
+
+while(cont!=a.length-3){
+    path= path + "/" + a[cont];
+    cont++;
+}
 
 base = $('#content');
 var layout_click;
@@ -13,7 +20,13 @@ var layout_click;
 // Control LAYUOT NOTHING
 $('#radio_nothing').live("click",function(){
     $('#newLayoutTemplate').remove();
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');    
+    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');
+
+    var cid = $('#radio_nothing').attr('name');
+    
+    alert(cid);
+    addLayoutTemplate(cid,"nothing");
+    layout_click="nothing";
 });
 
 /*  Control LAYOUT CANADA   */
@@ -115,19 +128,23 @@ function addLayoutTemplate(cid,layout){
 function createLayoutTemplate(layout,structure)
 {
 
-   layout_template='<div id="newLayoutTemplate" style="margin: 10px; margin-bottom: 15px;">';
-
-    if(structure.length>24){
-        layout_template= layout_template + 'Preview ' + layout + ':';
-        layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
-        layout_template= layout_template + '<p>'+structure+'</p>';
+    layout_template='<div id="newLayoutTemplate" style="margin: 10px; margin-bottom: 15px;">';
+    if(layout!="nothing"){
+        if(structure.length>24){
+            layout_template= layout_template + 'Preview ' + layout + ':';
+            layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+            layout_template= layout_template + '<p>'+structure+'</p>';
+        }else{
+            layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
+            layout_template= layout_template + 'Preview ' + layout + ':';
+            layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+            layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
+        }
     }else{
-        layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
-        layout_template= layout_template + 'Preview ' + layout + ':';
-        layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
-        layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
-    }   
+    layout_template= layout_template + 'Preview ' + layout + ':';
+    layout_template= layout_template + '<p>'+structure+'</p>';
+    }
     layout_template =layout_template + '</div>';
-    //alert(layout_template);
+
     return layout_template;
 }
