@@ -14,27 +14,27 @@
     -khtml-border-radius:       5px;
 }
 
-#content h1{
+#content h2{
 	border-left:				3px solid #FF0000;
 }
-#content h2{
+#content h3{
 	border-left:				3px solid #8ec52d;
 }
-#content h3{
+#content h4{
 	border-left:				3px solid #feeb01;
 }
-#content h4{
-	border-left:				3px solid #0151a0;
-}
 #content h5{
-	border-left:				3px solid #333;
+	border-left:				3px solid #0151a0;
 }
 #content h6{
 	border-left:				3px solid #333;
 }
+#content h7{
+	border-left:				3px solid #333;
+}
 
-#content h1, #content h2, #content h3,
-#content h4, #content h5, #content h6{
+#content h2, #content h3, #content h4,
+#content h5, #content h6, #content h7{
 
 	
 	color:						#000;
