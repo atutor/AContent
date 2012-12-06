@@ -63,16 +63,16 @@ div.input-form {
 	border: 1px #cccccc solid;
 	margin-bottom: 20px;
 	line-height:150%;
-	background-color: #FFFEF0;
+	background-color: #F1EFE2;
 	padding:.3em;
 	border-radius:.5em .5em .5em .5em;
 	-moz-border-radius:.5em .5em .5em .5em;
-	-moz-box-shadow:.05em .05em .0em #999999;
-	 box-shadow: .1em .0em  .1em #999999;
+	/* -moz-box-shadow:.05em .05em .0em #999999;
+	 box-shadow: .1em .0em  .1em #999999; */
 }
 
 div.input-form div.row {
-	background-color:  #FFFEF0;
+	background-color:  #F1EFE2;
 	padding:8px;
 }
 
@@ -131,7 +131,7 @@ div.input-form div.buttons input {
 }
 
 div.input-form input[type=submit]{
-	background-color:#F0F1FF;
+	background-color:#E7E4D3;
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
 	-moz-box-shadow:.1em .1em .2em #999999;

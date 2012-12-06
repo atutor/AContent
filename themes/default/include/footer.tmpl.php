@@ -70,14 +70,15 @@ if($languageManager->getNumEnabledLanguages() > 1) {
       </div>
 		
     </div>
+          <div id="logo">
+      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
+    </div>
   </div> <!--  end center-content div -->
 
   <div class="bottom"></div>
   <!--  bottom for liquid-round theme -->
   </div>
-      <div id="logo">
-      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
-    </div>
+
     <!-- BEAT -->
    
 </body>
