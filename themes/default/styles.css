@@ -1141,7 +1141,8 @@ li.theirs{
   background-image: url('images/others_course.png');
   background-repeat: no-repeat;
   background-position: 0px 0px;
-  padding-left: 18px;
+  background-size:1.1em 1.1em;
+  padding-left: 1.2em;
   line-height:1.5em;
 }
 .results h3 {
