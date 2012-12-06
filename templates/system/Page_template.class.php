@@ -132,7 +132,7 @@
                         echo '</div>';
                  
 
-                        echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template_new.js"></script>';
+                        echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template.js"></script>';
                         
                         $pageTemplateList = array();
                         
