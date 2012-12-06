@@ -5,7 +5,7 @@
 	text-align:					justify;
 }
 
-#content h2{
+#content h3{
 	background:					#18578d;
 	padding:					10px;
         margin-bottom:				10px;
@@ -23,7 +23,7 @@
     -khtml-border-radius:       2px;
 }
 
-#content h2{
+#content h3{
 	color:						#000;
 	border-bottom:				1px solid #000;
 	padding-bottom:				0px;
