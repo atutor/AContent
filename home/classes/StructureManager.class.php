@@ -47,7 +47,8 @@ class StructureManager
 	
 		$this->path = realpath(TR_INCLUDE_PATH		. '../templates').'/structures/' . $name;
 		if(!is_dir($this->path)) 
-			throw new Exception("Error: the name of the struct doesn't corrispond to a dir");
+			//throw new Exception(_"Error: the name of the struct doesn't corrispond to a dir");
+			throw new Exception(_AT('error_no_structure'));
 		
 		$this->name = $name;
 		
@@ -90,9 +91,11 @@ class StructureManager
 			}
 			
 		} else if($this->hasForum($page)) 
-			return 'At this content is associated a forum';
+			//return 'At this content is associated a forum';
+			return _AT('forum_associated');
 		else if($this->hasTest($page))
-			return 'At this content is associated a test';
+			//return 'At this content is associated a test';
+			return _AT('test_associated');
 		//else {
 			//return 'null';
 		//}
@@ -192,7 +195,7 @@ class StructureManager
 			echo '<form action="home/course/course_property.php" method="get">';
 			echo '<input type="hidden" name="_struct_name" value="'.$structs.'" />';
 		
-			echo '<input type="submit" value="Create course with this structure" style="margin: 50px; margin-right: 100px; float: right;" />';
+			echo '<input type="submit" value="'._AT('create_this_structure').'" style="margin: 50px; margin-right: 100px; float: right;" />';
 		//Create lesson with this structure
 		}
 		
@@ -401,7 +404,7 @@ class StructureManager
 					$forum_course = new ForumsCoursesDAO();
 					$forum_content = new ContentForumsAssocDAO();
 					
-					$forum_id = $forums_dao->Create($page['name'], 'This is the description of the forum');
+					$forum_id = $forums_dao->Create($page['name'], _AT('forums_description'));
 					
 					$forum_content->Create($content_id, $forum_id);
 					
@@ -411,7 +414,7 @@ class StructureManager
 					$testsDAO = new TestsDAO();
 					$test_ass_cont = new ContentTestsAssocDAO();
 					
-					$test_id = $testsDAO->Create($course_id, $page['name'], 'This is the test description');
+					$test_id = $testsDAO->Create($course_id, $page['name'], _AT('tests_description'));
 					$test_ass_cont->Create($content_id, $test_id);
 					
 				} else if($content_type == 1) {
@@ -458,9 +461,9 @@ class StructureManager
 	function insertIcons($min, $i){
 
 		if($i < $min)
-			echo '<img title="the page is mandatory" border="0" alt="" src="'.TR_BASE_HREF.'images/must.jpeg"/>';
+			echo '<img title="'._AT('page_mandatory').'" border="0" alt="" src="'.TR_BASE_HREF.'images/must.jpeg"/>';
 		else 
-			echo '<img title="the page can be deleted" height="14" width="14" border="0" alt="" src="'.TR_BASE_HREF.'images/bad.gif"/>';
+			echo '<img title="'._AT('page_deletable').'" height="14" width="14" border="0" alt="" src="'.TR_BASE_HREF.'images/bad.gif"/>';
 		
 		
 	}
