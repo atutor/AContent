@@ -392,9 +392,6 @@
 			$page_template = array();
 			foreach($dir as $item)  {
                             
-				//die($item); // plain_text con struttura
-                                                // goals_creative senza struttura
-                            
                             $page_template[$item] = $this->checkPageTemplate($item);
                             
                         }
