@@ -1581,7 +1581,6 @@ INSERT INTO `language_text` VALUES ('en', '_template','test_mc','Multiple Choice
 INSERT INTO `language_text` VALUES ('en', '_template','test_open','Open Ended','2010-03-23 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','test_ordering','Ordering','2010-03-23 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','test_tf','True or False','2010-03-23 14:23:29','');
-INSERT INTO `language_text` VALUES ('en', '_template','test_fib','Fill in the blanks','2012-05-18 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','text','Text','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','textual','Textual','2010-05-27 14:41:45','');
 INSERT INTO `language_text` VALUES ('en', '_template','theme','Theme','2010-01-27 15:48:35','');
@@ -1698,3 +1697,9 @@ INSERT INTO `language_text` VALUES ('en', '_template','paste_page_template','Pas
 
 INSERT INTO `language_text` VALUES ('en','_template','label_active_first_part','Click here to open the preview of all the page templates availables','2012-11-13 09:58:00','');
 INSERT INTO `language_text` VALUES ('en','_template','label_active_second_part','or make changes to page templates already included','2012-11-13 09:59:00','');
+
+INSERT INTO `language_text` VALUES ('en','_template','img_layout_icon','Layout Icon %1s','2012-12-05 12:10:00','');
+
+INSERT INTO `language_text` VALUES ('en','_template','img_pagetemplate_icon','%1s Thumbnail','2012-12-05 12:10:00','');
+INSERT INTO `language_text` VALUES ('en','_template','img_title_pagetemplate_icon','Click the %1s thumbnail to display a preview below','2012-12-05 12:10:00','');
+

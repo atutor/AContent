@@ -113,45 +113,7 @@ if(isset($_POST['struct']) && isset($_POST['create_struct'])) {
 <?php 
 
 }
-/*
-// 26/11/2012 CM
-$goals_manag = new GoalsManager();
-$struct = '';
-// = array();
 
-foreach ($goals_manag->getGoals() as $goal) {
-
-
-$goal =  str_replace(' ', '_', $goal);
-
-
-if(isset($_POST[$goal])) {
-    //die("entra"); ok
-                $goal =  str_replace('_', ' ', $goal);
-                $type = $goals_manag->getType($goal);
-
-                // In type si ha la struttura
-                $_POST['struct']	= $content_row['title'] = $type;
-	
-                $ordering = count($contentManager->getContent(0)) + 1;
-                $pid = 0;
-                $cid = $contentManager->addContent($_SESSION['course_id'],$pid,$ordering,$_POST['struct'],'','','',0,'',0,'',1,CONTENT_TYPE_FOLDER);
-                $struc_manag = new StructureManager($_POST['struct']);	     
-                $page_temp = $struc_manag->get_page_temp();
-
-                $struc_manag->createStruct($page_temp, $cid, $_course_id); 
-
-        
-                
-// Dovrebbe saltare a                      
-// die(TR_BASE_HREF.'home/editor/edit_content_folder.php?_cid='.$cid); //ARRIVA
-// http://localhost/AContent/AContent/home/editor/edit_content_folder.php?_cid=888
-                
-        header('Location: '.TR_BASE_HREF.'home/editor/edit_content_folder.php?_cid='.$cid);
-        exit;       
-    }
-
-}*/
 require(TR_INCLUDE_PATH.'footer.inc.php');
 ?>
 

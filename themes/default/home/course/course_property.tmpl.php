@@ -13,7 +13,6 @@ global $_current_user;
 global $languageManager;
 
 require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
-require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$this->course_id; ?>" name="form">
@@ -77,46 +76,7 @@ require_once(TR_INCLUDE_PATH.'../home/classes/GoalsManager.class.php');
 			<td align="left"><label for="description"><?php echo _AT('description'); ?></label></td>
 			<td align="left"><textarea id="description" cols="45" rows="2" name="description"><?php if (isset($_POST['description'])) echo stripslashes(htmlspecialchars($_POST['description'])); else echo stripslashes(htmlspecialchars($this->course_row['description'])); ?></textarea></td>
 		</tr>
-		<!--  catia GOAL -->
-                <!--
-		<tr>
-		<td align="left"><p>Goals</p></td>
-		<td>
-			<fieldset>
-				<legend>Choose the lesson's goals</legend>
-						<?php 
-						/*$goals_manager = new GoalsManager();
-						 
-						 $goals = $goals_manager->getGoals();
-						 	foreach ($goals as $goal) {
-						 		
-						 		echo '<div style="display:inline-block">';
-						 		echo '<input id="'.$goal.'" type="checkbox" name="'.$goal.'"></input>';
-						 		echo '<label for="'.$goal.'">'.$goal.'</label>';
-								echo '</div>';
-								
-						 	}*/
-						 
-						 ?>
-						
-				
-			</fieldset>
-			
-		</td>	
-		</tr>
 		
-		<tr>
-			<td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>
-			<td align="left"><textarea name="copyright" rows="2" cols="65" id="copyright"><?php if (isset($_POST['copyright'])) echo stripslashes(htmlspecialchars($_POST['copyright'])); else echo stripslashes(htmlspecialchars($this->course_row['copyright'])); ?></textarea></td>
-		</tr>
-
-		<tr>
-			<td colspan="2" align="left">
-			  <input type="checkbox" name="hide_course" id="hide_course" value="1" <?php if ($this->course_row['access']=='private') echo "checked"; ?> />
-			  <label for="hide_course"><?php echo _AT('hide_course'); ?></label>
-			</td>
-		</tr>
--->
 		<tr>
 			<td colspan="2">
 			

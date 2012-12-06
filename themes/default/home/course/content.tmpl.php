@@ -90,17 +90,22 @@ $result=$dao->execute($sql);
            $choice_layout=$support['layout'];
            break;
         }  
-    }   
-?>
-
-<div id="content">
-  <!--  <div id="content"> -->
-<link  rel="stylesheet" href="<?php echo TR_BASE_HREF; ?>templates/layout/<?php echo $choice_layout; ?>/<?php echo $choice_layout; ?>.css"  type="text/css" />
-            <?php echo $this->body; ?>
-   <!-- </div> -->
-</div>
-
-
+    }
+    if($choice_layout!=''){
+        ?>
+        <div id="content">
+          <!--  <div id="content"> -->
+        <link  rel="stylesheet" href="<?php echo TR_BASE_HREF; ?>templates/layout/<?php echo $choice_layout; ?>/<?php echo $choice_layout; ?>.css"  type="text/css" />
+                    <?php echo $this->body; ?>
+           <!-- </div> -->
+        </div>
+        <?php
+    }else{ ?>
+       <div id="content">
+       <?php echo $this->body; ?>
+          
+       </div>
+<?php   } ?>
 
 
 <?php if (!empty($this->test_ids)): ?>

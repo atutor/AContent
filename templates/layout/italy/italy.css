@@ -5,7 +5,7 @@
 	text-align:					justify;
 }
 
-#content h1{
+#content h2{
 	background:					#365778;
     margin-bottom:				10px;
     margin-top:					20px;
@@ -13,7 +13,7 @@
 	color:						#FFF;
 }
 
-#content h2{
+#content h3{
 	background:					#008d46;
     margin-bottom:				10px;
     margin-top:					20px;
@@ -21,7 +21,7 @@
 	color:						#FFF;
 }
 
-#content h3, #content h4, #content h5, #content h6{
+#content h4, #content h5, #content h6, #content h7{
 	background:					#d2232c;
     margin-bottom:				10px;
     margin-top:					20px;
@@ -29,8 +29,8 @@
 	color:						#FFF;
 }
 
-#content h1, #content h2, #content h3,
-#content h4, #content h5, #content h6{
+#content h2, #content h3, #content h4,
+#content h5, #content h6, #content h7{
     background-image:			url(italy/c_led2.png), url(italy/c_archivio3.png);
     background-repeat:			no-repeat;
     background-position:		left center, right center;
