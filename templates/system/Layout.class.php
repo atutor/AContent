@@ -212,8 +212,8 @@ $ui             .= '<div style="margin: 10px;">';
                                 </thead>';
          
                         $ui .= '<tbody>';
-                         $ui .= '<tr onmousedown="document.form[\'radio-nothing\'].checked=!document.form[\'radio-nothing\'].checked;togglerowhighlight(this,\'radio-nothing\')">';
-                        $ui .= '<td id="radio_nothing"  name="'.$_content_id.'" title="nothing"><input id="radio-nothing" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value=""></td>';
+                         $ui .= '<tr onclick="preview(\'nothing\');" onmousedown="document.form[\'radio-nothing\'].checked=!document.form[\'radio-nothing\'].checked;togglerowhighlight(this,\'radio-nothing\')">';
+                        $ui .= '<td id="radio_nothing"  name="'.$_content_id.'" title="nothing"><input id="radio-nothing" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="nothing"></td>';
                         $ui .= '<td><label for="radio-nothing" style="cursor:pointer;">Nothing</label></td>';
                        $ui .= '<td>Without layout</td>';
                        
