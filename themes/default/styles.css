@@ -487,7 +487,8 @@ a#guide {
   background-image: url('images/guide.png'); 
   background-repeat: no-repeat; 
   background-position: 2px 2px;
-  padding: 3px 10px 1px 25px;
+  background-size:1.5em 1.5em;
+  padding: 3px 10px 1px 1.5em;
   text-decoration:none;
   font-size:0.85em;
   float:right;
