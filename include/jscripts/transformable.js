@@ -252,7 +252,7 @@ trans.utility.selected;
     '         onclick="trans.utility.elementToggle(this, \''+title+'\', \''+compact_title+'\', \''+base_path+'\', \''+show_text+'\', \''+hide_text+'\'); return false;"' +
     '         alt="'+ alt_text + '" ' +
     '         title="'+ alt_text + '"' +
-    '         style="float:right" type="image" /> '+ title +
+    '         style="float:right" type="image" class="toggle_switch"/> '+ title +
     '</h4>');
   };
   

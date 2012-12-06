@@ -378,7 +378,7 @@ float:right;
   margin-top: 2px; 
   color: black; 
   background-color: transparent; 
-  padding-left: 70%; 
+
   padding-right: 5px;
 }
 #banner #versioninfo {
@@ -975,6 +975,7 @@ pre.badgeSnippet {
 #liquid-round {
   background-image:url('images/books_top.jpg');
   background-repeat:repeat-x;
+  background-size:100% 6.2em;
   width:99%;
   margin-left:auto;
   margin-right:auto;
@@ -1125,7 +1126,8 @@ li.mine{
   background-image: url('images/my_own_course.gif');
   background-repeat: no-repeat;
   background-position: 0px 0px;
-  padding-left: 18px;
+  background-size:1.1em 1.1em;
+  padding-left: 1.2em;
   line-height:1.5em;
 }
 div.box ol li.theirs{
@@ -1292,6 +1294,8 @@ table.etabbed-table td.tab-spacer {
 .shortcut_icon{
   border:0;
   vertical-align:middle;
+  height:1.5em;
+  width:1.5em;
 }
 div.shortcuts{
   border-left:1px solid #cccccc;
@@ -1314,6 +1318,15 @@ div.shortcuts{
 }
 .shortcuts li{
   display: inline;
+}
+
+.delete_ex{
+height:1em;
+width:1em;
+}
+.toggle_switch{
+height:.9em;
+width:.9em;
 }
 dl.form_layout dt{
   text-align:center; 
