@@ -85,50 +85,42 @@
                                 
                         echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
 
-                        echo '<li id="deactivate_page_template" style="display: inline;">';
+                        echo '<li id="deactivate_page_template_bar" style="display: inline;">';
                         echo '<label style="margin-right:61px; margin-left:2px;">'._AT('label_deactivate_page_template').'</label>';
-                        echo '<label class="label_button">'._AT('deactivate_page_template').'</label>';
+                        echo '<button type="button" id="deactivate_page_template" class="button">'._AT('deactivate_page_template').'</button>';
                         echo '</li>';
                         
-                        echo '<li id="activate_page_template" style="display: none;">';
+                        echo '<li id="activate_page_template_bar" style="display: none;">';
                         echo '<label style="margin-right:34px; margin-left:2px;">'._AT('label_active_page_template').'</label>';
-                        echo '<label class="label_button">'._AT('activate_page_template').'</label>';
+                        echo '<button type="button" id="activate_page_template" class="button">'._AT('activate_page_template').'</button>';
                         echo '</li>';
                         
                         // display the button if there is only arrange content
                         if($whit_content!=0){
-                            echo '<li id="orderPageTemplate" style="display: inline;">';
+                            echo '<li id="orderPageTemplate_bar" style="display: inline;">';
                             echo '<div style="padding:5px;"></div>';
                             echo '<label style="margin-right:20px; padding-left:2px; padding-right:3px;">'._AT('label_arrange_page_template').'</label>';
-                                echo '<label class="label_button">'._AT('arrange_page_template').'</label>';
+                                echo '<button type="button" id="orderPageTemplate" class="button">'._AT('arrange_page_template').'</button>';
                             echo '</li>';
                           //  echo '<div style="padding:5px;"></div>';
 
                         }else{
                             
-                            echo '<li id="orderPageTemplate" style="display: none;">';
+                            echo '<li id="orderPageTemplate_bar" style="display: none;">';
                             echo '<div style="padding:5px;"></div>';
                             echo '<label style="margin-right:20px; padding-left:2px; padding-right:3px;">'._AT('label_arrange_page_template').'</label>';
-                                echo '<label class="label_button">'._AT('arrange_page_template').'</label>';
+                                echo '<button type="button" id="orderPageTemplate" class="button">'._AT('arrange_page_template').'</button>';
                             echo '</li>';
-                            //echo '<div style="padding:5px;"></div>';
                       }
                        
                         echo '<div style="padding:5px;"></div>';
-                        
-                     
-                        
-                        
-                        
-                        
-                        //echo $_SERVER['REQUEST_URI']; /AContent/home/editor/edit_content.php?_cid=6
 
                         //  code for save (LABEL by DEFAULT /// this also code for the button)
-                        echo '<li id="savePageTemplate" style="display: inline;" name="'.$cid.'">';
+                        echo '<li id="savePageTemplate_bar" style="display: inline;" name="'.$cid.'">';
                             echo '<label id="label_save" name="'.$_SERVER['REQUEST_URI'].'" style="margin-right:61px; margin-left:2px;">'._AT('label_save_page_template').'</label>';
-                         echo '<label class="label_button">'._AT('save').'</label>';
+                         echo '<button type="button" id="savePageTemplate" class="button">'._AT('save').'</button>';
                         // BUTTON   echo '<input type="submit" value="save" id="save_page_templates" name="save_page_templates" />';
-                        echo '</li>';                          
+                        echo '</li>';
                         echo '</div>';
                  
 
@@ -197,14 +189,19 @@
                                              echo '<table id="'.$key.'" >';
                                                     echo '<tr>';
                                                         echo '<td>';
-                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$key).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" />';
+                                                            echo '<a href="javascript: void(0);">';
+                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+                                                            echo '<span class="desc">'.$value['name'].'</span>';
+                                                            echo '</a>';
                                                         echo '</td>';
                                                     echo '</tr>';
+                                                    /*
                                                     echo '<tr>';
                                                         echo '<td class="desc">';
                                                             echo $value['name'];
                                                         echo '</td>';
                                                     echo '</tr>';
+                                                    */
                                         echo '</table>';
                                     echo '</li>';  
                                     }
@@ -215,14 +212,19 @@
                                              echo '<table id="'.$key.'" >';
                                                     echo '<tr>';
                                                         echo '<td>';
-                                                            echo '<img title="'._AT('img_title_pagetemplate_icon',$key).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" />';
+                                                            echo '<a href="javascript: void(0);">';
+                                                            echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+                                                            echo '<span class="desc">'. $value['name'] . '</span>';
+                                                            echo '</a>';
                                                         echo '</td>';
                                                     echo '</tr>';
+                                                    /*
                                                     echo '<tr>';
                                                         echo '<td class="desc">';
                                                             echo $value['name'];
                                                         echo '</td>';
                                                     echo '</tr>';
+                                                    */
                                         echo '</table>';
                                     echo '</li>';  
                                 }
