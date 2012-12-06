@@ -1581,7 +1581,6 @@ INSERT INTO `language_text` VALUES ('en', '_template','test_mc','Multiple Choice
 INSERT INTO `language_text` VALUES ('en', '_template','test_open','Open Ended','2010-03-23 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','test_ordering','Ordering','2010-03-23 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','test_tf','True or False','2010-03-23 14:23:29','');
-INSERT INTO `language_text` VALUES ('en', '_template','test_fib','Fill in the blanks','2012-05-18 14:23:29','');
 INSERT INTO `language_text` VALUES ('en', '_template','text','Text','2010-05-21 15:57:28','');
 INSERT INTO `language_text` VALUES ('en', '_template','textual','Textual','2010-05-27 14:41:45','');
 INSERT INTO `language_text` VALUES ('en', '_template','theme','Theme','2010-01-27 15:48:35','');

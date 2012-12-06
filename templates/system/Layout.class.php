@@ -255,7 +255,7 @@
                            
                            // $ui .= '<div id="radio">';
 //
-                            // MIa implementazione se inserisco ID in td non vede il valore del radio button dopo il post
+                            // Mia implementazione se inserisco ID in td non vede il valore del radio button dopo il post
                    $ui .= '<tr onclick="preview(\''.$tname.'\');" onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\');">';
                   
   $ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
