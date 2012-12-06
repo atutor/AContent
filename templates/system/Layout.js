@@ -26,14 +26,15 @@ $('input[id="apply_layout_to_course"]').live("click",function(){
 
 function preview(lay){
 
-    $('#newLayoutTemplate').remove();
+   $('#newLayoutTemplate').remove();
 
-    $('input[id="radio-'+lay+'"]').removeAttr('disabled'); 
+   $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
 
    $('input[id="radio-'+lay+'"]').attr('checked','checked');
    $('input[id="radio-'+lay+'"]').attr('disabled','disabled');
 
     var cid = $("#radio_"+lay).attr('name');
+
     addLayoutTemplate(cid,lay);
     layout_click=lay;
     
@@ -43,6 +44,8 @@ function preview(lay){
 function addLayoutTemplate(cid,layout){
 
     var url =path + "/templates/system/AJAX_actions.php";
+    
+    
 
     $.post(url, {content: cid}, function(structure){
         base.append(createLayoutTemplate(layout,structure));
@@ -67,8 +70,14 @@ function createLayoutTemplate(layout,structure)
             layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
         }
     }else{
-    layout_template= layout_template + 'Preview ' + layout + ':';
-    layout_template= layout_template + '<p>'+structure+'</p>';
+        if(structure.length>24){
+                layout_template= layout_template + 'Preview ' + layout + ':';          
+                layout_template= layout_template + '<p>'+structure+'</p>';
+            }else{
+                layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
+                layout_template= layout_template + 'Preview ' + layout + ':';
+                layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
+            }
     }
     layout_template =layout_template + '</div>';
 
