@@ -1209,7 +1209,7 @@ initContentMenu();
 				
 				if ($content['content_type'] == CONTENT_TYPE_FOLDER)
 				{
-					$link .= '<img src="'.$_base_path.'images/folder.gif" />';
+					$link .= '<img src="'.$_base_path.'images/folder.gif" class="map_folder"/>';
 				}
 				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'</label>'."\n";
 
@@ -1231,15 +1231,15 @@ initContentMenu();
 					}
 
 					if (($counter == $num_items) && ($depth > 0)) {
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 						$children[$depth] = 0;
 					} else {
 						echo $buttons;
 						if (($num_items == $counter) && ($parent_id == 0)) {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 							$end = true;
 						} else {
-							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
+							echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 						}
 						$children[$depth] = 1;
 					}
@@ -1251,10 +1251,10 @@ initContentMenu();
 					}
 
 					if ($_SESSION['menu'][$content['content_id']] == 1) {
-						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
+						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'"  class="img-size-tree"/>';
 
 					} else {
-						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'" />';
+						echo '<img src="'.$_base_path.'images/tree/tree_disabled.gif" alt="'._AT('toggle_disabled').'" border="0" width="16" height="16" title="'._AT('toggle_disabled').'"  class="img-size-tree"/>';
 					}
 
 				} else {
@@ -1267,7 +1267,7 @@ initContentMenu();
 									if ($end && ($i == 0)) {
 										echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 									}
 								} else {
 									echo '<img src="'.$_base_path.'images/clr.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
@@ -1276,7 +1276,7 @@ initContentMenu();
 						} else {
 							echo $buttons;
 						}
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_end.gif" alt="" border="0"  class="img-size-tree"/>';
 					} else {
 						if ($depth) {
 							echo $buttons;
@@ -1285,12 +1285,12 @@ initContentMenu();
 								if ($children[$i] == 1) {
 									if ($end && !$print) {
 										$print = true;
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />';
 									} else {
-										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16" />';
+										echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_vertline.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 									}
 								} else {
-									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16" />';
+									echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_space.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 								}
 							}
 							$print = false;
@@ -1298,9 +1298,9 @@ initContentMenu();
 							echo $buttons;
 						}
 		
-						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16" />';
+						echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_split.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 					}
-					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" />';
+					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 				}
 
 				echo '<small> '.($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter : '');

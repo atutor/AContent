@@ -991,7 +991,7 @@ pre.badgeSnippet {
 #liquid-round {
   background-image:url('images/books_top.jpg');
   background-repeat:repeat-x;
-  background-size:100% 6.2em;
+  background-size:100% 5.8em;
   width:99%;
   margin-left:auto;
   margin-right:auto;
@@ -1042,7 +1042,7 @@ border-radius:.8em .8em .8em .8em;
 
 /* Navigation tab style */
 div.topnavlistcontainer {
-  margin-left:-1.5em;
+  margin-left:-1em;
 }
 .navigation a
 {
@@ -1146,7 +1146,7 @@ ul.navigation li a.active{
   border:1px solid #cccccc;
 }
 li.course {
-
+white-space:nowrap;
   margin:.5em -.5em;
 }
 ol li{
@@ -1404,6 +1404,8 @@ ul#content-tool-links img{
   border: 0 none;
   display: block;
   padding-left: 10px;
+  height:3em;
+  width:3em;
 }
 .hidden {
   display: none;
@@ -1417,6 +1419,38 @@ ul#content-tool-links img{
 .selected-sidemenu {
   font-weight:bold;
   text-decoration:underline;
+}
+
+.img-size-tree{
+height:1em;
+width:1em;
+}
+.map_folder{
+height:1.2em;
+width:1.3em;
+}
+.img-size-fm1{
+height:1.2em;
+width:1.3em;
+}
+.img-size-fm2{
+height:1em;
+width:1em;
+}
+.img-size-fm3{
+height:1em;
+width:.8em;
+}
+.img-size-fm4{
+height:1em;
+width:1.2em;
+}
+.fl-uploader span.fl-uploader-browse {
+background-size:1em 1em;
+
+}
+.flc-uploader-button-browse-text{
+margin-lefy:1em;
 }
 div#alternatives_shortcuts {
   float: right;
