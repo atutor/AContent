@@ -19,7 +19,7 @@ if ($this->course_id > 0) { ?>
           <br />
           <span style="font-size:smaller;padding-right:3px;">
             <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" title="<?php echo _AT('goto_top'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
-              <img src="<?php echo $this->base_path; ?>themes/<?php echo $this->theme; ?>/images/goto_top.gif" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0"/> 
+              <img src="<?php echo $this->base_path; ?>themes/<?php echo $this->theme; ?>/images/goto_top.gif" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0" class="goto"/> 
 			</a>
           </span>
         </div>  
@@ -30,35 +30,18 @@ if ($this->course_id > 0) { ?>
     </div> <!-- end of contentwrapper -->
 	
 	<div id="footer">
-<?php 
+	    <div id="logo">
+      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
+    </div>
 
-if($languageManager->getNumEnabledLanguages() > 1) {
-?>
-      <div align="center" id="lang" style="clear: left"><br />
-<?php
-	if ($languageManager->getNumEnabledLanguages() > 5) {
-		echo '        <form method="get" action="'.htmlspecialchars($_my_uri, ENT_QUOTES).'">';
-		echo '          <label for="lang" style="display:none;">'._AT('translate_to').' </label>';
-		$languageManager->printDropdown($_SESSION['lang'], 'lang', 'lang');
-		echo '          <input type="submit" name="submit_language" class="button" value="'._AT('translate').'" />';
-		echo '        </form>';
-	} else {
-		echo '        <small><label for="lang">'._AT('translate_to').' </label></small>';
-		$languageManager->printList($_SESSION['lang'], 'lang', 'lang', htmlspecialchars($_my_uri));
-	}
-?>
-        <br/><br/>
-      </div>
-<?php } // end of displaying language selection ?>
-
-      <div align="center" style="clear:both;margin-left:auto; width:30em;margin-right:auto;">
+      <div align="center" class="foot_text">
         <a href="<?php echo TR_BASE_HREF; ?>documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
           &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="<?php echo TR_BASE_HREF; ?>documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
         <br /><br />
       </div>
-		<br style="clear:both;" />
-      <div style="margin-left:auto; margin-right:auto; width:20em;">
+
+      <div class="foot_text">
         <small><?php if (isset($this->course_copyright)) echo htmlentities_utf8($this->course_copyright, ENT_QUOTES, 'UTF-8').'<br />'; echo _AT("copyright"); ?></small><br />
   <!-- guide -->
 
@@ -68,11 +51,9 @@ if($languageManager->getNumEnabledLanguages() > 1) {
 
 
       </div>
-		
+		<br style="clear:both;">
     </div>
-          <div id="logo">
-      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
-    </div>
+
   </div> <!--  end center-content div -->
 
   <div class="bottom"></div>
