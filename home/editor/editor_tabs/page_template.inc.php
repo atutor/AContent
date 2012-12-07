@@ -172,15 +172,15 @@ echo '<label  class="success_label">Action completed successfully.</label>';
 echo '</div>';
 
 echo '<div id="no-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
-echo '<div style="margin-left:10px;"><b>No content</b> associated</div>';
+echo '<div style="margin-left:10px;">'. _AT("no_content_associated").'</div>';
 echo '</div>';
 
 echo '<div id="whit-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
-echo '<div style="margin-left:10px;">Content associated:</div></div>';
+echo '<div style="margin-left:10px;">'. _AT("content_associated") .'</div></div>';
 
 if($sup<=24){ 
     echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
-    echo '<div id="no-cont"><b>No content</b> associated</div>';
+    echo '<div id="no-cont">'. _AT("no_content_associated") . '</div>';
     echo '</div>';
     $whit_content=0;
     $mod->view_page_templates($whit_content);
@@ -188,7 +188,7 @@ if($sup<=24){
 else{
     echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$layout.'/'.$layout.'.css">';
     echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
-    echo '<div id="whit-cont">Content associated: </div>';
+    echo '<div id="whit-cont">'. _AT("content_associated") .'</div>';
     // I insert a new div to try not to lose the old contents in the case of rescue
     echo '<div id="content-previous">';
         echo $text;
