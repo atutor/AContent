@@ -26,7 +26,6 @@ global $savant;
 
 $contentDAO = new ContentDAO();
 $privilegesDAO = new PrivilegesDAO();
-$output = '';
 
 ######################################
 #	Variables declarations / definitions
@@ -107,10 +106,6 @@ if(is_array($result))
 //content-length if less than 24 there is content, being 24 to the div id = "content" that is inserted automatically 
 $sup=strlen($text);
 
-// call the function that creates the graphics module selection
-// step content length and the value cid-->content_id
-$output	= $mod->createUI($sup,$cid);
-
 echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'/themes/default/form.css">';	
 echo '<div id="success" style="display:none;">';
 echo '<label  class="success_label">Action completed successfully.</label>';
@@ -120,36 +115,28 @@ echo '<div id="no-cont-pre" style="display:none; margin: 10px; margin-top: 20px;
 echo '<div style="margin-left:10px;">'. _AT("no_content_associated").'</div>';
 echo '</div>';
 
-echo '<div id="whit-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+echo '<div id="with-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
 echo '<div style="margin-left:10px;" style="font-weight:bold;">'. _AT("content_associated") .':</div></div>';
 
 if($sup<=24) { 
 	echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
 	echo '<div id="no-cont">'. _AT("no_content_associated") . '</div>';
 	echo '</div>';
-	$whit_content=0;
-	$mod->view_page_templates($whit_content);
+	$with_content=0;
+	$mod->view_page_templates($with_content);
 } else {
 	echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$layout.'/'.$layout.'.css">';
 	echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
-	echo '<div id="whit-cont" style="font-weight:bold;">'. _AT("content_associated") .':</div>';
-	// I insert a new div to try not to lose the old contents in the case of rescue
+	echo '<div id="with-cont" style="font-weight:bold;">'. _AT("content_associated") .':</div>';
+	// Keep track of the old content for rescue
 	echo '<div id="content-previous">';
 		echo $text;
 	echo '</div>';
 	echo'</div>';
 	
-	$whit_content=1;
-	$mod->view_page_templates($whit_content);
+	$with_content=1;
+	$mod->view_page_templates($with_content);
 }
-
-// NEW VERSION
-if ($output == '') {
-	$output = _AT('none_found');
-}
-
-// content
-echo $output;
 
 ?>
 

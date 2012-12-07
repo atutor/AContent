@@ -61,174 +61,154 @@ class Page_template {
 		return;
 	}
 
-	public function view_page_templates($whit_content)
+	public function view_page_templates($with_content)
 	{
-		$this->content_id	= (isset($_REQUEST['cid']) ? intval($_REQUEST['cid']) : $_content_id);
-		$this->course_id	= (isset($_REQUEST['course_id']) ? intval($_REQUEST['course_id']) : $_course_id);
+		// 
+		// form if using save as button
+		echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="test" method="post" style="display: none;" onsubmit="return false">';
 
-		$template="templates";
+		// added css for labels that become buttons
+		echo '<link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'/themes/default/forms.css">';
 
-		if(isset($_POST['activate_page_template_php'])){
-			// form if using save as button
-			echo '<form action="'.$_SERVER['REQUEST_URI'].'" id="test" method="post" style="display: none;" onsubmit="return false">';
+		echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
 
-			//05/11/2012
-			// this gets the cid value from the hidden field added to createUI()
-			$cid = $_POST['value_cid'];
+		if ($with_content == 0) {
+			echo '<span>'._AT("note_at_first_access").'</span><br />';
+		}
+		echo '<li id="deactivate_page_template_bar" style="display: '. ($with_content == 0 ? 'inline' : 'none') . ';">';
+		echo '<button type="button" id="deactivate_page_template" class="button">'. _AT('hide_templates') .'</button>';
+		echo '</li>';
 
-			// added css for labels that become buttons       
-			echo '<link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'/themes/default/forms.css">';
+		echo '<li id="activate_page_template_bar" style="display: '.($with_content == 0 ? 'none' : 'inline').';">';
+		echo '<button type="button" id="activate_page_template" class="button">'.($with_content == 0 ? _AT('show_templates') : _AT('add_templates')).'</button>';
 
-			echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+		// display the button if there is only arrange content
+		echo '<li id="orderPageTemplate_bar" style="display: none;">';
+		echo '<div style="padding:5px;"></div>';
+		echo '<button type="button" id="orderPageTemplate" class="button">'._AT('edit_templates').'</button>';
+		echo '</li>';
 
-			echo '<li id="deactivate_page_template_bar" style="display: inline;">';
-			echo '<label style="margin-right:61px; margin-left:2px;">'._AT('label_deactivate_page_template').'</label>';
-			echo '<button type="button" id="deactivate_page_template" class="button">'._AT('deactivate_page_template').'</button>';
-			echo '</li>';
+		echo '<div style="padding:5px;"></div>';
 
-			echo '<li id="activate_page_template_bar" style="display: none;">';
-			echo '<label style="margin-right:34px; margin-left:2px;">'._AT('label_active_page_template').'</label>';
-			echo '<button type="button" id="activate_page_template" class="button">'._AT('activate_page_template').'</button>';
-			echo '</li>';
+		//  code for save (LABEL by DEFAULT /// this also code for the button)
+		echo '<li id="savePageTemplate_bar" style="display: '. ($with_content == 0 ? 'inline' : 'none') .'">';
+		echo '<input id="server_url" value="'.$_SERVER['REQUEST_URI'].'" type="hidden" />';
+		echo '<input id="content_id" value="'.$this->content_id.'" type="hidden" />';
+		echo '<button type="button" id="savePageTemplate" class="button">'._AT('save').'</button>';
+		// BUTTON   echo '<input type="submit" value="save" id="save_page_templates" name="save_page_templates" />';
+		echo '</li>';
+		echo '</div>';
 
-			// display the button if there is only arrange content
-			if($whit_content!=0){
-				echo '<li id="orderPageTemplate_bar" style="display: inline;">';
-				echo '<div style="padding:5px;"></div>';
-				echo '<label style="margin-right:20px; padding-left:2px; padding-right:3px;">'._AT('label_arrange_page_template').'</label>';
-				echo '<button type="button" id="orderPageTemplate" class="button">'._AT('arrange_page_template').'</button>';
-				echo '</li>';
+		echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template.js"></script>';
 
-			} else {
-				echo '<li id="orderPageTemplate_bar" style="display: none;">';
-				echo '<div style="padding:5px;"></div>';
-				echo '<label style="margin-right:20px; padding-left:2px; padding-right:3px;">'._AT('label_arrange_page_template').'</label>';
-				echo '<button type="button" id="orderPageTemplate" class="button">'._AT('arrange_page_template').'</button>';
-				echo '</li>';
-			}
+		$pageTemplateList = array();
 
-			echo '<div style="padding:5px;"></div>';
+		// Db calls to get the values ​​of the structure and title
+		define('TR_INCLUDE_PATH', '../../include/');
+		include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
+		require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+		require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
+		require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
+		Utility::authenticate(TR_PRIV_ISAUTHOR);
+		$dao = new DAO();
 
-			//  code for save (LABEL by DEFAULT /// this also code for the button)
-			echo '<li id="savePageTemplate_bar" style="display: inline;" name="'.$cid.'">';
-			echo '<label id="label_save" name="'.$_SERVER['REQUEST_URI'].'" style="margin-right:61px; margin-left:2px;">'._AT('label_save_page_template').'</label>';
-			echo '<button type="button" id="savePageTemplate" class="button">'._AT('save').'</button>';
-			// BUTTON   echo '<input type="submit" value="save" id="save_page_templates" name="save_page_templates" />';
-			echo '</li>';
-			echo '</div>';
+		$sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$this->content_id."";
+		$result=$dao->execute($sql);
 
-			echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template.js"></script>';
-
-			$pageTemplateList = array();
-
-			// NEW 12/11/2012
-
-			// Db calls to get the values ​​of the structure and title
-			define('TR_INCLUDE_PATH', '../../include/');
-			include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
-			require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
-			require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
-			require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
-			Utility::authenticate(TR_PRIV_ISAUTHOR);
-			$dao = new DAO();
-
-			$sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-			$result=$dao->execute($sql);
-
-			if(is_array($result))
-			{
-				foreach ($result as $support) {
-					$content=$support['structure'];
-					break;
-				}
-			}
-			$sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-			$result=$dao->execute($sql);
-			if(is_array($result)) {
-				foreach ($result as $support) {
-					$title=$support['title'];
-					break;
-				}
-			}
-			//echo $content['structure'];              
-			if($content!='') {
-				// Upload the array of default page template structure
-				$structManager = new StructureManager($content);
-
-				$item=$structManager->getPageTemplatesItem($title);
-				$array = $structManager->getContent($item);
-
-				//	$pageTemplateList = $this->validatedPageTemplate($array);
-			}
-
-			$pageTemplateList = $this->getPageTemplateList();
-
-			echo '<link rel="stylesheet" href="'.TR_BASE_HREF.'/templates/system/page_template.css" type="text/css" />';
-			// avoid the input when the array is empty
-			if($pageTemplateList != null){
-
-				echo '<div class="boxTotal">';
-				echo '<div class="boxPageTemplate" style="display: block;" >';
-				echo '<ul>';
-				foreach ($pageTemplateList as $key => $value) {
-					//Check if there is a structure and search if the page template belongs
-					// scanned array of predefined structure
-					if($content!=''){
-						if(in_array($key,$array)){
-							echo '<li>';
-							echo '<table id="'.$key.'" >';
-							echo '<tr>';
-							echo '<td>';
-							echo '<a href="javascript: void(0);">';
-							echo '<img title="'._AT('img_title_pagetemplate_icon',$value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
-							echo '<span class="desc">'.$value['name'].'</span>';
-							echo '</a>';
-							echo '</td>';
-							echo '</tr>';
-							echo '</table>';
-							echo '</li>';  
-						}
-					} else {
-						echo '<li>';
-						echo '<table id="'.$key.'" >';
-						echo '<tr>';
-						echo '<td>';
-						echo '<a href="javascript: void(0);">';
-						echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
-						echo '<span class="desc">'. $value['name'] . '</span>';
-						echo '</a>';
-						echo '</td>';
-						echo '</tr>';
-						echo '</table>';
-						echo '</li>';  
-					}
-				}
-				echo '</ul>';
-				echo '</div>'; // div boxPageTemplate  
-				// two button PASTE and COPY
-				echo '<div class="boxPageTemplateTool">';
-				echo '<ul>';
-				echo '</ul>';
-
-				echo '<ul>';
-				echo '<li id="pageTemplatePaste" style="display: none;">';
-				echo '<img alt="error paste" title="paste" src="'.TR_BASE_HREF.'/templates/system/paste.png">';
-				echo _AT('paste_page_template');
-				echo '</li>';
-				echo '<li id="pageTemplateCopy">';
-				echo '<img alt="error copy" title="copy" src="'.TR_BASE_HREF.'/templates/system/copy.png">';
-				echo _AT('copy_page_template');
-				echo '</li>';
-				echo '</ul>';
-				echo '</div>';
-				echo '</div>'; // div boxTotal
-
-				echo '<div id="content-text">';
-
-				echo '</div>';
-				echo '</form>';
+		if(is_array($result))
+		{
+			foreach ($result as $support) {
+				$content=$support['structure'];
+				break;
 			}
 		}
+		$sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$this->content_id."";
+		$result=$dao->execute($sql);
+		if(is_array($result)) {
+			foreach ($result as $support) {
+				$title=$support['title'];
+				break;
+			}
+		}
+
+		if($content!='') {
+			// Upload the array of default page template structure
+			$structManager = new StructureManager($content);
+
+			$item=$structManager->getPageTemplatesItem($title);
+			$array = $structManager->getContent($item);
+
+			//	$pageTemplateList = $this->validatedPageTemplate($array);
+		}
+
+		$pageTemplateList = $this->getPageTemplateList();
+
+		echo '<link rel="stylesheet" href="'.TR_BASE_HREF.'/templates/system/page_template.css" type="text/css" />';
+		// avoid the input when the array is empty
+		if($pageTemplateList != null){
+
+			echo '<div class="boxTotal" style="display: '. ($with_content == 0 ? "block" : "none").';">';
+			echo '<div class="boxPageTemplate" style="display:block;">';
+			echo '<ul>';
+			foreach ($pageTemplateList as $key => $value) {
+				//Check if there is a structure and search if the page template belongs
+				// scanned array of predefined structure
+				
+//				if($content!=''){
+//					if(in_array($key,$array)){
+//						echo '<li>';
+//						echo '<table id="'.$key.'" >';
+//						echo '<tr>';
+//						echo '<td>';
+//						echo '<a href="javascript: void(0);">';
+//						echo '<img title="'._AT('img_title_pagetemplate_icon',$value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+//						echo '<span class="desc">'.$value['name'].'</span>';
+//						echo '</a>';
+//						echo '</td>';
+//						echo '</tr>';
+//						echo '</table>';
+//						echo '</li>';  
+//					}
+//				} else {
+					echo '<li>';
+					echo '<table id="'.$key.'" >';
+					echo '<tr>';
+					echo '<td>';
+					echo '<a href="javascript: void(0);">';
+					echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+					echo '<span class="desc">'. $value['name'] . '</span>';
+					echo '</a>';
+					echo '</td>';
+					echo '</tr>';
+					echo '</table>';
+					echo '</li>';  
+//				}
+			}
+			echo '</ul>';
+			echo '</div>'; // div boxPageTemplate  
+			// two button PASTE and COPY
+			echo '<div class="boxPageTemplateTool">';
+			echo '<ul>';
+			echo '</ul>';
+
+			echo '<ul>';
+			echo '<li id="pageTemplatePaste" style="display: none;">';
+			echo '<img alt="error paste" title="paste" src="'.TR_BASE_HREF.'/templates/system/paste.png">';
+			echo _AT('paste_page_template');
+			echo '</li>';
+			echo '<li id="pageTemplateCopy">';
+			echo '<img alt="error copy" title="copy" src="'.TR_BASE_HREF.'/templates/system/copy.png">';
+			echo _AT('copy_page_template');
+			echo '</li>';
+			echo '</ul>';
+			echo '</div>';
+			echo '</div>'; // div boxTotal
+
+			echo '<div id="content-text"></div>';
+		}
+		
+		echo '</div>';
+		echo '</form>';
 	}
 
 	/*
@@ -350,30 +330,6 @@ class Page_template {
 		}
 
 		return $page_template;
-	}
-
-	/*
-	 * 	The following function provides for the generation of a form
-	 *	to graphically show the user the list of available page_template.
-	 * 	The form is returned by the function and, then,
-	 * 	integrated the output of this model.
-	 *	input:	$pageTemplateList[]	list of available page_template
-	 *	output:	none 
-	 * */
-
-	public function createUI($sup,$cid){
-
-		$ui = '';
-		$ui .='<form action="'.$_SERVER['REQUEST_URI'].'" id="templates" method="post" style="display: none" onsubmit="return false">';
-		$ui .= '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
-		$ui .= '<label id="label_act_page_template_php" style="margin-right:20px;">'._AT('label_active_first_part').'<br>'.
-		       _AT('label_active_second_part').'</label><br><div style="padding:5px;"></div>'.
-		       '<input type="submit" style="width:250px;" value="Active page template functions" id="activate_page_template_php" name="activate_page_template_php" />';
-		$ui .= '<input name="value_cid" type="hidden" value="'.$cid.'" >';
-		$ui .='</form>';
-		$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
-
-		return $ui;                  
 	}
 
 	private function applyPageTemplateToContent() {
