@@ -61,6 +61,6 @@ if (!is_array($structsList) || count($structsList) == 0) {
 <?php echo _AT('create_content_3', TR_BASE_HREF.'home/editor/edit_content_struct.php?_course_id='.$_course_id, "");
 
  ?>
-	</div>
+</div>
 	
 	
