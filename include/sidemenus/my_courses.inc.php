@@ -56,7 +56,7 @@ if (!is_array($my_courses)) {
 		} 
 		if ($row['role'] == NULL && $_SESSION['user_id']>0) {
 			$output .= '    <a href="'. TR_BASE_HREF.'home/'. $caller_url.'action=add'.SEP.'cid='. $row['course_id'].'">'."\n";
-			$output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_add.png" alt="'. htmlspecialchars(_AT('add_into_list')).'" title="'. htmlspecialchars(_AT('add_into_list')).'" border="0" />'."\n";
+			$output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_add.png" alt="'. htmlspecialchars(_AT('add_into_list')).'" title="'. htmlspecialchars(_AT('add_into_list')).'" border="0"  class="shortcut_icon"/>'."\n";
 			$output .= '    </a>'."\n";
 		}
 		//$output .= '    <a href="'. TR_BASE_HREF.'home/ims/ims_export.php?course_id='. $row['course_id'].'">'."\n";
