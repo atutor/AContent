@@ -164,11 +164,12 @@ $mime['csv']   = array('text/plain',   'xls');
 // microsoft office
 $mime['xls']   = array('application/msexcel',   'xls');
 $mime['doc']   = array('application/msword',    'doc');
+$mime['docx']   = array('application/msword',    'docx');
 $mime['mdb']   = array('application/msaccess',  'mdb');
 $mime['vsd']   = array('application/visio',     'vsd');
 $mime['mpp']   = array('application/msproject', 'mpp');
 $mime['ppt']   = array('application/vnd.ms-powerpoint',   'ppt');
-
+$mime['pptx']   = array('application/vnd.ms-powerpoint',   'pptx');
 // open office
 $mime['oot']   = array('application/x-vnd.oasis.openoffice.text',   'oot');
 $mime['ott']   = array('application/x-vnd.oasis.openoffice.text',   'oot');
