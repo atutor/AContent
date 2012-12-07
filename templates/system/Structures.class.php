@@ -1,5 +1,16 @@
 <?php
 
+/* * ********************************************************************* */
+/* AContent                                                             */
+/* * ********************************************************************* */
+/* Copyright (c) 2010                                                   */
+/* Inclusive Design Institute                                           */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/* * ********************************************************************* */
+
 class Structures {
     /*
      * Variables declarations / definitions
@@ -24,11 +35,19 @@ class Structures {
     public function __construct($mod_path) {
 
         $this->mod_path = $mod_path;
-
         return;
     }
 
-    
+    /*
+     * Open the configuration file reading the parameters
+     * input:	none
+     * output:	none
+     * 
+     * */
+
+    /* public function getConfig(){
+      return $this->config;
+      } */
 
     /*
      * Read loaded themes creating a list of available themes
@@ -69,16 +88,13 @@ class Structures {
 
             $isdir = $this->mod_path['structs_dir_int'] . $item;
 
-
-
             // checking if the element is a directory
             if (is_dir($isdir)) {
-
-                // check if exists the .xml file and parse it
+                // check if exists the .info file and parse it
+                //$isfile	= $isdir.'/structure.info';
                 $xml_file = $isdir . '/structure.xml';
                 if (is_file($xml_file)) {
                     $xml = simplexml_load_file($xml_file);
-
                     foreach ($xml->children() as $child) {
                         $name = $child->getName();
                         if ($name == "release") {
@@ -86,43 +102,32 @@ class Structures {
                         }
                         $info[$name] = $child;
                     }
-
                     $info['short_name'] = $item;
                     if (!$info['name'])
                         $info['name'] = $item;
-
                     // check the "core"
                     if (!$info['core'])
-                        return NULL;
+                        continue;
                     else {
-
                         $vfile = explode('.', $info['core']);
                         $vcore = explode('.', VERSION);
-
                         // cursory check for version compatibility
                         // stopping the cycle to the first incompatibility found
                         if ($vfile[0] < $vcore[0])
                         // not compatible!
-                            return NULL;
+                            continue;
                         elseif (strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
                         // not compatible!
-                            return NULL;
+                            continue;
                     }
-
-
-
                     // put the info of the current structure into an array
                     $structs[$item] = $info;
                 }
             }
         }
-
-
-
-
         return $structs;
     }
 
 }
-
 ?>
+

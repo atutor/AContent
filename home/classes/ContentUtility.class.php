@@ -694,7 +694,12 @@ class ContentUtility {
 					   'url' => $_base_href . 'home/editor/edit_content.php?_cid='.$content_row['content_id'],
 					  'icon' => $_base_href . 'images/medit.gif');
 			}
-		
+			$tool_shortcuts[] = array(
+			  'title' => _AT('add_top_structure'), 
+			  'url' => $_base_href .
+				'home/editor/edit_content_struct.php?_course_id='.$_course_id,
+			   'icon' => $_base_href . 'images/addstruct.gif');
+
 			$tool_shortcuts[] = array(
 			  'title' => _AT('add_sibling_folder'), 
 			  'url' => $_base_href .

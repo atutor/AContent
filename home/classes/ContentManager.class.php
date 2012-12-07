@@ -724,7 +724,7 @@ function initContentMenu() {
 			echo "\n".'
   <div class="menuedit">
   	<a href="'.$_base_path.'home/editor/edit_content_struct.php?_course_id='.$_course_id.'">
-      <img id="img_create_top_folder" src="'.$_base_path.'images/addstruct.gif" alt="Add top structure" title="Add top structure" style="border:0;height:1.2em" />
+      <img id="img_create_top_folder" src="'.$_base_path.'images/addstruct.gif" alt="'._AT('add_top_structure').'" title="'._AT('add_top_structure').'" style="border:0;height:1.2em" />
     </a>'."\n".'
     <a href="'.$_base_path.'home/editor/edit_content_folder.php?_course_id='.$_course_id.'">
       <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
@@ -940,10 +940,10 @@ initContentMenu();
 					//catia
 						if($content['optional'] == 1) 
 						//1 the content is optional
-							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" class="delete_ex" /></a>';
 						else
 						//0 the content is mandatory
-							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="mandatory page"/>';
+							$link .= '<img style="margin-left:2px" src="'.$_base_path.'images/must.jpeg" title="'._AT('mandatory_content').'" class="delete_ex"/>';
 					}
 					
 				} 
@@ -980,10 +980,10 @@ initContentMenu();
 								//catia
 							if($content['optional'] == 1) 
 							//1 the content is optional
-								$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+								$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0"  class="delete_ex" /></a>';
 							else
 							//0 the content is mandatory
-								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="Mandatory content" style="margin-left:2px;"/>';
+								$link .= '<img src="'.$_base_path.'images/must.jpeg" title="'._AT('mandatory_content').'" style="margin-left:2px;"/>';
 						}
 					}
 					else
@@ -1019,7 +1019,7 @@ initContentMenu();
 						
 						// instructors have privilege to delete content
 						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
-							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0" height="10" /></a>';
+							$link .= '<a href="'.$_base_path.'home/editor/delete_content.php?_cid='.$content['content_id'].'"><img src="'.TR_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" style="border:0"  class="delete_ex" /></a>';
 						}
 //						echo '<div id="folder_content_'.$content['content_id'].'">';
 					}

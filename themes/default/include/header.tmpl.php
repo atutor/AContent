@@ -335,10 +335,10 @@ foreach ($this->top_level_pages as $page) {
         //<![CDATA[
         var state = trans.utility.getcookie("side-menu");
         if (state && (state == 'none')) {
-           trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" />","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" />", "", "show");
+           trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" class=\"shortcut_icon\"/>","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" class=\"shortcut_icon\" />", "", "show");
         } else {
             document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-            trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" />","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" />", "", "hide");
+            trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\"  class=\"shortcut_icon\"/>","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\"  class=\"shortcut_icon\" />", "", "hide");
         }
         //]]>
         </script>

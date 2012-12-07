@@ -30,7 +30,7 @@ if ($this->shortcuts):
 </fieldset>
 <?php endif; ?> -->
 	<div class="row">
-		<div style="font-weight:bold;"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ftitle">Choose the structure</label></div>
+		<div style="font-weight:bold;"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ftitle"><?php echo _AT('choose_structure'); ?></label></div>
 		
 		<?php  
 			
@@ -73,13 +73,13 @@ if ($this->shortcuts):
 		
 	<!--	<li id="<?php echo $val['short_name'];?>"> <?php echo $val['name'];?> </li> -->
 
-		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;">Description:</span>
+		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;"><?php echo _AT('description'); ?>:</span>
                 <?php echo $val['description']; ?></p>
 
 
                 <div style="font-size:95%; margin-left: 10px;">
 
-                        <a title="outline_collapsed" id="a_outline_<?php echo $val['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $val['short_name'];?>', 'Hide outline', 'Show outline'); " href="javascript:void(0)">Show outline</a>
+                        <a title="outline_collapsed" id="a_outline_<?php echo $val['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $val['short_name'];?>', '<?php echo _AT('hide_outline'); ?>', '<?php echo _AT('show_outline'); ?>'); " href="javascript:void(0)"><?php echo _AT('show_outline'); ?></a>
                         <div style="display: none;" id="div_outline_<?php echo $val['short_name'];?>">
                                 <?php $struc_manag = new StructureManager($val['short_name']);
                                 $struc_manag->printPreview(false, $val['short_name']); ?>

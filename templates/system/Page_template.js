@@ -6,7 +6,7 @@
 //var support=0; // for boxTotal control
 var num_layout_select=0; // for layout control
 
-	var removePageTemplateTopBar	= '<div class="removePageTemplateTopBar"><div class="removePageTemplate">X</div></div>';
+	var removePageTemplateTopBar	= '<div class="removePageTemplateTopBar"><button type="button" class="removePageTemplate">X</button></div>';
 	
         /*var sortTools			= '<div class="sortTools">\
 								<img src="<?php echo $templates; ?>system/top.png" class="movePageTemplateTop" alt="move top" />\
@@ -36,10 +36,10 @@ while(cont!=a.length-3){
 
 
 var sortTools= '<div class="sortTools">\n\
-<img src="'+ path + '/templates/system/top.png" class="movePageTemplateTop" alt="move top" />\n\
-<img src="'+ path + '/templates/system/up.png" class="movePageTemplateUp" alt="move up" />\n\
-<img src="'+ path + '/templates/system/down.png" class="movePageTemplateDown" alt="move down" />\n\
-<img src="'+ path + '/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom" />\n\
+<button type="button" class="movePageTemplateTop no-style"><img src="'+ path + '/templates/system/top.png" class="" alt="move top" /></button>\n\
+<button type="button" class="movePageTemplateUp no-style"><img src="'+ path + '/templates/system/up.png" class="" alt="move up" /></button>\n\
+<button type="button" class="movePageTemplateDown no-style"><img src="'+ path + '/templates/system/down.png" class="" alt="move down" /></button>\n\
+<button type="button" class="movePageTemplateBottom no-style"><img src="'+ path + '/templates/system/bottom.png" alt="move bottom" /></button>\n\
 </div>';
 
 
@@ -175,20 +175,23 @@ $('#label_act_page_template_php').css('display','none');
 //	ARRANGE page_template BUTTON
 ////////////////////////////////////////
 
-		$('#orderPageTemplate').live("click",function(){
-                    $('#success').css('display','none');
-                    $('.removePageTemplateTopBar').css('display','inline');
-                    $('.sortTools').css('visibility','visible');
-                    $('.pageTemplateContent').css('border','1px solid #DDDDDD');                  
-		});
- 
+$('#orderPageTemplate').live("click",function(event){
+    event.preventDefault();
+    $('#success').css('display','none');
+    $('.removePageTemplateTopBar').css('display','inline');
+    $('.sortTools').css('visibility','visible');
+    $('.pageTemplateContent').css('border','1px solid #DDDDDD');                  
+});
+
 ////////////////////////////////////////
 //	page_template SORTING
 ////////////////////////////////////////
 
 		// top
 
-		$('.movePageTemplateTop').live("click", function(){
+		$('.movePageTemplateTop').live("click", function(event){
+
+			event.preventDefault();
 
 			// this page_template
 			var pageTemplate = $(this).parents('.page_template');
@@ -199,7 +202,9 @@ $('#label_act_page_template_php').css('display','none');
 
 		// up
 
-		$('.movePageTemplateUp').live("click", function(){
+		$('.movePageTemplateUp').live("click", function(event){
+
+			event.preventDefault();
 
 			// this page_template
 			var page_template = $(this).parents('.page_template');
@@ -215,7 +220,9 @@ $('#label_act_page_template_php').css('display','none');
 
 		// down
 
-		$('.movePageTemplateDown').live("click", function(){
+		$('.movePageTemplateDown').live("click", function(event){
+
+			event.preventDefault();
 
 			// this page_template
 			var page_template = $(this).parents('.page_template');
@@ -237,8 +244,10 @@ $('#label_act_page_template_php').css('display','none');
 
 		// bottom
 
-		$('.movePageTemplateBottom').live("click", function(){
+		$('.movePageTemplateBottom').live("click", function(event){
 
+			event.preventDefault();
+			
 			// this page_template
 			var page_template = $(this).parents('.page_template');
 
@@ -271,8 +280,8 @@ $('#label_act_page_template_php').css('display','none');
 //	DELETE SELECTED page_template
 ////////////////////////////////////////
 
-		$('.removePageTemplate').live("click", function(){
-
+		$('.removePageTemplate').live("click", function(event){
+			event.preventDefault();
 			// slideUp effect
 			/*
 			$(this).parent().parent().slideUp(300,function(){
@@ -283,11 +292,11 @@ $('#label_act_page_template_php').css('display','none');
                          // Se non vi sono layout selezionati il bottone per aprire
                          // la preview layout va sempre visibile e l'arrange va nascosto 
                          if(num_layout_select==0){
-                            $('#activate_page_template').css('display','inline');
-                            $('#deactivate_page_template').css('display','none');
+                            $('#activate_page_template_bar').css('display','inline');
+                            $('#deactivate_page_template_bar').css('display','none');
                             $('.boxTotal').css('display','none');
-                           // $('#orderPageTemplate').css('display','none');
-                           // $('#savePageTemplate').css('display','none');
+                           // $('#orderPageTemplate_bar').css('display','none');
+                           // $('#savePageTemplate_bar').css('display','none');
                         }
                         
 			var page_template	= $(this).parents('.page_template');
@@ -339,56 +348,56 @@ $('#label_act_page_template_php').css('display','none');
 
 
 
- $('#deactivate_page_template').live("click",function(){
-     
-     $('#success').css('display','none');
-     
-     
-     
-     // death list page template
-     $('.boxTotal').css('display','none');
+ $('#deactivate_page_template').live("click",function(event){
+    event.preventDefault();
+    
+    $('#success').css('display','none');
+
+    // death list page template
+    $('.boxTotal').css('display','none');
     // alert(num_layout_select);
     // if(num_layout_select!=0){
-    $('#orderPageTemplate').css('display','inline');
-    $('#savePageTemplate').css('display','inline');
+    $('#orderPageTemplate_bar').css('display','inline');
+    $('#savePageTemplate_bar').css('display','inline');
 
     // Remove Board and label X
     $('.pageTemplateContent').css('border','none');
     $('.removePageTemplateTopBar').css('display','none');
     $('.sortTools').css('visibility','hidden');
     //   }else
-    $('#activate_page_template').css('display','inline');
+    $('#activate_page_template_bar').css('display','inline');
      
-    $('#deactivate_page_template').css('display','none');
+    $('#deactivate_page_template_bar').css('display','none');
     
    /* if(num_layout_select<=0){
-        $('#orderPageTemplate').css('display','none');
+        $('#orderPageTemplate_bar').css('display','none');
     }*/
  
  });
 
 
 
-$('#activate_page_template').live("click",function(){
+$('#activate_page_template').live("click",function(event){
+    event.preventDefault();
     $('#success').css('display','none');
      //$("#server-msg").css('display','none');
     
     
     $('.boxTotal').css('display','inline');
    /* if(num_layout_select>0){
-                $('#orderPageTemplate').css('display','inline');
-                $('#deactivate_page_template').css('display','inline');
+                $('#orderPageTemplate_bar').css('display','inline');
+                $('#deactivate_page_template_bar').css('display','inline');
                 
      }else{
-         $('#deactivate_page_template').css('display','inline');
-         $('#orderPageTemplate').css('display','none');
+         $('#deactivate_page_template_bar').css('display','inline');
+         $('#orderPageTemplate_bar').css('display','none');
      }*/
     
-    $('#orderPageTemplate').css('display','inline');
-             $('#deactivate_page_template').css('display','inline');
+    $('#orderPageTemplate_bar').css('display','inline');
+             $('#deactivate_page_template_bar').css('display','inline');
 
-$('#savePageTemplate').css('display','inline');
-     $('#activate_page_template').css('display','none');
+$('#savePageTemplate_bar').css('display','inline');
+     $('#activate_page_template_bar').css('display','none');
 
 /* old
      if(support==0){
@@ -402,8 +411,8 @@ $('#savePageTemplate').css('display','inline');
             
             // scomparsa Arrange page template
           if(num_layout_select!=0){
-                $('#orderPageTemplate').css('display','inline');
-                $('#savePageTemplate').css('display','inline');
+                $('#orderPageTemplate_bar').css('display','inline');
+                $('#savePageTemplate_bar').css('display','inline');
           }
             
 
@@ -411,7 +420,7 @@ $('#savePageTemplate').css('display','inline');
   /*faccio scomparire la label di active 
    *e faccio comparire il bottone salva 
     if(num_layout_select!=0){
-            $('#activate_page_template').css('display','none');
+            $('#activate_page_template_bar').css('display','none');
             }
    
      }
@@ -420,7 +429,7 @@ $('#savePageTemplate').css('display','inline');
          support=0;
          
          // comparsa Arrange page template
-         $('#orderPageTemplate').css('display','none');
+         $('#orderPageTemplate_bar').css('display','none');
          
             // Rintroduzione bordo e label X 
             $('.removePageTemplateTopBar').css('display','inline');
@@ -502,9 +511,10 @@ $('#savePageTemplate').css('display','inline');
 /********************************************
  * SAVE BUTTON PAGE TEMPLATE
  ********************************************/                                  
-             $('#savePageTemplate').live("click",function(){
-                 //alert("clicksave");
-              var cid= $('#savePageTemplate').attr('name');
+             $('#savePageTemplate').live("click",function(event){
+              event.preventDefault();
+              
+              var cid= $('#savePageTemplate_bar').attr('name');
               var server=$('#label_save').attr('name');
               //alert(server); 
 
@@ -516,9 +526,9 @@ $('#savePageTemplate').css('display','inline');
               
               $('.unsaved').css('display','none');
               
-              $('#activate_page_template').css('display','inline');
+              $('#activate_page_template_bar').css('display','inline');
      
-              $('#deactivate_page_template').css('display','none');
+              $('#deactivate_page_template_bar').css('display','none');
                 
               $('.boxTotal').css('display','none');
               

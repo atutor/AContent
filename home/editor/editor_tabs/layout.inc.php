@@ -81,18 +81,17 @@ $apply_lesson_layout		= $config['apply_to_the_lesson'];
 #	RETURN THE OUTPUT
 ######################################
 if($cid==null){
-    echo '<div id="error">';
-    echo '<h4>The following errors occurred:</h4><ul>';
-    echo '<li>Please save the content before proceeding to define "Layout templates".</li></ul></div>';
+	$msg->printErrors('SAVE_BEFORE_PROCEED');
+	require_once(TR_INCLUDE_PATH.'footer.inc.php');
+	exit;
 }else{
 
-echo '<p style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">'; 
+echo '<p style="padding:1em;">'; 
 
 if($content_layout == null) 
-    echo '<b>No layout</b> associated to this content';
+    echo _AT('no_layout_associated');
 else
-    echo 'Layout associated to this content: <b>'. $content_layout.'</b>';
-
+	echo _AT('layout_associated', $content_layout);
 echo '</p>';
 
 

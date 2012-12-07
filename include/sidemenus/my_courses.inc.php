@@ -51,7 +51,7 @@ if (!is_array($my_courses)) {
 		$output .= '    <a href="'. TR_BASE_HREF.'home/course/index.php?_course_id='. $row['course_id'].'"'.(($_course_id == $row['course_id']) ? ' class="selected-sidemenu"' : '').'>'.$row['title'].'</a>'."\n";
 		if ($row['role'] == TR_USERROLE_VIEWER) {
 			$output .= '    <a href="'. TR_BASE_HREF.'home/'. $caller_url.'action=remove'.SEP.'cid='. $row['course_id'].'">'."\n";
-            $output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_remove.png" alt="'. htmlspecialchars(_AT('remove_from_list')).'" title="'. htmlspecialchars(_AT('remove_from_list')).'" border="0" />'."\n";
+            $output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_remove.png" alt="'. htmlspecialchars(_AT('remove_from_list')).'" title="'. htmlspecialchars(_AT('remove_from_list')).'" border="0" class="shortcut_icon"/>'."\n";
 			$output .= '    </a>'."\n";
 		} 
 		if ($row['role'] == NULL && $_SESSION['user_id']>0) {
