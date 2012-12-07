@@ -203,7 +203,7 @@ class Layout{
 		$ui .= '<tr onclick="preview(\'nothing\');" onmousedown="document.form[\'radio-nothing\'].checked=!document.form[\'radio-nothing\'].checked;togglerowhighlight(this,\'radio-nothing\')">';
 		$ui .= '<td id="radio_nothing"  name="'.$_content_id.'" title="'._AT('nothing').'"><input id="radio-nothing" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="nothing"></td>';
 		$ui .= '<td><label for="radio-nothing" style="cursor:pointer;">'._AT('nothing').'</label></td>';
-		$ui .= '<td>'._AT('nothing_description').'/td>';
+		$ui .= '<td>'._AT('nothing_description').'</td>';
 
 		$ui .= '<td><div><img class="layout_img_small"  src="'.TR_BASE_HREF.'/templates/system/nolayout.png" style="height:48px;" src=""  desc="Nothing Screenshot" title="'._AT('img_layout_icon','nothing').'" id="layoutscreenshot"  /></td></div>';       
 		$ui .= '</tr>'; 
