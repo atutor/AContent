@@ -93,6 +93,7 @@ $starttime = $mtime;
    <script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
    <script type="text/javascript">
+   <!--
       // check if AContent is into an iframe
       // if so, include the "iframe" stylesheet to hide header, side menu and footer
       // The use of another css instead of a media="print" is to keep separate the two objectives: print, iframe.
@@ -105,6 +106,7 @@ $starttime = $mtime;
             //jQuery("#content_frame").contents().find("body").height()
          });
       }
+   //-->
    </script>
 </head>
 
