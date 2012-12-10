@@ -99,7 +99,7 @@ class Page_template {
 		echo '</li>';
 		echo '</div>';
 
-		echo '<script type="text/javascript" src="'.TR_BASE_HREF.'/templates/system/Page_template.js"></script>';
+		echo '<script type="text/javascript" src="'.TR_BASE_HREF.'templates/system/Page_template.js"></script>';
 
 		$pageTemplateList = array();
 
@@ -143,7 +143,7 @@ class Page_template {
 
 		$pageTemplateList = $this->getPageTemplateList();
 
-		echo '<link rel="stylesheet" href="'.TR_BASE_HREF.'/templates/system/page_template.css" type="text/css" />';
+		echo '<link rel="stylesheet" href="'.TR_BASE_HREF.'templates/system/page_template.css" type="text/css" />';
 		// avoid the input when the array is empty
 		if($pageTemplateList != null){
 
@@ -175,7 +175,7 @@ class Page_template {
 					echo '<tr>';
 					echo '<td>';
 					echo '<a href="javascript: void(0);">';
-					echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+					echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
 					echo '<span class="desc">'. $value['name'] . '</span>';
 					echo '</a>';
 					echo '</td>';
@@ -193,11 +193,11 @@ class Page_template {
 
 			echo '<ul>';
 			echo '<li id="pageTemplatePaste" style="display: none;">';
-			echo '<img alt="error paste" title="paste" src="'.TR_BASE_HREF.'/templates/system/paste.png">';
+			echo '<img alt="error paste" title="paste" src="'.TR_BASE_HREF.'templates/system/paste.png">';
 			echo _AT('paste_page_template');
 			echo '</li>';
 			echo '<li id="pageTemplateCopy">';
-			echo '<img alt="error copy" title="copy" src="'.TR_BASE_HREF.'/templates/system/copy.png">';
+			echo '<img alt="error copy" title="copy" src="'.TR_BASE_HREF.'templates/system/copy.png">';
 			echo _AT('copy_page_template');
 			echo '</li>';
 			echo '</ul>';
