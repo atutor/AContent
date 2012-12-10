@@ -302,6 +302,8 @@ $(document).ready(function(){
     
     $('#activate_page_template').live("click",function(event){
         event.preventDefault();
+        $(document).scrollTo('#activate_page_template_bar');
+        
         $('#success').css('display','none');
         $('.boxTotal').css('display','inline');
         
@@ -406,8 +408,6 @@ $(document).ready(function(){
         }
 
         if(vtext!=''){
-            //alert("entra");
-            //$('#content-previous').append(vtext);
             $('#with-cont').css('display','none');
             $('#with-cont-pre').css('display','inline');
             $('#no-cont').css('display','none');
