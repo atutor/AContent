@@ -114,15 +114,15 @@ class StructureManager
 		
 		if($page->forum)
 			return true;
-				 
 		
 		return false;
 	}
 
 	function hasTest($page) {
+		if (!isset($page) || !isset($page->tests)) return false;
 		
 		if(count($page->tests->children()) > 0) 
-				return true;
+			return true;
 		
 		return false;
 	}
