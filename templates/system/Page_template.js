@@ -49,6 +49,11 @@ $(document).ready(function(){
         $('#savePageTemplate_bar').css('display','inline');
     }
 
+    // Hide content editor default "save" and "close" buttons
+    // Note that the id of their container div could be "saved" or "unsaved" depending on whether there's unsaved info
+    $('.unsaved').css('display','none');
+    $('.saved').css('display','none');
+    
     ////////////////////////////////////////
     //    INCLUSIONS / DECLARATIONS / DEFINITIONS
     ////////////////////////////////////////
@@ -270,6 +275,7 @@ $(document).ready(function(){
         // la preview layout va sempre visibile e l'arrange va nascosto 
         if(num_layout_select==0){
             $('#activate_page_template_bar').css('display','inline');
+            $('#orderPageTemplate_bar').css('display','none');
             $('#deactivate_page_template_bar').css('display','none');
             $('.boxTotal').css('display','none');
         }
@@ -318,9 +324,12 @@ $(document).ready(function(){
     
         $('.boxTotal').css('display','none');
         
-        if (!hasTemplatesOnPage() && !unsaved) {
+        if (!hasTemplatesOnPage()) {
             $('#orderPageTemplate_bar').css('display','none');
-            $('#savePageTemplate_bar').css('display','none');
+            
+            if (!unsaved) {
+                $('#savePageTemplate_bar').css('display','none');
+            }
         }
     
         // Remove Board and label X

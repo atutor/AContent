@@ -98,8 +98,8 @@ if(is_array($result))
 	}
 }
 
-//content-length if less than 24 there is content, being 24 to the div id = "content" that is inserted automatically 
-$sup=strlen($text);
+// find out the content length
+$sup=strlen(strip_tags($text));
 
 echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'/themes/default/form.css">';	
 echo '<div id="success" style="display:none;">';
@@ -113,7 +113,7 @@ echo '</div>';
 echo '<div id="with-cont-pre" style="display:none; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
 echo '<div style="margin-left:10px;" style="font-weight:bold;">'. _AT("content_associated") .':</div></div>';
 
-if($sup<=24) { 
+if($sup == 0) { 
 	echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
 	echo '<div id="no-cont">'. _AT("no_content_associated") . '</div>';
 	echo '</div>';
@@ -134,7 +134,3 @@ if($sup<=24) {
 }
 
 ?>
-
-<script>
-$('.unsaved').css('display','none');
-</script>

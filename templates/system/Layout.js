@@ -12,6 +12,11 @@ while(cont!=a.length-3){
 base = $('#content');
 var layout_click;
 
+//Hide content editor default "save" and "close" buttons
+//Note that the id of their container div could be "saved" or "unsaved" depending on whether there's unsaved info
+$('.unsaved').css('display','none');
+$('.saved').css('display','none');
+
 $('input[id="apply_layout_to_content"]').live("click",function(){
     $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');  
 });
