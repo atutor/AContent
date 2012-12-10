@@ -36,6 +36,18 @@ $(document).ready(function(){
         $('#menu_' + module_name + ' form').hide();
 
     base = $('#content-text');
+    
+    // show "edit templates" button if there are existing templates on the page
+    var unsaved = false;
+    
+    var hasTemplatesOnPage = function () {
+        return $('.page_template').length > 0;
+    };
+
+    if (hasTemplatesOnPage()) {
+        $('#orderPageTemplate_bar').css('display','inline');
+        $('#savePageTemplate_bar').css('display','inline');
+    }
 
     ////////////////////////////////////////
     //    INCLUSIONS / DECLARATIONS / DEFINITIONS
@@ -63,6 +75,8 @@ $(document).ready(function(){
 
         var allpage_template = '';
 
+        unsaved = true;
+        
         $('.page_template').each(function(index) {
             allpage_template = allpage_template + "|" + $(this).attr('class');
         });
@@ -88,6 +102,8 @@ $(document).ready(function(){
 
         var c_name        = 'pageTemplateClipboard';
 
+        unsaved = true;
+        
         // read cookie
         var i,x,y,ARRcookies=document.cookie.split(";");
         for (i=0;i<ARRcookies.length;i++){
@@ -136,10 +152,13 @@ $(document).ready(function(){
     
     $('#orderPageTemplate').live("click",function(event){
         event.preventDefault();
+        
+        unsaved = true;
+        
         $('#success').css('display','none');
         $('.removePageTemplateTopBar').css('display','inline');
         $('.sortTools').css('visibility','visible');
-        $('.pageTemplateContent').css('border','1px solid #DDDDDD');                  
+        $('.pageTemplateContent').css('border','1px solid #DDDDDD');
     });
     
     ////////////////////////////////////////
@@ -151,6 +170,8 @@ $(document).ready(function(){
 
         event.preventDefault();
 
+        unsaved = true;
+        
         // this page_template
         var pageTemplate = $(this).parents('.page_template');
 
@@ -164,6 +185,8 @@ $(document).ready(function(){
 
         event.preventDefault();
 
+        unsaved = true;
+        
         // this page_template
         var page_template = $(this).parents('.page_template');
 
@@ -182,6 +205,8 @@ $(document).ready(function(){
 
         event.preventDefault();
 
+        unsaved = true;
+        
         // this page_template
         var page_template = $(this).parents('.page_template');
 
@@ -206,6 +231,8 @@ $(document).ready(function(){
 
         event.preventDefault();
         
+        unsaved = true;
+        
         // this page_template
         var page_template = $(this).parents('.page_template');
 
@@ -220,6 +247,7 @@ $(document).ready(function(){
 
         var structure    = "";
 
+        unsaved = true;
         num_layout_select++;
 
         // take the name of the template you want to insert
@@ -235,6 +263,8 @@ $(document).ready(function(){
 
     $('.removePageTemplate').live("click", function(event){
         event.preventDefault();
+        
+        unsaved = true;
         num_layout_select--;
         // Se non vi sono layout selezionati il bottone per aprire
         // la preview layout va sempre visibile e l'arrange va nascosto 
@@ -286,10 +316,12 @@ $(document).ready(function(){
         
         $('#success').css('display','none');
     
-        // death list page template
         $('.boxTotal').css('display','none');
-        $('#orderPageTemplate_bar').css('display','inline');
-        $('#savePageTemplate_bar').css('display','inline');
+        
+        if (!hasTemplatesOnPage() && !unsaved) {
+            $('#orderPageTemplate_bar').css('display','none');
+            $('#savePageTemplate_bar').css('display','none');
+        }
     
         // Remove Board and label X
         $('.pageTemplateContent').css('border','none');
