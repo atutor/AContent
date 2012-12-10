@@ -1706,4 +1706,6 @@ INSERT INTO `language_text` VALUES ('en','_template','img_title_pagetemplate_ico
 INSERT INTO `language_text` VALUES ('en','_template','nothing','Nothing','2012-12-07 15:19:00','');
 INSERT INTO `language_text` VALUES ('en','_template','nothing_description','Nothing','2012-12-07 15:19:00','');
 
-
+INSERT INTO `language_text` VALUES ('en','_template','layout_associated','Layout associated to this content: <b>%1s</b>','2012-12-10 09:04:00','');
+INSERT INTO `language_text` VALUES ('en','_template','no_layout_associated','<b>No layout</b> associated to this content','2012-12-10 09:04:00','');
+ 
