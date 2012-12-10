@@ -44,8 +44,6 @@ function preview(lay){
 function addLayoutTemplate(cid,layout){
 
     var url =path + "/templates/system/AJAX_actions.php";
-    
-    
 
     $.post(url, {content: cid}, function(structure){
         base.append(createLayoutTemplate(layout,structure));
@@ -56,6 +54,9 @@ function addLayoutTemplate(cid,layout){
 
 function createLayoutTemplate(layout,structure)
 {
+    while($('#newLayoutTemplate').length !=0){
+        $('#newLayoutTemplate').remove();
+    }
 
     layout_template='<div id="newLayoutTemplate" style="margin: 10px; margin-bottom: 15px;">';
     if(layout!="nothing"){
