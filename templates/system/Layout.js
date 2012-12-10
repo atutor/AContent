@@ -22,16 +22,16 @@ $('input[id="apply_layout_to_course"]').live("click",function(){
 function preview(lay){
    $('#newLayoutTemplate').remove();
 
-   $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
+   $('input').removeAttr('disabled'); 
 
    $('input[id="radio-'+lay+'"]').attr('checked','checked');
    $('input[id="radio-'+lay+'"]').attr('disabled','disabled');
+   $('tr').removeClass('selected');
+   $('input[id="radio-'+lay+'"]').closest('tr').addClass('selected');
 
     var cid = $("#radio_"+lay).attr('name');
 
     addLayoutTemplate(cid,lay);
-    layout_click=lay;
-    
 }
 
 function addLayoutTemplate(cid,layout){
@@ -74,12 +74,4 @@ function createLayoutTemplate(layout,structure)
     layout_template =layout_template + '</div>';
 
     return layout_template;
-}
-
-function togglerowhighlight(obj, boxid) {
-	if (document.getElementById(boxid).checked) {
-		obj.className = 'selected';
-	} else {
-		obj.className = '';
-	}
 }
