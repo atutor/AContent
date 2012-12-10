@@ -17,11 +17,6 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/PrivilegesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
 
-include('templates/system/page_template.css');
-
-/* Provo ad inserire la pagina che contiene il codice javascript*/
-include_once($mod_path['templates_sys'].'Page_templates.js');
-
 global $savant;
 
 $contentDAO = new ContentDAO();
