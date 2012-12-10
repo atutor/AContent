@@ -36,7 +36,7 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 	else
 		$description = $patch_row["description"] . _AT('update_dependent_update_not_installed') . "<span style='color: red'>" . $dependent_patches . "</span>";
 ?>
-	<tr <?php if ($enable_radiotton) echo 'onkeydown="document.form[\'m'. $row_id.'\'].checked = true; trans.utility.rowselect(this);" onmousedown="document.form[\'m'. $row_id.'\'].checked = true; trans.utility.rowselect(this);" id="r_'. $row_id .'"'; ?>>
+	<tr <?php if ($enable_radiotton) echo 'onkeydown="document.form[\'m_'. $patch_row["system_patch_id"].'\'].checked = true; trans.utility.rowselect(this);" onmousedown="document.form[\'m_'. $patch_row["system_patch_id"].'\'].checked = true; trans.utility.rowselect(this);" id="r_'. $row_id .'"'; ?>>
 		<td><input type="radio" name="id" value="<?php echo $row_id; ?>" id="m_<?php echo $patch_row["system_patch_id"]; ?>" <?php if (!$enable_radiotton) echo 'disabled="disabled" '; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
 		<td><label for="m_<?php echo $patch_row["system_patch_id"]; ?>"><?php echo $patch_row["system_patch_id"]; ?></label></td>
 		<td><?php echo $description; ?></td>

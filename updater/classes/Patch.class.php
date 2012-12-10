@@ -43,9 +43,11 @@ class Patch {
 	var $patch_suffix;                    // suffix appended for patch files copied from UPDATE_SERVER (defined in include/constants.inc.php)
 	var $skipFilesModified = false;       // if set to true, report error for files that have been modified by user
 	var $module_content_dir;              // content folder used to create patch.sql
-	var $svn_server_connected;            // flag indicating if can connect to svn server, if not, consider all files manipulated by patch as modified
-
-	// constant, URL of user's ATutor release version in SVN 
+	var $github_server_connected;         // flag indicating if can connect to github server, if not, consider all files manipulated by patch as modified
+	
+	// constant, URL of user's AContent release version in github 
+	var $github_tag_folder = 'https://raw.github.com/atutor/AContent/';
+	var $github_fetch_tags_url = 'https://api.github.com/repos/atutor/AContent/tags';
 	var $sql_file = 'patch.sql';
 	var $relative_to_root = '../';   // relative path from updater/ to root
 	
@@ -100,18 +102,18 @@ class Patch {
 		global $msg;
 		
 		// Checks on 
-		// 1. if svn server is up. If not, consider all files manipulated by patch as modified
+		// 1. if github server is up. If not, consider all files manipulated by patch as modified
 		// 2. if the local file is customized by user
 		// 3. if script has write priviledge on local file/folder
 		// 4. if dependent patches have been installed
-		if (!$this->pingDomain(SVN_TAG_FOLDER)) 
+		if (!$this->pingDomain($this->github_tag_folder) || !$this->pingDomain($this->github_fetch_tags_url)) 
 		{
-			$msg->addInfo('CANNOT_CONNECT_SVN_SERVER');
+			$msg->addInfo('CANNOT_CONNEC_GITHUB_SERVER');
 			$msg->printInfos();
-			$this->svn_server_connected = false;
+			$this->github_server_connected = false;
 		}
 		else
-			$this->svn_server_connected = true;
+			$this->github_server_connected = true;
 		
 		if (!$this->checkDependentPatches()) return false;
 
@@ -435,7 +437,7 @@ class Patch {
 	}
 
 	/**
-	* Compare user's local file with SVN backup for user's AContent version,
+	* Compare user's local file with github backup for user's AContent version,
 	* if different, check table TR_patches_files to see if user's local file
 	* was altered by previous patch installation. If it is, return false 
 	* (not modified), otherwise, return true (modified).
@@ -450,17 +452,18 @@ class Patch {
 	{
 		global $db;
 
-		if (!$this->svn_server_connected) return true;
+		if (!$this->github_server_connected) return true;
 		
-		$svn_file = SVN_TAG_FOLDER . 'acontent_' . str_replace('.', '_', VERSION) .
-		            str_replace(substr($this->relative_to_root, 0, -1), '' , $folder) .$file;
+		$github_file_content = file_get_contents($this->github_tag_folder . $this->getReleaseCommitNum() .
+		            str_replace(substr($this->relative_to_root, 0, -1), '' , $folder) .$file);
+		
 		$local_file = $folder.$file;
-
-		// if svn script does not exist, consider the script is modified
-		if (!@file_get_contents($svn_file)) return true;
+		
+		// if github script does not exist, consider the script is modified
+		if (!$github_file_content) return true;
 
 		// check if the local file has been modified by user. if it is, don't overwrite
-		if ($this->compareFiles($svn_file, $local_file) <> 0 && $this->patchesFilesDAO->getNumOfUpdatesOnFile($file) == 0)
+		if ($this->compareFiles($github_file_content, $local_file) <> 0 && $this->patchesFilesDAO->getNumOfUpdatesOnFile($file) == 0)
 		{
 			// check if the file was changed by previous installed patches
 			return true;
@@ -468,6 +471,23 @@ class Patch {
 		return false;
 	}
 
+	/**
+	 * Get the commit hash for the current AContent release
+	 * @access  private
+	 */
+	private function getReleaseCommitNum() {
+		$releases_json = file_get_contents($this->github_fetch_tags_url);
+		$release_tags = json_decode($releases_json);
+		$atutor_tag_name = 'acontent_' . str_replace('.', '_', VERSION);
+
+		foreach ($release_tags as $release_obj) {
+			if ($release_obj->name == $atutor_tag_name) {
+				return $release_obj->commit->sha;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	* Run SQL defined in patch.xml
 	* @access  private
