@@ -243,8 +243,23 @@ class Layout{
 		//POSIZIONE VECCHIA DEI PULSANTI SOTTO LA TABELLA
 		$ui	.= '</form>';  
 
-		$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>';
-		$ui .='<script type="text/javascript" src="'.TR_BASE_HREF.'templates/system/Layout.js"></script>';
+		$ui .= '<noscript><div>'._AT('no_js').'</div></noscript>'. "\n";
+		
+		// Define language variables needed by javascript file
+		$ui .= '<script language="javascript" type="text/javascript">'. "\n";
+		$ui .= '//<!--'. "\n";
+		$ui .= '    var trans = trans || {};'. "\n";
+		$ui .= '    trans.templates = trans.templates || {};'. "\n";
+		$ui .= '    trans.templates.preview = "' . _AT('preview') . '";'. "\n";
+		$ui .= '    trans.templates.title = "' . _AT('title') . '";'. "\n";
+		$ui .= '    trans.templates.document_body = "' . _AT('document_body') . '";'. "\n";
+		$ui .= '    trans.templates.devoid_content = "' . _AT('devoid_content') . '";'. "\n";
+		
+		htmlentities_utf8();
+		$ui .= '//-->'. "\n";
+		$ui .= '</script>'. "\n";
+		
+		$ui .='<script type="text/javascript" src="'.TR_BASE_HREF.'templates/system/Layout.js"></script>'. "\n";
 
 		return $ui;
 	}

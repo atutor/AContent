@@ -4,7 +4,6 @@ var a=ap.split('/');
 var path=a[0];
 var cont=1;
 
-
 while(cont!=a.length-3){
     path= path + "/" + a[cont];
     cont++;
@@ -13,7 +12,6 @@ while(cont!=a.length-3){
 base = $('#content');
 var layout_click;
 
-
 $('input[id="apply_layout_to_content"]').live("click",function(){
     $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');  
 });
@@ -21,11 +19,7 @@ $('input[id="apply_layout_to_course"]').live("click",function(){
     $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');  
 });
 
-
-
-
 function preview(lay){
-
    $('#newLayoutTemplate').remove();
 
    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled'); 
@@ -39,7 +33,6 @@ function preview(lay){
     layout_click=lay;
     
 }
-
 
 function addLayoutTemplate(cid,layout){
 
@@ -56,27 +49,26 @@ function addLayoutTemplate(cid,layout){
 
 function createLayoutTemplate(layout,structure)
 {
-
     layout_template='<div id="newLayoutTemplate" style="margin: 10px; margin-bottom: 15px;">';
     if(layout!="nothing"){
         if(structure.length>24){
-            layout_template= layout_template + 'Preview ' + layout + ':';
+            layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
             layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
             layout_template= layout_template + '<p>'+structure+'</p>';
         }else{
-            layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
-            layout_template= layout_template + 'Preview ' + layout + ':';
+            layout_template= layout_template + '<p>' + trans.templates.devoid_content + '</p>';
+            layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
             layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
-            layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
+            layout_template= layout_template + '<div id="content"><h1>' + trans.templates.title + '</h1><p>' + trans.templates.document_body + '</p></div>';
         }
     }else{
         if(structure.length>24){
-                layout_template= layout_template + 'Preview ' + layout + ':';          
+                layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
                 layout_template= layout_template + '<p>'+structure+'</p>';
             }else{
-                layout_template= layout_template + '<p>Content devoid of text, below is an example with default text.</p>';
-                layout_template= layout_template + 'Preview ' + layout + ':';
-                layout_template= layout_template + '<div id="content"><h1>Title</h1><p>Body of the document</p></div>';
+                layout_template= layout_template + '<p>' + trans.templates.devoid_content + '</p>';
+                layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
+                layout_template= layout_template + '<div id="content"><h1>' + trans.templates.title + '</h1><p>' + trans.templates.document_body + '</p></div>';
             }
     }
     layout_template =layout_template + '</div>';
@@ -84,4 +76,10 @@ function createLayoutTemplate(layout,structure)
     return layout_template;
 }
 
-
+function togglerowhighlight(obj, boxid) {
+	if (document.getElementById(boxid).checked) {
+		obj.className = 'selected';
+	} else {
+		obj.className = '';
+	}
+}
