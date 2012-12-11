@@ -66,7 +66,6 @@ echo 'var initSettings = {';
     }   
 echo 'theme: "advanced",
       relative_urls : true,
-      content_css :"'.$_base_path.'/include/lib/tinymce_styles.css",
       convert_urls : true,
       accessibility_warnings : true,
       entity_encoding : "raw",
