@@ -67,7 +67,7 @@ $starttime = $mtime;
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
 
-<head id="head">
+<head>
    <title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
    <meta name="Generator" content="AContent - Copyright 2010 by IDRC/IDI http://inclusivedesign.ca/" />
@@ -93,7 +93,7 @@ $starttime = $mtime;
    <script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
    <script type="text/javascript">
-   <!--
+
       // check if AContent is into an iframe
       // if so, include the "iframe" stylesheet to hide header, side menu and footer
       // The use of another css instead of a media="print" is to keep separate the two objectives: print, iframe.
@@ -106,7 +106,7 @@ $starttime = $mtime;
             //jQuery("#content_frame").contents().find("body").height()
          });
       }
-   //-->
+
    </script>
 </head>
 
