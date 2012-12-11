@@ -454,16 +454,13 @@ class Patch {
 
 		if (!$this->github_server_connected) return true;
 		
-		$github_file_content = file_get_contents($this->github_tag_folder . $this->getReleaseCommitNum() .
-		            str_replace(substr($this->relative_to_root, 0, -1), '' , $folder) .$file);
+		$remote_file = $this->github_tag_folder . $this->getReleaseCommitNum() .
+		            str_replace(substr($this->relative_to_root, 0, -1), '' , $folder) .$file;
 		
 		$local_file = $folder.$file;
 		
-		// if github script does not exist, consider the script is modified
-		if (!$github_file_content) return true;
-
 		// check if the local file has been modified by user. if it is, don't overwrite
-		if ($this->compareFiles($github_file_content, $local_file) <> 0 && $this->patchesFilesDAO->getNumOfUpdatesOnFile($file) == 0)
+		if ($this->compareFiles($remote_file, $local_file) <> 0 && $this->patchesFilesDAO->getNumOfUpdatesOnFile($file) == 0)
 		{
 			// check if the file was changed by previous installed patches
 			return true;
@@ -668,7 +665,7 @@ class Patch {
 	* @return  Returns < 0 if $src is less than $dest ; > 0 if $src is greater than $dest, and 0 if they are equal.
 	* @author  Cindy Qi Li
 	*/
-	function compareFiles($src, $dest)
+	function compareFiles($remote_file, $src_file)
 	{
 		// use preg_replace to delete 
 		// 1. the line starting with // $Id:
@@ -676,10 +673,13 @@ class Patch {
 		// These lines are created by SVN. It could be different in different copies of the same file.
 		$pattern = '/\/\/ \$Id.*\$|\$lm = \'\$LastChangedDate.*;/';
 		
-		$src_content = preg_replace($pattern, '', file_get_contents($src));
-		$dest_content = preg_replace($pattern, '', file_get_contents($dest));
+		$remote_file_content = preg_replace($pattern, '', file_get_contents($remote_file));
+		$src_file_content = preg_replace($pattern, '', file_get_contents($src_file));
 
-		return strcasecmp($src_content, $dest_content);
+		// if github script does not exist, consider the script is modified
+		if (!$remote_file_content) return false;
+
+		return strcasecmp($remote_file_content, $src_file_content);
 	}
 	
 	/**
