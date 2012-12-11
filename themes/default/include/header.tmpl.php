@@ -67,7 +67,7 @@ $starttime = $mtime;
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
 
-<head>
+<head id="head">
    <title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
    <meta name="Generator" content="AContent - Copyright 2010 by IDRC/IDI http://inclusivedesign.ca/" />
@@ -98,7 +98,7 @@ $starttime = $mtime;
       // if so, include the "iframe" stylesheet to hide header, side menu and footer
       // The use of another css instead of a media="print" is to keep separate the two objectives: print, iframe.
       if (top != self){
-         document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_iframe.css" type="text/css" />');
+        document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_iframe.css" type="text/css" />');
          jQuery(document).ready(function() {
             //alert(jQuery(document).height());
             jQuery("#content_frame", window.parent.document).height(jQuery(document).height());
@@ -198,7 +198,7 @@ foreach ($this->top_level_pages as $page) {
    
       <div class="search_top">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
-        <input type="text" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo htmlentities_utf8($_GET['search_text'], ENT_QUOTES, 'UTF-8'); ?>" size="25" />
+        <input type="text" title="<?php echo _AT("search"); ?>" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo htmlentities_utf8($_GET['search_text'], ENT_QUOTES, 'UTF-8'); ?>" size="25" />
       
 <?php if (is_array($this->categories)) { // print category dropdown list box?>
         <select name="catid">
