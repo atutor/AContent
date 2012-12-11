@@ -200,7 +200,7 @@ class Layout{
                 </thead>';
 
 		$ui .= '<tbody>';
-		$ui .= '<tr onclick="preview(\'nothing\');">';
+		$ui .= '<tr onclick="preview(\'nothing\');" onmousedown="document.form[\'radio-nothing\'].checked=!document.form[\'radio-nothing\'].checked;togglerowhighlight(this,\'radio-nothing\')">';
 		$ui .= '<td id="radio_nothing"  name="'.$_content_id.'" title="'._AT('nothing').'"><input id="radio-nothing" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="nothing"></td>';
 		$ui .= '<td><label for="radio-nothing" style="cursor:pointer;">'._AT('nothing').'</label></td>';
 		$ui .= '<td>'._AT('nothing_description').'</td>';
@@ -210,7 +210,7 @@ class Layout{
 		$ui .= '</tr>';
 
 		foreach($layout_list as $tname => $tval){
-			$ui .= '<tr onclick="preview(\''.$tname.'\');">';
+			$ui .= '<tr onclick="preview(\''.$tname.'\');" onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\');">';
 
 			$ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
 <input id="radio-'.$tname.'" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="'.$tname.'">

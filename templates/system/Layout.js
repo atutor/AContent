@@ -18,16 +18,16 @@ $('.unsaved').css('display','none');
 $('.saved').css('display','none');
 
 $('input[id="apply_layout_to_content"]').live("click",function(){
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');  
+    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');
 });
 $('input[id="apply_layout_to_course"]').live("click",function(){
-    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');  
+    $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');
 });
 
 function preview(lay){
    $('#newLayoutTemplate').remove();
 
-   $('input').removeAttr('disabled'); 
+   $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');
 
    $('input[id="radio-'+lay+'"]').attr('checked','checked');
    $('input[id="radio-'+lay+'"]').attr('disabled','disabled');
@@ -37,6 +37,8 @@ function preview(lay){
     var cid = $("#radio_"+lay).attr('name');
 
     addLayoutTemplate(cid,lay);
+    layout_click=lay;
+    
 }
 
 function addLayoutTemplate(cid,layout){
@@ -50,10 +52,14 @@ function addLayoutTemplate(cid,layout){
     });
     
     $('#newLayoutTemplate').fadeIn(300);
-}   
+}
 
 function createLayoutTemplate(layout,structure)
 {
+    while($('#newLayoutTemplate').length !=0){
+        $('#newLayoutTemplate').remove();
+    }
+
     layout_template='<div id="newLayoutTemplate" style="margin: 10px; margin-bottom: 15px;">';
     if(layout!="nothing"){
         if(structure.length>24){

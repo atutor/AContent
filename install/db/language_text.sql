@@ -1706,4 +1706,3 @@ INSERT INTO `language_text` VALUES ('en','_template','img_title_pagetemplate_ico
 INSERT INTO `language_text` VALUES ('en','_template','no_content_associated','<span style="font-weight:bold">No content</span> associated','2012-12-05 12:10:00','');
 
 INSERT INTO `language_text` VALUES ('en','_template','content_associated','Content associated','2012-12-05 12:10:00','');
-
