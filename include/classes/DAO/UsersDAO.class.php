@@ -74,7 +74,7 @@ class UsersDAO extends DAO {
 		global $addslashes;
 
 		/* email check */
-/*		$login = $addslashes(strtolower(trim($login)));
+		$login = $addslashes(strtolower(trim($login)));
 		$email = $addslashes(trim($email));
 		$first_name = $addslashes(str_replace('<', '', trim($first_name)));
 		$last_name = $addslashes(str_replace('<', '', trim($last_name)));
@@ -85,7 +85,7 @@ class UsersDAO extends DAO {
 		$province = $addslashes(trim($province));
 		$country = $addslashes(trim($country));
 		$postal_code = $addslashes(trim($postal_code));
-*/
+
 		if ($this->isFieldsValid('new', $user_group_id, $login, $email,$first_name, $last_name,
 		                         $is_author, $organization, $phone, $address, $city,
 	                             $province, $country, $postal_code))

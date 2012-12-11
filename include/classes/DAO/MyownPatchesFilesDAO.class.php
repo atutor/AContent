@@ -40,7 +40,9 @@ class MyownPatchesFilesDAO extends DAO {
 		$action = $addslashes($action);
 		$name = $addslashes($name);
 		$location = $addslashes($location);
-
+		$code_from =  $addslashes($code_from);
+		$code_to =  $addslashes($code_to);
+		
 		$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_files
                (myown_patch_id, 
                	action,
