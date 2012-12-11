@@ -284,7 +284,7 @@ class LanguageManager {
 
 		$languageParser = new LanguageParser();
 		$languageParser->parse($language_xml);
-		$languageEditor =& $languageParser->getLanguageEditor(0);
+		$languageEditor = $languageParser->getLanguageEditor(0);
 
 		$lang_code = $languageEditor->getCode();
 		if ($languageManager->exists($lang_code)) {
