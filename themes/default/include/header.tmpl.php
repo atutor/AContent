@@ -86,7 +86,6 @@ $starttime = $mtime;
    <![endif]-->
 <?php echo $this->rtl_css; ?>
    <script src="<?php echo $this->base_path; ?>include/jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-   <script src="<?php echo $this->base_href; ?>include/jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js" type="text/javascript"></script>
    <script src="<?php echo $this->base_path; ?>include/jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
    <script src="<?php echo $this->base_path; ?>include/jscripts/flowplayer/flowplayer-3.2.4.min.js" type="text/javascript"></script>
    <script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
