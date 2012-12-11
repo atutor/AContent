@@ -175,6 +175,9 @@ a:hover {
 a:active {
   color: #932318;
 }
+
+
+
 /* align text to the left */
 .left {
   text-align: left;
@@ -1110,6 +1113,11 @@ margin-right:auto;
 height:2em;
 width:2em;
 }
+#gototop{
+font-size:smaller;
+padding-right:3px;
+text-align:right;
+}
 
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
   background-color:#BBD9EE; 
@@ -1468,4 +1476,10 @@ div#alternatives_shortcuts {
 img.img1616{
 height:1.5em;
 width:1.5;
+}
+.title_3_columns{
+background-color:#ffffff;
+}
+.boxPageTemplate td a:active{
+background-color:#ffffff;
 }
