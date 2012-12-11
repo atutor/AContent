@@ -35,7 +35,9 @@ class OAuthServerConsumersDAO extends DAO {
 	public function Create($consumer, $expire_threshold)
 	{
 		global $addslashes, $msg;
-
+		$consumer = $addslashes($consumer);
+		$expire_threshold = intval($expire_threshold);
+		
 		$missing_fields = array();
 
 		/* email check */
@@ -100,7 +102,9 @@ class OAuthServerConsumersDAO extends DAO {
 	public function updateExpireThreshold($consumer, $expire_threshold)
 	{
 		global $addslashes, $msg;
-
+		$consumer = $addslashes($consumer);
+		$expire_threshold = intval($expire_threshold);
+		
 		$missing_fields = array();
 
 		/* email check */
@@ -150,6 +154,8 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function get($consumer_id)
 	{
+		$consumer_id = intval($consumer_id);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer_id='".$consumer_id."'";
 	    $rows = $this->execute($sql);
 	    return $rows[0];
@@ -165,6 +171,8 @@ class OAuthServerConsumersDAO extends DAO {
 	function getByConsumer($consumer)
 	{
 	    global $addslashes;
+		$consumer = $addslashes($consumer);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer='".$addslashes($consumer)."'";
 	    return $this->execute($sql);
   	}
@@ -178,6 +186,9 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumerKey($consumer_key)
 	{
+		global $addslashes;
+		$consumer_key = $addslashes($consumer_key);
+	
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
 	             WHERE consumer_key = '".$consumer_key."'";
 	    return $this->execute($sql);
@@ -192,6 +203,10 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumerKeyAndSecret($consumer_key, $consumer_secret)
 	{
+		global $addslashes;
+		$consumer_key = $addslashes($consumer_key);
+		$consumer_secret = $addslashes($consumer_secret); 	
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
 	             WHERE consumer_key = '".$consumer_key."'
 	               AND consumer_secret = '".$consumer_secret."'";

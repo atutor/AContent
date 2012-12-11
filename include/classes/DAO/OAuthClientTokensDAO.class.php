@@ -36,6 +36,11 @@ class OAuthClientTokensDAO extends DAO {
 	public function Create($oauth_server_id, $token, $token_type, $token_secret, $user_id)
 	{
 		global $addslashes, $msg;
+		
+		$oauth_server_id = intval($oauth_server_id);
+		$token = $addslashes($token);
+		$token_type = $addslashes($token_type);		
+		$token_secret = $addslashes($token_secret);
 
 		$missing_fields = array();
 
@@ -88,7 +93,12 @@ class OAuthClientTokensDAO extends DAO {
 	* @author  Cindy Qi Li
 	*/
 	function deleteByTokenAndType($token, $token_type)
-	{
+	{		
+		global $addslashes;
+		
+		$token = $addslashes($token);
+		$token_type = $addslashes($token_type);
+		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE token = '".$token."'
 	               AND token_type = '".$token_type."'";
@@ -104,6 +114,11 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function get($oauth_server_id, $token_type)
 	{
+		global $addslashes;
+		
+		$oauth_server_id = intval($oauth_server_id);
+		$token_type = $addslashes($token_type);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE oauth_server_id='".$oauth_server_id."'
 	               AND token_type='".$token_type."'";
@@ -119,6 +134,10 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function getByToken($consumer_key, $token)
 	{
+		global $addslashes;
+		$consumer_key = $addslashes($consumer_key);
+		$token = $addslashes($token);
+				
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers c, ".TABLE_PREFIX."oauth_client_tokens t 
 	             WHERE c.oauth_server_id = t.oauth_server_id
 	               AND c.consumer_key='".$consumer_key."'
@@ -135,26 +154,14 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
+		global $addslashes;
+		
+		$token = $addslashes($token);
+		$token_type = $addslashes($token_type);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE token = '".$token."'
 	               AND token_type = '".$token_type."'";
-	    return $this->execute($sql);
-  	}
-
-  	/**
-	* Return token row by consumer key, token, nounce
-	* @access  public
-	* @param   $consumer_key, $token, $nounce
-	* @return  table rows if successful, otherwise, return false
-	* @author  Cindy Qi Li
-	*/
-	function getByTokenAndNounce($consumer_key, $token, $nonce)
-	{
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers, c".TABLE_PREFIX."oauth_client_tokens t 
-	             WHERE c.oauth_server_id = t.oauth_server_id
-	               AND c.consumer_key='".$consumer_key."'
-	               AND t.token = '".$token."'
-	               AND t.nounce = '".$nonce."'";
 	    return $this->execute($sql);
   	}
 

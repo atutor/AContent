@@ -65,6 +65,7 @@ class PrivilegesDAO extends DAO {
 	*/
 	function getUserPrivileges($userID)
 	{
+		$userID = intval($userID);
 		$sql = 'SELECT *
 				FROM '.TABLE_PREFIX.'users u, '.TABLE_PREFIX.'user_groups ug, '.TABLE_PREFIX.'user_group_privilege ugp, '.TABLE_PREFIX.'privileges p
 				WHERE u.user_id = '.$userID.'
@@ -85,6 +86,7 @@ class PrivilegesDAO extends DAO {
 	*/
 	function getUserGroupPrivileges($userGroupID)
 	{
+		$userGroupID = intval($userGroupID);
 		$sql = 'SELECT *, ug.description user_group_desc, p.description privilege_desc
 				FROM '.TABLE_PREFIX.'user_groups ug, '.TABLE_PREFIX.'user_group_privilege ugp, '.TABLE_PREFIX.'privileges p
 				WHERE ug.user_group_id = '.$userGroupID.'
@@ -104,6 +106,8 @@ class PrivilegesDAO extends DAO {
 	*/
 	function getAllPrivsExceptListed($privilegeIDs)
 	{
+		$privilegeIDs = intval($privilegeIDs);
+		
 		if (trim($privilegeIDs) == '')
 			return $this->getAll();
 		else

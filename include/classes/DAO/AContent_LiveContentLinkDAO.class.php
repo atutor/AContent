@@ -45,6 +45,9 @@ class AContent_LiveContentLinkDAO {
 	public function getContent($v_id, $course)
 	{
 
+		$v_id = intval($v_id);
+		$course = intval($course);
+		
 		// create doctype
 		$this->_dom = new DOMDocument("1.0");
 		//set the document encoding
@@ -100,6 +103,9 @@ class AContent_LiveContentLinkDAO {
 	 * @author  Mauro Donadio
 	 */
 	private function _recursiveFolderScan($parentID, $root){
+	
+		$parentID = intval($parentID);
+		$root = intval($root);
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_parent_id='.$parentID.' ORDER BY ordering ASC';
 		$DAO = self::_getInstance();
@@ -132,7 +138,9 @@ class AContent_LiveContentLinkDAO {
 	 * @author  Mauro Donadio
 	 */
 	private function _xmlAddContentID($id, $root, $tagName = 'content_id'){
-
+		$id = intval($id);
+		$root = intval($root);
+		
 		$content_id = $this->_dom->createElement($tagName);
 		$root->appendChild($content_id);
 			$attribute = $this->_dom->createAttribute("id");

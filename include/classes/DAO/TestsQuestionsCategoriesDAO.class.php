@@ -71,7 +71,8 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	public function Update($categoryID, $title)
 	{
 		global $addslashes;
-
+		
+		$courseID = intval($courseID);
 		$title = $addslashes(trim($title));
 				
 		if ($this->isFieldsValid('update', $title, $categoryID))
@@ -94,7 +95,9 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 * @author  Cindy Qi Li
 	 */
 	public function Delete($categoryID)
-	{
+	{		
+		$categoryID = intval($categoryID);
+		
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id = ".$categoryID;
 		return $this->execute($sql);
 	}
@@ -108,6 +111,8 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function get($categoryID)
 	{
+		$categoryID = intval($categoryID);
+		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories 
 		             WHERE category_id=".$categoryID;
 		
@@ -126,6 +131,7 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function getByCourseID($courseID)
 	{
+		$courseID = intval($courseID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories 
 		         WHERE course_id=".$courseID."
 		         ORDER BY title";

@@ -36,6 +36,7 @@ class TestsQuestionsDAO extends DAO {
 	public function UpdateField($questionID, $fieldName, $fieldValue)
 	{
 		global $addslashes;
+		$questionID = intval($questionID);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."tests_questions 
 		           SET ".$fieldName."='".$addslashes($fieldValue)."'
@@ -54,6 +55,7 @@ class TestsQuestionsDAO extends DAO {
 	 */
 	public function Delete($questionID)
 	{
+		$questionID = intval($questionID);
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE question_id = ".$questionID;
 		return $this->execute($sql);
 	}
@@ -67,6 +69,7 @@ class TestsQuestionsDAO extends DAO {
 	 */
 	public function get($questionID)
 	{
+		$questionID = intval($questionID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
 		             WHERE question_id=".$questionID;
 		
@@ -103,6 +106,9 @@ class TestsQuestionsDAO extends DAO {
 	 */
 	public function getByCourseIDAndCategoryID($courseID, $categoryID)
 	{
+		$courseID = intval($courseID);
+		$categoryID = intval($categoryID);
+		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
 		         WHERE course_id=".$courseID."
 		           AND category_id = ".$categoryID."
@@ -121,6 +127,9 @@ class TestsQuestionsDAO extends DAO {
 	 */
 	public function getByCourseIDAndType($courseID, $type)
 	{
+		$courseID = intval($courseID);
+		$type = intval($type);		
+		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
 		         WHERE course_id=".$courseID."
 		           AND type = ".$type;;

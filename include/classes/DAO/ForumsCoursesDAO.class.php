@@ -32,6 +32,9 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function Create($forum_id, $course_id)
 	{
+		$forum_id = intval($forum_id);
+		$course_id = intval($course_id);
+		
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'forums_courses' . 
 				'(forum_id, course_id) ' .
 				'VALUES (' . $forum_id . ", $course_id)";
@@ -47,6 +50,8 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function DeleteByCourseID($courseID)
 	{
+		$courseID = intval($courseID);
+		
 	    include_once(TR_INCLUDE_PATH.'classes/DAO/ForumsDAO.class.php');
 	    $forumsDAO = new ForumsDAO();
 	    
@@ -70,6 +75,7 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function DeleteByForumID($forumID)
 	{
+		$forumID = intval($forumID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
 	             WHERE forum_id = ".$forumID."";
 	    return $this->execute($sql);
@@ -84,6 +90,7 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function getByCourse($course_id)
 	{
+		$course_id = intval($course_id);
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id = '".$course_id."'";
 	    return $this->execute($sql);
 	}
@@ -97,6 +104,7 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function getByForum($forum_id)
 	{
+		$forum_id = intval($forum_id);
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = '".$forum_id."'";
 	    return $this->execute($sql);
 	}

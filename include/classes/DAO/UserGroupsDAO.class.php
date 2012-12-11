@@ -37,11 +37,10 @@ class UserGroupsDAO extends DAO {
 		global $addslashes, $msg;
 
 		$missing_fields = array();
-
-		/* email check */
-		$title = $addslashes(trim($title));
-
-		/* login name check */
+		
+		//$title = $addslashes(trim($title));
+		//$description = $addslashes(trim($description));
+		
 		if ($title == '')
 		{
 			$missing_fields[] = _AT('title');
@@ -99,8 +98,10 @@ class UserGroupsDAO extends DAO {
 		$missing_fields = array();
 
 		/* email check */
+		$user_group_id = intval($user_group_id);
 		$title = $addslashes(trim($title));
-
+		$description = $addslashes(trim($description));
+		
 		/* login name check */
 		if ($title == '')
 		{
@@ -144,7 +145,7 @@ class UserGroupsDAO extends DAO {
 		if ($fieldName == 'title' && $fieldValue == '') return array(_AT('TR_ERROR_EMPTY_FIELD'));
 		
 		$sql = "UPDATE ".TABLE_PREFIX."user_groups 
-		           SET ".$fieldName."='".$addslashes($fieldValue)."'
+		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
 		         WHERE user_group_id = ".$userGroupID;
 		
 		return $this->execute($sql);
@@ -159,6 +160,7 @@ class UserGroupsDAO extends DAO {
 	 */
 	public function Delete($userGroupID)
 	{
+		$userGroupID = intval($userGroupID);
 		// delete user_group_privilege
 		include_once(TR_INCLUDE_PATH.'classes/DAO/UserGroupPrivilegeDAO.class.php');
 		
@@ -193,6 +195,7 @@ class UserGroupsDAO extends DAO {
 	 */
 	public function getUserGroupByID($user_group_id)
 		{
+		$user_group_id = intval($user_group_id);
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'user_groups WHERE user_group_id='.$user_group_id;
 		if ($rows = $this->execute($sql))
 		{

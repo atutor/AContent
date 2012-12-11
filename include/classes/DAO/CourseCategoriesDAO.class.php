@@ -97,6 +97,7 @@ class CourseCategoriesDAO extends DAO {
 	 */
 	public function Delete($categoryID)
 	{
+		$categoryID = intval($categoryID);
 		// move the courses that belong to $categoryID to "uncategorized"
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
 		           SET category_id=".TR_COURSECATEGORY_UNCATEGORIZED."
@@ -120,6 +121,8 @@ class CourseCategoriesDAO extends DAO {
 	 */
 	public function get($categoryID)
 	{
+		$categoryID = intval($categoryID);
+		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'course_categories WHERE category_id='.$categoryID;
 		if ($rows = $this->execute($sql))
 		{

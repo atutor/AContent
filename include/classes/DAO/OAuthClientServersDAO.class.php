@@ -38,7 +38,11 @@ class OAuthClientServersDAO extends DAO {
 	public function Create($oauth_server, $consumer_key, $consumer_secret, $expire_threshold)
 	{
 		global $addslashes, $msg;
-
+		$oauth_server = $addslashes($oauth_server);
+		$consumer_key = $addslashes($consumer_key);
+		$consumer_secret = $addslashes($consumer_secret);		
+		$expire_threshold = intval($expire_threshold);			
+			
 		$missing_fields = array();
 
 		/* email check */
@@ -104,7 +108,11 @@ class OAuthClientServersDAO extends DAO {
 	public function Update($oauth_server, $consumer_key, $consumer_secret, $expire_threshold)
 	{
 		global $addslashes, $msg;
-
+		$oauth_server = $addslashes($oauth_server);
+		$consumer_key = $addslashes($consumer_key);
+		$consumer_secret = $addslashes($consumer_secret);		
+		$expire_threshold = intval($expire_threshold);			
+			
 		$missing_fields = array();
 
 		/* email check */
@@ -156,6 +164,8 @@ class OAuthClientServersDAO extends DAO {
 	*/
 	function get($oauth_server_id)
 	{
+		$oauth_server_id = intval($oauth_server_id);	
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server_id='".$oauth_server_id."'";
 	    $rows = $this->execute($sql);
 	    return $rows[0];
@@ -170,6 +180,9 @@ class OAuthClientServersDAO extends DAO {
 	*/
 	function getByOauthServer($oauth_server)
 	{
+		global $addslashes;
+		$oauth_server = $addslashes($oauth_server);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server='".$oauth_server."'";
 	    return $this->execute($sql);
   	}

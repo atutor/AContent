@@ -34,7 +34,9 @@ class PatchesFilesDAO extends DAO {
 	public function Create($patch_id, $action, $name, $location)
 	{
 		global $addslashes;
-
+		$patch_id = intval($patch_id);
+		$actions = $addslashes($actions);
+		
 		$sql = "INSERT INTO " . TABLE_PREFIX. "patches_files " .
 					 "(patches_id, 
 					   action,
@@ -66,6 +68,9 @@ class PatchesFilesDAO extends DAO {
 	 */
 	public function getNumOfUpdatesOnFile($file)
 	{
+		global $addslashes;
+		$file = $addslashes($file);	
+		
 		$sql = "SELECT count(*) num_of_updates FROM " . TABLE_PREFIX. "patches patches, " . TABLE_PREFIX."patches_files patches_files " .
 			       "WHERE patches.applied_version = '" . VERSION . "' ".
 			       "  AND patches.status = 'Installed' " .

@@ -34,7 +34,9 @@ class PatchesFilesActionsDAO extends DAO {
 	public function Create($patches_files_id, $action, $code_from, $code_to)
 	{
 		global $addslashes;
-
+		$patches_files_id = intval($patches_files_id);
+		$actions = $addslashes($actions );
+		
 		$sql = "INSERT INTO " . TABLE_PREFIX. "patches_files_actions " .
 					 "(patches_files_id, 
 					   action,

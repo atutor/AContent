@@ -36,9 +36,15 @@ class CoursesDAO extends DAO {
 	                       $primary_language, $icon, $side_menu)
 	{
 		global $addslashes;
-
+		$user_id = intval($user_id);
 		$title = $addslashes(trim($title));
 		$decsription = $addslashes(trim($description));
+		$course_dir_name = $addslashes(trim($course_dir_name));
+		$max_quota = $addslashes(trim($max_quota));
+		$max_file_size = $addslashes(trim($max_file_size));	
+		$primary_language = $addslashes(trim($primary_language));
+		$icon = $addslashes(trim($icon));
+		$side_menu = $addslashes(trim($side_menu));
 		$copyright = $addslashes(trim($copyright));
 		
 		if ($this->isFieldsValid($user_id, $title))
@@ -112,6 +118,8 @@ class CoursesDAO extends DAO {
 	public function UpdateField($courseID, $fieldName, $fieldValue)
 	{
 		global $addslashes, $msg;
+		$courseID = intval($courseID);
+		
 		
 		// check if ther courseID is provided
 		if (intval($courseID) == 0)
@@ -133,7 +141,7 @@ class CoursesDAO extends DAO {
 			return false;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
-		           SET ".$fieldName."='".$addslashes($fieldValue)."',
+		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."',
 		               modified_date = now()
 		         WHERE course_id = ".$courseID;
 		
@@ -150,6 +158,7 @@ class CoursesDAO extends DAO {
 	 */
 	public function Delete($courseID)
 	{
+		$courseID = intval($courseID);
 		require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
@@ -212,6 +221,7 @@ class CoursesDAO extends DAO {
 	 */
 	public function updateModifiedDate($id, $id_type = "course_id")
 	{
+		$id = intval($id);
 		if ($id_type != "course_id" && $id_type != "content_id") return false;
 		
 		if ($id_type == "course_id") {
@@ -232,6 +242,7 @@ class CoursesDAO extends DAO {
 	 */
 	public function get($courseID)
 	{
+		$courseID = intval($courseID);
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses WHERE course_id='.$courseID;
 		if ($rows = $this->execute($sql))
 		{
@@ -264,6 +275,7 @@ class CoursesDAO extends DAO {
 	 */
 	public function getByCategory($categoryID)
 	{
+		$categoryID = intval($categoryID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
 		         WHERE category_id=".$categoryID."
 		         AND access='public'
@@ -279,6 +291,8 @@ class CoursesDAO extends DAO {
 	 */
 	public function getByStructure($name_struct)
 	{
+		global $addslashes;
+		$name_struct = $addslashes($name_struct);
 		$sql = "SELECT DISTINCT CONTENT.course_id,COURSES.title  FROM ".TABLE_PREFIX."content AS CONTENT,".TABLE_PREFIX."courses AS COURSES
 		         WHERE structure='".$name_struct."' AND COURSES.course_id = CONTENT.course_id
 		         ORDER BY CONTENT.course_id";
@@ -320,6 +334,8 @@ class CoursesDAO extends DAO {
 	 */
 	public function getSearchResult($keywords, $catid='', $start=0, $maxResults=0)
 	{
+		global $addslashes;
+		$keywords = $addslashes($keywords);
 		require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 		// full-text search
 //		$sql = "SELECT DISTINCT course_id, title, description, created_date
@@ -405,6 +421,7 @@ class CoursesDAO extends DAO {
 	 */
 	private function getSearchSqlParams($all_keywords)
 	{
+
 		if (!is_array($all_keywords) || count($all_keywords) == 0) return array();
 		
 		$sql_search_template = "(cs.title like '%{KEYWORD}%' ".

@@ -32,6 +32,9 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function Create($content_id, $forum_id)
 	{
+	$content_id = intval($content_id);
+	$forum_id = intval($forum_id);
+	
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_forums_assoc' . 
 				'(content_id, forum_id) ' .
 				'VALUES (' . $content_id . ", $forum_id)";
@@ -56,6 +59,7 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function DeleteByContentID($contentID)
 	{
+		$contentID = intval($contentID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 	             WHERE content_id = ".$contentID."";
 		if ($this->execute($sql)) {
@@ -79,6 +83,8 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function DeleteByForumID($forumID)
 	{
+		$forumID = intval($forumID);
+		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 	             WHERE forum_id = ".$forumID."";
 		if ($this->execute($sql)) {
@@ -112,18 +118,21 @@ class ContentForumsAssocDAO extends DAO {
 	* @author  Cindy Qi Li
 	*/
 	function Delete($forumID, $contentID) {
-	 $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
-	             WHERE content_id = '".$contentID."' AND forum_id = '".$forumID."'";
-		if ($this->execute($sql)) {
-			// update the courses.modified_date to the current timestamp
-			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
-			$coursesDAO = new CoursesDAO();
-			$coursesDAO->updateModifiedDate($contentID, "content_id");
-			return true;
-		} else {
-			$msg->addError('DB_NOT_UPDATED');
-			return false;
-		}
+		$forumID = intval($forumID);
+		$contentID = intval($contentID);
+		
+		 $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
+					 WHERE content_id = '".$contentID."' AND forum_id = '".$forumID."'";
+			if ($this->execute($sql)) {
+				// update the courses.modified_date to the current timestamp
+				include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+				$coursesDAO = new CoursesDAO();
+				$coursesDAO->updateModifiedDate($contentID, "content_id");
+				return true;
+			} else {
+				$msg->addError('DB_NOT_UPDATED');
+				return false;
+			}
 	}
 	
 	/**
@@ -135,6 +144,7 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function getByContent($content_id)
 	{
+		$content_id = intval($content_id);
 	    $sql = "SELECT f.forum_id, f.title, f.description
 	              FROM ".TABLE_PREFIX."content_forums_assoc cfa, ".TABLE_PREFIX."forums f 
 	             WHERE cfa.content_id = '".$content_id."'

@@ -110,6 +110,10 @@ class LanguageTextDAO extends DAO {
 	*/
 	function getMsgByTermAndLang($term, $lang)
 	{
+		global $addslashes;
+		$term = $addslashes($term);
+		$lang = $addslashes($lang);
+		
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX.'language_text 
 						WHERE term="' . $term . '" 
 						AND variable="_msgs" 
@@ -129,6 +133,10 @@ class LanguageTextDAO extends DAO {
 	*/
 	function getByTermAndLang($term, $lang)
 	{
+		global $addslashes;
+		$term = $addslashes($term);
+		$lang = $addslashes($lang);
+		
 		$sql	= 'SELECT * FROM '.TABLE_PREFIX.'language_text 
 						WHERE term="' . $term . '" 
 						AND language_code="'.$lang.'" 
@@ -147,6 +155,9 @@ class LanguageTextDAO extends DAO {
 	*/
 	function getHelpByMatchingText($text, $lang)
 	{
+		global $addslashes;
+		$term = $addslashes($text);
+		$lang = $addslashes($lang);
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE term like 'TR_HELP_%'
 						AND lower(cast(text as char)) like '%".strtolower($text)."%' 
@@ -165,6 +176,9 @@ class LanguageTextDAO extends DAO {
 	*/
 	function getAllByLang($lang)
 	{
+		global $addslashes;
+		$lang = $addslashes($lang);
+		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE language_code='".$lang."' 
 						ORDER BY variable, term ASC";
@@ -181,6 +195,9 @@ class LanguageTextDAO extends DAO {
 	*/
 	function getAllTemplateByLang($lang)
 	{
+		global $addslashes;
+		$lang = $addslashes($lang);
+		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE language_code='".$lang."' 
 						AND variable='_template' 
@@ -208,8 +225,8 @@ class LanguageTextDAO extends DAO {
 		           SET text='".$addslashes($text)."',
 		               revised_date = now()
 		         WHERE language_code = '".$_SESSION['lang']."' 
-		           AND variable='".$variable."' 
-		           AND term = '".$term."'";
+		           AND variable='".$addslashes($variable)."' 
+		           AND term = '".$addslashes($term)."'";
 
     return $this->execute($sql);
   }

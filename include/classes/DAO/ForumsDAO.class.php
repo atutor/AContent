@@ -73,6 +73,7 @@ class ForumsDAO extends DAO {
 	 */
 	public function Delete($forumID)
 	{
+		$forumID = intval($forumID);
 		require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 		$contentForumsAssocDAO = new ContentForumsAssocDAO();
@@ -94,6 +95,7 @@ class ForumsDAO extends DAO {
 	 */
 	public function get($forumID)
 	{
+		$forumID = intval($forumID);
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$forumID;
 		if ($rows = $this->execute($sql))
 		{

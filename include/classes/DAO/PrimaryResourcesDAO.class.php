@@ -56,6 +56,7 @@ class PrimaryResourcesDAO extends DAO {
 	public function Delete($cid)
 	{
 		$pri_resource_ids = array();
+		$cid = intval($cid);
 		
 		// Get all primary resources ID out that're associated with this content
 		$rows = $this->getByContent($cid);
@@ -94,6 +95,9 @@ class PrimaryResourcesDAO extends DAO {
 	*/
 	function DeleteByResourceName($resourceName)
 	{
+		global $addslashes;
+		$resourceName = $addslashes($resourceName);
+		
 		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources
 		         WHERE resource = '".$resourceName."'";
 		return $this->execute($sql);
@@ -108,6 +112,8 @@ class PrimaryResourcesDAO extends DAO {
      * @date    Oct 6, 2010
      */
     function DeleteByResourceID($resourceID){
+    	$resourceID = intval($resourceID);
+    	
         // Delete all secondary a4a
         $sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX."secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id=$resourceID";
         $result = $this->execute($sql);
@@ -128,6 +134,7 @@ class PrimaryResourcesDAO extends DAO {
 	*/
 	public function getByContent($cid)
 	{
+		$cid = intval($cid);
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$cid.' ORDER BY primary_resource_id';;
 	    return $this->execute($sql);
 	}
@@ -143,6 +150,12 @@ class PrimaryResourcesDAO extends DAO {
      * @date    Oct 6, 2010
      */
     public function getByResourceName($cid, $lang, $resource_name){
+    
+    	global $addslashes;
+		$cid = intval($cid);
+		$lang = $addslashes($lang);
+		$resource_name = $addslashes($resource_name);   
+		 	
 		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
 		        WHERE content_id=".$cid."
 		          AND language_code = '".$lang."'

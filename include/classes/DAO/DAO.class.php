@@ -25,13 +25,13 @@ class DAO {
 	
 	function DAO()
 	{
-		if (!isset($this->db))
+		if (!isset(self::$db))
 		{
-			$this->db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
-			if (!$this->db) {
+			self::$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+			if (!self::$db) {
 				die('Unable to connect to db.');
 			}
-			if (!@mysql_select_db(DB_NAME, $this->db)) {
+			if (!@mysql_select_db(DB_NAME, self::$db)) {
 				die('DB connection established, but database "'.DB_NAME.'" cannot be selected.');
 			}
 		}
@@ -49,7 +49,7 @@ class DAO {
 	function execute($sql)
 	{
 		$sql = trim($sql);
-		$result = mysql_query($sql, $this->db) or die($sql . "<br />". mysql_error());
+		$result = mysql_query($sql, self::$db) or die($sql . "<br />". mysql_error());
 
 		// for 'select' SQL, return retrieved rows
 		if (strtolower(substr($sql, 0, 6)) == 'select') 

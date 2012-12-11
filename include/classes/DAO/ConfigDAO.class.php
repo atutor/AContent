@@ -32,6 +32,10 @@ class ConfigDAO extends DAO {
 	*/
 	function Create($name, $value)
 	{
+		global $addslashes;
+		$name = $addslashes($name);
+		$value = $addslashes($value);
+		
 	    $sql = "INSERT INTO ".TABLE_PREFIX."config (name, value)
 	            VALUES ('".$name."', '".$value."')";
 	    return $this->execute($sql);
@@ -46,6 +50,10 @@ class ConfigDAO extends DAO {
 	*/
 	function Replace($name, $value)
 	{
+		global $addslashes;
+		$name = $addslashes($name);
+		$value = $addslashes($value);
+		
 	    $sql = "REPLACE INTO ".TABLE_PREFIX."config 
 	             VALUES ('".$name."', '".$value."')";
 	    return $this->execute($sql);
@@ -60,6 +68,10 @@ class ConfigDAO extends DAO {
 	*/
 	function Delete($name)
 	{
+	
+		global $addslashes;
+		$name = $addslashes($name);
+		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."config 
 	             WHERE name = '".$name."'";
 	    return $this->execute($sql);
@@ -87,6 +99,10 @@ class ConfigDAO extends DAO {
 	*/
 	function get($name)
 	{
+	
+		global $addslashes;
+		$name = $addslashes($name);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."config WHERE name = '".$name."'";
 	    $rows = $this->execute($sql);
 	    return $rows[0];

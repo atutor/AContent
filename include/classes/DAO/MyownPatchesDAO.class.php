@@ -35,7 +35,11 @@ class MyownPatchesDAO extends DAO {
 	                       $description, $sql_statement)
 	{
 		global $addslashes;
-
+		$system_patch_id = $addslashes($system_patch_id);
+		$applied_version = $addslashes($applied_version);		
+		$description = $addslashes($description);
+		$sql_statement = $addslashes($sql_statement);
+		
 		$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches 
 	               (system_patch_id, 
 	                applied_version,
@@ -72,7 +76,11 @@ class MyownPatchesDAO extends DAO {
 	                       $description, $sql_statement)
 	{
 		global $addslashes;
-
+		$myown_patch_id = intval($myown_patch_id);
+		$system_patch_id = $addslashes($system_patch_id);
+		$applied_version = $addslashes($applied_version);		
+		$description = $addslashes($description);
+		
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
 		           SET system_patch_id = '". $system_patch_id ."',
 		               applied_version = '". $applied_version ."',
@@ -97,15 +105,15 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function UpdateField($myownPatchID, $fieldName, $fieldValue)
 	{
-		global $addslashes;
-
+		global $addslashes;	
+		
 		// check if the required fields are filled
 		if (($fieldName == 'system_patch_id' || $fieldName == 'applied_version') && $fieldValue == '')
 			return array(_AT('TR_ERROR_EMPTY_FIELD'));
 
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
 		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
-		         WHERE myown_patch_id = ".$myownPatchID;
+		         WHERE myown_patch_id = ".intval($myownPatchID);
 		
 		return $this->execute($sql);
 	}
@@ -120,6 +128,7 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function Delete($patchID)
 	{
+		$patchID = intval($patchID);
 		$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches
 		         WHERE myown_patch_id = ".$patchID;
 
@@ -149,6 +158,7 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function getByID($patchID)
 	{
+		$patchID = intval($patchID);
 		$sql = "SELECT * from ".TABLE_PREFIX."myown_patches where myown_patch_id=". $patchID;
 		
 		$rows = $this->execute($sql);

@@ -35,7 +35,7 @@ class TestsDAO extends DAO {
 	public function Create($course_id, $title, $description)
 	{
 		global $addslashes;
-		
+		$course_id = intval($course_id);
 		$title = Utility::validateLength($addslashes(trim($title)), 100);
 		$description = $addslashes(trim($description));
 
@@ -73,6 +73,7 @@ class TestsDAO extends DAO {
 	{
 		global $addslashes;
 		
+		$testID = intval($testID);
 		$title = Utility::validateLength($addslashes(trim($title)), 100);
 		$description = $addslashes(trim($description));
 
@@ -110,6 +111,8 @@ class TestsDAO extends DAO {
 	 */
 	public function get($testID)
 	{
+		$testID = intval($testID);
+		
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE test_id='.$testID;
 		if ($rows = $this->execute($sql))
 		{
@@ -127,6 +130,7 @@ class TestsDAO extends DAO {
 	 */
 	public function getByCourseID($courseID)
 	{
+		$courseID = intval($courseID);
 		$sql = "SELECT * 
 		          FROM ".TABLE_PREFIX."tests 
 		         WHERE course_id=$courseID";

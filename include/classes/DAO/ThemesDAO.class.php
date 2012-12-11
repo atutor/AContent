@@ -45,6 +45,9 @@ class ThemesDAO extends DAO {
 	*/
 	function getByID($dirName)
 	{
+	global $addslashes;
+	$dirName = $addslashes($dirName);
+	
     $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name='".$dirName."'";
     if ($rows = $this->execute($sql))
     	return $rows[0];

@@ -32,6 +32,13 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function Create($testID, $questionID, $weight, $order)
 	{
+		global $addslashes;
+		
+		$testID = intval($testID);
+		$questionID = intval($questionID);
+		$weight = $addslashes($weight);
+		$order = intval($order);
+		
 		$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
 				"(test_id, question_id, weight, ordering) " .
 				"VALUES ($testID, $questionID, $weight, $order)";
@@ -47,6 +54,13 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function Update($testID, $questionID, $weight, $order)
 	{
+		global $addslashes;
+		
+		$testID = intval($testID);
+		$questionID = intval($questionID);
+		$weight = $addslashes($weight);
+		$order = intval($order);
+		
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc 
 		              SET weight=".$weight.", ordering=".$order." 
 		            WHERE question_id=".$questionID." AND test_id=".$testID;
@@ -61,7 +75,10 @@ class TestsQuestionsAssocDAO extends DAO {
 	* @author  Cindy Qi Li
 	*/
 	function Delete($testID, $questionID)
-	{
+	{		
+		$testID = intval($testID);
+		$questionID = intval($questionID);
+
 	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
 	             WHERE test_id = ".$testID."
 	               AND question_id = ".$questionID;
@@ -77,6 +94,7 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function DeleteByQuestionID($questionID)
 	{
+		$questionID = intval($questionID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
 	             WHERE question_id = ".$questionID;
 	    return $this->execute($sql);
@@ -91,6 +109,7 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function DeleteByTestID($testID)
 	{
+		$testID = intval($testID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
 	             WHERE test_id = ".$testID;
 	    return $this->execute($sql);
@@ -105,6 +124,7 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function getByTestID($testID)
 	{
+		$testID = intval($testID);
 	    $sql = "SELECT TQ.*, TQA.test_id, TQA.weight, TQA.ordering 
 	              FROM ".TABLE_PREFIX."tests_questions TQ 
 	             INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA 
@@ -123,6 +143,7 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function getZeroWeightRowsByTestID($testID)
 	{
+		$testID = intval($testID);
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions_assoc QA, ".TABLE_PREFIX."tests_questions Q 
 	             WHERE QA.test_id=$testID 
 	               AND QA.weight=0 
@@ -140,6 +161,7 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function getMaxOrderByTestID($testID)
 	{
+		$testID = intval($testID);
 		$sql = "SELECT MAX(ordering) AS max_ordering FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=".$testID;
 	    $rows = $this->execute($sql);
 	    return $rows[0]['max_ordering'];

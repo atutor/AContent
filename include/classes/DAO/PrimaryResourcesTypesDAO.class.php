@@ -50,6 +50,9 @@ class PrimaryResourcesTypesDAO extends DAO {
 	*/
 	function DeleteByResourceName($resourceName)
 	{
+		global $addslashes;
+		$resourceName = $addslashes($resourceName);
+		
 		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
 		         WHERE primary_resource_id in (SELECT primary_resource_id 
 		                      FROM ".TABLE_PREFIX."primary_resources
@@ -66,6 +69,8 @@ class PrimaryResourcesTypesDAO extends DAO {
 	*/
 	public function getByResourceID($resource_id)
 	{
+		$resource_id = intval($resource_id);
+		
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources_types WHERE primary_resource_id='.$resource_id;
 	    return $this->execute($sql);
 	}

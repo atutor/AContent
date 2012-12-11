@@ -32,7 +32,13 @@ class LanguagesDAO extends DAO {
 	*/
 	function Create($langCode, $charset, $regExp, $nativeName, $englishName, $status)
 	{
-		global $languageManager, $msg;
+		global $languageManager, $msg, $addslashes;
+		$langCode = $addslashes($langCode);
+		$charset = $addslashes($charset);
+		$regExp = $addslashes($regExp);
+		$englishName = $addslashes($englishName);
+		$status = intval($status);
+	
 		
 		// check if the required fields are filled
 		if (!$this->ValidateFields($langCode, $charset, $nativeName, $englishName)) return false;
@@ -58,6 +64,14 @@ class LanguagesDAO extends DAO {
 	*/
 	function Update($langCode, $charset, $regExp, $nativeName, $englishName, $status)
 	{
+		global $addslashes;
+		
+		$langCode = $addslashes($langCode);
+		$charset = $addslashes($charset);
+		$regExp = $addslashes($regExp);
+		$englishName = $addslashes($englishName);
+		$status = intval($status);
+		
 		// check if the required fields are filled
 		if (!$this->ValidateFields($langCode, $charset, $nativeName, $englishName)) return false;
 		
@@ -103,6 +117,9 @@ class LanguagesDAO extends DAO {
 	*/
 	function Delete($langCode)
 	{
+		global $addslashes;
+		$langCode = $addslashes($langCode);
+		
 		$sql = "DELETE FROM ".TABLE_PREFIX."languages 
 		         WHERE language_code = '".$langCode."'";
 		if (!$this->execute($sql)) return false;
@@ -152,6 +169,11 @@ class LanguagesDAO extends DAO {
 	*/
 	function getByLangCodeAndCharset($langCode, $charset)
 	{
+		global $addslashes;
+		
+		$langCode = $addslashes($langCode);
+		$charset = $addslashes($charset);
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages l
 	             WHERE l.language_code = '".$langCode."'
 	               AND l.charset='".$charset."'
@@ -172,6 +194,10 @@ class LanguagesDAO extends DAO {
 	*/
 	function getAllExceptLangCode($langCode)
 	{
+		global $addslashes;
+		
+		$langCode = $addslashes($langCode);
+
 		if (trim($langCode) == '')
 			return $this->getAll();
 		else

@@ -30,6 +30,7 @@ class ContentDAO extends DAO {
 	{
 		global $addslashes, $msg;
 		
+		
 		if ($this->isFieldsValid('create', $course_id, $title))
 		{
 			/* insert into the db */
@@ -180,6 +181,7 @@ class ContentDAO extends DAO {
 	public function Delete($contentID)
 	{
 		global $msg;
+		$contentID = intval($contentID);
 		
 		require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 		$a4a = new A4a($contentID);
@@ -217,6 +219,7 @@ class ContentDAO extends DAO {
 	 */
 	public function get($contentID)
 	{
+		$contentID = intval($contentID);
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_id='.$contentID;
 		if ($rows = $this->execute($sql))
 		{
@@ -234,6 +237,7 @@ class ContentDAO extends DAO {
 	 */
 	public function getContentByCourseID($courseID)
 	{
+		$courseID = intval($courseID);
 		$sql = "SELECT *, 
 		               UNIX_TIMESTAMP(last_modified) AS u_ts 
 		          FROM ".TABLE_PREFIX."content 
@@ -254,6 +258,9 @@ class ContentDAO extends DAO {
 	 */
 	public function getMaxOrdering($course_id, $content_parent_id)
 	{
+		$course_id = intval($course_id);
+		$content_parent_id = intval($content_parent_id);
+		
 		$sql = "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content 
 		         WHERE course_id=".$course_id." 
 		           AND content_parent_id=".$content_parent_id;

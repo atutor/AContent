@@ -54,6 +54,9 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	function DeleteByResourceName($resourceName)
 	{
+		global $addslashes;
+		$resourceName = $addslashes($resourceName);
+		
 		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
 		         WHERE secondary_resource = '".$resourceName."'
 		            OR primary_resource_id in (SELECT primary_resource_id
@@ -71,6 +74,8 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function getByContent($content_id)
 	{
+		$content_id = intval($content_id);
+		
 		$sql = "SELECT DISTINCT secondary_resource_id, secondary_resource FROM ".TABLE_PREFIX."primary_resources a 
 		          LEFT JOIN ".TABLE_PREFIX."secondary_resources s
 					ON a.primary_resource_id = s.primary_resource_id 
@@ -86,6 +91,7 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function getByPrimaryResourceID($primary_resource_id)
 	{
+		$primary_resource_id = intval($primary_resource_id);
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources WHERE primary_resource_id='.$primary_resource_id;
 	    return $this->execute($sql);
 	}

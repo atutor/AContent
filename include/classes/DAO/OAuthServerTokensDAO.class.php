@@ -36,7 +36,14 @@ class OAuthServerTokensDAO extends DAO {
 	public function Create($consumer_id, $token, $token_type, $token_secret, $user_id)
 	{
 		global $addslashes, $msg;
-
+		global $addslashes, $msg;
+		
+		$consumer_id = intval($consumer_id);			
+		$token = $addslashes($token);
+		$token_type = $addslashes($token_type);
+		$token_secret = $addslashes($token_secret);		
+		$user_id = intval($user_id);			
+			
 		$missing_fields = array();
 
 		/* token type check */
@@ -90,6 +97,9 @@ class OAuthServerTokensDAO extends DAO {
 	function updateUserIDByToken($token, $user_id)
 	{
 	    global $addslashes;
+		$token = $addslashes($token);	 
+		$user_id = intval($user_id);   
+		
 	    $sql = "UPDATE ".TABLE_PREFIX."oauth_server_tokens 
 	               SET user_id = ".$user_id."
 	             WHERE token = '".$addslashes($token)."'";
@@ -105,6 +115,10 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function deleteByTokenAndType($token, $token_type)
 	{
+	    global $addslashes;
+		$token = $addslashes($token);	
+		$token_type = $addslashes($token_type);	
+		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_server_tokens 
 	             WHERE token = '".$token."'
 	               AND token_type = '".$token_type."'";
@@ -120,6 +134,10 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function get($consumer_id, $token_type)
 	{
+	    global $addslashes;
+		$consumer_id = intval($consumer_id);	
+		$token_type = $addslashes($token_type);	
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
 	             WHERE consumer_id='".$consumer_id."'
 	               AND token_type='".$token_type."'";
@@ -135,6 +153,11 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function getByToken($consumer_key, $token)
 	{
+	
+	    global $addslashes;
+		$consumer_key = $addslashes($consumer_key);
+		$token = $addslashes($token);	
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers c, ".TABLE_PREFIX."oauth_server_tokens t 
 	             WHERE c.consumer_id = t.consumer_id
 	               AND c.consumer_key='".$consumer_key."'
@@ -151,29 +174,16 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
-
+	    global $addslashes;
+		$token = $addslashes($token);		
+		$token_type = $addslashes($token_type);	
+		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
 	             WHERE token = '".addslashes($token)."'
 	               AND token_type = '".addslashes($token_type)."'";
 	    return $this->execute($sql);
   	}
 
-  	/**
-	* Return token row by consumer key, token, nounce
-	* @access  public
-	* @param   $consumer_key, $token, $nounce
-	* @return  table rows if successful, otherwise, return false
-	* @author  Cindy Qi Li
-	*/
-	function getByTokenAndNounce($consumer_key, $token, $nonce)
-	{
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers, c".TABLE_PREFIX."oauth_server_tokens t 
-	             WHERE c.consumer_id = t.consumer_id
-	               AND c.consumer_key='".$consumer_key."'
-	               AND t.token = '".$token."'
-	               AND t.nounce = '".$nonce."'";
-	    return $this->execute($sql);
-  	}
 
   	/**
 	* Check whether the given token is expired. If expired, return true, otherwise, return false.
@@ -184,6 +194,9 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function isTokenExpired($token)
 	{
+	    global $addslashes;
+		$token = $addslashes($token);
+		
 		$sql = "SELECT unix_timestamp(now()) now_timestamp, 
 		               osc.expire_threshold,
 		               unix_timestamp(addtime(ost.assign_date, sec_to_time(osc.expire_threshold))) expire_timestamp
