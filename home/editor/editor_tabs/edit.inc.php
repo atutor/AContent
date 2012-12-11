@@ -11,7 +11,7 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
-global $_course_id;
+global $_course_id, $contentManager;
 ?>
     <script type="text/javascript" language="javascript">
     //<!--
@@ -25,7 +25,7 @@ global $_course_id;
 	<div class="row">
 	    <span>
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><strong><?php echo _AT('title');  ?></strong></label>
-		<input type="text" name="title" id="ctitle" size="60" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
+		<input type="text" name="title" id="ctitle" size="60" class="formfield" value="<?php echo $contentManager->cleanOutput($_POST['title']); ?>" />
         </span>
         <span class="nowrap">
         <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><strong><?php echo _AT('formatting'); ?></strong></label>
