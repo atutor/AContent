@@ -412,7 +412,6 @@ $(document).ready(function(){
 
          saveChangeInContent(cid);
 
-         $('.unsaved').css('display','none');
          $('#activate_page_template_bar').css('display','inline');
          $('#deactivate_page_template_bar').css('display','none');
          $('.boxTotal').css('display','none');
@@ -433,9 +432,9 @@ $(document).ready(function(){
     }
 
     function saveChangeInContent(cid){
-        var vcid        = cid;
-        var vaction        = 'savePageTemplateContent';
-        var vtext        = $('#content-text').html();
+        var vcid = cid;
+        var vaction = 'savePageTemplateContent';
+        var vtext = $('#content-text').html();
           
         var cont= $('#content-previous').html();
         

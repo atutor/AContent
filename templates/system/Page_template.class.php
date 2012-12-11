@@ -367,17 +367,17 @@ class Page_template {
 	public function applyPageTemplate($cid,$text){
 		define("TR_INCLUDE_PATH", "../../include/");
 
+		global $stripslashes;
+		
 		require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 		$contentDAO = new ContentDAO();
 
 		// write on db
-		$contentDAO->UpdateField($cid, "text", $text);
-
-
+		$contentDAO->UpdateField($cid, "text", $stripslashes($text));
+		
 		return;
-
 	}
 
 	public function getpage_templatetructure($pageTemplateID = ''){
@@ -386,7 +386,7 @@ class Page_template {
 		$file = '../../templates/page_template/'.$pageTemplateID.'/'.$pageTemplateID.'.html';
 
 		if(file_exists($file)) {
-			$struct	= file_get_contents($file);
+			$struct = file_get_contents($file);
 		}
 
 		return $struct;
@@ -401,7 +401,7 @@ class Page_template {
 
 	private function textFixPHP($text = ''){
 	
-		return $text;		
+		return $text;
 	}
 }
 ?>
