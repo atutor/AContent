@@ -31,6 +31,23 @@ function unregister_GLOBALS() {
    }
 }
 
+function my_add_null_slashes( $string ) {
+//    return mysql_real_escape_string(stripslashes($string));
+    return addslashes(stripslashes($string));
+}
+
+function my_null_slashes($string) {
+	return $string;
+}
+
+if ( get_magic_quotes_gpc() == 1 ) {
+	$addslashes   = 'my_add_null_slashes';
+	$stripslashes = 'stripslashes';
+} else {
+	$addslashes   = 'mysql_real_escape_string';
+	$stripslashes = 'my_null_slashes';
+}
+
 /*
  * structure of this document (in order):
  *
@@ -424,23 +441,6 @@ function debug_to_log($var, $log='') {
 		$_my_uri .= SEP;
 	}
 	$_my_uri = $_SERVER['PHP_SELF'].$_my_uri;
-
-function my_add_null_slashes( $string ) {
-//    return mysql_real_escape_string(stripslashes($string));
-    return addslashes(stripslashes($string));
-}
-
-function my_null_slashes($string) {
-	return $string;
-}
-
-if ( get_magic_quotes_gpc() == 1 ) {
-	$addslashes   = 'my_add_null_slashes';
-	$stripslashes = 'stripslashes';
-} else {
-	$addslashes   = 'mysql_real_escape_string';
-	$stripslashes = 'my_null_slashes';
-}
 
 /**
  * If MBString extension is loaded, then use it.
