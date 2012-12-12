@@ -423,7 +423,6 @@ $(document).ready(function(){
 
     function createLabelSuccess()
     {
-        label= '<link type="text/css" rel="stylesheet" href="'+ path + '/themes/default/form.css">';    
         label= label + '<div id="success" style="display:none; ">';
         label= label + '<label  class="success_label">Action completed successfully.</label>';
         label= label + '</div>';

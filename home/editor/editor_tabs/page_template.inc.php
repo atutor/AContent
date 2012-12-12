@@ -101,7 +101,6 @@ if(is_array($result))
 // find out the content length
 $sup=strlen(strip_tags($text));
 
-echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'/themes/default/form.css">';	
 echo '<div id="success" style="display:none;">';
 echo '<label  class="success_label">Action completed successfully.</label>';
 echo '</div>';
