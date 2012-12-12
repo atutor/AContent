@@ -721,21 +721,24 @@ function initContentMenu() {
 		
 		if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme())
 		{
+		global $_config;
+			echo ' <div class="menuedit">';
+			if($_config['enable_template_structure'] == '1'){
+			  echo '<a href="'.$_base_path.'home/editor/edit_content_struct.php?_course_id='.$_course_id.'">
+    		  <img id="img_create_top_folder" src="'.$_base_path.'images/addstruct.gif" alt="'._AT('add_top_structure').'" title="'._AT('add_top_structure').'" style="border:0;height:1.2em" />
+   				 </a>'."\n";
+			}
 			echo "\n".'
-  <div class="menuedit">
-  	<a href="'.$_base_path.'home/editor/edit_content_struct.php?_course_id='.$_course_id.'">
-      <img id="img_create_top_folder" src="'.$_base_path.'images/addstruct.gif" alt="'._AT('add_top_structure').'" title="'._AT('add_top_structure').'" style="border:0;height:1.2em" />
-    </a>'."\n".'
-    <a href="'.$_base_path.'home/editor/edit_content_folder.php?_course_id='.$_course_id.'">
-      <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
-    </a>'."\n".'
-    <a href="'.$_base_path.'home/editor/edit_content.php?_course_id='.$_course_id.'">
-      <img id="img_create_top_content" src="'.$_base_path.'images/mpage.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
-    </a>'."\n".'
-    <a href="javascript:void(0)" onclick="javascript:switchEditMode();">
-      <img id="img_switch_edit_mode" src="'.$_base_path.'images/medit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
-    </a>
-  </div>'."\n";
+				<a href="'.$_base_path.'home/editor/edit_content_folder.php?_course_id='.$_course_id.'">
+				  <img id="img_create_top_folder" src="'.$_base_path.'images/mfolder.gif" alt="'._AT("add_top_folder").'" title="'._AT("add_top_folder").'" style="border:0;height:1.2em" />
+				</a>'."\n".'
+				<a href="'.$_base_path.'home/editor/edit_content.php?_course_id='.$_course_id.'">
+				  <img id="img_create_top_content" src="'.$_base_path.'images/mpage.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
+				</a>'."\n".'
+				<a href="javascript:void(0)" onclick="javascript:switchEditMode();">
+				  <img id="img_switch_edit_mode" src="'.$_base_path.'images/medit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
+				</a>
+			  </div>'."\n";
 		}
 		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
 		
