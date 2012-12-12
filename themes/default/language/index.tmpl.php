@@ -105,7 +105,7 @@ function validate_filename() {
 jQuery(document).ready(function () {
 	var tableEdit = fluid.inlineEdits("#editable_table", {
 		selectors : {
-			text : "span",
+			text : ".inlineEdits",
 			editables : "td:has(span.inlineEdits)"
 		},
 		defaultViewText: "",
