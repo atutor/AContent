@@ -27,7 +27,7 @@ $('input[id="apply_layout_to_course"]').live("click",function(){
 function preview(lay){
    $('#newLayoutTemplate').remove();
 
-   $('input[id="radio-'+layout_click+'"]').removeAttr('disabled');
+   $('input').removeAttr('disabled');
 
    $('input[id="radio-'+lay+'"]').attr('checked','checked');
    $('input[id="radio-'+lay+'"]').attr('disabled','disabled');

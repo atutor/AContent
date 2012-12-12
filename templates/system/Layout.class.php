@@ -1,9 +1,9 @@
 <?php
 global $lay;
 
+if (!defined('TR_INCLUDE_PATH')) exit;
+
 class Layout{
-
-
 	/**
 	 * Update an existing course record
 	 * @access  public
@@ -19,7 +19,6 @@ class Layout{
 	 * Variables declarations / definitions
 	 * 
 	 * */
-
 	private $mod_path	= array();
 	private $config		= array();
 	private $content_id	= '';
@@ -200,7 +199,7 @@ class Layout{
                 </thead>';
 
 		$ui .= '<tbody>';
-		$ui .= '<tr onclick="preview(\'nothing\');" onmousedown="document.form[\'radio-nothing\'].checked=!document.form[\'radio-nothing\'].checked;togglerowhighlight(this,\'radio-nothing\')">';
+		$ui .= '<tr onclick="preview(\'nothing\');">';
 		$ui .= '<td id="radio_nothing"  name="'.$_content_id.'" title="'._AT('nothing').'"><input id="radio-nothing" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="nothing"></td>';
 		$ui .= '<td><label for="radio-nothing" style="cursor:pointer;">'._AT('nothing').'</label></td>';
 		$ui .= '<td>'._AT('nothing_description').'</td>';
@@ -210,7 +209,7 @@ class Layout{
 		$ui .= '</tr>';
 
 		foreach($layout_list as $tname => $tval){
-			$ui .= '<tr onclick="preview(\''.$tname.'\');" onmousedown="document.form[\'radio-'.$tname.'\'].checked=!document.form[\'radio-'.$tname.'\'].checked;togglerowhighlight(this,\'radio-'.$tname.'\');">';
+			$ui .= '<tr onclick="preview(\''.$tname.'\');">';
 
 			$ui .= '<td id="radio_'.$tname.'" name="'.$_content_id.'" title="'.$tname.'">
 <input id="radio-'.$tname.'" mouseseup="this.checked=!this.checked" type="radio" name="radio_layout" value="'.$tname.'">
@@ -265,9 +264,6 @@ class Layout{
 	private function applyLayoutToCourse(){
 		global $msg;
 
-		define("TR_INCLUDE_PATH", "../../include/");
-
-		require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 		$contentDAO = new ContentDAO();
@@ -317,9 +313,7 @@ class Layout{
 
 	private function applyLayoutToContent(){
 		global $msg;
-		define("TR_INCLUDE_PATH", "../../include/");
-
-		require_once(TR_INCLUDE_PATH.'vitals.inc.php');
+		
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 		$selected_layout	= (isset($_POST['layout_list']) ? htmlentities($_POST['layout_list']) : '-');
@@ -386,12 +380,10 @@ class Layout{
 	private function textFixPHP($text = ''){
 
 		// JUMP
-		return $text;		
+		return $text;
 	}
 
 	public function content_text($cid){
-		define("TR_INCLUDE_PATH", "../../include/");
-		require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 		$contentDAO = new ContentDAO();

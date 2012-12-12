@@ -1,5 +1,7 @@
 <?php
 
+if (!defined('TR_INCLUDE_PATH')) exit;
+
 class Page_template {
 	/**
 	 * Update an existing course record
@@ -333,21 +335,16 @@ class Page_template {
 	}
 
 	private function applyPageTemplateToContent() {
-		if(isset($_POST['cid']))
-
-		echo $_POST['body_text'];
+		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+		
+		if(isset($_POST['cid'])) echo $_POST['body_text'];
+		
 		$cid	= htmlentities($_POST['_cid']);
 		$text	= $this->textFixPHP($_POST['body_text']);
 		echo $cid;
 		echo $text;
 
-		if(strlen($text) == 0)
-			return;
-
-		define("TR_INCLUDE_PATH", "../../include/");
-
-		require_once(TR_INCLUDE_PATH.'vitals.inc.php');
-		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
+		if(strlen($text) == 0) return;
 
 		$contentDAO = new ContentDAO();
 
@@ -365,11 +362,8 @@ class Page_template {
 	public function control(){}
 
 	public function applyPageTemplate($cid,$text){
-		define("TR_INCLUDE_PATH", "../../include/");
-
 		global $stripslashes;
 		
-		require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 		$contentDAO = new ContentDAO();
