@@ -136,8 +136,7 @@ class AContent_LiveContentLinkDAO {
 	 * @author  Mauro Donadio
 	 */
 	private function _xmlAddContentID($id, $root, $tagName = 'content_id'){
-		//$id = intval($id);
-		//$root = intval($root);
+		$id = intval($id);
 		
 		$content_id = $this->_dom->createElement($tagName);
 		$root->appendChild($content_id);

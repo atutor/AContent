@@ -38,8 +38,9 @@ if ($this->course_id > 0) { ?>
         <a href="<?php echo TR_BASE_HREF; ?>documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="_new"><?php echo _AT('web_service_api'); ?></a>
           &nbsp;&nbsp;&nbsp;&nbsp;
         <a href="<?php echo TR_BASE_HREF; ?>documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="_new"><?php echo _AT('oauth_server_api'); ?></a>
-        <br /><br />
       </div>
+
+<?php require(TR_INCLUDE_PATH.'html/languages.inc.php'); ?>
 
       <div class="foot_text">
         <small><?php if (isset($this->course_copyright)) echo htmlentities_utf8($this->course_copyright, ENT_QUOTES, 'UTF-8').'<br />'; echo _AT("copyright"); ?></small><br />
