@@ -102,7 +102,7 @@ class AContent_LiveContentLinkDAO {
 	 * @author  Mauro Donadio
 	 */
 	private function _recursiveFolderScan($parentID, $root){
-	
+		global $addslashes;
 		$parentID = intval($parentID);
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_parent_id='.$parentID.' ORDER BY ordering ASC';
@@ -136,6 +136,7 @@ class AContent_LiveContentLinkDAO {
 	 * @author  Mauro Donadio
 	 */
 	private function _xmlAddContentID($id, $root, $tagName = 'content_id'){
+		$id = intval($id);
 		
 		$content_id = $this->_dom->createElement($tagName);
 		$root->appendChild($content_id);

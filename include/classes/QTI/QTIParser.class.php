@@ -280,7 +280,7 @@ class QTIParser {
 							$this->answers_for_matching[$this->item_num] = array();
 						}							
 //							if (!in_array($tv['name'][$val_id], $this->answers_for_matching[$this->item_num])){
-							array_push($this->answers_for_matching[$this->item_num], $tv['name'][$pos]);
+							array_push($this->answers_for_matching[$this->item_num], $tv['name'][sizeof($tv['name'])-1]);
 							
 							//add mark
 							$this->weights[$this->item_num] += floatval($current_answer);
