@@ -113,12 +113,14 @@ class Structures {
                                                 $vcore = explode('.', VERSION);
                                                 // cursory check for version compatibility
                                                 // stopping the cycle to the first incompatibility found
+                                                /*
                                                 if ($vfile[0] < $vcore[0])
                                                 // not compatible!
                                                         continue;
                                                 elseif (strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
                                                 // not compatible!
                                                         continue;
+                                                */
                                         }
                                         // put the info of the current structure into an array
                                         $structs[$item] = $info;
