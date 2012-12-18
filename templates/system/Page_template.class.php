@@ -299,12 +299,14 @@ class Page_template {
 	
 					// cursory check for version compatibility
 					// stopping the cycle to the first incompatibility found
+					/* WHAT IS THIS? Using continue here breaks
 					if($vfile[0] < $vcore[0])
 						// not compatible!
 						continue;
 					elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
 						// not compatible!
 						continue;
+					*/
 				}
 
 				// put the info of the current model into an array
