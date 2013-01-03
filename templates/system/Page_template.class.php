@@ -177,7 +177,7 @@ class Page_template {
 					echo '<tr>';
 					echo '<td>';
 					echo '<a href="javascript: void(0);">';
-					echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+					echo '<img title="'._AT('img_title_pagetemplate_icon', _AT($key)).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',_AT($key)).'" /><br />';
 					echo '<span class="desc">'. $value['name'] . '</span>';
 					echo '</a>';
 					echo '</td>';
@@ -267,6 +267,7 @@ class Page_template {
 	function checkPageTemplate($name) {
 		$info = null;
 		$isdir = $this->mod_path['page_template_dir_int'].$name;
+		$info['token'] = $name;
 		// checking if the element is a directory
 		if(is_dir($isdir)){
 			// check if exists the .info file and parse it
@@ -280,6 +281,7 @@ class Page_template {
 						$info['core'] = trim($child->version);
 					else
 						$info[$name] = trim($child);
+
 				}
 				
 				// if you did not specify a name, use the folder name
@@ -287,10 +289,12 @@ class Page_template {
 					$info['name'] = trim($item);
 				
 				// reduce the name length to 15 characters
-				$limit	= 15;
-				if(strlen($info['name']) >= $limit){
-					$info['name']	= substr($info['name'], 0, ($limit-2));
+
+				$limit	= 14;
+				if(strlen(_AT($info['token'])) >= $limit){
+					$info['name']	= substr(_AT($info['token']), 0, ($limit-2));
 					$info['name']	.= '..';
+					
 				}
 
 				// check the "core"
