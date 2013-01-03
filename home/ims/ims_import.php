@@ -31,6 +31,7 @@ if (isset($_GET['oauth_token']))
 {
 	require_once(TR_INCLUDE_PATH.'config.inc.php');
 	require_once(TR_INCLUDE_PATH.'constants.inc.php');
+	require_once(TR_INCLUDE_PATH.'lib/vital_funcs.inc.php');
 	
 	if ($_GET['oauth_token'] == '')
 	{
