@@ -37,14 +37,12 @@ img.layout_img_big{
     height: 48px;
 }
 img.layout_img_small{
-    padding-left: 77px;
+    margin-left: 47px;
+	border:thin solid black;
     width: auto;
     height: 48px;
+    width: 150px;
 }
-
-
-
-
 
 div.right-col {
 	width: 25%; 

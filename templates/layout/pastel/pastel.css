@@ -7,10 +7,10 @@
 
 
 #content h3{
-	background:					#18578d;
+	background:					#798287;
 	color:						#FFF;
 	border:						1px solid #cccccc;
-	background-image:			url('canada/h-square.gif');
+	background-image:			url('pastel/h-square.gif');
 	background-repeat:			no-repeat;
 	background-position:		left top;
 	border-bottom:				1px solid #000;
@@ -30,8 +30,8 @@
 
 #content h4, #content h5, #content h6, #content h7{
 	padding:					5px;
-	background-color:			#555;
-	background-image:			url('canada/h-square.gif');
+	background-color:			#C7DAD4;
+	background-image:			url('pastel/h-square.gif');
 	background-repeat:			no-repeat;
 	background-position:		left top;
 	color:						#FFF;
@@ -47,7 +47,7 @@
 
 #content ul{
 	margin-top:					30px;
-	list-style-image:			url('canada/list.gif');
+	list-style-image:			url('pastel/list.gif');
 }
 #content ul li{
 	padding:					3px;
@@ -69,7 +69,6 @@
 }
 .pageTemplateContent{
 	height:						30px;
-	background-image:			url('canada/wmms.gif');
 	background-repeat:			no-repeat;
 	background-position:		center bottom;
 	background-position:		100% 100%;
