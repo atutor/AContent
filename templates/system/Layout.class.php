@@ -134,7 +134,6 @@ class Layout{
 
 					// check the "core"
 					if(!$info['core'])
-						
 						continue;
 					else {
 
@@ -143,15 +142,12 @@ class Layout{
 		
 						// cursory check for version compatibility
 						// stopping the cycle to the first incompatibility found
-						/*
 						if($vfile[0] < $vcore[0])
 							// not compatible!
 							continue;
 						elseif(strtolower($vfile[1]) != 'x' and $vfile[1] < $vcore[1]) 
 							// not compatible!
 							continue;
-						*/
-						
 					}
 	
 					// put the info of the current layout into an array
