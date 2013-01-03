@@ -254,7 +254,11 @@ class Page_template {
 		$pages = array();
 		foreach ($item->children() as $child) {
 			 $name = (string)$child['name'];
-			 $pages[$name] = $this->checkPageTemplate($child['name']);
+			 
+			 $current_template = $this->checkPageTemplate($child['name']);
+			 if ($current_template) {
+			 	$pages[$name] = $current_template;
+			 }
 		}
 
 		return $pages;
@@ -291,7 +295,7 @@ class Page_template {
 
 				// check the "core"
 				if(!$info['core'])
-					continue;
+					return false;
 				else{
 
 					$vfile	= explode('.', $info['core']);
@@ -299,18 +303,15 @@ class Page_template {
 	
 					// cursory check for version compatibility
 					// stopping the cycle to the first incompatibility found
-					/* WHAT IS THIS? Using continue here breaks
-					if($vfile[0] < $vcore[0])
+					if($vfile[0] < $vcore[0]) {
 						// not compatible!
-						continue;
-					elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1])
+						return false;
+					}
+					elseif(strtolower($vfile[1]) != 'x' AND $vfile[1] < $vcore[1]) {
 						// not compatible!
-						continue;
-					*/
+						return false;
+					}
 				}
-
-				// put the info of the current model into an array
-				//$modelli[$item] = $info;
 			}
 		}	
 		return $info;
@@ -330,7 +331,11 @@ class Page_template {
 		// scan all existing themes
 		$page_template = array();
 		foreach($dir as $item)  {
-			$page_template[$item] = $this->checkPageTemplate($item);
+			$current_template = $this->checkPageTemplate($item);
+			
+			if ($current_template) {
+				$page_template[$item] = $current_template;
+			}
 		}
 
 		return $page_template;
