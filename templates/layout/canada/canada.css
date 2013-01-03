@@ -5,15 +5,20 @@
 	text-align:					justify;
 }
 
+
 #content h3{
 	background:					#18578d;
-	padding:					10px;
-        margin-bottom:				10px;
-        margin-top:					20px;
 	color:						#FFF;
-
 	border:						1px solid #cccccc;
-    /* CSS3 */
+	background-image:			url('canada/h-square.gif');
+	background-repeat:			no-repeat;
+	background-position:		left top;
+	border-bottom:				1px solid #000;
+	padding:					3px 3px 3px 30px;
+    margin-bottom:				10px;
+    margin-top:					10px;
+    
+        /* CSS3 */
     border-radius:              2px;
     /* Safari and chrome */
     -webkit-border-radius:      2px;
@@ -23,17 +28,8 @@
     -khtml-border-radius:       2px;
 }
 
-#content h3{
-	color:						#000;
-	border-bottom:				1px solid #000;
-	padding-bottom:				0px;
-    margin-bottom:				10px;
-    margin-top:					20px;
-}
-
 #content h4, #content h5, #content h6, #content h7{
 	padding:					5px;
-
 	background-color:			#555;
 	background-image:			url('canada/h-square.gif');
 	background-repeat:			no-repeat;
@@ -44,35 +40,37 @@
 	margin-bottom:				5px;
 	margin-left:				0;
 	margin-right:				0;
-	padding:					3px 3px 3px 25px;
-
+	padding:					3px 3px 3px 30px;
     margin-bottom:				10px;
     margin-top:					20px;
 }
 
 #content ul{
 	margin-top:					30px;
-	list-style-image:			url(canada/list.gif);
+	list-style-image:			url('canada/list.gif');
 }
 #content ul li{
 	padding:					3px;
 }
 
 #content a:link{
-	text-decoration:			none;
+	text-decoration:			underline;
 	color:						#295376;
 	background:					transparent;
+	background-color:			#EBF4FA;
 }
 #content a:visited{
 	color:						#5a306b;
 }
-#content a:hover, #content a:active{
-	text-decoration:			underline;
+#content a:hover, #content a:focus, #content a:active{
+	text-decoration:			none;
+	background-color:			#EBF4FA;
 	color:						#B00000;	
 }
-.header .pageTemplateContent{
+.pageTemplateContent{
 	height:						30px;
-	background-image:			url(canada/wmms.gif);
+	background-image:			url('canada/wmms.gif');
 	background-repeat:			no-repeat;
-	background-position:		right top;
+	background-position:		center bottom;
+	background-position:		100% 100%;
 }
