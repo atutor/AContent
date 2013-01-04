@@ -12,7 +12,7 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; } 
 
-global $onload;
+global $onload, $contentManager;
 $onload = 'document.form.title.focus();';
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'].'?'; if ($this->cid > 0) echo '_cid='.$this->cid; else if ($this->pid > 0) echo 'pid='.$this->pid.SEP.'_course_id='.$this->course_id; else echo '_course_id='.$this->course_id;?>" method="post" name="form"> 
@@ -30,7 +30,7 @@ if ($this->shortcuts):
 <?php endif; ?> -->
 	<div class="row">
 		<div style="font-weight:bold;"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ftitle"><?php echo _AT('content_folder_title');  ?></label></div>
-		<input type="text" name="title" id="ftitle" size="70" class="formfield" value="<?php echo ContentManager::cleanOutput($this->ftitle); ?>" />
+		<input type="text" name="title" id="ftitle" size="70" class="formfield" value="<?php echo $contentManager->cleanOutput($this->ftitle); ?>" />
 	</div>
 	
 	<div class="row buttons">
