@@ -260,10 +260,7 @@ require_once(TR_INCLUDE_PATH.'page_constants.inc.php');
 
 /*~~~~~~~~~~~~~~~~~flash detection~~~~~~~~~~~~~~~~*/
 if(isset($_COOKIE["flash"])){
-    $_SESSION['flash'] = $_COOKIE["flash"];
-
-    //delete the cookie
-    AContent.setcookie("flash",'',time()-3600);
+	$_SESSION['flash'] = $_COOKIE["flash"];
 }
 
 if (!isset($_SESSION["flash"])) {
