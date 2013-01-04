@@ -277,6 +277,10 @@ class Page_template {
 
 				foreach($xml->children() as $child) {
 					$name = $child->getName();
+					if ($name == "name") {
+						$xml_defined_template_name = trim($child[0]);
+					}
+					
 					if($name == "release") 
 						$info['core'] = trim($child->version);
 					else
@@ -284,15 +288,22 @@ class Page_template {
 
 				}
 				
-				// if you did not specify a name, use the folder name
-				if(!$info['name'])
-					$info['name'] = trim($item);
+				// determine the template name
+				if (_AT($info['token']) != '[ '.$info['token'].' ]') {
+					// 1st approach: retrieve from DB
+					$template_name = _AT($info['token']);
+				} else if (isset($xml_defined_template_name)) {
+					// 2nd approach: use name defined in page_template.xml
+					$template_name = $xml_defined_template_name;
+				} else if (!isset($template_name)) {
+					// if no name is defined, use the folder name
+					$template_name = trim($item);
+				}
 				
 				// reduce the name length to 15 characters
-
 				$limit	= 14;
-				if(strlen(_AT($info['token'])) >= $limit){
-					$info['name']	= substr(_AT($info['token']), 0, ($limit-2));
+				if(strlen($template_name) >= $limit){
+					$info['name']	= substr($template_name, 0, ($limit-2));
 					$info['name']	.= '..';
 					
 				}
