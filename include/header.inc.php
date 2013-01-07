@@ -125,11 +125,11 @@ $savant->assign('categories', $courseCategoriesDAO->getAll());
 // get custom css
 $custom_css = '';
 if (isset($_custom_css)) {
-	$custom_css = '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
+	$custom_head = '<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
 }
 
 if (isset($_custom_head)) {
-	$custom_css .= '
+	$custom_head .= '
 ' . $_custom_head;
 }
 
@@ -139,7 +139,7 @@ if (isset($_pages[$current_page]['guide']))
 	$savant->assign('guide', TR_GUIDES_PATH .'index.php?p='. htmlentities_utf8($script_name));
 }
 
-$savant->assign('custom_css', $custom_css);
+$savant->assign('custom_head', $custom_head);
 
 if ($onload) $savant->assign('onload', $onload);
 $savant->assign('course_id', $_course_id);
