@@ -147,7 +147,7 @@ $starttime = $mtime;
 
   </div>
 
-  <div class="topnavlistcontainer">
+  <div class="topnavlistcontainer" role="navigation">
   <!-- the main navigation. in our case, tabs -->
     <ul class="navigation">
 <?php 
@@ -195,7 +195,7 @@ foreach ($this->top_level_pages as $page) {
    <!-- the sub navigation and guide -->
   <div id="sub-menu">
    
-      <div class="search_top">
+      <div class="search_top" role="search">
       <form target="_top" action="<?php echo TR_BASE_HREF; ?>home/search.php" method="get">
         <input type="text" title="<?php echo _AT("search"); ?>" name="search_text" id="search_text_at_header" value="<?php if (isset($_GET['search_text'])) echo htmlentities_utf8($_GET['search_text'], ENT_QUOTES, 'UTF-8'); ?>" size="25" />
       
@@ -307,9 +307,9 @@ foreach ($this->top_level_pages as $page) {
       //<![CDATA[
       var state = trans.utility.getcookie("side-menu");
       if (state && (state == 'none')) {
-          document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu">');
+          document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu" role="navigation">');
       } else {
-          document.writeln('<a name="menu"></a><div id="side-menu">');
+          document.writeln('<a name="menu"></a><div id="side-menu" role="navigation">');
       }
       //]]>
       </script>
@@ -323,11 +323,10 @@ foreach ($this->top_level_pages as $page) {
     </div>
    <?php //endif; ?>
 
-    <div id="contentcolumn"
+    <div id="contentcolumn" role="main"
     <?php if (isset($this->course_id) && $this->course_id <= 0): ?>
       style="margin-left:0.5em;width:99%;"
-    <?php endif; ?>
-    >
+    <?php endif; ?>>
 
     <?php //if (isset($this->course_id) && $this->course_id > 0): ?>
       <div id="menutoggle">
