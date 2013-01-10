@@ -68,33 +68,6 @@ $num_in_path = count($path);
 $page_title = '';
 $page_title .= $content_row['title'];
 
-for ($i=0; $i<$num_in_path; $i++) {
-	$content_info = $path[$i];
-	if ($_SESSION['prefs']['PREF_NUMBERING']) {
-		if ($contentManager->_menu_info[$content_info['content_id']]['content_parent_id'] == 0) {
-			$top_num = $contentManager->_menu_info[$content_info['content_id']]['ordering'];
-			$parent_headings .= $top_num;
-		} else {
-			$top_num = $top_num.'.'.$contentManager->_menu_info[$content_info['content_id']]['ordering'];
-			$parent_headings .= $top_num;
-		}
-		if ($_SESSION['prefs']['PREF_NUMBERING']) {
-			$path[$i]['content_number'] = $top_num . ' ';
-		}
-		$parent_headings .= ' ';
-	}
-}
-
-if ($_SESSION['prefs']['PREF_NUMBERING']) {
-	if ($top_num != '') {
-		$top_num = $top_num.'.'.$content_row['ordering'];
-		$page_title .= $top_num.' ';
-	} else {
-		$top_num = $content_row['ordering'];
-		$page_title .= $top_num.' ';
-	}
-}
-
 $parent = 0;
 
 foreach ($path as $i=>$page) {
