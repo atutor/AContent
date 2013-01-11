@@ -464,7 +464,7 @@ class ContentManager
 	 * @date	Sep 10, 2008
 	 * @author	Harris
 	 */
-	function & getContentTestsAssoc($content_id){
+	function getContentTestsAssoc($content_id){
 		$sql	= "SELECT ct.test_id, t.title 
 		             FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc 
 		                    WHERE content_id=$content_id) AS ct 
@@ -473,7 +473,7 @@ class ContentManager
 		return $this->dao->execute($sql);
 	}
 
-	function & cleanOutput($value) {
+	function cleanOutput($value) {
 		return stripslashes(htmlspecialchars($value));
 	}
 
@@ -590,7 +590,7 @@ class ContentManager
 		
 		$first = $this->getNextContent(0); // get first
 		//echo("TITOLO : ". $first['title']);
-		if ($_SESSION['prefs']['PREF_NUMBERING'] && $first) {
+		if ($first) {
 			$first['title'] = $this->getNumbering($first['content_id']).' '.$first['title'];
 		}
 		if ($first) {
@@ -601,10 +601,6 @@ class ContentManager
 		if (!$cid && $_SESSION['s_cid']) {
 			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
 
-			if ($_SESSION['prefs']['PREF_NUMBERING']) {
-				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
-			}
-
 			$resume['url'] = $_base_path.'home/course/content.php?_cid='.$_SESSION['s_cid'];
 			
 			$sequence_links['resume'] = $resume;
@@ -613,11 +609,6 @@ class ContentManager
 				$previous = $this->getPreviousContent($cid);
 			}
 			$next = $this->getNextContent($cid ? $cid : 0);
-
-			if ($_SESSION['prefs']['PREF_NUMBERING']) {
-				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
-				$next['title'] = $this->getNumbering($next['content_id']).' '.$next['title'];
-			}
 
 			$next['url'] = $_base_path.'home/course/content.php?_cid='.$next['content_id'];
 			if (isset($previous['content_id'])) {
@@ -914,10 +905,6 @@ initContentMenu();
 //					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
 					$link .= $img_link . ' <a href="'.$in_link.'" title="';
 					$base_title_length = 29;
-					if ($_SESSION['prefs']['PREF_NUMBERING']) {
-//						$link .= $path.$counter.' ';
-						$base_title_length = 24;
-					}
 
 					$link .= $content['title'].'">';
 
@@ -930,7 +917,6 @@ initContentMenu();
 						$link .= $content['title'];
 					else
 						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
-						         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 						         $content['title'].'</span>';
 					
 					$link .= '</a>';
@@ -953,10 +939,7 @@ initContentMenu();
 				else 
 				{ // current content page & nodes with content type "CONTENT_TYPE_FOLDER"
 					$base_title_length = 26;
-					if ($_SESSION['prefs']['PREF_NUMBERING']) {
-						$base_title_length = 21;
-					}
-					
+
 					if (isset($highlighted[$content['content_id']])) {
 						$link .= '<strong>';
 						$on = true;
@@ -966,7 +949,6 @@ initContentMenu();
 					{ // current content page
 						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': '.
-						         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter : '').
 						         $content['title'].'" height="1" width="1" border="0" /></a><strong style="color:red" title="'.$content['title'].'">'."\n";
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
@@ -974,7 +956,6 @@ initContentMenu();
 						}
 //						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
-						         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 						         $content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
@@ -1010,7 +991,6 @@ initContentMenu();
 							$link .= $content['title'];
 						else
 							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
-							         ($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter.'&nbsp;' : '').
 							         $content['title'].'</span>';
 						
 						if (isset($_current_user) && ($_current_user->isAuthor($this->course_id) || $_current_user->isAdmin()) && !Utility::isMobileTheme()) {
@@ -1112,10 +1092,6 @@ initContentMenu();
 					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16" class="img-size-tree" />'."\n";
 				}
 
-//				if ($_SESSION['prefs']['PREF_NUMBERING']) {
-//					echo $path.$counter;
-//				}
-				
 				echo $link;
 				
 				echo "\n<br /></span>\n\n";
@@ -1306,11 +1282,7 @@ initContentMenu();
 					echo '<img src="'.$_base_path.'images/'.$rtl.'tree/tree_horizontal.gif" alt="" border="0" width="16" height="16"  class="img-size-tree"/>';
 				}
 
-				echo '<small> '.($_SESSION['prefs']['PREF_NUMBERING'] ? $path.$counter : '');
-				
-				echo $link;
-				
-				echo '</small></td>'."\n".'</tr>'."\n";
+				echo '<small> ' . $link . '</small></td>'."\n".'</tr>'."\n";
 
 				$this->printActionMenu($menu,
 									$content['content_id'],

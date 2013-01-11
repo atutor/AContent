@@ -129,7 +129,7 @@ if (isset($_POST['savenewfile'])) {
 $onload="on_load()";
 
 require(TR_INCLUDE_PATH.'header.inc.php');
-require(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
 
 // set default body editor to tinymce editor
 if (!isset($_POST['extension'])) $_POST['extension'] = 'html';
@@ -165,7 +165,7 @@ $msg->printAll();
 	
 		<div class="row">
 			<label for="body_text"><?php echo _AT('body');  ?></label><br />
-			<textarea name="body_text" id="body_text" rows="25"><?php echo ContentManager::cleanOutput($_POST['body_text']); ?></textarea>
+			<textarea name="body_text" id="body_text" rows="25"><?php echo $contentManager->cleanOutput($_POST['body_text']); ?></textarea>
 		</div>
 	
 		<div class="row buttons">

@@ -66,6 +66,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback']);
 			$hidden_vars['question']    = htmlspecialchars($_POST['question']);
 			$hidden_vars['category_id'] = htmlspecialchars($_POST['category_id']);
+			$hidden_vars['_course_id']  = $_course_id;
 
 			for ($i = 0; $i < count($choice_new); $i++) {
 				$hidden_vars['answer['.$i.']'] = htmlspecialchars($answer_new[$i]);

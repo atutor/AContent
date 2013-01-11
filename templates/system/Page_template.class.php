@@ -177,7 +177,7 @@ class Page_template {
 					echo '<tr>';
 					echo '<td>';
 					echo '<a href="javascript: void(0);">';
-					echo '<img title="'._AT('img_title_pagetemplate_icon', $value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
+					echo '<img title="'._AT('img_title_pagetemplate_icon', _AT($key)).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',_AT($key)).'" /><br />';
 					echo '<span class="desc">'. $value['name'] . '</span>';
 					echo '</a>';
 					echo '</td>';
@@ -267,6 +267,7 @@ class Page_template {
 	function checkPageTemplate($name) {
 		$info = null;
 		$isdir = $this->mod_path['page_template_dir_int'].$name;
+		$info['token'] = $name;
 		// checking if the element is a directory
 		if(is_dir($isdir)){
 			// check if exists the .info file and parse it
@@ -276,21 +277,35 @@ class Page_template {
 
 				foreach($xml->children() as $child) {
 					$name = $child->getName();
+					if ($name == "name") {
+						$xml_defined_template_name = trim($child[0]);
+					}
+					
 					if($name == "release") 
 						$info['core'] = trim($child->version);
 					else
 						$info[$name] = trim($child);
+
 				}
 				
-				// if you did not specify a name, use the folder name
-				if(!$info['name'])
-					$info['name'] = trim($item);
+				// determine the template name
+				if (_AT($info['token']) != '[ '.$info['token'].' ]') {
+					// 1st approach: retrieve from DB
+					$template_name = _AT($info['token']);
+				} else if (isset($xml_defined_template_name)) {
+					// 2nd approach: use name defined in page_template.xml
+					$template_name = $xml_defined_template_name;
+				} else if (!isset($template_name)) {
+					// if no name is defined, use the folder name
+					$template_name = trim($item);
+				}
 				
 				// reduce the name length to 15 characters
-				$limit	= 15;
-				if(strlen($info['name']) >= $limit){
-					$info['name']	= substr($info['name'], 0, ($limit-2));
+				$limit	= 14;
+				if(strlen($template_name) >= $limit){
+					$info['name']	= substr($template_name, 0, ($limit-2));
 					$info['name']	.= '..';
+					
 				}
 
 				// check the "core"

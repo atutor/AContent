@@ -194,16 +194,16 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_id'] > 0)
  * $_SESSION['s_cid']: record the last content_id on (user_id + course_id) basis
  * $_sequence_links: resume/first/next/previous content links
  */ 
-if (intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
-else if (intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
+if (isset($_REQUEST['_cid']) && intval($_REQUEST['_cid']) > 0) $_content_id = intval($_REQUEST['_cid']);
+else if (isset($_POST['_cid']) && intval($_POST['_cid']) > 0) $_content_id = intval($_POST['_cid']);
 
-if (intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
-else if (intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
+if (isset($_REQUEST['_course_id']) && intval($_REQUEST['_course_id']) > 0) $_course_id = intval($_REQUEST['_course_id']);
+else if (isset($_POST['_course_id']) && intval($_POST['_course_id']) > 0) $_course_id = intval($_POST['_course_id']);
 
 /*
  * catia
  */
-$_struct_name = strval($_REQUEST['_struct_name']);
+if (isset($_REQUEST['_struct_name'])) $_struct_name = strval($_REQUEST['_struct_name']);
 
 // find course_id thru content_id
 if ($_content_id > 0)
@@ -260,10 +260,7 @@ require_once(TR_INCLUDE_PATH.'page_constants.inc.php');
 
 /*~~~~~~~~~~~~~~~~~flash detection~~~~~~~~~~~~~~~~*/
 if(isset($_COOKIE["flash"])){
-    $_SESSION['flash'] = $_COOKIE["flash"];
-
-    //delete the cookie
-    AContent.setcookie("flash",'',time()-3600);
+	$_SESSION['flash'] = $_COOKIE["flash"];
 }
 
 if (!isset($_SESSION["flash"])) {
