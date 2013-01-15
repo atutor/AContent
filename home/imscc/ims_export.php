@@ -86,7 +86,7 @@ $course_desc     = htmlspecialchars($course_row['description'], ENT_QUOTES, 'UTF
 $course_title    = htmlspecialchars($course_row['title'], ENT_QUOTES, 'UTF-8');
 $course_language = $course_row['primary_language'];
 
-$courseLanguage =& $languageManager->getLanguage($course_language);
+$courseLanguage = $languageManager->getLanguage($course_language);
 
 //If course language cannot be found, use UTF-8 English
 //@author harris, Oct 30,2008
@@ -133,13 +133,13 @@ $rows = $contentDAO->getContentByCourseID($course_id);
  * donadiomauro@gmail.com
  * 
  * */
-include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
+//include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
 
-$templates_theme	= new Layout('');
+//$templates_theme	= new Layout('');
 
 // Array containing content and properties (such as content_id, course_id, layout ..)
 // the 'layout' property is required to add the proper content into the manifest file
-$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
+//$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
 
 /***************************************/
 
