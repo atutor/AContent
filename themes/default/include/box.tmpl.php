@@ -6,7 +6,6 @@ $compact_title = str_replace(array(' ', '(', ')', '&nbsp;', '.'), array('','',''
 if (!isset($this->default_status)) $this->default_status = "show";
 ?>
 
-<br />
 <script language="javascript" type="text/javascript">
   trans.utility.printSubmenuHeader("<?php echo $this->title; ?>", "<?php echo $compact_title; ?>", "<?php echo $_base_path; ?>", "<?php echo _AT('show'); ?>", "<?php echo _AT('hide'); ?>", "<?php echo $this->default_status; ?>");
 </script>
