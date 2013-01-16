@@ -29,7 +29,7 @@ if ($this->course_id > 0) { ?>
       </div> <!-- end of contentcolumn -->
     </div> <!-- end of contentwrapper -->
 	
-	<div id="footer">
+	<div id="footer" role="contentinfo">
 	    <div id="logo">
       <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
     </div>

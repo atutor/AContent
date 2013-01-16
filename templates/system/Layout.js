@@ -70,7 +70,7 @@ function createLayoutTemplate(layout,structure)
             layout_template= layout_template + '<p>' + trans.templates.devoid_content + '</p>';
             layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
             layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
-            layout_template= layout_template + '<div id="content"><h1>' + trans.templates.title + '</h1><p>' + trans.templates.document_body + '</p></div>';
+            layout_template= layout_template + '<div id="content"><h3>' + trans.templates.title + '</h3><p>' + trans.templates.document_body + '</p></div>';
         }
     }else{
         if(structure.length>24){

@@ -257,10 +257,11 @@ div.paging li a:hover, div.paging li a.current {
   margin-left: 18em;
 }
 #leftcolumn{
+height:100%;
   float: left;
   width: 17em;
-  margin-left: 5px;
-  margin-top:-10px;
+  margin-left: 1px;
+  background-color: #EBF4FA;
 }
 #footer{
   /*position:absolute;
@@ -277,7 +278,7 @@ div.paging li a:hover, div.paging li a.current {
 }
 #side-menu{
   overflow:hidden;
-  padding:.2em;
+
 }
 
 /* sequence links */
@@ -441,7 +442,7 @@ h1 {
 div#sub-menu {
     color: #555;
   background-color:#BBD9EE; 
-  padding-top: 3px; 
+  padding-top: .4em; 
    font-size:0.85em; 
     border-top:1px solid #cccccc;
     height:2.1em;
@@ -781,17 +782,18 @@ h3.indent {
 }
 h4.box {
   font-size:0.85em;
-  padding: 3px;
+  padding: 5px;
   background-color:#BBD9EE;
   /*border-top: 1px solid #B8AE9C;
   border-left: 1px solid #B8AE9C;
   border-right: 1px solid #B8AE9C;
   */
+  /*
   -moz-border-radius:.3em .3em 0em 0em;
   border-radius:.3em .3em 0em 0em;
+  */
 }
 div.box {
-  padding: 5px;
   background-color: #EBF4FA;
   color: black;
   /*
@@ -801,7 +803,7 @@ div.box {
   */
   font-size:0.8em;
   font-weight: normal;
-  padding:2px;
+  padding:4px;
   -moz-border-radius:.0em .0em .3em .3em;
   border-radius:.0em .0em .3em .3em;
 }
@@ -995,7 +997,7 @@ pre.badgeSnippet {
   background-image:url('images/books_top.jpg');
   background-repeat:repeat-x;
   background-size:100% 5.8em;
-  width:99%;
+  width:100%;
   margin-left:auto;
   margin-right:auto;
 }
@@ -1092,7 +1094,7 @@ div.topnavlistcontainer {
 #logo{
 float:left;
   margin-left:2em;
-  margin-top:.2em;
+  margin-top:1.5em;
   width:12em;
   background-color: #EBF4FA;
   padding:1em;
@@ -1346,8 +1348,8 @@ div.shortcuts{
   border-left:1px solid #cccccc;
   border-right:1px solid #cccccc;
   border-bottom:1px solid #cccccc;
-  border-radius: 0em 0em .5em .5em;
-  -moz-border-radius: 0em 0em .5em .5em;
+  border-radius: 0em 0em .2em .2em;
+  -moz-border-radius: 0em 0em .2em .2em;
   float:right;
   margin-right:2em;
   padding: 0.1em 0.3em 0.3em 0.5em;

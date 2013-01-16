@@ -231,7 +231,7 @@ class ContentUtility {
      *          For instance: http://www.youtube.com/watch?v=a0ryB0m0MiM
      *          Otherwise, return the original send-in parameter.
      */
-    public function convertYoutubePlayURLToWatchURL($youtube_playURL) {
+    public static function convertYoutubePlayURLToWatchURL($youtube_playURL) {
         return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
                             "\\1youtube.com/watch?v=\\2", $youtube_playURL);
     }
