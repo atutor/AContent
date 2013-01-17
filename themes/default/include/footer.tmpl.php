@@ -77,6 +77,8 @@ $totaltime = ($endtime - $starttime);
 
 if (defined('TR_DEVEL') && TR_DEVEL) 
 {
+
+
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');
 	debug($totaltime. ' seconds.', "TIME USED"); 
