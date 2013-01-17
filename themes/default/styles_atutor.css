@@ -1,0 +1,91 @@
+/************************************************************************/
+/* Transformable                                                        */
+/************************************************************************/
+/* Copyright (c) 2009                                                   */
+/* Adaptive Technology Resource Centre / University of Toronto          */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+/* @import url(http://fonts.googleapis.com/css?family=Droid+Sans:regular,bold); */
+
+
+
+/* floating layout */
+#contentwrapper{
+  width: 99%;
+}
+#contentcolumn {
+  margin-left: 0.5em;
+  padding-right: 5px;
+}
+
+#liquid-round {
+  background-image:url('');
+}
+.foot_text{
+  visibility:hidden;
+}
+#footer{
+background-color:transparent;
+}
+div.input-form{
+  background-color:transparent;
+}
+
+
+div.topnavlistcontainer {
+  display:	none;
+}
+
+legend.group_form{
+  display:none;
+}
+
+div#sub-menu{
+  display:none;
+  width:0;
+}
+
+div#leftcolumn{
+  display:none;
+}
+span#logininfo{
+  display:none;
+}
+
+div#menutoggle{
+  display:none;
+}
+div.shortcuts{
+  display:none;
+}
+div#sequence-links{
+  display:none;
+}
+
+div#contentcolumn_shiftright{
+margin-left:0;
+}
+
+div.content{
+margin:0;
+}
+
+div#banner{
+  display:none;
+}
+
+div#logo{
+  display:none;
+}
+
+div#content-info{
+  display:none;
+}
+div#gototop{
+  display:none;
+
+
+}
