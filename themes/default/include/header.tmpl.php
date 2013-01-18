@@ -107,6 +107,7 @@ $starttime = $mtime;
       }
       // if AContent is being presented in ATutor, which has its own content navigation
       //  hide way all navigation elements
+      /*
       if (window.frameElement.id == "content_frame"){
         document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_atutor.css" type="text/css" />');
          jQuery(document).ready(function() {
@@ -116,6 +117,7 @@ $starttime = $mtime;
             //jQuery("#content_frame").contents().find("body").height()
          });
       }
+      */
    </script>
 </head>
 
