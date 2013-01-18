@@ -50,6 +50,7 @@ global $system_courses;
 	<script src="<?php echo $this->base_path; ?>include/jscripts/handleAjaxResponse.js" type="text/javascript"></script>
 	<script src="<?php echo $this->base_path; ?>include/jscripts/transformable.js" type="text/javascript"></script>
 <?php echo $this->custom_css; ?>
+<?php echo $this->custom_head; ?>
 </head>
 
 <body onload="<?php echo $this->onload; ?>"><div class="input-form"><div id="overDiv" style="position:absolute; visibility:hidden; z-index:1000;"></div>

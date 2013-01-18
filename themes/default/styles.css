@@ -610,12 +610,12 @@ table.data {
   text-align: left;
 } 
 table.data th {
-  background-color: #F6EAD6;
+  background-color: #BBD9EE;
   padding: 3px;
   white-space: nowrap;
 }
 table.data th a {
-  color: #595241;
+  color: #000000;
   padding-right: 15px;
   margin-right: 15px;
   background-image: url('../default/images/sort.gif');
@@ -635,7 +635,7 @@ table.data td {
   padding: 3px;
 }
 table.data tbody tr:hover {
-  background-color: #efefef;
+  background-color:#F5FAFA;
   cursor: pointer;
 }
 table.data tbody tr.selected {
@@ -643,7 +643,7 @@ table.data tbody tr.selected {
   cursor: auto;
 }
 table.data tfoot {
-  background-color: #F7F3ED;
+  background-color: #EBF4FA;
   /*border-top: 1px solid #B8AE9C;*/
 }
 table.data tfoot tr:first-child td {
@@ -1484,4 +1484,39 @@ background-color:#ffffff;
 }
 .boxPageTemplate td a:active{
 background-color:#ffffff;
+}
+
+/* File Storage */
+.fs_tools{
+ 	width:95%;
+ 	padding-left:3em;
+}
+.fs_tools .input-form{
+	float:left;
+	width:45%;
+	margin-left:1em;
+}
+.fl-uploader-browse-instructions {
+    background-color: #BBD9EE !important;
+    color: #666666;
+    padding: 6px;
+    text-align: center;
+}
+.fl-uploader-queue-footer {
+    background-color: #EBF4FA !important;
+    border-top: 1px solid #206BA4 !improtant;
+    color: #4D4D4D;
+    font-size: 1.07em;
+    font-weight: bold;
+    padding: 8px 6px;
+    position: relative;
+    vertical-align: middle;
+    z-index: 6;
+}
+
+.flc-uploader-button-upload .fl-uploader-button-upload .fl-uploader-dim{
+
+}
+.group-selected{
+background-color:#F4F0CB;
 }
