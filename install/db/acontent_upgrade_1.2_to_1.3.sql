@@ -8,6 +8,7 @@ ALTER TABLE `content` ADD `layout` TEXT NOT NULL AFTER `content_type`;
 ALTER TABLE `content` ADD `optional` TINYINT( 1 ) NOT NULL DEFAULT '1' AFTER `layout`; 
 ALTER TABLE `content` ADD `structure` TEXT NOT NULL AFTER `optional`; 
 
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_structure','1');
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_layout','1');
-INSERT INTO `config`(`name`, `value`) VALUES ('enable_template_page','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_structure','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_layout','1');
+INSERT INTO `config` (`name`, `value`) VALUES ('enable_template_page','1');
+
