@@ -83,7 +83,7 @@ if (FileUtility::course_realpath($current_path . $pathext . $file) == FALSE) {
 
 $onload = "on_load();";
 require(TR_INCLUDE_PATH.'header.inc.php');
-require(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
+require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
 
 // load tinymce library
 load_editor(true, false, "none");
