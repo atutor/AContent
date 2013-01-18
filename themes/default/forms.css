@@ -58,13 +58,15 @@ div.input-form {
 	width: 95%; 
 	margin-left:auto; 
 	margin-right:auto;
-	border: 1px #cccccc solid;
+	border: 1px #206BA4 solid;
 	margin-bottom: 20px;
 	line-height:150%;
-	background-color: #F1EFE2;
+/*	background-color: #F1EFE2;*/
+
+	background-color: #F5FAFA;
 	padding:.3em;
-	border-radius:.5em .5em .5em .5em;
-	-moz-border-radius:.5em .5em .5em .5em;
+	border-radius:.2em .2em .2em .2em;
+	-moz-border-radius:.2em .2em .2em .2em;
 	/* -moz-box-shadow:.05em .05em .0em #999999;
 	 box-shadow: .1em .0em  .1em #999999; */
 }
