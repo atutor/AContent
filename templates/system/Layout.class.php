@@ -406,10 +406,12 @@ class Layout{
 
 		$styles			= array();
 		$stylesheet		= '';
-		
+	
+                
+                
 		for($i=0; $i < count($rows); $i++){
-
-			if($rows[$i]['layout'] != ''){
+                        
+			if($rows[$i]['layout'] != '' && $this->exist_layout($rows[$i]['layout'])){
 				// In another version, AContent requires 'commoncartridge' as folder
 				//$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 				//$rows[$i]['head']					= '<link rel="stylesheet" href="'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
@@ -445,6 +447,16 @@ class Layout{
 
 		return $rows;
 	}
+        
+        public function exist_layout($layout) {
+            
+                if(is_dir('../../templates/layout/'.$layout))
+                        return true;
+                else
+                        return false;
+        }
+        
+        
 
 }
 ?>

@@ -133,13 +133,13 @@ $rows = $contentDAO->getContentByCourseID($course_id);
  * donadiomauro@gmail.com
  * 
  * */
-//include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
+include_once(TR_INCLUDE_PATH . '../templates/system/Layout.class.php');
 
-//$templates_theme	= new Layout('');
+$templates_theme	= new Layout('');
 
 // Array containing content and properties (such as content_id, course_id, layout ..)
 // the 'layout' property is required to add the proper content into the manifest file
-//$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
+$rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
 
 /***************************************/
 
@@ -256,13 +256,19 @@ ob_end_clean();
  * */
 
 $mnf	= '';
-$mnf	.= "<resource identifier=\"MANIFEST01_RESOURCE".rand()."\" type=\"webcontent\">\n";
-$mnf	.= "<metadata/>\n";
+$flag = false;
 	// take all .css documents in "commoncartridge" folder
 	$css	= array();
 	for($i=0; $i < count($rows); $i++){
-		if(!in_array($rows[$i]['layout'], $css) AND $rows[$i]['layout'] != null){
-
+		if(!in_array($rows[$i]['layout'], $css) AND $rows[$i]['layout'] != null AND  $templates_theme->exist_layout($rows[$i]['layout'])){
+                        
+                        if(!$flag) {
+                            
+                                $mnf	.= "<resource identifier=\"MANIFEST01_RESOURCE".rand()."\" type=\"webcontent\">\n";
+                                $mnf	.= "<metadata/>\n";
+                                $flag = true;
+                        }
+                    
 			$css[]	= $rows[$i]['layout'];
 
 			// add the .css file
@@ -277,7 +283,9 @@ $mnf	.= "<metadata/>\n";
 				}
 		}
 	}
-$mnf	.= "\n</resource>";
+        
+if($flag)
+        $mnf	.= "\n</resource>";
 
 $resources .= $mnf;
 
