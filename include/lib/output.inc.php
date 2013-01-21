@@ -466,12 +466,13 @@ function html_get_list($array) {
  *
  * print out list of page links
  */
-function print_paginator($current_page, $num_rows, $request_args, $rows_per_page = 50, $window = 5) {
+function print_paginator($current_page, $num_rows, $request_args, $rows_per_page = 50, $window = 5, $skippager='0') {
 	$num_pages = ceil($num_rows / $rows_per_page);
 	$request_args = '?'.$request_args;
 
 	if ($num_pages == 1) return;
 	if ($num_rows) {
+		echo '<div><a href="'.$_SERVER['PHP_SELF'].'#skippager'.$skippager.'" class="hide_focus">'._AT('skip_pager').'</a></div>';
 		echo '<div class="paging">';
 	    echo '<ul>';
 		
@@ -505,7 +506,7 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 			echo '<li>&nbsp;&nbsp;&nbsp;<a href="'.$_SERVER['PHP_SELF'].$request_args.htmlspecialchars(SEP).'p='.($current_page+1).'">'._AT('next').'</a></li>';
 		
 		echo '</ul>';
-		echo '</div>';
+		echo '</div><a name="skippager'.$skippager.'"></a>';
 	}
 }
 

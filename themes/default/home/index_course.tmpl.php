@@ -34,7 +34,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
 	
 	$num_results = count($this->courses);
-	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE);
+	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '1');
 	// if the requested page number exceeds the max number of pages, set the current page to the last page
 	$num_pages = ceil($num_results / RESULTS_PER_PAGE);
 	if ($this->curr_page_num > $num_pages) $this->curr_page_num = $num_pages;
@@ -106,7 +106,7 @@ if($_current_user->isAdmin($_SESSION['user_id']) == 1 || $user_role['role'] == T
       </li>				
 <?php } // end of foreach; ?>
     </ol>
-<?php 	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE);?>
+<?php 	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '2');?>
   </div>
 <?php } // end of if
 else {
