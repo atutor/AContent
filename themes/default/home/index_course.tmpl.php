@@ -28,12 +28,13 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 <?php if (is_array($this->courses)) { ?>
   <div class="results">
-    <ol class="remove-margin-left">
+  
+
 <?php 
 	if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
 	
 	$num_results = count($this->courses);
-	
+	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE);
 	// if the requested page number exceeds the max number of pages, set the current page to the last page
 	$num_pages = ceil($num_results / RESULTS_PER_PAGE);
 	if ($this->curr_page_num > $num_pages) $this->curr_page_num = $num_pages;
@@ -41,7 +42,7 @@ if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
 	
 	$start_num = ($this->curr_page_num - 1) * RESULTS_PER_PAGE;
 	$end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
-?>
+?>    <ol class="remove-margin-left">
       <li class="course" style="font-weight:bold"> <!-- Lessons 1-6 of 6 -->
         <div><?php echo ((strstr($caller_script, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
         <?php  
