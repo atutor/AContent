@@ -492,7 +492,7 @@ $html_content_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitio
 	<meta name="Generator" content="ATutor">
 	<meta name="Keywords" content="{KEYWORDS}">
 </head>
-<body>{CONTENT}</body>
+<body><div id="content">{CONTENT}</div></body>
 </html>';
 
 $default_html_style = '	<style type="text/css">

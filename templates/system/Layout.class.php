@@ -413,7 +413,7 @@ class Layout{
                         
 			if($rows[$i]['layout'] != '' && $this->exist_layout($rows[$i]['layout'])){
 				// In another version, AContent requires 'commoncartridge' as folder
-				//$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
+				$rows[$i]['head']					= '<link rel="stylesheet" href="commoncartridge/'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 				//$rows[$i]['head']					= '<link rel="stylesheet" href="'.$rows[$i]['layout'].'.css" type="text/css" />'.$rows[$i]['head'];
 				$rows[$i]['use_customized_head']	= '1';
 
