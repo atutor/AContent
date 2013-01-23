@@ -348,14 +348,25 @@ $flag = false;
 	$css	= array();
 	for($i=0; $i < count($rows); $i++){
 		if(!in_array($rows[$i]['layout'], $css) AND $rows[$i]['layout'] != null AND $templates_theme->exist_layout($rows[$i]['layout'])) {
-
+                       
+                    
                         if(!$flag) {
                             
                                 $mnf	.= "<resource identifier=\"MANIFEST01_RESOURCE".rand()."\" type=\"webcontent\">\n";
                                 $mnf	.= "<metadata/>\n";
                                 $flag = true;
                         }
-                    
+                        
+                        if ($cid) {
+                            if($rows[$i]['content_id'] != $cid) {
+                                
+                                //I must insert only the layout of the content $cid
+                                break;
+                                
+                            }
+                           
+                        }
+                        
 			$css[]	= $rows[$i]['layout'];
 
 			// add the .css file
