@@ -1230,6 +1230,9 @@ foreach ($items as $item_id => $content_info)
 			// end of specifically handle eXe package
 
 			$content = ContentUtility::getHtmlBody($content);
+                        //remove div content if exists
+                        $content = ContentUtility::getHTMLContent($content);
+                        
 			if ($contains_glossary_terms) 
 			{
 				// replace glossary content package links to real glossary mark-up using [?] [/?]
