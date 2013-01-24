@@ -87,17 +87,6 @@ if (is_array($this->courses)) {
         $user_role = isset($session_user_id) ? $userCoursesDAO->get($session_user_id, $course_id) : NULL;
         $user_role = isset($user_role) ? $user_role['role'] : NULL;
         
-        // If the user logged-in and not the admin
-        if (!$session_user_id || ($session_user_id && $_current_user->isAdmin($session_user_id) != 1)) {
-            // If the user is not the owner of the course
-            if ($user_role != TR_USERROLE_AUTHOR) {
-                // Do the check that course should not be empty
-                if (!$userCoursesDAO->hasContent($course_id)) {
-                    continue;
-                }
-            }
-        }
-        
         $description_ending = '';
         if (strlen($course_description) > $len_description) {
             $course_description = substr($course_description, 0, $len_description);
