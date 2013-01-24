@@ -32,6 +32,12 @@ $session_user_id = $_SESSION['user_id'];
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
 
 <?php 
+
+function createShortCutIcon($file_name, $title) {
+    $title = htmlspecialchars(_AT($title));
+    return sprintf('<img src="%s" alt="%s" title="%s" class="shortcut_icon"/>', Utility::getThemeImagePath($file_name), $title, $title);
+}
+
 if (is_array($this->courses)) {
 
     // Get theme for the page
@@ -64,9 +70,7 @@ if (is_array($this->courses)) {
     
     // My lessons marker for articles which belong to the currently logged in author
     if($session_user_id) {
-        echo sprintf('<span style="float: right"><img src="%s" alt="%s" title="%s" class="shortcut_icon"/>&nbsp;&nbsp;&nbsp;%s</span>', 
-                        Utility::getThemeImagePath('my_own_course.gif'), _AT('my_authoring_course'), _AT('my_authoring_course'), _AT('authoring_img_info')
-        );
+        echo sprintf('<span style="float: right">%s&nbsp;&nbsp;&nbsp;%s</span>', createShortCutIcon('my_own_course.gif', 'my_authoring_course'), _AT('authoring_img_info'));
     }
     echo '</div></li>';
     // end of markup
@@ -79,86 +83,54 @@ if (is_array($this->courses)) {
         $row = $this->courses[$i];
         $course_id = $row['course_id'];
         $course_description = $row['description'];
+        $course_title = $row['title'];
         
         // find whether the current user is the author of this course
         $user_role = isset($session_user_id) ? $userCoursesDAO->get($session_user_id, $course_id) : NULL;
         $user_role = isset($user_role) ? $user_role['role'] : NULL;
         
+        $description_ending = '';
         if (strlen($course_description) > $len_description) {
-            $description = Utility::highlightKeywords(substr($course_description, 0, $len_description), $keywords).' ...';
-        } else {
-            $description = Utility::highlightKeywords($course_description, $keywords);
+            $course_description = substr($course_description, 0, $len_description);
+            $description_ending = '...';
         }
+        $description = Utility::highlightKeywords($course_description, $keywords) . $description_ending;
 
         echo '<li class="course">';
     
             // An icon on the left of the topic name to indicate if course belongs to the current user
             if ($user_role == TR_USERROLE_AUTHOR) {
-                echo sprintf('<img src="%s" alt="%s" title="%s" class="shortcut_icon"/>', 
-                                Utility::getThemeImagePath('my_own_course.gif'), _AT('my_authoring_course'), _AT('my_authoring_course')
-                );
+                $file_name = 'my_own_course.gif'; $title = 'my_authoring_course';
             } else {
-                echo sprintf('<img src="%s" alt="%s" title="%s" class="shortcut_icon"/>', 
-                                Utility::getThemeImagePath('others_course.gif'), _AT('others_course'), _AT('others_course')
-                );
+                $file_name = 'others_course.png'; $title = 'others_course';
             }
+            echo createShortCutIcon($file_name, $title);
             
             // Course name
-            echo sprintf('<a href="%shome/course/index.php?_course_id=%d">%s</a>', 
-                                TR_BASE_HREF, $course_id, Utility::highlightKeywords($row['title'], $keywords)
-            );
+            echo sprintf('<a href="%shome/course/index.php?_course_id=%d">%s</a>', TR_BASE_HREF, $course_id, Utility::highlightKeywords($course_title, $keywords));
     
             // -- set of icons set For Adding removal of the course from My Lessons. Book icon
             if ($user_role == TR_USERROLE_VIEWER) {
-                echo sprintf('<a href="%shome/%saction=remove%scid=%d">', 
-                                TR_BASE_HREF, $caller_url, SEP, $course_id
-                );
-                echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
-                                Utility::getThemeImagePath('bookmark_remove.png'), htmlspecialchars(_AT('remove_from_list')), htmlspecialchars(_AT('remove_from_list'))
-                );
-                echo '</a>';
+                $action = 'remove'; $file_name = 'bookmark_remove.png'; $title = 'remove_from_list';
             }
             if ($user_role == NULL && $session_user_id > 0) {
-                echo sprintf('<a href="%shome/%saction=add%scid=%d">', 
-                                TR_BASE_HREF, $caller_url, SEP, $course_id
-                );
-                echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon" />', 
-                                Utility::getThemeImagePath('bookmark_add.png'), htmlspecialchars(_AT('add_into_list')), htmlspecialchars(_AT('add_into_list'))
-                );
-                echo '</a>';
+                $action = 'add'; $file_name = 'bookmark_add.png'; $title = 'add_into_list';
             }
+            echo sprintf('<a href="%shome/%saction=%s%scid=%d">%s</a>', TR_BASE_HREF, $caller_url, $action, SEP, $course_id, createShortCutIcon($file_name, $title));
             // end of set
             
             // Yellow icon for Download Content Package
-            echo sprintf('<a href="%shome/ims/ims_export.php?course_id=%d">', 
-                                TR_BASE_HREF, $course_id
-            );
-            echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
-                                Utility::getThemeImagePath('export.png'), _AT('download_content_package'), _AT('download_content_package')
-            );
-            echo '</a>';
+            echo sprintf('<a href="%shome/ims/ims_export.php?course_id=%d">%s</a>', TR_BASE_HREF, $course_id, createShortCutIcon('export.png', 'download_content_package'));
             
             // A DB icon for Download Common Cartridge
-            echo sprintf('<a href="%shome/imscc/ims_export.php?course_id=%d">', 
-                                TR_BASE_HREF, $course_id
-            );
-            echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
-                                Utility::getThemeImagePath('export_cc.png'), _AT('download_common_cartridge'), _AT('download_common_cartridge')
-            );
-            echo '</a>';
+            echo sprintf('<a href="%shome/imscc/ims_export.php?course_id=%d">%s</a>', TR_BASE_HREF, $course_id, createShortCutIcon('export_cc.png', 'download_common_cartridge'));
             
             // If a user logged in
             global $_current_user;
             if(isset($session_user_id)) {
                 // If user is an Admin or an Author of the course then display a delete icon
                 if($_current_user->isAdmin($session_user_id) == 1 || $user_role == TR_USERROLE_AUTHOR) {
-                    echo sprintf('<a href="%shome/course/del_course.php?_course_id=%d">', 
-                                TR_BASE_HREF, $course_id
-                    );
-                    echo sprintf('<img src="%s" title="%s" alt="%s" border="0" class="shortcut_icon"/>', 
-                                Utility::getThemeImagePath('delete.gif'), _AT('del_course'), _AT('del_course')
-                    );
-                    echo "</a>";
+                    echo sprintf('<a href="%shome/course/del_course.php?_course_id=%d">%s</a>', TR_BASE_HREF, $course_id, createShortCutIcon('delete.gif', 'del_course'));
                 }
             }
             
