@@ -33,15 +33,15 @@ $action = $_GET['action'];
 $catid = (isset($catid) && trim($catid) <> '') ? intval($catid) : NULL;
 
 if (isset($action, $_GET['cid']) && $session_user_id > 0) {
-	$cid = intval($_GET['cid']);
-	
-	if ($action == 'remove') {
-	   $userCoursesDAO->Delete($session_user_id, $cid);
+    $cid = intval($_GET['cid']);
+    
+    if ($action == 'remove') {
+       $userCoursesDAO->Delete($session_user_id, $cid);
     } else if ($action == 'add') {
         $userCoursesDAO->Create($session_user_id, $cid, TR_USERROLE_VIEWER, 0);
     }
-	
-	$msg->addFeedback(ACTION_COMPLETED_SUCCESSFULLY);
+    
+    $msg->addFeedback(ACTION_COMPLETED_SUCCESSFULLY);
 }
 
 $courses = isset($catid) ? $coursesDAO->getByCategory($catid) : $coursesDAO->getByMostRecent();
@@ -76,7 +76,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 
 $curr_page_num = intval($_GET['p']);
 if (!$curr_page_num) {
-	$curr_page_num = 1;
+    $curr_page_num = 1;
 }
 $savant->assign('courses', $courses);
 $savant->assign('categories', $courseCategoriesDAO->getAll());
