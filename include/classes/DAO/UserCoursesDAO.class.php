@@ -145,6 +145,18 @@ class UserCoursesDAO extends DAO {
 		
 		return is_array($rows);
 	}
-
+	
+	/**
+	 * Check if the course has any content
+	 * @access  public
+	 * @param   content id
+	 * @return  TRUE if course has any content
+	 * @author  Alexey Novak
+	 */
+	public function hasContent($course_id) {
+        $sql = sprintf('SELECT * FROM %scontent WHERE course_id = %d', TABLE_PREFIX, $course_id);
+        $rows = $this->execute($sql);
+        return is_array($rows);
+	}
 }
 ?>

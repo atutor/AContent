@@ -39,15 +39,13 @@ function createShortCutIcon($file_name, $title) {
 }
 
 if (is_array($this->courses)) {
+    global $_current_user;
+    $userCoursesDAO = new UserCoursesDAO();
 
     // Get theme for the page
     $theme = $this->theme;
     
     echo '<div class="results">';
-
-    if (isset($session_user_id)) {
-        $userCoursesDAO = new UserCoursesDAO();
-    }
 
     $num_results = count($this->courses);
     print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '1');
@@ -69,7 +67,7 @@ if (is_array($this->courses)) {
     );
     
     // My lessons marker for articles which belong to the currently logged in author
-    if($session_user_id) {
+    if ($session_user_id) {
         echo sprintf('<span style="float: right">%s&nbsp;&nbsp;&nbsp;%s</span>', createShortCutIcon('my_own_course.gif', 'my_authoring_course'), _AT('authoring_img_info'));
     }
     echo '</div></li>';
@@ -88,6 +86,17 @@ if (is_array($this->courses)) {
         // find whether the current user is the author of this course
         $user_role = isset($session_user_id) ? $userCoursesDAO->get($session_user_id, $course_id) : NULL;
         $user_role = isset($user_role) ? $user_role['role'] : NULL;
+        
+        // If the user logged-in and not the admin
+        if (!$session_user_id || ($session_user_id && $_current_user->isAdmin($session_user_id) != 1)) {
+            // If the user is not the owner of the course
+            if ($user_role != TR_USERROLE_AUTHOR) {
+                // Do the check that course should not be empty
+                if (!$userCoursesDAO->hasContent($course_id)) {
+                    continue;
+                }
+            }
+        }
         
         $description_ending = '';
         if (strlen($course_description) > $len_description) {
@@ -125,8 +134,7 @@ if (is_array($this->courses)) {
             // A DB icon for Download Common Cartridge
             echo sprintf('<a href="%shome/imscc/ims_export.php?course_id=%d">%s</a>', TR_BASE_HREF, $course_id, createShortCutIcon('export_cc.png', 'download_common_cartridge'));
             
-            // If a user logged in
-            global $_current_user;
+            // Delete button markup
             if(isset($session_user_id)) {
                 // If user is an Admin or an Author of the course then display a delete icon
                 if($_current_user->isAdmin($session_user_id) == 1 || $user_role == TR_USERROLE_AUTHOR) {
