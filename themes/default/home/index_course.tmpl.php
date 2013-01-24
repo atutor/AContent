@@ -64,8 +64,8 @@ if (is_array($this->courses)) {
     
     // My lessons marker for articles which belong to the currently logged in author
     if($session_user_id) {
-        echo sprintf('<span style="float: right"><img src="%sthemes/%s/images/my_own_course.gif" alt="%s" title="%s" class="shortcut_icon"/>&nbsp;&nbsp;&nbsp;%s</span>', 
-                        TR_BASE_HREF, $theme, _AT('my_authoring_course'), _AT('my_authoring_course'), _AT('authoring_img_info')
+        echo sprintf('<span style="float: right"><img src="%s" alt="%s" title="%s" class="shortcut_icon"/>&nbsp;&nbsp;&nbsp;%s</span>', 
+                        Utility::getThemeImagePath('my_own_course.gif'), _AT('my_authoring_course'), _AT('my_authoring_course'), _AT('authoring_img_info')
         );
     }
     echo '</div></li>';
@@ -94,14 +94,12 @@ if (is_array($this->courses)) {
     
             // An icon on the left of the topic name to indicate if course belongs to the current user
             if ($user_role == TR_USERROLE_AUTHOR) {
-                echo sprintf('<img src="%sthemes/%s/images/my_own_course.gif" alt="%s" title="%s" class="shortcut_icon"/>', 
-                                TR_BASE_HREF, $theme, 
-                                _AT('my_authoring_course'), _AT('my_authoring_course')
+                echo sprintf('<img src="%s" alt="%s" title="%s" class="shortcut_icon"/>', 
+                                Utility::getThemeImagePath('my_own_course.gif'), _AT('my_authoring_course'), _AT('my_authoring_course')
                 );
             } else {
-                echo sprintf('<img src="%sthemes/%s/images/others_course.png" alt="%s" title="%s" class="shortcut_icon"/>', 
-                                TR_BASE_HREF, $theme, 
-                                _AT('others_course'), _AT('others_course')
+                echo sprintf('<img src="%s" alt="%s" title="%s" class="shortcut_icon"/>', 
+                                Utility::getThemeImagePath('others_course.gif'), _AT('others_course'), _AT('others_course')
                 );
             }
             
@@ -115,8 +113,8 @@ if (is_array($this->courses)) {
                 echo sprintf('<a href="%shome/%saction=remove%scid=%d">', 
                                 TR_BASE_HREF, $caller_url, SEP, $course_id
                 );
-                echo sprintf('<img src="%sthemes/%s/images/bookmark_remove.png" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
-                                TR_BASE_HREF, $theme, htmlspecialchars(_AT('remove_from_list')), htmlspecialchars(_AT('remove_from_list'))
+                echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
+                                Utility::getThemeImagePath('bookmark_remove.png'), htmlspecialchars(_AT('remove_from_list')), htmlspecialchars(_AT('remove_from_list'))
                 );
                 echo '</a>';
             }
@@ -124,8 +122,8 @@ if (is_array($this->courses)) {
                 echo sprintf('<a href="%shome/%saction=add%scid=%d">', 
                                 TR_BASE_HREF, $caller_url, SEP, $course_id
                 );
-                echo sprintf('<img src="%sthemes/%s/images/bookmark_add.png" alt="%s" title="%s" border="0" class="shortcut_icon" />', 
-                                TR_BASE_HREF, $theme, htmlspecialchars(_AT('add_into_list')), htmlspecialchars(_AT('add_into_list'))
+                echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon" />', 
+                                Utility::getThemeImagePath('bookmark_add.png'), htmlspecialchars(_AT('add_into_list')), htmlspecialchars(_AT('add_into_list'))
                 );
                 echo '</a>';
             }
@@ -135,8 +133,8 @@ if (is_array($this->courses)) {
             echo sprintf('<a href="%shome/ims/ims_export.php?course_id=%d">', 
                                 TR_BASE_HREF, $course_id
             );
-            echo sprintf('<img src="%sthemes/%s/images/export.png" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
-                                TR_BASE_HREF, $theme, _AT('download_content_package'), _AT('download_content_package')
+            echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
+                                Utility::getThemeImagePath('export.png'), _AT('download_content_package'), _AT('download_content_package')
             );
             echo '</a>';
             
@@ -144,8 +142,8 @@ if (is_array($this->courses)) {
             echo sprintf('<a href="%shome/imscc/ims_export.php?course_id=%d">', 
                                 TR_BASE_HREF, $course_id
             );
-            echo sprintf('<img src="%sthemes/%s/images/export_cc.png" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
-                                TR_BASE_HREF, $theme, _AT('download_common_cartridge'), _AT('download_common_cartridge')
+            echo sprintf('<img src="%s" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
+                                Utility::getThemeImagePath('export_cc.png'), _AT('download_common_cartridge'), _AT('download_common_cartridge')
             );
             echo '</a>';
             
@@ -157,8 +155,8 @@ if (is_array($this->courses)) {
                     echo sprintf('<a href="%shome/course/del_course.php?_course_id=%d">', 
                                 TR_BASE_HREF, $course_id
                     );
-                    echo sprintf('<img src="%sthemes/%s/images/delete.gif" title="%s" alt="%s" border="0" class="shortcut_icon"/>', 
-                                TR_BASE_HREF, $theme, _AT('del_course'), _AT('del_course')
+                    echo sprintf('<img src="%s" title="%s" alt="%s" border="0" class="shortcut_icon"/>', 
+                                Utility::getThemeImagePath('delete.gif'), _AT('del_course'), _AT('del_course')
                     );
                     echo "</a>";
                 }
