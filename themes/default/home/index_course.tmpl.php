@@ -20,100 +20,161 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 // after adding/removing the course from "My Courses"
 list($caller_url, $url_param) = Utility::getRefererURLAndParams();
 
-if (isset($this->search_text)) $keywords = explode(' ', $this->search_text);
+// Get search text for the page
+$search_text = $this->search_text;
+
+$keywords = isset($search_text) ? explode(' ', $search_text) : NULL;
+$session_user_id = $_SESSION['user_id'];
 ?>
 
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo $this->title; ?></legend>
-<?php if (is_array($this->courses)) { ?>
-  <div class="results">
-  
 
 <?php 
-	if (isset($_SESSION['user_id'])) $userCoursesDAO = new UserCoursesDAO();
-	
-	$num_results = count($this->courses);
-	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '1');
-	// if the requested page number exceeds the max number of pages, set the current page to the last page
-	$num_pages = ceil($num_results / RESULTS_PER_PAGE);
-	if ($this->curr_page_num > $num_pages) $this->curr_page_num = $num_pages;
-	
-	
-	$start_num = ($this->curr_page_num - 1) * RESULTS_PER_PAGE;
-	$end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
-?>    <ol class="remove-margin-left">
-      <li class="course" style="font-weight:bold"> <!-- Lessons 1-6 of 6 -->
-        <div><?php echo ((strstr($caller_script, 'search.php') ? _AT('results'):_AT('lessons'))).' '.($start_num+1) .'-'.$end_num.' '._AT('of').' '.$num_results.' '. ($this->search_text<>'' ? _AT('for').' "<em>'.$this->search_text.'</em>"':'');?>
-        <?php  
-        if($_SESSION['user_id']){ ?>
-          <span style="float: right"><img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" class="shortcut_icon"/>&nbsp;&nbsp;&nbsp;<?php echo _AT('authoring_img_info'); ?></span>
-          <?php } ?>
-        </div>
-				
-      </li>
-<?php 	for ($i = $start_num; $i < $end_num; $i++) {
-		// only display the first 200 character of course description
-		$row = $this->courses[$i];
-		
-		// find whether the current user is the author of this course
-		if (isset($_SESSION['user_id'])) $user_role = $userCoursesDAO->get($_SESSION['user_id'], $row['course_id']);
-		
-		$len_description = 330;
-		if (strlen($row['description']) > $len_description)
-			$description = Utility::highlightKeywords(substr($row['description'], 0, $len_description), $keywords).' ...';
-		else
-			$description = Utility::highlightKeywords($row['description'], $keywords);
-?>
-      <li class="course">
+if (is_array($this->courses)) {
 
-<?php if ($user_role['role'] == TR_USERROLE_AUTHOR) {?>
-          <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/my_own_course.gif" alt="<?php echo _AT('my_authoring_course'); ?>" title="<?php echo _AT('my_authoring_course'); ?>" class="shortcut_icon"/>
-<?php } else  {?>
-          <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/others_course.png" alt="<?php echo _AT('others_course'); ?>" title="<?php echo _AT('others_course'); ?>" class="shortcut_icon"/>
-<?php } ?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/course/index.php?_course_id=<?php echo $row['course_id']; ?>"><?php echo Utility::highlightKeywords($row['title'], $keywords); ?></a>
-<?php if ($user_role['role'] == TR_USERROLE_VIEWER) {?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=remove<?php echo SEP; ?>cid=<?php echo $row['course_id']; ?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_remove.png" alt='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' title='<?php echo htmlspecialchars(_AT('remove_from_list')); ?>' border="0" class="shortcut_icon"/>
-          </a>
-<?php } if ($user_role['role'] == NULL && $_SESSION['user_id']>0) {?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/<?php echo $caller_url; ?>action=add<?php echo SEP; ?>cid=<?php echo $row['course_id'];?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/bookmark_add.png" alt="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" title="<?php echo htmlspecialchars(_AT('add_into_list')); ?>" border="0" class="shortcut_icon" />
-          </a>
-<?php }?>
-          <a href="<?php echo TR_BASE_HREF; ?>home/ims/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export.png" alt="<?php echo _AT('download_content_package'); ?>" title="<?php echo _AT('download_content_package'); ?>" border="0" class="shortcut_icon"/>
-          </a>
-          <a href="<?php echo TR_BASE_HREF; ?>home/imscc/ims_export.php?course_id=<?php echo $row['course_id']; ?>">
-            <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/export_cc.png" alt="<?php echo _AT('download_common_cartridge'); ?>" title="<?php echo _AT('download_common_cartridge'); ?>" border="0" class="shortcut_icon"/>
-          </a>
+    // Get theme for the page
+    $theme = $this->theme;
+    
+    echo '<div class="results">';
 
-<?php 
-global $_current_user;
-if(isset($_SESSION['user_id']) ){
-if($_current_user->isAdmin($_SESSION['user_id']) == 1 || $user_role['role'] == TR_USERROLE_AUTHOR){ ?>
+    if (isset($session_user_id)) {
+        $userCoursesDAO = new UserCoursesDAO();
+    }
 
-      <a href="<?php echo TR_BASE_HREF; ?>home/course/del_course.php?_course_id=<?php echo $row['course_id']; ?>">
-        <img src="<?php echo TR_BASE_HREF; ?>themes/<?php echo $this->theme?>/images/delete.gif" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
-        </a>
+    $num_results = count($this->courses);
+    print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '1');
+    // if the requested page number exceeds the max number of pages, set the current page to the last page
+    $num_pages = ceil($num_results / RESULTS_PER_PAGE);
+    $this->curr_page_num = ($this->curr_page_num > $num_pages) ? $num_pages : $this->curr_page_num;
+
+    $start_num = ($this->curr_page_num - 1) * RESULTS_PER_PAGE;
+    $end_num = min($this->curr_page_num * RESULTS_PER_PAGE, $num_results);
+
+    echo '<ol class="remove-margin-left">';
+    
+    // Markup for the "Lessons 1-6 of 6"
+    echo '<li class="course" style="font-weight:bold"><div>';
+    echo sprintf('%s %d-%d %s %d %s', 
+                        strstr($caller_script, 'search.php') ? _AT('results') : _AT('lessons'),
+                        ($start_num+1), $end_num, _AT('of'), $num_results,
+                        $search_text <> '' ? sprintf('%s "<em>%s</em>"', _AT('for'), $search_text) : ''
+    );
+    
+    // My lessons marker for articles which belong to the currently logged in author
+    if($session_user_id) {
+        echo sprintf('<span style="float: right"><img src="%sthemes/%s/images/my_own_course.gif" alt="%s" title="%s" class="shortcut_icon"/>&nbsp;&nbsp;&nbsp;%s</span>', 
+                        TR_BASE_HREF, $theme, _AT('my_authoring_course'), _AT('my_authoring_course'), _AT('authoring_img_info')
+        );
+    }
+    echo '</div></li>';
+    // end of markup
+
+    // Max length for the course description
+    $len_description = 330;
+    
+    for ($i = $start_num; $i < $end_num; $i++) {
+        // only display the first 200 character of course description
+        $row = $this->courses[$i];
+        $course_id = $row['course_id'];
+        $course_description = $row['description'];
         
-<?php }
-	}
- ?>    
+        // find whether the current user is the author of this course
+        $user_role = isset($session_user_id) ? $userCoursesDAO->get($session_user_id, $course_id) : NULL;
+        $user_role = isset($user_role) ? $user_role['role'] : NULL;
+        
+        if (strlen($course_description) > $len_description) {
+            $description = Utility::highlightKeywords(substr($course_description, 0, $len_description), $keywords).' ...';
+        } else {
+            $description = Utility::highlightKeywords($course_description, $keywords);
+        }
 
-        <div><?php echo $description; ?></div>
-      </li>				
-<?php } // end of foreach; ?>
-    </ol>
-<?php 	print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '2');?>
-  </div>
-<?php } // end of if
-else {
-//	echo _AT("no_results_for_keywords", $this->search_text);
-	echo _AT("none_found");
-} // end of else?>
-
-
+        echo '<li class="course">';
+    
+            // An icon on the left of the topic name to indicate if course belongs to the current user
+            if ($user_role == TR_USERROLE_AUTHOR) {
+                echo sprintf('<img src="%sthemes/%s/images/my_own_course.gif" alt="%s" title="%s" class="shortcut_icon"/>', 
+                                TR_BASE_HREF, $theme, 
+                                _AT('my_authoring_course'), _AT('my_authoring_course')
+                );
+            } else {
+                echo sprintf('<img src="%sthemes/%s/images/others_course.png" alt="%s" title="%s" class="shortcut_icon"/>', 
+                                TR_BASE_HREF, $theme, 
+                                _AT('others_course'), _AT('others_course')
+                );
+            }
+            
+            // Course name
+            echo sprintf('<a href="%shome/course/index.php?_course_id=%d">%s</a>', 
+                                TR_BASE_HREF, $course_id, Utility::highlightKeywords($row['title'], $keywords)
+            );
+    
+            // -- set of icons set For Adding removal of the course from My Lessons. Book icon
+            if ($user_role == TR_USERROLE_VIEWER) {
+                echo sprintf('<a href="%shome/%saction=remove%scid=%d">', 
+                                TR_BASE_HREF, $caller_url, SEP, $course_id
+                );
+                echo sprintf('<img src="%sthemes/%s/images/bookmark_remove.png" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
+                                TR_BASE_HREF, $theme, htmlspecialchars(_AT('remove_from_list')), htmlspecialchars(_AT('remove_from_list'))
+                );
+                echo '</a>';
+            }
+            if ($user_role == NULL && $session_user_id > 0) {
+                echo sprintf('<a href="%shome/%saction=add%scid=%d">', 
+                                TR_BASE_HREF, $caller_url, SEP, $course_id
+                );
+                echo sprintf('<img src="%sthemes/%s/images/bookmark_add.png" alt="%s" title="%s" border="0" class="shortcut_icon" />', 
+                                TR_BASE_HREF, $theme, htmlspecialchars(_AT('add_into_list')), htmlspecialchars(_AT('add_into_list'))
+                );
+                echo '</a>';
+            }
+            // end of set
+            
+            // Yellow icon for Download Content Package
+            echo sprintf('<a href="%shome/ims/ims_export.php?course_id=%d">', 
+                                TR_BASE_HREF, $course_id
+            );
+            echo sprintf('<img src="%sthemes/%s/images/export.png" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
+                                TR_BASE_HREF, $theme, _AT('download_content_package'), _AT('download_content_package')
+            );
+            echo '</a>';
+            
+            // A DB icon for Download Common Cartridge
+            echo sprintf('<a href="%shome/imscc/ims_export.php?course_id=%d">', 
+                                TR_BASE_HREF, $course_id
+            );
+            echo sprintf('<img src="%sthemes/%s/images/export_cc.png" alt="%s" title="%s" border="0" class="shortcut_icon"/>', 
+                                TR_BASE_HREF, $theme, _AT('download_common_cartridge'), _AT('download_common_cartridge')
+            );
+            echo '</a>';
+            
+            // If a user logged in
+            global $_current_user;
+            if(isset($session_user_id)) {
+                // If user is an Admin or an Author of the course then display a delete icon
+                if($_current_user->isAdmin($session_user_id) == 1 || $user_role == TR_USERROLE_AUTHOR) {
+                    echo sprintf('<a href="%shome/course/del_course.php?_course_id=%d">', 
+                                TR_BASE_HREF, $course_id
+                    );
+                    echo sprintf('<img src="%sthemes/%s/images/delete.gif" title="%s" alt="%s" border="0" class="shortcut_icon"/>', 
+                                TR_BASE_HREF, $theme, _AT('del_course'), _AT('del_course')
+                    );
+                    echo "</a>";
+                }
+            }
+            
+            // Description for the course
+            echo sprintf('<div>%s</div>', $description);
+        echo '</li>';
+    } // End of the course row
+    echo '</ol>';
+    
+    print_paginator($this->curr_page_num, $num_results, $url_param, RESULTS_PER_PAGE, 5, '2');
+    echo '</div>'; // Closing for div=results
+} else {
+    echo _AT("none_found");
+}
+?>
 </fieldset>
 </div>
