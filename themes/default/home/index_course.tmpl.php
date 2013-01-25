@@ -14,6 +14,8 @@
 global $_base_path;
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/LangCodesDAO.class.php');
+require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
 // This template is called by home/index.php and home/search.php
 // Find out the caller URL and direct the page back to the caller 
@@ -57,6 +59,8 @@ function addDescriptionLine($value, $message, $breakAfter = FALSE, $breakAfterDe
 if (is_array($this->courses)) {
     global $_current_user;
     $userCoursesDAO = new UserCoursesDAO();
+    $langCodesDAO = new LangCodesDAO();
+    $usersDAO = new UsersDAO();
 
     // Get theme for the page
     $theme = $this->theme;
@@ -110,6 +114,10 @@ if (is_array($this->courses)) {
         $primary_language = ($primary_language != NULL) ? $primary_language : '';
         $course_description = ($course_description != NULL) ? $course_description : '';
         $access = ($access != NULL) ? $access : '';
+        
+        $primary_language = $langCodesDAO->getLanguageByCode($primary_language);
+        $author = $usersDAO->getUserByID($author);
+        $author = sprintf('%s %s', $author['first_name'], $author['last_name']);
         
         // find whether the current user is the author of this course
         $user_role = isset($session_user_id) ? $userCoursesDAO->get($session_user_id, $course_id) : NULL;
