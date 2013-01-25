@@ -32,17 +32,7 @@
         // Bind the click event
         collapsibleElements.click(function (event) {
             var link = (event.currentTarget) ? $(event.currentTarget) : $(event.srcElement),
-                collapsibleArea = link.parent().siblings(collapsibleAreaSelector),
-                showLabel = link.find(".showLabel"),
-                hideLabel = link.find(".hideLabel");
-                
-            if (showLabel.is(":visible")) {
-                showLabel.hide();
-                hideLabel.show();
-            } else {
-                showLabel.show();
-                hideLabel.hide();
-            }
+                collapsibleArea = link.parent().siblings(collapsibleAreaSelector);
             
             collapseWork(collapsibleAreas, collapsibleArea, options.notCollapsedClass, options.height);
             
@@ -89,8 +79,9 @@
                 return;
             }
             
-            //element.siblings('.topRow').find('.showLabel').show();
-            //element.siblings('.topRow').find('.hideLabel').hide();
+            var topRow = element.siblings('.topRow')
+            topRow.find('.showLabel').show();
+            topRow.find('.hideLabel').hide();
             
             element.animate({"height": 0}, 200, "linear", function() {
                 element.removeClass(notCollapsedClass);
@@ -108,6 +99,10 @@
             if (element.hasClass(notCollapsedClass)) {
                 return;
             }
+            
+            var topRow = element.siblings('.topRow')
+            topRow.find('.showLabel').hide();
+            topRow.find('.hideLabel').show();
             
             element.height("0px");
             element.show();
