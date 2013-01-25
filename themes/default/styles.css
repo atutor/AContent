@@ -1156,7 +1156,34 @@ ul.navigation li a.active{
   border:1px solid #cccccc;
 }
 li.course {
-  margin:.5em -.5em;
+    margin: .5em -.5em;
+}
+li.course.area {
+    border-color: #206BA4;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 1.5em;
+}
+li.course.area .topRow {
+    border-color: #206BA4;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+    padding: 1.5em;
+}
+li.course.area .collapsible {
+    margin-top: 1.5em;
+    padding-top: 1.5em;
+    border-top-style: solid;
+    border-top-width: 1px;
+    border-top-color: #206BA4;
+}
+li.course.area .collapsible .courseIcons {
+    float: right;
+}
+li.course.area .collapsible_link {
+    text-decoration: underline;
 }
 ol li{
   list-style:none;

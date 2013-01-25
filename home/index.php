@@ -15,6 +15,7 @@ require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
+$_custom_head .= '<script type="text/javascript" src="home/js/misc.js"></script>';
 
 global $_current_user;
 
@@ -44,6 +45,7 @@ if (isset($action, $_GET['cid']) && $session_user_id > 0) {
     $msg->addFeedback(ACTION_COMPLETED_SUCCESSFULLY);
 }
 
+unset($courses);
 $courses = isset($catid) ? $coursesDAO->getByCategory($catid) : $coursesDAO->getByMostRecent();
 
 // If the user is not an admin then we better filter out courses with empty content
@@ -56,7 +58,7 @@ if (!$session_user_id || ($session_user_id && $_current_user->isAdmin($session_u
         $user_role = isset($user_role) ? $user_role['role'] : NULL;
         
         // If the user is not the owner of the course or owner but not an author
-        if ($course_user_id != $session_user_id || ($course_user_id == $session_user_id && $user_role == TR_USERROLE_AUTHOR)) {
+        if ($course_user_id != $session_user_id || ($course_user_id == $session_user_id && $user_role != TR_USERROLE_AUTHOR)) {
             // Do the check that course should not be empty
             if (!$userCoursesDAO->hasContent($course_id)) {
                 unset($courses[$i]);

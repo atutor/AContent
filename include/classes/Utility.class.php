@@ -331,13 +331,12 @@ class Utility {
 	 */
 	public static function getThemeImagePath($file_name) {
         $theme = $_SESSION['prefs']['PREF_THEME'];
-        if (TR_BASE_HREF == "" || 
-            !isset($theme) || $theme == "" || 
+        if (!isset($theme) || $theme == "" || 
             !isset($file_name) || $file_name == "") {
             return '';
         }
         
-        return sprintf('%sthemes/%s/images/%s', TR_BASE_HREF, $theme, $file_name);
+        return sprintf('themes/%s/images/%s', $theme, $file_name);
 	}
 }
 ?>
