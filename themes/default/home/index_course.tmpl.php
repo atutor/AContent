@@ -96,24 +96,24 @@ if (is_array($this->courses)) {
         $description = Utility::highlightKeywords($course_description, $keywords) . $description_ending;
 
         echo '<li class="course area">';
-    
-            // An icon on the left of the topic name to indicate if course belongs to the current user
-            if ($user_role == TR_USERROLE_AUTHOR) {
-                $file_name = 'my_own_course.gif'; $title = 'my_authoring_course';
-            } else {
-                $file_name = 'others_course.png'; $title = 'others_course';
-            }
-            echo createShortCutIcon($file_name, $title);
-            
-            // Course name
-            echo sprintf('%s<a href="home/course/index.php?_course_id=%d">%s</a>', $htmlSeparator, $course_id, Utility::highlightKeywords($course_title, $keywords));
-            
-            echo sprintf('%s<a href="#" class="collapsible_link"><span class="showLabel">%s</span><span class="hideLabel" style="display: none">%s</span></a>'
-                                , $htmlSeparator, 'Show More...', 'Hide'
-            );
-            
+            echo '<div class="topRow">';
+                // An icon on the left of the topic name to indicate if course belongs to the current user
+                if ($user_role == TR_USERROLE_AUTHOR) {
+                    $file_name = 'my_own_course.gif'; $title = 'my_authoring_course';
+                } else {
+                    $file_name = 'others_course.png'; $title = 'others_course';
+                }
+                echo createShortCutIcon($file_name, $title);
+                
+                // Course name
+                echo sprintf('%s<a href="home/course/index.php?_course_id=%d" class="courseName">%s</a>', $htmlSeparator, $course_id, Utility::highlightKeywords($course_title, $keywords));
+                
+                echo sprintf('%s<a href="#" class="collapsible_link"><span class="showLabel">%s</span><span class="hideLabel" style="display: none">%s</span></a>'
+                                    , $htmlSeparator, 'Show More...', 'Hide'
+                );
+            echo '</div>';
             echo '<div class="collapsible" style="display: none;">';
-                echo '&nbsp;<br /><div class="courseIcons">';
+                echo '&nbsp;<div class="courseIcons">';
                     // -- set of icons set For Adding removal of the course from My Lessons. Book icon
                     $showIcon = false;
                     if ($user_role == TR_USERROLE_VIEWER) {
@@ -142,7 +142,7 @@ if (is_array($this->courses)) {
                     }
                 echo '</div>';
                 // Description for the course
-                echo sprintf('<div>%s</div>', $description);
+                echo sprintf('<div class="description">%s</div>', $description);
             echo '</div>';
         echo '</li>';
     } // End of the course row

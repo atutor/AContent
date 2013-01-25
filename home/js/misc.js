@@ -15,7 +15,7 @@
         var collapsibleElements = options.collapsibleElements,
             notCollapsedClass = options.notCollapsedClass,
             collapsibleAreaSelector = options.collapsibleAreaSelector,
-            collapsibleAreas = collapsibleElements.siblings(collapsibleAreaSelector),
+            collapsibleAreas = collapsibleElements.parent().siblings(collapsibleAreaSelector),
             minHeight = options.minHeight;
         
         if (!collapsibleElements || collapsibleElements.length === 0) {
@@ -62,7 +62,7 @@
         // Bind the click event
         collapsibleElements.click(function (event) {
             var link = (event.currentTarget) ? $(event.currentTarget) : $(event.srcElement),
-                collapsibleArea = link.siblings(collapsibleAreaSelector);
+                collapsibleArea = link.parent().siblings(collapsibleAreaSelector);
                 
             collapseWork(collapsibleAreas, collapsibleArea, notCollapsedClass);
             
@@ -78,7 +78,7 @@
             collapsibleElements: collapsibleElements,
             notCollapsedClass: "notcollapsed",
             collapsibleAreaSelector: ".collapsible",
-            minHeight: "5em"
+            minHeight: "8em"
         });
     };
 
