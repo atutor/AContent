@@ -108,9 +108,11 @@ if (is_array($this->courses)) {
                 // Course name
                 echo sprintf('%s<a href="home/course/index.php?_course_id=%d" class="courseName">%s</a>', $htmlSeparator, $course_id, Utility::highlightKeywords($course_title, $keywords));
                 
-                echo sprintf('%s<a href="#" class="collapsible_link"><span class="showLabel">%s</span><span class="hideLabel" style="display: none">%s</span></a>'
-                                    , $htmlSeparator, 'Show More...', 'Hide'
-                );
+                echo sprintf('%s<a href="#" class="collapsible_link">', $htmlSeparator);
+                    echo sprintf('<span class="showLabel">%s...</span>', _AT('show'));
+                    echo sprintf('<span class="hideLabel" style="display: none">%s...</span>', _AT('hide'));
+                    echo sprintf('<span style="visibility:hidden">%s</span>', _AT('more_course_information', $course_title));
+                echo sprintf('</a>');
             echo '</div>';
             echo '<div class="collapsible" style="display: none;">';
                 echo '&nbsp;<div class="courseIcons">';

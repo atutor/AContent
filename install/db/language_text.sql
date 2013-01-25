@@ -616,6 +616,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'mb', '<acronym title=\"Megabyte\">MB</acronym>', '2010-04-05 14:22:48', ''),
 ('en', '_template', 'metadata', 'Meta-data', '2010-06-10 15:45:35', ''),
 ('en', '_template', 'missing_content', 'Missing Content', '2010-05-19 14:04:47', ''),
+('en', '_template', 'more_course_information', 'more information about "%s" course', '2013-01-25 09:02:52', ''),
 ('en', '_template', 'most_recent_courses', 'Most Recent Lessons', '2010-06-08 09:02:52', ''),
 ('en', '_template', 'move', 'Move', '2010-04-01 15:02:37', ''),
 ('en', '_template', 'msg_terms', 'Message Terms', '2010-01-27 15:48:35', ''),
