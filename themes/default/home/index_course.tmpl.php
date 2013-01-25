@@ -38,6 +38,22 @@ function createShortCutIcon($file_name, $title) {
     return sprintf('<img src="%s" alt="%s" title="%s" class="shortcut_icon"/>', Utility::getThemeImagePath($file_name), $title, $title);
 }
 
+function addDescriptionLine($value, $message, $breakAfter = FALSE, $breakAfterDescription = FALSE) {
+    if ($value == '') {
+        return '';
+    }
+    
+    $htmlBreak1 = ($breakAfterDescription) ? '<br />' : '';
+    $htmlBreak2 = ($breakAfter) ? '<br />' : '';
+    
+    // Some different variations of markup for specific fields
+    if ($message == 'author') {
+        return sprintf('<div><strong>%s/%s:</strong>%s %s</div>%s', _AT('author'), _AT('course_owner'), $htmlBreak1, $value, $htmlBreak2);
+    }
+    
+    return sprintf('<div><strong>%s:</strong>%s %s</div>%s', _AT($message), $htmlBreak1, $value, $htmlBreak2);
+}
+
 if (is_array($this->courses)) {
     global $_current_user;
     $userCoursesDAO = new UserCoursesDAO();
@@ -83,17 +99,23 @@ if (is_array($this->courses)) {
         $course_id = $row['course_id'];
         $course_description = $row['description'];
         $course_title = $row['title'];
+        $created_date = $row['created_date'];
+        $modified_date = $row['modified_date'];
+        $primary_language = $row['primary_language'];
+        $access = $row['access'];
+        $author = $row['user_id'];
+        
+        $created_date = ($created_date != NULL && $created_date != '0000-00-00 00:00:00') ? $created_date : '';
+        $modified_date = ($modified_date != NULL && $modified_date != '0000-00-00 00:00:00') ? $modified_date : '';
+        $primary_language = ($primary_language != NULL) ? $primary_language : '';
+        $course_description = ($course_description != NULL) ? $course_description : '';
+        $access = ($access != NULL) ? $access : '';
         
         // find whether the current user is the author of this course
         $user_role = isset($session_user_id) ? $userCoursesDAO->get($session_user_id, $course_id) : NULL;
         $user_role = isset($user_role) ? $user_role['role'] : NULL;
         
-        $description_ending = '';
-        if (strlen($course_description) > $len_description) {
-            $course_description = substr($course_description, 0, $len_description);
-            $description_ending = '...';
-        }
-        $description = Utility::highlightKeywords($course_description, $keywords) . $description_ending;
+        $course_description = Utility::highlightKeywords($course_description, $keywords);
 
         echo '<li class="course area">';
             echo '<div class="topRow">';
@@ -143,8 +165,16 @@ if (is_array($this->courses)) {
                         }
                     }
                 echo '</div>';
-                // Description for the course
-                echo sprintf('<div class="description">%s</div>', $description);
+                // Extra information about the course goes here
+                echo '<div class="description">';
+                    echo addDescriptionLine($author, 'author', TRUE, FALSE);
+                    echo addDescriptionLine($created_date, 'date_created');
+                    echo addDescriptionLine($modified_date, 'last_modified');
+                    echo addDescriptionLine($primary_language, 'primary_language');
+                    echo addDescriptionLine($access, 'access', TRUE);
+                    echo addDescriptionLine($course_description, 'description', TRUE, TRUE);
+                echo '</div>';
+                // End of extra information
             echo '</div>';
         echo '</li>';
     } // End of the course row

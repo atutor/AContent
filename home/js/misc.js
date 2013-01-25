@@ -15,7 +15,7 @@
     *    collapsibleElements        - jQuery links which would have a click event bind to them
     *    notCollapsedClass          - class which will be added/removed to the div area which will have a slide effect
     *    collapsibleAreaSelector    - selector which would be used to get all collapsing areas
-    *    height                     - height which will be applied to the slidin area
+    *    speed                      - animation speed
     * @author    Alexey Novak
     */
     var makeCollapsibles = function(options) {
@@ -34,7 +34,7 @@
             var link = (event.currentTarget) ? $(event.currentTarget) : $(event.srcElement),
                 collapsibleArea = link.parent().siblings(collapsibleAreaSelector);
             
-            collapseWork(collapsibleAreas, collapsibleArea, options.notCollapsedClass, options.height);
+            collapseWork(collapsibleAreas, collapsibleArea, options.notCollapsedClass, options.speed);
             
             link.focus();
             return false;
@@ -45,14 +45,15 @@
         * @param    all areas which could be collapsed
         * @param    element which relates to the link being clicked
         * @param    class which will be added or removed depending on the situation
+        * @param    animation speed
         * @author    Alexey Novak
         */
-        var collapseWork = function(collapsibleAreas, element, notCollapsedClass, height) {
+        var collapseWork = function(collapsibleAreas, element, notCollapsedClass, speed) {
             if (element.hasClass(notCollapsedClass)) {
-                collapse(element, notCollapsedClass);
+                collapse(element, notCollapsedClass, speed);
             } else {
-                collapseAll(collapsibleAreas, notCollapsedClass);
-                uncollapse(element, notCollapsedClass, height);
+                collapseAll(collapsibleAreas, notCollapsedClass, speed);
+                uncollapse(element, notCollapsedClass, speed);
             }
         };
         
@@ -60,11 +61,12 @@
         * Function which will collapse all areas
         * @param    array of jQuery elements which will be collapsed
         * @param    class which will be removed from those areas
+        * @param    animation speed
         * @author    Alexey Novak
         */
-        var collapseAll = function(collapsibleAreas, notCollapsedClass) {
+        var collapseAll = function(collapsibleAreas, notCollapsedClass, speed) {
             $.each(collapsibleAreas.filter("." + notCollapsedClass), function(index, element) {
-                collapse($(element), notCollapsedClass);
+                collapse($(element), notCollapsedClass, speed);
             });
         };
         
@@ -72,9 +74,10 @@
         * Function which will collapses one element
         * @param    jQuery element which will be collapsed
         * @param    class which will be removed from this element
+        * @param    animation speed
         * @author    Alexey Novak
         */
-        var collapse = function(element, notCollapsedClass) {
+        var collapse = function(element, notCollapsedClass, speed) {
             if (!element.hasClass(notCollapsedClass)) {
                 return;
             }
@@ -83,7 +86,7 @@
             topRow.find('.showLabel').show();
             topRow.find('.hideLabel').hide();
             
-            element.animate({"height": 0}, 200, "linear", function() {
+            element.slideUp(speed, "linear", function () {
                 element.removeClass(notCollapsedClass);
                 element.hide();
             });
@@ -93,9 +96,10 @@
         * Function which will show the area and convert from collapsed to be displayed one
         * @param    element which will be shown
         * @param    class which will be added from this element
+        * @param    animation speed
         * @author    Alexey Novak
         */
-        var uncollapse = function(element, notCollapsedClass, height) {
+        var uncollapse = function (element, notCollapsedClass, speed) {
             if (element.hasClass(notCollapsedClass)) {
                 return;
             }
@@ -104,10 +108,10 @@
             topRow.find('.showLabel').hide();
             topRow.find('.hideLabel').show();
             
-            element.height("0px");
-            element.show();
             element.addClass(notCollapsedClass);
-            element.animate({"height": height}, 200, "linear");
+            element.slideDown(speed, "linear", function () {
+                element.show();
+            });
         }
     };
     
@@ -122,7 +126,7 @@
             collapsibleElements: collapsibleElements,
             notCollapsedClass: "notcollapsed",
             collapsibleAreaSelector: ".collapsible",
-            height: "8em"
+            speed: "300"
         });
     };
 

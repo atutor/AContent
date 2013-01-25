@@ -211,6 +211,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'a4a_export', 'Export AccessForAll adapted content.', '2010-06-03 10:30:44', ''),
 ('en', '_template', 'a4a_import_package', 'Import available AccessForAll adapted content.', '2010-06-03 10:30:45', ''),
 ('en', '_template', 'about_content_tests', 'Link available tests to this content page. Or <a href=\"%s\">Create a new test</a> to link in.', '2010-08-10 14:23:01', ''),
+('en', '_template', 'access', 'Access', '2013-01-25 11:06:22', ''),
 ('en', '_template', 'accessibility', 'Accessibility', '2010-04-29 11:06:22', ''),
 ('en', '_template', 'accessibility_disabled', 'Accessibility Validation disabled', '2010-05-21 15:57:28', ''),
 ('en', '_template', 'accessibility_enabled', 'Acessibility Validation enabled', '2010-05-21 15:57:28', ''),
