@@ -77,6 +77,26 @@ class LangCodesDAO extends DAO {
 		else
 			return false;
 	}
+	
+    /**
+    * Return a name of the language based on its language code
+    * @access  public
+    * @param   language code 3 or 2 letter one
+    * @return  table rows
+    * @author  Alexey Novak
+    */
+    public function getLanguageByCode($code) {
+        global $addslashes;
+        $code = $addslashes($code);
+        
+        $sql = sprintf('SELECT * FROM %slang_codes WHERE code_3letters="%s" OR code_2letters="%s"', TABLE_PREFIX, $code, $code);
+        
+        if ($rows = $this->execute($sql)) {
+            return $rows[0]['description'];
+        }
+        
+        return '';
+	}
 
 	/**
 	* Return array of all the 2-letter & 3-letter language codes with given direction
