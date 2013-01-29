@@ -321,5 +321,22 @@ class Utility {
 		
 		return array($caller_url, $url_param);
 	}
+	
+	/**
+	 * This funciton returns a path to the file_name in the images folder of the current session's theme
+	 * @access public
+	 * @param File Name with its extenstion. For example: my_own_course.gif
+	 * @return path to the file in the images folder of the current session's theme
+	 * @author Alexey Novak
+	 */
+	public static function getThemeImagePath($file_name) {
+        $theme = $_SESSION['prefs']['PREF_THEME'];
+        if (!isset($theme) || $theme == "" || 
+            !isset($file_name) || $file_name == "") {
+            return '';
+        }
+        
+        return sprintf('themes/%s/images/%s', $theme, $file_name);
+	}
 }
 ?>

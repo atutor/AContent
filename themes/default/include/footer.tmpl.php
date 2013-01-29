@@ -31,7 +31,7 @@ if ($this->course_id > 0) { ?>
 	
 	<div id="footer" role="contentinfo">
 	    <div id="logo">
-      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>/images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
+      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
     </div>
 
       <div align="center" class="foot_text">
