@@ -513,6 +513,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'getting_start', 'Getting Started', '2010-07-02 16:37:29', ''),
 ('en', '_template', 'getting_start_info', '<span style=\"font-weight:bold\">AContent</span> is a learning content authoring tool and repository that supports customization of the learning content to the individual needs of each learner.<br /><br /><span style=\"font-weight:bold\">To search the repository</span>, type keywords into the search field above.<br /><br /><span style=\"font-weight:bold\">To create your own account</span>, click the Register link above. While you do not need an account to search the repository and view public content, an account allows you to develop and store your own content. Request Authoring privileges when you create your account.<br />', '2010-08-08 11:25:54', ''),
 ('en', '_template', 'get_my_update', 'Get My Update', '2010-01-27 15:48:35', 'Updater'),
+('en', '_template', 'goto_course', '> Go to "%s" Course', '2013-01-29 12:26:32', ''),
 ('en', '_template', 'goto_top', 'Go to Top', '2003-05-20 12:26:32', ''),
 ('en', '_template', 'grant_write_permission', 'Please grant <strong>write</strong> permission to folders and files listed below:<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>', '2010-01-27 15:48:35', 'Updater'),
 ('en', '_template', 'h', 'H', '2010-03-25 14:52:29', ''),

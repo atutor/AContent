@@ -1172,6 +1172,7 @@ li.course.area .topRow {
 li.course.area .topRow .courseName {
     color: black;
     font-weight: bold;
+    border-bottom: black 1px dotted;
 }
 li.course.area .collapsible {
     padding-left: 1.5em;
@@ -1182,6 +1183,8 @@ li.course.area .collapsible {
 }
 li.course.area .collapsible_link {
     text-decoration: underline;
+}
+li.course.area .collapsible_link:hover, li.course.area .collapsible_link:focus {
 }
 li.course.area .collapsible.notcollapsed {
     -moz-box-shadow: inset 0 0 10px 1px #888;

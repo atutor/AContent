@@ -81,16 +81,16 @@ if (is_array($this->courses)) {
     
     // Markup for the "Lessons 1-6 of 6"
     echo '<li class="course" style="font-weight:bold"><div>';
-    echo sprintf('%s %d-%d %s %d %s', 
-                        strstr($caller_script, 'search.php') ? _AT('results') : _AT('lessons'),
-                        ($start_num+1), $end_num, _AT('of'), $num_results,
-                        $search_text <> '' ? sprintf('%s "<em>%s</em>"', _AT('for'), $search_text) : ''
-    );
-    
-    // My lessons marker for articles which belong to the currently logged in author
-    if ($session_user_id) {
-        echo sprintf('<span style="float: right">%s%s%s</span>', createShortCutIcon('my_own_course.gif', 'my_authoring_course'), $htmlSeparator, _AT('authoring_img_info'));
-    }
+        echo sprintf('%s %d-%d %s %d %s', 
+                            strstr($caller_script, 'search.php') ? _AT('results') : _AT('lessons'),
+                            ($start_num+1), $end_num, _AT('of'), $num_results,
+                            $search_text <> '' ? sprintf('%s "<em>%s</em>"', _AT('for'), $search_text) : ''
+        );
+        
+        // My lessons marker for articles which belong to the currently logged in author
+        if ($session_user_id) {
+            echo sprintf('<span style="float: right">%s%s%s</span>', createShortCutIcon('my_own_course.gif', 'my_authoring_course'), $htmlSeparator, _AT('authoring_img_info'));
+        }
     echo '</div></li>';
     // end of markup
 
@@ -108,6 +108,7 @@ if (is_array($this->courses)) {
         $primary_language = $row['primary_language'];
         $access = $row['access'];
         $author = $row['user_id'];
+        $course_link = sprintf('home/course/index.php?_course_id=%d', $course_id);
         
         $created_date = ($created_date != NULL && $created_date != '0000-00-00 00:00:00') ? $created_date : '';
         $modified_date = ($modified_date != NULL && $modified_date != '0000-00-00 00:00:00') ? $modified_date : '';
@@ -136,7 +137,7 @@ if (is_array($this->courses)) {
                 echo createShortCutIcon($file_name, $title);
                 
                 // Course name
-                echo sprintf('%s<a href="home/course/index.php?_course_id=%d" class="courseName">%s</a>', $htmlSeparator, $course_id, Utility::highlightKeywords($course_title, $keywords));
+                echo sprintf('%s<a href="%s" class="courseName">%s</a>', $htmlSeparator, $course_link, Utility::highlightKeywords($course_title, $keywords));
                 
                 echo sprintf('%s<a href="#" class="collapsible_link">', $htmlSeparator);
                     echo sprintf('<span class="showLabel">%s...</span>', _AT('show'));
@@ -181,6 +182,9 @@ if (is_array($this->courses)) {
                     echo addDescriptionLine($primary_language, 'primary_language');
                     echo addDescriptionLine($access, 'access', TRUE);
                     echo addDescriptionLine($course_description, 'description', TRUE, TRUE);
+                    
+                    echo sprintf('<a href="%s" class="courseName">%s</a>', $course_link, _AT('goto_course', $course_title));
+                    echo '<br />&nbsp;';
                 echo '</div>';
                 // End of extra information
             echo '</div>';
