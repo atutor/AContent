@@ -1184,7 +1184,11 @@ li.course.area .collapsible {
 li.course.area .collapsible_link {
     text-decoration: underline;
 }
-li.course.area .collapsible_link:hover, li.course.area .collapsible_link:focus {
+.accessibility_label {
+    display: inline-block;
+    height: 1px;
+    overflow: hidden;
+    width: 1px;
 }
 li.course.area .collapsible.notcollapsed {
     -moz-box-shadow: inset 0 0 10px 1px #888;
