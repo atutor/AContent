@@ -56,7 +56,16 @@ else {
 </div>
 
 <?php 
-if (is_array($results)) print_test_table($results, $_POST['tid']);
+
+	include_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+	$contentTestsAssocDAO = new ContentTestsAssocDAO();
+	$test_rows = $contentTestsAssocDAO->getByContent($cid);
+	if(is_array($test_rows)){
+	    foreach($test_rows as $test_row){
+	        $test_row_ids[] = $test_row['test_id'];
+	    }
+	}
+if (is_array($results)) print_test_table($results, $test_row_ids);
 
 function print_test_table($results, $post_tids, $id_prefix='') {?>
 	<div>
