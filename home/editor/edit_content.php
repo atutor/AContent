@@ -356,7 +356,7 @@ $pid = intval($_REQUEST['pid']);
 	}
 	
 	//tests
-	if ($current_tab != 3){
+	if ($current_tab != 5){
 		// set content associated tests
 		if (isset($_POST['visited_tests'])) {
 			echo '<input type="hidden" name="visited_tests" value="1" />'."\n";
