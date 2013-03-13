@@ -164,7 +164,7 @@ function print_organizations($parent_id,
 				$link .= '<title>'.$current_forum['title'].'</title>';
 				$link .= '</item>';
 				
-            }
+			}
 
 			 /** Test dependency **/
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
@@ -173,9 +173,6 @@ function print_organizations($parent_id,
 			$contentTestsAssocDAO = new ContentTestsAssocDAO();
 			$testDAO = new TestsDAO();
 			
-//			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
-//			$result = mysql_query($sql, $db);
-//			while ($row = mysql_fetch_assoc($result)){
 			$rows = $contentTestsAssocDAO->getByContent($content['content_id']);
 			
 			if (is_array($rows)) {
@@ -183,10 +180,11 @@ function print_organizations($parent_id,
 				foreach ($rows as $row)
 					$forums_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
 			
-					$link .= '<item identifier="MANIFEST01_ITEM_TEST'.$row['test_id'].'" identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'">';
-					$test = $testDAO->get($row['test_id']);
-					$link .= '<title>'.$test['title'].'</title>';
-					$link .= '</item>';
+					// 5218: Prevent the content with pre-test(s) from being duplicated at the re-import
+					//$link .= '<item identifier="MANIFEST01_ITEM_TEST'.$row['test_id'].'" identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'">';
+					//$test = $testDAO->get($row['test_id']);
+					//$link .= '<title>'.$test['title'].'</title>';
+					//$link .= '</item>';
 			
 			}
 
