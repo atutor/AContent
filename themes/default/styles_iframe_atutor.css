@@ -1,0 +1,45 @@
+/*  hide from ATutor */
+#leftcolumn{
+  visibility:hidden;
+  width:0px;
+}
+$side-menu{
+  visibility:hidden;
+  width:0px;
+}
+#contentcolumn_shiftright {
+    margin-left: 0em;
+    margin-top:-4em;
+}
+#side-menuhidelink{
+  visibility:hidden;
+}
+#logininfo{
+  visibility:hidden;
+}
+
+.topnavlistcontainer{
+  visibility:hidden;
+  height:0;
+}
+#sub-menu{
+  visibility:hidden;
+  height:0;
+}
+.shortcuts{
+  visibility:hidden;
+  height:0;
+}
+#sequence-links{
+  visibility:hidden;
+  height:0;
+}
+#banner{
+height:0;
+}
+#contentwrapper{
+    margin-top:-4em;
+}
+h2.page-title{
+clear:none;
+}
