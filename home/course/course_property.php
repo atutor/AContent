@@ -27,7 +27,6 @@ global $_course_id;
 $coursesDAO = new CoursesDAO();
 $contentDAO = new ContentDAO();
 
-
 if ($_course_id > 0) {
 	Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
 } else {
@@ -51,8 +50,12 @@ else if($_POST['submit']){
 			$coursesDAO->UpdateField($_course_id, 'primary_language', $_POST['pri_lang']);
 			$coursesDAO->UpdateField($_course_id, 'description', $_POST['description']);
 			$coursesDAO->UpdateField($_course_id, 'copyright', $_POST['copyright']);
-			
+
 			$coursesDAO->UpdateField($_course_id, 'access', $access);
+			
+			 if($_current_user->isAdmin()) { 
+			 		$coursesDAO->UpdateField($_course_id, 'user_id', $_POST['this_author']);
+			 }
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 		else 
