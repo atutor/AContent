@@ -96,7 +96,8 @@ class PatchesDAO extends DAO {
 	*/
 	public function UpdateByArray($patchID, $fieldArray)
 	{
-		$patchID = intval($patchID);
+                global $addslashes;
+		$patchID = $addslashes($patchID);
 		
 		$sql_prefix = "Update ". TABLE_PREFIX. "patches set ";
 		
@@ -120,7 +121,8 @@ class PatchesDAO extends DAO {
 	 */
 	public function getByID($patchID)
 	{
-		$patchID = intval($patchID);
+                global $addslashes;
+		$patchID = $addslashes($patchID);
 		$sql = "SELECT * from ".TABLE_PREFIX."patches where patches_id=". $patchID;
 		
 		$rows = $this->execute($sql);
@@ -158,7 +160,7 @@ class PatchesDAO extends DAO {
 	public function getInstalledPatchByIDAndVersion($patchID, $version)
 	{
 		global $addslashes;
-		$patchID = intval($patchID);
+		$patchID = $addslashes($patchID);
 		$version = $addslashes($version);
 		
 		$sql = "select * from ".TABLE_PREFIX."patches " .
