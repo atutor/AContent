@@ -35,7 +35,7 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 	$_custom_head .= '
 		<script type="text/javascript">
 		<!--
-			trans.utility.setcookie("fluid_on", "yes", ' . time()+1200 .');
+			trans.utility.setcookie("fluid_on", "yes", ' . (time()+1200) .');
 		//-->
 		</script>
 ';
