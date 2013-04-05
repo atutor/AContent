@@ -15,6 +15,7 @@ require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CourseCategoriesDAO.class.php');
+$_custom_head .= '<script type="text/javascript" src="home/js/misc.js"></script>';
 
 global $_current_user;
 
