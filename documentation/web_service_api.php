@@ -20,7 +20,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 <h1>AContent Web Service API</h1>
 <p>Access AContent from remote applications through its web service API. This is version 0.1, dated Jun 2010.</p>
 <p>AContent provides a search API that allows users to send search requests to AContent. AContent returns results in REST format. AContent also has an 
-<a href="<?php echo TR_BASE_HREF;?>documentation/oauth_web_server">OAuth web service API</a> for viewing, downloading, importing and 
+<a href="<?php echo TR_BASE_HREF;?>documentation/oauth_server_api.php">OAuth web service API</a> for viewing, downloading, importing and 
 exporting content from remote applications. </p>
 
 <h2 id="TableOfContents">Table of Contents</h2>
