@@ -60,7 +60,7 @@ else if($_POST['submit']){
 		}
 		else 
 		{ // create a new course
-			if ($course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $_POST['title'], $_POST['description'], 
+			if ($course_id = $coursesDAO->Create($_POST['this_author'], $_POST['category_id'], 'top', $access, $_POST['title'], $_POST['description'], 
 			                    null, null, null, $_POST['copyright'], $_POST['pri_lang'], null, null))
 			{
 				if(isset($_POST['_struct_name'])) {
