@@ -1034,7 +1034,7 @@ if (!isset($_POST['_course_id']))
 		$this_author = $_SESSION['user_id'];
 	}
 	
-	$_course_id = $coursesDAO->Create($this_author, 'top', $access, $course_title, $course_description, 
+	$_course_id = $coursesDAO->Create($this_author, 0, 'top', $access, $course_title, $course_description, 
 	             '', '', '', '', $course_primary_lang, '', '');
 	
 	check_available_size($_course_id);
