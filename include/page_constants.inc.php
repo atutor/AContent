@@ -40,6 +40,7 @@ define('TR_PRIV_UPDATER', 7);
 define('TR_PRIV_MANAGE_TESTS', 8);
 define('TR_PRIV_FILE_MANAGER', 9);
 define('TR_PRIV_PROFILE', 10);
+define('TR_PRIV_TEMPLATE_EDITOR', 11);
 
 /* constants used for menu item generation. Used in class Menu (include/classes/Menu.class.php) */
 define('TR_NAV_PUBLIC', 'TR_NAV_PUBLIC');  // public menus, when no user login
@@ -483,4 +484,18 @@ if (array_key_exists(TR_PRIV_FILE_MANAGER, $privs) && Utility::authenticate($pri
 	$_pages['file_manager/delete.php']['title_var'] = 'delete';
 	$_pages['file_manager/delete.php']['parent']    = 'file_manager/index.php';
 }
+
+// template editor
+if (array_key_exists(TR_PRIV_TEMPLATE_EDITOR, $privs) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITOR], false))
+{
+	$_pages['template_editor/index.php']['title_var'] = 'template_editor';
+	$_pages['template_editor/index.php']['parent']    = TR_NAV_TOP;
+        $_pages['template_editor/edit_layout.php']['title_var'] = 'Edit Layout';
+	$_pages['template_editor/edit_layout.php']['parent']    = 'template_editor/index.php';
+        $_pages['template_editor/edit_structure.php']['title_var'] = 'Edit Structure';
+	$_pages['template_editor/edit_structure.php']['parent']    = 'template_editor/index.php';
+        $_pages['template_editor/edit_page.php']['title_var'] = 'Edit Page Template';
+	$_pages['template_editor/edit_page.php']['parent']    = 'template_editor/index.php';
+}
+
 ?>
