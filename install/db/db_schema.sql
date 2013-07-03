@@ -1069,6 +1069,7 @@ INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_da
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (8, 'manage_tests', 'Tests management: Used by instructors to create, edit, delete course-related test questions and tests.', NOW(), 'tests/index.php?_course_id={COURSE_ID}', 80, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (9, 'file_manager', 'File Manager: Allows an instructor to upload and manage files for a course. Files can then be made available to students by linking them into content pages.', NOW(), 'file_manager/index.php?_course_id={COURSE_ID}', 90, 0);
 INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (10, 'profile', 'Profile management: Edit profile, change password or email.', NOW(), 'profile/index.php', 100, 0);
+INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (11, 'template_editor', 'Template Editor', NOW(), 'template_editor/index.php', 110, 0);
 
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (1, 'Administrator', 'Administrate users, user groups, languages and updates.', now());
 INSERT INTO `user_groups` (`user_group_id`, `title`, `description`, `create_date`) VALUES (2, 'User', 'Regular user.', now());
@@ -1084,6 +1085,7 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 INSERT INTO `user_group_privilege` (`user_group_id` ,`privilege_id` ,`user_requirement`) VALUES (1, 8, 0);
 INSERT INTO `user_group_privilege` (`user_group_id` ,`privilege_id` ,`user_requirement`) VALUES (1, 9, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 10, 0);
+INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 11, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 1, 0);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 8, 2);
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (2, 9, 2);

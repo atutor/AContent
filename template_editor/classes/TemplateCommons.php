@@ -139,7 +139,7 @@ class TemplateCommons {
         return file_exists($full_dir);
     }
 
-     public function get_template_list($template_type){
+    public function get_template_list($template_type){
          $dir=realpath($this->template_dir . $this->template_dir_map[$template_type]);
          $dir_list= scandir($dir);
          $list = array();
