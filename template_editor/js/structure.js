@@ -1,8 +1,10 @@
 var selected_item;
 var history_stack=new HistoryStack();
+var loc = window.location;
+var base_url = loc.protocol + "//" + loc.host + "/" + loc.pathname.split('/')[1];
 
 $(function() {  
-    var parser = new DOMParser();    
+    //var parser = new DOMParser();
     $("#toxml").click(function() {
         generate_xml();
     });
@@ -35,6 +37,17 @@ $(function() {
         selected_item.attr('name',$(this).val());
         generate_xml();
     });
+    $("#node_min, #node_max").keyup(function() {
+        selected_item.attr('min',$("#node_min").val());
+        selected_item.attr('max',$("#node_max").val());
+        generate_xml();
+    });
+    $(".btn_move").click(function() {
+        var id=$(this).attr('id');
+        if(id=='btn_up' ) move_up(selected_item)
+        else if(id=='btn_down' ) move_down(selected_item)
+        refresh_tree();
+    });
     draw_tree();
 });
 
@@ -56,11 +69,21 @@ function setup_toolbar(node_type){
         }else if(node_type=='tests'){
             $('#insert_test' ).removeAttr("disabled");
         }
-        if(node_type!='structure') $('#btn_delete' ).removeAttr("disabled");
+        if(node_type!='structure') $('#btn_delete, .btn_move' ).removeAttr("disabled");
         if(node_type==""){
             $('#node_name').val("");
         }else{
-            $('#node_name').val(selected_item.attr('name'));
+            $node_name=selected_item.attr('name');
+            if($node_name=='null') $node_name="";
+            $('#node_name').val($node_name);
+
+            $node_min=selected_item.attr('min');
+            if($node_min=='null') $node_min="";
+            $('#node_min').val($node_min);
+
+            $node_max=selected_item.attr('max');
+            if($node_max=='null') $node_max="";
+            $('#node_max').val($node_max);
         }
     }
     if(history_stack.hasUndo()) $('#btn_undo' ).removeAttr("disabled");
@@ -84,7 +107,8 @@ function draw_tree(){
     });
     $('.items').click(function(e) {
         selected_item=$(this).parent();
-        setup_toolbar($(this).parent().attr('type'));
+        setup_toolbar(selected_item.attr('type'));
+        return false;
     });
 }
 
@@ -94,7 +118,8 @@ function generate_xml(){
     var htmlstr=$('#preview').html();
     htmlstr=htmlstr.replace(/<ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<\/ol(.*?)>/g,"");
-    htmlstr=htmlstr.replace(/<div(.*?)div>/g,"");
+    htmlstr=htmlstr.replace(/<span(.*?)span>/g,"");
+    htmlstr=htmlstr.replace(/<a(.*?)a>/g,"");
     var xmldoc= parser.parseFromString(htmlstr, "text/xml");
     $('#tarea').val(html_to_xml(xmldoc,xmldoc.firstChild,""));
 }
@@ -105,11 +130,15 @@ function generate_tree(element, parent) {
     $.each(element.childNodes,function(index, child){
         if(child.nodeType !=3){
             if(child.nodeName=="structure")
-                str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +"'><div class='items'>"+ child.nodeName+"</div>" ;
+                str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +
+                    "'><span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_folder.gif'></span>"+
+                    "<a href='javascript:;' class='items' accesskey='z'>"+ child.nodeName+"</a>" ;
             else{
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +"' max='"+child.getAttribute('max')
                 +"' min='"+child.getAttribute('min')+"' style='cursor:move;'>"+
-                "<div class='items'>"+ child.nodeName+"</div>" ;
+                "<span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_end.gif'>"+
+                "<img class='img-size-tree' src='"+base_url+"/images/tree/"+get_class_type(child.nodeName)+".gif'>"+
+                "</span><a href='javascript:;' class='items' accesskey='z'>"+ child.nodeName+"</a>" ;
             }
             if(child.hasChildNodes()){
                 str=str+ generate_tree(child,get_class_type(child.nodeName));
@@ -127,7 +156,7 @@ function insert_to_tree(element, parent){
         parent.append(document.createElement("ol"));
         insrting_list=parent.children("ol");
     }
-    newNode = "<li type='" +element + "' ><div class='items'>"+element+"</div></li>";
+    newNode = "<li type='" +element + "' ><a class='items'>"+element+"</a></li>";
     insrting_list.append(newNode);
 }
 
@@ -140,7 +169,7 @@ function get_class_type(node_name) {
     else if(node_name=="page" ) return "tree_page";
     else if(node_name=="page_templates" ) return "tree_page_templates";
     else if(node_name=="tests" ) return "tree_tests";
-    else return "";
+    else return "tree_"+node_name;
 }
 
 function html_to_xml(xmldoc,element,prefix) {
@@ -152,14 +181,23 @@ function html_to_xml(xmldoc,element,prefix) {
     }if(element.getAttribute("name") && element.getAttribute("name")!="null"){
         str=str+ " name='"+element.getAttribute("name")+"'";
     }
-    if(element.hasChildNodes() && element.children.length>0 ){
+    if(element.hasChildNodes() && element.childElementCount>0 ){
         str=str+">\n";
-        $.each(element.children,function(index, child){
-            if(child && child.nodeType !=3){                
-                var childstr=    html_to_xml(xmldoc,child,prefix+"  ");
+        $.each(element.childNodes,function (index, child){
+            if(child && child.nodeType !=3){
+                var childstr=   html_to_xml(xmldoc,child,prefix+"  ");
                 str=str+childstr;
             }
         });
+        //        var i=0;
+        //        for (i = 0; i < element.childElementCount;++i) {
+        //            var aa=$(element);
+        //            var child=aa.children[i];
+        //            if(child && child.nodeType !=3){
+        //                var childstr=   html_to_xml(xmldoc,child,prefix+"  ");
+        //                str=str+childstr;
+        //            }
+        //        }
         str=str+ prefix+ "</"+element.getAttribute("type")+">\n";
     }else{
         str=str+"/>\n";
@@ -193,5 +231,59 @@ function HistoryStack()
     this.hasUndo=function(){
         if(this.undo_stack.length>0) return true;
         else return false;
+    }
+}
+
+function move_up(element){
+    var parent=element.parent().parent();
+    var sibling=element.prev();
+    if (sibling.length){
+        $(sibling).before(element);
+    }else if(parent.attr('type')!='structure'){
+        var prev=parent.prev();
+        var cls=element.parent().attr('class').split(" ")[0];
+        while(true){
+            if(!prev.length){
+                if(parent.parent().attr('class').split(" ")[0]==cls){
+                    parent.before(element);
+                    break;
+                }
+                parent=parent.parent().parent();
+                if(parent.attr('type')=='structure') break;
+                prev=parent.prev();
+                continue;
+            }
+            var insert_node=prev.find('.'+cls +':last');
+            insert_node.append(element);
+            if(insert_node.length) break;
+            prev=prev.prev();
+        }
+    }
+}
+
+function move_down(element){
+    var parent=element.parent().parent();
+    var sibling=element.next();
+    if (sibling.length){
+        $(sibling).after(element);
+    }else if(parent.attr('type')!='structure'){       
+        var next=parent.next();
+        var cls=element.parent().attr('class').split(" ")[0];
+        while(true){
+            if(!next.length){
+                if(parent.parent().attr('class').split(" ")[0]==cls){
+                    parent.after(element);
+                    break;
+                }
+                parent=parent.parent().parent();
+                if(parent.attr('type')=='structure') break;
+                next=parent.next();
+                continue;
+            }
+            var insert_node=next.find('.'+cls +':first');
+            insert_node.prepend(element);
+            if(insert_node.length) break;
+            next=next.next();
+        }
     }
 }
