@@ -12,26 +12,30 @@ $(function() {
         draw_tree();
     });
     $(".btn_insert").click(function() {
-        var insert_node=$(this).attr('id');
-        insert_node=insert_node.replace("insert_","");
-        insert_to_tree(insert_node,selected_item);
-        refresh_tree();
+        if($(this).attr("active")=="true"){
+            var insert_node=$(this).attr('id');
+            insert_node=insert_node.replace("insert_","");
+            insert_to_tree(insert_node,selected_item);
+            refresh_tree();
+        }
     });
     $("#btn_delete").click(function() {
         delete_from_tree(selected_item);
         refresh_tree();
     });
     $(".btn_history").click(function() {
-        var id=$(this).attr('id');
-        var data;
-        if(id=='btn_undo' && history_stack.hasUndo()){
-            data=history_stack.undo($('#tarea').val());
-        } else if(id=='btn_redo' && history_stack.hasRedo()){
-            data=history_stack.redo($('#tarea').val());
+        if($(this).attr("active")=="true"){
+            var id=$(this).attr('id');
+            var data;
+            if(id=='btn_undo' && history_stack.hasUndo()){
+                data=history_stack.undo($('#tarea').val());
+            } else if(id=='btn_redo' && history_stack.hasRedo()){
+                data=history_stack.redo($('#tarea').val());
+            }
+            $('#tarea').val(data);
+            draw_tree();
+            setup_toolbar("");
         }
-        $('#tarea').val(data);
-        draw_tree();
-        setup_toolbar("");
     });
     $("#node_name").keyup(function() { 
         selected_item.attr('name',$(this).val());
@@ -58,18 +62,18 @@ function refresh_tree(){
 }
 
 function setup_toolbar(node_type){
-    $('[class^=btn_]' ).attr("disabled", "disabled");
+    $('[class^=btn_]' ).attr("active", false);
     if(selected_item){
         if(node_type=='structure' || node_type=='folder'){
-            $('#insert_folder, #insert_page' ).removeAttr("disabled");
+            $('#insert_folder, #insert_page' ).attr("active", true);
         }else if(node_type=='page'){
-            $('#insert_page_templates, #insert_tests' ).removeAttr("disabled");
+            $('#insert_page_templates, #insert_tests' ).attr("active", true);
         }else if(node_type=='page_templates'){
-            $('#insert_page_template' ).removeAttr("disabled");
+            $('#insert_page_template' ).attr("active", true);
         }else if(node_type=='tests'){
-            $('#insert_test' ).removeAttr("disabled");
+            $('#insert_test' ).attr("active", true);
         }
-        if(node_type!='structure') $('#btn_delete, .btn_move' ).removeAttr("disabled");
+        if(node_type!='structure') $('#btn_delete, .btn_move' ).attr("active", true);
         if(node_type==""){
             $('#node_name').val("");
         }else{
@@ -86,8 +90,8 @@ function setup_toolbar(node_type){
             $('#node_max').val($node_max);
         }
     }
-    if(history_stack.hasUndo()) $('#btn_undo' ).removeAttr("disabled");
-    if(history_stack.hasRedo()) $('#btn_redo' ).removeAttr("disabled");
+    if(history_stack.hasUndo()) $('#btn_undo' ).attr("active", true);
+    if(history_stack.hasRedo()) $('#btn_redo' ).attr("active", true);
 }
 
 function draw_tree(){

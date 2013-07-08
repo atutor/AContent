@@ -15,6 +15,7 @@ $xmlDoc = new DOMDocument();
 $xmlDoc->load($xmlpath);
 $x = $xmlDoc->documentElement;
 $savant->assign('xml_script', $xmlDoc->saveXML($xmlDoc->documentElement));
+$savant->assign('image_path', TR_BASE_HREF.'images');
 $savant->display('template_editor/structure_tool.tmpl.php');
 
 require(TR_INCLUDE_PATH.'footer.inc.php');
