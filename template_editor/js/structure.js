@@ -2,9 +2,17 @@ var selected_item;
 var history_stack=new HistoryStack();
 var loc = window.location;
 var base_url = loc.protocol + "//" + loc.host + "/" + loc.pathname.split('/')[1];
-
-$(function() {  
-    //var parser = new DOMParser();
+var element_names;
+$(function() {
+   
+    $('#tarea').change(function() {
+        if(validateXML($('#tarea').val())){
+            draw_tree();
+            $('#status').hide();
+        }else{
+            $('#status').show();
+        }
+    });
     $("#toxml").click(function() {
         generate_xml();
     });
@@ -43,7 +51,7 @@ $(function() {
     });
     $("#node_min, #node_max").keyup(function() {
         selected_item.attr('min',$("#node_min").val());
-        selected_item.attr('max',$("#node_max").val());
+        if($("#node_max").val()!="") selected_item.attr('max',$("#node_max").val());
         generate_xml();
     });
     $(".btn_move").click(function() {
@@ -52,22 +60,32 @@ $(function() {
         else if(id=='btn_down' ) move_down(selected_item)
         refresh_tree();
     });
-    draw_tree();
+
+    $.get("template_editor/ajax_handler.php?get=struc_elements", function(data) {
+        element_names=JSON.parse(data);
+        draw_tree();
+        refresh_tree();
+    });
+    $('#status').hide();
 });
 
 function refresh_tree(){
     generate_xml();
     draw_tree();    
     setup_toolbar("");
+    $("#tarea").height($('#preview').height()+6);
 }
 
 function setup_toolbar(node_type){
     $('[class^=btn_]' ).attr("active", false);
+    $('#toolbar [id^=node_]' ).attr("disabled", true);
     if(selected_item){
         if(node_type=='structure' || node_type=='folder'){
             $('#insert_folder, #insert_page' ).attr("active", true);
+            $('#toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page'){
             $('#insert_page_templates, #insert_tests' ).attr("active", true);
+            $('#toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page_templates'){
             $('#insert_page_template' ).attr("active", true);
         }else if(node_type=='tests'){
@@ -97,7 +115,7 @@ function setup_toolbar(node_type){
 function draw_tree(){
     var parser = new DOMParser();
     var xml = $('#tarea').val();
-    var doc = parser.parseFromString(xml, "text/xml");
+    var doc = parser.parseFromString(xml, "text/xml"); 
     $('#preview').html(generate_tree(doc))  ;
 
     $('[class^=tree_]' ).each(function(index, item) {
@@ -126,6 +144,7 @@ function generate_xml(){
     htmlstr=htmlstr.replace(/<a(.*?)a>/g,"");
     var xmldoc= parser.parseFromString(htmlstr, "text/xml");
     $('#tarea').val(html_to_xml(xmldoc,xmldoc.firstChild,""));
+    $('#status').hide();
 }
 
 function generate_tree(element, parent) {
@@ -135,14 +154,14 @@ function generate_tree(element, parent) {
         if(child.nodeType !=3){
             if(child.nodeName=="structure")
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +
-                    "'><span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_folder.gif'></span>"+
-                    "<a href='javascript:;' class='items' accesskey='z'>"+ child.nodeName+"</a>" ;
+                "'><span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_folder.gif'></span>"+
+                "<a href='javascript:;' class='items' accesskey='z'>"+ element_names['structure']+"</a>" ;
             else{
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +"' max='"+child.getAttribute('max')
                 +"' min='"+child.getAttribute('min')+"' style='cursor:move;'>"+
                 "<span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_end.gif'>"+
                 "<img class='img-size-tree' src='"+base_url+"/images/tree/"+get_class_type(child.nodeName)+".gif'>"+
-                "</span><a href='javascript:;' class='items' accesskey='z'>"+ child.nodeName+"</a>" ;
+                "</span><a href='javascript:;' class='items'>"+ element_names[child.nodeName] +"</a>" ;
             }
             if(child.hasChildNodes()){
                 str=str+ generate_tree(child,get_class_type(child.nodeName));
@@ -160,7 +179,9 @@ function insert_to_tree(element, parent){
         parent.append(document.createElement("ol"));
         insrting_list=parent.children("ol");
     }
-    newNode = "<li type='" +element + "' ><a class='items'>"+element+"</a></li>";
+    var max="";
+    if(element=='folder' || element=='page') max="max='1'";
+    newNode = "<li type='" +element + "'"+ max + " ><a class='items'>"+element+"</a></li>";
     insrting_list.append(newNode);
 }
 
@@ -193,15 +214,6 @@ function html_to_xml(xmldoc,element,prefix) {
                 str=str+childstr;
             }
         });
-        //        var i=0;
-        //        for (i = 0; i < element.childElementCount;++i) {
-        //            var aa=$(element);
-        //            var child=aa.children[i];
-        //            if(child && child.nodeType !=3){
-        //                var childstr=   html_to_xml(xmldoc,child,prefix+"  ");
-        //                str=str+childstr;
-        //            }
-        //        }
         str=str+ prefix+ "</"+element.getAttribute("type")+">\n";
     }else{
         str=str+"/>\n";
@@ -289,5 +301,35 @@ function move_down(element){
             if(insert_node.length) break;
             next=next.next();
         }
+    }
+}
+
+function validateXML(txt){
+    // code for IE
+    if (window.ActiveXObject){
+        var xmlDoc = new ActiveXObject("Microsoft.XMLDOM");
+        xmlDoc.async="false";
+        xmlDoc.loadXML(txt);
+        if(xmlDoc.parseError.errorCode!=0){
+            //            txt=txt+"Error Reason: " + xmlDoc.parseError.reason;
+            //            txt=txt+"Error Line: " + xmlDoc.parseError.line;
+            return false;
+        }else{
+            return true;
+        }
+    }
+    // code for Mozilla, Firefox, Opera, etc.
+    else if (document.implementation.createDocument) {
+        var parser=new DOMParser();
+        var text=txt;
+        var xmlDoc=parser.parseFromString(text,"text/xml");
+        if (xmlDoc.getElementsByTagName("parsererror").length>0)        {
+            //checkErrorXML(xmlDoc.getElementsByTagName("parsererror")[0]);
+            return false;
+        }else {
+            return true;
+        }
+    }else{
+        return false;
     }
 }

@@ -5,7 +5,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
 global $_current_user;
 
-if (isset($_current_user)) {
+if (isset($_current_user) && $_current_user->isAdmin()) {
     require(TR_INCLUDE_PATH.'header.inc.php');
 
     if(isset ($_GET['create'])) {
@@ -14,12 +14,16 @@ if (isset($_current_user)) {
     }elseif(isset ($_POST['submit'])) {
         require('classes/TemplateCommons.php');
         $commons=new TemplateCommons('../templates');
-        if(!$commons->template_exists($_POST['template_type'], $_POST['template_name'])) {
-            $commons->create_template_metadata($_POST['template_type'], $_POST['template_name'], $_POST['template_desc'],
-                $_POST['maintainer_name'], $_POST ['maintainer_email'], $_POST ['template_url'], $_POST['template_license'],
-                $_POST ['release_version'], $_POST ['release_date'], $_POST ['release_state'], $_POST ['release_notes']);
-        }else {
-            echo "Theme named ".$_POST['template_name']. " already exists";
+        $template_folder=$commons->create_template_dir($_POST['template_type'], $_POST['template_name']);
+
+        $commons->create_template_metadata($_POST['template_type'],$template_folder, $_POST['template_name'], $_POST['template_desc'],
+            $_POST['maintainer_name'], $_POST ['maintainer_email'], $_POST ['template_url'], $_POST['template_license'],
+            $_POST ['release_version'], $_POST ['release_date'], $_POST ['release_state'], $_POST ['release_notes']);
+
+        if($_POST['template_type']=='structure') {
+            $content=$commons->parse_to_XML('<structure version="0.1"></structure>');
+            $commons->save_xml($content, 'structures/'.$template_folder, 'content.xml');
+            Header('Location: edit_structure.php?temp='.$template_folder);
         }
     }else {
         require('classes/TemplateCommons.php');
@@ -34,5 +38,7 @@ if (isset($_current_user)) {
     }
     require(TR_INCLUDE_PATH.'footer.inc.php');
     exit;
+}else{
+    Header('Location: ../index.php');
 }
 ?>

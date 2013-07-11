@@ -490,12 +490,16 @@ if (array_key_exists(TR_PRIV_TEMPLATE_EDITOR, $privs) && Utility::authenticate($
 {
 	$_pages['template_editor/index.php']['title_var'] = 'template_editor';
 	$_pages['template_editor/index.php']['parent']    = TR_NAV_TOP;
-        $_pages['template_editor/edit_layout.php']['title_var'] = 'Edit Layout';
+        $_pages['template_editor/edit_layout.php']['title_var'] = 'edit_layout';
 	$_pages['template_editor/edit_layout.php']['parent']    = 'template_editor/index.php';
-        $_pages['template_editor/edit_structure.php']['title_var'] = 'Edit Structure';
+        $_pages['template_editor/edit_structure.php']['title_var'] = 'edit_structure';
 	$_pages['template_editor/edit_structure.php']['parent']    = 'template_editor/index.php';
-        $_pages['template_editor/edit_page.php']['title_var'] = 'Edit Page Template';
+        $_pages['template_editor/edit_page.php']['title_var'] = 'edit_page_template';
 	$_pages['template_editor/edit_page.php']['parent']    = 'template_editor/index.php';
+        $_pages['template_editor/edit_meta.php']['title_var'] = 'edit_metadata';
+	$_pages['template_editor/edit_meta.php']['parent']    = 'template_editor/index.php';
+        $_pages['template_editor/delete.php']['title_var'] = 'delete_template';
+	$_pages['template_editor/delete.php']['parent']    = 'template_editor/index.php';
 }
 
 ?>

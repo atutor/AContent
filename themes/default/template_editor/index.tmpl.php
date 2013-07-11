@@ -1,15 +1,15 @@
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
         <ul id="subnavlist">
-            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?create=true">Create Template</a></li>
+            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?create=true"><?php echo _AT('create_template'); ?></a></li>
         </ul>
     </div>
 </div>
 <div class="input-form">
     <fieldset class="group_form">
-        <legend class="group_form">Available Templates</legend>
+        <legend class="group_form"><?php echo _AT('available_templates'); ?></legend>
         <div class="results" style="float:left; width:240px; ">
-            <div style="font-weight:bold">Layout Templates</div>
+            <div style="font-weight:bold"><?php echo _AT('layout'); ?></div>
             <ol class="remove-margin-left">
             <?php
             foreach( $this->layout_list as $template=>$name){
@@ -21,7 +21,7 @@
             </ol>
         </div>
         <div class="results" style="float:left; width:240px;">
-            <div style="font-weight:bold">Structure Templates</div>
+            <div style="font-weight:bold"><?php echo _AT('structures'); ?></div>
             <ol class="remove-margin-left">
             <?php
             foreach( $this->structure_list as $template=>$name){
@@ -33,7 +33,7 @@
             </ol>
         </div>
         <div class="results" style="float:left; width:240px;">
-            <div style="font-weight:bold">Page Templates</div>
+            <div style="font-weight:bold"><?php echo _AT('pages'); ?></div>
             <ol class="remove-margin-left">
             <?php
             foreach( $this->pgtemp_list as $template=>$name){
