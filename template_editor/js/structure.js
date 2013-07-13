@@ -5,8 +5,8 @@ var base_url = loc.protocol + "//" + loc.host + "/" + loc.pathname.split('/')[1]
 var element_names;
 $(function() {
    
-    $('#tarea').change(function() {
-        if(validateXML($('#tarea').val())){
+    $('#xml_text').change(function() {
+        if(validateXML($('#xml_text').val())){
             draw_tree();
             $('#status').hide();
         }else{
@@ -36,11 +36,11 @@ $(function() {
             var id=$(this).attr('id');
             var data;
             if(id=='btn_undo' && history_stack.hasUndo()){
-                data=history_stack.undo($('#tarea').val());
+                data=history_stack.undo($('#xml_text').val());
             } else if(id=='btn_redo' && history_stack.hasRedo()){
-                data=history_stack.redo($('#tarea').val());
+                data=history_stack.redo($('#xml_text').val());
             }
-            $('#tarea').val(data);
+            $('#xml_text').val(data);
             draw_tree();
             setup_toolbar("");
         }
@@ -73,19 +73,19 @@ function refresh_tree(){
     generate_xml();
     draw_tree();    
     setup_toolbar("");
-    $("#tarea").height($('#preview').height()+6);
+    $("#xml_text").height($('#preview').height()+6);
 }
 
 function setup_toolbar(node_type){
     $('[class^=btn_]' ).attr("active", false);
-    $('#toolbar [id^=node_]' ).attr("disabled", true);
+    //$('#toolbar [id^=node_]' ).attr("disabled", true);
     if(selected_item){
         if(node_type=='structure' || node_type=='folder'){
             $('#insert_folder, #insert_page' ).attr("active", true);
-            $('#toolbar [id^=node_]' ).attr("disabled", false);
+            //$('#toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page'){
-            $('#insert_page_templates, #insert_tests' ).attr("active", true);
-            $('#toolbar [id^=node_]' ).attr("disabled", false);
+            $('#insert_page_templates, #insert_tests, #insert_forum' ).attr("active", true);
+            //$('#toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page_templates'){
             $('#insert_page_template' ).attr("active", true);
         }else if(node_type=='tests'){
@@ -114,7 +114,7 @@ function setup_toolbar(node_type){
 
 function draw_tree(){
     var parser = new DOMParser();
-    var xml = $('#tarea').val();
+    var xml = $('#xml_text').val();
     var doc = parser.parseFromString(xml, "text/xml"); 
     $('#preview').html(generate_tree(doc))  ;
 
@@ -135,15 +135,15 @@ function draw_tree(){
 }
 
 function generate_xml(){
-    history_stack.record($('#tarea').val());
+    history_stack.record($('#xml_text').val());
     var parser = new DOMParser();
     var htmlstr=$('#preview').html();
     htmlstr=htmlstr.replace(/<ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<\/ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<span(.*?)span>/g,"");
     htmlstr=htmlstr.replace(/<a(.*?)a>/g,"");
-    var xmldoc= parser.parseFromString(htmlstr, "text/xml");
-    $('#tarea').val(html_to_xml(xmldoc,xmldoc.firstChild,""));
+    var xmldom= parser.parseFromString(htmlstr, "text/xml");
+    $('#xml_text').val(html_to_xml(xmldom.firstChild,""));
     $('#status').hide();
 }
 
@@ -154,13 +154,13 @@ function generate_tree(element, parent) {
         if(child.nodeType !=3){
             if(child.nodeName=="structure")
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +
-                "'><span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_folder.gif'></span>"+
+                "'><span class='node_icons'><img src='"+base_url+"/images/tree/tree_folder.gif' alt='"+ element_names[child.nodeName] +"'></span>"+
                 "<a href='javascript:;' class='items' accesskey='z'>"+ element_names['structure']+"</a>" ;
             else{
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +"' max='"+child.getAttribute('max')
                 +"' min='"+child.getAttribute('min')+"' style='cursor:move;'>"+
                 "<span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_end.gif'>"+
-                "<img class='img-size-tree' src='"+base_url+"/images/tree/"+get_class_type(child.nodeName)+".gif'>"+
+                "<img src='"+base_url+"/images/tree/"+get_class_type(child.nodeName)+".gif' alt='"+ element_names[child.nodeName] +"'>"+
                 "</span><a href='javascript:;' class='items'>"+ element_names[child.nodeName] +"</a>" ;
             }
             if(child.hasChildNodes()){
@@ -173,6 +173,12 @@ function generate_tree(element, parent) {
     return str;
 }
 
+/**
+ * Insert an element to the tree
+ * @author SupunGS
+ * @param {string} element element's type to add
+ * @param {string} parent parent node to insert the new element
+ */
 function insert_to_tree(element, parent){
     var insrting_list=parent.children("ol");
     if(insrting_list.length==0){
@@ -197,7 +203,15 @@ function get_class_type(node_name) {
     else return "tree_"+node_name;
 }
 
-function html_to_xml(xmldoc,element,prefix) {
+/**
+ * Convert an html dom into xml code
+ *
+ * @author SupunGS
+ * @param {DOM} element DOM object to convert
+ * @param {string} prefix whitespace required to format the xml code
+ * @return	xml code for the element
+ */
+function html_to_xml(element,prefix) {
     var str=prefix+ "<"+element.getAttribute("type") ;
     if(element.getAttribute("max") && element.getAttribute("max")!="null"){
         str=str+ " max='"+element.getAttribute("max")+"'";
@@ -210,7 +224,7 @@ function html_to_xml(xmldoc,element,prefix) {
         str=str+">\n";
         $.each(element.childNodes,function (index, child){
             if(child && child.nodeType !=3){
-                var childstr=   html_to_xml(xmldoc,child,prefix+"  ");
+                var childstr=   html_to_xml(child,prefix+"  ");
                 str=str+childstr;
             }
         });
@@ -221,6 +235,12 @@ function html_to_xml(xmldoc,element,prefix) {
     return str;
 }
 
+/**
+ * Creates an instance of HistoryStack.
+ *
+ * @constructor
+ * @this {HistoryStack}
+ */
 function HistoryStack()
 {
     this.undo_stack=new Array();
@@ -250,6 +270,12 @@ function HistoryStack()
     }
 }
 
+/**
+ * Move up a given tree element
+ * 
+ * @author SupunGS
+ * @param {string} element element to move
+ */
 function move_up(element){
     var parent=element.parent().parent();
     var sibling=element.prev();
@@ -277,6 +303,11 @@ function move_up(element){
     }
 }
 
+/**
+ * Move down a given tree element
+ * @author SupunGS
+ * @param {string} element element to move
+ */
 function move_down(element){
     var parent=element.parent().parent();
     var sibling=element.next();
@@ -304,6 +335,13 @@ function move_down(element){
     }
 }
 
+/**
+ * Validate an xml string
+ * @author SupunGS
+ * @param {string} txt the xml string to validate
+ * @param {number} r The desired radius of the circle.
+ * @return	boolean given string is a valid xml or not
+ */
 function validateXML(txt){
     // code for IE
     if (window.ActiveXObject){

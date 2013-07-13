@@ -45,7 +45,7 @@ if($this->metadata['template_type']=='page_template') $type='page';
                 <dt><label for="maintainer_email"><?php echo _AT('maintainer_email'); ?></label></dt>
                 <dd><input name="" id="maintainer_email" size="30" type="text" value="<?php echo $this->metadata['maintainer_email']; ?>"/></dd>
 
-                <dt><label for="template_url"><?php echo _AT('template_durl'); ?></label></dt>
+                <dt><label for="template_url"><?php echo _AT('template_url'); ?></label></dt>
                 <dd><input name="template_url" size="30" type="text" value="<?php echo $this->metadata['template_url']; ?>"/></dd>
 
                 <dt><label for="template_license"><?php echo _AT('template_license'); ?></label></dt>

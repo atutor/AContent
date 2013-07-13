@@ -20,7 +20,7 @@
 
 <div class="input-form">
     <div class="row">
-        <?php echo _AT('confirm_template_delete',$this->template_name); ?>
+        <?php echo _AT('confirm_template_delete', $this->template_name); ?>
     </div>
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']?>?type=<?php echo $this->template_type; ?>&temp=<?php echo $this->template_dir; ?>">
         <div class="row buttons">

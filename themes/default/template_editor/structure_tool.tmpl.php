@@ -77,6 +77,7 @@
             <img class="btn_insert" id="insert_page_template"  src="<?php echo $this->image_path."/tree/tree_page_template.gif"; ?>" alt="<?php echo _AT('add_page_template'); ?>" title="<?php echo _AT('add_page_template'); ?>">
             <img class="btn_insert" id="insert_tests" src="<?php echo $this->image_path."/tree/tree_tests.gif"; ?>" alt="<?php echo _AT('add_tests'); ?>" title="<?php echo _AT('add_tests'); ?>">
             <img class="btn_insert" id="insert_test" src="<?php echo $this->image_path."/tree/tree_test.gif"; ?>" alt="<?php echo _AT('add_test'); ?>" title="<?php echo _AT('add_test'); ?>">
+            <img class="btn_insert" id="insert_forum" src="<?php echo $this->image_path."/tree/tree_forum.gif"; ?>" alt="<?php echo _AT('add_forum'); ?>" title="<?php echo _AT('add_forum'); ?>">
         </div>
         <div style='float:left; margin:-1px 15px 1px 15px;'>
             <label id="lbl_node_name" for="node_name"><?php echo _AT('name'); ?>:</label>
@@ -88,7 +89,7 @@
         </div>
         <img class="btn_delete"  accesskey='x' value="Delete" id="btn_delete" src="<?php echo $this->image_path."/x.gif"; ?>" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>">
         <img class="btn_move"  accesskey='u' value="Up" id="btn_up" src="<?php echo $this->image_path."/move_up.png"; ?>" alt="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>">
-        <img class="btn_move"  accesskey='d' value="Down" id="btn_down" src="<?php echo $this->image_path."/move_down.png"; ?>" alt="<?php echo _AT('move_dowm'); ?>" title="<?php echo _AT('move_dowm'); ?>">
+        <img class="btn_move"  accesskey='d' value="Down" id="btn_down" src="<?php echo $this->image_path."/move_down.png"; ?>" alt="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>">
 
 	<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?>" accesskey="s" />
     </div>
@@ -96,7 +97,7 @@
     <div id="status"><?php echo _AT('invalid_xml'); ?></div>
     <table border="0" cellpadding="4" style="width:100%">
         <tr>
-            <td valign="top" height="100%"> <textarea  id="tarea" name="xml_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px'> <?php  echo $this->xml_script; ?></textarea></td>
+            <td valign="top" height="100%"> <textarea  id="xml_text" name="xml_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px'> <?php  echo $this->xml_script; ?></textarea></td>
             <td valign="top" height="100%"><div id='preview' style='height:100%; width:400px; min-height:300px; margin:2px;'></div></td>
         </tr>
     </table>

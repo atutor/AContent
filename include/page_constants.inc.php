@@ -494,7 +494,7 @@ if (array_key_exists(TR_PRIV_TEMPLATE_EDITOR, $privs) && Utility::authenticate($
 	$_pages['template_editor/edit_layout.php']['parent']    = 'template_editor/index.php';
         $_pages['template_editor/edit_structure.php']['title_var'] = 'edit_structure';
 	$_pages['template_editor/edit_structure.php']['parent']    = 'template_editor/index.php';
-        $_pages['template_editor/edit_page.php']['title_var'] = 'edit_page_template';
+        $_pages['template_editor/edit_page.php']['title_var'] = 'edit_page';
 	$_pages['template_editor/edit_page.php']['parent']    = 'template_editor/index.php';
         $_pages['template_editor/edit_meta.php']['title_var'] = 'edit_metadata';
 	$_pages['template_editor/edit_meta.php']['parent']    = 'template_editor/index.php';

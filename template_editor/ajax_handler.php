@@ -18,6 +18,7 @@ function get_structure_elements(){
     $elements['page_template']=_AT('page_template_tag');
     $elements['tests']=_AT('tests');
     $elements['test']=_AT('test');
+    $elements['forum']=_AT('forum');
 
     echo json_encode($elements);
 }
