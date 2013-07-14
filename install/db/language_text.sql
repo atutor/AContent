@@ -904,6 +904,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'edit_page', 'Edit Page', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'edit_template', 'Edit Template', '2013-07-13 08:49:45', ''),
 ('en', '_template', 'edit_metadata', 'Edit Metadata', '2013-07-13 08:49:45', ''),
+('en', '_template', 'delete_template', 'Delete Template', '2013-07-13 08:49:45', ''),
 ('en', '_template', 'min', 'Min', '2013-07-13 08:49:45', ''),
 ('en', '_template', 'max', 'Max', '2013-07-13 08:52:00', ''),
 ('en', '_template', 'undo', 'Undo', '2013-07-13 08:52:00', ''),

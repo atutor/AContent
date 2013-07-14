@@ -1,10 +1,14 @@
+/**
+ * @author SupunGS
+ * @copyright Copyright � 2013, AContent, All rights reserved.
+ */
+
 var selected_item;
 var history_stack=new HistoryStack();
 var loc = window.location;
 var base_url = loc.protocol + "//" + loc.host + "/" + loc.pathname.split('/')[1];
 var element_names;
-$(function() {
-   
+$(function() {   
     $('#xml_text').change(function() {
         if(validateXML($('#xml_text').val())){
             draw_tree();
@@ -69,23 +73,32 @@ $(function() {
     $('#status').hide();
 });
 
+/**
+ * Generates the xml code from tree and redraw the tree from the code
+ * @author SupunGS
+ */
 function refresh_tree(){
     generate_xml();
     draw_tree();    
     setup_toolbar("");
-    $("#xml_text").height($('#preview').height()+6);
+    $("#xml_text").height($('#tree_preview').height()+6);
 }
 
+/**
+ * Setups the toolbar according to the currently selected tree node
+ * @author SupunGS
+ * @param {string} node_type selected node's type
+ */
 function setup_toolbar(node_type){
     $('[class^=btn_]' ).attr("active", false);
-    //$('#toolbar [id^=node_]' ).attr("disabled", true);
+    //$('#struct_toolbar [id^=node_]' ).attr("disabled", true);
     if(selected_item){
         if(node_type=='structure' || node_type=='folder'){
             $('#insert_folder, #insert_page' ).attr("active", true);
-            //$('#toolbar [id^=node_]' ).attr("disabled", false);
+            //$('#struct_toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page'){
             $('#insert_page_templates, #insert_tests, #insert_forum' ).attr("active", true);
-            //$('#toolbar [id^=node_]' ).attr("disabled", false);
+            //$('#struct_toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page_templates'){
             $('#insert_page_template' ).attr("active", true);
         }else if(node_type=='tests'){
@@ -112,11 +125,15 @@ function setup_toolbar(node_type){
     if(history_stack.hasRedo()) $('#btn_redo' ).attr("active", true);
 }
 
+/**
+ * Generate and draw the tree structure
+ * @author SupunGS
+ */
 function draw_tree(){
     var parser = new DOMParser();
     var xml = $('#xml_text').val();
     var doc = parser.parseFromString(xml, "text/xml"); 
-    $('#preview').html(generate_tree(doc))  ;
+    $('#tree_preview').html(generate_tree(doc))  ;
 
     $('[class^=tree_]' ).each(function(index, item) {
         $(item).sortable({
@@ -134,10 +151,14 @@ function draw_tree(){
     });
 }
 
+/**
+ * Generate the xml code from the tree structure 
+ * @author SupunGS
+ */
 function generate_xml(){
     history_stack.record($('#xml_text').val());
     var parser = new DOMParser();
-    var htmlstr=$('#preview').html();
+    var htmlstr=$('#tree_preview').html();
     htmlstr=htmlstr.replace(/<ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<\/ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<span(.*?)span>/g,"");
@@ -147,6 +168,13 @@ function generate_xml(){
     $('#status').hide();
 }
 
+/**
+ * Generate the html code for the tree structure from a dom object
+ * @author SupunGS
+ * @param {DOMobject} element dom object to generate the html code
+ * @param {string} parent node type of the parent node of the element
+ * @return {string} html code representing the tree
+ */
 function generate_tree(element, parent) {
     var parent_class=parent || "folder";
     var str="<ol class='"+ parent_class+"'>";
@@ -177,7 +205,7 @@ function generate_tree(element, parent) {
  * Insert an element to the tree
  * @author SupunGS
  * @param {string} element element's type to add
- * @param {string} parent parent node to insert the new element
+ * @param {DOMobject} parent parent node to insert the new element
  */
 function insert_to_tree(element, parent){
     var insrting_list=parent.children("ol");
@@ -191,10 +219,21 @@ function insert_to_tree(element, parent){
     insrting_list.append(newNode);
 }
 
+/**
+ * Delete an element from the tree
+ * @author SupunGS
+ * @param {DOMobject} element element to delete
+ */
 function delete_from_tree(element){
     element.remove();
 }
 
+/**
+ * Get the class name for a tree node
+ * @author SupunGS
+ * @param {string} node_name nodeName of the node
+ * @return {string} class name for the node
+ */
 function get_class_type(node_name) {
     if(node_name=="structure" ||node_name=="folder" ) return "tree_folder";
     else if(node_name=="page" ) return "tree_page";
@@ -236,7 +275,7 @@ function html_to_xml(element,prefix) {
 }
 
 /**
- * Creates an instance of HistoryStack.
+ * Creates an instance of HistoryStack. 
  *
  * @constructor
  * @this {HistoryStack}

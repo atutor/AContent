@@ -1,4 +1,15 @@
 <?php
+/************************************************************************/
+/* AContent                                                             */
+/************************************************************************/
+/* Copyright (c) 2013                                                   */
+/* Inclusive Design Institute                                           */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 
@@ -8,7 +19,11 @@ if(isset ($_GET['get'])){
     }
 }
 
-
+/**
+ * Prints an array of structure elements' names in current language as a JSON string
+ * @access  private
+ * @author  SupunGS
+ */
 function get_structure_elements(){
     $elements=array();
     $elements['structure']=_AT('structure');

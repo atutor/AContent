@@ -1,4 +1,14 @@
 <?php
+/************************************************************************/
+/* AContent                                                             */
+/************************************************************************/
+/* Copyright (c) 2013                                                   */
+/* Inclusive Design Institute                                           */
+/*                                                                      */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
 class TemplateCommons {
     public $template_dir_map=array("layout"=>"layout","structure"=>"structures","page_template"=>"page_template");
@@ -41,21 +51,28 @@ class TemplateCommons {
     /**
      * Save an dom object into an xml file
      * @access  public
-     * @param   object $xml     DOMDocument object to save
+     * @param   DOMDocument $domdoc     DOMDocument object to save
      * @param   string $directory     directory to save the file
      * @param   string $file_name     file name to save
      * @return  boolean         whether the file saving was successful
      * @author  SupunGS
      */
-    public function save_xml($xml,$directory,$file_name) {
-        $xml->formatOutput = true;
+    public function save_xml($domdoc,$directory,$file_name) {
+        $domdoc->formatOutput = true;
         $full_dir=$this->template_dir.$directory;   //  "../templates/".$directory;
         //        if (!file_exists($full_dir)) {
         //            mkdir($full_dir);
         //        }
-        return $xml->save($full_dir."/".$file_name) ;
+        return $domdoc->save($full_dir."/".$file_name) ;
     }
 
+    /**
+     * Convert a xml string into a DOMDocument object
+     * @access  public
+     * @param   string $xml_str     xml string to parse
+     * @return  DOMDocument  resulting DOMDocument object
+     * @author  SupunGS
+     */
     public function parse_to_XML($xml_str) {
         $dom = new DOMDocument();
         $dom->preserveWhiteSpace = FALSE;

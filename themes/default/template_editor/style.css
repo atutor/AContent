@@ -1,0 +1,45 @@
+#tree_preview li{
+    margin:0px 0 4px 1px;
+}
+#tree_preview .items{
+    border: 1px dashed #eed;
+    width:150px; height:20px;
+    margin:2px 0 0 2px;text-decoration:none;
+}
+#tree_preview .items:hover{
+    border: 1px dashed #909080;
+}
+#tree_preview .node_icons{
+    margin-left:-25px;
+}
+#struct_toolbar{
+    width:98%;
+    margin:5px;
+    padding:3px;
+}
+#struct_toolbar [type="submit"]{
+    float:right;
+}
+#struct_toolbar img:hover{
+    background:#b2bbd0;
+    border: 1px solid #0a246a;
+}
+#struct_toolbar img{
+    padding:2px;
+    border: 1px solid #f0f0ee;
+}
+#struct_toolbar img[active=false]{
+    background:#f0f0ee;
+    opacity:0.3;
+    border: 1px solid #f0f0ee;
+}
+#struct_toolbar [type="text"]:disabled{
+    background:#ebebe4;
+    border: 1px solid #abadb3;
+}
+#status{
+    background:#FFFDE0;
+    margin:auto;
+    color:red;
+    padding:0px 5px 0px 15px;
+}
