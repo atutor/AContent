@@ -37,9 +37,12 @@ $xmlpath=realpath("../templates/structures")."/". $template."/content.xml";
 $xmlDoc = new DOMDocument();
 $xmlDoc->load($xmlpath);
 $x = $xmlDoc->documentElement;
+$page_temp_list=$commons->get_template_list("page_template");
+
 $savant->assign('template', $template);
 $savant->assign('xml_script', $xmlDoc->saveXML($xmlDoc->documentElement));
 $savant->assign('image_path', TR_BASE_HREF.'images');
+$savant->assign('page_temp_list', $page_temp_list);
 $savant->display('template_editor/structure_tool.tmpl.php');
 
 require(TR_INCLUDE_PATH.'footer.inc.php');

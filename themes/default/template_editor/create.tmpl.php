@@ -5,6 +5,16 @@
     </ul>
 </div>
 
+<div id="subnavlistcontainer">
+    <div id="sub-navigation">
+        <ul id="subnavlist">
+            <li class="active"><b><?php echo _AT('create_template'); ?></b></li>
+            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=layout"><?php echo _AT('layout'); ?></a></li>
+            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=structures"><?php echo _AT('structures'); ?></a></li>
+            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=pages"><?php echo _AT('pages'); ?></a></li>
+        </ul>
+    </div>
+</div>
 <div class="input-form">
     <fieldset class="group_form"><legend></legend>
         <form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF'] ?>">

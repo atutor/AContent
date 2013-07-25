@@ -897,6 +897,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'zip_archive', 'Zip Archive', '2010-04-07 13:55:04', ''),
 ('en', '_template', 'zip_file_manager', 'Zip File Manager', '2010-04-07 15:36:16', ''),
 ('en', '_template', 'zip_illegal_contents', 'The contents of this archive are listed below. Illegal file types will not be extracted, and file names containing illegal characters will be translated.', '2010-04-07 15:23:22', ''),
+('en', '_template', 'template_editor', 'Template Editor', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'create_template', 'Create Template', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'pages', 'Pages', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'edit_structure', 'Edit Structure', '2013-07-13 08:46:35', ''),

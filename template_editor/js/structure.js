@@ -6,9 +6,10 @@
 var selected_item;
 var history_stack=new HistoryStack();
 var loc = window.location;
-var base_url = loc.protocol + "//" + loc.host + "/" + loc.pathname.split('/')[1];
+var base_url ;//= loc.protocol + "//" + loc.host + "/" + loc.pathname.split('/')[1];
 var element_names;
-$(function() {   
+$(function() {
+    $('#delete_confirm').hide();
     $('#xml_text').change(function() {
         if(validateXML($('#xml_text').val())){
             draw_tree();
@@ -32,8 +33,12 @@ $(function() {
         }
     });
     $("#btn_delete").click(function() {
-        delete_from_tree(selected_item);
-        refresh_tree();
+        if(selected_item.attr('type')=='structure'){
+            $('#delete_confirm').show();
+        }else{
+            delete_from_tree(selected_item);
+            refresh_tree(); 
+        }
     });
     $(".btn_history").click(function() {
         if($(this).attr("active")=="true"){
@@ -53,22 +58,31 @@ $(function() {
         selected_item.attr('name',$(this).val());
         generate_xml();
     });
+    $("#page_temp_list").change(function() {
+        $("#node_name").val($(this).val());
+        $("#node_name").keyup();
+    });
     $("#node_min, #node_max").keyup(function() {
         selected_item.attr('min',$("#node_min").val());
         if($("#node_max").val()!="") selected_item.attr('max',$("#node_max").val());
         generate_xml();
     });
     $(".btn_move").click(function() {
-        var id=$(this).attr('id');
-        if(id=='btn_up' ) move_up(selected_item)
-        else if(id=='btn_down' ) move_down(selected_item)
-        refresh_tree();
+        if($(this).attr("active")=="true"){
+            var id=$(this).attr('id');
+            if(id=='btn_up' ) move_up(selected_item)
+            else if(id=='btn_down' ) move_down(selected_item)
+            refresh_tree();
+        }
     });
 
     $.get("template_editor/ajax_handler.php?get=struc_elements", function(data) {
         element_names=JSON.parse(data);
-        draw_tree();
-        refresh_tree();
+        $.get("template_editor/ajax_handler.php?get=base_path", function(data) {
+            base_url=data;
+            draw_tree();
+            refresh_tree();
+        });
     });
     $('#status').hide();
 });
@@ -91,23 +105,31 @@ function refresh_tree(){
  */
 function setup_toolbar(node_type){
     $('[class^=btn_]' ).attr("active", false);
-    //$('#struct_toolbar [id^=node_]' ).attr("disabled", true);
+    $('#btn_delete' ).attr("active", true);
+    $('#struct_toolbar [id^=node_]' ).attr("disabled", false).show();
+    $('#struct_toolbar #page_temp_list' ).hide();
     if(selected_item){
+        //  activate/deactivate toolbar buttons and inputs according to selected element
         if(node_type=='structure' || node_type=='folder'){
             $('#insert_folder, #insert_page' ).attr("active", true);
-            //$('#struct_toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page'){
             $('#insert_page_templates, #insert_tests, #insert_forum' ).attr("active", true);
-            //$('#struct_toolbar [id^=node_]' ).attr("disabled", false);
         }else if(node_type=='page_templates'){
             $('#insert_page_template' ).attr("active", true);
+            $('#struct_toolbar [id^=node_]' ).attr("disabled", true);
         }else if(node_type=='tests'){
             $('#insert_test' ).attr("active", true);
+            $('#struct_toolbar [id^=node_]' ).attr("disabled", true);
+        }else if(node_type=='page_template'){
+            $('#struct_toolbar #page_temp_list' ).show();
+            $('#struct_toolbar #node_name' ).hide();
         }
-        if(node_type!='structure') $('#btn_delete, .btn_move' ).attr("active", true);
+
+        if(node_type!='structure') $('.btn_move' ).attr("active", true);
         if(node_type==""){
             $('#node_name').val("");
         }else{
+            // set name, min and max values
             $node_name=selected_item.attr('name');
             if($node_name=='null') $node_name="";
             $('#node_name').val($node_name);
@@ -120,8 +142,9 @@ function setup_toolbar(node_type){
             if($node_max=='null') $node_max="";
             $('#node_max').val($node_max);
         }
+        if(node_type=='page_template') $('#page_temp_list' ).val($('#node_name').val()); //set page templates dropdown box value
     }
-    if(history_stack.hasUndo()) $('#btn_undo' ).attr("active", true);
+    if(history_stack.hasUndo()) $('#btn_undo' ).attr("active", true);   //activate undo redo buttons
     if(history_stack.hasRedo()) $('#btn_redo' ).attr("active", true);
 }
 
@@ -145,6 +168,8 @@ function draw_tree(){
         }).disableSelection();
     });
     $('.items').click(function(e) {
+        $('.items' ).removeAttr("selected");
+        $(this).attr("selected","true");
         selected_item=$(this).parent();
         setup_toolbar(selected_item.attr('type'));
         return false;
@@ -182,14 +207,14 @@ function generate_tree(element, parent) {
         if(child.nodeType !=3){
             if(child.nodeName=="structure")
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +
-                "'><span class='node_icons'><img src='"+base_url+"/images/tree/tree_folder.gif' alt='"+ element_names[child.nodeName] +"'></span>"+
-                "<a href='javascript:;' class='items' accesskey='z'>"+ element_names['structure']+"</a>" ;
+                "'><span class='node_icons'><img src='"+base_url+"images/tree/tree_folder.gif' alt='"+ element_names[child.nodeName] +"'></span>"+
+                "<a href='javascript:;' class='items' accesskey='z'>"+ get_node_text('structure',  child.getAttribute('name'))+"</a>" ;
             else{
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +"' max='"+child.getAttribute('max')
                 +"' min='"+child.getAttribute('min')+"' style='cursor:move;'>"+
-                "<span class='node_icons'><img class='img-size-tree' src='"+base_url+"/images/tree/tree_end.gif'>"+
-                "<img src='"+base_url+"/images/tree/"+get_class_type(child.nodeName)+".gif' alt='"+ element_names[child.nodeName] +"'>"+
-                "</span><a href='javascript:;' class='items'>"+ element_names[child.nodeName] +"</a>" ;
+                "<span class='node_icons'><img class='img-size-tree' src='"+base_url+"images/tree/tree_end.gif'>"+
+                "<img src='"+base_url+"images/tree/"+get_class_type(child.nodeName)+".gif' alt='"+ element_names[child.nodeName] +"'>"+
+                "</span><a href='javascript:;' class='items'>"+ get_node_text(child.nodeName,child.getAttribute('name')) +"</a>" ;
             }
             if(child.hasChildNodes()){
                 str=str+ generate_tree(child,get_class_type(child.nodeName));
@@ -409,4 +434,17 @@ function validateXML(txt){
     }else{
         return false;
     }
+}
+
+/**
+ * Get the text displayed with a tree node
+ * @author SupunGS
+ * @param {string} type of the node
+ * @param {string} name nodeName of the element
+ * @return {string} text for the node
+ */
+function get_node_text(type, name) {
+    if(type=="page_templates" || type=="tests" ) return element_names[type];
+    else if(name!=null) return name;
+    else return element_names[type];
 }

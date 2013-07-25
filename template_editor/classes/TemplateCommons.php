@@ -259,7 +259,7 @@ class TemplateCommons {
         $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_name;
         $this->remove_dir_content($full_dir);
     }
-    
+
     /**
      * remove a folder and its content
      * @access  public
@@ -270,6 +270,13 @@ class TemplateCommons {
         foreach(glob($directory . '/*') as $file) {
             if(is_dir($file)) rrmdir($file); else unlink($file);
         } rmdir($directory);
+    }
+
+    public function save_file($directory,$file_name,$message) {
+        $file_path=$this->template_dir.$directory."/".$file_name;
+        $file = fopen($file_path,"w");
+        fwrite($file,$message);
+        fclose($file);
     }
 }
 ?>

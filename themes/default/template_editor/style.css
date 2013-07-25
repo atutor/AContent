@@ -6,6 +6,10 @@
     width:150px; height:20px;
     margin:2px 0 0 2px;text-decoration:none;
 }
+#tree_preview .items[selected="true"]{
+    border: 1px dashed #e4b150;
+    background:#ffdb96;
+}
 #tree_preview .items:hover{
     border: 1px dashed #909080;
 }
@@ -37,9 +41,19 @@
     background:#ebebe4;
     border: 1px solid #abadb3;
 }
+#struct_toolbar #page_temp_list{
+    width:140px;
+}
 #status{
     background:#FFFDE0;
     margin:auto;
     color:red;
     padding:0px 5px 0px 15px;
+}
+#delete_confirm input[type="button"] {
+    background-color: #E7E4D3;
+    border-radius: 0.3em;
+    box-shadow: 0.1em 0.1em 0.2em #999999;
+    padding: 1px 8px;
+    text-align: center;
 }
