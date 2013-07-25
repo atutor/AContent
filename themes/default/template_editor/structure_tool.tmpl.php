@@ -1,3 +1,15 @@
+<div class="input-form" id="delete_confirm">
+    <div class="row">
+        <?php echo _AT('confirm_template_delete',''); ?>
+    </div>
+    <form method="post" action="<?php echo $_base_path ?>template_editor/delete.php?type=structure&temp=<?php echo $this->template; ?>">
+        <div class="row buttons">
+            <input  type="submit" name="submit" value="<?php echo _AT('yes'); ?>">
+            <input onclick="$('#delete_confirm').hide();" type="button" name="cancel" value="<?php echo _AT('no'); ?>">
+        </div>
+    </form>
+</div>
+
 <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
 <div align="center">
     <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
@@ -35,6 +47,13 @@
         <div style='float:left; margin:-1px 15px 1px 15px;'>
             <label id="lbl_node_name" for="node_name"><?php echo _AT('name'); ?>:</label>
             <input id="node_name" type="text" size="15" maxlength="25" title="<?php echo _AT('name'); ?>" accesskey='n'>
+            <select name="page_temp_list" id="page_temp_list" title="<?php echo _AT('name'); ?>" >
+                <?php 
+                foreach( $this->page_temp_list as $template=>$display_name) {
+                    echo "<option value='".$template."'>".$display_name."</option>";
+                }
+                ?>
+            </select>
             <label id="lbl_node_min" for="node_min"><?php echo _AT('min'); ?>:</label>
             <input id="node_min" type="text" size="3" maxlength="3" title="<?php echo _AT('min'); ?>" >
             <label id="lbl_node_max" for="node_min"><?php echo _AT('max'); ?>:</label>
@@ -56,4 +75,5 @@
     </table>
 </div>
 </form>
+
 

@@ -12,10 +12,13 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
+global $_base_path;
 
 if(isset ($_GET['get'])){
     if($_GET['get']=='struc_elements'){
         get_structure_elements();
+    }elseif($_GET['get']=='base_path'){
+        echo $_base_path;
     }
 }
 
