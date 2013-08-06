@@ -2,6 +2,8 @@
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+$_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
+$_custom_head .= '<script type="text/javascript" src="template_editor/js/layout.js"></script>';
 
 require(TR_INCLUDE_PATH.'header.inc.php');
 require('classes/TemplateCommons.php');
