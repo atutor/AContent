@@ -1,11 +1,12 @@
-var template,lastselected;
+var template,lastselected, dltimage;
 var csssheet;
 var cssmap={};
 
 $(function() {
     template=get_template_name();
     $('#css_dumy').hide();
-   
+    $('#image_confirm').hide();
+
     $("#css_text").click(function() { 
         get_selected_style();     setup_toolbar();
     });
@@ -15,6 +16,7 @@ $(function() {
         var value=$(this).attr('arg');
         insert_css_rule( cmd, value);
     });
+    
     $("#font-family").change(function() {
         insert_css_rule("font-family", $(this).val());
     });
@@ -30,8 +32,39 @@ $(function() {
     $("#border-width, #border-style, #border-color").change(function() {
         insert_css_rule( "border");
     });
+    $("#background-image").change(function() {
+        insert_css_rule( "background-image",$(this).val());
+    });
+    $(".delete_image").click(function() {
+        dltimage=$(this).attr('file');
+        $('#image_confirm').show();
+    });
+    $(".btn_delete").click(function() {
+        if($(this).attr('name')=='delete') delete_image(dltimage);
+        $('#image_confirm').hide();
+    });
     convert_code();
 });
+
+$(window).load(function() {
+    $('.thumbnail img').each(function() {
+        var THUMBSIZE=128;
+        var width=$(this).width();
+        var height=$(this).height();
+        if(width>THUMBSIZE || height>THUMBSIZE){
+            if(width>height){
+                $(this).width(THUMBSIZE);
+                $(this).height(THUMBSIZE*height/width);
+            //$(this).css({ "margin-top": THUMBSIZE*(1-height/width)/2});
+            }else{
+                $(this).width(128*width/height);
+                $(this).height(128);
+            //$(this).css({ "margin-left": THUMBSIZE*(1-width/height)/2});
+            }
+        }//else $(this).css({ "margin-left": (THUMBSIZE-width)/2, "margin-top":(THUMBSIZE-height)/2});
+    });
+});
+
 function setup_toolbar(){
     var rules=csssheet[cssmap[lastselected]].rules;
     if('font-size' in rules) $('#font-size').val(rules['font-size']);
@@ -41,6 +74,8 @@ function setup_toolbar(){
 
     if('background-color' in rules) $('#background-color').val(rules['background-color'].replace(/#/g,""));
     else $('#background-color').val("");
+
+    if('background-image' in rules) $('#background-image').val(rules['background-image'].url);
 
     if('border' in rules){
         $('#border-width').val(rules['border'].width);
@@ -110,6 +145,8 @@ function parse_rule(property,rule) {
         value=parse_css_padding(rule);
     }if(property=='border'){
         value=parse_css_border(rule);
+    }if(property=='background-image'){
+        value=parse_css_bgimage(rule);
     }else{
         value=rule;
     }
@@ -135,6 +172,16 @@ function parse_css_border(value) {
     return border;
 }
 
+function parse_css_bgimage(value){
+    var urls=value.match(/url\('(.*?)'\)/g);
+    var back_image=new cssRuleValue();
+    for (i = 0; i < urls.length; i++) {
+        urls[i]=urls[i].replace(/url\('*/g,"").replace(/'*\)/g,"");
+        back_image['url'+i]=urls[i];
+    }
+    return back_image;
+}
+
 function cssobj_to_string(obj){
     var str="";
     for (var property in obj) {
@@ -152,8 +199,13 @@ function get_css_code(arrCSS){
     return code;
 }
 
+/**
+ * Get the selector of the currently selected style
+ * @author SupunGS
+ * @return {string} selector
+ */
 function get_selected_style(){
-    var pos=getCaret(document.getElementById("css_text"));
+    var pos=get_caret(document.getElementById("css_text"));
     var code=$("#css_text").val();
     if(pos<code.length){
         var precode=code.substring(0, pos);
@@ -169,6 +221,11 @@ function get_selected_style(){
     return selector;
 }
 
+/**
+ * Creates an instance of a cssObject
+ * @constructor
+ * @this {cssObject}
+ */
 function cssObject(selector){
     this.selector=selector;
     this.rules;
@@ -190,30 +247,43 @@ function cssObject(selector){
     }
 }
 
+/**
+ * Creates an instance of cssRuleValue
+ * @constructor
+ * @this {cssRuleValue}
+ */
 function cssRuleValue(){
     this.toString=function(){
         var str="";
         for (var property in this) {
             if (property!='toString') {
-                str=str+this[property]+" ";
+                if(property.match(/url./)) str=str+"url('"+this[property]+"'), ";
+                else str=str+this[property]+" ";
             }
         }
+        str=str.replace(/, $/,"");
         return str;
     }
 }
 
-function getCaret(el) {
-    if (el.selectionStart) {
-        return el.selectionStart;
+/**
+ * Get the current caret position of an element
+ * @author SupunGS
+ * @param {DOMElement} element to get the caret position
+ * @return {int} caret position
+ */
+function get_caret(element) {
+    if (element.selectionStart) {
+        return element.selectionStart;
     } else if (document.selection) {
-        el.focus();
+        element.focus();
 
         var r = document.selection.createRange();
         if (r == null) {
             return 0;
         }
 
-        var re = el.createTextRange(),
+        var re = element.createTextRange(),
         rc = re.duplicate();
         re.moveToBookmark(r.getBookmark());
         rc.setEndPoint('EndToStart', re);
@@ -223,6 +293,11 @@ function getCaret(el) {
     return 0;
 }
 
+/**
+ * Get the name of the currently edditing template
+ * @author SupunGS
+ * @return {string} template name
+ */
 function get_template_name(){
     var str=window.location.search;
     str=str.match(/temp=([a-zA-Z0-9_-]*)&*/);
@@ -231,6 +306,12 @@ function get_template_name(){
     return str;
 }
 
+/**
+ * Insert a CSS rule to the curently selected style block
+ * @author SupunGS
+ * @param {string} property CSS property to insert
+ * @param {string} value value of the property
+ */
 function insert_css_rule(property, value){
     var style=get_selected_style();
     convert_code();
@@ -245,18 +326,38 @@ function insert_css_rule(property, value){
         if('text-decoration' in rules) delete rules['text-decoration'];
         else csssheet[cssmap[style]].rules['text-decoration']='underline';
     }else if(property=="border") {
-        var border;
-        if('border' in rules) border=rules['border'];
-        else border=new cssRuleValue();
+        var border=new cssRuleValue();
         border['width']=$('#border-width').val();
         border['style']=$('#border-style').val();
         border['color']="#"+ $('#border-color').val();
         rules['border']=border;
+    }else if(property=="background-image") {
+        var back_image;
+        if('background-image' in rules) back_image= rules['background-image'];
+        else back_image=new cssRuleValue();
+        back_image['url0']=value;
+        rules['background-image']=back_image;
     }else if(property.match(/align-.*/)) {
-        csssheet[cssmap[style]].rules['text-align']=value;
+        rules['text-align']=value;
     }else{
-        csssheet[cssmap[style]].rules[property]=value;
+        rules[property]=value;
     }
     add_preview_styles(csssheet);
     $("#css_text").val(get_css_code(csssheet));
+}
+
+/**
+ * Delete a specified image from the template
+ * @author SupunGS
+ * @param {string} file file name to delete
+ */
+function delete_image(file){
+    $.get("template_editor/ajax_handler.php?",{ 
+        'action': 'delete_image',
+        'temp': template,
+        'file':file
+    }, function(data) {
+        $("#background-image option[value='"+template+"/"+file+"']").remove();
+        $(".image_item[file='" + file+ "']").remove();
+    });
 }

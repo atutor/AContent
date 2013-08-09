@@ -12,6 +12,7 @@
 
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
+require('classes/TemplateCommons.php');
 global $_base_path;
 
 if(isset ($_GET['get'])){
@@ -19,6 +20,13 @@ if(isset ($_GET['get'])){
         get_structure_elements();
     }elseif($_GET['get']=='base_path'){
         echo $_base_path;
+    }
+}elseif(isset ($_GET['action'])){
+    $commons=new TemplateCommons('../templates');
+    if($_GET['action']=='delete_image'){
+        $template=$_GET['temp'];
+        $file=$_GET['file'];
+        $commons->delete_file("layout/".$template."/".$template, $file);
     }
 }
 
