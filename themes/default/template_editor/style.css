@@ -85,3 +85,38 @@
 #layout_toolbar label{
     font-size:	13px;
 }
+.thumbnail{
+    width:128px;
+    height:128px;
+    border: 1px solid #e2e2e0;
+    display: table-cell;
+    margin:5px 5px 5px 5px;
+    vertical-align:middle;
+    text-align:center;
+}
+.thumbnail:hover{
+    background-color:#dfefef;
+    border: 1px solid #d0d0cb;
+}
+
+.image_item{
+    width:130px;
+    display: inline-block;
+    text-align:center;
+    margin:5px 5px 5px 5px;
+}
+
+.image_item .delete_image{
+    float:right;
+    margin:-18px 0px;
+    border: 1px solid #e2e2e0;
+    z-index:5;
+    position:relative;
+}
+.image_item .delete_image:hover{
+    background-color:#e2e2e0;
+}
+
+.confirm{ margin:7px 5px 0px 15px; }
+
+.confirm input{ margin:0 5px 0px 5px; }

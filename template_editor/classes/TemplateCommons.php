@@ -35,17 +35,21 @@ class TemplateCommons {
     public function create_template_dir($template_type,$template_name) {
         $template_dir=$this->get_folder_name($template_name);
         $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_dir;
+        $final_dir="";
         if (!file_exists($full_dir)) {
             mkdir($full_dir);
-            return $template_dir;
+            $final_dir= $template_dir;
         }else {
             $i=1;
             while($this->template_exists($template_type,$template_dir.$i)) {
                 $i=$i+1;
             }
             mkdir($full_dir.$i);
-            return $template_dir.$i;
+            $full_dir=$full_dir.$i;
+            $final_dir= $template_dir.$i;
         }
+        if($template_type=='layout') mkdir($full_dir."/".$final_dir);
+        return $final_dir;
     }
 
     /**
@@ -161,8 +165,9 @@ class TemplateCommons {
         else return false;
 
         if ($_FILES["file"]["error"] ==0) {
-            move_uploaded_file($_FILES["file"]["tmp_name"], $_FILES["file"]["name"]);
-            echo "Stored in: " . "upload/" . $_FILES["file"]["name"];
+            $destination=$this->template_dir.$directory;
+            if (!file_exists($destination)) mkdir($destination);
+            move_uploaded_file($_FILES["file"]["tmp_name"], $destination."/". $_FILES["file"]["name"]);
         }
     }
 
@@ -277,6 +282,31 @@ class TemplateCommons {
         $file = fopen($file_path,"w");
         fwrite($file,$message);
         fclose($file);
+    }
+
+    public function get_image_list($directory) {
+        $dir=realpath($this->template_dir . $directory);
+        if (!file_exists($dir)) return array();
+        $dir_list= scandir($dir);
+        $list = array();
+        foreach ($dir_list as $item) {
+            $check_file=$dir .'/'.$item;
+            if(preg_match('/^.*\.(jpg|jpeg|png|gif)$/i', $item)) {
+                $list[]=$item;
+            }
+        }
+        return $list;
+    }
+
+    /**
+     * delete a given file
+     * @access  public
+     * @param   string $directory   directory to remove
+     * @author  SupunGS
+     */
+    public function delete_file($directory,$file_name){
+        $path=realpath($this->template_dir .$directory)."/". $file_name;
+        unlink($path);
     }
 }
 ?>
