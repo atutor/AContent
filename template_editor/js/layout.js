@@ -8,8 +8,10 @@ $(function() {
     $('#image_confirm').hide();
 
     $("#css_text").click(function() { 
-        get_selected_style();     setup_toolbar();
+        get_selected_style();
+        setup_toolbar();
     });
+    $("#css_text").change(function() {add_preview_styles(parseCSS($("#css_text").val())); });
     
     $(".buttons").click(function() {
         var cmd=$(this).attr('id');
@@ -37,6 +39,7 @@ $(function() {
     });
     $(".delete_image").click(function() {
         dltimage=$(this).attr('file');
+        $('#image_confirm strong').html(dltimage);
         $('#image_confirm').show();
     });
     $(".btn_delete").click(function() {
@@ -173,7 +176,8 @@ function parse_css_border(value) {
 }
 
 function parse_css_bgimage(value){
-    var urls=value.match(/url\('(.*?)'\)/g);
+    value=value.replace(/'|"/,"");
+    var urls=value.match(/url\((.*?)\)/g);
     var back_image=new cssRuleValue();
     for (i = 0; i < urls.length; i++) {
         urls[i]=urls[i].replace(/url\('*/g,"").replace(/'*\)/g,"");

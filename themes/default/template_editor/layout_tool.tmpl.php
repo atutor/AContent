@@ -27,9 +27,9 @@
                     <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
                     <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>'>
                     <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>'>
-                    <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="center">
-                    <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="right">
-                    <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="justify">
+                    <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>'>
+                    <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>'>
+                    <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>'>
                 </div>
                 <div style="float:left; margin:0 15px 0 20px;">
                     <label for="font-family"><?php echo _AT('font_family'); ?>:</label>
@@ -98,7 +98,7 @@
         <input type="submit" name="upload" value="<?php echo _AT('upload'); ?>">
     </form>
     <div class="confirm" id="image_confirm">
-        <?php echo _AT('confirm_image_delete', "xxxx"); ?>
+        <?php echo _AT('confirm_image_delete', "%s"); ?>
         <input class="btn_delete" type="submit" name="delete" value="<?php echo _AT('yes'); ?>">
         <input class="btn_delete" type="submit" name="cancel" value="<?php echo _AT('no'); ?>">
     </div>
