@@ -21,6 +21,8 @@
     </div>
     <div class="input-form" style="width: 95%;">
         <div id='layout_toolbar'>
+            <label for="selector"><?php echo _AT('selector'); ?>:</label>
+            <input id="selector" type="text" size="15" disabled>
             <div style="height:30px; padding:5px 8px 1px 5px;">
                 <div style="float:left;">
                     <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
@@ -48,17 +50,17 @@
                 </div>
                 <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?>" accesskey="s"  style="float:right;"/>
             </div>
-            
+
             <div style="float:left; margin:0 15px 0 0;">
                 <label for="background-color"><?php echo _AT('background-color'); ?>:</label>
                 <input id="background-color" name="background-color" type="text" size="6" maxlength="6">
                 <label for="background-image"><?php echo _AT('background-image'); ?>:</label>
                 <select id="background-image"  style="width:100px;">
                     <?php
-                            foreach ($this->image_list as $image) {
-                                echo "<option value='".$this->template."/".$image."'>".$image."</option>";
-                            }
-                    ?>                    
+                    foreach ($this->image_list as $image) {
+                        echo "<option value='".$this->template."/".$image."'>".$image."</option>";
+                    }
+                    ?>
                 </select>
             </div>
 

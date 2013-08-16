@@ -11,7 +11,9 @@ $(function() {
         get_selected_style();
         setup_toolbar();
     });
-    $("#css_text").change(function() {add_preview_styles(parseCSS($("#css_text").val())); });
+    $("#css_text").change(function() {
+        add_preview_styles(parseCSS($("#css_text").val()));
+    });
     
     $(".buttons").click(function() {
         var cmd=$(this).attr('id');
@@ -46,6 +48,11 @@ $(function() {
         if($(this).attr('name')=='delete') delete_image(dltimage);
         $('#image_confirm').hide();
     });
+    $("#css_preview *").click(function(event) {
+        event.stopPropagation();
+        get_selected_style($(this).get(0).tagName);
+        setup_toolbar();
+    });
     convert_code();
 });
 
@@ -69,6 +76,8 @@ $(window).load(function() {
 });
 
 function setup_toolbar(){
+    $('#selector').val(lastselected);
+    if(typeof cssmap[lastselected] == 'undefined') return;
     var rules=csssheet[cssmap[lastselected]].rules;
     if('font-size' in rules) $('#font-size').val(rules['font-size']);
     else $('#font-size').val("");
@@ -146,9 +155,9 @@ function parse_rule(property,rule) {
     var value;
     if(property=='padding' || property=='margin'){
         value=parse_css_padding(rule);
-    }if(property=='border'){
+    }else if(property=='border'){
         value=parse_css_border(rule);
-    }if(property=='background-image'){
+    }else if(property=='background-image'){
         value=parse_css_bgimage(rule);
     }else{
         value=rule;
@@ -206,20 +215,35 @@ function get_css_code(arrCSS){
 /**
  * Get the selector of the currently selected style
  * @author SupunGS
+ * @param {string} tag optional parameter to get the selected style from tag.
  * @return {string} selector
  */
-function get_selected_style(){
-    var pos=get_caret(document.getElementById("css_text"));
-    var code=$("#css_text").val();
-    if(pos<code.length){
-        var precode=code.substring(0, pos);
-        var postcode=code.substring(pos,code.length);
-        var block=precode.substring(precode.lastIndexOf("}"),precode.length)+postcode.substring(0,postcode.indexOf("}")+1);
-        block=block.replace(/^}/,"");
-        var selector=$.trim(block.replace(/ *{[^}]*} */g,""));
-        lastselected=selector;
+function get_selected_style(tag){
+    var selector="";
+    if (typeof tag == 'undefined') {
+        var pos=get_caret(document.getElementById("css_text"));
+        var code=$("#css_text").val();
+        if(pos<code.length){
+            var precode=code.substring(0, pos);
+            var postcode=code.substring(pos,code.length);
+            var block=precode.substring(precode.lastIndexOf("}"),precode.length)+postcode.substring(0,postcode.indexOf("}")+1);
+            block=block.replace(/^}/,"");
+            selector=$.trim(block.replace(/ *{[^}]*} */g,""));
+            lastselected=selector;
+        }else{
+            selector=lastselected;
+        }
     }else{
-        selector=lastselected;
+        tag=tag.toLowerCase();
+        for (i = 0; i < csssheet.length; i++) {
+            var temp=csssheet[i].selector.toLowerCase();
+            if(temp.match(tag)){
+                selector=csssheet[i].selector;
+                break;
+            }
+        }
+        if(selector=="")  selector="#content " + tag;            
+        lastselected=selector;
     }
     //convert_code();
     return selector;
@@ -317,8 +341,9 @@ function get_template_name(){
  * @param {string} value value of the property
  */
 function insert_css_rule(property, value){
-    var style=get_selected_style();
+    var style=lastselected; // get_selected_style();
     convert_code();
+    if(typeof cssmap[style] == 'undefined') insert_css_block(style);
     var rules=csssheet[cssmap[style]].rules;
     if(property=="bold"){
         if('font-weight' in rules) delete rules['font-weight'];
@@ -348,6 +373,18 @@ function insert_css_rule(property, value){
     }
     add_preview_styles(csssheet);
     $("#css_text").val(get_css_code(csssheet));
+}
+
+/**
+ * Insert a CSS block to the csssheet
+ * @author SupunGS
+ * @param {string} selector selector of the CSS block
+ */
+function insert_css_block(selector){
+    var cssobj =new cssObject(selector);
+    cssobj.rules={};
+    csssheet.push(cssobj);
+    cssmap[selector]=csssheet.length-1;
 }
 
 /**
