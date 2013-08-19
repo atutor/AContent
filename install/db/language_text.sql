@@ -950,4 +950,12 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'border-width', 'Border Width', '2013-08-10 09:40:00', ''),
 ('en', '_template', 'border-style', 'Border Style', '2013-08-10 09:40:00', ''),
 ('en', '_template', 'border-color', 'Border Color', '2013-08-10 09:40:00', ''),
-('en', '_template', 'confirm_image_delete', 'Are you sure you want to delete <strong>%s</strong>?', '2013-08-10 09:40:00', '');
+('en', '_template', 'confirm_image_delete', 'Are you sure you want to delete <strong>%s</strong>?', '2013-08-10 09:40:00', ''),
+('en', '_template', 'selector', 'Selector', '2013-08-19 09:40:00', ''),
+('en', '_template', 'edit_mode ', 'Edit Mode', '2013-08-19 09:40:00', ''),
+('en', '_template', 'basic', 'Basic', '2013-08-19 09:40:00', ''),
+('en', '_template', 'advanced', 'Advanced', '2013-08-19 09:40:00', ''),
+('en', '_template', 'property', 'Property', '2013-08-19 09:40:00', ''),
+('en', '_template', 'value', 'Value', '2013-08-19 09:40:00', ''),
+('en', '_template', 'associated_images ', 'Associated Images ', '2013-08-19 09:40:00', ''),
+('en', '_template', 'screenshot', 'Screenshot', '2013-08-19 09:40:00', '');

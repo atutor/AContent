@@ -1,4 +1,4 @@
-var template,lastselected, dltimage;
+var template,editmode=0, lastselected, dltimage;
 var csssheet;
 var cssmap={};
 
@@ -7,11 +7,17 @@ $(function() {
     $('#css_dumy').hide();
     $('#image_confirm').hide();
 
+    $("input:radio[name=edit_mode]").change(function() {
+        editmode=$("input:radio[name=edit_mode]:checked").val();
+        setup_toolbar();
+    });
+    
     $("#css_text").click(function() { 
         get_selected_style();
         setup_toolbar();
     });
     $("#css_text").change(function() {
+        //convert_code();
         add_preview_styles(parseCSS($("#css_text").val()));
     });
     
@@ -21,12 +27,10 @@ $(function() {
         insert_css_rule( cmd, value);
     });
     
-    $("#font-family").change(function() {
-        insert_css_rule("font-family", $(this).val());
+    $("#font-family, #font-size").change(function() {
+        insert_css_rule($(this).attr('id'), $(this).val());
     });
-    $("#font-size").change(function() {
-        insert_css_rule( "font-size", $(this).val());
-    });
+
     $("#font-color").change(function() {
         insert_css_rule( "color", "#"+$(this).val());
     });
@@ -53,7 +57,17 @@ $(function() {
         get_selected_style($(this).get(0).tagName);
         setup_toolbar();
     });
+
+    $("#add_rule").click(function() {
+        if($("#new_property").val()!="" && $("#new_value").val()!=""){            
+            insert_css_rule( $("#new_property").val(),$("#new_value").val());
+            $("#new_property").val("");
+            $("#new_value").val("");
+            setup_toolbar();
+        }
+    });
     convert_code();
+    setup_toolbar();
 });
 
 $(window).load(function() {
@@ -75,40 +89,76 @@ $(window).load(function() {
     });
 });
 
+/**
+ * Setup the toolbar according to the currently selected CSS block
+ * @author SupunGS
+ */
 function setup_toolbar(){
     $('#selector').val(lastselected);
-    if(typeof cssmap[lastselected] == 'undefined') return;
-    var rules=csssheet[cssmap[lastselected]].rules;
-    if('font-size' in rules) $('#font-size').val(rules['font-size']);
-    else $('#font-size').val("");
+    $('#layout_exttools').html("");
 
-    if('font-family' in rules) $('#font-family').val(rules['font-family']);
+    if(editmode==0){
+        $("#css_text").hide();
+        $("#layout_toolbar").show();
+        $('#font-size, #background-color, #border-width, #border-color').val("");
 
-    if('background-color' in rules) $('#background-color').val(rules['background-color'].replace(/#/g,""));
-    else $('#background-color').val("");
+        if(typeof cssmap[lastselected] == 'undefined') return;
 
-    if('background-image' in rules) $('#background-image').val(rules['background-image'].url);
+        var rules=csssheet[cssmap[lastselected]].rules;
+        var str="<table>";
+        for (var property in rules) {
+            var ruleval=rules[property];
 
-    if('border' in rules){
-        $('#border-width').val(rules['border'].width);
-        $('#border-style').val(rules['border'].style);
-        $('#border-color').val(rules['border'].color.replace(/#/g,""));
-    }else $('#border-width, #border-color').val("");
+            if(property=='color') $('#font-color').val(ruleval.replace(/#/g,""));
+            else if(property=='background-color') $('#background-color').val(ruleval.replace(/#/g,""));
+            else if(property=='background-image') $('#background-image').val(ruleval.url0);
+            else if(property=='border'){
+                $('#border-width').val(ruleval.width);
+                $('#border-style').val(ruleval.style);
+                $('#border-color').val(ruleval.color.replace(/#/g,""));
+            }else if($('#layout_toolbar #'+property).length ) $('#layout_toolbar #'+property).val(ruleval);
+            else if(property.match(/comment|font-weight|font-style|text-align/)) continue;
+            else{
+                str=str+"<tr><td>";
+                str=str+'<label for="'+property+'">'+property+':</label></td>';
+                str=str+'<td><input class="custom_property" id="'+property+'" type="text" size="15" value="'+rules[property]+'">';
+                str=str+"</td></tr>";
+            }
+        }
+        str=str+"</table>";
+        $('#layout_exttools').html(str);
 
+        $(".custom_property").change(function() {
+            insert_css_rule($(this).attr('id'),$(this).val());
+        }); 
+    }else{
+        $("#css_text").show();
+        $("#layout_toolbar").hide();
+    }
 }
 
-function add_preview_styles(arrCSS){
+/**
+ * Convert the css sheet into preview-able format and apply it to the preview panel
+ * @author SupunGS
+ * @param {array} sheet css string to parse
+ */
+function add_preview_styles(sheet){
     var style="";
-    var len=arrCSS.length;
+    var len=sheet.length;
     for (i = 0; i < len; i++) {
-        style=style+"#css_preview "+ arrCSS[i].toString();
+        style=style+"#css_preview "+ sheet[i].toString();
     //style=style+"{"+ arrCSS[i].rule+ "}\n"
     }
     style=style.replace(/url\('*/g,"url('templates/layout/"+template+"/");
     $('#preview_styles').html(style);
 }
 
+/**
+ * Convert the CSS code into object format and generate back the text format
+ * @author SupunGS
+ */
 function convert_code(){
+    cssmap={};
     csssheet=parseCSS($("#css_text").val());
     for (i = 0; i < csssheet.length; i++) {
         cssmap[csssheet[i].selector]=i;
@@ -116,11 +166,12 @@ function convert_code(){
     add_preview_styles(csssheet);
     $("#css_text").val(get_css_code(csssheet));
 }
+
 /**
- * Parse a CSS string into an array of css rules
+ * Parse a CSS string into an array of cssObjects
  * @author SupunGS
  * @param {string} css_text css string to parse
- * @return {array} array of css rules
+ * @return {array} array of cssObjects
  */
 function parseCSS (css_text) {
     //css_text = css_text.replace(/\/\*(\r|\n|.)*\*\//g,"");
@@ -138,19 +189,38 @@ function parseCSS (css_text) {
     return css_rules;
 }
 
+/**
+ * Parse a CSS code block into an array of css rules
+ * @author SupunGS
+ * @param {string} css_block css code block to parse
+ * @return {array} array of css rules
+ */
 function parse_block(css_block) {
-    var lines = css_block.split(';');
+    var lines = css_block.split(/;|\*\//);
     var length = lines.length;
     var rules={};
+    var comment_count=0;
     for (var i = 0; i < length-1; i++){
         var segments=lines[i].split(":");
         var property=$.trim(segments[0]);
         var value=$.trim(segments[1]);
-        rules[property]=parse_rule(property,value);
+        if(property.match(/\/\*/)){
+            rules["comment"+comment_count]=$.trim(property.replace("/*",""));
+            comment_count++;
+        }else{
+            rules[property]=parse_rule(property,value);
+        }
     }
     return rules;
 }
 
+/**
+ * Parse a css value string into a css rule value object
+ * @author SupunGS
+ * @param {string} property related css property of the value
+ * @param {string} rule css value to parse
+ * @return {cssRuleValue} css rule value
+ */
 function parse_rule(property,rule) {
     var value;
     if(property=='padding' || property=='margin'){
@@ -165,6 +235,12 @@ function parse_rule(property,rule) {
     return value;
 }
 
+/**
+ * Parse a css padding or margin value into cssRuleValue
+ * @author SupunGS
+ * @param {string} value padding/margin value to parse
+ * @return {cssRuleValue} padding/margin cssRuleValue
+ */
 function parse_css_padding(value) {
     var temp=value.split(" ");
     var padding=new cssRuleValue();
@@ -175,6 +251,12 @@ function parse_css_padding(value) {
     return padding;
 }
 
+/**
+ * Parse a css border value into cssRuleValue
+ * @author SupunGS
+ * @param {string} value border value to parse
+ * @return {cssRuleValue} border cssRuleValue
+ */
 function parse_css_border(value) {
     var temp=value.split(" ");
     var border=new cssRuleValue();
@@ -184,6 +266,12 @@ function parse_css_border(value) {
     return border;
 }
 
+/**
+ * Parse a css background image value into cssRuleValue
+ * @author SupunGS
+ * @param {string} value background image value to parse
+ * @return {cssRuleValue} background image cssRuleValue
+ */
 function parse_css_bgimage(value){
     value=value.replace(/'|"/,"");
     var urls=value.match(/url\((.*?)\)/g);
@@ -195,19 +283,17 @@ function parse_css_bgimage(value){
     return back_image;
 }
 
-function cssobj_to_string(obj){
-    var str="";
-    for (var property in obj) {
-        str=str+obj[property]+" ";
-    }
-    return str;
-}
-
-function get_css_code(arrCSS){
+/**
+ * Get the code/text/string representation of an array of cssObjects
+ * @author SupunGS
+ * @param {array} sheet cssObject array to get the code/text
+ * @return {string} string representation
+ */
+function get_css_code(sheet){
     var code="";
-    var len=arrCSS.length;
+    var len=sheet.length;
     for (i = 0; i < len; i++) {
-        code=code+ arrCSS[i].toString()+"\n";
+        code=code+ sheet[i].toString()+"\n";
     }
     return code;
 }
@@ -257,13 +343,22 @@ function get_selected_style(tag){
 function cssObject(selector){
     this.selector=selector;
     this.rules;
-    
+
+    /**
+     * Get the string representation of the cssObject
+     * @author SupunGS
+     * @return {string} string representation
+     */
     this.toString=function(){
         var str=this.selector+" {";
         for (var property in this.rules) {
+            if(property.match(/comment/)){
+                str=str+"\n\t/*"+this.rules[property]+"*/";
+                continue;
+            }
             str=str+"\n\t"+property+":\t";
-            if(typeof this.rules[property]=="string") str=str+this.rules[property];
-            else  str=str+this.rules[property].toString();
+            //if(typeof this.rules[property]=="string") str=str+this.rules[property];
+            str=str+this.rules[property].toString();
             str=str+ ";"
         }
         str=str+"\n}";
@@ -364,8 +459,14 @@ function insert_css_rule(property, value){
         var back_image;
         if('background-image' in rules) back_image= rules['background-image'];
         else back_image=new cssRuleValue();
-        back_image['url0']=value;
-        rules['background-image']=back_image;
+        if(value =='none' && 'url0' in back_image){
+            delete back_image['url0'];
+            if(!('url1' in back_image)) delete  rules['background-image'];
+        }
+        else{
+            back_image['url0']=value;
+            rules['background-image']=back_image;
+        }
     }else if(property.match(/align-.*/)) {
         rules['text-align']=value;
     }else{

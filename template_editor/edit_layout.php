@@ -20,13 +20,17 @@ if(isset ($_POST['submit'])) {
     $commons->save_file("layout/".$template,$template.".css",$_POST['css_text']);
 }
 if(isset ($_POST['upload'])) {
-    echo $commons->upload_image("layout/".$template."/".$template);
+    echo $commons->upload_image("layout/".$template."/".$template,"");
+}elseif(isset ($_POST['uploadscrn'])) {
+    echo $commons->upload_image("layout/".$template,"screenshot-". $template.".png");
 }
 
 $css_path=realpath("../templates/layout")."/". $template."/".$template.".css";
+$screenshot_path=realpath("../templates/layout")."/". $template."/screenshot-".$template.".png";
 
 if(file_exists($css_path)) $savant->assign('css_code', file_get_contents($css_path));
 else $savant->assign('css_code', "");
+if(file_exists($screenshot_path)) $savant->assign('screenshot',true);
 $savant->assign('template', $template);
 $savant->assign('image_list', $commons->get_image_list("layout/".$template."/".$template));
 $savant->assign('base_path', $_base_path);

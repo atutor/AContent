@@ -154,7 +154,7 @@ class TemplateCommons {
      * @return  boolean     whether uploading successed or not
      * @author  SupunGS
      */
-    public function upload_image($directory) {
+    public function upload_image($directory,$file_name) {
         $allowedExts = array("gif", "jpeg", "jpg", "png");
         $extension = end(explode(".", $_FILES["file"]["name"]));
         if ((($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "image/jpeg")
@@ -167,7 +167,8 @@ class TemplateCommons {
         if ($_FILES["file"]["error"] ==0) {
             $destination=$this->template_dir.$directory;
             if (!file_exists($destination)) mkdir($destination);
-            move_uploaded_file($_FILES["file"]["tmp_name"], $destination."/". $_FILES["file"]["name"]);
+            if($file_name=="") $file_name=$_FILES["file"]["name"];
+            move_uploaded_file($_FILES["file"]["tmp_name"], $destination."/". $file_name);
         }
     }
 
