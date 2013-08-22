@@ -26,9 +26,9 @@
 
             <label for="mode_radios" style="margin-left:15px;"><?php echo _AT('edit_mode'); ?></label>
             <span class="bordered" id="mode_radios">
-                <input type="radio" name="edit_mode" value="0" id="basic_mode" checked="checked" accesskey="b">
+                <input type="radio" name="edit_mode" value="0" id="basic_mode" title="<?php echo _AT('basic'); ?>" checked="checked" accesskey="b">
                 <label for="basic_mode"><?php echo _AT('basic'); ?></label>
-                <input type="radio" name="edit_mode" value="1" id="adv_mode" accesskey="a">
+                <input type="radio" name="edit_mode" value="1" id="adv_mode" title="<?php echo _AT('advanced'); ?>" accesskey="a">
                 <label for="adv_mode"><?php echo _AT('advanced'); ?></label>
             </span>
 
@@ -145,7 +145,14 @@
                 <td valign="top" height="100%" id='css_preview_cell'>
                     <div id='css_preview' style='height:100%; width:400px; min-height:300px; margin:15px;'>
                         <style id="preview_styles"></style>
-                        <div id="content"><h3>Heading 3</h3><h2>Heading 2</h2>Some text content<ul><li>List Item</li><li>List Item</li></ul></div>
+                        <div id="content">
+                            <h2 accesskey="h" title="H2">Heading 2</h2>
+                            <h3 accesskey="i" title="H3">Heading 3</h3>
+                            Some text content
+                            <ul accesskey="j" title="UL">
+                                <li accesskey="k" title="LI">List Item</li><li>List Item</li>
+                            </ul>
+                        </div>
                     </div>
                     <div id="css_dumy"></div>
                 </td>
@@ -168,7 +175,7 @@
             else $display_name=substr($image, 0, 6)."...". substr($image, strlen( $image)-7, 7);
 
             echo "<div class='image_item' file='".$image."'><div class='thumbnail'>";
-            echo "<img src='".$this->base_path."templates/layout/". $this->template."/".$this->template."/".$image."'>";
+            echo "<img src='".$this->base_path."templates/layout/". $this->template."/".$this->template."/".$image."' alt='".$image."'>";
             echo "</div>";
             echo "<img class='delete_image' src='".$this->base_path."images/x.gif' file='".$image."' alt='"._AT('delete_image')."' title='"._AT('delete_image')."'>";
             echo "<div>".$display_name."</div></div>";
@@ -178,7 +185,7 @@
 
     <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
         <label for="file"><?php echo _AT('file'); ?>:</label>
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" accesskey="l" title="<?php echo _AT('upload'); ?>">
         <input type="submit" name="upload" value="<?php echo _AT('upload'); ?>">
     </form>
 </div>
@@ -187,12 +194,12 @@
     <div>
         <?php
         $img_path=$this->base_path."templates/layout/". $this->template."/screenshot-".$this->template.".png";
-        if(isset($this->screenshot))  echo "<img src='".$img_path."'>";
+        if(isset($this->screenshot))  echo "<img src='".$img_path."' alt='"._AT('screenshot')."'>";
         ?>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
         <label for="file"><?php echo _AT('file'); ?>:</label>
-        <input type="file" name="file" id="file">
+        <input type="file" name="file" id="file" accesskey="n" title="<?php echo _AT('upload'); ?>">
         <input type="submit" name="uploadscrn" value="<?php echo _AT('upload'); ?>">
     </form>
 </div>

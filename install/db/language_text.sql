@@ -958,4 +958,5 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'property', 'Property', '2013-08-19 09:40:00', ''),
 ('en', '_template', 'value', 'Value', '2013-08-19 09:40:00', ''),
 ('en', '_template', 'associated_images ', 'Associated Images ', '2013-08-19 09:40:00', ''),
-('en', '_template', 'screenshot', 'Screenshot', '2013-08-19 09:40:00', '');
+('en', '_template', 'screenshot', 'Screenshot', '2013-08-19 09:40:00', ''),
+('en', '_template', 'delete_image', 'Delete Image', '2013-08-19 09:40:00', '');
