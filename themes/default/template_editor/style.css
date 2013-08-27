@@ -151,3 +151,12 @@
 .confirm{ margin:7px 5px 0px 15px; }
 
 .confirm input{ margin:0 5px 0px 5px; }
+
+
+
+#page_preview div,ul,li,h2,h3{
+     border: 1px solid transparent;
+}
+#page_preview div:hover,ul:hover,li:hover,h2:hover,h3:hover{
+     border: 1px dotted #d2d2d0;
+}
