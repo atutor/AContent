@@ -36,8 +36,42 @@
                 <td valign="top" height="100%">
                     <div id='layout_toolbar'>
                         <div class="layout_toolline">                            
-                            <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
-                            <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
+                            <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
+                            <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
+                            <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>'>
+                            <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons attrib" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>'>
+                            <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>'>
+                            <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>'>
+                            <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>'>
+                            <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>'>
+                            <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>'>
+                            <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('insert_image'); ?>' title='<?php echo _AT('insert_image'); ?>'>
+                            <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('insert_table'); ?>' title='<?php echo _AT('insert_table'); ?>'>
+                        </div>
+                        <div class="layout_toolline">
+                            <select id="format" name="format" style="width:130px;">
+                                <option value="null"><?php echo _AT('format'); ?></option>
+                                <option value="p">P</option>
+                                <option value="h1">H1</option>
+                                <option value="h2">H2</option>
+                                <option value="h3">H3</option>
+                            </select>
+                            <select id="font-family" name="font-family" style="width:130px;">
+                                <option value="null" selected><?php echo _AT('font_family'); ?></option>
+                                <option value="georgia">Georgia</option>
+                                <option value="times new roman">Times New Roman</option>
+                                <option value="arial">Arial</option>
+                                <option value="verdana">Verdana</option>
+                            </select>
+                            <select id="font-size" name="font-size" style="width:100px;">
+                                <option value="null" selected><?php echo _AT('font_size'); ?></option>
+                                <option value="8px">8</option>
+                                <option value="10px">10</option>
+                                <option value="12px">12</option>
+                                <option value="14px">14</option>
+                                <option value="16px">16</option>
+                                <option value="18px">18</option>
+                            </select>
                         </div>
                     </div>
                     <textarea  id="page_text" name="css_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px'> <?php  echo $this->html_code; ?></textarea>

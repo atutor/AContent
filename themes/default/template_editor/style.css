@@ -102,6 +102,10 @@
 #layout_toolbar #align-justify{ background-position: -79px 0; }
 #layout_toolbar #align-left{ background-position: -99px 0; }
 #layout_toolbar #align-right{ background-position: -119px 0; }
+#layout_toolbar #insert-ulist{ background-position: -160px 0; }
+#layout_toolbar #insert-olist{ background-position: -180px 0; }
+#layout_toolbar #insert-image{ background-position: 0 -20px; }
+#layout_toolbar #insert-table{ background-position: -20px -20px; }
 
 #layout_toolbar #add_rule{
     background-image:url('../../../images/layout_toolbar.png');

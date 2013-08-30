@@ -1,4 +1,5 @@
 var template,editmode=0;
+var last_selection=false,last_range=false;
 
 $(function() {
     template=get_template_name();
@@ -6,10 +7,33 @@ $(function() {
     $('#page_text').bind('input propertychange', function() {
         update_preview();
     });
-    $('#page_preview').mouseup(function() {
-        //insert_to_preview("<h2>Link</h2>");
+    $('#page_preview').mouseup(function() { 
+        get_selection_range();
         update_code();
     });
+    $(".buttons.wrap").click(function() {
+        wrap_selection($(this).attr('arg'));
+        update_code();
+    });
+    $(".buttons.insert").click(function() {
+        insert_html($(this).attr('id'));
+    });
+    $(".buttons.attrib").click(function() {
+        change_attribute("align",$(this).attr('arg'));
+    });
+    $(".tagbtn").click(function() {
+        insert_html(" ");
+        return 0;
+    });
+    $("#format").change(function() {
+        if($(this).val()!=='null') wrap_elements($(this).val(),['div','p','h1','h2']);
+        $(this).val('null');
+    });
+    $("#font-family, #font-size").change(function() {
+        if($(this).val()!=='null') change_attribute($(this).attr('id'),$(this).val(),true);
+        $(this).val('null');
+    });
+
 });
 
 /**
@@ -40,39 +64,107 @@ function update_preview(){
     $('#page_preview').html($('#page_text').val());
 }
 
-function insert_to_preview(html_str) {
-    var selection, range;
-    if (window.getSelection){   // IE9 and non-IE
-        selection = window.getSelection();
-        if (selection.getRangeAt && selection.rangeCount) {
-            range = selection.getRangeAt(0);
-            var prnt_element = range.commonAncestorContainer;
-            if(is_within("page_preview",prnt_element)){	//insert only if selection on #page_preview
-                range.deleteContents();
-                var temp_element = document.createElement("div");
-                temp_element.innerHTML = html_str;
-                var fragment = document.createDocumentFragment();
-                var temp_node;
-                while (temp_node= temp_element.firstChild ) {
-                    fragment.appendChild(temp_node);
-                }
-                range.insertNode(fragment);
+function insert_to_selection(html_str) {
+    var range = last_range;
+    if(range){
+        var prnt_element = range.commonAncestorContainer;
+        if(is_within("page_preview",prnt_element)){	//insert only if selection on #page_preview
+            range.deleteContents();
+            var temp_element = document.createElement("div");
+            temp_element.innerHTML = html_str;
+            var fragment = document.createDocumentFragment();
+            var temp_node;
+            while (temp_node= temp_element.firstChild ) {
+                fragment.appendChild(temp_node);
             }
+            range.insertNode(fragment);
         }
     }else if (document.selection && document.selection.type != "Control") { // IE < 9
         document.selection.createRange().pasteHTML(html_str);
     }
+    update_code();
 }
 
+function wrap_selection(tag) {
+    var range = get_selection_range();
+    if(range){
+        var prnt_element = range.commonAncestorContainer;
+        if(is_within("page_preview",prnt_element)){	//insert only if selection on #page_preview
+            var selection = window.getSelection();
+            var temp_element = document.createElement(tag);            
+            temp_element.innerHTML = selection.toString();
+            range.deleteContents();
+            var fragment = document.createDocumentFragment();
+            fragment.appendChild(temp_element);
+            range.insertNode(fragment);
+        }
+    }else if (document.selection && document.selection.type != "Control") { // IE < 9
+        document.selection.createRange().pasteHTML(html_str);
+    }
+    update_code();
+}
+
+function wrap_elements(tag, replace) {
+    var range = last_range;
+    if(range){
+        var prnt_element = range.commonAncestorContainer;
+        if(is_within("page_preview",prnt_element)){	//insert only if selection on #page_preview
+            if(prnt_element.nodeType==3)prnt_element=prnt_element.parentNode;
+            var temp_element = document.createElement(tag);
+            var prev_sibling=null;
+            $(prnt_element.childNodes).each(function (){
+                if (last_selection.containsNode(this, true) || range.startContainer==this || range.startContainer==this.firstChild || range.endContainer==this.firstChild){
+                    if(prev_sibling==null){
+                        prev_sibling=$(this).prev();
+                        if(this.nodeType==3) prev_sibling=$(this.parentNode).prev();
+                    }
+                    temp_element.appendChild(this);
+                }
+            });
+            if(prnt_element.childNodes.length==0 && prnt_element.nodeName.toLowerCase()==tag.toLowerCase()){
+                prnt_element.innerHTML=temp_element.innerHTML;
+            }else if(prnt_element.childNodes.length==0 && $.inArray(prnt_element.nodeName.toLowerCase(),replace)+1){
+                prnt_element.outerHTML=temp_element.outerHTML;
+            }else if(prev_sibling.length) prev_sibling.after(temp_element);
+            else $(prnt_element).prepend(temp_element);
+        }
+    }else if (document.selection && document.selection.type != "Control") { // IE < 9
+        document.selection.createRange().pasteHTML(tag);
+    }
+    update_code();
+}
+
+function change_attribute(attribute,value,style){
+    var range = last_range;
+    if(range){
+        var prnt_element = range.commonAncestorContainer;
+        if(is_within("page_preview",prnt_element)){	//insert only if selection on #page_preview
+            if(prnt_element.nodeType==3)prnt_element=prnt_element.parentNode;
+            $(prnt_element.childNodes).each(function (){
+                if (last_selection.containsNode(this, true) || range.startContainer==this || range.startContainer==this.firstChild || range.endContainer==this.firstChild){
+                    if(this.nodeType!=3 || range.startContainer==range.endContainer){
+                        if(!style) $(this).closest( "div,span,p,h2,h3" ).attr(attribute,value);
+                        else $(this).closest( "div,span,p,h1,h2,h3,h4,li" ).css(attribute,value);
+                    }
+                }
+            });
+        }
+    }
+    update_code();
+}
+
+
 function get_selection_range(){
-    var selection, range;
     if (window.getSelection){   // IE9 and non-IE
-        selection = window.getSelection();
-        if (selection.getRangeAt && selection.rangeCount) {
-            range = selection.getRangeAt(0);
+        last_selection = window.getSelection();
+        if (last_selection.getRangeAt && last_selection.rangeCount) {
+            last_range = last_selection.getRangeAt(0);
         }    
-    }else range=false;
-    return range;
+    }else {
+        last_selection=false;
+        last_range=false;
+    }
+    return last_range;
 }
 
 /**
@@ -117,4 +209,12 @@ function html_to_xml(element,prefix) {
         str=str+"/>\n";
     }
     return str;
+}
+
+function insert_html(cmd){
+    insert_to_selection('---------');
+    if(cmd=='insert-ulist') insert_to_selection('<ul><li>&nbsp;</ul>');
+    else if(cmd=='insert-olist') insert_to_selection('<ol><li>&nbsp;</ol>');
+    else if(cmd=='insert-image') insert_to_selection('<img src="dnd_image" />');
+    update_code();
 }
