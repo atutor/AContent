@@ -16,10 +16,16 @@ if(!$commons->template_exists('page_template', $template)) {
     Header('Location: index.php');
     exit;
 }
+if(isset ($_POST['submit'])) {
+    $commons->save_file("page_template/".$template,$template.".html",$_POST['page_text']);
+}
 
 $html_path=realpath("../templates/page_template")."/". $template."/".$template.".html";
+$screenshot_path=realpath("../templates/page_template")."/". $template."/screenshot.png";
+
 if(file_exists($html_path)) $savant->assign('html_code', file_get_contents($html_path));
 else $savant->assign('html_code', "");
+if(file_exists($screenshot_path)) $savant->assign('screenshot',true);
 $savant->assign('template', $template);
 $savant->assign('base_path', $_base_path);
 $savant->display('template_editor/page_tool.tmpl.php');

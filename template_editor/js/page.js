@@ -1,16 +1,34 @@
 var template,editmode=0;
 var last_selection=false,last_range=false;
+var base_url,last_code="";
 
 $(function() {
     template=get_template_name();
-    $('#page_preview').html($('#page_text').val())  ;
+    $("input:radio[name=edit_mode]").change(function() {
+        editmode=$("input:radio[name=edit_mode]:checked").val();
+        setup_toolbar();
+    });
     $('#page_text').bind('input propertychange', function() {
         update_preview();
     });
     $('#page_preview').mouseup(function() { 
         get_selection_range();
+    });
+    $('#page_preview').change(function() {
         update_code();
     });
+    $('#page_preview').live('focus', function() {
+        last_code = $(this).html();
+    })
+    $('#page_preview').live('blur keyup paste', function() {
+        if (last_code != $(this).html()) {
+            $(this).trigger('change');
+        }
+    });
+    $('#page_preview').mouseover(function(event) {  
+        event.stopPropagation();
+    });
+
     $(".buttons.wrap").click(function() {
         wrap_selection($(this).attr('arg'));
         update_code();
@@ -25,6 +43,9 @@ $(function() {
         insert_html(" ");
         return 0;
     });
+    $("#insert-table").click(function() {
+        $('#table_settings').toggle();
+    });
     $("#format").change(function() {
         if($(this).val()!=='null') wrap_elements($(this).val(),['div','p','h1','h2']);
         $(this).val('null');
@@ -34,7 +55,24 @@ $(function() {
         $(this).val('null');
     });
 
+    $.get("template_editor/ajax_handler.php?get=base_path", function(data) {
+        base_url=data;
+        update_preview();
+    });
+    setup_toolbar();
 });
+
+
+function setup_toolbar(){
+    if(editmode==0){
+        $("#page_text").hide();
+        $("#page_toolbar").show();
+    }else{
+        $("#page_text").show();
+        $("#page_toolbar").hide();
+    }
+    $('#table_settings').hide();
+}
 
 /**
  * Get the name of the currently edditing template
@@ -50,7 +88,8 @@ function get_template_name(){
 }
 
 function update_code(){
-    $('#page_text').val($('#page_preview').html());
+    var temp=$('#page_preview').html().replace(/src=(.*?)dummy_template_image.png/g,'src="dnd_image');
+    $('#page_text').val(temp);
 }
 
 function prettify_code(){
@@ -61,7 +100,8 @@ function prettify_code(){
 }
 
 function update_preview(){
-    $('#page_preview').html($('#page_text').val());
+    var temp=$('#page_text').val().replace(/dnd_image(.png)*/g,base_url+"images/dummy_template_image.png")
+    $('#page_preview').html(temp);
 }
 
 function insert_to_selection(html_str) {
@@ -153,7 +193,6 @@ function change_attribute(attribute,value,style){
     update_code();
 }
 
-
 function get_selection_range(){
     if (window.getSelection){   // IE9 and non-IE
         last_selection = window.getSelection();
@@ -212,9 +251,22 @@ function html_to_xml(element,prefix) {
 }
 
 function insert_html(cmd){
-    insert_to_selection('---------');
     if(cmd=='insert-ulist') insert_to_selection('<ul><li>&nbsp;</ul>');
     else if(cmd=='insert-olist') insert_to_selection('<ol><li>&nbsp;</ol>');
     else if(cmd=='insert-image') insert_to_selection('<img src="dnd_image" />');
+    else if(cmd=='add_table' && $("#num_rows").val()*$("#num_cols").val()<=25) insert_to_selection(generate_table($("#num_rows").val(),$("#num_cols").val()));
     update_code();
+}
+
+function generate_table(rows, columns){
+    var str="<table>";
+    for(var r = 0; r < rows; r++){
+        str=str+"<tr>";
+        for(var c = 0; c < columns; c++){
+            str=str+"<td>cell</td>";
+        }
+        str=str+"</tr>";
+    }
+    str=str+"</table>";
+    return str;
 }

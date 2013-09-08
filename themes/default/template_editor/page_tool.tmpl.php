@@ -20,7 +20,7 @@
             </tbody></table>
     </div>
     <div class="input-form" style="width: 95%;">
-        <div id='layout_topbar'>
+        <div id='page_topbar'>
             <label for="mode_radios" style="margin-left:15px;"><?php echo _AT('edit_mode'); ?></label>
             <span class="bordered" id="mode_radios">
                 <input type="radio" name="edit_mode" value="0" id="basic_mode" title="<?php echo _AT('basic'); ?>" checked="checked" accesskey="b">
@@ -33,9 +33,9 @@
 
         <table border="0" cellpadding="4" style="width:100%">
             <tr>
-                <td valign="top" height="100%">
-                    <div id='layout_toolbar'>
-                        <div class="layout_toolline">                            
+                <td valign="top" height="100%" width="460px">
+                    <div id='page_toolbar'>
+                        <div class="page_toolline">
                             <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
                             <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
                             <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>'>
@@ -73,11 +73,18 @@
                                 <option value="18px">18</option>
                             </select>
                         </div>
+                        <div id="table_settings" class="layout_toolline">
+                            <label for="num_rows"><?php echo _AT('number_of_rows'); ?>:</label>
+                            <input id="num_rows" type="text" size="5" style="width:30px;" value="1">
+                            <label for="num_cols"><?php echo _AT('number_of_columns'); ?>:</label>
+                            <input id="num_cols" type="text" size="5" style="width:30px;" value="1">
+                            <img id="add_table" class="buttons insert" src="<?php echo $this->base_path;?>images/clr.gif" alt='<?php echo _AT('insert'); ?>' title='<?php echo _AT('insert'); ?>'>
+                        </div>
                     </div>
-                    <textarea  id="page_text" name="css_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px'> <?php  echo $this->html_code; ?></textarea>
+                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; '> <?php  echo $this->html_code; ?></textarea>
                 </td>
                 <td valign="top" height="100%" id='page_preview_cell'>
-                    <div id='page_preview' contenteditable="true" style='height:100%; width:400px; min-height:300px; margin:15px;'>
+                    <div id='page_preview' contenteditable="true" style='height:100%; min-width:400px; min-height:300px; margin:15px;'>
 
                     </div>
                 </td>
@@ -85,3 +92,19 @@
         </table>
     </div>
 </form>
+
+<div class="input-form" style="width: 95%;">
+    <h4 style="margin:2px 0 7px 0;"><?php echo _AT('screenshot'); ?></h4>
+    <div>
+        <?php
+        $img_path=$this->base_path."templates/page_template/". $this->template."/screenshot.png";
+        if(isset($this->screenshot))  echo "<img src='".$img_path."' alt='"._AT('screenshot')."'>";
+        ?>
+    </div>
+    <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
+        <label for="file"><?php echo _AT('file'); ?>:</label>
+        <input type="file" name="file" id="file" accesskey="n" title="<?php echo _AT('upload'); ?>">
+        <input type="submit" name="uploadscrn" value="<?php echo _AT('upload'); ?>">
+        <input type="submit" value="<?php echo _AT('generate'); ?>">
+    </form>
+</div>
