@@ -11,6 +11,10 @@ $(function() {
     $('#page_text').bind('input propertychange', function() {
         update_preview();
     });
+    $('#generate_scrn').click(function() { 
+        generate_screenshot(); return false;
+    });
+    
     $('#page_preview').mouseup(function() { 
         get_selection_range();
     });
@@ -269,4 +273,66 @@ function generate_table(rows, columns){
     }
     str=str+"</table>";
     return str;
+}
+
+function generate_screenshot(){
+    draw_on_canvas($('#page_preview')[0]);
+}
+
+function draw_on_canvas(element){
+    if(element.nodeType != 3)draw_element(element);
+    if (element.hasChildNodes()) {
+        var child = element.firstChild;
+        while (child) {
+            draw_on_canvas(child);
+            child = child.nextSibling;
+        }
+    }
+}
+
+function draw_element(element){
+    var canvas = document.getElementById("screenshot_canvas");
+    var yy=3;
+    var ctx = canvas.getContext("2d");
+    ctx.lineWidth=0.5;
+    var width=100, height=200;
+    var tag_name=element.tagName.toLowerCase();
+    if(tag_name=='h3'){
+        ctx.strokeRect(3,yy,width,10); yy=yy+14;
+    }if(tag_name=='h2'){
+        ctx.strokeRect(3,yy,width,30); yy=yy+34;
+    }if(tag_name=='table'){
+        var ch=30/element.children.length;
+        var cw=width/get_column_count(element);
+        var row = element.firstChild;
+        var y=0;
+        while (row) {
+            var col = row.firstChild;
+            var x=0;
+            while (col) {
+                ctx.strokeRect(3+ x*cw,yy+y*ch,cw,ch);
+                col = col.nextSibling;
+                x++;
+            }
+            row = row.nextSibling;
+            y++;
+        }
+    }if(tag_name=='div'){
+        ctx.beginPath();
+        ctx.moveTo(6,yy+6);
+        ctx.lineTo(width-5,yy+6);
+        ctx.stroke();
+        ctx.strokeRect(3,yy,width,30); yy=yy+34;
+    }
+}
+
+function get_column_count(element){
+    var colcount=0;
+    var row = element.firstChild;
+    while (row) {
+        clmns=row.children.length;
+        if(clmns>colcount) colcount=clmns;
+        row = row.nextSibling;
+    }
+    return colcount;
 }

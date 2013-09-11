@@ -19,6 +19,9 @@ if(!$commons->template_exists('page_template', $template)) {
 if(isset ($_POST['submit'])) {
     $commons->save_file("page_template/".$template,$template.".html",$_POST['page_text']);
 }
+if(isset ($_POST['uploadscrn'])) {
+    echo $commons->upload_image("page_template/".$template,"screenshot.png");
+}
 
 $html_path=realpath("../templates/page_template")."/". $template."/".$template.".html";
 $screenshot_path=realpath("../templates/page_template")."/". $template."/screenshot.png";

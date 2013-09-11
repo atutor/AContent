@@ -274,10 +274,32 @@ class TemplateCommons {
      */
     private function remove_dir_content($directory) {
         foreach(glob($directory . '/*') as $file) {
-            if(is_dir($file)) rrmdir($file); else unlink($file);
+            if(is_dir($file)) $this->rrmdir($file); else unlink($file);
         } rmdir($directory);
     }
+    /**
+     * recursively remove a directory
+     * @access  private
+     * @param   string $dir   directory to remove
+     */
+    private function rrmdir($dir) {
+        foreach(glob($dir . '/*') as $file) {
+            if(is_dir($file))
+                rrmdir($file);
+            else
+                unlink($file);
+        }
+        rmdir($dir);
+    }
 
+    /**
+     * save a given text into a file
+     * @access  public
+     * @param   string $directory   directory to save the file
+     * @param   string $file   file name to save
+     * @param   string $message  content to save
+     * @author  SupunGS
+     */
     public function save_file($directory,$file_name,$message) {
         $file_path=$this->template_dir.$directory."/".$file_name;
         $file = fopen($file_path,"w");
@@ -285,6 +307,13 @@ class TemplateCommons {
         fclose($file);
     }
 
+    /**
+     * get the list of images within a given directory
+     * @access  public
+     * @param   string $directory   directory to scan
+     * @return  array    list of images
+     * @author  SupunGS
+     */
     public function get_image_list($directory) {
         $dir=realpath($this->template_dir . $directory);
         if (!file_exists($dir)) return array();
@@ -305,7 +334,7 @@ class TemplateCommons {
      * @param   string $directory   directory to remove
      * @author  SupunGS
      */
-    public function delete_file($directory,$file_name){
+    public function delete_file($directory,$file_name) {
         $path=realpath($this->template_dir .$directory)."/". $file_name;
         unlink($path);
     }

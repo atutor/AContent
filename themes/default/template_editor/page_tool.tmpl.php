@@ -45,8 +45,8 @@
                             <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>'>
                             <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>'>
                             <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>'>
-                            <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('insert_image'); ?>' title='<?php echo _AT('insert_image'); ?>'>
-                            <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('insert_table'); ?>' title='<?php echo _AT('insert_table'); ?>'>
+                            <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('image'); ?>' title='<?php echo _AT('image'); ?>'>
+                            <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>'>
                         </div>
                         <div class="layout_toolline">
                             <select id="format" name="format" style="width:130px;">
@@ -100,11 +100,12 @@
         $img_path=$this->base_path."templates/page_template/". $this->template."/screenshot.png";
         if(isset($this->screenshot))  echo "<img src='".$img_path."' alt='"._AT('screenshot')."'>";
         ?>
+        <canvas width=200 height=200 id="screenshot_canvas"></canvas>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
         <label for="file"><?php echo _AT('file'); ?>:</label>
         <input type="file" name="file" id="file" accesskey="n" title="<?php echo _AT('upload'); ?>">
         <input type="submit" name="uploadscrn" value="<?php echo _AT('upload'); ?>">
-        <input type="submit" value="<?php echo _AT('generate'); ?>">
+        <input id="generate_scrn" type="submit" value="<?php echo _AT('auto_generate'); ?>">
     </form>
 </div>
