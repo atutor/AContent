@@ -17,7 +17,7 @@ $(function() {
         setup_toolbar();
     });
     $("#css_text").change(function() {
-        //convert_code();
+        convert_code();
         add_preview_styles(parseCSS($("#css_text").val()));
     });
     
@@ -118,7 +118,7 @@ function setup_toolbar(){
                 $('#border-color').val(ruleval.color.replace(/#/g,""));
             }else if($('#layout_toolbar #'+property).length ) $('#layout_toolbar #'+property).val(ruleval);
             else if(property.match(/comment|font-weight|font-style|text-align/)) continue;
-            else{
+            else{   //custom property
                 str=str+"<tr><td>";
                 str=str+'<label for="'+property+'">'+property+':</label></td>';
                 str=str+'<td><input class="custom_property" id="'+property+'" type="text" size="15" value="'+rules[property]+'">';
@@ -306,7 +306,7 @@ function get_css_code(sheet){
  */
 function get_selected_style(tag){
     var selector="";
-    if (typeof tag == 'undefined') {
+    if (typeof tag == 'undefined') { // selected on code
         var pos=get_caret(document.getElementById("css_text"));
         var code=$("#css_text").val();
         if(pos<code.length){
@@ -319,7 +319,7 @@ function get_selected_style(tag){
         }else{
             selector=lastselected;
         }
-    }else{
+    }else{ // selected on preview
         tag=tag.toLowerCase();
         for (i = 0; i < csssheet.length; i++) {
             var temp=csssheet[i].selector.toLowerCase();
@@ -401,14 +401,14 @@ function get_caret(element) {
     } else if (document.selection) {
         element.focus();
 
-        var r = document.selection.createRange();
-        if (r == null) {
+        var rng = document.selection.createRange();
+        if (rng == null) {
             return 0;
         }
 
         var re = element.createTextRange(),
         rc = re.duplicate();
-        re.moveToBookmark(r.getBookmark());
+        re.moveToBookmark(rng.getBookmark());
         rc.setEndPoint('EndToStart', re);
 
         return rc.text.length;

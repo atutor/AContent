@@ -102,15 +102,22 @@
 #layout_toolbar #align-justify{ background-position: -79px 0; }
 #layout_toolbar #align-left{ background-position: -99px 0; }
 #layout_toolbar #align-right{ background-position: -119px 0; }
+#layout_toolbar #insert-ulist{ background-position: -160px 0; }
+#layout_toolbar #insert-olist{ background-position: -180px 0; }
+#layout_toolbar #insert-image{ background-position: 0 -20px; }
+#layout_toolbar #insert-table{ background-position: -20px -20px; }
 
-#layout_toolbar #add_rule{
+
+#layout_toolbar #add_table, #add_rule{
     background-image:url('../../../images/layout_toolbar.png');
     background-repeat: no-repeat;
     width:20px;
-    height:20px;
-    margin-bottom: -4px;
-    background-position: -139px 0;
+    height:20px;padding:0px;
+    margin-bottom: -5px;
 }
+
+#layout_toolbar #add_table{ background-position: -40px -20px;}
+#layout_toolbar #add_rule{  background-position: -139px 0;}
 
 
 #layout_toolbar label{
@@ -151,3 +158,69 @@
 .confirm{ margin:7px 5px 0px 15px; }
 
 .confirm input{ margin:0 5px 0px 5px; }
+
+
+
+#page_preview_cell{
+    background-color:#ffffff;
+}
+#page_preview div,ul,li,h2,h3{
+    border: 1px solid transparent;
+}
+#page_preview div:hover,ul:hover,li:hover,h2:hover,h3:hover{
+    border: 1px dotted #d2d2d0;
+}
+
+#page_toolbar .buttons{
+    background-image:url('../../../images/layout_toolbar.png');
+    background-repeat: no-repeat;
+    width:16px;
+    height:16px;
+    padding:2px;
+    border: 1px solid #f0f0ee;
+}
+#page_toolbar  .buttons:hover{
+    background-color:#b2bbd0;
+    border: 1px solid #0a246a;
+}
+
+#page_toolbar  table{
+    margin:5px 0;
+    border-spacing:2px;
+}
+#page_toolbar td{
+    padding:4px 3px 3px 3px;
+}
+
+.page_toolline{
+    margin:7px 1px 9px 5px;
+}
+#page_toolbar input{
+    width:94px;
+    max-width:100%;
+}
+
+#page_toolbar #bold{ background-position: 0 0; }
+#page_toolbar #italic{ background-position: -20px 0; }
+#page_toolbar #underline{ background-position: -39px 0; }
+#page_toolbar #align-center{ background-position: -59px 0; }
+#page_toolbar #align-justify{ background-position: -79px 0; }
+#page_toolbar #align-left{ background-position: -99px 0; }
+#page_toolbar #align-right{ background-position: -119px 0; }
+#page_toolbar #insert-ulist{ background-position: -160px 0; }
+#page_toolbar #insert-olist{ background-position: -180px 0; }
+#page_toolbar #insert-image{ background-position: 0 -20px; }
+#page_toolbar #insert-table{ background-position: -20px -20px; }
+
+#page_toolbar #add_table{
+    background-image:url('../../../images/layout_toolbar.png');
+    background-repeat: no-repeat;
+    background-position: -40px -20px;
+    width:20px;
+    height:20px;padding:0px;
+    margin-bottom: -5px;
+}
+
+#page_toolbar label{
+    font-size:	13px;
+}
