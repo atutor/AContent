@@ -76,6 +76,7 @@ $(function() {
         }
     });
 
+    //get language texts for tree elements and base_path
     $.get("template_editor/ajax_handler.php?get=struc_elements", function(data) {
         element_names=JSON.parse(data);
         $.get("template_editor/ajax_handler.php?get=base_path", function(data) {
@@ -158,7 +159,7 @@ function draw_tree(){
     var doc = parser.parseFromString(xml, "text/xml"); 
     $('#tree_preview').html(generate_tree(doc))  ;
 
-    $('[class^=tree_]' ).each(function(index, item) {
+    $('[class^=tree_]' ).each(function(index, item) {   //add sortable for all the tree elements
         $(item).sortable({
             revert: false ,
             connectWith: "."+$(item).attr('class'),
@@ -167,7 +168,7 @@ function draw_tree(){
             }
         }).disableSelection();
     });
-    $('.items').click(function(e) {
+    $('.items').click(function(e) {     // add click event handler for tree elements
         $('.items' ).removeAttr("selected");
         $(this).attr("selected","true");
         selected_item=$(this).parent();
@@ -184,6 +185,7 @@ function generate_xml(){
     history_stack.record($('#xml_text').val());
     var parser = new DOMParser();
     var htmlstr=$('#tree_preview').html();
+    // remove unwanted tags from the code
     htmlstr=htmlstr.replace(/<ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<\/ol(.*?)>/g,"");
     htmlstr=htmlstr.replace(/<span(.*?)span>/g,"");
@@ -205,7 +207,7 @@ function generate_tree(element, parent) {
     var str="<ol class='"+ parent_class+"'>";
     $.each(element.childNodes,function(index, child){
         if(child.nodeType !=3){
-            if(child.nodeName=="structure")
+            if(child.nodeName=="structure") // super parent node
                 str=str+ "<li type='"+child.nodeName +"' name='"+ child.getAttribute('name') +
                 "'><span class='node_icons'><img src='"+base_url+"images/tree/tree_folder.gif' alt='"+ element_names[child.nodeName] +"'></span>"+
                 "<a href='javascript:;' class='items' accesskey='z'>"+ get_node_text('structure',  child.getAttribute('name'))+"</a>" ;
@@ -287,7 +289,7 @@ function html_to_xml(element,prefix) {
     if(element.hasChildNodes() && element.childElementCount>0 ){
         str=str+">\n";
         $.each(element.childNodes,function (index, child){
-            if(child && child.nodeType !=3){
+            if(child && child.nodeType !=3){    // if not a textNode
                 var childstr=   html_to_xml(child,prefix+"  ");
                 str=str+childstr;
             }
@@ -377,7 +379,7 @@ function move_down(element){
     var sibling=element.next();
     if (sibling.length){
         $(sibling).after(element);
-    }else if(parent.attr('type')!='structure'){       
+    }else if(parent.attr('type')!='structure'){   
         var next=parent.next();
         var cls=element.parent().attr('class').split(" ")[0];
         while(true){
