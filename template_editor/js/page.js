@@ -1,6 +1,7 @@
 var template,editmode=0;
 var last_selection=false,last_range=false;
 var base_url,last_code="";
+var imgy=3;
 
 $(function() {
     template=get_template_name();
@@ -51,7 +52,7 @@ $(function() {
         $('#table_settings').toggle();
     });
     $("#format").change(function() {
-        if($(this).val()!=='null') wrap_elements($(this).val(),['div','p','h1','h2']);
+        if($(this).val()!=='null') wrap_elements($(this).val(),['div','p','h2','h3','h4']);
         $(this).val('null');
     });
     $("#font-family, #font-size").change(function() {
@@ -61,7 +62,7 @@ $(function() {
 
     $.get("template_editor/ajax_handler.php?get=base_path", function(data) {
         base_url=data;
-        update_preview();
+        update_preview();        
     });
     setup_toolbar();
 });
@@ -70,10 +71,10 @@ $(function() {
 function setup_toolbar(){
     if(editmode==0){
         $("#page_text").hide();
-        $("#page_toolbar").show();
+        $("#page_preview, #page_toolbar").show();
     }else{
         $("#page_text").show();
-        $("#page_toolbar").hide();
+        $("#page_preview, #page_toolbar").hide();
     }
     $('#table_settings').hide();
 }
@@ -255,11 +256,14 @@ function html_to_xml(element,prefix) {
 }
 
 function insert_html(cmd){
-    if(cmd=='insert-ulist') insert_to_selection('<ul><li>&nbsp;</ul>');
-    else if(cmd=='insert-olist') insert_to_selection('<ol><li>&nbsp;</ol>');
+    if(cmd=='insert-ulist') insert_to_selection('<ul><li>item1<li>item2</ul>');
+    else if(cmd=='insert-olist') insert_to_selection('<ol><li>item1<li>item2</ol>');
     else if(cmd=='insert-image') insert_to_selection('<img src="dnd_image" />');
+    else if(cmd=='insert-paragraph') insert_to_selection('<p>Paragraph</p>');
+    else if(cmd=='insert-link') insert_to_selection('<a href="#">Link</a>');
     else if(cmd=='add_table' && $("#num_rows").val()*$("#num_cols").val()<=25) insert_to_selection(generate_table($("#num_rows").val(),$("#num_cols").val()));
     update_code();
+    update_preview();
 }
 
 function generate_table(rows, columns){
@@ -276,6 +280,11 @@ function generate_table(rows, columns){
 }
 
 function generate_screenshot(){
+    var canvas = document.getElementById("screenshot_canvas");
+    var ctx = canvas.getContext("2d");
+    canvas.width=canvas.width;
+    ctx.lineWidth=1;ctx.strokeStyle="#666";
+    imgy=3;
     draw_on_canvas($('#page_preview')[0]);
 }
 
@@ -292,47 +301,86 @@ function draw_on_canvas(element){
 
 function draw_element(element){
     var canvas = document.getElementById("screenshot_canvas");
-    var yy=3;
     var ctx = canvas.getContext("2d");
-    ctx.lineWidth=0.5;
-    var width=100, height=200;
+    var width=150, height=200;
     var tag_name=element.tagName.toLowerCase();
-    if(tag_name=='h3'){
-        ctx.strokeRect(3,yy,width,10); yy=yy+14;
-    }if(tag_name=='h2'){
-        ctx.strokeRect(3,yy,width,30); yy=yy+34;
+    if(tag_name=='h2'){
+        ctx.strokeRect(3,imgy,width,21); imgy=imgy+25;
+    }if(tag_name=='h3'){
+        ctx.strokeRect(3,imgy,width,18); imgy=imgy+22;
+    }if(tag_name=='h4'){
+        ctx.strokeRect(3,imgy,width,15); imgy=imgy+19;
     }if(tag_name=='table'){
-        var ch=30/element.children.length;
+        var ch=80/element.children[0].children.length;
         var cw=width/get_column_count(element);
-        var row = element.firstChild;
         var y=0;
-        while (row) {
-            var col = row.firstChild;
+        $.each(element.children[0].children,function(index, row){
             var x=0;
-            while (col) {
-                ctx.strokeRect(3+ x*cw,yy+y*ch,cw,ch);
-                col = col.nextSibling;
+            $.each(row.children,function(index, col){
+                ctx.strokeRect(4+ x*cw,imgy+y*ch,cw-2.5,ch-2.5);
+                draw_line(ctx,3+ (x+0.2)*cw,imgy+(y+0.3)*ch,3+ (x+0.8)*cw,imgy+(y+0.3)*ch);
+                draw_line(ctx,3+ (x+0.2)*cw,imgy+(y+0.6)*ch,3+ (x+0.8)*cw,imgy+(y+0.6)*ch);
+                draw_containing_images(col,ctx,x*cw,imgy+y*ch,cw-2.5,ch-2.5);
                 x++;
-            }
-            row = row.nextSibling;
+            });
             y++;
+        });
+    }if(tag_name=='div' && is_rendable(element)){        
+        draw_line(ctx,width/6,imgy+10,width-width/6,imgy+10);
+        draw_line(ctx,width/6,imgy+20,width-width/6,imgy+20);
+        ctx.strokeRect(3,imgy,width,30); 
+        draw_containing_images(element,ctx,3,imgy,width,30);
+        imgy=imgy+34;
+    }if(tag_name=='img'){
+        if(element.parentElement==$('#page_preview')[0] || !is_rendable(element.parentElement)&& element.parentElement.parentElement==$('#page_preview')[0]){
+            var imgrect = element.getBoundingClientRect();
+            var prntrect = $('#page_preview')[0].getBoundingClientRect();
+            var relx=(imgrect.left-prntrect.left)*width/prntrect.width;
+            if(relx+25>width) relx=width-26;
+            ctx.drawImage(element,3+relx,imgy,25,25);
+            imgy=imgy+30;
         }
-    }if(tag_name=='div'){
-        ctx.beginPath();
-        ctx.moveTo(6,yy+6);
-        ctx.lineTo(width-5,yy+6);
-        ctx.stroke();
-        ctx.strokeRect(3,yy,width,30); yy=yy+34;
     }
+}
+
+function draw_containing_images(element,ctx,x,y,cw,ch){
+    $(element).find('img').each(function(){
+        if(this.parentElement==element || this.parentElement.parentElement==element && !is_rendable(this.parentElement)){
+            var img=this;
+            var imgrect = img.getBoundingClientRect();
+            var elmrect = element.getBoundingClientRect();
+            var relx=(imgrect.left-elmrect.left)*cw/elmrect.width;
+            var rely=(imgrect.top-elmrect.top)*ch/elmrect.height;
+            if(relx+25>cw)relx=cw-29;
+            ctx.drawImage(img,x+relx,y+rely,25,25);
+        }
+    });
+}
+
+function draw_line(ctx,x1,y1,x2,y2){
+    var temp=ctx.strokeStyle;
+    ctx.strokeStyle="#999";
+    ctx.beginPath();
+    ctx.moveTo(x1,y1);
+    ctx.lineTo(x2,y2);
+    ctx.stroke();
+    ctx.strokeStyle=temp;
 }
 
 function get_column_count(element){
     var colcount=0;
-    var row = element.firstChild;
-    while (row) {
-        clmns=row.children.length;
+    var rows = element.children[0].children;
+    for (i = 0; i < rows.length; i++) {
+        clmns=rows[i].children.length;
         if(clmns>colcount) colcount=clmns;
-        row = row.nextSibling;
     }
     return colcount;
+}
+
+function is_rendable(element){
+    var children=element.childNodes;
+    for (i = 0; i < children.length; i++) {
+        if(children[i].nodeType==3 && $.trim(children[i].data) !="") return true;
+    }
+    return false;
 }

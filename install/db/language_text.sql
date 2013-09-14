@@ -963,8 +963,9 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTION
 ('en', '_template', 'ordered_list', 'Ordered List', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'image', 'Image', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'table', 'Table', '2013-09-08 09:40:00', ''),
+('en', '_template', 'link', 'Link', '2013-09-08 09:40:00', ''),
+('en', '_template', 'paragraph', 'Paragraph', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'format', 'Format', '2013-09-08 09:40:00', ''),
-('en', '_template', 'rows', 'Rows', '2013-09-08 09:40:00', ''),
-('en', '_template', 'columns', 'Columns', '2013-09-08 09:40:00', ''),
-('en', '_template', 'columns', 'Columns', '2013-09-08 09:40:00', ''),
+('en', '_template', 'number_of_rows', 'Rows', '2013-09-08 09:40:00', ''),
+('en', '_template', 'number_of_columns', 'Columns', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'auto_generate', 'Auto Generate', '2013-09-08 09:40:00', '');

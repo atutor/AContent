@@ -161,13 +161,13 @@
 
 
 
-#page_preview_cell{
+#page_preview{
     background-color:#ffffff;
 }
-#page_preview div,ul,li,h2,h3{
+#page_preview *{
     border: 1px solid transparent;
 }
-#page_preview div:hover,ul:hover,li:hover,h2:hover,h3:hover{
+#page_preview *:hover{
     border: 1px dotted #d2d2d0;
 }
 
@@ -211,6 +211,8 @@
 #page_toolbar #insert-olist{ background-position: -180px 0; }
 #page_toolbar #insert-image{ background-position: 0 -20px; }
 #page_toolbar #insert-table{ background-position: -20px -20px; }
+#page_toolbar #insert-link{ background-position: -60px -20px; }
+#page_toolbar #insert-paragraph{ background-position: -80px -20px; }
 
 #page_toolbar #add_table{
     background-image:url('../../../images/layout_toolbar.png');

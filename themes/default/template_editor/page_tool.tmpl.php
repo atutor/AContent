@@ -33,28 +33,34 @@
 
         <table border="0" cellpadding="4" style="width:100%">
             <tr>
-                <td valign="top" height="100%" width="460px">
+                <td valign="top" height="100%" >
                     <div id='page_toolbar'>
                         <div class="page_toolline">
-                            <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
-                            <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
-                            <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>'>
-                            <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons attrib" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>'>
-                            <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>'>
-                            <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>'>
-                            <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>'>
-                            <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>'>
-                            <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>'>
-                            <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('image'); ?>' title='<?php echo _AT('image'); ?>'>
-                            <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>'>
+                            <div style='float:left;'>
+                                <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
+                                <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
+                                <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>'>
+                                <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons attrib" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>'>
+                                <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>'>
+                                <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>'>
+                                <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>'>
+                            </div>
+                            <div style='float:left; margin:0 10px 1px 20px;'>
+                                <img id="insert-paragraph" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('paragraph'); ?>' title='<?php echo _AT('paragraph'); ?>'>
+                                <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>'>
+                                <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>'>
+                                <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('image'); ?>' title='<?php echo _AT('image'); ?>'>
+                                <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>'>
+                                <img id="insert-link" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('link'); ?>' title='<?php echo _AT('link'); ?>'>
+                            </div>
                         </div>
                         <div class="layout_toolline">
                             <select id="format" name="format" style="width:130px;">
                                 <option value="null"><?php echo _AT('format'); ?></option>
                                 <option value="p">P</option>
-                                <option value="h1">H1</option>
                                 <option value="h2">H2</option>
                                 <option value="h3">H3</option>
+                                <option value="h4">H4</option>
                             </select>
                             <select id="font-family" name="font-family" style="width:130px;">
                                 <option value="null" selected><?php echo _AT('font_family'); ?></option>
@@ -81,9 +87,7 @@
                             <img id="add_table" class="buttons insert" src="<?php echo $this->base_path;?>images/clr.gif" alt='<?php echo _AT('insert'); ?>' title='<?php echo _AT('insert'); ?>'>
                         </div>
                     </div>
-                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; '> <?php  echo $this->html_code; ?></textarea>
-                </td>
-                <td valign="top" height="100%" id='page_preview_cell'>
+                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; '><?php  echo $this->html_code; ?></textarea>
                     <div id='page_preview' contenteditable="true" style='height:100%; min-width:400px; min-height:300px; margin:15px;'>
 
                     </div>
