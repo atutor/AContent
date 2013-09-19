@@ -15,19 +15,24 @@ require(TR_INCLUDE_PATH.'vitals.inc.php');
 require('classes/TemplateCommons.php');
 global $_base_path;
 
-if(isset ($_GET['get'])){
-    if($_GET['get']=='struc_elements'){
+if(isset ($_GET['get'])) {
+    if($_GET['get']=='struc_elements') {
         get_structure_elements();
-    }elseif($_GET['get']=='base_path'){
+    }elseif($_GET['get']=='base_path') {
         echo $_base_path;
     }
-}elseif(isset ($_GET['action'])){
+}elseif(isset ($_GET['action'])) {
     $commons=new TemplateCommons('../templates');
-    if($_GET['action']=='delete_image'){
+    if($_GET['action']=='delete_image') {
         $template=$_GET['temp'];
         $file=$_GET['file'];
         $commons->delete_file("layout/".$template."/".$template, $file);
     }
+}elseif(isset ($_POST['action']) && $_POST['action']=='upload_image') {
+    $dataURL = $_POST["image"];
+    $template=$_POST['temp'];
+    $commons=new TemplateCommons('../templates');
+    $commons->save_DataURL_image($dataURL,"page_template/".$template,"screenshot.png");
 }
 
 /**
@@ -35,7 +40,7 @@ if(isset ($_GET['get'])){
  * @access  private
  * @author  SupunGS
  */
-function get_structure_elements(){
+function get_structure_elements() {
     $elements=array();
     $elements['structure']=_AT('structure');
     $elements['folder']=_AT('folder');

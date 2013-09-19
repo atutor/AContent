@@ -161,8 +161,9 @@
 
 
 
-#page_preview{
+#page_prev_container{
     background-color:#ffffff;
+    padding:2px;
 }
 #page_preview *{
     border: 1px solid transparent;
@@ -225,4 +226,8 @@
 
 #page_toolbar label{
     font-size:	13px;
+}
+
+#screenshot_img{
+    margin:2px 0px 5px 5px;
 }

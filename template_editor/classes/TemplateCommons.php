@@ -277,6 +277,7 @@ class TemplateCommons {
             if(is_dir($file)) $this->rrmdir($file); else unlink($file);
         } rmdir($directory);
     }
+    
     /**
      * recursively remove a directory
      * @access  private
@@ -337,6 +338,26 @@ class TemplateCommons {
     public function delete_file($directory,$file_name) {
         $path=realpath($this->template_dir .$directory)."/". $file_name;
         unlink($path);
+    }
+
+    /**
+     * save dataURL data as an image
+     * @access  public
+     * @param   DataURL $dataURL  dataURL to save
+     * @param   string $directory  directory to save the image
+     * @param   string $file_name  file name of the image
+     * @author  SupunGS
+     */
+    function save_DataURL_image($dataURL,$directory,$file_name) {
+        $parts = explode(',', $dataURL);
+        $data = $parts[1];
+        // Decode Base64 data
+        $data = base64_decode($data);
+        // Save data as an image
+        $destination=$this->template_dir.$directory;
+        $fp = fopen( $destination."/". $file_name, 'w');
+        fwrite($fp, $data);
+        fclose($fp);
     }
 }
 ?>

@@ -4,19 +4,20 @@ var base_url,last_code="";
 var imgy=3;
 
 $(function() {
+    /* ---- Event handlers -------- */
     template=get_template_name();
-    $("input:radio[name=edit_mode]").change(function() {
+    $("input:radio[name=edit_mode]").change(function() {    //radio box for edit mode
         editmode=$("input:radio[name=edit_mode]:checked").val();
         setup_toolbar();
     });
-    $('#page_text').bind('input propertychange', function() {
+    $('#page_text').bind('input propertychange keyup', function() {     //preview panel edit
         update_preview();
     });
-    $('#generate_scrn').click(function() { 
+    $('#generate_scrn').click(function() {  //screenshot generate button
         generate_screenshot(); return false;
     });
     
-    $('#page_preview').mouseup(function() { 
+    $('#page_preview').mouseup(function() { //store last selection on preview panel mouse up
         get_selection_range();
     });
     $('#page_preview').change(function() {
@@ -34,14 +35,14 @@ $(function() {
         event.stopPropagation();
     });
 
-    $(".buttons.wrap").click(function() {
+    $(".buttons.wrap").click(function() {   //toolbar buttons that wraps selection with a tag
         wrap_selection($(this).attr('arg'));
         update_code();
     });
-    $(".buttons.insert").click(function() {
+    $(".buttons.insert").click(function() {   //toolbar buttons that insert into selection
         insert_html($(this).attr('id'));
     });
-    $(".buttons.attrib").click(function() {
+    $(".buttons.attrib").click(function() {   //toolbar buttons that changes selected elements' attributes
         change_attribute("align",$(this).attr('arg'));
     });
     $(".tagbtn").click(function() {
@@ -60,11 +61,13 @@ $(function() {
         $(this).val('null');
     });
 
+    /* --- Runs onload ---- */
     $.get("template_editor/ajax_handler.php?get=base_path", function(data) {
         base_url=data;
         update_preview();        
     });
     setup_toolbar();
+    $("#screenshot_canvas").hide();
 });
 
 
@@ -92,23 +95,29 @@ function get_template_name(){
     return str;
 }
 
+/**
+ * Update the code in text area
+ * @author SupunGS
+ */
 function update_code(){
     var temp=$('#page_preview').html().replace(/src=(.*?)dummy_template_image.png/g,'src="dnd_image');
     $('#page_text').val(temp);
 }
 
-function prettify_code(){
-    var html_str=$('#page_preview').html();
-    var temp_element = document.createElement("DIV");
-    temp_element.innerHTML = html_str;
-    $('#page_text').val(html_to_xml($(temp_element.children(0)),""));
-}
-
+/**
+ * Update the preview panel
+ * @author SupunGS
+ */
 function update_preview(){
     var temp=$('#page_text').val().replace(/dnd_image(.png)*/g,base_url+"images/dummy_template_image.png")
     $('#page_preview').html(temp);
 }
 
+/**
+ * Insert an html string in to the current selection
+ * @author SupunGS
+ * @param {string} html_str html string to insert
+ */
 function insert_to_selection(html_str) {
     var range = last_range;
     if(range){
@@ -130,6 +139,11 @@ function insert_to_selection(html_str) {
     update_code();
 }
 
+/**
+ * Wrap current selection with a html tag
+ * @author SupunGS
+ * @param {string} tag html tag to surround
+ */
 function wrap_selection(tag) {
     var range = get_selection_range();
     if(range){
@@ -149,6 +163,12 @@ function wrap_selection(tag) {
     update_code();
 }
 
+/**
+ * Wrap elements in current selection with a html tag. If a given wraping tag already exists replace it
+ * @author SupunGS
+ * @param {string} tag tag to surround
+ * @param {array} replace array of tag names to replace if currently wrpaing
+ */
 function wrap_elements(tag, replace) {
     var range = last_range;
     if(range){
@@ -179,6 +199,13 @@ function wrap_elements(tag, replace) {
     update_code();
 }
 
+/**
+ * Change an attribute of the elements in current selection
+ * @author SupunGS
+ * @param {string} attribute attribute to change
+ * @param {string} value new value
+ * @param {boolean} style whether css attribute
+ */
 function change_attribute(attribute,value,style){
     var range = last_range;
     if(range){
@@ -198,6 +225,11 @@ function change_attribute(attribute,value,style){
     update_code();
 }
 
+/**
+ * Get the current selection range on the page
+ * @author SupunGS
+ * @return {Range} current selection range
+ */
 function get_selection_range(){
     if (window.getSelection){   // IE9 and non-IE
         last_selection = window.getSelection();
@@ -220,7 +252,7 @@ function get_selection_range(){
  */
 function is_within(container,element) {
     rst=false;
-    parent = element;
+    var parent = element;
     while(parent){
         if (parent.id==container)
             return true;
@@ -230,31 +262,11 @@ function is_within(container,element) {
     return false;
 }
 
-function html_to_xml(element,prefix) {
-    var str=prefix+ "<"+element.prop("tagName") ;
-    $(element[0].attributes).each(function() {
-        console.log(this.nodeName+':'+this.nodeValue);
-        str=str+ ' ' + this.nodeName+'="'+this.nodeValue+'"';
-    });
-    if(element[0].childNodes.length>0 ){
-        var data=element[0].firstChild.data;
-        str=str+">\n";
-        $(element[0].childNodes).each(function (){
-            if(this.nodeType !=3){
-                var childstr=   html_to_xml($(this),prefix+"	");
-                str=str+childstr;
-            }else{
-                var data=$.trim(this.data);
-                if(data!="") str=str+ prefix+"	"+ data+"\n";
-            }
-        });
-        str=str+ prefix+ "</"+element.prop("tagName")+">\n";
-    }else{
-        str=str+"/>\n";
-    }
-    return str;
-}
-
+/**
+ * Insert the relevent html code in to the selection
+ * @author SupunGS
+ * @param {string} cmd command specifying the code to insert
+ */
 function insert_html(cmd){
     if(cmd=='insert-ulist') insert_to_selection('<ul><li>item1<li>item2</ul>');
     else if(cmd=='insert-olist') insert_to_selection('<ol><li>item1<li>item2</ol>');
@@ -266,6 +278,13 @@ function insert_html(cmd){
     update_preview();
 }
 
+/**
+ * Get the html code for a table with given number of rows and columns
+ * @author SupunGS
+ * @param {Number} rows number of rows
+ * @param {Number} columns number of columns
+ * @return {Number} html code for the table
+ */
 function generate_table(rows, columns){
     var str="<table>";
     for(var r = 0; r < rows; r++){
@@ -279,30 +298,49 @@ function generate_table(rows, columns){
     return str;
 }
 
+/**
+ * Auto generate a screenshot image for the template
+ * @author SupunGS
+ */
 function generate_screenshot(){
     var canvas = document.getElementById("screenshot_canvas");
     var ctx = canvas.getContext("2d");
     canvas.width=canvas.width;
     ctx.lineWidth=1;ctx.strokeStyle="#666";
     imgy=3;
-    draw_on_canvas($('#page_preview')[0]);
+    draw_on_canvas($('#page_preview')[0],ctx);
+    $("#screenshot_img").attr("src", canvas.toDataURL());
+
+    $.post("template_editor/ajax_handler.php", {
+       action: 'upload_image', temp: template ,image: canvas.toDataURL()
+    });
 }
 
-function draw_on_canvas(element){
-    if(element.nodeType != 3)draw_element(element);
+/**
+ * Recursively draw elements
+ * @author SupunGS
+ * @param {HTMLElement} element element to draw
+ * @param {CanvasContext} ctx context of the canvas to draw on
+ */
+function draw_on_canvas(element,ctx){
+    if(element.nodeType != 3)draw_element(element,ctx);
     if (element.hasChildNodes()) {
         var child = element.firstChild;
         while (child) {
-            draw_on_canvas(child);
+            draw_on_canvas(child,ctx);
             child = child.nextSibling;
         }
     }
 }
 
-function draw_element(element){
-    var canvas = document.getElementById("screenshot_canvas");
-    var ctx = canvas.getContext("2d");
-    var width=150, height=200;
+/**
+ * Draw an element on the canvas for screenshot
+ * @author SupunGS
+ * @param {HTMLElement} element element to draw
+ * @param {CanvasContext} ctx context of the canvas to draw on
+ */
+function draw_element(element, ctx){
+    var width=124, height=128; //width and height of the image
     var tag_name=element.tagName.toLowerCase();
     if(tag_name=='h2'){
         ctx.strokeRect(3,imgy,width,21); imgy=imgy+25;
@@ -325,6 +363,7 @@ function draw_element(element){
             });
             y++;
         });
+        imgy=imgy+83;
     }if(tag_name=='div' && is_rendable(element)){        
         draw_line(ctx,width/6,imgy+10,width-width/6,imgy+10);
         draw_line(ctx,width/6,imgy+20,width-width/6,imgy+20);
@@ -343,6 +382,16 @@ function draw_element(element){
     }
 }
 
+/**
+ * Draw all images contained in a given element in their relative positions
+ * @author SupunGS
+ * @param {HTMLElement} element element to check for images
+ * @param {CanvasContext} ctx contex of the canvas element to draw
+ * @param { Number} x x cordinate of the box represnting the container
+ * @param { Number} y y cordinate of the box represnting the container
+ * @param { Number} cw width of the box represnting the container
+ * @param { Number} ch height of the box represnting the container
+ */
 function draw_containing_images(element,ctx,x,y,cw,ch){
     $(element).find('img').each(function(){
         if(this.parentElement==element || this.parentElement.parentElement==element && !is_rendable(this.parentElement)){
@@ -357,6 +406,15 @@ function draw_containing_images(element,ctx,x,y,cw,ch){
     });
 }
 
+/**
+ * Draw a line with given cordinates
+ * @author SupunGS
+ * @param {CanvasContext} ctx contex of the canvas element to draw
+ * @param { Number} x1 x cordinate of the start point
+ * @param { Number} y1 y cordinate of the start point
+ * @param { Number} x2 x cordinate of the end point
+ * @param { Number} y2 y cordinate of the end point
+ */
 function draw_line(ctx,x1,y1,x2,y2){
     var temp=ctx.strokeStyle;
     ctx.strokeStyle="#999";
@@ -367,9 +425,15 @@ function draw_line(ctx,x1,y1,x2,y2){
     ctx.strokeStyle=temp;
 }
 
-function get_column_count(element){
+/**
+ * Get the maximum number of columns in a row of a given table
+ * @author SupunGS
+ * @param {HTMLElement} table table to get the number of columns
+ * @return {integer} number of columns
+ */
+function get_column_count(table){
     var colcount=0;
-    var rows = element.children[0].children;
+    var rows = table.children[0].children;
     for (i = 0; i < rows.length; i++) {
         clmns=rows[i].children.length;
         if(clmns>colcount) colcount=clmns;
@@ -377,6 +441,12 @@ function get_column_count(element){
     return colcount;
 }
 
+/**
+ * Check whether a given element should be rendered for screenshot
+ * @author SupunGS
+ * @param {HTMLElement} element element to check
+ * @return {boolean} whether or not rendable
+ */
 function is_rendable(element){
     var children=element.childNodes;
     for (i = 0; i < children.length; i++) {

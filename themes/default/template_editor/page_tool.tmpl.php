@@ -37,21 +37,21 @@
                     <div id='page_toolbar'>
                         <div class="page_toolline">
                             <div style='float:left;'>
-                                <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>'>
-                                <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>'>
-                                <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>'>
-                                <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons attrib" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>'>
-                                <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>'>
-                                <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>'>
-                                <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>'>
+                                <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>' accesskey='d'>
+                                <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>' accesskey='f'>
+                                <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>' accesskey='h'>
+                                <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons attrib" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>' accesskey='i'>
+                                <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>' accesskey='j'>
+                                <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>' accesskey='k'>
+                                <img id="align-justify" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="justify" alt='<?php echo _AT('justify'); ?>' title='<?php echo _AT('justify'); ?>' accesskey='l'>
                             </div>
                             <div style='float:left; margin:0 10px 1px 20px;'>
-                                <img id="insert-paragraph" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('paragraph'); ?>' title='<?php echo _AT('paragraph'); ?>'>
-                                <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>'>
-                                <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>'>
-                                <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('image'); ?>' title='<?php echo _AT('image'); ?>'>
-                                <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>'>
-                                <img id="insert-link" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('link'); ?>' title='<?php echo _AT('link'); ?>'>
+                                <img id="insert-paragraph" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('paragraph'); ?>' title='<?php echo _AT('paragraph'); ?>' accesskey='m'>
+                                <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>' accesskey='n'>
+                                <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>' accesskey='o'>
+                                <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('image'); ?>' title='<?php echo _AT('image'); ?>' accesskey='p'>
+                                <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>' accesskey='q'>
+                                <img id="insert-link" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('link'); ?>' title='<?php echo _AT('link'); ?>' accesskey='r'>
                             </div>
                         </div>
                         <div class="layout_toolline">
@@ -87,9 +87,10 @@
                             <img id="add_table" class="buttons insert" src="<?php echo $this->base_path;?>images/clr.gif" alt='<?php echo _AT('insert'); ?>' title='<?php echo _AT('insert'); ?>'>
                         </div>
                     </div>
-                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; '><?php  echo $this->html_code; ?></textarea>
-                    <div id='page_preview' contenteditable="true" style='height:100%; min-width:400px; min-height:300px; margin:15px;'>
-
+                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; ' accesskey='e' title='<?php echo _AT('edit'); ?>'><?php  echo $this->html_code; ?></textarea>
+                    <div id='page_prev_container'>
+                        <div id='page_preview' contenteditable="true" style='height:100%; min-width:400px; min-height:300px; margin:15px;' accesskey="p" title='<?php echo _AT('preview'); ?>' >
+                        </div>
                     </div>
                 </td>
             </tr>
@@ -102,14 +103,14 @@
     <div>
         <?php
         $img_path=$this->base_path."templates/page_template/". $this->template."/screenshot.png";
-        if(isset($this->screenshot))  echo "<img src='".$img_path."' alt='"._AT('screenshot')."'>";
+        if(isset($this->screenshot))  echo "<img id='screenshot_img' src='".$img_path."' alt='"._AT('screenshot')."'>";
         ?>
-        <canvas width=200 height=200 id="screenshot_canvas"></canvas>
+        <canvas width=130 height=140 id="screenshot_canvas"></canvas>
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
         <label for="file"><?php echo _AT('file'); ?>:</label>
         <input type="file" name="file" id="file" accesskey="n" title="<?php echo _AT('upload'); ?>">
         <input type="submit" name="uploadscrn" value="<?php echo _AT('upload'); ?>">
-        <input id="generate_scrn" type="submit" value="<?php echo _AT('auto_generate'); ?>">
+        <input id="generate_scrn" type="submit" value="<?php echo _AT('auto_generate'); ?>" accesskey="g">
     </form>
 </div>
