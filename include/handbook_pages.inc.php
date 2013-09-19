@@ -42,7 +42,12 @@ $handbook_pages = array(
                                         ),
                'translation/index.php' => array(),
 
-               'updater/index.php' => array('updater/patch_create.php')
+               'updater/index.php' => array('updater/patch_create.php'),
+
+               'template_editor/index.php' => array('template_editor/edit_structure.php',
+                                          'template_editor/edit_layout.php',
+                                          'template_editor/edit_page.php',
+               )
 );
 
 ?>
