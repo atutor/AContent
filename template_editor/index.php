@@ -36,6 +36,9 @@ if (isset($_current_user) && $_current_user->isAdmin()) {
         }elseif($_POST['template_type']=='layout') {
             $commons->save_file('layout/'.$template_folder, $template_folder.'.css');
             Header('Location: edit_layout.php?temp='.$template_folder);
+        }elseif($_POST['template_type']=='page_template') {
+            $commons->save_file('page_template/'.$template_folder, $template_folder.'.html');
+            Header('Location: edit_page.php?temp='.$template_folder);
         }
     }elseif(isset ($_GET['tab'])) {
         require('classes/TemplateCommons.php');

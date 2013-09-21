@@ -104,6 +104,7 @@
         <?php
         $img_path=$this->base_path."templates/page_template/". $this->template."/screenshot.png";
         if(isset($this->screenshot))  echo "<img id='screenshot_img' src='".$img_path."' alt='"._AT('screenshot')."'>";
+        else echo "<img id='screenshot_img' src='".$this->base_path. "images/clr.gif'>";
         ?>
         <canvas width=130 height=140 id="screenshot_canvas"></canvas>
     </div>
