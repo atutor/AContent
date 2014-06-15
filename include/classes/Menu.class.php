@@ -193,11 +193,11 @@ class Menu {
 	private function setSubMenus($page) {
 		global $_base_path, $_course_id;
 
-		if (isset($page) && defined($page)) 
+		if (isset($page) && defined($page))
 		{
 			// reached the top
 			return array();
-		} 
+		}
 		else if (isset($this->pages[$page]['children'])) 
 		{
 			$param = $this->getParam($page);

@@ -60,7 +60,7 @@ to test your LMS instance running on localhost.
 
 $oauth_consumer_key = $_REQUEST['key'];
 $method="POST";
-$endpoint = preg_replace("#\.\.#","",$_REQUEST['url']);
+$endpoint = $_REQUEST['url'];
 $content_type = "application/xml";
 
 if ( $_REQUEST['submit'] == "Send Grade" && isset($_REQUEST['grade'] ) ) {
