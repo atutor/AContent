@@ -336,5 +336,3 @@ foreach ($this->top_level_pages as $page) {
   </div>
   </div>
 <?php endif; ?>
-
-

@@ -219,12 +219,12 @@ CREATE TABLE `oauth_server_tokens` (
 # since 0.1
 
 CREATE TABLE `patches` (
-	`patches_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`system_patch_id` VARCHAR(20) NOT NULL default '',
-	`applied_version` VARCHAR(10) NOT NULL default '',
-	`patch_folder` VARCHAR(250) NOT NULL default '',
+  `patches_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `system_patch_id` VARCHAR(20) NOT NULL default '',
+  `applied_version` VARCHAR(10) NOT NULL default '',
+  `patch_folder` VARCHAR(250) NOT NULL default '',
   `description` TEXT,
-	`available_to` VARCHAR(250) NOT NULL default '',
+  `available_to` VARCHAR(250) NOT NULL default '',
   `sql_statement` text,
   `status` varchar(20) NOT NULL default '',
   `remove_permission_files` text,
@@ -232,7 +232,7 @@ CREATE TABLE `patches` (
   `patch_files` text,
   `author` VARCHAR(255) NOT NULL,
   `installed_date` datetime NOT NULL,
-	PRIMARY KEY  (`patches_id`)
+  PRIMARY KEY  (`patches_id`)
 );
 
 
@@ -241,12 +241,12 @@ CREATE TABLE `patches` (
 # since 0.1
 
 CREATE TABLE `patches_files` (
-	`patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`patches_id` MEDIUMINT UNSIGNED NOT NULL default 0,
-	`action` VARCHAR(20) NOT NULL default '',
-	`name` TEXT,
-	`location` VARCHAR(250) NOT NULL default '',
-	PRIMARY KEY  (`patches_files_id`)
+  `patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `patches_id` MEDIUMINT UNSIGNED NOT NULL default 0,
+  `action` VARCHAR(20) NOT NULL default '',
+  `name` TEXT,
+  `location` VARCHAR(250) NOT NULL default '',
+  PRIMARY KEY  (`patches_files_id`)
 );
 
 # --------------------------------------------------------
@@ -254,12 +254,12 @@ CREATE TABLE `patches_files` (
 # since 0.1
 
 CREATE TABLE `patches_files_actions` (
-	`patches_files_actions_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`patches_files_id` MEDIUMINT UNSIGNED NOT NULL default 0,
-	`action` VARCHAR(20) NOT NULL default '',
-	`code_from` TEXT,
-	`code_to` TEXT,
-	PRIMARY KEY  (`patches_files_actions_id`)
+  `patches_files_actions_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `patches_files_id` MEDIUMINT UNSIGNED NOT NULL default 0,
+  `action` VARCHAR(20) NOT NULL default '',
+  `code_from` TEXT,
+  `code_to` TEXT,
+  PRIMARY KEY  (`patches_files_actions_id`)
 );
 
 # --------------------------------------------------------
@@ -267,14 +267,14 @@ CREATE TABLE `patches_files_actions` (
 # since 0.1
 
 CREATE TABLE `myown_patches` (
-	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`system_patch_id` VARCHAR(20) NOT NULL default '',
-	`applied_version` VARCHAR(10) NOT NULL default '',
+  `myown_patch_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `system_patch_id` VARCHAR(20) NOT NULL default '',
+  `applied_version` VARCHAR(10) NOT NULL default '',
   `description` TEXT,
   `sql_statement` text,
   `status` varchar(20) NOT NULL default '',
   `last_modified` datetime NOT NULL,
-	PRIMARY KEY  (`myown_patch_id`)
+  PRIMARY KEY  (`myown_patch_id`)
 );
 
 # --------------------------------------------------------
@@ -282,10 +282,10 @@ CREATE TABLE `myown_patches` (
 # since 0.1
 
 CREATE TABLE `myown_patches_dependent` (
-	`myown_patches_dependent_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
-	`dependent_patch_id` VARCHAR(50) NOT NULL default '',
-	PRIMARY KEY  (`myown_patches_dependent_id`)
+  `myown_patches_dependent_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
+  `dependent_patch_id` VARCHAR(50) NOT NULL default '',
+  PRIMARY KEY  (`myown_patches_dependent_id`)
 );
 
 # --------------------------------------------------------
@@ -293,15 +293,15 @@ CREATE TABLE `myown_patches_dependent` (
 # since 0.1
 
 CREATE TABLE `myown_patches_files` (
-	`myown_patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
-	`action` VARCHAR(20) NOT NULL default '',
-	`name` VARCHAR(250) NOT NULL,
-	`location` VARCHAR(250) NOT NULL default '',
-	`code_from` TEXT,
-	`code_to` TEXT,
-	`uploaded_file` TEXT,
-	PRIMARY KEY  (`myown_patches_files_id`)
+  `myown_patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
+  `action` VARCHAR(20) NOT NULL default '',
+  `name` VARCHAR(250) NOT NULL,
+  `location` VARCHAR(250) NOT NULL default '',
+  `code_from` TEXT,
+  `code_to` TEXT,
+  `uploaded_file` TEXT,
+  PRIMARY KEY  (`myown_patches_files_id`)
 );
 
 # --------------------------------------------------------
@@ -468,6 +468,17 @@ CREATE TABLE `user_groups` (
   `create_date` datetime NOT NULL,
   `last_update` datetime,
   PRIMARY KEY  (`user_group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+# --------------------------------------------------------
+# Table structure for table `group_users`
+# since 0.1
+
+CREATE TABLE `group_users` (
+  `group_name` varchar(255) NOT NULL DEFAULT '',
+  `group_creator` mediumint(8) NOT NULL,
+  `user_id` int(8) NOT NULL,  
+  PRIMARY KEY  (`group_name`,`group_creator`,`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 # --------------------------------------------------------
@@ -1095,5 +1106,4 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 
 # insert default atutor account
 INSERT INTO `users` (`user_id`, `login`, `password`, `user_group_id`, `first_name`, `last_name`, `web_service_id`, `status`, `create_date`) VALUES (1, 'ATutor', '0cbab2aec26a53b0107487d43b1b8eb29384ad10', 2, 'ATutor', 'ATutor', '90c3cd6f656739969847f3a99ac0f3c7', 1, now());
-
 
