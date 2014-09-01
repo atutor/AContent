@@ -47,7 +47,8 @@ class MailQueueDAO extends DAO {
 		
 		if ($this->execute($sql))
 		{
-			return mysql_insert_id($this->db);
+			//return mysql_insert_id($this->db);
+			return ac_insert_id($this->db);
 		}
 		else
 		{

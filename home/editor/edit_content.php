@@ -295,36 +295,6 @@ $pid = intval($_REQUEST['pid']);
 	echo '<input type="hidden" name="test_message" value="'.AT_print($_POST['test_message'], 'input.hidden').'" />';
 	
 	/* get glossary terms */
-//	$matches = find_terms(stripslashes($_POST['body_text']));
-//	$num_terms = count($matches[0]);
-//	$matches = $matches[0];
-//	$word = str_replace(array('[?]', '[/?]'), '', $matches);
-//
-//	if (is_array($word)) {
-//		/* update $_POST['glossary_defs'] with any new/changed terms */
-//		for($i=0; $i<$num_terms; $i++) {
-//			$word[$i] = $word[$i];
-//			if (!isset($_POST['glossary_defs'][$word[$i]])) {
-//				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
-//			}
-//		}
-//	}
-//
-//	if (is_array($_POST['glossary_defs']) && ($current_tab != 2)) {
-//		foreach($_POST['glossary_defs'] as $w => $d) {
-//			/* this term still exists in the content */
-//			if (!in_array($w, $word)) {
-//				unset($_POST['glossary_defs'][$w]);
-//				continue;
-//			}
-//			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
-//		}
-//		if (isset($_POST['related_term'])) {
-//			foreach($_POST['related_term'] as $w => $d) {
-//				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
-//			}
-//		}
-//	}
 
 	// adapted content
 	$sql = "SELECT pr.primary_resource_id, prt.type_id
@@ -333,7 +303,6 @@ $pid = intval($_REQUEST['pid']);
 	         WHERE pr.content_id = ".$cid."
 	           AND pr.language_code = '".$_SESSION['lang']."'
 	           AND pr.primary_resource_id = prt.primary_resource_id";
-//	$all_types_result = mysql_query($sql, $db);
 	$types = $dao->execute($sql);
 	
 	$i = 0;
@@ -373,22 +342,6 @@ $pid = intval($_REQUEST['pid']);
 				}
 			}
 		}
-		
-//		// set pre-tests
-//		if (is_array($_POST['pre_tid'])) {
-//			foreach ($_POST['pre_tid'] as $i=>$pre_tid){
-//				echo '<input type="hidden" name="pre_tid['.$i.']" value="'.$pre_tid.'" />';
-//			}
-//		}
-//		else
-//		{
-//			$i = 0;
-//			$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$cid AND type='".CONTENT_PRE_TEST."'";
-//			$pretests_result = mysql_query($sql, $db);
-//			while ($pretest_row = mysql_fetch_assoc($pretests_result)) {
-//					echo '<input type="hidden" name="pre_tid['.$i++.']" value="'.$pretest_row['item_id'].'" />';
-//			}
-//		}
 	} 
 	
 	if ($do_check) {

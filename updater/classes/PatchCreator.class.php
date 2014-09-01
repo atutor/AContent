@@ -162,7 +162,8 @@ class PatchCreator {
 
 		if ($this->current_patch_id == 0)
 		{
-			$this->current_patch_id = mysql_insert_id();
+			//$this->current_patch_id = mysql_insert_id();
+			$this->current_patch_id = ac_insert_id();
 		}
 		else // delete records for current_patch_id in tables myown_patches_dependent & myown_patches_files
 		{

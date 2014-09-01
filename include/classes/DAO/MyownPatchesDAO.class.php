@@ -61,7 +61,8 @@ class MyownPatchesDAO extends DAO {
 		}
 		else
 		{
-			return mysql_insert_id();
+			//return mysql_insert_id();
+			return ac_insert_id();
 		}
 	}
 

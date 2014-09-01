@@ -139,9 +139,7 @@ function print_organizations($parent_id,
 
 			$contentForumsAssocDAO = new ContentForumsAssocDAO();
 			$forums = $contentForumsAssocDAO->getByContent($content[content_id]);
-//                    $sql = "SELECT cf.forum_id, f.title, f.description FROM (SELECT * FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content[content_id]) AS cf LEFT JOIN ".TABLE_PREFIX."forums f ON cf.forum_id=f.forum_id";
-//                    $result_cf = mysql_query($sql,$db);
-   
+ 
 			$find=false;
 			$forums_dependency='';  //template for associate Discussion Topic to the current content into the manifest
 			if (is_array($forums)) {

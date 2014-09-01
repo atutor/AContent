@@ -35,20 +35,51 @@ $_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
 
 require('include/classes/sqlutility.php');
 
+/* test for mysqli presence */
+if(function_exists('mysqli_connect')){
+	define('MYSQLI_ENABLED', 1);
+} 
 
+/*
 function my_add_null_slashes( $string ) {
     return @mysql_real_escape_string(stripslashes($string));
 }
+*/
+function my_add_null_slashes( $string ) {
+    global $db;
+    if(defined('MYSQLI_ENABLED')){
+        return $db->real_escape_string(stripslashes($string));
+    }else{
+        return mysql_real_escape_string(stripslashes($string));
+    }
+
+}
+
 function my_null_slashes($string) {
 	return $string;
 }
-
+/*
 if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'my_add_null_slashes';
 	$stripslashes = 'stripslashes';
 } else {
 	$addslashes   = 'mysql_real_escape_string';
 	$stripslashes = 'my_null_slashes';
+}
+*/
+if ( get_magic_quotes_gpc() == 1 ) {
+    $addslashes   = 'my_add_null_slashes';
+    $stripslashes = 'stripslashes';
+} else {
+    if(defined('MYSQLI_ENABLED')){
+        // mysqli_real_escape_string requires 2 params, breaking wherever
+        // current $addslashes with 1 param exists. So hack with trim and 
+        // manually run mysqli_real_escape_string requires during db sanitization
+        $addslashes   = 'trim';
+    }else{
+        $addslashes   = 'mysql_real_escape_string';
+    }
+    $stripslashes = 'my_null_slashes';
 }
 
 function queryFromFile($sql_file_path)
@@ -83,7 +114,8 @@ function queryFromFile($sql_file_path)
       
       if($prefixed_query[1] == 'CREATE TABLE')
       {
-      	if (mysql_query($prefixed_query[0],$db) !== false)
+      	//if (mysql_query($prefixed_query[0],$db) !== false)
+      	if($dao->execute($prefixed_query[0]) !== false)
 					$progress[] = 'Table <strong>'.$table . '</strong> created successfully.';
         else 
 					if (mysql_errno($db) == 1050)
@@ -92,25 +124,32 @@ function queryFromFile($sql_file_path)
 						$errors[] = 'Table <strong>' . $table . '</strong> creation failed.';
       }
 			elseif($prefixed_query[1] == 'INSERT INTO')
-				mysql_query($prefixed_query[0],$db);
+				//mysql_query($prefixed_query[0],$db);
+				$dao->execute($prefixed_query[0]);
       elseif($prefixed_query[1] == 'REPLACE INTO')
-        mysql_query($prefixed_query[0],$db);
+        $dao->execute($prefixed_query[0]);
+        //mysql_query($prefixed_query[0],$db);
       elseif($prefixed_query[1] == 'ALTER TABLE')
       {
-				if (mysql_query($prefixed_query[0],$db) !== false)
+				//if (mysql_query($prefixed_query[0],$db) !== false)
+				if($dao->execute($prefixed_query[0])  !== false)
 					$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 				else
-					if (mysql_errno($db) == 1060) 
+					//if (mysql_errno($db) == 1060) 
+					if(at_db_errno() == 1060)
 						$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
-					elseif (mysql_errno($db) == 1091) 
+					//elseif (mysql_errno($db) == 1091) 
+					elseif (at_db_errno() == 1091)
 						$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
 					else
 						$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
       }
       elseif($prefixed_query[1] == 'DROP TABLE')
-				mysql_query($prefixed_query[1] . ' ' .$table,$db);
+				//mysql_query($prefixed_query[1] . ' ' .$table,$db);
+				$dao->execute($prefixed_query[1] . ' ' .$table);
       elseif($prefixed_query[1] == 'UPDATE')
-                mysql_query($prefixed_query[0],$db);
+                //mysql_query($prefixed_query[0],$db);
+                $dao->execute($prefixed_query[0] );
 		}
 	}
 	return true;

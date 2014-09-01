@@ -86,6 +86,6 @@ $savant->assign('curr_page_num', $curr_page_num);
 $savant->assign('title', isset($catid) ? _AT('search_results') : _AT('most_recent_courses'));
 
 $savant->display('home/index_course.tmpl.php');
-
+//debug(MYSQLI_ENABLED);
 require(TR_INCLUDE_PATH.'footer.inc.php'); 
 ?>

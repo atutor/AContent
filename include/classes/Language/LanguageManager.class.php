@@ -317,6 +317,7 @@ class LanguageManager {
 	function liveImport($language_code) {
 		global $db;
 
+        // UPDATE FOR MYSQLI
 		$tmp_lang_db = mysql_connect(TR_LANG_DB_HOST, TR_LANG_DB_USER, TR_LANG_DB_PASS);
 		// set database connection using utf8
 		mysql_query("SET NAMES 'utf8'", $tmp_lang_db);

@@ -75,7 +75,8 @@ class ContentDAO extends DAO {
 			else
 			{
 				
-				$cid = mysql_insert_id();
+				//$cid = mysql_insert_id();
+				$cid = ac_insert_id();
 				
 				// update the courses.modified_date to the current timestamp
 				include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');

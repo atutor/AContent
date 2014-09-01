@@ -204,15 +204,6 @@ $rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
 
 /***************************************/
 
-//if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
-//	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
-//} else {
-//	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
-//}
-//$result = mysql_query($sql, $db);
-//while ($row = mysql_fetch_assoc($result)) {
-//	if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
-
 if (is_array($rows)) {
 	foreach ($rows as $row) {
 		$content[$row['content_parent_id']][] = $row;
@@ -249,75 +240,11 @@ $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '
 $first = $content[$top_content_parent_id][0];
 
 $test_ids = array();	//global array to store all the test ids
-//if ($my_files == null) 
-//$my_files = array();
-
-/* generate the IMS QTI resource and files */
-/*
-/* in print_organizations
-foreach ($content[0] as $content_box){
-	$content_test_rs = $contentManager->getContentTestsAssoc($content_box['content_id']);	
-	while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
-		//export
-		$test_ids[] = $content_test_row['test_id'];
-		//the 'added_files' is for adding into the manifest file in this zip
-		$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
-
-		//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
-		foreach($added_files as $filename=>$file_array){
-			$my_files[] = $filename;
-			foreach ($file_array as $garbage=>$filename2){
-				$my_files[] = $filename2;
-			}
-		}
-	}
-}
-*/
 
 ob_start();
 print_organizations($top_content_parent_id, $content, 0, '', array(), $toc_html);
 $organizations_str = ob_get_contents();
 ob_end_clean();
-
-// Modified by Cindy Qi Li on Jun 3, 2010
-// Transformable does not support glossary
-/* generate the resources and save the HTML files */
-/*
-$used_glossary_terms = array();
-if (count($used_glossary_terms)) {
-	$used_glossary_terms = array_unique($used_glossary_terms);
-	sort($used_glossary_terms);
-	reset($used_glossary_terms);
-
-	$terms_xml = '';
-	foreach ($used_glossary_terms as $term) {
-		$term_key = urlencode($term);
-		$glossary[$term_key] = htmlentities($glossary[$term_key], ENT_QUOTES, 'UTF-8');
-		$glossary[$term_key] = str_replace('&', '&amp;', $glossary[$term_key]);
-		$escaped_term = str_replace('&', '&amp;', $term);
-		$terms_xml .= str_replace(	array('{TERM}', '{DEFINITION}'),
-									array($escaped_term, $glossary[$term_key]),
-									$glossary_term_xml);
-
-		$terms_html .= str_replace(	array('{ENCODED_TERM}', '{TERM}', '{DEFINITION}'),
-									array($term_key, $term, $glossary[$term_key]),
-									$glossary_term_html);
-	}
-
-	$glossary_body_html = str_replace('{BODY}', $terms_html, $glossary_body_html);
-
-	$glossary_xml = str_replace(array('{GLOSSARY_TERMS}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}'),
-							    array($terms_xml, $course_language_charset),
-								$glossary_xml);
-	$glossary_html = str_replace(	array('{CONTENT}', '{KEYWORDS}', '{TITLE}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
-									array($glossary_body_html, '', 'Glossary', $course_language_charset, $course_language_code),
-									$html_template);
-	$toc_html .= '<ul><li><a href="glossary.html" target="body">'._AT('glossary').'</a></li></ul>';
-} else {
-	unset($glossary_xml);
-}
-*/
-// END OF Modified by Cindy Qi Li on Jun 3, 2010
 
 $toc_html = str_replace(array('{TOC}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'),
 					    array($toc_html, $course_language_charset, $course_language_code),
@@ -397,8 +324,6 @@ $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURS
 									$ims_template_xml['final']);
 
 /* generate the vcard for the instructor/author */
-//$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-//$result = mysql_query($sql, $db);
 $usersDAO = new UsersDAO();
 $row = $usersDAO->getUserByID($instructor_id);
 									
@@ -420,16 +345,6 @@ $zipfile->add_file($frame,			 'index.html');
 $zipfile->add_file($toc_html,		 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
-
-// Modified by Cindy Qi Li on Jun 3, 2010
-// AContent does not support glossary
-/*
-if ($glossary_xml) {
-	$zipfile->add_file($glossary_xml,  'glossary.xml');
-	$zipfile->add_file($glossary_html, 'glossary.html');
-}
-*/
-// END OF Modified by Cindy Qi Li on Jun 3, 2010
 $zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/adlcp_rootv1p2.xsd'), 'adlcp_rootv1p2.xsd');
 $zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/ims_xml.xsd'), 'ims_xml.xsd');
 $zipfile->add_file(file_get_contents(TR_INCLUDE_PATH.'../home/ims/include/imscp_rootv1p1p2.xsd'), 'imscp_rootv1p1p2.xsd');

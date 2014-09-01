@@ -204,7 +204,8 @@ $not_as_good = FALSE;
 		<tr>
 			<td>MySQL 4.1.10+</td>
 			<td><?php if (defined('MYSQL_NUM')) {
-						$mysql_version = mysql_get_client_info();
+						//$mysql_version = mysql_get_client_info();
+						$mysql_version = at_get_db_info()
 						echo 'Found  Version '.$mysql_version.'</td><td align="center">';
 						echo $good;
 					} else {

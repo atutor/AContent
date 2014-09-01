@@ -305,31 +305,6 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	$resources    = array();
 	$dependencies = array();
 
-//	don't want to sort it, i want the same order out.
-//	asort($question_ids);
-
-	//TODO: Merge the following 2 sqls together.
-	//Randomized or not, export all the questions that are associated with it.
-//	$sql	= "SELECT TQ.question_id, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-//	$result	= mysql_query($sql, $db);
-//	$question_ids = array();
-//
-//	if (is_array($question_rows)){
-//		foreach ($question_rows as $question_row) $question_ids[] = $question_row['question_id'];
-//	}
-//
-//	//No questions in the test
-//	if (sizeof($question_ids)==0){
-//		return;
-//	}
-//
-//	$question_ids_delim = implode(',',$question_ids);	
-//
-//	//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-//	$sql = "SELECT TQ.*, TQA.weight, TQA.test_id FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
-//
-//	$result = mysql_query($sql, $db);
-//	while ($row = mysql_fetch_assoc($result)) {
 	$testsQuestionsAssocDAO = new TestsQuestionsAssocDAO();
 	$question_rows = $testsQuestionsAssocDAO->getByTestID($tid);
 
@@ -358,9 +333,6 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	$xml = trim($xml);
 
 	//get test title
-//	$sql = "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id = $tid";
-//	$result = mysql_query($sql, $db);
-//	$row = mysql_fetch_array($result);
 	$testsDAO = new TestsDAO();
 	$row = $testsDAO->get($tid);
 	
@@ -814,11 +786,10 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 			$sql = vsprintf(TR_SQL_QUESTION_ORDERING, $sql_params);
 
-//			$result	= mysql_query($sql, $db);
-//			if ($result==true){
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return mysql_insert_id();
+				return ac_insert_id();
+				
 			}			
 		}
 	}
@@ -898,11 +869,10 @@ class TruefalseQuestion extends AbstracttestQuestion {
 									$question['answer']);
 
 			$sql = vsprintf(TR_SQL_QUESTION_TRUEFALSE, $sql_params);
-//			$result	= mysql_query($sql, $db);
-//			if ($result==true){
+
 			$dao = new DAO();
 			if ($dao->execute($sql)) {	
-				return mysql_insert_id();
+				return ac_insert_id();
 			}
 		}
 	}
@@ -1031,11 +1001,10 @@ class LikertQuestion extends AbstracttestQuestion {
 									$question['answer'][9]);
 
 			$sql = vsprintf(TR_SQL_QUESTION_LIKERT, $sql_params);
-//			$result	= mysql_query($sql, $db);
-//			if ($result==true){
+
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return mysql_insert_id();
+				return ac_insert_id();
 			}
 		}
 	}
@@ -1106,11 +1075,9 @@ class LongQuestion extends AbstracttestQuestion {
 
 			$sql = vsprintf(TR_SQL_QUESTION_LONG, $sql_params);
 
-//			$result	= mysql_query($sql, $db);
-//			if ($result==true){
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return mysql_insert_id();
+				return ac_insert_id();
 			}
 		}
 	}
@@ -1309,7 +1276,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return mysql_insert_id();
+				return ac_insert_id();
 			}
 		}
 	}
@@ -1458,11 +1425,9 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 									$answers[9]);
 
 			$sql = vsprintf(TR_SQL_QUESTION_MULTI, $sql_params);
-//			$result	= mysql_query($sql, $db);
-//			if ($result==true){
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return mysql_insert_id();
+				return ac_insert_id();
 			}
 		}
 	}
@@ -1597,11 +1562,9 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
 				$sql = vsprintf(TR_SQL_QUESTION_MULTIANSWER, $sql_params);
 
-//				$result	= mysql_query($sql, $db);
-//				if ($result==true){
 				$dao = new DAO();
 				if ($dao->execute($sql)) {
-					return mysql_insert_id();
+					return ac_insert_id();
 				}
 			}
 		}

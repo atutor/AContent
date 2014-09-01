@@ -84,9 +84,6 @@ class A4aExport extends A4a {
 		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
 		$secondaryResourcesDAO = new SecondaryResourcesDAO();
 		$rows = $secondaryResourcesDAO->getByContent($this->cid);
-//		$sql = "SELECT DISTINCT secondary_resource FROM ".TABLE_PREFIX."primary_resources a LEFT JOIN ".TABLE_PREFIX."secondary_resources s
-//				ON a.primary_resource_id = s.primary_resource_id WHERE content_id=".$this->cid;
-//		$result = mysql_query ($sql);
 
 		if (is_array($rows)){
 			foreach ($rows as $row) {

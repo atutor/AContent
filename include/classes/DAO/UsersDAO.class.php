@@ -146,7 +146,7 @@ class UsersDAO extends DAO {
 			}
 			else
 			{
-				return mysql_insert_id();
+				return ac_insert_id();
 			}
 		}
 		else

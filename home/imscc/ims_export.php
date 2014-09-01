@@ -143,16 +143,6 @@ $rows				= $templates_theme->appendStyle($rows, $zipfile, $_content_id);
 
 /***************************************/
 
-//if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN)) {
-//	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
-//} else {
-//	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
-//}
-//$result = mysql_query($sql, $db);
-
-//$cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
-//while ($row = mysql_fetch_assoc($result)) {
-//	if (authenticate(TR_PRIV_CONTENT, TR_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 if (is_array($rows)) {
 	foreach ($rows as $row) {
 		$content[$row['content_parent_id']][] = $row;
@@ -303,8 +293,6 @@ $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}', '{GLOSSARY}',	'{RESOUR
 // generate the vcard for the instructor/author
 $usersDAO = new UsersDAO();
 $row = $usersDAO->getUserByID($instructor_id);
-//$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-//$result = mysql_query($sql, $db);
 $vcard = new vCard();
 if (isset($row)) {
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
@@ -319,14 +307,6 @@ if (isset($row)) {
 
 /* save the imsmanifest.xml file */
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
-
-/* Commented by Cindy Qi Li on Jan 12, 2010
-// AContent does not have glossary and forums (discussion tools)
-if ($glossary_xml) {
-	$zipfile->create_dir('resources/GlossaryItem/');
-	$zipfile->add_file($glossary_xml,  'resources/GlossaryItem/glossary.xml');
-}
-*/
 
 $zipfile->close(); // this is optional, since send_file() closes it anyway
 

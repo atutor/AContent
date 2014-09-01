@@ -36,7 +36,6 @@ if ($_GET['category_id'] >= 0) {
 	$category_rows = $testsQuestionsCategoriesDAO->getByCourseID($_course_id);
 }
 
-//$result	= mysql_query($sql, $db);
 if ($_GET['category_id'] <= 0) {
 	$cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
 }

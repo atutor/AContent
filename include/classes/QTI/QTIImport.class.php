@@ -205,33 +205,6 @@ class QTIImport {
 		$tid = $testsDAO->Create($_course_id, 
 								$title, 
 								$test_obj['description']);
-
-//			$sql_params = array (	$_SESSION['course_id'], 
-//									$test_obj['title'], 
-//									$test_obj['description'], 
-//									$test_obj['format'], 
-//									$start_date, 
-//									$end_date, 
-//									$test_obj['order'], 
-//									$test_obj['num_questions'], 
-//									$test_obj['instructions'], 
-//									$test_obj['content_id'], 
-//									$test_obj['passscore'], 
-//									$test_obj['passpercent'], 
-//									$test_obj['passfeedback'], 
-//									$test_obj['failfeedback'], 
-//									$test_obj['result_release'], 
-//									$test_obj['random'], 
-//									$test_obj['difficulty'], 
-//									$test_obj['num_takes'], 
-//									$test_obj['anonymous'], 
-//									'', 
-//									$test_obj['allow_guests'], 
-//									$test_obj['display']);
-//
-//			$sql = vsprintf(AT_SQL_TEST, $sql_params);
-//			$result = mysql_query($sql, $db);
-//			$tid = mysql_insert_id($db);
 			
 		return $tid;
 	}

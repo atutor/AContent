@@ -163,21 +163,7 @@ if ($cid > 0)
 	
 	
 	$parent = 0;
-//	foreach ($path as $i=>$page) {
-//		if (!$parent) {
-//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
-//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['parent']   = 'index.php';
-//		} else {
-//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['title']    = $page['content_number'] . $page['title'];
-//			$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['parent']   = 'editor/edit_content_folder.php?cid='.$parent;
-//		}
-//	
-//		$_pages['editor/edit_content_folder.php?cid='.$page['content_id']]['ignore'] = true;
-//		$parent = $page['content_id'];
-//	}
-//	$last_page = array_pop($_pages);
-//	$_pages['editor/edit_content_folder.php'] = $last_page;
-	
+
 	reset($path);
 	$first_page = current($path);
 	
@@ -189,14 +175,7 @@ if ($cid > 0)
 	$_tool_shortcuts = ContentUtility::getToolShortcuts($content_row);  // used by header.tmpl.php
 	
 	// display pre-tests
-//	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$_REQUEST[cid] AND type='".CONTENT_PRE_TEST."'";
-//	$result = mysql_query($sql, $db);
-//	while ($row = mysql_fetch_assoc($result)) {
-//		$_POST['pre_tid'][] = $row['item_id'];
-//	}
-
 	$savant->assign('ftitle', $content_row['title']);
-//	$savant->assign('shortcuts', $shortcuts);
 	$savant->assign('cid', $cid);
 }
 
