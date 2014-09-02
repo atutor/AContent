@@ -25,16 +25,27 @@ class DAO {
 	
 	function DAO()
 	{
+
 		if (!isset(self::$db))
 		{
+
 		    if(defined('MYSQLI_ENABLED')){
-		        if(!defined('DB_NAME')){
+		    
+		        if(!defined('DB_NAME') && !isset($_POST['db_name'])){
+		        			debug('im here');
                     //self::$db = @mysqli_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
                     self::$db = new mysqli(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
                     self::$db->set_charset("utf8");
                 }else{
-                    self::$db = new mysqli(DB_HOST,  DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-                    self::$db->set_charset("utf8");
+                    if(isset($_POST['db_name'])){
+                        self::$db = new mysqli($_POST['db_host'],  $_POST['db_login'], $_POST['db_password'], $_POST['db_name'], $_POST['db_port']);
+                        define('DB_NAME', $_POST['db_name']);
+                    
+                        self::$db->set_charset("utf8");
+                    }else{
+                       self::$db = new mysqli(DB_HOST,  DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+                        self::$db->set_charset("utf8");                 
+                    }
                 }
                 if (!self::$db) {
                     die('Unable to connect to db.');

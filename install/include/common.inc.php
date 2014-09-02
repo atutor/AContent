@@ -34,6 +34,8 @@ $_defaults['theme_categories'] = 'FALSE';
 $_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
 
 require('include/classes/sqlutility.php');
+require('../include/classes/DAO/DAO.class.php');
+require('../include/lib/mysql_funcs.inc.php');
 
 /* test for mysqli presence */
 if(function_exists('mysqli_connect')){
@@ -85,9 +87,10 @@ if ( get_magic_quotes_gpc() == 1 ) {
 function queryFromFile($sql_file_path)
 {
 	global $db, $progress, $errors;
-
+    //$dao = new DAO($_POST['db_host'], $_POST['db_login'], $_POST['db_password'],  $_POST['db_name']);
+    $dao = new DAO();
 	$tables = array();
-
+	
   if (!file_exists($sql_file_path)) {
     $progress[] = $sql_file_path . ': file not exists.';
     return false;
