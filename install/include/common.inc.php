@@ -39,7 +39,7 @@ require('../include/lib/mysql_funcs.inc.php');
 
 /* test for mysqli presence */
 if(function_exists('mysqli_connect')){
-	define('MYSQLI_ENABLED', 1);
+	//define('MYSQLI_ENABLED', 1);
 } 
 
 /*

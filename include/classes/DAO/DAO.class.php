@@ -32,9 +32,8 @@ class DAO {
 		    if(defined('MYSQLI_ENABLED')){
 		    
 		        if(!defined('DB_NAME') && !isset($_POST['db_name'])){
-		        			debug('im here');
                     //self::$db = @mysqli_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
-                    self::$db = new mysqli(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
+                    self::$db = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, null, DB_PORT);
                     self::$db->set_charset("utf8");
                 }else{
                     if(isset($_POST['db_name'])){
@@ -43,7 +42,7 @@ class DAO {
                     
                         self::$db->set_charset("utf8");
                     }else{
-                       self::$db = new mysqli(DB_HOST,  DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
+                        self::$db = new mysqli(DB_HOST,  DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
                         self::$db->set_charset("utf8");                 
                     }
                 }
@@ -56,7 +55,20 @@ class DAO {
                 }		    
 		    
 		    }else{
-                self::$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+		         if(!defined('DB_NAME') && !isset($_POST['db_name'])){
+                    self::$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+                } else{
+                    if(isset($_POST['db_name'])){
+                        self::$db = @mysql_connect($_POST['db_host'].':'. $_POST['db_port'],  $_POST['db_login'], $_POST['db_password'], $_POST['db_name']);
+                        define('DB_NAME', $_POST['db_name']);
+                    }else{
+                        self::$db = @mysql_connect(DB_HOST.':'.DB_PORT,  DB_USER, DB_PASSWORD, DB_NAME);               
+                    }
+                
+                }
+                
+                
+                
                 if (!self::$db) {
                     die('Unable to connect to db.');
                 }

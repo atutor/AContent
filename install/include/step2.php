@@ -18,10 +18,10 @@ if(isset($_POST['submit'])) {
 
 	//check DB & table connection
     if(defined('MYSQLI_ENABLED')){
-        $db = new mysqli($_POST['db_host'], $_POST['db_login'], $_POST['db_password']);
+        $db = new mysqli($_POST['db_host'], $_POST['db_login'], $_POST['db_password'], null, $_POST['db_port']);
         $db->set_charset("utf8");
     }else{
-	    $db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	    $db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
 	
 	}
 	if (!$db) {
