@@ -31,7 +31,7 @@ $_config_defaults['pref_defaults']      = 'a:1:{s:10:"PREF_THEME";s:7:"default";
 $_config_defaults['enable_template']    = 1; //use template 
 $_config = $_config_defaults;
 
-define('VERSION',		'1.3');
+define('VERSION',		'1.4');
 
 define('UPDATE_SERVER', 'http://update.atutor.ca/acontent');
 define('RESULTS_PER_PAGE', 15);

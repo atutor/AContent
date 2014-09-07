@@ -69,8 +69,7 @@ if (isset($_POST['submit'])) {
 			
 			if(defined('MYSQLI_ENABLED')){
 			    $result = $db->query($sql);
-			    $db_rows = $result->fetch_assoc;
-			    foreach($db_rows as $row){
+			    while ($row =  $result->fetch_assoc()) {
 			        $db_size += $row['Data_length']+$row['Index_length'];
 			    }
 			}else{
@@ -142,7 +141,7 @@ print_progress($step);
 		<td class="row1"><?php
             if(defined('MYSQLI_ENABLED')){
                     if ($_POST['step1']['old_path'] != '') {
-                        $db     = new mysqli($_POST['step1']['db_host'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password'], null, $_POST['step1']['db_port']));
+                        $db     = new mysqli($_POST['step1']['db_host'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']), null, $_POST['step1']['db_port']);
                     } else {
                         $db     = new mysqli($_POST['step2']['db_host'],  $_POST['step2']['db_login'], $_POST['step2']['db_password'], null,  $_POST['step2']['db_port']);
                     }			
