@@ -29,7 +29,7 @@ if (get_magic_quotes_gpc()) $sourcedid = stripslashes($sourcedid);
 ?>
 <p>
 <form method="POST">
-Service URL: <input type="text" name="url" size="100" disabled="true" value="<?php echo(htmlentities($_REQUEST['url']));?>"/></br>
+Service URL: <input type="text" name="url" size="100"  disabled="true" value="<?php echo(htmlentities($_REQUEST['url']));?>"/></br>
 lis_result_sourcedid: <input type="text" name="sourcedid" disabled="true" size="100" value="<?php echo(htmlentities($sourcedid));?>"/></br>
 OAuth Consumer Key: <input type="text" name="key" disabled="true" size="80" value="<?php echo(htmlentities($_REQUEST['key']));?>"/></br>
 OAuth Consumer Secret: <input type="text" name="secret" size="80" value="<?php echo(htmlentities($oauth_consumer_secret));?>"/></br>
@@ -41,7 +41,9 @@ Grade to Send to LMS: <input type="text" name="grade" value="<?php echo(htmlenti
 <input type='submit' name='submit' value="Delete Grade"></br>
 </form>
 <?php 
-$url = $_REQUEST['url'];
+
+$url = filter_var($url,  FILTER_SANITIZE_URL);
+
 if(!in_array($_SERVER['HTTP_HOST'],array('localhost','127.0.0.1')) && strpos($url,'localhost') > 0){ ?>
 <p>
 <b>Note</b> This service call may not work.  It appears as though you are 
