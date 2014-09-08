@@ -52,7 +52,7 @@ class TestsDAO extends DAO {
 			}
 			else
 			{
-				return ac_insert_id();
+				return $this->ac_insert_id();
 			}
 		}
 		else

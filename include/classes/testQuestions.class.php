@@ -788,7 +788,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return ac_insert_id();
+				return $dao->ac_insert_id();
 				
 			}			
 		}
@@ -872,7 +872,7 @@ class TruefalseQuestion extends AbstracttestQuestion {
 
 			$dao = new DAO();
 			if ($dao->execute($sql)) {	
-				return ac_insert_id();
+				return $dao->ac_insert_id();
 			}
 		}
 	}
@@ -1004,7 +1004,7 @@ class LikertQuestion extends AbstracttestQuestion {
 
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return ac_insert_id();
+				return $dao->ac_insert_id();
 			}
 		}
 	}
@@ -1077,7 +1077,7 @@ class LongQuestion extends AbstracttestQuestion {
 
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return ac_insert_id();
+				return $dao->ac_insert_id();
 			}
 		}
 	}
@@ -1276,7 +1276,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return ac_insert_id();
+				return $dao->ac_insert_id();
 			}
 		}
 	}
@@ -1427,7 +1427,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 			$sql = vsprintf(TR_SQL_QUESTION_MULTI, $sql_params);
 			$dao = new DAO();
 			if ($dao->execute($sql)) {
-				return ac_insert_id();
+				return $dao->ac_insert_id();
 			}
 		}
 	}
@@ -1564,7 +1564,7 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
 				$dao = new DAO();
 				if ($dao->execute($sql)) {
-					return ac_insert_id();
+					return $dao->ac_insert_id();
 				}
 			}
 		}

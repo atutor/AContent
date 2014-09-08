@@ -21,6 +21,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'lib/mysql_funcs.inc.php');
 
 global $_course_id;
 

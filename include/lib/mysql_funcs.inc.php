@@ -52,7 +52,7 @@ function getMySQLVersion() {
   preg_match('@[0-9]+\.[0-9]+\.[0-9]+@', $output, $version); 
   return $version[0]; 
 }
-
+/*
 function at_db_select($db_name, $db){
  if(defined('MYSQLI_ENABLED')){
     if(!$db->select_db($db_name)){
@@ -73,4 +73,4 @@ function at_db_select($db_name, $db){
     }
  }
 
-}
+}*/

@@ -128,6 +128,13 @@ class DAO {
 			return true;
 		}
 	}
-
+    function ac_insert_id(){
+        //global $db;
+        if(defined('MYSQLI_ENABLED')){
+            return self::$db->insert_id;
+        }else{
+            return mysql_insert_id(self::$db);
+        }
+    }
 }
 ?>

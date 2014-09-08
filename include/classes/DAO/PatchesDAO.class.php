@@ -85,7 +85,7 @@ class PatchesDAO extends DAO {
 		else
 		{
 			//return mysql_insert_id();
-			return ac_insert_id();
+			return $this->ac_insert_id();
 		}
 	}
 
