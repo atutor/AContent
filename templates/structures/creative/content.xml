@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <structure name="creative">
   <page max="1" min="1" name="overview">
     <page_templates>
@@ -7,9 +7,8 @@
   </page>
   <folder max="x" min="1" name="eTivities">
     <page max="x" min="1" name="eTivity">
-      
       <page_templates/>
-	  <tests>
+      <tests>
         <test name="true_or_false"/>
         <test name="multiple_choise"/>
         <test name="matching_graphical"/>

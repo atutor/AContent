@@ -301,7 +301,7 @@ class TemplateCommons {
      * @param   string $message  content to save
      * @author  SupunGS
      */
-    public function save_file($directory,$file_name,$message) {
+    public function save_file($directory,$file_name,$message='') {
         $file_path=$this->template_dir.$directory."/".$file_name;
         $file = fopen($file_path,"w");
         fwrite($file,$message);
