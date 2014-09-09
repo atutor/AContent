@@ -93,21 +93,7 @@ function print_organizations($parent_id,
 			/* save the content as HTML files */
 			$content['text'] = str_replace('CONTENT_DIR/', '', $content['text']);
 
-			/* Commented by Cindy Qi Li on Jan 12, 2010
-			 * AContent does not support glossary
-			// get all the glossary terms used
-			$terms = find_terms($content['text']);
-			if (is_array($terms)) {
-				foreach ($terms[2] as $term) {
-					$used_glossary_terms[] = $term;
-				}
-			}
-*/
 			/** Test dependency **/
-//			$test_dependency = '';	//Template for test
-//			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
-//			$result = mysql_query($sql, $db);
-//			while ($row = mysql_fetch_assoc($result)){
 			require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
 			$contentTestsAssocDAO = new ContentTestsAssocDAO();
 			$rows = $contentTestsAssocDAO->getByContent($content['content_id']);

@@ -66,17 +66,27 @@ class BLTI {
             $this->message = "Constructor requires a secret or database information.";
             return;
         } else {
+/*
             $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
                 ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
                 '='.
                 "'".mysql_real_escape_string($oauth_consumer_key)."'";
-            $result = mysql_query($sql);
-            $num_rows = mysql_num_rows($result);
-            if ( $num_rows != 1 ) {
+*/
+            $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
+                ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
+                '='.
+                "'".my_add_null_slashes($oauth_consumer_key)."'";
+            //$result = mysql_query($sql);
+            $rows_keys =  $dao->execute($sql);
+            //$num_rows = mysql_num_rows($result);
+            
+            //if ( $num_rows != 1 ) {
+            if (count($rows_keys) != 1 ) {
                 $this->message = "Your consumer is not authorized oauth_consumer_key=".$oauth_consumer_key;
                 return;
             } else {
-                while ($row = mysql_fetch_assoc($result)) {
+                //while ($row = mysql_fetch_assoc($result)) {
+                foreach($rows_keys as $row){
                     $secret = $row[$parms['secret_column']?$parms['secret_column']:'secret'];
                     $context_id = $row[$parms['context_column']?$parms['context_column']:'context_id'];
                     if ( $context_id ) $this->context_id = $context_id;
@@ -284,13 +294,25 @@ class BLTI {
 		include '..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'DAO'.DIRECTORY_SEPARATOR.'ContentDAO.class.php';
 		$ret = $_SERVER['ORIG_PATH_INFO'];
 return $ret;
+/*
         $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
             ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
             '='.
             "'".mysql_real_escape_string($oauth_consumer_key)."'";
-        $result = mysql_query($sql);
-        $num_rows = mysql_num_rows($result);
-die("debug");
+*/
+
+// WHAT IS THIS DOING HERE
+        $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
+            ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
+            '='.
+            "'".my_add_null_slashes($oauth_consumer_key)."'";
+
+
+        //$result = mysql_query($sql);
+        $result = $dao->execute($sql);
+        //$num_rows = mysql_num_rows($result);
+        $num_rows = count($result);
+//die("debug");
     	$ret = 'content_id||course_id||content_parent_id||ordering||last_modified||';
     	$ret = array('content_id' => '', '||course_id||content_parent_id||ordering||last_modified||' => 'aa');
     	return $ret;

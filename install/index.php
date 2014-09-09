@@ -14,8 +14,11 @@ define('TR_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
 
 require('../include/constants.inc.php');
-
+require('../include/lib/mysql_funcs.inc.php');
 $new_version = VERSION;
+if(function_exists('mysqli_connect')){
+	define('MYSQLI_ENABLED', 1);
+} 
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
@@ -204,7 +207,8 @@ $not_as_good = FALSE;
 		<tr>
 			<td>MySQL 4.1.10+</td>
 			<td><?php if (defined('MYSQL_NUM')) {
-						$mysql_version = mysql_get_client_info();
+						//$mysql_version = mysql_get_client_info();
+						$mysql_version = at_get_db_info();
 						echo 'Found  Version '.$mysql_version.'</td><td align="center">';
 						echo $good;
 					} else {

@@ -35,7 +35,7 @@ require('include/upgrade_header.php');
 if ($step == 1) {
 	if (!$new_version) {
 		echo 'You cannot access this page directly. <a href="index.php">Upgrade from here</a> using the <em>Upgrade</em> button.';
-		require('include/footer.php');
+		require('include/footer.inc.php');
 		exit;
 	}
 	// in:  select directory

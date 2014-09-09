@@ -50,7 +50,7 @@ class TestsQuestionsCategoriesDAO extends DAO {
 			}
 			else
 			{
-				return mysql_insert_id();
+				return $this->ac_insert_id();
 			}
 		}
 		else

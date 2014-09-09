@@ -40,12 +40,6 @@ if (isset($_POST['cancel'])) {
 		$_POST['feedback'] = $addslashes($_POST['feedback']);
 		$_POST['question'] = $addslashes($_POST['question']);
 
-		/*
-		$sql = 'SELECT content_id FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
-		$result = mysql_query($sql, $db);			
-		$row = mysql_fetch_assoc($result);
-		*/
-
 		$sql_params = array(	$_POST['category_id'], 
 								$_course_id,
 								$_POST['feedback'], 

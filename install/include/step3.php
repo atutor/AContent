@@ -109,9 +109,15 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	
 	if (!isset($errors)) {
+	
+	     if(defined('MYSQLI_ENABLED')){
+        $db = new mysqli($_POST['step2']['db_host'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']), $_POST['step2']['db_name'], $_POST['step2']['db_port']);
+        $db->set_charset("utf8");
+
+	     }else{
 		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
 		@mysql_select_db($_POST['step2']['db_name'], $db);
-
+        }
 		// for admin account
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
 		        (login, password, user_group_id, email, web_service_id, create_date, is_author)
@@ -122,8 +128,12 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		                '".substr(md5(uniqid(rand(), true)),0,32)."', 
 		                NOW(),
 		                '1')";
-		$result= mysql_query($sql, $db);
-
+		                
+		if(defined('MYSQLI_ENABLED')){
+		    $result = $db->query($sql);
+		}else{
+		    $result= mysql_query($sql, $db);
+        }
 		// for author account
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users
                (login, password, user_group_id, first_name, last_name, email, is_author, organization, phone,
@@ -145,25 +155,47 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		       '".substr(md5(uniqid(rand(), true)),0,32)."', 
                1, 
                now())";
-		$result = mysql_query($sql ,$db);
-		$user_id = mysql_insert_id();
+		if(defined('MYSQLI_ENABLED')){
+		    $result = $db->query($sql);
+		}else{
+		    $result= mysql_query($sql, $db);
+        }
+		//$user_id = mysql_insert_id();
+		$user_id = ac_insert_id();
 		
 		// associate the default HowTo lesson with this author account 
 		$sql = "UPDATE ".$_POST['step2']['tb_prefix']."courses SET user_id=".$user_id." WHERE course_id=1";
-		$result = mysql_query($sql ,$db);
-		
+		//$result = mysql_query($sql ,$db);
+		if(defined('MYSQLI_ENABLED')){
+		    $result = $db->query($sql);
+		}else{
+		    $result= mysql_query($sql, $db);
+        }
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."user_courses (user_id, course_id, role) VALUES (".$user_id.", 1, 1)";
-		$result = mysql_query($sql ,$db);
+		if(defined('MYSQLI_ENABLED')){
+		    $result = $db->query($sql);
+		}else{
+		    $result= mysql_query($sql, $db);
+        }
+		//$result = mysql_query($sql ,$db);
 		
 		// configurations
 		$_POST['site_name'] = $addslashes($_POST['site_name']);
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('site_name', '$_POST[site_name]')";
-		$result = mysql_query($sql ,$db);
-
+		//$result = mysql_query($sql ,$db);
+		if(defined('MYSQLI_ENABLED')){
+		    $result = $db->query($sql);
+		}else{
+		    $result= mysql_query($sql, $db);
+        }
 		$_POST['email'] = $addslashes($_POST['email']);
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('contact_email', '$_POST[email]')";
-		$result = mysql_query($sql ,$db);
-
+		//$result = mysql_query($sql ,$db);
+		if(defined('MYSQLI_ENABLED')){
+		    $result = $db->query($sql);
+		}else{
+		    $result= mysql_query($sql, $db);
+        }
 		unset($_POST['admin_username']);
 		unset($_POST['form_admin_password_hidden']);
 		unset($_POST['admin_email']);

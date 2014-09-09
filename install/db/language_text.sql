@@ -1,4 +1,5 @@
-DROP TABLE language_text;
+DROP TABLE IF EXISTS `language_text`;
+#DROP TABLE `language_text`;
 # Table structure for table 'language_text'
 
 CREATE TABLE `language_text` (
@@ -10,7 +11,8 @@ CREATE TABLE `language_text` (
   `context` text NOT NULL,
   PRIMARY KEY  (`language_code`,`variable`,`term`)
 ) ENGINE=MyISAM;
-INSERT INTO `languages` VALUES ('en', 'utf-8',  'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
+
+#INSERT INTO `languages` VALUES ('en', 'utf-8',  'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
 
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'TR_CONFIRM_ADD_TEST_QUESTIONS', 'Are you sure you want to <em>add</em> the following questions? \r\n<ul>%s</ul>', '2010-03-31 11:47:09', ''),
 ('en', '_msgs', 'TR_CONFIRM_DELETE', 'Are you sure you want to delete these items?<br />\r\n\r\n <ul> %s </ul>', '2010-03-25 14:07:57', ''),

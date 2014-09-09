@@ -21,6 +21,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
+require_once(TR_INCLUDE_PATH.'lib/mysql_funcs.inc.php');
 
 global $_course_id;
 
@@ -60,7 +61,7 @@ else if($_POST['submit']){
 		}
 		else 
 		{ // create a new course
-			if ($course_id = $coursesDAO->Create($_SESSION['user_id'], 'top', $access, $_POST['title'], $_POST['description'], 
+			if ($course_id = $coursesDAO->Create($_POST['this_author'], $_POST['category_id'], 'top', $access, $_POST['title'], $_POST['description'], 
 			                    null, null, null, $_POST['copyright'], $_POST['pri_lang'], null, null))
 			{
 				if(isset($_POST['_struct_name'])) {

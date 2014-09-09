@@ -30,27 +30,58 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 
 	//check DB & table connection
 
-	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
+    if(defined('MYSQLI_ENABLED')){
+        $db = new mysqli($_POST['db_host'], $_POST['db_login'], $_POST['db_password'], null, $_POST['db_port']);
+        $db->set_charset("utf8");
+    }else{
+	    $db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	
+	}
+
+	//$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
 
 	if (!$db) {
-		$error_no = mysql_errno();
+	    $error_no = at_db_errno();
+		//$error_no = mysql_errno();
 		if ($error_no == 2005) {
 			$errors[] = 'Unable to connect to database server. Database with hostname '.$_POST['db_host'].' not found.';
 		} else {
 			$errors[] = 'Unable to connect to database server. Wrong username/password combination.';
 		}
 	} else {
-		if (!mysql_select_db($_POST['db_name'], $db)) {
-			$errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
-		}
-
+	    if(defined('MYSQLI_ENABLED')){
+	         if (!$db->select_db($_POST['db_name'])) {
+                    $errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
+             }
+	    }else{
+	
+            if (!mysql_select_db($_POST['db_name'], $db)) {
+                $errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
+            }
+        }
+        /*
 		$sql = "SELECT VERSION() AS version";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
 		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
 			$errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.0.2 or later.';
 		}
-
+		*/
+		if(defined('MYSQLI_ENABLED')){
+		    $sql = "SELECT VERSION() AS version";
+            $result = $db->query($sql);
+            $row = $result->fetch_assoc();
+            if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
+                $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
+            }
+		}else{
+            $sql = "SELECT VERSION() AS version";
+            $result = mysql_query($sql, $db);
+            $row = mysql_fetch_assoc($result);
+            if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
+                $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
+            }
+        }
 		if (!$errors) {
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
@@ -65,7 +96,11 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 //			}
 
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";
-			@mysql_query($sql, $db);
+		    if(defined('MYSQLI_ENABLED')){
+		        $db->query($sql);
+		    }else{
+			    @mysql_query($sql, $db);
+			}
 
 			//get list of all update scripts minus sql extension
 			$files = scandir('db'); 

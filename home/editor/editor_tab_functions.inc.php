@@ -26,9 +26,6 @@ function in_array_cin($strItem, $arItems)
 
 
 function get_tabs() {
-	//these are the _AT(x) variable names and their include file
-	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
-
 /* Check if the page template_layout and are enabled or disabled */
         include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
         $dao = new DAO();
@@ -58,20 +55,6 @@ function get_tabs() {
 	$tabs[++$inc] = array('metadata',    		'properties.inc.php',    'p');
 	$tabs[++$inc] = array('alternative_content', 'alternatives.inc.php',  'a');	
 	$tabs[++$inc] = array('tests',               'tests.inc.php',         't');
-
-   /* DEFAULT IS TO PROF
-	$tabs[0] = array('content',       		'edit.inc.php',          'n');
-        $tabs[1] = array('layout', 'layout.inc.php', 'l');
-        $tabs[2] = array('page_template', 'page_template.inc.php', 'g');
-	$tabs[3] = array('metadata',    		'properties.inc.php',    'p');
-	$tabs[4] = array('alternative_content', 'alternatives.inc.php',  'a');	
-	$tabs[5] = array('tests',               'tests.inc.php',         't');
-	//catia
-	//$tabs[4] = array('forums', '');
-    * 
-    * END DEFAULT
-    */
-
 	return $tabs;
 }
 
@@ -238,22 +221,6 @@ function save_changes($redir, $current_tab) {
 		$content_type_pref = CONTENT_TYPE_CONTENT;
 	}
 
-	/*if (!($release_date = generate_release_date())) {
-		$msg->addError('BAD_DATE');
-	}*/
-
-//	if ($_POST['title'] == '') {
-//		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
-//	}
-		
-//	if (!$msg->containsErrors()) {
-        $orig_body_text = $_POST['body_text'];  // used to populate a4a tables
-//		$_POST['title']			= $addslashes($_POST['title']);
-//		$_POST['body_text']		= $addslashes($_POST['body_text']);
-//		$_POST['head']  		= $addslashes($_POST['head']);
-//		$_POST['keywords']		= $addslashes($_POST['keywords']);
-//		$_POST['test_message']	= $addslashes($_POST['test_message']);		
-
 		// add or edit content
 		if ($_POST['_cid']) {
 			/* editing an existing page */
@@ -261,140 +228,6 @@ function save_changes($redir, $current_tab) {
 			                                    $_POST['keywords'], $_POST['formatting'], 
 			                                    $_POST['head'], $_POST['use_customized_head'], 
 			                                    $_POST['test_message']);
-/*                                                            
-//ceppini matteo 09/11/2012
-// 13/11/2012                        
-// 14/11/2012  
-                
-$first_part='<table style="width: 100%; display: table;" class="page_template linee_guida">
-                <tbody>
-                    <tr>
-                        <td>
-                        <div class="removePageTemplateTopBar" style="display: none;">
-                        <div class="removePageTemplate">X</div>
-                        </div>
-                        </td>
-                    </tr><tr><td class="pageTemplateContent" style="border: medium none;">';
-$second_part='</tr></td>
-            <tr>
-                <td>
-                    <div style="visibility: hidden;" class="sortTools">
-                            <img src="'.TR_BASE_HREF.'/templates/system/top.png" class="movePageTemplateTop" alt="move top">
-                            <img src="'.TR_BASE_HREF.'/templates/system/up.png" class="movePageTemplateUp" alt="move up">
-                            <img src="'.TR_BASE_HREF.'/templates/system/down.png" class="movePageTemplateDown" alt="move down">
-                            <img src="'.TR_BASE_HREF.'/templates/system/bottom.png" class="movePageTemplateBottom" alt="move bottom">
-                    </div>
-                        
-                </td>
-            </tr>
-        </tbody>
-    </table>';
-
-
-
-
-if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
-  //$control_string="non trovata";
-    $first_part= $first_part. $_POST['body_text'];
-    $control_string= $first_part. $second_part;
-    $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
-                                        $_POST['keywords'], $_POST['formatting'], 
-                                        $_POST['head'], $_POST['use_customized_head'], 
-                                        $_POST['test_message']);
-}else{
-  $first_part= $first_part. $_POST['body_text'];
-  $second_part='</tbody></table>';
-  $control_string= $first_part. $second_part;
-$err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
-                                        $_POST['keywords'], $_POST['formatting'], 
-                                        $_POST['head'], $_POST['use_customized_head'], 
-                                        $_POST['test_message']);
-}
-                      
-// IDEA SOTTARRE AL NUOVO TESTO QUELLO PRECEDENTE E CONTROLLARE SE CONTIENE TESTO E POI RACCHIUDERLO
-                        
-define('TR_INCLUDE_PATH', '../../include/');
-global $associated_forum, $_course_id, $_content_id;
-include_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
-require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
-require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
-Utility::authenticate(TR_PRIV_ISAUTHOR);
-$dao = new DAO();
-$cid = $_POST['_cid'];
-$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-$result=$dao->execute($sql);
-    if(is_array($result))
-    {
-        foreach ($result as $support) {
-           $text=$support['text'];
-           break;
-        }  
-    }
-    //************************************************
-    // In $text ho il vecchio contenuto               
-    // In $orig_body_text ho tutto il nuovo contenuto 
-    //************************************************
-    
-    //$appoggio=substr($orig_body_text, $text); NON VA
-    //$appogio=substr_compare($orig_body_text, $text);
-    
-    $rr= strlen($text);
-    $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $rr, 
-                                                $_POST['keywords'], $_POST['formatting'], 
-                                                $_POST['head'], $_POST['use_customized_head'], 
-                                                $_POST['test_message']);
-    if(!empty($text)){
-       // $appoggio=str_replace($text,"",$orig_body_text);
-        
-     //   $appoggio=str_ireplace($orig_body_text, "", $text);
-        // appoggio-->contenuto vecchio
-      //  die($text);
-      //  $appoggio=substr($orig_body_text,strlen($appoggio));
-        $a=(string)$text;
-        $lunghezza=strlen($a);
-       // die($lunghezza);
-        
-       $rrrr=str_replace($orig_body_text,"",$text);
-        
-        $appoggio=substr($orig_body_text,$lunghezza);
-        $appoggio=strip_tags($appoggio);
-       // die($appoggio);
-        
-        if(strstr($appoggio,'removePageTemplateTopBar')===false){
-          //$control_string="non trovata";
-            $first_part=$first_part. '<br>';
-            $first_part= $first_part. $appoggio;
-            $appoggio= $first_part. $second_part;
-            $control_string=$rrrr. $appoggio;
-            //die($rrrr);
-            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
-                                                $_POST['keywords'], $_POST['formatting'], 
-                                                $_POST['head'], $_POST['use_customized_head'], 
-                                                $_POST['test_message']);
-        }else{
-            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $orig_body_text, 
-                                                $_POST['keywords'], $_POST['formatting'], 
-                                                $_POST['head'], $_POST['use_customized_head'], 
-                                                $_POST['test_message']);
-
-        }   
-    }else{
-        if(strstr($orig_body_text,'removePageTemplateTopBar')===false){
-          
-            $first_part= $first_part. $_POST['body_text'];
-            $control_string= $first_part. $second_part;
-            $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $control_string, 
-                                                $_POST['keywords'], $_POST['formatting'], 
-                                                $_POST['head'], $_POST['use_customized_head'], 
-                                                $_POST['test_message']);
-        }else{
-          $err = $contentManager->editContent($_POST['_cid'], $_POST['title'], $_POST['body_text'], 
-                                                $_POST['keywords'], $_POST['formatting'], 
-                                                $_POST['head'], $_POST['use_customized_head'], 
-                                                $_POST['test_message']);
-        }
-    }*/
-    
     
                                            
 			$cid = $_POST['_cid'];
@@ -426,36 +259,6 @@ $result=$dao->execute($sql);
 		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
 		
 		
-		
-//	}
-
-	/* insert glossary terms */
-	/*
-	if (is_array($_POST['glossary_defs']) && ($num_terms = count($_POST['glossary_defs']))) {
-		global $glossary, $glossary_ids, $msg;
-
-		foreach($_POST['glossary_defs'] as $w => $d) {
-			$old_w = $w;
-			$key = in_array_cin($w, $glossary_ids);
-			$w = urldecode($w);
-			$d = $addslashes($d);
-
-			if (($key !== false) && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
-				$w = addslashes($w);
-				$related_id = intval($_POST['related_term'][$old_w]);
-				$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d', related_word_id=$related_id WHERE word_id=$key AND course_id=$_SESSION[course_id]";
-				$result = mysql_query($sql, $db);
-				$glossary[$old_w] = $d;
-			} else if ($key === false && ($d != '')) {
-				$w = addslashes($w);
-				$related_id = intval($_POST['related_term'][$old_w]);
-				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$w', '$d', $related_id)";
-
-				$result = mysql_query($sql, $db);
-				$glossary[$old_w] = $d;
-			}
-		}
-	}*/
 	if (isset($_GET['tab'])) {
 		$current_tab = intval($_GET['tab']);
 	}
@@ -491,9 +294,6 @@ $result=$dao->execute($sql);
 				if (isset($_POST['alt_'.$type['primary_resource_id'].'_'.$type['type_id']]))
 				{
 					$primaryResourcesTypesDAO->Create($type['primary_resource_id'], $type['type_id']);
-//					$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types (primary_resource_id, type_id)
-//					        VALUES (".$type['primary_resource_id'].", ".$type['type_id'].")";
-//					$result = mysql_query($sql, $db);
 				}
 			}
 		}
@@ -502,8 +302,6 @@ $result=$dao->execute($sql);
 	include_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
 	$contentTestsAssocDAO = new ContentTestsAssocDAO();
 	$test_rows = $contentTestsAssocDAO->getByContent($_POST['_cid']);
-//	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_tests_assoc WHERE content_id=$_POST[cid]";
-//	$result = mysql_query($sql, $db);
 	$db_test_array = array();
 	if (is_array($test_rows)) {
 		foreach ($test_rows as $row) {
@@ -525,8 +323,7 @@ $result=$dao->execute($sql);
 		if (!empty($toBeAdded)){
 			foreach ($toBeAdded as $i => $tid){
 				$tid = intval($tid);
-//				$sql = 'INSERT INTO '. TABLE_PREFIX . "content_tests_assoc SET content_id=$_POST[cid], test_id=$tid";
-//				$result = mysql_query($sql, $db);
+
 				if ($contentTestsAssocDAO->Create($_POST['_cid'], $tid) === false){
 					$msg->addError('DB_NOT_UPDATED');
 				}
@@ -535,29 +332,9 @@ $result=$dao->execute($sql);
 	} else {
 		//All tests has been removed.
 		$contentTestsAssocDAO->DeleteByContentID($_POST['_cid']);
-//		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
-//		$result = mysql_query($sql, $db);
 	}
 	//End Add test
 
-	//TODO*******************BOLOGNA****************REMOVE ME**************/
-/*
-	if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){
-		if($_SESSION['associated_forum']=='none'){
-			$sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
-			mysql_query($sql,$db);
-		} else {
-			$sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
-			mysql_query($sql,$db);
-			$associated_forum = $_SESSION['associated_forum'];
-			for($i=0; $i<count($associated_forum); $i++){
-				$sql="INSERT INTO ".TABLE_PREFIX."content_forums_assoc SET content_id='$_POST[cid]',forum_id='$associated_forum[$i]'";
-				mysql_query($sql,$db);
-			}
-		}
-		unset($_SESSION['associated_forum']);
-	}
-*/
 	if (!$msg->containsErrors() && $redir) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 		
@@ -568,43 +345,7 @@ $result=$dao->execute($sql);
 		return;
 	}
 }
-/*
-function generate_release_date($now = false) {
-	if ($now) {
-		$day  = date('d');
-		$month= date('m');
-		$year = date('Y');
-		$hour = date('H');
-		$min  = 0;
-	} else {
-		$day	= intval($_POST['day']);
-		$month	= intval($_POST['month']);
-		$year	= intval($_POST['year']);
-		$hour	= intval($_POST['hour']);
-		$min	= intval($_POST['min']);
-	}
 
-	if (!checkdate($month, $day, $year)) {
-		return false;
-	}
-
-	if (strlen($month) == 1){
-		$month = "0$month";
-	}
-	if (strlen($day) == 1){
-		$day = "0$day";
-	}
-	if (strlen($hour) == 1){
-		$hour = "0$hour";
-	}
-	if (strlen($min) == 1){
-		$min = "0$min";
-	}
-	$release_date = "$year-$month-$day $hour:$min:00";
-	
-	return $release_date;
-}
-*/
 function check_for_changes($row, $row_alternatives) {
 	global $contentManager, $cid, $glossary, $glossary_ids_related, $addslashes;
 
@@ -646,63 +387,12 @@ function check_for_changes($row, $row_alternatives) {
 		$changes[0] = true;
 	}
 
-	/* release date: */
-//	if ($row && strcmp(substr(generate_release_date(), 0, -2), substr($row['release_date'], 0, -2))) {
-//		/* the substr was added because sometimes the release_date in the db has the seconds field set, which we dont use */
-//		/* so it would show a difference, even though it should actually be the same, so we ignore the seconds with the -2 */
-//		/* the seconds gets added if the course was created during the installation process. */
-//		$changes[1] = true;
-//	} else if (!$row && strcmp(generate_release_date(), generate_release_date(true))) {
-//		$changes[1] = true;
-//	}
-
-	/* related content: */
-//	$row_related = $contentManager->getRelatedContent($cid);
-//
-//	if (is_array($_POST['related']) && is_array($row_related)) {
-//		$sum = array_sum(array_diff($_POST['related'], $row_related));
-//		$sum += array_sum(array_diff($row_related, $_POST['related']));
-//		if ($sum > 0) {
-//			$changes[1] = true;
-//		}
-//	} else if (!is_array($_POST['related']) && !empty($row_related)) {
-//		$changes[1] = true;
-//	}
-
 	/* keywords */
 	if ($row && strcmp(trim($_POST['keywords']), $row['keywords'])) {
 		$changes[1] = true;
 	}  else if (!$row && $_POST['keywords']) {
 		$changes[1] = true;
 	}
-
-
-	/* glossary */
-//	if (is_array($_POST['glossary_defs'])) {
-//		global $glossary_ids;
-//		foreach ($_POST['glossary_defs'] as $w => $d) {
-//
-//			$key = in_array_cin($w, $glossary_ids);
-//			if ($key === false) {
-//				/* new term */
-//				$changes[2] = true;
-//				break;
-//			} else if ($cid && ($d &&($d != $glossary[$glossary_ids[$key]]))) {
-//				/* changed term */
-//				$changes[2] = true;
-//				break;
-//			}
-//		}
-//
-//		if (is_array($_POST['related_term'])) {
-//			foreach($_POST['related_term'] as $term => $r_id) {
-//				if ($glossary_ids_related[$term] != $r_id) {
-//					$changes[2] = true;
-//					break;
-//				}
-//			}
-//		}
-//	}
 
 	/* adapted content */
 	if (isset($_POST['use_post_for_alt']))
@@ -809,31 +499,7 @@ function write_temp_file() {
 	$file_name = $_POST['_cid'].'.html';
 
 	if ($handle = fopen(TR_CONTENT_DIR . $file_name, 'wb+')) {
-//		$temp_content = '<h2>'.TR_print(stripslashes($_POST['title']), 'content.title').'</h2>';
-//
-//		if ($_POST['body_text'] != '') {
-//			$temp_content .= format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
-//		}
-//		$temp_title = $_POST['title'];
-//
-//		$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-//			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-//		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-//		<head>
-//			<base href="{BASE_HREF}" />
-//			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-//			<title>{TITLE}</title>
-//			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
-//		</head>
-//		<body>
-//		{CONTENT}
-//		</body>
-//		</html>';
-//
-//		$page_html = str_replace(	array('{BASE_HREF}', '{TITLE}', '{CONTENT}'),
-//									array($content_base, $temp_title, $temp_content),
-//									$html_template);
-		
+	
 		if (!@fwrite($handle, stripslashes($_POST['body_text']))) {
 			$msg->addError('FILE_NOT_SAVED');       
 	   }

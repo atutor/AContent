@@ -145,7 +145,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 			    id="rm<?php echo $row['user_id']; ?>">
 				<td><input type="checkbox" name="id[]" value="<?php echo $row['user_id']; ?>" id="m<?php echo $row['user_id']; ?>" 
 				           onmouseup="this.checked=!this.checked" onkeyup="this.checked=!this.checked" /></td>
-				<td><label for="m<?php echo $row['user_id']; ?>"><span class="inlineEdits" id="<?php echo "login-".$row['user_id']; ?>"><?php echo $row['login']; ?></span></label></td>
+				<td><label for="m<?php echo $row['user_id']; ?>"><?php echo $row['login']; ?></label></td>
 				<td><span class="inlineEdits" id="<?php echo "first_name-".$row['user_id']; ?>"><?php echo $row['first_name']; ?></span></td>
 				<td><span class="inlineEdits" id="<?php echo "last_name-".$row['user_id']; ?>"><?php echo $row['last_name']; ?></span></td>
 				<td><?php echo $row['user_group']; ?></td>

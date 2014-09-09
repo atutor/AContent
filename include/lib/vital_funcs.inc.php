@@ -12,6 +12,12 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
+/* test for mysqli presence */
+if(function_exists('mysqli_connect')){
+	define('MYSQLI_ENABLED', 1);
+} 
+
+
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
    if (!ini_get('register_globals')) { return; }
@@ -27,15 +33,25 @@ function unregister_GLOBALS() {
        if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) { unset($GLOBALS[$k]); }
    }
 }
-
+/*
 function my_add_null_slashes( $string ) {
     return mysql_real_escape_string(stripslashes($string));
+}
+*/
+function my_add_null_slashes( $string ) {
+    global $db;
+    if(defined('MYSQLI_ENABLED')){
+        return $db->real_escape_string(stripslashes($string));
+    }else{
+        return mysql_real_escape_string(stripslashes($string));
+    }
+
 }
 
 function my_null_slashes($string) {
 	return $string;
 }
-
+/*
 if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'my_add_null_slashes';
 	$stripslashes = 'stripslashes';
@@ -43,6 +59,24 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'mysql_real_escape_string';
 	$stripslashes = 'my_null_slashes';
 }
+*/
+if ( get_magic_quotes_gpc() == 1 ) {
+    $addslashes   = 'my_add_null_slashes';
+    $stripslashes = 'stripslashes';
+} else {
+    if(defined('MYSQLI_ENABLED')){
+        // mysqli_real_escape_string requires 2 params, breaking wherever
+        // current $addslashes with 1 param exists. So hack with trim and 
+        // manually run mysqli_real_escape_string requires during sanitization below
+        $addslashes   = 'trim';
+    }else{
+        $addslashes   = 'mysql_real_escape_string';
+    }
+    $stripslashes = 'my_null_slashes';
+}
+
+
+
 
 /**
  * This function is used for printing variables for debugging.

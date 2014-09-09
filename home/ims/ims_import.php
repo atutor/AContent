@@ -112,10 +112,6 @@ function check_available_size($course_id)
 
 	$q_row = $coursesDAO->get($course_id);
 	
-	//$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-	//$result = mysql_query($sql, $db);
-	//$q_row	= mysql_fetch_assoc($result);
-	
 	if ($q_row['max_quota'] == TR_COURSESIZE_UNLIMITED) return;
 	else $zip_size_limit = $MaxCourseSize;
 
@@ -1034,7 +1030,7 @@ if (!isset($_POST['_course_id']))
 		$this_author = $_SESSION['user_id'];
 	}
 	
-	$_course_id = $coursesDAO->Create($this_author, 'top', $access, $course_title, $course_description, 
+	$_course_id = $coursesDAO->Create($this_author, 0, 'top', $access, $course_title, $course_description, 
 	             '', '', '', '', $course_primary_lang, '', '');
 	
 	check_available_size($_course_id);

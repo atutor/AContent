@@ -17,20 +17,55 @@ if(isset($_POST['submit'])) {
 	unset($progress);
 
 	//check DB & table connection
-
-	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+    if(defined('MYSQLI_ENABLED')){
+        $db = new mysqli($_POST['db_host'], $_POST['db_login'], $_POST['db_password'], null, $_POST['db_port']);
+        $db->set_charset("utf8");
+    }else{
+	    $db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	
+	}
 	if (!$db) {
 		$errors[] = 'Unable to connect to database server.';
 	} else {
 		// check mysql version number
-		$sql = "SELECT VERSION() AS version";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
-		}
-
+		if(defined('MYSQLI_ENABLED')){
+		    $sql = "SELECT VERSION() AS version";
+            $result = $db->query($sql);
+            $row = $result->fetch_assoc();
+            if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
+                $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
+            }
+		}else{
+            $sql = "SELECT VERSION() AS version";
+            $result = mysql_query($sql, $db);
+            $row = mysql_fetch_assoc($result);
+            if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
+                $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
+            }
+        }
 		if (!isset($errors)){
+		    if(defined('MYSQLI_ENABLED')){
+		    	if (!$db->select_db($_POST['db_name'])) {
+				    $sql = "CREATE DATABASE $_POST[db_name] CHARACTER SET utf8 COLLATE utf8_general_ci";
+				    $result = $db->query($sql);
+                    if (!$result) {
+                        $errors[] = 'Unable to select or create database <b>'.$_POST['db_name'].'</b>.';
+                    } else {
+                        $progress[] = 'Database <b>'.$_POST['db_name'].'</b> created successfully.';
+                        $db->select_db($_POST['db_name']);
+                    }
+			    } else {
+                    /* Check if the database that existed is in UTF-8, if not, ask for retry */
+                    $sql = "SHOW CREATE DATABASE $_POST[db_name]";
+                    $result = $db->query($sql);
+                    $row = $result->fetch_assoc();
+                
+                    if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
+                        $errors[] = 'Database <b>'.$_POST['db_name'].'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  To use ALTER DATABASE, you need the ALTER privilege on the database.';
+                    }
+			}
+		}else{
+		
 			if (!mysql_select_db($_POST['db_name'], $db)) {
 				$sql = "CREATE DATABASE $_POST[db_name] CHARACTER SET utf8 COLLATE utf8_general_ci";
 				$result = mysql_query($sql, $db);
@@ -51,13 +86,13 @@ if(isset($_POST['submit'])) {
 				}
 			}
 		}
-
+    }
 		if (!isset($errors)) {
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			$errors = array();
 			
 			/* @See include/classes/dbmanager.php */
-			queryFromFile('db/db_schema.sql');
+			queryFromFile('db/db_schema.sql');  
 			queryFromFile('db/language_text.sql');
 			queryFromFile('db/HowTo_lesson.sql');
 

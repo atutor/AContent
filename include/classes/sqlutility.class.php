@@ -179,7 +179,8 @@ class SqlUtility
                     if ($dao->execute($prefixed_query[0]) !== false) {
 						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
                     } else {
-						if (mysql_errno($db) == 1050) {
+						if (at_db_errno($db) == 1050) {
+						//if (mysql_errno($db) == 1050) {
 							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
 						} else {
 							$errors[] = 'Table <b>' . $table . '</b> creation failed.';

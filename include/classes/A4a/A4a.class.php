@@ -167,7 +167,7 @@ class A4a {
 		$primaryResourcesDAO = new PrimaryResourcesDAO();
 		
 		if ($primaryResourcesDAO->Create($content_id, $file_name, $lang)){
-			return mysql_insert_id();
+			return $this->ac_insert_id();
 		}
 		return false;
 	}
@@ -185,7 +185,7 @@ class A4a {
 		include_once(TR_INCLUDE_PATH.'classes/DAO/SecondaryResourcesDAO.class.php');
 		$secondaryResourcesDAO = new SecondaryResourcesDAO();
 		if ($secondaryResourcesDAO->Create($primary_resource_id, $file_name, $lang)){
-			return mysql_insert_id();
+			return $this->ac_insert_id();
 		}
 		return false;
 	}
@@ -220,6 +220,15 @@ class A4a {
 		$primaryResourcesDAO = new PrimaryResourcesDAO();
 		$rows = $primaryResourcesDAO->Delete($this->cid);
 	}    
+	
+	function ac_insert_id(){
+        global $db;
+        if(defined('MYSQLI_ENABLED')){
+            return self::$db->insert_id;
+        }else{
+            return mysql_insert_id(self::$db);
+        }
+    }
 }
 
 ?>

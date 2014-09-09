@@ -31,12 +31,13 @@ class CoursesDAO extends DAO {
 	 *          false and add error into global var $msg, if unsuccessful
 	 * @author  Cindy Qi Li
 	 */
-	public function Create($user_id, $content_packaging, $access, $title, $description, $course_dir_name, 
+	public function Create($user_id, $category_id, $content_packaging, $access, $title, $description, $course_dir_name, 
 	                       $max_quota, $max_file_size, $copyright,
 	                       $primary_language, $icon, $side_menu)
 	{
 		global $addslashes;
 		$user_id = intval($user_id);
+		$category_id = intval($category_id);
 		$title = $addslashes(trim($title));
 		$decsription = $addslashes(trim($description));
 		$course_dir_name = $addslashes(trim($course_dir_name));
@@ -52,6 +53,7 @@ class CoursesDAO extends DAO {
 			/* insert into the db */
 			$sql = "INSERT INTO ".TABLE_PREFIX."courses
 			              (user_id,
+			               category_id,
 			               content_packaging,
 			               access,
 			               title,
@@ -66,6 +68,7 @@ class CoursesDAO extends DAO {
 			               created_date
 			               )
 			       VALUES (".$user_id.",
+			               '".$category_id."',
 			               '".$content_packaging."',
 			               '".$access."',
 			               '".$title."',
@@ -86,7 +89,8 @@ class CoursesDAO extends DAO {
 			}
 			else
 			{
-				$course_id = mysql_insert_id();
+				//$course_id = mysql_insert_id();
+				$course_id = $this->ac_insert_id();
 				// create the user and course relationship
 				$sql = "INSERT INTO ".TABLE_PREFIX."user_courses (user_id, course_id, role, last_cid)
 				        VALUES (".$user_id.", ".$course_id.", ".TR_USERROLE_AUTHOR.", 0)";

@@ -55,7 +55,7 @@ sleep 1
 
 echo "Dumping language_text"
 rm $acontent_dir/AContent/install/db/language_text.sql
-echo "DROP TABLE language_text;" > $acontent_dir/AContent/install/db/language_text.sql
+echo "DROP IF EXISTS language_text;" > $acontent_dir/AContent/install/db/language_text.sql
 wget --output-document=- http://atutor.ca/atutor/translate/dump_lang_acontent.php >> $acontent_dir/AContent/install/db/language_text.sql
 
 sleep 1

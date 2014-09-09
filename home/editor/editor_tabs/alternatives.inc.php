@@ -48,7 +48,7 @@ function get_display_filename($filename)
 
 /**
  * Display alternative table cell
- * @param $secondary_result   mysql result of all secondary alternatives
+ * @param $secondary_result   db result of all secondary alternatives
  *        $alternative type   the resource type of the alternative to display. Must be one of the values in resource_types.type_id
  *        $content_id         used to pass into file_manager/index.php
  *        $pid                primary resource id
@@ -65,7 +65,6 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 	
 	if (is_array($secondary_resources))
 	{
-//		mysql_data_seek($secondary_result, 0);  // move the mysql result cursor back to the first row
 		foreach ($secondary_resources as $secondary_resource)
 		{
 			if ($secondary_resource['type_id'] == $alternative_type)
@@ -147,7 +146,7 @@ if ($_POST['formatting'] <> 1)
 			           AND pr.primary_resource_id='".$primary_resource_id."'
 			           AND pr.primary_resource_id = prt.primary_resource_id
 			           AND prt.type_id = rt.type_id";
-	//		$primary_type_result = mysql_query($sql, $db);
+
 			$primary_types = $dao->execute($sql);
 			
 			if (!$is_post_indicator_set)
@@ -166,7 +165,7 @@ if ($_POST['formatting'] <> 1)
 			           AND pr.primary_resource_id='".$primary_resource_id."'
 			           AND pr.primary_resource_id = sr.primary_resource_id
 			           AND sr.secondary_resource_id = srt.secondary_resource_id";
-	//		$secondary_result = mysql_query($sql, $db);
+
 			$secondary_resources = $dao->execute($sql);
 			
 			echo '  <tr>'."\n";
@@ -179,8 +178,6 @@ if ($_POST['formatting'] <> 1)
 			// table cell "original resource type"
 			echo '    <td headers="header2">'."\n";
 			
-	//		mysql_data_seek($resource_types_result, 0);  // move the mysql result cursor back to the first row
-	//		while ($resource_type = mysql_fetch_assoc($resource_types_result))
 			if (is_array($resource_types))
 			{
 				foreach ($resource_types as $resource_type) {

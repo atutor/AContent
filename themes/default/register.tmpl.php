@@ -75,7 +75,15 @@ function encrypt_password()
 	  
 	<dl class="form_layout">
 	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name'); ?></label>:</dt>
-	  <dd><input id="login" name="login" type="text" maxlength="20" size="30" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['login'])); else echo stripslashes(htmlspecialchars($this->user_row['login'])); ?>" /></dd>
+	  <dd>
+	    <?php if($this->user_row['login'] != ''){
+	    echo '<strong>'.stripslashes(htmlspecialchars($this->user_row['login'])).'</strong>';
+	    }else{ ?>
+	    <input id="login" name="login" type="text" maxlength="20" size="30" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['login'])); else echo stripslashes(htmlspecialchars($this->user_row['login'])); ?>" />
+	  <?php  }
+	    ?>
+
+	  </dd>
 		  <p><small>&middot; <?php echo _AT('contain_only'); ?><br />
 		  &middot; <?php echo _AT('20_max_chars'); ?></small></p>	
 

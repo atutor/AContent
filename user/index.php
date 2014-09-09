@@ -133,9 +133,10 @@ $sql = "SELECT U.user_id, U.login, U.first_name, U.last_name, UG.title user_grou
           AND U.status $status AND $search AND $user_group_sql ORDER BY $col $order LIMIT $offset, $results_per_page";
 
 $user_rows = $dao->execute($sql);
-
+/*
 if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
 	$ids = '';
+	// WHAT IS THIS DOING HERE
 	while ($row = mysql_fetch_assoc($result)) {
 		$ids .= $row['user_id'].','; 
 	}
@@ -150,7 +151,7 @@ if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
 		exit;
 	}
 }
-
+*/
 $userGroupsDAO = new UserGroupsDAO();
 
 $savant->assign('user_rows', $user_rows);

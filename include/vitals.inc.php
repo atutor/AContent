@@ -12,11 +12,11 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
-define('TR_DEVEL', 0);
+define('TR_DEVEL', 1);
 define('TR_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
-require(TR_INCLUDE_PATH.'lib/vital_funcs.inc.php');
-
+require_once(TR_INCLUDE_PATH.'lib/vital_funcs.inc.php');
+//require_once(TR_INCLUDE_PATH.'lib/mysql_funcs.inc.php');
 /*
  * structure of this document (in order):
  *
@@ -85,6 +85,7 @@ require(TR_INCLUDE_PATH.'classes/DAO/ConfigDAO.class.php');
 
 $configDAO = new ConfigDAO();
 $rows = $configDAO->getAll();
+
 if (is_array($rows))
 {
 	foreach ($rows as $id => $row)

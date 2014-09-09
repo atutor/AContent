@@ -64,12 +64,6 @@ class ContentManager
 		$max_depth = array();
 		$_menu_info = array();
 
-//		$sql = "SELECT content_id, content_parent_id, ordering, title, UNIX_TIMESTAMP(release_date) AS u_release_date, content_type 
-//		          FROM ".TABLE_PREFIX."content 
-//		         WHERE course_id=$this->course_id 
-//		         ORDER BY content_parent_id, ordering";
-//		$result = mysql_query($sql, $this->db);
-
 		$rows = $this->contentDAO->getContentByCourseID($this->course_id);
 		
 		
@@ -282,8 +276,6 @@ class ContentManager
 		}
 
 		/* first get the content to make sure it exists	*/
-//		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-//		$result	= mysql_query($sql, $this->db);
 		if (!($row = $this->getContentPage($content_id)) ) {
 			return FALSE;
 		}
@@ -291,8 +283,7 @@ class ContentManager
 		$old_content_parent_id	= $row['content_parent_id'];
 		
 		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=$old_content_parent_id AND course_id=$_course_id";
-//		$result	= mysql_query($sql, $this->db);
-//		$row = mysql_fetch_assoc($result);
+
 		$row = $this->contentDAO->execute($sql);
 		$max_ordering = $row[0]['max_ordering'];
 		
@@ -327,7 +318,7 @@ class ContentManager
 			           AND content_parent_id=$old_content_parent_id 
 			           AND content_id<>$content_id 
 			           AND course_id=$_course_id";
-//			$result = mysql_query($sql, $this->db);
+
 			$this->contentDAO->execute($sql);
 
 			// shift the new neighbouring content down
@@ -337,13 +328,13 @@ class ContentManager
 			           AND content_parent_id=$new_content_parent_id 
 			           AND content_id<>$content_id 
 			           AND course_id=$_course_id";
-//			$result = mysql_query($sql, $this->db);
+
 			$this->contentDAO->execute($sql);
 
 			$sql	= "UPDATE ".TABLE_PREFIX."content 
 			              SET content_parent_id=$new_content_parent_id, ordering=$new_content_ordering 
 			            WHERE content_id=$content_id AND course_id=$_course_id";
-//			$result	= mysql_query($sql, $this->db);
+
 			$this->contentDAO->execute($sql);
 		}
 	}
@@ -356,9 +347,7 @@ class ContentManager
 		}
 
 		/* check if exists */
-//		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-//		$result	= mysql_query($sql, $this->db);
-//		if (!($row = @mysql_fetch_assoc($result)) ) {
+
 		if (!($row = $this->getContentPage($content_id)) ) {
 			return false;
 		}
@@ -391,33 +380,6 @@ class ContentManager
 		unset($_SESSION['s_cid']);
 		unset($_SESSION['from_cid']);
 		
-		/* delete this content page					*/
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-//		$result = mysql_query($sql, $this->db);
-
-		/* delete this content from member tracking page	*/
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-//		$result = mysql_query($sql, $this->db);
-
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
-//		$result = mysql_query($sql, $this->db);
-
-		/* delete the content tests association */
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
-//		$result = mysql_query($sql, $this->db);
-
-		/* delete the content forum association */
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id";
-//		$result = mysql_query($sql, $this->db);
-
-		/* Delete all AccessForAll contents */
-//		require_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
-//		$a4a = new A4a($content_id);
-//		$a4a->deleteA4a();
-
-		/* remove the "resume" to this page, b/c it was deleted */
-//		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
-//		$result = mysql_query($sql, $this->db);
 
 		return true;
 	}
@@ -439,16 +401,6 @@ class ContentManager
 
 		// delete this content page
 		$this->contentDAO->Delete($content_id);
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-//		$result = mysql_query($sql, $this->db);
-
-		/* delete this content from member tracking page	*/
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
-//		$result = mysql_query($sql, $this->db);
-
-		/* delete the content tests association */
-//		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
-//		$result = mysql_query($sql, $this->db);
 	}
 
 	function getContentPage($content_id) {
