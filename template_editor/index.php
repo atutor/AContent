@@ -17,7 +17,10 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 global $_current_user;
 
 if (isset($_current_user) && $_current_user->isAdmin()) {
+    // Temporary hack re: mantis 5530
+    if(!isset($_POST['template_type'])){
     require(TR_INCLUDE_PATH.'header.inc.php');
+    }
 
     if(isset ($_POST['submit'])) {
         require('classes/TemplateCommons.php');
