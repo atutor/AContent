@@ -1,4 +1,4 @@
-<?php 
+<?php
 /************************************************************************/
 /* AContent                                                             */
 /************************************************************************/
@@ -17,7 +17,7 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$this->course_id; ?>" name="form">
 <input type="hidden" name="_course_id" value="<?php echo $this->course_id; ?>" />
-<?php if(isset( $_REQUEST['_struct_name'])) { 
+<?php if(isset( $_REQUEST['_struct_name'])) {
 
  	echo '<input type="hidden" name="_struct_name" value="'. $_REQUEST['_struct_name']. '" />';
 }
@@ -42,13 +42,16 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 				if($author['user_id'] == $this->course_row['user_id']){
 	 				echo '<option value="'.$author['user_id'].'" selected="selected">'.$author['first_name'].' '.$author['last_name'].' ('.$author['login'].')</option>';
 	 			}else{
-	 				echo '<option value="'.$author['user_id'].'">'.$author['first_name'].' '.$author['last_name'].' ('.$author['login'].')</option>';	 		
+	 				echo '<option value="'.$author['user_id'].'">'.$author['first_name'].' '.$author['last_name'].' ('.$author['login'].')</option>';
 	 			}
 			}?>
 			</select>
 			</td>
 		</tr>
-		<?php } ?>
+		<?php } else { ?>
+
+			<input type="hidden" name="this_author" value="<?php echo $_SESSION['user_id']; ?>" />
+		<?php }?>
 
 		<tr>
 			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
@@ -76,14 +79,14 @@ require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
 			<td align="left"><label for="description"><?php echo _AT('description'); ?></label></td>
 			<td align="left"><textarea id="description" cols="45" rows="2" name="description"><?php if (isset($_POST['description'])) echo stripslashes(htmlspecialchars($_POST['description'])); else echo stripslashes(htmlspecialchars($this->course_row['description'])); ?></textarea></td>
 		</tr>
-		
-                <tr>
- 	  	
 
-                        <td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>	  	
+                <tr>
+
+
+                        <td align="left"><label for="copyright"><?php echo _AT('course_copyright'); ?></label></td>
 
                         <td align="left"><textarea name="copyright" rows="2" cols="65" id="copyright"><?php if (isset($_POST['copyright'])) echo stripslashes(htmlspecialchars($_POST['copyright'])); else echo stripslashes(htmlspecialchars($this->course_row['copyright'])); ?></textarea></td>
- 	
+
 
                 </tr>
                 <tr>
