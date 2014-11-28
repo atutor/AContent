@@ -210,7 +210,7 @@ class OAuthRequest {
     @$http_url or $http_url = $scheme .
                               '://' . $_SERVER['HTTP_HOST'] .
                               ':' .
-                              $_SERVER['SERVER_PORT'] .
+                              //$_SERVER['SERVER_PORT'] . // port is defined as part of the uri
                               $_SERVER['REQUEST_URI'];
     @$http_method or $http_method = $_SERVER['REQUEST_METHOD'];
 
