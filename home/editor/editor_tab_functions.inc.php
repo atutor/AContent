@@ -173,7 +173,9 @@ function populate_a4a($cid, $content, $formatting){
     foreach ($db_primary_resources  as $primary_rid=>$db_resource){
         //if this file from our table is not found in the $resource, then it's not used.
     	if(count($resources) == 0 || !in_array($db_resource['resource'], $resources)){
-        	$a4a->deletePrimaryResource($primary_rid);
+			// The following ends up deleting all original resourse type from the db
+			// Why is it here?
+        	//$a4a->deletePrimaryResource($primary_rid);
         }
     }
     
