@@ -106,7 +106,8 @@ class DAO {
                     {
                         $rows[] = $result->fetch_assoc();
                     }
-                    $result->free;
+					// $result-.free fails with mysqli
+                    //$result->free;
                     return $rows;
 		         }else{
 		            return false;
