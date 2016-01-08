@@ -482,7 +482,7 @@ class ContentUtility {
 		$text = str_replace("[code]","[code]<?php",$text);
 		$text = str_replace("[/code]","?>[/code]",$text);
 	
-		$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "ContentUtility::highlightCode(ContentUtility::fixQuotes('\\1'), $html)", $text);
+		$text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usi", "ContentUtility::highlightCode(ContentUtility::fixQuotes('\\1'), $html)", $text);
 		// now remove the <?php added above and leave the syntax colour behind.
 		$text = str_replace("&lt;?php", "", $text);
 		$text = str_replace("?&gt;", "", $text);
@@ -624,7 +624,7 @@ class ContentUtility {
 	
 		if (isset($_config['latex_server']) && $_config['latex_server']) {
 			// see: http://www.forkosh.com/mimetex.html
-			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
+			$input = preg_replace('/\[tex\](.*?)\[\/tex\]/si', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\">'", $input);
 		}
 	
 		if ($html) {
