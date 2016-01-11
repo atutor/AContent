@@ -1,4 +1,5 @@
 <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
+    <input type="hidden" name="referer" value="<?php echo $this->referer; ?>" />
     <div align="center">
         <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
             <tbody><tr>
@@ -28,6 +29,7 @@
                 <input type="radio" name="edit_mode" value="1" id="adv_mode" title="<?php echo _AT('advanced'); ?>" accesskey="a">
                 <label for="adv_mode"><?php echo _AT('advanced'); ?></label>
             </span>
+            <input type="submit" name="submit" value="<?php echo _AT('cancel'); ?>" title="<?php echo _AT('cancel'); ?>"accesskey="c"  style="float:right;"/>
             <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?>" accesskey="s"  style="float:right;"/>
         </div>
 

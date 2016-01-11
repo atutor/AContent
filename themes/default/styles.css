@@ -27,21 +27,6 @@
   src: local('Droid Sans'), url('fonts/DroidSans-Bold.ttf') format('truetype');
 }
 
-div.activ_template_page{
-    background-color: #efefef;
-    display: block;
-}
-img.table_template_page{
-    position:relative;
-    width: 80px;
-    height: 90px;
-    padding: 10px;
-}
-img.table_template_page:hover{
-    background-color:white;
-    
-}
-
 
 @font-face {
   font-family: 'Droid Sans';
@@ -115,7 +100,7 @@ ul {
 li {
   margin-bottom: 0px;
   margin-top: 0px;
-  margin-right: 0px;
+  margin-right: 3px;
 }
 img {
   border: none;
@@ -486,7 +471,7 @@ padding-bottom: .35em;
 ul#subnavlist li.active{
   padding-bottom: .5em;
   background-color: #F5FAFA;
-padding-bottom: .4em;
+  padding-bottom: .4em;
   border-bottom:0;
 
 }

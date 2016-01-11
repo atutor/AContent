@@ -11,6 +11,7 @@
 </div>
 
 <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
+    <input type="hidden" name="referer" value="<?php echo $this->referer; ?>" />
 <div align="center">
     <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
         <tbody><tr>
@@ -62,7 +63,7 @@
         <img class="btn_delete"  accesskey='x' value="Delete" id="btn_delete" src="<?php echo $this->image_path."/x.gif"; ?>" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>">
         <img class="btn_move"  accesskey='o' value="Up" id="btn_up" src="<?php echo $this->image_path."/move_up.png"; ?>" alt="<?php echo _AT('move_up'); ?>" title="<?php echo _AT('move_up'); ?>">
         <img class="btn_move"  accesskey='p' value="Down" id="btn_down" src="<?php echo $this->image_path."/move_down.png"; ?>" alt="<?php echo _AT('move_down'); ?>" title="<?php echo _AT('move_down'); ?>">
-
+<input type="submit" name="submit" value="<?php echo _AT('cancel'); ?>" title="<?php echo _AT('cancel'); ?>"accesskey="c"  style="float:right;"/>
 	<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?>" accesskey="s" />
     </div>
     

@@ -16,10 +16,11 @@
 <div class="input-form">
     <fieldset class="group_form">
         <legend class="group_form"><?php echo _AT('available_templates'); ?></legend>
-        <div class="results" style="float:left; width:240px; ">
+        <div class="results ">
             <div style="font-weight:bold"><?php echo _AT($this->template_type); ?></div>
-            <ol class="remove-margin-left">
+            <ol class="remove-margin-left" id="layout_list">
             <?php
+            global $_base_href;
             $editor_url;
             if($this->template_type=="layout") $editor_url="edit_layout.php";
             elseif($this->template_type=="structures") $editor_url="edit_structure.php";
@@ -27,8 +28,39 @@
 
             foreach( $this->template_list as $template=>$name){
                 echo "<li><a href='template_editor/".$editor_url."?temp=".$template."' class='courseName'>";
-                echo $name;
-                echo "</a></li>";
+                if($this->template_type == "layout"){
+                    echo '<img src="templates/layout/'.$template.'/screenshot-'.$template.'.png" class="template_thumb"/><br />';
+                 }else if($this->template_type == "pages"){
+                    echo '<img src="templates/page_template/'.$template.'/screenshot.png" class="template_thumb"/><br />';
+                 } else if($this->template_type == "structures"){
+                 //debug($template);
+                 //debug($this->template_list);
+                    ?>
+           <!--         
+                    <script type="text/javascript">
+                        this.this_template  ='';
+                        this.this_template = '<?php echo $template; ?>';
+                        this.this_structures = '<?php echo $this->template_list; ?>';
+                        //alert(this.this_template);
+                    </script>
+                    <script type="text/javascript" src="template_editor/js/structure.js"></script>
+                      -->
+                    <?php
+                    /*
+                    $xmlpath=realpath("../templates/structures")."/". $template."/content.xml";
+                    $xmlDoc = new DOMDocument();
+                    $xmlDoc->load($xmlpath);
+                    $x = $xmlDoc->documentElement;
+                    $this->xml_script = $xmlDoc->saveXML($xmlDoc->documentElement);
+                  
+                    echo '<textarea  id="xml_text_'.$template.'" name="xml_text" rows="35" cols="60"  style="border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; display:none;">'.$this->xml_script.'</textarea>';
+                    echo "<div id='tree_preview_".$template."' style='width:24em; height:300px; margin:2px;'></div>";
+                    */
+                    
+                 }
+                 
+               echo "<br /><span style='float:right;'>".$name."<span>";
+                echo '</a><a href="template_editor/delete.php?temp='.$template.SEP.'type='.$this->template_type.'"><img src="themes/default/images/delete.gif" alt="'._AT('delete').'" title="'._AT('delete').'"/></a></li>';
             } 
             ?>
             </ol>

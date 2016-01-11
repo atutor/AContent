@@ -5,12 +5,18 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 $_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/layout.js"></script>';
 
+if($_POST['submit'] == _AT('cancel')){
+    header('Location: '. $_POST['referer']);
+    exit;
+}
+
 require(TR_INCLUDE_PATH.'header.inc.php');
 require('classes/TemplateCommons.php');
 
 $commons=new TemplateCommons('../templates');
 
-$template=$_GET['temp'];
+$template=strip_tags($addslashes($_GET['temp']));
+
 // non existing template name
 if(!$commons->template_exists('layout', $template)) {
     Header('Location: index.php');
@@ -34,7 +40,9 @@ if(file_exists($screenshot_path)) $savant->assign('screenshot',true);
 $savant->assign('template', $template);
 $savant->assign('image_list', $commons->get_image_list("layout/".$template."/".$template));
 $savant->assign('base_path', $_base_path);
+$savant->assign('referer', $_SERVER['HTTP_REFERER']);
 $savant->display('template_editor/layout_tool.tmpl.php');
+
 
 ?>
 

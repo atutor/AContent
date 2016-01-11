@@ -16,20 +16,28 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
 if (isset($_current_user) && $_current_user->isAdmin()) {
 
+$_GET['type'] = $addslashes(strip_tags($_GET['type']));
+$_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
 
     if(isset ($_GET['type']) && isset ($_GET['temp'])) {
         require('classes/TemplateCommons.php');
         $commons=new TemplateCommons('../templates');
-        $type=$_GET['type'];
+        $type=strip_tags($addslashes($_GET['type']));
         if($_GET['type']=='page') $type='page_template';
+        if(isset ($_POST['cancel'])){
+            $msg->addFeedback('CANCELLED');
+            Header('Location: index.php?tab='.$type);
+            exit;
+        }
 
-        if(!$commons->template_exists($type, $_GET['temp']) || isset ($_POST['cancel'])){
-            Header('Location: index.php');
+        if(!$commons->template_exists($type, $_GET['temp'])){
+            $msg->addError('SELECT_ONE_ITEM');
+            Header('Location: index.php?tab='.$type);
             exit;
         }
         if(isset ($_POST['submit'])) {
             $commons->delete_template($type, $_GET['temp']);
-            Header('Location: index.php');
+            Header('Location: index.php?tab='.$type);
         }
         require(TR_INCLUDE_PATH.'header.inc.php');
         $metadata=$commons->load_metadata($type,$_GET['temp']);
@@ -38,10 +46,10 @@ if (isset($_current_user) && $_current_user->isAdmin()) {
         $savant->assign('template_type', $_GET['type']);
         $savant->display('template_editor/delete.tmpl.php');
     }else {
-        Header('Location: ../index.php');
+        Header('Location: ../index.php?tab='.$type);
     }
     require(TR_INCLUDE_PATH.'footer.inc.php');
 }else {
-    Header('Location: ../index.php');
+    Header('Location: ../index.php?tab='.$type);
 }
 ?>

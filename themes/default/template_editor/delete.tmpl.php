@@ -1,4 +1,15 @@
-<div align="center">
+<div id="subnavlistcontainer">
+    <div id="sub-navigation">
+        <ul id="subnavlist">
+            <?php 
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_'. $type.'.php?temp='. $this->template_dir.'"><strong>'. _AT('edit_template') . '</strong></a></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type='.$this->template_type.'&temp='.$this->template_dir.'"><strong>'. _AT('edit_metadata') . '</strong></a></li>';
+                echo '<li  class="active"><strong>'. _AT('delete') . '</strong></li>';
+            ?>
+        </ul>
+    </div>
+</div>
+<!--<div align="center">
     <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
         <tbody><tr>
                 <td class="editor_tab">
@@ -17,7 +28,7 @@
             </tr>
         </tbody></table>
 </div>
-
+-->
 <div class="input-form">
     <div class="row">
         <?php echo _AT('confirm_template_delete', $this->template_name); ?>

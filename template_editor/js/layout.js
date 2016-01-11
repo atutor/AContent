@@ -453,7 +453,11 @@ function insert_css_rule(property, value){
         var border=new cssRuleValue();
         border['width']=$('#border-width').val();
         border['style']=$('#border-style').val();
-        border['color']="#"+ $('#border-color').val();
+        if(check_color($('#border-color').val())){
+            border['color']="#"+ $('#border-color').val();
+        } else{
+            border['color']="#"+ $('#border-color').val();
+        }
         rules['border']=border;
     }else if(property=="background-image") {
         var back_image;
@@ -475,6 +479,23 @@ function insert_css_rule(property, value){
     add_preview_styles(csssheet);
     $("#css_text").val(get_css_code(csssheet));
 }
+
+
+/**
+ * check if a color is a word or a code
+ * @author greggy
+ * @param {string} color CSS color value
+ */
+function check_color(color){    
+    var name = /^[A-Za-z]+$/;
+    var code = /\d/;
+    if(code.test(color)){
+       alert('contains numbers');
+    }else{
+       alert('no numbers');   
+    }   
+}
+
 
 /**
  * Insert a CSS block to the csssheet

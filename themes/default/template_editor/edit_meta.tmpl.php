@@ -9,7 +9,18 @@
 $type=$this->metadata['template_type'];
 if($this->metadata['template_type']=='page_template') $type='page';
 ?>
-<div align="center">
+<div id="subnavlistcontainer">
+    <div id="sub-navigation">
+        <ul id="subnavlist">
+            <?php 
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_'. $type.'.php?temp='. $this->template_dir.'"><strong>'. _AT('edit_template') . '</strong></a></li>';
+                echo '<li class="active"><strong>'. _AT('edit_metadata') . '</strong></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=layout&temp='.$this->template.'">'. _AT('delete') . '</a></li>';
+            ?>
+        </ul>
+    </div>
+</div>
+<!-- <div align="center">
     <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
         <tbody><tr>
                 <td class="editor_tab">
@@ -29,7 +40,7 @@ if($this->metadata['template_type']=='page_template') $type='page';
             </tr>
         </tbody></table>
 </div>
-
+-->
 <div class="input-form">
     <fieldset class="group_form"><legend></legend>
         <form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF']?>?type=<?php echo $this->template_type; ?>&temp=<?php echo $this->template_dir; ?>">

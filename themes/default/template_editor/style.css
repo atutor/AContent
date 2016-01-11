@@ -1,7 +1,12 @@
 #tree_preview li{
-    margin:0px 0 4px 1px;
+    /* margin:0px 0 4px 1px; */
 }
 #tree_preview .items{
+    border: 1px dashed #eed;
+    width:150px; height:20px;
+    margin:2px 0 0 2px;text-decoration:none;
+}
+#tree_preview_creative .items{
     border: 1px dashed #eed;
     width:150px; height:20px;
     margin:2px 0 0 2px;text-decoration:none;
@@ -13,8 +18,15 @@
 #tree_preview .items:hover{
     border: 1px dashed #909080;
 }
+#tree_preview_creative .items[selected="true"]{
+    border: 1px dashed #e4b150;
+    background:#ffdb96;
+}
+#tree_preview_creative .items:hover{
+    border: 1px dashed #909080;
+}
 #tree_preview .node_icons{
-    margin-left:-25px;
+    /* margin-left:-5px; */
 }
 #struct_toolbar{
     width:98%;
@@ -230,4 +242,78 @@
 
 #screenshot_img{
     margin:2px 0px 5px 5px;
+}
+div.activ_template_page{
+    background-color: #efefef;
+    display: block;
+}
+img.table_template_page{
+    position:relative;
+    width: 80px;
+    height: 90px;
+    padding: 10px;
+}
+img.table_template_page:hover{
+    background-color:white;
+    
+}
+img.template_thumb{
+    height:10em;
+    width:11em;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+#layout_list{
+    display:block;
+}
+#layout_list div#tree_preview{
+    overflow:auto;
+}
+#layout_list li span{
+    margin-left:auto;
+    margin-right:auto;
+    text-align:center;
+    width:10em;
+}
+#layout_list li {
+    display: inline-block;
+    list-style: inside none none;
+    margin: 1em;
+    border:thin solid black;
+    padding:.5em;
+    overflow:auto;
+}
+#layout_list li li{
+    border: 0 none;
+    margin-left: -1.5em;
+    margin-top: -0.1em;
+    padding: 0;
+
+}
+#layout_list li li li{
+    border: 0 none;
+    margin-left: -1.5em;
+    margin-top: -0.1em;
+    margin-bottom: 0em;
+    padding: 0;
+
+}
+#layout_list li li li li{
+    border: 0 none;
+    margin-left: -1.5em;
+    margin-top: -0.1em;
+    margin-bottom:0;
+    padding: 0;
+}
+ol.tree_page
+.tree-folder ol{
+        margin-bottom:-.2em;
+}
+.tree_folder li{
+        margin-left:-2em;
+}
+ol.tree_page li, ol.tree_folder li, ol.folder li{
+ margin:0;
+ padding:0;
 }

@@ -17,6 +17,11 @@ $_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/structure.js"></script>';
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/jquery.ui.sortable.js"></script>';
 
+if($_POST['submit'] == _AT('cancel')){
+    header('Location: '. $_POST['referer']);
+    exit;
+}
+
 require(TR_INCLUDE_PATH.'header.inc.php');
 require('classes/TemplateCommons.php');
 $commons=new TemplateCommons('../templates');
@@ -43,6 +48,7 @@ $savant->assign('template', $template);
 $savant->assign('xml_script', $xmlDoc->saveXML($xmlDoc->documentElement));
 $savant->assign('image_path', TR_BASE_HREF.'images');
 $savant->assign('page_temp_list', $page_temp_list);
+$savant->assign('referer', $_SERVER['HTTP_REFERER']);
 $savant->display('template_editor/structure_tool.tmpl.php');
 
 require(TR_INCLUDE_PATH.'footer.inc.php');

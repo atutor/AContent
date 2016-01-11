@@ -61,7 +61,7 @@
 
             <p class="submit_buttons">
                 <input type="submit" name="submit" value="<?php echo _AT('create'); ?>" class="submit" id="submit_btn" />
-                <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  class="submit" />
+                <!-- <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  class="submit" /> -->
             </p>
         </form>
     </fieldset>

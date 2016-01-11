@@ -5,6 +5,11 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 $_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/page.js"></script>';
 
+if($_POST['submit'] == _AT('cancel')){
+    header('Location: '. $_POST['referer']);
+    exit;
+}
+
 require(TR_INCLUDE_PATH.'header.inc.php');
 require('classes/TemplateCommons.php');
 
@@ -31,6 +36,7 @@ else $savant->assign('html_code', "");
 if(file_exists($screenshot_path)) $savant->assign('screenshot',true);
 $savant->assign('template', $template);
 $savant->assign('base_path', $_base_path);
+$savant->assign('referer', $_SERVER['HTTP_REFERER']);
 $savant->display('template_editor/page_tool.tmpl.php');
 
 require(TR_INCLUDE_PATH.'footer.inc.php');

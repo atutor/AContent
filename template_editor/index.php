@@ -13,7 +13,9 @@
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
-
+$_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />'."\n";
+//$_custom_head .= '<script type="text/javascript" src="template_editor/js/structure.js"></script>'."\n";
+$_custom_head .= '<script type="text/javascript" src="template_editor/js/jquery.ui.sortable.js"></script>'."\n";
 global $_current_user;
 
 if (isset($_current_user) && $_current_user->isAdmin()) {
