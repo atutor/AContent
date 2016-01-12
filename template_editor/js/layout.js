@@ -30,12 +30,19 @@ $(function() {
     $("#font-family, #font-size").change(function() {
         insert_css_rule($(this).attr('id'), $(this).val());
     });
-
     $("#font-color").change(function() {
-        insert_css_rule( "color", "#"+$(this).val());
+        if(check_color($(this).val())){
+            insert_css_rule( "color", "#"+$(this).val());
+        }else{
+            insert_css_rule( "color", $(this).val());
+        }
     });
     $("#background-color").change(function() {
-        insert_css_rule( "background-color", "#"+$(this).val());
+        if(check_color($(this).val())){
+            insert_css_rule( "background-color", "#"+$(this).val());
+        }else{
+            insert_css_rule( "background-color", $(this).val());
+        }
     });
     $("#border-width, #border-style, #border-color").change(function() {
         insert_css_rule( "border");
@@ -438,8 +445,10 @@ function get_template_name(){
 function insert_css_rule(property, value){
     var style=lastselected; // get_selected_style();
     convert_code();
+    
     if(typeof cssmap[style] == 'undefined') insert_css_block(style);
     var rules=csssheet[cssmap[style]].rules;
+    
     if(property=="bold"){
         if('font-weight' in rules) delete rules['font-weight'];
         else rules['font-weight']='700';
@@ -453,10 +462,13 @@ function insert_css_rule(property, value){
         var border=new cssRuleValue();
         border['width']=$('#border-width').val();
         border['style']=$('#border-style').val();
+        
         if(check_color($('#border-color').val())){
+            // valid 6 or 3 char hex code append a hash sign
             border['color']="#"+ $('#border-color').val();
         } else{
-            border['color']="#"+ $('#border-color').val();
+            // otherwise assume its a color name (though not validating to actual supported named colors)
+            border['color']= $('#border-color').val();
         }
         rules['border']=border;
     }else if(property=="background-image") {
@@ -482,17 +494,22 @@ function insert_css_rule(property, value){
 
 
 /**
- * check if a color is a word or a code
+ * check if a color is a valid hex code or not
  * @author greggy
  * @param {string} color CSS color value
+ *    return true or false
  */
 function check_color(color){    
-    var name = /^[A-Za-z]+$/;
-    var code = /\d/;
-    if(code.test(color)){
-       alert('contains numbers');
+    // Test for valid 6 character hex color codes
+    var isCode  = /[0-9A-F]{6}$/i
+    // Test for valid 3 character color codes
+    var isCodesm= /([0-9A-F]{6}$)|([0-9A-F]{3}$)/i
+    if(isCode.test(color)){
+       return true;
+    } else if(isCodesm.test(color)){
+        return true;
     }else{
-       alert('no numbers');   
+       return false;
     }   
 }
 
