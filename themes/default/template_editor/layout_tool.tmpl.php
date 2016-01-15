@@ -105,6 +105,7 @@
                                         </td>
                                         <td>
                                             <select id="border-style" style="width:100px;">
+                                                <option value="none">&nbsp;</option>
                                                 <option value="solid">Solid</option>
                                                 <option value="dashed">Dashed</option>
                                                 <option value="dotted">Dotted</option>
@@ -150,21 +151,21 @@
                             <input id="new_property" type="text" size="18">
                             <label for="new_value"><?php echo _AT('value'); ?>:</label>
                             <input id="new_value" type="text" size="12">
-                            <img id="add_rule" src="<?php echo $this->base_path;?>images/clr.gif" alt='<?php echo _AT('add'); ?>' title='<?php echo _AT('add'); ?>'>
+                            <img id="add_rule" src="<?php echo $this->base_path;?>images/clr.gif" alt='<?php echo _AT('add'); ?>' title='<?php echo _AT('add'); ?>' tabindex="0">
                         </div>
                     </div>
 
                     <textarea  id="css_text" name="css_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px'> <?php  echo $this->css_code; ?></textarea>
                 </td>
                 <td valign="top" height="100%" id='css_preview_cell'>
-                    <div id='css_preview' style='height:100%; width:400px; min-height:300px; margin:15px;'>
+                    <div id='css_preview' style='height:100%; width:400px; min-height:300px; margin:15px;' tabindex='0'>
                         <style id="preview_styles"></style>
                         <div id="content">
-                            <h2 accesskey="h" title="H2">Heading 2</h2>
-                            <h3 accesskey="i" title="H3">Heading 3</h3>
-                            Some text content
-                            <ul accesskey="j" title="UL">
-                                <li accesskey="k" title="LI">List Item</li><li>List Item</li>
+                            <h2  title="H2">Heading 2</h2>
+                            <h3  title="H3">Heading 3</h3>
+                            <p title="Paragraph format">Some text formatting<p>
+                            <ul title="UL">
+                                <li title="LI">List Item</li><li>List Item</li>
                             </ul>
                         </div>
                     </div>
@@ -188,10 +189,10 @@
             if(strlen( $image)<17) $display_name=$image;
             else $display_name=substr($image, 0, 6)."...". substr($image, strlen( $image)-7, 7);
 
-            echo "<div class='image_item' file='".$image."'><div class='thumbnail'>";
+            echo "<div class='image_item' file='".$image."'><div class='thumbnail' tabindex='0' title='".$display_name."'>";
             echo "<img src='".$this->base_path."templates/layout/". $this->template."/".$this->template."/".$image."' alt='".$image."'>";
             echo "</div>";
-            echo "<img class='delete_image' src='".$this->base_path."images/x.gif' file='".$image."' alt='"._AT('delete_image')."' title='"._AT('delete_image')."'>";
+            echo "<img class='delete_image' src='".$this->base_path."images/x.gif' file='".$image."' alt='"._AT('delete_image')."-".$display_name."' title='"._AT('delete_image')."-".$display_name."' tabindex='0'>";
             echo "<div>".$display_name."</div></div>";
         }
         ?>
@@ -205,7 +206,7 @@
 </div>
 <div class="input-form" style="width: 95%;">
     <h4 style="margin:2px 0 7px 0;"><?php echo _AT('screenshot'); ?></h4>
-    <div>
+    <div tabindex="0" title="<?php echo _AT('screenshot').'  '. _AT('enabled'); ?>">
         <?php
         $img_path=$this->base_path."templates/layout/". $this->template."/screenshot-".$this->template.".png";
         if(isset($this->screenshot))  echo "<img src='".$img_path."' alt='"._AT('screenshot')."'>";
