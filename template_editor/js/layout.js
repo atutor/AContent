@@ -4,6 +4,17 @@ var cssmap={};
 
 $(function() {
     template=get_template_name();
+    // keyclick() make things click and keypress accessible
+    // Use .keypress() instead of .click() for the event of a function.
+    // Then pass the function into keyclick() along with the associated 
+    // css selector to act upon. See it used further below.
+    var keyclick = function(thisfunction, thisrule){
+        $(thisrule).keypress(
+            thisfunction
+        ).click(
+            thisfunction
+        );
+    }
     $('#css_dumy').hide();
     $('#image_confirm').hide();
 
@@ -59,20 +70,50 @@ $(function() {
         if($(this).attr('name')=='delete') delete_image(dltimage);
         $('#image_confirm').hide();
     });
+    $("#css_preview *").focus(css_preview).attr('tabindex', '0');
+    
+    /* var css_preview = function (){
+        $("#css_preview *").click(function(event) {
+             event.stopPropagation(); 
+            get_selected_style($(this).get(0).tagName);
+            setup_toolbar();
+            });
+    }*/
+    $("#css_preview *").focus(css_preview).attr('tabindex', '0');
     $("#css_preview *").click(function(event) {
-        event.stopPropagation();
-        get_selected_style($(this).get(0).tagName);
-        setup_toolbar();
+     event.stopPropagation(); 
+    get_selected_style($(this).get(0).tagName);
+    setup_toolbar();
+    });
+    $("#css_preview *").keypress(function(event) {
+     event.stopPropagation(); 
+    get_selected_style($(this).get(0).tagName);
+    setup_toolbar();
     });
 
-    $("#add_rule").click(function() {
+/*    $("#add_rule").keypress(function() {
         if($("#new_property").val()!="" && $("#new_value").val()!=""){            
             insert_css_rule( $("#new_property").val(),$("#new_value").val());
             $("#new_property").val("");
             $("#new_value").val("");
             setup_toolbar();
-        }
+        } 
+        
     });
+   */ 
+    var add_rule = function (){
+        if($("#new_property").val()!="" && $("#new_value").val()!=""){            
+                insert_css_rule( $("#new_property").val(),$("#new_value").val());
+                $("#new_property").val("");
+                $("#new_value").val("");
+                setup_toolbar();
+        }   
+    }
+    // Described further above, keyclick takes a function like add_rule, and a
+    // css selector, and make it mouse and keyboard accessible.
+    // In this case, the add a custom property button
+    keyclick(add_rule, "#add_rule");
+        
     convert_code();
     setup_toolbar();
 });
@@ -126,7 +167,7 @@ function setup_toolbar(){
             }else if($('#layout_toolbar #'+property).length ) $('#layout_toolbar #'+property).val(ruleval);
             else if(property.match(/comment|font-weight|font-style|text-align/)) continue;
             else{   //custom property
-                str=str+"<tr><td>";
+              str=str+"<tr><td>";
                 str=str+'<label for="'+property+'">'+property+':</label></td>';
                 str=str+'<td><input class="custom_property" id="'+property+'" type="text" size="15" value="'+rules[property]+'">';
                 str=str+"</td></tr>";
@@ -143,7 +184,9 @@ function setup_toolbar(){
         $("#layout_toolbar").hide();
     }
 }
+function delete_css_rule(rule){
 
+}
 /**
  * Convert the css sheet into preview-able format and apply it to the preview panel
  * @author SupunGS
@@ -475,7 +518,7 @@ function insert_css_rule(property, value){
         var back_image;
         if('background-image' in rules) back_image= rules['background-image'];
         else back_image=new cssRuleValue();
-        if(value =='none' && 'url0' in back_image){
+        if(value =='' && 'url0' in back_image){
             delete back_image['url0'];
             if(!('url1' in back_image)) delete  rules['background-image'];
         }
@@ -485,6 +528,8 @@ function insert_css_rule(property, value){
         }
     }else if(property.match(/align-.*/)) {
         rules['text-align']=value;
+    }else if(value == ''){
+        if(property in rules) delete rules[property];
     }else{
         rules[property]=value;
     }
