@@ -78,6 +78,7 @@ function encrypt_password()
 	  <dd>
 	    <?php if($this->user_row['login'] != ''){
 	    echo '<strong>'.stripslashes(htmlspecialchars($this->user_row['login'])).'</strong>';
+	    echo '<input id="login" name="login" type="hidden" value="'.stripslashes(htmlspecialchars($this->user_row['login'])).'" />'; 
 	    }else{ ?>
 	    <input id="login" name="login" type="text" maxlength="20" size="30" value="<?php if (isset($_POST['login'])) echo stripslashes(htmlspecialchars($_POST['login'])); else echo stripslashes(htmlspecialchars($this->user_row['login'])); ?>" />
 	  <?php  }
