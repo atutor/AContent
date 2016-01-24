@@ -11,7 +11,7 @@
 /************************************************************************/
 
 class TemplateCommons {
-    public $template_dir_map=array("layout"=>"layout","structure"=>"structures","page_template"=>"page_template");
+    public $template_dir_map=array("layouts"=>"layouts","structures"=>"structures","page_templates"=>"page_templates");
     private $template_dir="";
 
     /**
@@ -48,7 +48,7 @@ class TemplateCommons {
             $full_dir=$full_dir.$i;
             $final_dir= $template_dir.$i;
         }
-        if($template_type=='layout') mkdir($full_dir."/".$final_dir);
+        if($template_type=='layouts') mkdir($full_dir."/".$final_dir);
         return $final_dir;
     }
 
@@ -87,7 +87,7 @@ class TemplateCommons {
     /**
      * Create the template matadata file that specifies metadata for the template
      * @access  public
-     * @param   string $template_type   type of the template. layout, structure, page_template
+     * @param   string $template_type   type of the template. layouts, structures, page_templates
      * @param   string $template_name   name of the template
      * @param   string $template_desc   description about the template
      * @param   string $maintainer_name     name of the template maintainer
@@ -103,7 +103,7 @@ class TemplateCommons {
      */
     public function create_template_metadata($template_type,$template_folder, $template_name,$template_desc,$maintainer_name,
         $maintainer_email,$template_url,$template_license,$release_version,$release_date,$release_state,$release_notes) {
-        global $template_dir_map;
+        global $template_dir_map, $msg;
         $metadata = new DOMDocument();
         $metadata->formatOutput = true;
 
@@ -144,6 +144,7 @@ class TemplateCommons {
         $rel_notes_node->appendChild($metadata->createTextNode($release_notes));
 
         $template_dir=$this->template_dir_map[$template_type]."/".$template_folder;
+        $msg->addFeedback('META_UPDATED');
         return $this->save_xml($metadata,$template_dir,$template_type.".xml");
     }
 
@@ -155,41 +156,48 @@ class TemplateCommons {
      * @author  SupunGS
      */
     public function upload_image($directory,$file_name) {
+        global $msg;
         $allowedExts = array("gif", "jpeg", "jpg", "png");
         $extension = end(explode(".", $_FILES["file"]["name"]));
         if ((($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "image/jpeg")
             || ($_FILES["file"]["type"] == "image/jpg")|| ($_FILES["file"]["type"] == "image/pjpeg")
             || ($_FILES["file"]["type"] == "image/x-png")  || ($_FILES["file"]["type"] == "image/png"))
             && ($_FILES["file"]["size"] < 100000) && in_array($extension, $allowedExts)) {
-        }
-        else return false;
+        } else {
+            $msg->addError('UPLOAD_FAILED');
+             return false;
+         }
 
         if ($_FILES["file"]["error"] ==0) {
             $destination=$this->template_dir.$directory;
             if (!file_exists($destination)) mkdir($destination);
-            if($file_name=="") $file_name=$_FILES["file"]["name"];
+            if($file_name=="") {
+                $file_name=$_FILES["file"]["name"];
+            }
             move_uploaded_file($_FILES["file"]["tmp_name"], $destination."/". $file_name);
+            $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         }
     }
 
     /**
      * Check whether a template already exists with a given name and type
      * @access  public
-     * @param   string $template_type   type of the template. layout, structure, page_template
+     * @param   string $template_type   type of the template. layouts, structures, page_templates
      * @param   string $template_name   name of the template to check
      * @return  boolean     whether the template already exists or not
      * @author  SupunGS
      */
     public function template_exists($template_type,$template_name) {
     //$full_dir="../templates/".$this->template_dir_map[$template_type]."/".$template_name;
-        $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_name;
+        $template_dir=$this->get_folder_name($template_name);
+        $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_dir;
         return file_exists($full_dir);
     }
 
     /**
      * get a list of existing templates of a given type
      * @access  public
-     * @param   string $template_type   type of template: layout, structure, page_template
+     * @param   string $template_type   type of template: layouts, structures, page_templates
      * @return  array     array of existing templates
      * @author  SupunGS
      */
@@ -250,7 +258,7 @@ class TemplateCommons {
      */
     public function get_folder_name($temlate_name) {
         $temlate_name=trim($temlate_name);
-        $temp=preg_replace("/[^A-Za-z0-9 ]/", '', $temlate_name);
+        $temp=preg_replace("/[^A-Za-z0-9_]/", '', $temlate_name);
         return str_replace(" ", "_", $temp);
     }
 
@@ -262,7 +270,12 @@ class TemplateCommons {
      * @author  SupunGS
      */
     public function delete_template($template_type,$template_name) {
-        $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_name;
+        $template_dir=$this->get_folder_name($template_name);
+        //$full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_dir;
+    
+        //$full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_name;
+        $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_dir;
+
         $this->remove_dir_content($full_dir);
     }
 
@@ -275,7 +288,8 @@ class TemplateCommons {
     private function remove_dir_content($directory) {
         foreach(glob($directory . '/*') as $file) {
             if(is_dir($file)) $this->rrmdir($file); else unlink($file);
-        } rmdir($directory);
+        } 
+        rmdir($directory);
     }
     
     /**
@@ -302,10 +316,15 @@ class TemplateCommons {
      * @author  SupunGS
      */
     public function save_file($directory,$file_name,$message='') {
+        global $msg;
         $file_path=$this->template_dir.$directory."/".$file_name;
         $file = fopen($file_path,"w");
-        fwrite($file,$message);
-        fclose($file);
+        if(fwrite($file,$message) == true){
+            fclose($file);
+            $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+            return TRUE;
+        } 
+
     }
 
     /**

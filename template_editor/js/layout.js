@@ -5,13 +5,36 @@ var cssmap={};
 $(function() {
     template=get_template_name();
     // keyclick() make things click and keypress accessible
-    // Use .keypress() instead of .click() for the event of a function.
-    // Then pass the function into keyclick() along with the associated 
+    // Pass a function into keyclick() along with the associated 
     // css selector to act upon. See it used further below.
+    
+/**
+ * make things click and keypress accessible
+ * @author greggy
+ * @param thisfuction {obj} a function that does something to the CSS selector 
+ * @param thisrule {string} the CSS selector
+ *    return true or false
+ */
     var keyclick = function(thisfunction, thisrule){
-        $(thisrule).keypress(
+        $(thisrule).keypress( 
             thisfunction
         ).click(
+            thisfunction
+        );
+    }
+/**
+ * make things click, keypress, and focus accessible
+ * @author greggy
+ * @param thisfuction {obj} a function that does something to the CSS selector 
+ * @param thisrule {string} the CSS selector
+ *    return true or false
+ */
+    var keyclickfocus = function(thisfunction, thisrule){
+        $(thisrule).keypress( 
+            thisfunction
+        ).click(
+            thisfunction
+        ).focus(
             thisfunction
         );
     }
@@ -31,12 +54,17 @@ $(function() {
         convert_code();
         add_preview_styles(parseCSS($("#css_text").val()));
     });
-    
-    $(".buttons").click(function() {
+
+    $("#layout_toolline *").attr('tabindex', '0');
+    var toolbutton = function(e){
         var cmd=$(this).attr('id');
         var value=$(this).attr('arg');
-        insert_css_rule( cmd, value);
-    });
+        if(e.which == 1 || e.which ==13){
+            insert_css_rule( cmd, value);
+        }
+    }
+    keyclick(toolbutton, "#layout_toolline *");
+    
     
     $("#font-family, #font-size").change(function() {
         insert_css_rule($(this).attr('id'), $(this).val());
@@ -70,37 +98,20 @@ $(function() {
         if($(this).attr('name')=='delete') delete_image(dltimage);
         $('#image_confirm').hide();
     });
+    
     $("#css_preview *").focus(css_preview).attr('tabindex', '0');
     
-    /* var css_preview = function (){
-        $("#css_preview *").click(function(event) {
-             event.stopPropagation(); 
-            get_selected_style($(this).get(0).tagName);
-            setup_toolbar();
-            });
-    }*/
-    $("#css_preview *").focus(css_preview).attr('tabindex', '0');
-    $("#css_preview *").click(function(event) {
-     event.stopPropagation(); 
-    get_selected_style($(this).get(0).tagName);
-    setup_toolbar();
-    });
-    $("#css_preview *").keypress(function(event) {
-     event.stopPropagation(); 
-    get_selected_style($(this).get(0).tagName);
-    setup_toolbar();
-    });
-
-/*    $("#add_rule").keypress(function() {
-        if($("#new_property").val()!="" && $("#new_value").val()!=""){            
-            insert_css_rule( $("#new_property").val(),$("#new_value").val());
-            $("#new_property").val("");
-            $("#new_value").val("");
-            setup_toolbar();
-        } 
-        
-    });
-   */ 
+    var css_preview = function(event){
+        event.stopPropagation(); 
+        get_selected_style($(this).get(0).tagName);
+        setup_toolbar();
+        $('#lastelement').val(get_selected_style($(this).get(0).tagName));
+        if(event.which == 13){
+            $('#layout_topbar').focus();
+        }
+    }
+    $('#lastelement').focus(keyclick(css_preview, "#css_preview *"));
+    
     var add_rule = function (){
         if($("#new_property").val()!="" && $("#new_value").val()!=""){            
                 insert_css_rule( $("#new_property").val(),$("#new_value").val());
@@ -164,6 +175,10 @@ function setup_toolbar(){
                 $('#border-width').val(ruleval.width);
                 $('#border-style').val(ruleval.style);
                 $('#border-color').val(ruleval.color.replace(/#/g,""));
+      /*          if($('#border-color').val()){
+                alert('has border');
+                    $('#border-color').val(ruleval.color.replace(/#/g,""));
+                }*/
             }else if($('#layout_toolbar #'+property).length ) $('#layout_toolbar #'+property).val(ruleval);
             else if(property.match(/comment|font-weight|font-style|text-align/)) continue;
             else{   //custom property
@@ -184,9 +199,7 @@ function setup_toolbar(){
         $("#layout_toolbar").hide();
     }
 }
-function delete_css_rule(rule){
 
-}
 /**
  * Convert the css sheet into preview-able format and apply it to the preview panel
  * @author SupunGS
@@ -199,7 +212,7 @@ function add_preview_styles(sheet){
         style=style+"#css_preview "+ sheet[i].toString();
     //style=style+"{"+ arrCSS[i].rule+ "}\n"
     }
-    style=style.replace(/url\('*/g,"url('templates/layout/"+template+"/");
+    style=style.replace(/url\('*/g,"url('templates/layouts/"+template+"/");
     $('#preview_styles').html(style);
 }
 

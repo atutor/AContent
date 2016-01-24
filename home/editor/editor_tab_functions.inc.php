@@ -39,7 +39,7 @@ function get_tabs() {
         {
             foreach ($result as $support) {
                 if($support['value']==TR_STATUS_ENABLED)
-                    $tabs[++$inc] = array('layout', 'layout.inc.php', 'l');
+                    $tabs[++$inc] = array('layouts', 'layout.inc.php', 'l');
             }  
         }
         $sql="SELECT value FROM ".TABLE_PREFIX."config WHERE name='enable_template_page'";
@@ -48,7 +48,7 @@ function get_tabs() {
         {
             foreach ($result as $support) {
                 if($support['value']==TR_STATUS_ENABLED)
-                    $tabs[++$inc] = array('page_template', 'page_template.inc.php', 'g');
+                    $tabs[++$inc] = array('page_templates', 'page_template.inc.php', 'g');
             }  
         }
 

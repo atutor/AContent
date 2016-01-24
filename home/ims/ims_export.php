@@ -301,7 +301,7 @@ $flag = false;
 
 			// add all the style folder content
 				// get all layout images
-				$images = glob("../../templates/layout/".$rows[$i]['layout']."/".$rows[$i]['layout']."/*.*");
+				$images = glob("../../templates/layouts/".$rows[$i]['layout']."/".$rows[$i]['layout']."/*.*");
 
 				for($j=0; $j<count($images); $j++){
 					$mnf	.= "<file href=\"resources/commoncartridge/".$rows[$i]['layout']."/".basename($images[$j])."\"/>\n";

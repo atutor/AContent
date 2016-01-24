@@ -30,8 +30,8 @@ $mod_path					= array();
 $mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
 $mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
 $mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
-$mod_path['layout_dir']		= $mod_path['templates']		. 'layout/';
-$mod_path['layout_dir_int']	= $mod_path['templates_int']	. 'layout/';
+$mod_path['layout_dir']		= $mod_path['templates']		. 'layouts/';
+$mod_path['layout_dir_int']	= $mod_path['templates_int']	. 'layouts/';
 
 // include the file "applicaTema" so that he can inherit variables and constants defined by the system
 include_once($mod_path['templates_sys'].'Layout.class.php');
@@ -69,8 +69,8 @@ $templates		= TR_BASE_HREF.'templates/';
 $templates_int	= $mod_path['templates_int'];
 $templates_sys	= $mod_path['templates_sys'];
 // path containing the layout list
-$layout_dir		= $templates.'layout/';
-$layout_dir_int	= $templates_int.'layout/';
+$layout_dir		= $templates.'layouts/';
+$layout_dir_int	= $templates_int.'layouts/';
 
 $config					= parse_ini_file($mod_path['templates_sys'].'config.ini');
 $apply_lesson_layout		= $config['apply_to_the_lesson'];

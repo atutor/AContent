@@ -26,13 +26,13 @@ if(isset ($_GET['get'])) {
     if($_GET['action']=='delete_image') {
         $template=$_GET['temp'];
         $file=$_GET['file'];
-        $commons->delete_file("layout/".$template."/".$template, $file);
+        $commons->delete_file("layouts/".$template."/".$template, $file);
     }
 }elseif(isset ($_POST['action']) && $_POST['action']=='upload_image') {
     $dataURL = $_POST["image"];
     $template=$_POST['temp'];
     $commons=new TemplateCommons('../templates');
-    $commons->save_DataURL_image($dataURL,"page_template/".$template,"screenshot.png");
+    $commons->save_DataURL_image($dataURL,"page_templates/".$template,"screenshot.png");
 }
 
 /**
