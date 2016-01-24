@@ -1,0 +1,31 @@
+<?xml version="1.0" ?>
+<page_template version="0.1">
+  <name lang="en">
+    Title, text and 2 columns
+  </name>
+  <description lang="en">
+    Title, text and 2 columns
+  </description>
+  <maintainers>
+    <maintainer>
+      <name>
+        Mauro Donadio
+      </name>
+      <email>
+        mauro.donadio@studio.unibo.it
+      </email>
+    </maintainer>
+  </maintainers>
+  <url/>
+  <license/>
+  <release>
+    <version>
+      1.x
+    </version>
+    <date/>
+    <state>
+      stable
+    </state>
+    <notes/>
+  </release>
+</page_template>

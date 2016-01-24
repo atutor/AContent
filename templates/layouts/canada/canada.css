@@ -1,0 +1,89 @@
+#content {
+	color:	#333;
+	line-height:	1.5em;
+	background-color:	#FFF;
+	text-align:	justify;
+}
+#content h2, h2.page-title {
+	background:	#18578d;
+	color:	#FFF;
+	border:	1px solid #cccccc ;
+	background-image:	url('canada/h-square.gif');
+	background-repeat:	no-repeat;
+	background-position:	left top;
+	border-bottom:	1px solid #000;
+	padding:	3px 3px 3px 30px ;
+	margin-bottom:	10px;
+	margin-top:	10px;
+	margin-left:	0 !important;
+	/*CSS3*/
+	border-radius:	5px;
+	text-decoration:	underline;
+	/*Safari and chrome*/
+	-webkit-border-radius:	2px;
+	/*Firefox*/
+	-moz-border-radius:	2px;
+	/*Linux browsers*/
+	-khtml-border-radius:	2px;
+}
+#content h3 {
+	background:	#18578d;
+	color:	#FFF;
+	border:	1px solid #cccccc ;
+	background-image:	url('canada/h-square.gif');
+	background-repeat:	no-repeat;
+	background-position:	left top;
+	border-bottom:	1px solid #000;
+	padding:	3px 3px 3px 30px ;
+	margin-bottom:	10px;
+	margin-top:	10px;
+	/*CSS3*/
+	border-radius:	2px;
+	/*Safari and chrome*/
+	-webkit-border-radius:	2px;
+	/*Firefox*/
+	-moz-border-radius:	2px;
+	/*Linux browsers*/
+	-khtml-border-radius:	2px;
+}
+#content h4, #content h5, #content h6, #content h7 {
+	padding:	3px 3px 3px 30px ;
+	background-color:	#555;
+	background-image:	url('canada/h-square.gif');
+	background-repeat:	no-repeat;
+	background-position:	left top;
+	color:	#FFF;
+	font-size:	1em;
+	font-weight:	700;
+	margin-bottom:	10px;
+	margin-left:	0;
+	margin-right:	0;
+	margin-top:	20px;
+}
+#content ul {
+	margin-top:	30px;
+	list-style-image:	url('canada/list.gif');
+}
+#content ul li {
+	padding:	3px ;
+}
+#content a:link {
+	text-decoration:	underline;
+	color:	#295376;
+	background:	transparent;
+	background-color:	#EBF4FA;
+}
+#content a:visited {
+	color:	#5a306b;
+}
+#content a:hover, #content a:focus, #content a:active {
+	text-decoration:	none;
+	background-color:	#EBF4FA;
+	color:	#B00000;
+}
+.pageTemplateContent {
+	height:	30px;
+	background-image:	url('canada/wmms.gif');
+	background-repeat:	no-repeat;
+	background-position:	100% 100%;
+}

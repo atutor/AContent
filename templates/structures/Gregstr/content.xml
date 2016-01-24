@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<structure>
+  <page max="1" name="About the Unit"/>
+  <folder max="1" name="Introduction">
+    <page max="1" name="Syllabus"/>
+    <page max="1" name="Requirements"/>
+    <page max="1" name="Help"/>
+  </folder>
+  <folder max="1" name="Main Content">
+    <page max="1"/>
+    <page max="1"/>
+    <page max="1"/>
+  </folder>
+  <folder max="1" name="Activity">
+    <page max="1" name="Instructions"/>
+  </folder>
+  <folder max="1" name="Review">
+    <page max="1" name="Recap"/>
+    <page max="1" name="Self-Test"/>
+  </folder>
+</structure>

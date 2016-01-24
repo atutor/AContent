@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<structure version="0.1">
+  <name>Gregstr</name>
+  <description>A page structure test</description>
+  <maintainers>
+    <maintainer>
+      <name>greg</name>
+      <email></email>
+    </maintainer>
+  </maintainers>
+  <url></url>
+  <license></license>
+  <release>
+    <version>1.0</version>
+    <date></date>
+    <state>stable</state>
+    <notes></notes>
+  </release>
+</structure>

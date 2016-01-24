@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layout version="0.1">
+  <name>Canada</name>
+  <description>Public service colouring</description>
+  <maintainers>
+    <maintainer>
+      <name>Mauro Donadio</name>
+      <email>mauro.donadio@studio.unibo.it</email>
+    </maintainer>
+  </maintainers>
+  <url></url>
+  <license></license>
+  <release>
+    <version>1.0</version>
+    <date></date>
+    <state>stable</state>
+    <notes></notes>
+  </release>
+</layout>

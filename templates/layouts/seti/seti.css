@@ -1,0 +1,75 @@
+#content{
+	color:						#333;
+	line-height:				1.5em;
+	background-color:			#FFF;
+	text-align:					justify;
+}
+
+#content h2, #content h3, #content h4,
+#content h5, #content h6, #content h7{
+	/*#af0d1a*/
+	
+	color:						#333;
+	padding:					5px;
+	padding-left:				0px;
+    
+    margin-bottom:				10px;
+    margin-top:					20px;
+}
+
+#content h3{
+	background-image:			url(seti/sigillo.png);
+	background-repeat: 			no-repeat;
+	background-position:		left middle;
+	height:						32px;
+	padding-left:				40px;
+}
+
+#content a:link{
+	text-decoration:			none;
+	background:					transparent;
+	border-bottom:				1px dotted #1111dc;
+}
+#content a:visited{
+	color:						#551ab6;
+	background:					transparent;
+	border-bottom:				1px dotted #551ab6;
+}
+
+#content a:hover, #content a:active{
+	color:						#336699;
+	background:					transparent;
+	text-decoration:			none;
+	border-bottom:				1px dotted #336699;	
+}
+
+#content #anteprima-footer{
+	margin-top:					10px;
+	padding-top:				5px;
+	border-top:					1px solid #EEE;
+	font-style:					italic;
+	text-align:					right;
+	color:						#DDD;
+}
+#content #anteprima-footer:after{
+	content:					'Alma Mater Studiorum - Università di Bologna - Scienze e Tecnologie Informatiche';
+}
+
+#content .header .pageTemplateContent{
+	background-color:			#73C78B;
+	background-image:			url(seti/testata.png);
+	background-repeat:			no-repeat;
+	background-position:		left;
+	height:						74px;
+	width:						100%;
+
+
+    /* CSS3 */
+    border-radius:              3px;
+    /* Safari and chrome */
+    -webkit-border-radius:      3px;
+    /* Firefox */
+    -moz-border-radius:         3px;
+    /* Linux browsers */
+    -khtml-border-radius:       3px;
+}

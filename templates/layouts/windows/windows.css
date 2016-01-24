@@ -1,0 +1,108 @@
+#content{
+	color:						#333;
+	line-height:				1.5em;
+	background-color:			#FFF;
+	text-align:					justify;
+
+    /* CSS3 */
+    border-radius:              5px;
+    /* Safari and chrome */
+    -webkit-border-radius:      5px;
+    /* Firefox */
+    -moz-border-radius:         5px;
+    /* Linux browsers */
+    -khtml-border-radius:       5px;
+}
+
+#content h2{
+	border-left:				3px solid #FF0000;
+}
+#content h3{
+	border-left:				3px solid #8ec52d;
+}
+#content h4{
+	border-left:				3px solid #feeb01;
+}
+#content h5{
+	border-left:				3px solid #0151a0;
+}
+#content h6{
+	border-left:				3px solid #333;
+}
+#content h7{
+	border-left:				3px solid #333;
+}
+
+#content h2, #content h3, #content h4,
+#content h5, #content h6, #content h7{
+
+	
+	color:						#000;
+	padding:					5px;
+	padding-left:				10px;
+    
+    margin-bottom:				10px;
+    margin-top:					20px;
+
+	padding:					10px;
+	padding-left:				50px;
+	
+	background-image:			url('windows/logo.png'), url('windows/title.png');
+	background-repeat:			no-repeat, repeat-x;
+	background-position:		left middle, center bottom;
+	
+	line-height:				15px;
+	height:						15px;
+
+    /* CSS3 */
+    border-radius:              5px;
+    /* Safari and chrome */
+    -webkit-border-radius:      5px;
+    /* Firefox */
+    -moz-border-radius:         5px;
+    /* Linux browsers */
+    -khtml-border-radius:       5px;
+}
+
+#content .model{
+	background:#FFF;
+	padding:					10px;
+
+    /* CSS3 */
+    border-radius:              5px;
+    /* Safari and chrome */
+    -webkit-border-radius:      5px;
+    /* Firefox */
+    -moz-border-radius:         5px;
+    /* Linux browsers */
+    -khtml-border-radius:       5px;
+}
+
+#content ul{
+	margin-top:					30px;
+	list-style-image:			url('windows/list.png');
+}
+#content ul li{
+	padding:					3px;
+}
+
+#content a:link, #content a:visited{
+	text-decoration:			none;
+	color:						#0060a6;
+	background:					transparent;
+}
+#content a:hover, #content a:active{
+	text-decoration:			underline;	
+}
+
+#content #anteprima-footer{
+	margin-top:					10px;
+	padding-top:				5px;
+	border-top:					1px solid #EEE;
+	font-style:					italic;
+	text-align:					right;
+	color:						#DDD;
+}
+#content #anteprima-footer:after{
+	content:					'Any copyright applied - All rights are free';
+}
