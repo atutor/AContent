@@ -18,17 +18,16 @@ $_custom_head .= '<script type="text/javascript" src="template_editor/js/structu
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/jquery.ui.sortable.js"></script>';
 
 if($_POST['submit'] == _AT('cancel')){
-    header('Location: '. $_POST['referer']);
+    header('Location: index.php?tab=structures');
     exit;
 }
 
-require(TR_INCLUDE_PATH.'header.inc.php');
+$template=$_GET['temp'];
 require('classes/TemplateCommons.php');
 $commons=new TemplateCommons('../templates');
 
-$template=$_GET['temp'];
 // non existing template name
-if(!$commons->template_exists('structure', $template)) {
+if($commons->template_exists('structure', $template)) {
     Header('Location: index.php');
     exit;
 }
@@ -37,12 +36,14 @@ if(isset ($_POST['submit'])) {
     $dom=$commons->parse_to_XML($_POST['xml_text']);
     $commons->save_xml($dom, "structures/".$template, "content.xml");
 }
+require(TR_INCLUDE_PATH.'header.inc.php');
+
 // edit an existing template
 $xmlpath=realpath("../templates/structures")."/". $template."/content.xml";
 $xmlDoc = new DOMDocument();
 $xmlDoc->load($xmlpath);
 $x = $xmlDoc->documentElement;
-$page_temp_list=$commons->get_template_list("page_template");
+$page_temp_list=$commons->get_template_list("page_templates");
 
 $savant->assign('template', $template);
 $savant->assign('xml_script', $xmlDoc->saveXML($xmlDoc->documentElement));

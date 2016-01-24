@@ -1,4 +1,4 @@
-<?xml version="1.0" ?>
+<?xml version="1.0"?>
 <structure name="knowledge">
   <page max="1" min="1" name="overview">
     <page_templates>
@@ -26,21 +26,21 @@
         <page_template name="title_image_text"/>
       </page_templates>
     </page>
-	<page max="1" min="1" name="self_assesment">
-    <page_templates/>
-	<tests>
-      <test name="true_or_false"/>
-      <test name="multiple_choise"/>
-      <test name="matching_graphical"/>
-      <test name="matching_simple"/>
-    </tests>
-  	</page>
+    <page max="1" min="1" name="self_assesment">
+      <page_templates/>
+      <tests>
+        <test name="true_or_false"/>
+        <test name="multiple_choise"/>
+        <test name="matching_graphical"/>
+        <test name="matching_simple"/>
+      </tests>
+    </page>
     <page max="1" min="0" name="forum">
       <page_templates/>
-	  <forum name="forum"/>
+      <forum name="forum"/>
     </page>
   </folder>
-	<page max="1" min="0" name="retrieval_for_learning">
+  <page max="1" min="0" name="retrieval_for_learning">
     <page_templates>
       <page_template name="plain_text"/>
     </page_templates>

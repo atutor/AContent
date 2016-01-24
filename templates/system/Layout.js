@@ -64,12 +64,12 @@ function createLayoutTemplate(layout,structure)
     if(layout!="nothing"){
         if(structure.length>24){
             layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
-            layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+            layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layouts/'+layout+'/'+layout+'.css" type="text/css" />';
             layout_template= layout_template + '<p>'+structure+'</p>';
         }else{
             layout_template= layout_template + '<p>' + trans.templates.devoid_content + '</p>';
             layout_template= layout_template + trans.templates.preview + ' ' + layout + ':';
-            layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layout/'+layout+'/'+layout+'.css" type="text/css" />';
+            layout_template= layout_template + '<link rel="stylesheet" href="'+path+'/templates/layouts/'+layout+'/'+layout+'.css" type="text/css" />';
             layout_template= layout_template + '<div id="content"><h3>' + trans.templates.title + '</h3><p>' + trans.templates.document_body + '</p></div>';
         }
     }else{

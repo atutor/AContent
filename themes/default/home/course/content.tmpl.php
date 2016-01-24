@@ -95,7 +95,7 @@ $result=$dao->execute($sql);
         ?>
         <div id="content">
           <!--  <div id="content"> -->
-        <link  rel="stylesheet" href="<?php echo TR_BASE_HREF; ?>templates/layout/<?php echo $choice_layout; ?>/<?php echo $choice_layout; ?>.css"  type="text/css" />
+        <link  rel="stylesheet" href="<?php echo TR_BASE_HREF; ?>templates/layouts/<?php echo $choice_layout; ?>/<?php echo $choice_layout; ?>.css"  type="text/css" />
                     <?php echo $this->body; ?>
            <!-- </div> -->
         </div>

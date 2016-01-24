@@ -177,7 +177,7 @@ class Page_template {
 					echo '<tr>';
 					echo '<td>';
 					echo '<a href="javascript: void(0);">';
-					echo '<img title="'._AT('img_title_pagetemplate_icon', _AT($key)).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',_AT($key)).'" /><br />';
+					echo '<img title="'._AT('img_title_pagetemplate_icon', _AT($key)).'" style="padding:10px;" src="'.TR_BASE_HREF.'templates/page_templates/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',_AT($key)).'" /><br />';
 					echo '<span class="desc">'. $value['name'] . '</span>';
 					echo '</a>';
 					echo '</td>';
@@ -271,7 +271,7 @@ class Page_template {
 		// checking if the element is a directory
 		if(is_dir($isdir)){
 			// check if exists the .info file and parse it
-			$xml_file = $isdir.'/page_template.xml';
+			$xml_file = $isdir.'/page_templates.xml';
 			if(is_file($xml_file)) {
 				$xml = simplexml_load_file($xml_file);
 
@@ -293,7 +293,7 @@ class Page_template {
 					// 1st approach: retrieve from DB
 					$template_name = _AT($info['token']);
 				} else if (isset($xml_defined_template_name)) {
-					// 2nd approach: use name defined in page_template.xml
+					// 2nd approach: use name defined in page_templates.xml
 					$template_name = $xml_defined_template_name;
 				} else if (!isset($template_name)) {
 					// if no name is defined, use the folder name
@@ -399,7 +399,7 @@ class Page_template {
 	public function getpage_templatetructure($pageTemplateID = ''){
 		$struct	= '';
 
-		$file = '../../templates/page_template/'.$pageTemplateID.'/'.$pageTemplateID.'.html';
+		$file = '../../templates/page_templates/'.$pageTemplateID.'/'.$pageTemplateID.'.html';
 
 		if(file_exists($file)) {
 			$struct = file_get_contents($file);

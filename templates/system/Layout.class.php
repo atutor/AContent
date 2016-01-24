@@ -115,7 +115,7 @@ class Layout{
 		
 				// check if exists the .info file and parse it
 		
-				$xml_file = $isdir.'/layout.xml';
+				$xml_file = $isdir.'/layouts.xml';
 				if(is_file($xml_file)) {
 					$xml = simplexml_load_file($xml_file);
 					
@@ -217,13 +217,13 @@ class Layout{
 			$ui .= '<td>'.$tval['description'].'</td>';
 
 			if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
-				$ui .= '<td><div><img class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'"  title="'._AT('img_layout_icon',$tname).'"  /></td></div>';       
+				$ui .= '<td><div><img class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layouts/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'"  title="'._AT('img_layout_icon',$tname).'"  /></td></div>';       
 				$ui .= '</tr>'; 
 			} elseif($tname != unibo) {
-				$ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'"  title="'._AT('img_layout_icon',$tname).'" /></td></div>';       
+				$ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layouts/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'"  title="'._AT('img_layout_icon',$tname).'" /></td></div>';       
 				$ui .= '</tr>'; 
 			} else {
-				$ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layout/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'" title="'._AT('img_layout_icon',$tname).'"  /></td></div>';       
+				$ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layouts/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'" title="'._AT('img_layout_icon',$tname).'"  /></td></div>';       
 				$ui .= '</tr>'; 
 			}
 		}
@@ -427,13 +427,13 @@ class Layout{
 					if(in_array($rows[$i]['layout'], $styles)){
 						
 
-						if($stylesheet = file_get_contents('../../templates/layout/'.$rows[$i]['layout'].'/'.$rows[$i]['layout'].'.css')){
+						if($stylesheet = file_get_contents('../../templates/layouts/'.$rows[$i]['layout'].'/'.$rows[$i]['layout'].'.css')){
 							
 							$stylesheet	= str_replace('#'.$this->uniq, 'body', $stylesheet);
 							$zipfile->add_file($stylesheet, 'resources/commoncartridge/'.$rows[$i]['layout'].'.css');
 
 							// add images folder
-							$src	= '../../templates/layout/'.$rows[$i]['layout'].'/'.$rows[$i]['layout'].'/';
+							$src	= '../../templates/layouts/'.$rows[$i]['layout'].'/'.$rows[$i]['layout'].'/';
 							$dst	= 'resources/commoncartridge/'.$rows[$i]['layout'].'/';
 	
 							$zipfile->create_dir('resources/commoncartridge/'.$rows[$i]['layout'].'/');
@@ -450,7 +450,7 @@ class Layout{
         
         public function exist_layout($layout) {
             
-                if(is_dir('../../templates/layout/'.$layout))
+                if(is_dir('../../templates/layouts/'.$layout))
                         return true;
                 else
                         return false;

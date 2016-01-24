@@ -21,9 +21,9 @@ $mod_path['templates']		= TR_BASE_HREF . 'templates/';
 
 $mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
 $mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
-$mod_path['page_template_dir']		= $mod_path['templates']		. 'page_template/';
+$mod_path['page_template_dir']		= $mod_path['templates']		. 'page_templates/';
 
-$mod_path['page_template_dir_int']	= $mod_path['templates_int']	. 'page_template/';
+$mod_path['page_template_dir_int']	= $mod_path['templates_int']	. 'page_templates/';
 $path = $mod_path['page_template_dir'] . $prev_page_temp . '/';
 $path_int = $mod_path['page_template_dir_int'] . $prev_page_temp . '/';
 

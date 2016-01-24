@@ -101,7 +101,15 @@ $starttime = $mtime;
    <script type="text/javascript">
         // if AContent is being presented in ATutor, which has its own content navigation
         //  hide way all navigation elements
-        if(window.frameElement.id == "content_frame"){
+        function inIframe () {
+             try {
+                return window.self !== window.top;
+            } catch (e) {
+            return true;
+            }
+        }
+        //if(window.frameElement.id && window.frameElement.id == "content_frame"){
+        if( inIframe ()){
          document.writeln('<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles_iframe_atutor.css" type="text/css" />');
         }
     </script>

@@ -7,15 +7,28 @@
 
 <?php
 $type=$this->metadata['template_type'];
-if($this->metadata['template_type']=='page_template') $type='page';
+if($this->metadata['template_type']=='page_templates') $type='page_templates';
 ?>
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
+    <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
+    <a href="template_editor/index.php?tab=<?php echo $type; ?>"><img src="themes/default/images/previous.png" alt="back"></a>
+    </span>
         <ul id="subnavlist">
             <?php 
-                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_'. $type.'.php?temp='. $this->template_dir.'"><strong>'. _AT('edit_template') . '</strong></a></li>';
+                // hack to remove the s from layouts etc. for
+                // referencing by respective edit_layout.php etc.
+
+                if($type == "page_templates"){
+                    $app_type = "page";
+                }else if($type == "layouts")  { 
+                    $app_type = "layout"; 
+                }else if($type == "structures")  { 
+                    $app_type = "structure"; 
+                }
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_'. $app_type.'.php?type='.$type.SEP.'temp='. $this->template_dir.'"><strong>'. _AT('edit_template') . '</strong></a></li>';
                 echo '<li class="active"><strong>'. _AT('edit_metadata') . '</strong></li>';
-                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=layout&temp='.$this->template.'">'. _AT('delete') . '</a></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type='.$type.SEP.'temp='.urlencode($this->template_dir).'">'. _AT('delete') . '</a></li>';
             ?>
         </ul>
     </div>
@@ -43,7 +56,7 @@ if($this->metadata['template_type']=='page_template') $type='page';
 -->
 <div class="input-form">
     <fieldset class="group_form"><legend></legend>
-        <form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF']?>?type=<?php echo $this->template_type; ?>&temp=<?php echo $this->template_dir; ?>">
+        <form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF']?>?type=<?php echo $this->template_type; ?>&temp=<?php echo $this->template_dir; ?>" method="post">
             <input id="template_name" name="template_name" type="hidden"  value="<?php echo $this->metadata['template_name']; ?>" />
 
             <dl class="form_layout">
@@ -54,7 +67,7 @@ if($this->metadata['template_type']=='page_template') $type='page';
                 <dd><input name="maintainer_name" id="maintainer_name" size="30" type="text" value="<?php echo $this->metadata['maintainer_name']; ?>"/></dd>
 
                 <dt><label for="maintainer_email"><?php echo _AT('maintainer_email'); ?></label></dt>
-                <dd><input name="" id="maintainer_email" size="30" type="text" value="<?php echo $this->metadata['maintainer_email']; ?>"/></dd>
+                <dd><input name="maintainer_email" id="maintainer_email" size="30" type="text" value="<?php echo $this->metadata['maintainer_email']; ?>"/></dd>
 
                 <dt><label for="template_url"><?php echo _AT('template_url'); ?></label></dt>
                 <dd><input name="template_url" size="30" type="text" value="<?php echo $this->metadata['template_url']; ?>"/></dd>
@@ -71,8 +84,8 @@ if($this->metadata['template_type']=='page_template') $type='page';
                 <dt><span class="required" title="Required Field">*</span><label for="release_state"><?php echo _AT('release_state'); ?></label></dt>
                 <dd><input name="release_state" id="release_state" size="10" type="text" value="<?php echo $this->metadata['release_state']; ?>"/></dd>
 
-                <dt><label for="release_note"><?php echo _AT('release_note'); ?></label></dt>
-                <dd><input name="release_note" size="30" type="text" value="<?php echo $this->metadata['release_note']; ?>"/></dd>
+                <dt><label for="release_notes"><?php echo _AT('release_note'); ?></label></dt>
+                <dd><input id="release_notes" name="release_notes" size="30" type="text" value="<?php echo $this->metadata['release_notes']; ?>"/></dd>
             </dl>
 
             <p class="submit_buttons">

@@ -23,21 +23,43 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
         require('classes/TemplateCommons.php');
         $commons=new TemplateCommons('../templates');
         $type=strip_tags($addslashes($_GET['type']));
-        if($_GET['type']=='page') $type='page_template';
+        
+        
+        if($_GET['type']=='pages') $type='page_templates';
+       
         if(isset ($_POST['cancel'])){
             $msg->addFeedback('CANCELLED');
-            Header('Location: index.php?tab='.$type);
+            if($_GET['type']=='page_templates') $type='page';
+            if($_GET['type']=='page_templates') $app_type='page';
+            if($_GET['type']=='structures') $type='structure';
+            if($_GET['type']=='layouts') $type='layouts';
+            if($_GET['type']=='layouts') $app_type='layout';
+            header('Location: edit_'.$app_type.'.php?type='.$type.SEP.'temp='.$_GET['temp'] );
             exit;
         }
 
+        if(isset ($_POST['submit'])) {
+            if($_GET['type']=='page_templates') $type='page_templates';
+            if($_GET['type']=='page_templates') $app_type='pages';
+             if($_GET['type']=='structures') $type='structures';
+             if($_GET['type']=='layouts') $type='layouts';
+            $commons->delete_template($type, $_GET['temp']);
+            //if($commons->delete_template($type, $_GET['temp']) == true){
+                $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+                header('Location: index.php?tab='.$app_type);
+                exit;
+            //} 
+ 
+        }
+        
         if(!$commons->template_exists($type, $_GET['temp'])){
+            if($_GET['type']=='page_templates') $type='pages';
+             if($_GET['type']=='structures') $type='structures';
+             //if($_GET['type']=='layout') $type='layouts';
+             if($_GET['type']=='layouts') $type='layouts';
             $msg->addError('SELECT_ONE_ITEM');
             Header('Location: index.php?tab='.$type);
             exit;
-        }
-        if(isset ($_POST['submit'])) {
-            $commons->delete_template($type, $_GET['temp']);
-            Header('Location: index.php?tab='.$type);
         }
         require(TR_INCLUDE_PATH.'header.inc.php');
         $metadata=$commons->load_metadata($type,$_GET['temp']);

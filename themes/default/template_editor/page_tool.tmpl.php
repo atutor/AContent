@@ -1,25 +1,39 @@
-<form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
+<div id="subnavlistcontainer">
+    <div id="sub-navigation"> 
+    <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
+    <a href="template_editor/index.php?tab=pages"><img src="themes/default/images/previous.png" alt="back"></a>
+    </span>
+        <ul id="subnavlist">
+            <?php 
+                echo '<li class="active"><b>'. _AT('edit_template') . '</b></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type=page_templates&temp='.$this->template.'">'. _AT('edit_metadata') . '</a></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=page_templates&temp='.$this->template.'">'. _AT('delete') . '</a></li>';
+            ?>
+        </ul>
+    </div>
+</div>
+<form action="<?php echo $_SERVER['PHP_SELF'].'?type='.$this->type.SEP.'temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
     <input type="hidden" name="referer" value="<?php echo $this->referer; ?>" />
-    <div align="center">
+<!--    <div align="center">
         <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
             <tbody><tr>
                     <td class="editor_tab_selected" ><?php echo _AT('edit_template'); ?></td>
                     <td class="tab-spacer">&nbsp;</td>
                     <td class="editor_tab">
-                        <a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type=page_template&temp=<?php echo $this->template; ?>">
+                        <a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type=page_templates&temp=<?php echo $this->template; ?>">
                             <?php echo _AT('edit_metadata'); ?>
                         </a>
                     </td>
                     <td class="tab-spacer">&nbsp;</td>
                     <td class="editor_tab" >
-                        <a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=page_template&temp=<?php echo $this->template; ?>">
+                        <a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=page_templates&temp=<?php echo $this->template; ?>">
                             <?php echo _AT('delete'); ?>
                         </a>
                     </td>
                     <td>&nbsp;</td>
                 </tr>
             </tbody></table>
-    </div>
+    </div> -->
     <div class="input-form" style="width: 95%;">
         <div id='page_topbar'>
             <label for="mode_radios" style="margin-left:15px;"><?php echo _AT('edit_mode'); ?></label>
@@ -104,7 +118,7 @@
     <h4 style="margin:2px 0 7px 0;"><?php echo _AT('screenshot'); ?></h4>
     <div>
         <?php
-        $img_path=$this->base_path."templates/page_template/". $this->template."/screenshot.png";
+        $img_path=$this->base_path."templates/page_templates/". $this->template."/screenshot.png";
         if(isset($this->screenshot))  echo "<img id='screenshot_img' src='".$img_path."' alt='"._AT('screenshot')."'>";
         else echo "<img id='screenshot_img' src='".$this->base_path. "images/clr.gif'>";
         ?>

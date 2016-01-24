@@ -2,7 +2,7 @@
     <div class="row">
         <?php echo _AT('confirm_template_delete',''); ?>
     </div>
-    <form method="post" action="<?php echo $_base_path ?>template_editor/delete.php?type=structure&temp=<?php echo $this->template; ?>">
+    <form method="post" action="<?php echo $_base_path ?>template_editor/delete.php?type=structures&temp=<?php echo $this->template; ?>">
         <div class="row buttons">
             <input  type="submit" name="submit" value="<?php echo _AT('yes'); ?>">
             <input onclick="$('#delete_confirm').hide();" type="button" name="cancel" value="<?php echo _AT('no'); ?>">
@@ -10,9 +10,23 @@
     </form>
 </div>
 
+<div id="subnavlistcontainer">
+    <div id="sub-navigation"> 
+    <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
+    <a href="template_editor/index.php?tab=structures"><img src="themes/default/images/previous.png" alt="back"></a>
+    </span>
+        <ul id="subnavlist">
+            <?php 
+                echo '<li class="active"><b>'. _AT('edit_template') . '</b></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type=structures&temp='.$this->template.'">'. _AT('edit_metadata') . '</a></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=structures&temp='.$this->template.'">'. _AT('delete') . '</a></li>';
+            ?>
+        </ul>
+    </div>
+</div>
 <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
     <input type="hidden" name="referer" value="<?php echo $this->referer; ?>" />
-<div align="center">
+<!--<div align="center">
     <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
         <tbody><tr>
                 <td class="editor_tab_selected" ><?php echo _AT('edit_template'); ?></td>
@@ -30,8 +44,8 @@
                 </td>
                 <td>&nbsp;</td>
             </tr>
-        </tbody></table>
-</div>
+        </tbody></table> 
+</div> -->
     <div class="input-form" style="width: 95%;">
     <div id='struct_toolbar'>
         <div style='float:left; margin:0 10px 1px 10px;'>

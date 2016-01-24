@@ -276,6 +276,7 @@ img.template_thumb{
     text-align:center;
     width:10em;
 }
+/*
 #layout_list li {
     display: inline-block;
     list-style: inside none none;
@@ -283,6 +284,17 @@ img.template_thumb{
     border:thin solid black;
     padding:.5em;
     overflow:auto;
+}
+*/
+#layout_list li {
+        width: 11em;
+        min-height: 16em;
+        padding:.5em;
+        border: 1px solid #000;
+        display: inline-block;
+        list-style: inside none none;
+        margin: .5em;
+        vertical-align:top;
 }
 #layout_list li li{
     border: 0 none;

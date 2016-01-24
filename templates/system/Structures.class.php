@@ -92,7 +92,7 @@ class Structures {
                         if (is_dir($isdir)) {
                                 // check if exists the .info file and parse it
                                 //$isfile	= $isdir.'/structure.info';
-                                $xml_file = $isdir . '/structure.xml';
+                                $xml_file = $isdir . '/structures.xml';
                                 if (is_file($xml_file)) {
                                         $xml = simplexml_load_file($xml_file);
                                         foreach ($xml->children() as $child) {

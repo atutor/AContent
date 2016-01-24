@@ -9,7 +9,7 @@
     <div id="sub-navigation">
         <ul id="subnavlist">
             <li class="active"><b><?php echo _AT('create_template'); ?></b></li>
-            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=layout"><?php echo _AT('layout'); ?></a></li>
+            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=layouts"><?php echo _AT('layout'); ?></a></li>
             <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=structures"><?php echo _AT('structures'); ?></a></li>
             <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=pages"><?php echo _AT('pages'); ?></a></li>
         </ul>
@@ -25,9 +25,9 @@
                 <dt><span class="required" title="Required Field">*</span><label for="template_type"><?php echo _AT('template_type'); ?></label></dt>
                 <dd>
                     <select name="template_type" id="template_type">
-                        <option value="layout"><?php echo _AT('layout'); ?></option>
-                        <option value="page_template"><?php echo _AT('template_page'); ?></option>
-                        <option value="structure"><?php echo _AT('structure'); ?></option>
+                        <option value="layouts"><?php echo _AT('layout'); ?></option>
+                        <option value="page_templates"><?php echo _AT('template_page'); ?></option>
+                        <option value="structures"><?php echo _AT('structure'); ?></option>
                     </select>
                 </dd>
 

@@ -42,8 +42,8 @@ $mod_path					= array();
 $mod_path['templates']		= realpath(TR_BASE_HREF			. 'templates').'/';
 $mod_path['templates_int']	= realpath(TR_INCLUDE_PATH		. '../templates').'/';
 $mod_path['templates_sys']	= $mod_path['templates_int']	. 'system/';
-$mod_path['page_template_dir']		= $mod_path['templates']		. 'page_template/';
-$mod_path['page_template_dir_int']	= $mod_path['templates_int']	. 'page_template/';
+$mod_path['page_template_dir']		= $mod_path['templates']		. 'page_templates/';
+$mod_path['page_template_dir_int']	= $mod_path['templates_int']	. 'page_templates/';
 
 // include the file "apply_model" so that he can inherit variables and constants defined by the system
 include_once($mod_path['templates_sys'].'Page_template.class.php');
@@ -64,8 +64,8 @@ $templates = TR_BASE_HREF.'templates/';
 $templates_int = TR_INCLUDE_PATH.'../templates/';
 
 // path containing the page_template list
-$page_template_dir = $templates.'page_template/';
-$page_template_dir_int = $templates_int.'page_template/';
+$page_template_dir = $templates.'page_templates/';
+$page_template_dir_int = $templates_int.'page_templates/';
 
 // directory and file systems to be excluded from the page_template list
 $excep = array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
@@ -119,7 +119,7 @@ if($sup == 0) {
 	$with_content=0;
 	$mod->view_page_templates($with_content);
 } else {
-	echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layout/'.$layout.'/'.$layout.'.css">';
+	echo '<link type="text/css" rel="stylesheet" href="'.TR_BASE_HREF.'templates/layouts/'.$layout.'/'.$layout.'.css">';
 	echo '<div style="margin: 10px; margin-top: 10px; margin-bottom: 15px;">';
 	echo '<div id="with-cont" style="font-weight:bold;">'. _AT("content_associated") .':</div>';
 	// Keep track of the old content for rescue

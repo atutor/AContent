@@ -262,7 +262,7 @@ function delete_from_tree(element){
  * @return {string} class name for the node
  */
 function get_class_type(node_name) {
-    if(node_name=="structure" ||node_name=="folder" ) return "tree_folder";
+    if(node_name=="structures" ||node_name=="folder" ) return "tree_folder";
     else if(node_name=="page" ) return "tree_page";
     else if(node_name=="page_templates" ) return "tree_page_templates";
     else if(node_name=="tests" ) return "tree_tests";
