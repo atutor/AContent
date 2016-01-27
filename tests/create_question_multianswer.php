@@ -27,8 +27,8 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	exit;
 } else if ($_POST['submit'] || $_POST['submit_yes']) {
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['feedback'] = trim(htmlspecialchars($_POST['feedback'], ENT_QUOTES));
+	$_POST['question'] = trim(htmlspecialchars($_POST['question'], ENT_QUOTES));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
@@ -44,7 +44,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = $addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
@@ -62,15 +62,15 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			
 		if ($has_answer != TRUE && !$_POST['submit_yes']) {
 	
-			$hidden_vars['required']    = htmlspecialchars($_POST['required']);
-			$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback']);
-			$hidden_vars['question']    = htmlspecialchars($_POST['question']);
-			$hidden_vars['category_id'] = htmlspecialchars($_POST['category_id']);
+			$hidden_vars['required']    = htmlspecialchars($_POST['required'], ENT_QUOTES);
+			$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback'], ENT_QUOTES);
+			$hidden_vars['question']    = htmlspecialchars($_POST['question'], ENT_QUOTES);
+			$hidden_vars['category_id'] = intval($_POST['category_id']);
 			$hidden_vars['_course_id']  = $_course_id;
 
 			for ($i = 0; $i < count($choice_new); $i++) {
-				$hidden_vars['answer['.$i.']'] = htmlspecialchars($answer_new[$i]);
-				$hidden_vars['choice['.$i.']'] = htmlspecialchars($choice_new[$i]);
+				$hidden_vars['answer['.$i.']'] = htmlspecialchars($answer_new[$i], ENT_QUOTES);
+				$hidden_vars['choice['.$i.']'] = htmlspecialchars($choice_new[$i], ENT_QUOTES);
 			}
 
 			$msg->addConfirm('NO_ANSWER', $hidden_vars);

@@ -60,7 +60,7 @@ class ContentDAO extends DAO {
 			               '".$addslashes($keywords)."',
 			               '".$content_path."', 
 			               '".$addslashes($title)."',
-			               '".$addslashes($text)."',
+			               '".$addslashes(htmlspecialchars($text, ENT_QUOTES))."',
 			               '".$addslashes($head)."',
 			               ".$use_customized_head.",
 			               '".$addslashes($test_message)."',

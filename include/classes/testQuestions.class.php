@@ -1223,7 +1223,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 		for ($i = 0 ; $i < 10; $i++) {
 			$question['groups'][$i]        = trim($question['groups'][$i]);
 			$question['answer'][$i] = (int) $question['answer'][$i];
-			$question['choice'][$i]          = trim($question['choice'][$i]);
+			$question['choice'][$i]          = trim(htmlspecialchars($question['choice'][$i], ENT_QUOTES));
 		}
 
 		if (!$question['groups'][0] 
@@ -1389,7 +1389,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 //			$question['question']   = $addslashes($question['question']);
 
 			for ($i=0; $i<10; $i++) {
-				$question['choice'][$i] = trim($question['choice'][$i]);
+				$question['choice'][$i] = trim(htmlspecialchars($question['choice'][$i], ENT_QUOTES));
 			}
 
 			$answers = array_fill(0, 10, 0);

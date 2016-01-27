@@ -44,7 +44,7 @@ class ForumsDAO extends DAO {
 			$sql = "INSERT INTO ".TABLE_PREFIX."forums
 			              (title, description, created_date)
 			       VALUES ('".$title."',
-			               '".$decsription."',
+			               '".htmlspecialchars($decsription, ENT_QUOTES)."',
 			               now())";
 
 			if (!$this->execute($sql))

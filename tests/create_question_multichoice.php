@@ -27,8 +27,8 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['feedback'] = trim(htmlspecialchars($_POST['feedback'], ENT_QUOTES));
+	$_POST['question'] = trim(htmlspecialchars($_POST['question'], ENT_QUOTES));
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['answer']      = intval($_POST['answer']);
 
@@ -38,7 +38,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 		
 	if (!$msg->containsErrors()) {
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = $addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
 		}
 
 		$answers = array_fill(0, 10, 0);
