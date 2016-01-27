@@ -39,7 +39,7 @@ class CoursesDAO extends DAO {
 		$user_id = intval($user_id);
 		$category_id = intval($category_id);
 		$title = $addslashes(trim($title));
-		$decsription = $addslashes(trim($description));
+		$decsription = $addslashes(trim(htmlspecialchars($description, ENT_QUOTES)));
 		$course_dir_name = $addslashes(trim($course_dir_name));
 		$max_quota = $addslashes(trim($max_quota));
 		$max_file_size = $addslashes(trim($max_file_size));	
