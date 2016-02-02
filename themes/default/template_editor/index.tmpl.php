@@ -44,7 +44,7 @@
                     if(file_exists('../templates/page_templates/'.$template.'/screenshot.png')){
                         echo '<img src="templates/page_templates/'.$template.'/screenshot.png" class="template_thumb" alt="" /><br />';
                     }else{
-                        echo '<img src="images/page_placeholder.jpg" class="template_thumb" alt="no thumbnail available" style="height:11em; width:11em;text-align:center;border:1px black dashed;margin:.1em;"/><br />';
+                        echo '<img src="images/page_placeholder.jpg" class="template_thumb" alt="" style="height:11em; width:11em;text-align:center;border:1px black dashed;margin:.1em;"/><br />';
                     }
                  } else if($this->template_type == "structures"){
                    

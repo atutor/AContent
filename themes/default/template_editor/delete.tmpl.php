@@ -1,7 +1,7 @@
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
     <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
-    <a href="template_editor/index.php?tab=<?php echo $this->template_type; ?>"><img src="themes/default/images/previous.png" alt="back"></a>
+    <a href="template_editor/index.php?tab=<?php echo $this->template_type; ?>"><img src="themes/default/images/previous.png" alt="<?php echo _AT('back'); ?>"></a>
     </span>
         <ul id="subnavlist">
             <?php 
@@ -20,26 +20,6 @@
         </ul>
     </div>
 </div>
-<!--<div align="center">
-    <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
-        <tbody><tr>
-                <td class="editor_tab">
-                    <a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_<?php echo $this->template_type.'.php?temp='. $this->template_dir;?>">
-                        <?php echo _AT('edit_template'); ?>
-                    </a>
-                </td>
-                <td class="tab-spacer">&nbsp;</td>
-                <td class="editor_tab" >
-                    <a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type=<?php echo $this->template_type.'&temp='.$this->template_dir; ?>">
-                        <?php echo _AT('edit_metadata'); ?>
-                    </a></td>
-                <td class="tab-spacer">&nbsp;</td>
-                <td class="editor_tab_selected" ><?php echo _AT('delete'); ?></td>
-                <td>&nbsp;</td>
-            </tr>
-        </tbody></table>
-</div>
--->
 <div class="input-form">
     <div class="row">
         <?php echo _AT('confirm_template_delete', $this->template_name); ?>

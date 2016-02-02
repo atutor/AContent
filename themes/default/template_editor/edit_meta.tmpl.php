@@ -33,27 +33,6 @@ if($this->metadata['template_type']=='page_templates') $type='page_templates';
         </ul>
     </div>
 </div>
-<!-- <div align="center">
-    <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
-        <tbody><tr>
-                <td class="editor_tab">
-                    <a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_<?php echo $type.'.php?temp='. $this->template_dir;?>">
-                        <?php echo _AT('edit_template'); ?>
-                    </a>
-                </td>
-                <td class="tab-spacer">&nbsp;</td>
-                <td class="editor_tab_selected" ><?php echo _AT('edit_metadata'); ?></td>
-                <td class="tab-spacer">&nbsp;</td>
-                <td class="editor_tab" >
-                    <a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?type=<?php echo $type.'&temp='. $this->template_dir;?>">
-                        <?php echo _AT('delete'); ?>
-                    </a>
-                </td>
-                <td>&nbsp;</td>
-            </tr>
-        </tbody></table>
-</div>
--->
 <div class="input-form">
     <fieldset class="group_form"><legend></legend>
         <form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF']?>?type=<?php echo $this->template_type; ?>&temp=<?php echo $this->template_dir; ?>" method="post">
@@ -63,7 +42,7 @@ if($this->metadata['template_type']=='page_templates') $type='page_templates';
                 <dt><label for="template_desc"><?php echo _AT('template_description'); ?></label></dt>
                 <dd><textarea name="template_desc" id="template_desc" maxlength="100"  rows="4" ><?php echo $this->metadata['template_desc']; ?></textarea></dd>
 
-                <dt><span class="required" title="Required Field">*</span><label for="maintainer_name"><?php echo _AT('maintainer_name'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="maintainer_name"><?php echo _AT('maintainer_name'); ?></label></dt>
                 <dd><input name="maintainer_name" id="maintainer_name" size="30" type="text" value="<?php echo $this->metadata['maintainer_name']; ?>"/></dd>
 
                 <dt><label for="maintainer_email"><?php echo _AT('maintainer_email'); ?></label></dt>
@@ -75,13 +54,13 @@ if($this->metadata['template_type']=='page_templates') $type='page_templates';
                 <dt><label for="template_license"><?php echo _AT('template_license'); ?></label></dt>
                 <dd><input name="template_license" size="30" type="text" value="<?php echo $this->metadata['template_license']; ?>"/></dd>
 
-                <dt><span class="required" title="Required Field">*</span><label for="release_version"><?php echo _AT('release_version'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="release_version"><?php echo _AT('release_version'); ?></label></dt>
                 <dd><input name="release_version" id="release_version" size="10" type="text" value="<?php echo $this->metadata['release_version']; ?>"/></dd>
 
                 <dt><label for="release_date"><?php echo _AT('release_date'); ?></label></dt>
                 <dd><input name="release_date" size="10" type="text" value="<?php echo $this->metadata['release_date']; ?>"/></dd>
 
-                <dt><span class="required" title="Required Field">*</span><label for="release_state"><?php echo _AT('release_state'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="release_state"><?php echo _AT('release_state'); ?></label></dt>
                 <dd><input name="release_state" id="release_state" size="10" type="text" value="<?php echo $this->metadata['release_state']; ?>"/></dd>
 
                 <dt><label for="release_notes"><?php echo _AT('release_note'); ?></label></dt>

@@ -44,7 +44,7 @@ if($this->lastelement != ''){
     <input id="referer" type="hidden" name="referer" value="<?php echo $this->referer; ?>" />
     <input id="lastelement" type="hidden" name="lastelement" value="<?php echo $this->lastelement; ?>" />
     <div class="input-form" style="width: 95%;">
-        <div id='layout_topbar' tabindex="0" accesskey="e" aria-label="Editor on the left, interactive preview on the  right. Accesskey e to edit, s to save, p to preview window">
+        <div id='layout_topbar' tabindex="0" accesskey="e" aria-label="<?php echo _AT('template_editor_howto'); ?>">
             <label for="selector"><?php echo _AT('selector'); ?>:</label>
             <input id="selector" type="text" size="15" disabled aria-live="assertive">
 
@@ -81,12 +81,12 @@ if($this->lastelement != ''){
                                         </td>
                                         <td>
                                             <select id="font-family" name="font-family" style="width:100px;">
-                                                <option value="courier">Courier</option>
-                                                <option value="georgia">Georgia</option>
-                                                <option value="times new roman">Times New Roman</option>
-                                                <option value="arial">Arial</option>
-                                                <option value="helvetica">Helvetica</option>
-                                                <option value="verdana" selected="">Verdana</option>
+                                                <option value="courier"><?php echo _AT('font_courier'); ?></option>
+                                                <option value="georgia"><?php echo _AT('font_georgia'); ?></option>
+                                                <option value="times new roman"><?php echo _AT('font_times_new_roman'); ?></option>
+                                                <option value="arial"><?php echo _AT('font_arial'); ?></option>
+                                                <option value="helvetica"><?php echo _AT('font_helvetica'); ?></option>
+                                                <option value="verdana" selected=""><?php echo _AT('font_verdana'); ?></option>
                                             </select>
                                         </td>
                                         <td>
@@ -116,9 +116,9 @@ if($this->lastelement != ''){
                                         <td>
                                             <select id="border-style" style="width:100px;">
                                                 <option value="none">&nbsp;</option>
-                                                <option value="solid">Solid</option>
-                                                <option value="dashed">Dashed</option>
-                                                <option value="dotted">Dotted</option>
+                                                <option value="solid"><?php echo _AT('border_solid'); ?></option>
+                                                <option value="dashed"><?php echo _AT('border_dashed'); ?></option>
+                                                <option value="dotted"><?php echo _AT('border_dotted'); ?></option>
                                             </select>
                                         </td>
                                     </tr>
@@ -171,22 +171,21 @@ if($this->lastelement != ''){
                     <div id='css_preview' style='height:100%; width:400px; min-height:300px; margin:15px;' tabindex='0' accesskey="p">
                         <style id="preview_styles"></style>
                         <div id="content">
-                            <h2  title="H2">Heading 2</h2>
-                            <h3  title="H3">Heading 3</h3>
-                            <h4  title="H4">Heading 4</h4>
-                            <p title="Paragraph format">This is some paragraph text that can be formatted to any 
-                                font-family to give content a tailored look.</p>
+                            <h2  title="H2"><?php echo _AT('template_heading'); ?> 2</h2>
+                            <h3  title="H3"><?php echo _AT('template_heading'); ?> 3</h3>
+                            <h4  title="H4"><?php echo _AT('template_heading'); ?> 4</h4>
+                            <p title="Paragraph format"><?php echo _AT('template_sample_text'); ?></p>
                             <ul title="UL">
-                                <li title="LI">List Item</li>
-                                <li>List Item</li>
+                                <li title="LI"><?php echo _AT('template_list_item'); ?></li>
+                                <li><?php echo _AT('template_list_item'); ?></li>
                             </ul>
                             <ol title="OL">
-                                <li title="LI">List Item</li>
-                                <li>List Item</li>
+                                <li title="LI"><?php echo _AT('template_list_item'); ?></li>
+                                <li><?php echo _AT('template_list_item'); ?></li>
                             </ol>
                             <table title="table" >
-                            <tr><th title="TH">header</th><th>header</th></tr>
-                            <tr><td title="TD">data</td><td>data</td></tr>
+                            <tr><th title="TH"><?php echo _AT('template_table_header'); ?></th><th><?php echo _AT('template_table_header'); ?></th></tr>
+                            <tr><td title="TD"><?php echo _AT('template_table_data'); ?></td><td><?php echo _AT('template_table_data'); ?></td></tr>
                             </table>
                             <div id="copy">
                                     

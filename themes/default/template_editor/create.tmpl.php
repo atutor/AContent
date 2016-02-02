@@ -19,10 +19,10 @@
     <fieldset class="group_form"><legend></legend>
         <form method="post" name="form" action="<?php echo $_SERVER['PHP_SELF'] ?>">
             <dl class="form_layout">
-                <dt><span class="required" title="Required Field">*</span><label for="template_name"><?php echo _AT('template_name'); ?></label>:</dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="template_name"><?php echo _AT('template_name'); ?></label>:</dt>
                 <dd><input id="template_name" name="template_name" type="text" size="30" maxlength="50" value="" /></dd>
                 
-                <dt><span class="required" title="Required Field">*</span><label for="template_type"><?php echo _AT('template_type'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="template_type"><?php echo _AT('template_type'); ?></label></dt>
                 <dd>
                     <select name="template_type" id="template_type">
                         <option value="layouts"><?php echo _AT('layout'); ?></option>
@@ -34,7 +34,7 @@
                 <dt><label for="template_desc"><?php echo _AT('template_description'); ?></label></dt>
                 <dd><textarea name="template_desc" id="template_desc" maxlength="100"  rows="4" ></textarea></dd>
 
-                <dt><span class="required" title="Required Field">*</span><label for="maintainer_name"><?php echo _AT('maintainer_name'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="maintainer_name"><?php echo _AT('maintainer_name'); ?></label></dt>
                 <dd><input name="maintainer_name" id="maintainer_name" size="30" type="text"/></dd>
 
                 <dt><label for="maintainer_email"><?php echo _AT('maintainer_email'); ?></label></dt>
@@ -46,13 +46,13 @@
                 <dt><label for="template_license"><?php echo _AT('template_license'); ?></label></dt>
                 <dd><input name="template_license" size="30" type="text"/></dd>
 
-                <dt><span class="required" title="Required Field">*</span><label for="release_version"><?php echo _AT('release_version'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="release_version"><?php echo _AT('release_version'); ?></label></dt>
                 <dd><input name="release_version" id="release_version" size="10" type="text"/></dd>
 
                 <dt><label for="release_date"><?php echo _AT('release_date'); ?></label></dt>
                 <dd><input name="release_date" size="10" type="text"/></dd>
 
-                <dt><span class="required" title="Required Field">*</span><label for="release_state"><?php echo _AT('release_state'); ?></label></dt>
+                <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="release_state"><?php echo _AT('release_state'); ?></label></dt>
                 <dd><input name="release_state" id="release_state" size="10" type="text"/></dd>
 
                 <dt><label for="release_note"><?php echo _AT('release_note'); ?></label></dt>
