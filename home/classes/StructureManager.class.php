@@ -256,7 +256,7 @@ class StructureManager
 				$this->insertIcons($min, $i);
 				
 				if($this->isFolder($page)) {
-					
+					$name = preg_replace('/\s/', '_', $name);  // To accommodate folder names with spaces
 					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$name.$i.'" >';
 					$this->printStruct($page->children(), $i);
 									
@@ -312,7 +312,7 @@ class StructureManager
 		};
 		</script>
 		';
-		
+		$page = preg_replace('/\s/', '_', $page);  // To accommodate folder names with spaces
 		echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolderStruct(\''.$i.'\', \''.$page.'\', \''._AT('expand').'\', \''._AT('collapse').'\', \''.$tree_expand_icon.'\', \''.$tree_collapse_icon.'\' ); ">';
 		echo '<img id="tree_icon_'.$page.$i.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.TR_BASE_HREF.'images/tree/tree_'.$value.'.gif">';
 		echo '</a>';
@@ -384,7 +384,7 @@ class StructureManager
 				
 				$body = $this->getBody($page);
 				
-				$title = $page['name'];
+				$title = htmlspecialchars($page['name']);
 					
 				if($id_folder == -1) {
 					$content_id = $contentDAO->Create($course_id, 0, 1, 0, 1, null, null, $title, $body, null, 0, null, $content_type);
