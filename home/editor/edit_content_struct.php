@@ -45,7 +45,7 @@ if ($_POST['submit'])
 		
 	if (!$msg->containsErrors()) 
 	{
-		$_POST['title']	= $content_row['title'] = htmlspecialchars($_POST['title'], ENT_QUOTES, UTF8);
+		$_POST['title']	= $content_row['title'] = htmlspecialchars($_POST['title'], ENT_QUOTES, 'UTF-8');
 	
 		if ($cid > 0)
 		{ // edit existing content

@@ -76,9 +76,7 @@ if(isset($_POST['struct']) && isset($_POST['create_struct'])) {
 	
 } else {
 	
-	
-	
-	$msg->addInfo('NO_CONTENT_IN_COURSE');
+	$msg->printInfos('NO_CONTENT_IN_COURSE');
 	
 	$current_tab = 0;
 		

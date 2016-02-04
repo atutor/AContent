@@ -72,9 +72,8 @@ class StructureManager
 	function getBody($page) {
 		
 		$content = $this->getContent($page);
-		if(count($content)==1) {
-			
-			$path_page = realpath(TR_INCLUDE_PATH		. '../templates').'/page_template/';
+		$path_page = realpath(TR_INCLUDE_PATH		. '../templates').'/page_templates/';
+		if(count($content)==1) {	
  			$file = $path_page . $content[0] .'/'.$content[0].'.html';
 			if(is_file($file)) {
 				
@@ -86,16 +85,27 @@ class StructureManager
 						return str_replace('src="dnd_image', 'src="'.TR_BASE_HREF.'templates/system/page_template_image.png"', $text);
 					 else 	
 						return $text;
-				
-				
 			}
 			
-		} else if($this->hasForum($page)) 
+		} else if(count($content)>1){
+		    foreach($content as $template){
+		        $file = $path_page . $template .'/'.$template.'.html';
+			    if(is_file($file)) {
+				    $text .= file_get_contents($file);
+				    $find =  strpos($text, 'src="dnd_image"');
+				
+				    if($find) 
+						return str_replace('src="dnd_image', 'src="'.TR_BASE_HREF.'templates/system/page_template_image.png"', $text);
+			    }
+		    }
+		    return $text;
+		}else if($this->hasForum($page)) {
 			//return 'At this content is associated a forum';
 			return _AT('forum_associated');
-		else if($this->hasTest($page))
+		} else if($this->hasTest($page)){
 			//return 'At this content is associated a test';
 			return _AT('test_associated');
+		}
 		//else {
 			//return 'null';
 		//}
@@ -411,11 +421,18 @@ class StructureManager
 					$forum_course->Create($forum_id, $course_id);
 					
 				} else if($this->hasTest($page)) {
+				//debug($page->tests);
+				    $count = 0;
+				    foreach($page->tests as $test){
+				    global $msg;
+				    $msg->addFeedback($count);
 					$testsDAO = new TestsDAO();
 					$test_ass_cont = new ContentTestsAssocDAO();
-					
-					$test_id = $testsDAO->Create($course_id, $page['name'], _AT('tests_description'));
+					//debug($test);
+					$test_id = $testsDAO->Create($course_id, $page['name'].$count, _AT('tests_description'));
 					$test_ass_cont->Create($content_id, $test_id);
+					$count++;
+					}
 					
 				} else if($content_type == 1) {
 					//the content is a folder
