@@ -429,8 +429,9 @@ class BLTI {
 		// 1 course, 0 lesson
 		$course		= $this->info['course'];
 
-		return AContent_LiveContentLinkDAO::getContent($course_id, $course);
-
+		//return AContent_LiveContentLinkDAO::getContent($course_id, $course);
+        $ac_link = new AContent_LiveContentLinkDAO();
+		return $ac_link->getContent($course_id, $course);
 		// import entire lesson
 		//return AContent_LiveContentLinkDAO::getCourse('3', 0);
 	}
