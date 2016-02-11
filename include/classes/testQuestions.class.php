@@ -285,7 +285,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	$coursesDAO = new CoursesDAO();
 	$course_row = $coursesDAO->get($_course_id);
 	$course_language = $course_row['primary_language'];
-	$courseLanguage =& $languageManager->getLanguage($course_language);
+	$courseLanguage = $languageManager->getLanguage($course_language);
 	$course_language_charset = $courseLanguage->getCharacterSet();
 	$imported_files;
 	$zipflag = false;
