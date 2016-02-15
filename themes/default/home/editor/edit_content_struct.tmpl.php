@@ -50,10 +50,12 @@ if ($this->shortcuts):
 					$output = _AT('none_found');
 			} else {
 			
-                            echo '<div style=" weight: 10%; margin: 10px;">';
+                echo '<div style=" weight: 10%; margin: 10px;">';
                             
-                            
+                echo '<ol class="remove-margin-left" id="layout_list"> ';   
 				foreach ($structsList as $struct) {
+				    echo "<li>";
+				
 					echo '<input type="radio" name="title" id="'.$struct['name'].'" class="formfield" value="'.$struct['short_name'].'"/>';
 					echo '<label for="'.$struct['name'].'">'.$struct['name'].'</label>';
                                         $value = "";
@@ -68,21 +70,31 @@ if ($this->shortcuts):
                                         
                         if($val['name'] == $struct['name']){
                   ?>                      
-                <div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
+                <div style=" margin-bottom: 10px; margin-top:-1.5em;; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
 		
 		
 	<!--	<li id="<?php echo $val['short_name'];?>"> <?php echo $val['name'];?> </li> -->
 
-		<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;"><?php echo _AT('description'); ?>:</span>
-                <?php echo $val['description']; ?></p>
+		<!--<p style="margin-left: 10px; font-size:90%;"><span style="font-style:italic;"><?php echo _AT('description'); ?>:</span>
+                <?php echo $val['description']; ?></p> -->
 
 
-                <div style="font-size:95%; margin-left: 10px;">
-
+                <div style="font-size:95%; ">
+<!--
                         <a title="outline_collapsed" id="a_outline_<?php echo $val['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $val['short_name'];?>', '<?php echo _AT('hide_outline'); ?>', '<?php echo _AT('show_outline'); ?>'); " href="javascript:void(0)"><?php echo _AT('show_outline'); ?></a>
                         <div style="display: none;" id="div_outline_<?php echo $val['short_name'];?>">
                                 <?php $struc_manag = new StructureManager($val['short_name']);
                                 $struc_manag->printPreview(false, $val['short_name']); ?>
+                        </div> -->
+                        <div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
+                            <div style="font-size:95%; margin-left: 10px;">
+                                    <div style="display: inline;" id="div_outline_<?php echo $struct['short_name'];?>">
+                                        <?php   
+                                                $struc_manag = new StructureManager($struct['short_name']);
+                                                $struc_manag->printPreview(false, $struct['short_name']); 
+                                        ?>
+                                    </div>
+                            </div>
                         </div>
             
             </div>
@@ -93,10 +105,10 @@ if ($this->shortcuts):
                 }
                                         
                                         
-					echo '</br>';
+					echo '</li>';
 				}
                             
-                            echo '</div>';    
+                            echo '</ol></div>';    
                                 
 			}
 		
