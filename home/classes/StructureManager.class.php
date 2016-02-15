@@ -192,7 +192,7 @@ class StructureManager
 		//echo '<img class="img-size-tree" width="16" height="16" border="0" src="http://localhost/AContentEdu/images/tree/tree_space.gif" alt="">
 		echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
 		
-		echo '<p style="display:inline; border-style: solid; border-color: grey; border-width:1px;">'.$this->name.'</p>';
+		echo '<p style="display:inline;">'.$this->name.'</p>';
 		//echo '<script type="text/javascript" src="../templates/system/Struct.js"></script>';
 		
 		echo '<strong>';
@@ -356,14 +356,14 @@ class StructureManager
 		//die('gC');
 		if($this->isFolder($page))
 			return null;
-		
-                
-                
+      
 		$content = array();
 		$children = $page->page_templates->children();
-		foreach ($children as $child) {
-			$content[] = $child['name'];
-                       // die($child['name']);
+		if(is_array($children)){
+            foreach ($children as $child) {
+                $content[] = $child['name'];
+                           // die($child['name']);
+            }
 		}
 
 		return $content;
@@ -421,17 +421,16 @@ class StructureManager
 					$forum_course->Create($forum_id, $course_id);
 					
 				} else if($this->hasTest($page)) {
-				//debug($page->tests);
+
 				    $count = 0;
 				    foreach($page->tests as $test){
-				    global $msg;
-				    $msg->addFeedback($count);
-					$testsDAO = new TestsDAO();
-					$test_ass_cont = new ContentTestsAssocDAO();
-					//debug($test);
-					$test_id = $testsDAO->Create($course_id, $page['name'].$count, _AT('tests_description'));
-					$test_ass_cont->Create($content_id, $test_id);
-					$count++;
+                        global $msg;
+                        $msg->addFeedback($count);
+                        $testsDAO = new TestsDAO();
+                        $test_ass_cont = new ContentTestsAssocDAO();
+                        $test_id = $testsDAO->Create($course_id, $page['name'].$count, _AT('tests_description'));
+                        $test_ass_cont->Create($content_id, $test_id);
+                        $count++;
 					}
 					
 				} else if($content_type == 1) {
