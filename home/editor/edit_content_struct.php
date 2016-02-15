@@ -16,7 +16,7 @@ require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
-$_custom_head .= '<link rel="stylesheet" href="../themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />'."\n";
+$_custom_head .= '<link rel="stylesheet" href="'.$_base_href.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />'."\n";
 
 
 global $_content_id, $contentManager, $_course_id;
