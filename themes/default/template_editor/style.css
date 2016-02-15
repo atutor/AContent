@@ -289,12 +289,31 @@ img.template_thumb{
 #layout_list li {
         width: 11em;
         min-height: 16em;
+        max-height: 16em;
         padding:.5em;
         border: 1px solid #000;
         display: inline-block;
         list-style: inside none none;
         margin: .5em;
         vertical-align:top;
+        background-color:#ffffff;
+        /*background-image:url('structure_bg.jpg');*/
+        overflow-y:scroll;
+        overflow-x:hidden;
+}
+#layout_list li span {
+    font-size:1.2em;
+    font-weight:700;
+    margin-top:-.8em;
+    font-weight:400;
+}
+#layout_list div {  
+margin-top:.5em;
+white-space:nowrap;
+    font-size:0.8em;
+    line-height:1.0em;
+    font-weight:700;
+    float:left;
 }
 #layout_list li li{
     border: 0 none;
