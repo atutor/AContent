@@ -16,6 +16,8 @@ require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
+$_custom_head .= '<link rel="stylesheet" href="../themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />'."\n";
+
 
 global $_content_id, $contentManager, $_course_id;
 $cid = $_content_id;
@@ -23,6 +25,7 @@ $cid = $_content_id;
 Utility::authenticate(TR_PRIV_ISAUTHOR);
 
 if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
+if (isset($_POST['_course_id'])) $_course_id = intval($_POST['_course_id']);
 
 if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 	$course_base_href = 'get.php/';
