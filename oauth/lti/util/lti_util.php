@@ -74,14 +74,10 @@ class BLTI {
 			define('TR_INCLUDE_PATH', '../../include/');
 			include_once(TR_INCLUDE_PATH.'config.inc.php');
 
-            $dbr = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
-            
-            $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
-                ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
-                '='.
-                "'".mysqli_real_escape_string($dbr, $oauth_consumer_key)."'";
+            $dbr = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME) or die ("could not connect to mysql");
+            $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.($parm['key_column'] ? $parm['key_column'] :'oauth_consumer_key').'='."'".mysqli_real_escape_string($dbr, $oauth_consumer_key)."'";
 
-            $result = mysqli_query($dbr, $sql);
+            $result = mysqli_query($dbr, $sql) or die(mysql_error());
             $num_rows = mysqli_num_rows($result);
 
             if ( $num_rows != 1 ) {
