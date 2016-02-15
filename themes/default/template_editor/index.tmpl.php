@@ -59,8 +59,7 @@
                  	    ?>
                         <div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
                             <div style="font-size:95%; margin-left: 10px;">
-                                <a title="outline_collapsed" id="a_outline_<?php echo $struct['short_name'];?>" onclick="javascript: trans.utility.toggleOutline('<?php echo $struct['short_name'];?>', '<?php echo _AT('hide_outline'); ?>', '<?php echo _AT('show_outline'); ?>'); " href="javascript:void(0)"><?php echo _AT('show_outline'); ?></a>
-                                    <div style="display: none;" id="div_outline_<?php echo $struct['short_name'];?>">
+                                    <div style="display: inline;" id="div_outline_<?php echo $struct['short_name'];?>">
                                         <?php   
                                                 $struc_manag = new StructureManager($struct['short_name']);
                                                 $struc_manag->printPreview(false, $struct['short_name']); 
