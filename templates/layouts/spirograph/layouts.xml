@@ -1,18 +1,18 @@
 <?xml version="1.0" ?>
 <layout version="0.1">
   <name lang="en">
-    Microsoft Windows
+    Spirograph
   </name>
   <description lang="en">
-    Microsoft Windows look and feel
+    The old kids toy for drawing complex patterns
   </description>
   <maintainers>
     <maintainer>
       <name>
-        Mauro Donadio
+        ATutor
       </name>
       <email>
-        mauro.donadio@studio.unibo.it
+        info@atutor.ca
       </email>
     </maintainer>
   </maintainers>
