@@ -1,22 +1,27 @@
+#content {
+	background-image:	url('grey/atspaces_logo49.jpg');
+	background-repeat:	no-repeat;
+	background-position:	bottom center;
+	padding-bottom:	5em;
+}
 #content h2 {
 	color:	#666666;
-	background-image:	url('Greg5/h-square.gif');
+	background-image:	url('grey/h-square.png');
 	background-repeat:	no-repeat;
 	height:	2em;
 	padding-left:	1.5em;
+	margin-bottom:	.5em;
 	text-align:	justify;
 	border:	1px solid black ;
 	font-style:	italic;
 }
 #content h3 {
-	background-image:	url('Greg5/h-square.gif');
+	background-image:	url('grey/h-square.png');
 	background-repeat:	no-repeat;
 	padding-left:	2em;
 	background-color:	#eeeeee;
-	text-align:	justify;
-	padding-bottom:	.5em;
+	margin-bottom:	.5em;
 	font-weight:	700;
-	margin-left:	1em;
 }
 #content ul {
 	font-family:	georgia;
@@ -31,11 +36,10 @@
 }
 #content h4 {
 	text-align:	left;
-	background-image:	url('Greg5/h-square.gif');
+	background-image:	url('grey/h-square.png');
 	background-repeat:	no-repeat;
-	padding-left:	2em;
+	padding-left:	2.5em;
 	height:	1.6em;
-	margin-left:	2em;
 	text-decoration:	underline;
 }
 #content ol li {
@@ -47,7 +51,7 @@
 	border:	1 solid black ;
 }
 #content ul {
-	list-style-image:	url('Greg5/linkOpaque.gif');
+	list-style-image:	url('grey/linkOpaque.gif');
 }
 #content table {
 	width:	100%;
@@ -61,10 +65,4 @@
 }
 #content td {
 	text-align:	center;
-}
-.pageTemplateContent {
-	height:	30px;
-	background-image:	url('Greg5/basiclti-icon.png');
-	background-repeat:	no-repeat;
-	background-position:	100% 100%;
 }

@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <layouts version="0.1">
-  <name>Greg</name>
-  <description>Greg5test</description>
+  <name>Grey</name>
+  <description>Shades of grey</description>
   <maintainers>
     <maintainer>
-      <name>Greg</name>
-      <email>email address</email>
+      <name>ATutor</name>
+      <email>info@atutor.ca</email>
     </maintainer>
   </maintainers>
   <url>http://atutorspaces.com</url>
   <license>mit</license>
   <release>
     <version>1.x</version>
-    <date>Jan 22, 16</date>
+    <date>June 22, 16</date>
     <state>stable</state>
     <notes></notes>
   </release>
