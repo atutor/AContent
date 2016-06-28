@@ -19,7 +19,7 @@ $_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/jquery.ui.sortable.js"></script>'."\n";
 global $_current_user;
 
-if (isset($_current_user) && $_current_user->isAdmin()) {
+if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITOR])) {
     // Temporary hack re: mantis 5530
     if(!isset($_POST['template_type'])){
     require(TR_INCLUDE_PATH.'header.inc.php');
