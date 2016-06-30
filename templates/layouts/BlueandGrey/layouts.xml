@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<layouts version="0.1">
+  <name>Blue and Grey</name>
+  <description></description>
+  <maintainers>
+    <maintainer>
+      <name>ATutor</name>
+      <email>info@atutor.ca</email>
+    </maintainer>
+  </maintainers>
+  <url></url>
+  <license></license>
+  <release>
+    <version>1.0</version>
+    <date>2/16/16</date>
+    <state>stable</state>
+    <notes></notes>
+  </release>
+</layouts>

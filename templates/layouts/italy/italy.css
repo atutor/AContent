@@ -1,77 +1,94 @@
-#content{
-	color:						#333;
-	line-height:				1.5em;
-	background-color:			#FFF;
-	text-align:					justify;
+#content {
+	color:	#333;
+	line-height:	1.5em;
+	background-color:	#FFF;
+	text-align:	justify;
 }
-
-#content h2{
-	background:					#365778;
-    margin-bottom:				10px;
-    margin-top:					20px;
-
-	color:						#FFF;
+#content h2 {
+	background:	#365778;
+	margin-bottom:	10px;
+	margin-top:	20px;
+	color:	#FFF;
+	border:	none ;
 }
-
-#content h3{
-	background:					#008d46;
-    margin-bottom:				15px;
-    margin-top:					15px;
-	color:						#FFF;
+#content h3 {
+	background:	#008d46;
+	margin-bottom:	15px;
+	margin-top:	15px;
+	color:	#FFF;
 }
-
-#content h4, #content h5, #content h6, #content h7{
-	background:					#d2232c;
-    margin-bottom:				10px;
-    margin-top:					20px;
-
-	color:						#FFF;
+#content h4, #content h5, #content h6, #content h7 {
+	background:	#d2232c;
+	margin-bottom:	10px;
+	margin-top:	20px;
+	color:	#FFF;
 }
-
 #content h2, #content h3, #content h4,
-#content h5, #content h6, #content h7{
-    background-image:			url(italy/c_led2.png), url(italy/c_archivio3.png);
-    background-repeat:			no-repeat;
-    background-position:		left center, right center;
-
-    font-size:					0.875em;
-    height:						32px;
-    line-height:				32px;
-    padding:					0px;
-    padding-left:				20px;
+#content h5, #content h6, #content h7 {
+	background-image:	url('italy/c_led2.png'), url('italy/c_archivio3.png');
+	background-repeat:	no-repeat;
+	background-position:	left center, right center;
+	font-size:	0.875em;
+	height:	32px;
+	line-height:	32px;
+	padding:	0px ;
+	padding-left:	20px;
 }
-
-#content ul{
-	margin-top:					30px;
-	list-style-image:			url(italy/list.png);
+#content ol {
+	margin-top:	20px;
+	list-style:	lower-alpha !important;
+	list-style-type:	lower-alpha;
+	list-style-position:	left;
+	list-style-image:	none;
 }
-#content ul li{
-	padding:					3px;
+#content ol li {
+	padding:	3px ;
+	list-style:	disc none none !important;
 }
-
-#content a:link{
-	text-decoration:			none;
-	color:						#295376;
-	background:					transparent;
+#content ul {
+	margin-top:	30px;
+	list-style-image:	url(italy/list.png);
 }
-#content a:visited{
-	color:						#5a306b;
+#content ul li {
+	padding:	3px ;
 }
-#content a:hover, #content a:active{
-	text-decoration:			underline;
-	color:						#B00000;	
+#content a:link {
+	text-decoration:	none;
+	color:	#295376;
+	background:	transparent;
 }
-#content .img{
-	-webkit-transform: rotate(3deg);
-	-moz-transform: rotate(3deg);
+#content a:visited {
+	color:	#5a306b;
 }
-#content .img:hover{
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
+#content a:hover, #content a:active {
+	text-decoration:	underline;
+	color:	#B00000;
 }
-.header .pageTemplateContent{
-	height:						80px;
-	background-image:			url(italy/repubblica.png);
-	background-repeat:			no-repeat;
-	background-position:		right top;
+#content .img {
+	-webkit-transform:	rotate(3deg);
+	-moz-transform:	rotate(3deg);
+}
+#content .img:hover {
+	-webkit-transform:	rotate(0deg);
+	-moz-transform:	rotate(0deg);
+}
+.header .pageTemplateContent {
+	height:	80px;
+	background-image:	url('italy/repubblica.png');
+	background-repeat:	no-repeat;
+	background-position:	right top;
+}
+#content table {
+	width:	100%;
+	text-align:	center;
+}
+#content th {
+	border:	1px dashed #008d46 ;
+}
+#content caption {
+	border-top:	1px solid #008d46;
+	border-left:	1px solid #008d46;
+	border-right:	1px solid #008d46;
+	border-bottom:	1px solid #008d46;
+	weight:	bold;
 }

@@ -14,7 +14,8 @@ define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 
-if (isset($_current_user) && $_current_user->isAdmin()) {
+//if (isset($_current_user) && $_current_user->isAdmin()) {
+if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITOR])) {
 
 $_GET['type'] = $addslashes(strip_tags($_GET['type']));
 $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
@@ -32,6 +33,7 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
             if($_GET['type']=='page_templates') $type='page';
             if($_GET['type']=='page_templates') $app_type='page';
             if($_GET['type']=='structures') $type='structure';
+            if($_GET['type']=='structures') $app_type='structure';
             if($_GET['type']=='layouts') $type='layouts';
             if($_GET['type']=='layouts') $app_type='layout';
             header('Location: edit_'.$app_type.'.php?type='.$type.SEP.'temp='.$_GET['temp'] );
@@ -42,13 +44,19 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
             if($_GET['type']=='page_templates') $type='page_templates';
             if($_GET['type']=='page_templates') $app_type='pages';
              if($_GET['type']=='structures') $type='structures';
+             if($_GET['type']=='structures') $app_type='structures';
              if($_GET['type']=='layouts') $type='layouts';
-            $commons->delete_template($type, $_GET['temp']);
-            //if($commons->delete_template($type, $_GET['temp']) == true){
+             if($_GET['type']=='layouts') $app_type='layouts';
+
+            if($commons->delete_template($type, $_GET['temp']) == true){
                 $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
                 header('Location: index.php?tab='.$app_type);
                 exit;
-            //} 
+            }  else{
+                $msg->addError('DIR_NOT_DELETED');
+                header('Location: edit_'.$app_type.'.php?type='.$type.SEP.'temp='.$_GET['temp'] );
+                exit;
+            }
  
         }
         

@@ -1,75 +1,101 @@
-#content{
-	color:						#333;
-	line-height:				1.5em;
-	background-color:			#FFF;
-	text-align:					justify;
+#content {
+	color:	#333;
+	line-height:	1.5em;
+	background-color:	#FFF;
+	text-align:	justify;
+	background-image:	url('seti/testata.png');
+	background-repeat:	no-repeat;
+	background-position:	right bottom;
+	padding-bottom:	5em;
 }
-
 #content h2, #content h3, #content h4,
-#content h5, #content h6, #content h7{
+#content h5, #content h6, #content h7 {
 	/*#af0d1a*/
-	
-	color:						#333;
-	padding:					5px;
-	padding-left:				0px;
-    
-    margin-bottom:				10px;
-    margin-top:					20px;
+	color:	#333;
+	padding:	5px ;
+	padding-left:	0px;
+	margin-bottom:	10px;
+	margin-top:	20px;
 }
-
-#content h3{
-	background-image:			url(seti/sigillo.png);
-	background-repeat: 			no-repeat;
-	background-position:		left middle;
-	height:						32px;
-	padding-left:				40px;
+#content h3 {
+	background-image:	url('seti/sigillo.png');
+	background-repeat:	no-repeat;
+	background-position:	left middle;
+	height:	32px;
+	padding-left:	40px;
 }
-
-#content a:link{
-	text-decoration:			none;
-	background:					transparent;
-	border-bottom:				1px dotted #1111dc;
+#content a:link {
+	text-decoration:	none;
+	background:	transparent;
+	border-bottom:	1px dotted #1111dc;
 }
-#content a:visited{
-	color:						#551ab6;
-	background:					transparent;
-	border-bottom:				1px dotted #551ab6;
+#content a:visited {
+	color:	#551ab6;
+	background:	transparent;
+	border-bottom:	1px dotted #551ab6;
 }
-
-#content a:hover, #content a:active{
-	color:						#336699;
-	background:					transparent;
-	text-decoration:			none;
-	border-bottom:				1px dotted #336699;	
+#content a:hover, #content a:active {
+	color:	#336699;
+	background:	transparent;
+	text-decoration:	none;
+	border-bottom:	1px dotted #336699;
 }
-
-#content #anteprima-footer{
-	margin-top:					10px;
-	padding-top:				5px;
-	border-top:					1px solid #EEE;
-	font-style:					italic;
-	text-align:					right;
-	color:						#DDD;
+#content #anteprima-footer {
+	margin-top:	10px;
+	padding-top:	5px;
+	border-top:	1px solid #EEE;
+	font-style:	italic;
+	text-align:	right;
+	color:	#DDD;
 }
-#content #anteprima-footer:after{
-	content:					'Alma Mater Studiorum - Università di Bologna - Scienze e Tecnologie Informatiche';
+#content #anteprima-footer:after {
+	content:	'Alma Mater Studiorum - Università di Bologna - Scienze e Tecnologie Informatiche';
 }
-
-#content .header .pageTemplateContent{
-	background-color:			#73C78B;
-	background-image:			url(seti/testata.png);
-	background-repeat:			no-repeat;
-	background-position:		left;
-	height:						74px;
-	width:						100%;
-
-
-    /* CSS3 */
-    border-radius:              3px;
-    /* Safari and chrome */
-    -webkit-border-radius:      3px;
-    /* Firefox */
-    -moz-border-radius:         3px;
-    /* Linux browsers */
-    -khtml-border-radius:       3px;
+#content .header .pageTemplateContent {
+	background-color:	#73C78B;
+	background-image:	url('seti/sigillo.png');
+	background-repeat:	no-repeat;
+	background-position:	left;
+	height:	74px;
+	width:	100%;
+	/*CSS3*/
+	border-radius:	3px;
+	/*Safari and chrome*/
+	-webkit-border-radius:	3px;
+	/*Firefox*/
+	-moz-border-radius:	3px;
+	/*Linux browsers*/
+	-khtml-border-radius:	3px;
+}
+#content ol {
+	margin-top:	20px;
+	list-style:	lower-alpha !important;
+	list-style-type:	lower-alpha;
+	list-style-position:	left;
+	list-style-image:	none;
+}
+#content ol li {
+	padding:	3px ;
+	list-style:	disc none none !important;
+}
+#content ul {
+	margin-top:	30px;
+	list-style-image:	url(italy/list.png);
+}
+#content ul li {
+	padding:	3px ;
+}
+#content table {
+	width:	100%;
+	text-align:	center;
+}
+#content th {
+	border:	1px dashed #008d46 ;
+}
+#content caption {
+	border-top:	1px solid #008d46;
+	border-left:	1px solid #008d46;
+	border-right:	1px solid #008d46;
+	border-bottom:	1px solid #008d46;
+	weight:	bold;
 }

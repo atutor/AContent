@@ -18,6 +18,7 @@ $_custom_head .= '<script type="text/javascript" src="template_editor/js/structu
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/jquery.ui.sortable.js"></script>';
 
 if($_POST['submit'] == _AT('cancel')){
+    $msg->addFeedback('CANCELLED');
     header('Location: index.php?tab=structures');
     exit;
 }
@@ -35,6 +36,7 @@ if($commons->template_exists('structure', $template)) {
 if(isset ($_POST['submit'])) {      
     $dom=$commons->parse_to_XML($_POST['xml_text']);
     $commons->save_xml($dom, "structures/".$template, "content.xml");
+    $msg->addFeedback('TEMPLATE_UPDATED');
 }
 require(TR_INCLUDE_PATH.'header.inc.php');
 

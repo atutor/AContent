@@ -17,12 +17,18 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
     global $_current_user, $msg;
     $type=htmlspecialchars($_GET['type'], ENT_QUOTES, 'UTF-8');
     $temp=htmlspecialchars($_GET['temp'], ENT_QUOTES, 'UTF-8');
+
+
     if(isset($_POST['cancel'])) {
+        if($_GET['type']=='page_templates') $type='page';
+         if($_GET['type']=='structures') $type='structure';
+        if($_GET['type']=='layouts') $type='layouts';
+
         $msg->addFeedback('CANCELLED');
         header('Location:edit_'.$type.'.php?type='.$type.SEP.'temp='.$temp);
         exit;
     }
-if (isset($_current_user) && $_current_user->isAdmin()) {
+if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITOR])) {
     require('classes/TemplateCommons.php');
     $commons=new TemplateCommons('../templates');
 
@@ -34,8 +40,7 @@ if (isset($_current_user) && $_current_user->isAdmin()) {
             exit;
         }
         if(isset($_POST['submit'])) {
-            //$type=htmlspecialchars($_GET['type']);
-            //$temp=htmlspecialchars($_GET['temp']);
+
             if($type=='page') $type='page_templates';
             //$_GET['temp'] = htmlspecialchars($_GET['temp'], ENT_QUOTES, 'UTF-8');
             $_POST['template_name'] = htmlspecialchars($_POST['template_name'], ENT_QUOTES, 'UTF-8');
@@ -61,8 +66,15 @@ if (isset($_current_user) && $_current_user->isAdmin()) {
                     $_POST ['release_date'], 
                     $_POST ['release_state'], 
                     $_POST ['release_notes']);
-                    header('Location:?temp='.$temp);
-                    exit;
+            
+            if($_GET['type']=='page_templates') $type='page';
+            if($_GET['type']=='page_templates') $app_type='page';
+            if($_GET['type']=='structures') $type='structure';
+            if($_GET['type']=='structures') $app_type='structure';
+            if($_GET['type']=='layouts') $type='layouts';
+            if($_GET['type']=='layouts') $app_type='layout';
+            header('Location: edit_'.$app_type.'.php?type='.$type.SEP.'temp='.$_GET['temp'] );
+            exit;
             }
 
         }
@@ -81,7 +93,6 @@ if (isset($_current_user) && $_current_user->isAdmin()) {
         $msg->addFeedback('FAILED');
         header('Location:edit_layout.php?temp='.$temp);
         exit;
-        //Header('Location: ../index.php');
     }
 }else {
         $msg->addFeedback('FAILED2');

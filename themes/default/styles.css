@@ -1121,6 +1121,9 @@ ul.navigation li a.active{
   margin: 0 16px;
   padding-right: 1em;
 }
+.results li{
+  list-style:none;
+}
 .search_top{
   white-space:nowrap;
   font-size:.8em;
@@ -1187,7 +1190,7 @@ li.course.area .collapsible .courseIcons {
 }
 
 ol li{
-  list-style:none;
+ /* list-style:none; */
 }
 div.box ol{
   list-style:none;

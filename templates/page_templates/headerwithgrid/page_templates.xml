@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page_templates version="0.1">
+  <name>header with grid</name>
+  <description>H2 with nine floating divs</description>
+  <maintainers>
+    <maintainer>
+      <name>ATutor</name>
+      <email>info@atutor.ca</email>
+    </maintainer>
+  </maintainers>
+  <url></url>
+  <license></license>
+  <release>
+    <version>1.x</version>
+    <date></date>
+    <state>stable</state>
+    <notes></notes>
+  </release>
+</page_templates>

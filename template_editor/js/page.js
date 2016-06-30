@@ -323,7 +323,9 @@ function generate_screenshot(){
  * @param {CanvasContext} ctx context of the canvas to draw on
  */
 function draw_on_canvas(element,ctx){
-    if(element.nodeType != 3)draw_element(element,ctx);
+    if(element.nodeType != 3){
+        draw_element(element,ctx);
+    }
     if (element.hasChildNodes()) {
         var child = element.firstChild;
         while (child) {
@@ -343,11 +345,14 @@ function draw_element(element, ctx){
     var width=124, height=128; //width and height of the image
     var tag_name=element.tagName.toLowerCase();
     if(tag_name=='h2'){
-        ctx.strokeRect(3,imgy,width,21); imgy=imgy+25;
+        ctx.strokeRect(3,imgy,width,21); 
+        imgy=imgy+25;  
     }if(tag_name=='h3'){
-        ctx.strokeRect(3,imgy,width,18); imgy=imgy+22;
+        ctx.strokeRect(3,imgy,width,18); 
+        imgy=imgy+22;
     }if(tag_name=='h4'){
-        ctx.strokeRect(3,imgy,width,15); imgy=imgy+19;
+        ctx.strokeRect(3,imgy,width,15); 
+        imgy=imgy+19;
     }if(tag_name=='table'){
         var ch=80/element.children[0].children.length;
         var cw=width/get_column_count(element);
@@ -363,13 +368,33 @@ function draw_element(element, ctx){
             });
             y++;
         });
-        imgy=imgy+83;
-    }if(tag_name=='div' && is_rendable(element)){        
-        draw_line(ctx,width/6,imgy+10,width-width/6,imgy+10);
-        draw_line(ctx,width/6,imgy+20,width-width/6,imgy+20);
-        ctx.strokeRect(3,imgy,width,30); 
-        draw_containing_images(element,ctx,3,imgy,width,30);
-        imgy=imgy+34;
+        imgy=imgy+83;   
+    }if(tag_name=='div'){      
+        imgx=3;
+        if(!$("#outer1").length){
+            draw_line(ctx,width/6,imgy+10,width-width/6,imgy+10);
+            draw_line(ctx,width/6,imgy+20,width-width/6,imgy+20);
+            ctx.strokeRect(3,imgy,width,30); 
+            draw_containing_images(element,ctx,3,imgy,width,30);
+            imgy=imgy+34;
+        }else{
+            if(!i){
+                i=1;
+            }
+            $("#outer"+i+" div").each(function(){
+                var inputStyle = $(this).attr('style');
+                var styleParts = inputStyle.split(';');
+                var thiswidth = styleParts[0].split(':');
+                percentwidth= thiswidth[1].slice(0, -1)
+                percentwidth = 100/percentwidth;
+
+                ch = $("#outer"+i+"  div").length;
+                ctx.strokeRect(imgx+2,(28*i),width/percentwidth,26);
+                imgx=imgx+width/ch;  
+            });
+            i=i+1;
+        }
+
     }if(tag_name=='img'){
         if(element.parentElement==$('#page_preview')[0] || !is_rendable(element.parentElement)&& element.parentElement.parentElement==$('#page_preview')[0]){
             var imgrect = element.getBoundingClientRect();
@@ -450,7 +475,7 @@ function get_column_count(table){
 function is_rendable(element){
     var children=element.childNodes;
     for (i = 0; i < children.length; i++) {
-        if(children[i].nodeType==3 && $.trim(children[i].data) !="") return true;
+        if(children[i].nodeType==1 && $.trim(children[i].data) !="") return true;
     }
     return false;
 }

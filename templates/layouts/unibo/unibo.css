@@ -1,81 +1,82 @@
-#content{
-	color:						#333;
-	line-height:				1.5em;
-	background-color:			#FFF;
-	text-align:					justify;
+#content {
+	color:	#333;
+	line-height:	1.5em;
+	background-color:	#FFF;
+	text-align:	justify;
+	background-image:	url('unibo/testata.gif');
+	background-repeat:	no-repeat;
+	background-position:	bottom right;
+	padding-bottom:	5em;
 }
-
+#content h2 {
+	border-bottom:	1px solid #8B0000;
+	margin-bottom:	.2em;
+}
 #content h2 #content h3, #content h4,
-#content h5, #content h6, #content h7{
+#content h5, #content h6, #content h7 {
 	/*#af0d1a*/
-
-        color:						#333;				
-	padding:					5px;
-	padding-left:				0px;
-
-    margin-bottom:				10px;
-    margin-top:					20px;
+	color:	#333;
+	padding:	5px ;
+	padding-left:	0px;
+	margin-bottom:	10px;
+	margin-top:	20px;
 }
-
-#content h3{
-	background-image:			url(unibo/sigillo.png);
-	background-repeat: 			no-repeat;
-	background-position:		left middle;
-	height:						32px;
-	padding-left:				40px;
+#content h3 {
+	background-image:	url('unibo/sigillo.png');
+	background-repeat:	no-repeat;
+	background-position:	left middle;
+	height:	32px;
+	padding-left:	40px;
 }
-
-
-
-#content a:link, #content a:visited{
-	color:						#0000F0;
-	text-decoration:			underline;
+#content a:link, #content a:visited {
+	color:	#0000F0;
+	text-decoration:	underline;
 }
-
-#content a:hover, #content a:active{
-	color:						#0000F0;
-	background:					transparent;
-	text-decoration:			underline;
+#content a:hover, #content a:active {
+	color:	#0000F0;
+	background:	transparent;
+	text-decoration:	underline;
 }
-
-#content #anteprima-footer{
-	margin-top:					10px;
-	padding-top:				5px;
-	border-top:					1px solid #EEE;
-	font-style:					italic;
-	text-align:					right;
-	color:						#DDD;
+#content #anteprima-footer {
+	margin-top:	10px;
+	padding-top:	5px;
+	border-top:	1px solid #EEE;
+	font-style:	italic;
+	text-align:	right;
+	color:	#DDD;
 }
-#content #anteprima-footer:after{
-	content:					'Alma Mater Studiorum - Università di Bologna';
+#content ul {
+	list-style:	none;
+	padding:	0 ;
+	margin:	0 ;
 }
-
-#content .header .pageTemplateContent{
-	background-color:			#cc0000;
-	background-image:			url(unibo/testata.gif);
-	background-repeat:			no-repeat;
-	background-position:		left;
-	height:						74px;
-	width:						100%;
-
-
-    /* CSS3 */
-    border-radius:              3px;
-    /* Safari and chrome */
-    -webkit-border-radius:      3px;
-    /* Firefox */
-    -moz-border-radius:         3px;
-    /* Linux browsers */
-    -khtml-border-radius:       3px;
+#content ul>li {
+	padding-left:	1.5em;
+	text-indent:	-.5em;
 }
-
-#content .logo{
-	background-image:			url(unibo/logo.gif);
-	background-position:		center;
-	background-repeat:			no-repeat;
-	padding:					10px;
-	padding-right:				0px;
-	float:						right;
-	width:						128px;
-	height:						115px;
+#content ul>li:before {
+	content:	" • ";
+	color:	red;
+	/*or whatever color you prefer*/
+}
+#content ol {
+	margin-left:	-.5em;
+	list-style:	none;
+	list-style-type:	upper-roman;
+}
+#content ol>li {
+	padding-left:	.5em;
+	text-indent:	-.7em;
+}
+#content #anteprima-footer:after {
+	content:	'Alma Mater Studiorum - Università di Bologna';
+}
+#content table {
+	width:	100%;
+	border:	1px solid #8B0000 ;
+	text-align:	center;
+}
+#content th {
+	background-color:	#8B0000;
+	color:	white;
 }
