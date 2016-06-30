@@ -12,8 +12,12 @@
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
-$_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
-$_custom_head .= '<script type="text/javascript" src="template_editor/js/layout.js"></script>';
+$_custom_head .= "\n".'<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
+$_custom_head .= "\n".'<script type="text/javascript" src="template_editor/js/layout.js"></script>';
+
+$template=strip_tags($addslashes($_GET['temp']));
+$_custom_css = "templates/layouts"."/". $template."/".$template.".css";
+$_custom_head .= "\n".'<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
 
 $type="layouts";
 $temp=htmlspecialchars($_GET['temp'], ENT_QUOTES, 'UTF-8');
@@ -25,10 +29,7 @@ if($_POST['submit'] == "Cancel") {
 
 
 require('classes/TemplateCommons.php');
-
 $commons=new TemplateCommons('../templates');
-
-$template=strip_tags($addslashes($_GET['temp']));
 
 // non existing template name
 if(!$commons->template_exists('layouts', $template)) {
@@ -37,7 +38,8 @@ if(!$commons->template_exists('layouts', $template)) {
 }
 if(isset ($_POST['submit'])) { 
     $commons->save_file("layouts/".$template,$template.".css",$_POST['css_text']);
-    header('Location:'.$_SERVER['PHP_SELF'].'?temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
+    $msg->addFeedback('TEMPLATE_UPDATED');
+    header('Location:'.$_SERVER['PHP_SELF'].'?mode='.intval($_POST['edit_mode']).SEP.'temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
     exit;
 }
 if(isset ($_POST['upload'])) {
@@ -46,6 +48,7 @@ if(isset ($_POST['upload'])) {
     exit;
     
 }elseif(isset ($_POST['uploadscrn'])) {
+
     echo $commons->upload_image("layouts/".$template,"screenshot-". $template.".png");
     header('Location:'.$_SERVER['PHP_SELF'].'?temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
     exit;
@@ -53,7 +56,6 @@ if(isset ($_POST['upload'])) {
 
 $css_path=realpath("../templates/layouts")."/". $template."/".$template.".css";
 $screenshot_path=realpath("../templates/layouts")."/". $template."/screenshot-".$template.".png";
-
 require(TR_INCLUDE_PATH.'header.inc.php');
 
 if(file_exists($css_path)) {

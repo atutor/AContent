@@ -25,7 +25,17 @@ if($this->lastelement != ''){
     });
     </script>
 <?php } ?>
-
+<?php if($_GET['mode'] == 1){ ?>
+    <script type="text/javascript">
+        $( document ).ready(function() {
+            editmode = 1;
+            setup_toolbar();
+        });
+    </script>
+<?php } ?>
+<style>
+<?php  echo $this->css_code; ?>
+</style>
 <div id="subnavlistcontainer">
     <div id="sub-navigation"> 
     <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
@@ -47,12 +57,11 @@ if($this->lastelement != ''){
         <div id='layout_topbar' tabindex="0" accesskey="e" aria-label="<?php echo _AT('template_editor_howto'); ?>">
             <label for="selector"><?php echo _AT('selector'); ?>:</label>
             <input id="selector" type="text" size="15" disabled aria-live="assertive">
-
             <label for="mode_radios" style="margin-left:15px;"><?php echo _AT('edit_mode'); ?></label>
             <span class="bordered" id="mode_radios">
-                <input type="radio" name="edit_mode" value="0" id="basic_mode" title="<?php echo _AT('basic'); ?>" checked="checked" accesskey="b">
+                <input type="radio" name="edit_mode" value="0" id="basic_mode" title="<?php echo _AT('basic'); ?>" <?php if($_GET['mode'] == 0){ echo 'checked="checked"';} ?> accesskey="b">
                 <label for="basic_mode"><?php echo _AT('basic'); ?></label>
-                <input type="radio" name="edit_mode" value="1" id="adv_mode" title="<?php echo _AT('advanced'); ?>" accesskey="a">
+                <input type="radio" name="edit_mode" value="1" id="adv_mode" title="<?php echo _AT('advanced'); ?>" accesskey="a" <?php if($_GET['mode'] == 1){ echo 'checked="checked"';} ?>>
                 <label for="adv_mode"><?php echo _AT('advanced'); ?></label>
             </span>
             <input type="submit" name="submit" value="<?php echo _AT('cancel'); ?>" title="<?php echo _AT('cancel'); ?>"accesskey="c"  style="float:right;"/>
@@ -184,6 +193,7 @@ if($this->lastelement != ''){
                                 <li><?php echo _AT('template_list_item'); ?></li>
                             </ol>
                             <table title="table" >
+                            <caption><?php echo _AT('template_table_caption'); ?></caption>
                             <tr><th title="TH"><?php echo _AT('template_table_header'); ?></th><th><?php echo _AT('template_table_header'); ?></th></tr>
                             <tr><td title="TD"><?php echo _AT('template_table_data'); ?></td><td><?php echo _AT('template_table_data'); ?></td></tr>
                             </table>
