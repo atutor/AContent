@@ -192,7 +192,7 @@ function trans_form() {
 	<input type="hidden" name="selected_term" value="<?php echo AT_print($_REQUEST['selected_term'], 'input.hidden'); ?>" />
 	<input type="hidden" name="lang_code" value="<?php echo AT_print($_REQUEST['lang_code'], 'input.hidden'); ?>" />
 	<input type="hidden" name="new_or_translated" value="<?php echo AT_print($_REQUEST['new_or_translated'], 'input.hidden'); ?>" />
-	<input type="hidden" name="term_type" value="<?php echo AT_print($_REQUEST['term_type']. 'input.hidden'); ?>" />
+	<input type="hidden" name="term_type" value="<?php echo AT_print($_REQUEST['term_type'], 'input.hidden'); ?>" />
 	<input type="hidden" name="search_phase" value="<?php echo htmlspecialchars(stripslashes($_REQUEST['search_phase'])); ?>" />
 	<input type="hidden" name="variable" value="<?php echo $row_english['variable']; ?>" />
 	<input type="hidden" name="term" value="<?php echo AT_print($row_english['term'], 'input.hidden'); ?>" />
