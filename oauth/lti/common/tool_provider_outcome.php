@@ -1,3 +1,8 @@
+<?php exit; 
+//this file is deprecated
+
+?>
+
 <html>
 <head>
   <title>IMS Learning Tools Interoperability</title>
@@ -28,7 +33,7 @@ if (get_magic_quotes_gpc()) $sourcedid = stripslashes($sourcedid);
 
 ?>
 <p>
-<form method="POST">
+<!--<form method="POST">
 Service URL: <input type="text" name="url" size="100"  disabled="true" value="<?php echo(htmlentities($_REQUEST['url']));?>"/></br>
 lis_result_sourcedid: <input type="text" name="sourcedid" disabled="true" size="100" value="<?php echo(htmlentities($sourcedid));?>"/></br>
 OAuth Consumer Key: <input type="text" name="key" disabled="true" size="80" value="<?php echo(htmlentities($_REQUEST['key']));?>"/></br>
@@ -39,7 +44,7 @@ Grade to Send to LMS: <input type="text" name="grade" value="<?php echo(htmlenti
 <input type='submit' name='submit' value="Send Grade">
 <input type='submit' name='submit' value="Read Grade">
 <input type='submit' name='submit' value="Delete Grade"></br>
-</form>
+</form>-->
 <?php 
 
 $url = filter_var($url,  FILTER_SANITIZE_URL);
