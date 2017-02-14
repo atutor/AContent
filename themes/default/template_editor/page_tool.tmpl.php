@@ -12,7 +12,7 @@
         </ul>
     </div>
 </div>
-<form action="<?php echo $_SERVER['PHP_SELF'].'?type='.$this->type.SEP.'temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
+<form id="this_form" action="<?php echo $_SERVER['PHP_SELF'].'?type='.$this->type.SEP.'temp='.$this->template; ?>" method="post" name="form" enctype="multipart/form-data">
     <input type="hidden" name="referer" value="<?php echo $this->referer; ?>" />
 <!--    <div align="center">
         <table class="etabbed-table" border="0" cellpadding="0" cellspacing="0" width="95%">
@@ -43,11 +43,11 @@
                 <input type="radio" name="edit_mode" value="1" id="adv_mode" title="<?php echo _AT('advanced'); ?>" accesskey="a">
                 <label for="adv_mode"><?php echo _AT('advanced'); ?></label>
             </span>
-            <input type="submit" name="submit" value="<?php echo _AT('cancel'); ?>" title="<?php echo _AT('cancel'); ?>"accesskey="c"  style="float:right;"/>
+            <input type="submit" name="submit" value="<?php echo _AT('cancel'); ?>" title="<?php echo _AT('cancel'); ?>" accesskey="c"  style="float:right;"/>
             <input type="submit" name="submit" value="<?php echo _AT('save'); ?>" title="<?php echo _AT('save_changes'); ?>" accesskey="s"  style="float:right;"/>
         </div>
 
-        <table border="0" cellpadding="4" style="width:100%">
+        <table id="this_table" border="0" cellpadding="4" style="width:100%">
             <tr>
                 <td valign="top" height="100%" >
                     <div id='page_toolbar'>
@@ -55,7 +55,7 @@
                             <div style='float:left;'>
                                 <img id="bold" src="<?php echo $this->base_path;?>images/clr.gif" arg="b" class="buttons wrap" alt='<?php echo _AT('bold'); ?>' title='<?php echo _AT('bold'); ?>' accesskey='d'>
                                 <img id="italic" src="<?php echo $this->base_path;?>images/clr.gif" arg="i" class="buttons  wrap" alt='<?php echo _AT('italic'); ?>' title='<?php echo _AT('italic'); ?>' accesskey='f'>
-                                <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>'title='<?php echo _AT('underline'); ?>' accesskey='h'>
+                                <img id="underline" src="<?php echo $this->base_path;?>images/clr.gif" arg="u" class="buttons  wrap"  alt='<?php echo _AT('underline'); ?>' title='<?php echo _AT('underline'); ?>' accesskey='h'>
                                 <img id="align-left" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons attrib" arg="left" alt='<?php echo _AT('align_left'); ?>' title='<?php echo _AT('align_left'); ?>' accesskey='i'>
                                 <img id="align-center" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="center" alt='<?php echo _AT('align_center'); ?>' title='<?php echo _AT('align_center'); ?>' accesskey='j'>
                                 <img id="align-right" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  attrib" arg="right" alt='<?php echo _AT('align_right'); ?>' title='<?php echo _AT('align_right'); ?>' accesskey='k'>
@@ -66,8 +66,9 @@
                                 <img id="insert-ulist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ul" alt='<?php echo _AT('unordered_list'); ?>' title='<?php echo _AT('unordered_list'); ?>' accesskey='n'>
                                 <img id="insert-olist" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" arg="ol" alt='<?php echo _AT('ordered_list'); ?>' title='<?php echo _AT('ordered_list'); ?>' accesskey='o'>
                                 <img id="insert-image" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('image'); ?>' title='<?php echo _AT('image'); ?>' accesskey='p'>
-                                <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>' accesskey='q'>
+                                <img id="insert-table" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons insert" alt='<?php echo _AT('table'); ?>' title='<?php echo _AT('table'); ?>' accesskey='q'>
                                 <img id="insert-link" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('link'); ?>' title='<?php echo _AT('link'); ?>' accesskey='r'>
+                                <img id="insert-box" src="<?php echo $this->base_path;?>images/clr.gif" class="buttons  insert" alt='<?php echo _AT('box'); ?>' title='<?php echo _AT('box'); ?>' accesskey='s'>
                             </div>
                         </div>
                         <div class="layout_toolline">
@@ -103,17 +104,16 @@
                             <img id="add_table" class="buttons insert" src="<?php echo $this->base_path;?>images/clr.gif" alt='<?php echo _AT('insert'); ?>' title='<?php echo _AT('insert'); ?>'>
                         </div>
                     </div>
-                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px; ' accesskey='e' title='<?php echo _AT('edit'); ?>'><?php  echo $this->html_code; ?></textarea>
-                    <div id='page_prev_container'>
-                        <div id='page_preview' contenteditable="true" style='height:100%; min-width:400px; min-height:300px; margin:15px;' accesskey="p" title='<?php echo _AT('preview'); ?>' >
+                    <textarea  id="page_text" name="page_text" rows="35" cols="60"  style='border:1px solid #cccccc; resize: none;background-color:#ffffff; min-height:400px;display:block; ' accesskey='e' title='<?php echo _AT('edit'); ?>'><?php  echo $this->html_code; ?></textarea>
+                  <div id='page_prev_container'>
+                        <div id='page_preview' contenteditable="true" style="min-width:400px; min-height:300px; margin:15px;" accesskey="p" title='<?php echo _AT('preview'); ?>' >
                         </div>
-                    </div>
+                    </div> 
                 </td>
             </tr>
         </table>
     </div>
 </form>
-
 <div class="input-form" style="width: 95%;">
     <h4 style="margin:2px 0 7px 0;"><?php echo _AT('screenshot'); ?></h4>
     <div>
@@ -122,7 +122,9 @@
         if(isset($this->screenshot))  echo "<img id='screenshot_img' src='".$img_path."' alt='"._AT('screenshot')."'>";
         else echo "<img id='screenshot_img' src='".$this->base_path. "images/clr.gif'>";
         ?>
-        <canvas width=130 height=140 id="screenshot_canvas"></canvas>
+
+
+        
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
         <label for="file"><?php echo _AT('file'); ?>:</label>
@@ -131,3 +133,32 @@
         <input id="generate_scrn" type="submit" value="<?php echo _AT('auto_generate'); ?>" accesskey="g">
     </form>
 </div>
+<div id="img-out" style="visibility:hidden;"></div>
+<script type="text/javascript">
+    $( document ).ready(function() {
+         var canvas = document.querySelector("#screenshot_canvas");
+            document.querySelector("#generate_scrn").addEventListener("click", function() {
+            html2canvas(document.querySelector("#page_preview"), {
+                onrendered: function(canvas) {
+                    document.getElementById("img-out").appendChild(canvas);
+                    canvas = document.querySelector("canvas");
+
+                    var resizedCanvas = document.createElement("canvas");
+                    var resizedContext = resizedCanvas.getContext("2d");
+
+                    resizedCanvas.height = canvas.height;
+                    resizedCanvas.width =  canvas.width;
+
+                    var canvas2 = document.querySelector('canvas');
+                    resizedContext.drawImage(canvas2, 0, 0, resizedCanvas.width, resizedCanvas.height);
+                    var myResizedData = resizedCanvas.toDataURL();
+
+                    $.post("template_editor/ajax_handler.php", {
+                        action: 'upload_image', temp: template,image: myResizedData 
+                    });
+                }
+            });
+        }, false);
+        
+    });
+</script>

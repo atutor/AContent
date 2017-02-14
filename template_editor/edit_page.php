@@ -2,8 +2,21 @@
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
-$_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
-$_custom_head .= '<script type="text/javascript" src="template_editor/js/page.js"></script>';
+$_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />'."\n";
+$_custom_head .= '<script type="text/javascript" src="template_editor/js/page.js"></script>'."\n";
+$_custom_head .= '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>'."\n";
+
+
+
+//$_custom_head .='      <script type="text/javascript" src="https://github.com/niklasvh/html2canvas/releases/download/0.4.1/html2canvas.js"></script>'."\n"; 
+//$_custom_head .='      <script type="text/javascript" src="http://www.nihilogic.dk/labs/canvas2image/base64.js"></script>'."\n";   
+//$_custom_head .='      <script type="text/javascript" src="http://www.nihilogic.dk/labs/canvas2image/canvas2image.js"></script>'."\n";
+//$_custom_head .='<script type="text/javascript" src="'.$_base_href.'include/jscripts/html2canvas/dist/thumbnailer.js"></script>'."\n";
+$_custom_head .='<script type="text/javascript" src="'.$_base_href.'include/jscripts/html2canvas/html2canvas.js"></script>'."\n";
+//$_custom_head .='<script type="text/javascript" src="'.$_base_href.'include/jscripts/html2canvas/dist/base64.js"></script>'."\n";
+//$_custom_head .='<script type="text/javascript" src="'.$_base_href.'include/jscripts/html2canvas/dist/canvas2image.js"></script>'."\n";
+//$_custom_head .= '<script type="text/javascript" src="include/jscripts/jquery.js"></script>'."\n";
+$_custom_head .='<script type="text/javascript">jQuery.noConflict();</script>'."\n";
 
 if($_POST['submit'] == _AT('cancel')){
     $msg->addFeedback('CANCELLED');
@@ -31,6 +44,7 @@ if(isset ($_POST['submit'])) {
 if(isset ($_POST['uploadscrn'])) {
     echo $commons->upload_image("page_templates/".$template,"screenshot.png");
 }
+
 require(TR_INCLUDE_PATH.'header.inc.php');
 $html_path=realpath("../templates/page_templates")."/". $template."/".$template.".html";
 $screenshot_path=realpath("../templates/page_templates")."/". $template."/screenshot.png";
@@ -39,6 +53,7 @@ if(file_exists($html_path)) $savant->assign('html_code', file_get_contents($html
 else $savant->assign('html_code', "");
 if(file_exists($screenshot_path)) $savant->assign('screenshot',true);
 $savant->assign('template', $template);
+$savant->assign('page_text', $_POST['page_text']);
 $savant->assign('types', $type);
 $savant->assign('base_path', $_base_path);
 $savant->assign('referer', $_SERVER['HTTP_REFERER']);

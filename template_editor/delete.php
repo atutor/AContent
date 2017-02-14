@@ -54,6 +54,7 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
                 exit;
             }  else{
                 $msg->addError('DIR_NOT_DELETED');
+                $app_type = rtrim($app_type, "s");
                 header('Location: edit_'.$app_type.'.php?type='.$type.SEP.'temp='.$_GET['temp'] );
                 exit;
             }

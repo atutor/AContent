@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<structure name="Lesson">
+  <folder max="1" name="Introduction">
+    <page max="1" name="Objectives"/>
+    <page max="1" name="Reading"/>
+  </folder>
+  <folder max="1" name="Content">
+    <page max="1" name="Video Intro"/>
+    <page max="1" name="Topic Overview"/>
+    <page max="1" name="Topic Background"/>
+    <page max="1" name="Topic Indepth"/>
+  </folder>
+  <folder max="1" name="Discussion">
+    <page max="1" name="Weekly Forum"/>
+  </folder>
+  <folder max="1" name="Assessment">
+    <page max="1" name="Self Test"/>
+    <page max="1" name="Lesson Activity"/>
+    <page max="1" name="Lesson Quiz"/>
+    <page max="1" name="Final Review"/>
+  </folder>
+</structure>

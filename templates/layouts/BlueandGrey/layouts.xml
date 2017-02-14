@@ -1,18 +1,18 @@
 <?xml version="1.0"?>
 <layouts version="0.1">
   <name>Blue and Grey</name>
-  <description></description>
+  <description>Blue and Grey</description>
   <maintainers>
     <maintainer>
       <name>ATutor</name>
       <email>info@atutor.ca</email>
     </maintainer>
   </maintainers>
-  <url></url>
-  <license></license>
+  <url>http://atutorspaces.com</url>
+  <license>mit</license>
   <release>
-    <version>1.0</version>
-    <date>2/16/16</date>
+    <version>1.x</version>
+    <date>Feb 22, 16</date>
     <state>stable</state>
     <notes></notes>
   </release>

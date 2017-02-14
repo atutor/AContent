@@ -15,6 +15,11 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 $_custom_head .= "\n".'<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />';
 $_custom_head .= "\n".'<script type="text/javascript" src="template_editor/js/layout.js"></script>';
 
+//$_custom_head .= '<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>'."\n";
+$_custom_head .= '<script type="text/javascript" src="'.$_base_href.'include/jscripts/jquery.js"></script>'."\n";
+$_custom_head .='<script type="text/javascript" src="'.$_base_href.'include/jscripts/html2canvas/html2canvas.js"></script>'."\n";
+$_custom_head .='<script type="text/javascript">jQuery.noConflict();</script>'."\n";
+
 $template=strip_tags($addslashes($_GET['temp']));
 $_custom_css = "templates/layouts"."/". $template."/".$template.".css";
 $_custom_head .= "\n".'<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
@@ -36,6 +41,7 @@ if(!$commons->template_exists('layouts', $template)) {
     header('Location: index.php');
     exit;
 }
+
 if(isset ($_POST['submit'])) { 
     $commons->save_file("layouts/".$template,$template.".css",$_POST['css_text']);
     $msg->addFeedback('TEMPLATE_UPDATED');
@@ -47,8 +53,8 @@ if(isset ($_POST['upload'])) {
     header('Location:'.$_SERVER['PHP_SELF'].'?temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
     exit;
     
-}elseif(isset ($_POST['uploadscrn'])) {
-
+}
+if(isset ($_POST['generate_scrn'])) {
     echo $commons->upload_image("layouts/".$template,"screenshot-". $template.".png");
     header('Location:'.$_SERVER['PHP_SELF'].'?temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
     exit;

@@ -13,9 +13,9 @@ $(function() {
     $('#page_text').bind('input propertychange keyup', function() {     //preview panel edit
         update_preview();
     });
-    $('#generate_scrn').click(function() {  //screenshot generate button
-        generate_screenshot(); return false;
-    });
+   // $('#generate_scrn').click(function() {  //screenshot generate button
+  //      generate_screenshot(); return false;
+  //  });
     
     $('#page_preview').mouseup(function() { //store last selection on preview panel mouse up
         get_selection_range();
@@ -273,6 +273,7 @@ function insert_html(cmd){
     else if(cmd=='insert-image') insert_to_selection('<img src="dnd_image" />');
     else if(cmd=='insert-paragraph') insert_to_selection('<p>Paragraph</p>');
     else if(cmd=='insert-link') insert_to_selection('<a href="#">Link</a>');
+    else if(cmd=='insert-box') insert_to_selection(generate_box());
     else if(cmd=='add_table' && $("#num_rows").val()*$("#num_cols").val()<=25) insert_to_selection(generate_table($("#num_rows").val(),$("#num_cols").val()));
     update_code();
     update_preview();
@@ -297,14 +298,25 @@ function generate_table(rows, columns){
     str=str+"</table>";
     return str;
 }
-
+/**
+ * Get the html code for a bordered floating div/box
+ * @author GayG
+ * @param none
+ */
+function generate_box(){
+    var str='<div style="width:43%;border:1px solid #ccc;padding:1em;float:left;resize: both;overflow: auto;">';
+    str=str+"</div>";
+    return str;
+}
 /**
  * Auto generate a screenshot image for the template
  * @author SupunGS
  */
+/*
 function generate_screenshot(){
     var canvas = document.getElementById("screenshot_canvas");
     var ctx = canvas.getContext("2d");
+    alert(canvas);
     canvas.width=canvas.width;
     ctx.lineWidth=1;ctx.strokeStyle="#666";
     imgy=3;
@@ -315,13 +327,32 @@ function generate_screenshot(){
        action: 'upload_image', temp: template ,image: canvas.toDataURL()
     });
 }
-
+*/
+/*
+function generate_screenshot(){
+         //var canvas = $("#screenshot_canvas");
+        var canvas = document.getElementById("screenshot_canvas");
+        html2canvas(document.querySelector("#page_preview"), {
+            onrendered: function(canvas) {
+                document.getElementById("screenshot_img").appendChild(canvas);
+                //Canvas2Image.saveAsPNG(canvas, 200, 300);
+            }
+        });
+        $("#screenshot_img").attr("src", canvas.toDataURL());
+        $.post("template_editor/ajax_handler.php", {
+            action: 'upload_image', temp: template ,image: canvas.toDataURL()
+        });            
+console.log('something');
+  false;  
+}
+*/
 /**
  * Recursively draw elements
  * @author SupunGS
  * @param {HTMLElement} element element to draw
  * @param {CanvasContext} ctx context of the canvas to draw on
  */
+ /*
 function draw_on_canvas(element,ctx){
     if(element.nodeType != 3){
         draw_element(element,ctx);
@@ -332,18 +363,20 @@ function draw_on_canvas(element,ctx){
             draw_on_canvas(child,ctx);
             child = child.nextSibling;
         }
-    }
+    } 
 }
-
+*/
 /**
  * Draw an element on the canvas for screenshot
  * @author SupunGS
  * @param {HTMLElement} element element to draw
  * @param {CanvasContext} ctx context of the canvas to draw on
  */
+ /*
 function draw_element(element, ctx){
     var width=124, height=128; //width and height of the image
     var tag_name=element.tagName.toLowerCase();
+    var this_array = [];
     if(tag_name=='h2'){
         ctx.strokeRect(3,imgy,width,21); 
         imgy=imgy+25;  
@@ -369,31 +402,29 @@ function draw_element(element, ctx){
             y++;
         });
         imgy=imgy+83;   
-    }if(tag_name=='div'){      
-        imgx=3;
-        if(!$("#outer1").length){
-            draw_line(ctx,width/6,imgy+10,width-width/6,imgy+10);
-            draw_line(ctx,width/6,imgy+20,width-width/6,imgy+20);
-            ctx.strokeRect(3,imgy,width,30); 
-            draw_containing_images(element,ctx,3,imgy,width,30);
-            imgy=imgy+34;
-        }else{
-            if(!i){
-                i=1;
-            }
-            $("#outer"+i+" div").each(function(){
-                var inputStyle = $(this).attr('style');
-                var styleParts = inputStyle.split(';');
-                var thiswidth = styleParts[0].split(':');
-                percentwidth= thiswidth[1].slice(0, -1)
-                percentwidth = 100/percentwidth;
-
-                ch = $("#outer"+i+"  div").length;
-                ctx.strokeRect(imgx+2,(28*i),width/percentwidth,26);
-                imgx=imgx+width/ch;  
-            });
+    }if($('div').hasClass("outer")){      
+            imgx=3;
+            var kids = $("div.outer").children();
+            var len = $("div.outer").children().length;
+            // Determine width of outer div, if not 100%
+            var this_array = $("div.outer").attr('style').split(';');
+            this_width = this_array[0].split(':');
+            width_factor = parseFloat(this_width[1])*.01;
+            print_inners(ctx, imgx, imgy, width, width_factor);
+            // A percent width assumed
+            //console.log($('.outer').children('div').length);
             i=i+1;
-        }
+            // Draw a box  based on the width detected
+            console.log("kid"+i+kids);
+            if(kids.hasClass('inner')){
+                //draw_line(ctx,width/20,imgy+10,width*width_factor,imgy+10);
+                //draw_line(ctx,width/8,imgy+20,width *width_factor,imgy+20);
+                ctx.strokeRect(3,imgy,width*width_factor,30);
+                print_inners(ctx, imgx, imgy, width, width_factor);
+                imgy=imgy+34;
+            }
+                 
+            draw_containing_images(element,ctx,3,imgy,width*width_factor,30);
 
     }if(tag_name=='img'){
         if(element.parentElement==$('#page_preview')[0] || !is_rendable(element.parentElement)&& element.parentElement.parentElement==$('#page_preview')[0]){
@@ -406,7 +437,30 @@ function draw_element(element, ctx){
         }
     }
 }
-
+*/
+/*
+function print_inners(ctx, imgx, imgy, width, width_factor){
+console.log($('.outer').children('div').length);
+   if($('.outer').children().length > 0){
+        var inner_count = $('.outer').children('div').length;
+        //console.log(inner_count);
+       // for(i=1; i<=inner_count; i++){
+        imgx_start = 3;
+        $('.inner').each(function () {
+            //imgx_start = imgx_start+imgx;
+            //imgx = imgx+(width*width_factor)/inner_count-5;
+            //draw_line(ctx,imgx_start,imgy+10,imgx,imgy+10);
+            //draw_line(ctx,imgx_start,imgy+20,imgx,imgy+20);
+            //ctx.strokeRect(imgx_start,imgy+3,imgx,30/width_factor-9); 
+             ctx.strokeRect(imgx_start,imgy,width/inner_count,30); 
+            //draw_containing_images(element,ctx,3,imgy,imgx,30);
+            //imgx = imgx;
+            imgx_start = imgx_start+width/inner_count;
+        });
+        //}     
+    }  
+}
+*/
 /**
  * Draw all images contained in a given element in their relative positions
  * @author SupunGS
@@ -417,6 +471,7 @@ function draw_element(element, ctx){
  * @param { Number} cw width of the box represnting the container
  * @param { Number} ch height of the box represnting the container
  */
+ /*
 function draw_containing_images(element,ctx,x,y,cw,ch){
     $(element).find('img').each(function(){
         if(this.parentElement==element || this.parentElement.parentElement==element && !is_rendable(this.parentElement)){
@@ -430,7 +485,7 @@ function draw_containing_images(element,ctx,x,y,cw,ch){
         }
     });
 }
-
+*/
 /**
  * Draw a line with given cordinates
  * @author SupunGS
@@ -440,6 +495,7 @@ function draw_containing_images(element,ctx,x,y,cw,ch){
  * @param { Number} x2 x cordinate of the end point
  * @param { Number} y2 y cordinate of the end point
  */
+ /*
 function draw_line(ctx,x1,y1,x2,y2){
     var temp=ctx.strokeStyle;
     ctx.strokeStyle="#999";
@@ -449,13 +505,14 @@ function draw_line(ctx,x1,y1,x2,y2){
     ctx.stroke();
     ctx.strokeStyle=temp;
 }
-
+*/
 /**
  * Get the maximum number of columns in a row of a given table
  * @author SupunGS
  * @param {HTMLElement} table table to get the number of columns
  * @return {integer} number of columns
  */
+ /*
 function get_column_count(table){
     var colcount=0;
     var rows = table.children[0].children;
@@ -465,13 +522,14 @@ function get_column_count(table){
     }
     return colcount;
 }
-
+*/
 /**
  * Check whether a given element should be rendered for screenshot
  * @author SupunGS
  * @param {HTMLElement} element element to check
  * @return {boolean} whether or not rendable
  */
+ /*
 function is_rendable(element){
     var children=element.childNodes;
     for (i = 0; i < children.length; i++) {
@@ -479,3 +537,4 @@ function is_rendable(element){
     }
     return false;
 }
+*/

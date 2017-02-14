@@ -244,10 +244,41 @@ if($this->lastelement != ''){
         $img_path=$this->base_path."templates/layouts/". $this->template."/screenshot-".$this->template.".png";
         if(isset($this->screenshot))  echo "<img src='".$img_path."' alt='"._AT('screenshot')."'>";
         ?>
+        
     </div>
     <form action="<?php echo $_SERVER['PHP_SELF'].'?temp='.$this->template; ?>" method="post" enctype="multipart/form-data">
         <label for="file"><?php echo _AT('file'); ?>:</label>
         <input type="file" name="file" id="file" accesskey="n" title="<?php echo _AT('upload'); ?>">
         <input type="submit" name="uploadscrn" value="<?php echo _AT('upload'); ?>">
+        <input id="generate_scrn" type="submit" value="<?php echo _AT('auto_generate'); ?>" accesskey="g">
     </form>
 </div>
+<div id="img-out" style="visibility:hidden;"></div>
+<script type="text/javascript">
+    $( document ).ready(function() {
+         var canvas = document.querySelector("#screenshot_canvas");
+            document.querySelector("#generate_scrn").addEventListener("click", function() {
+            html2canvas(document.querySelector("#css_preview"), {
+                onrendered: function(canvas) {
+                    document.getElementById("img-out").appendChild(canvas);
+                    canvas = document.querySelector("canvas");
+
+                    var resizedCanvas = document.createElement("canvas");
+                    var resizedContext = resizedCanvas.getContext("2d");
+
+                    resizedCanvas.height = canvas.height*.8;
+                    resizedCanvas.width =  canvas.width*.8;
+
+                    var canvas2 = document.querySelector('canvas');
+                    resizedContext.drawImage(canvas2, 0, 0, resizedCanvas.width, resizedCanvas.height);
+                    var myResizedData = resizedCanvas.toDataURL();
+
+                    $.post("template_editor/ajax_handler.php", {
+                        action: 'upload_image', temp: template,image: myResizedData 
+                    });
+                }
+            });
+        }, false);
+        
+    });
+</script>

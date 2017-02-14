@@ -369,7 +369,9 @@ $pid = intval($_REQUEST['pid']);
 		</div>
 	<?php endif; ?>
     
-	<?php include('editor_tabs/'.$tabs[$current_tab][1]); ?>	
+	<?php 
+	
+	include('editor_tabs/'.$tabs[$current_tab][1]); ?>	
 
 </div>
 </form>

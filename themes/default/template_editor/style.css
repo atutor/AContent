@@ -225,6 +225,7 @@
 #page_toolbar #insert-image{ background-position: 0 -20px; }
 #page_toolbar #insert-table{ background-position: -20px -20px; }
 #page_toolbar #insert-link{ background-position: -60px -20px; }
+#page_toolbar #insert-box{ background-position: -100px -20px; }
 #page_toolbar #insert-paragraph{ background-position: -80px -20px; }
 
 #page_toolbar #add_table{
@@ -242,6 +243,8 @@
 
 #screenshot_img{
     margin:2px 0px 5px 5px;
+    height:13em;
+    width:11em;
 }
 div.activ_template_page{
     background-color: #efefef;

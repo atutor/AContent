@@ -1,31 +1,19 @@
-<?xml version="1.0" ?>
-<layout version="0.1">
-  <name lang="en">
-    Pastel
-  </name>
-  <description lang="en">
-    Pastel green colour cheme
-  </description>
+<?xml version="1.0"?>
+<layouts version="0.1">
+  <name>Pastel</name>
+  <description>Pastel green colour cheme</description>
   <maintainers>
     <maintainer>
-      <name>
-        Greg Gay
-      </name>
-      <email>
-        ggay@ocad.ca
-      </email>
+      <name>ATutor</name>
+      <email></email>
     </maintainer>
   </maintainers>
-  <url/>
-  <license/>
+  <url></url>
+  <license></license>
   <release>
-    <version>
-      1.x
-    </version>
-    <date/>
-    <state>
-      stable
-    </state>
-    <notes/>
+    <version>1.x</version>
+    <date></date>
+    <state>stable</state>
+    <notes></notes>
   </release>
-</layout>
+</layouts>

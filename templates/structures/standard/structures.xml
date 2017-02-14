@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<page_templates version="0.1">
-  <name>Header with Grid</name>
+<structures version="0.1">
+  <name>standard</name>
   <description></description>
   <maintainers>
     <maintainer>
@@ -11,9 +11,9 @@
   <url></url>
   <license></license>
   <release>
-    <version>.01</version>
+    <version>1.0</version>
     <date></date>
     <state>stable</state>
     <notes></notes>
   </release>
-</page_templates>
+</structures>
