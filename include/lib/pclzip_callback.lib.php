@@ -30,7 +30,7 @@ function preImportCallBack($p_event, &$p_header) {
 	if ($p_header['folder'] == 1) {
 		return 1;
 	}
-
+	$p_header['filename']				= preg_replace("/\.\./i", "", $p_header['filename']);
 	$path_parts = pathinfo($p_header['filename']);
 	$ext = $path_parts['extension'];
 
