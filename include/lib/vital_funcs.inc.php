@@ -119,7 +119,7 @@ function debug($var, $title='') {
 */
 function debug_to_log($var, $log='') {
 	if (!defined('TR_DEVEL') || !TR_DEVEL) {
-		return;
+		//return;
 	}
 	
 	if ($log == '') $log = TR_CONTENT_DIR. 'debug.log';
