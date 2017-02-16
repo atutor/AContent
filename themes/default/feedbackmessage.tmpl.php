@@ -14,7 +14,7 @@ global $_base_href;
  
 // header
 ?>
-<div id="feedback">
+<div id="feedback" role="alert">
 	<?php if (is_array($this->item)) : ?>
 		<ul>
 		<?php foreach($this->item as $e) : ?>

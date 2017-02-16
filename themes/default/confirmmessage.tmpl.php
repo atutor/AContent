@@ -20,7 +20,7 @@ global $_base_href;
 	<?php echo $this->hidden_vars; ?>
 <?php endif; ?>
 
-<div class="input-form">
+<div class="input-form" role="alert">
 	<div class="row">
 		<?php if (is_array($this->item)) : ?>
 			<?php foreach($this->item as $e) : ?>

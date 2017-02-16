@@ -14,7 +14,7 @@ global $_base_href;
  
 ?>
 
-<div id="warning">
+<div id="warning" role="alert">
 	<?php if (is_array($this->item)) : ?>
 		<ul>
 		<?php foreach($this->item as $e) : ?>

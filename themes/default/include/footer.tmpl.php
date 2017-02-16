@@ -43,12 +43,11 @@ if ($this->course_id > 0) { ?>
 <?php require(TR_INCLUDE_PATH.'html/languages.inc.php'); ?>
 
       <div class="foot_text">
-        <!--<small><?php if (isset($this->course_copyright)) echo htmlentities_utf8($this->course_copyright, ENT_QUOTES, 'UTF-8').'<br />'; echo _AT("copyright"); ?></small><br />-->
   <!-- guide -->
 
-    <div>
+            <div>
     <a href="#" onclick="trans.utility.poptastic('<?php echo TR_GUIDES_PATH."index.php?p=home/index.php"; ?>'); return false;" target="_new"><em><?php echo _AT('general_help'); ?></em></a>&nbsp;
-  </div>
+        </div>
 
 
       </div>
