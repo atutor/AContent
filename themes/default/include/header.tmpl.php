@@ -60,8 +60,8 @@ $mtime = explode(' ', $mtime);
 $mtime = $mtime[1] + $mtime[0]; 
 $starttime = $mtime; 
 //Timer Ends
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>" lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
+?><!DOCTYPE html>
+<html  lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 
 <head>
    <title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
    <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
@@ -117,7 +117,7 @@ $starttime = $mtime;
 <body onload="<?php echo $this->onload; ?>">
 <div id="liquid-round">
  <div class="center-content">
-    <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+    <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" accesskey="c">
     <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
    <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
@@ -148,7 +148,7 @@ $starttime = $mtime;
 
   </div>
 
-  <div class="topnavlistcontainer" role="navigation">
+  <div class="topnavlistcontainer"  role="navigation">
   <!-- the main navigation. in our case, tabs -->
     <ul class="navigation">
 <?php 
@@ -220,7 +220,16 @@ foreach ($this->top_level_pages as $page) {
   <?php }?>
 
   <?php if (is_array($this->tool_shortcuts) ||isset($this->course_id) && $this->course_id > 0){ ?>
-  <div class="shortcuts">
+  <!-- toolbar toggle switch-->
+<div class="tool_switch">
+ <label class="switch">
+  <input type="checkbox" />
+  <div class="slider round toggle_tools_on"  id="toggle_tools" title="Toggle toolbar" tabindex="0"></div>
+</label>
+</div>
+
+  <div class="shortcuts" style="float:right;">
+  <span style="font-size:0px;" aria-live="polite" aria-label="Toolbar on"></span>
     <ul>
   <?php if (is_array($this->tool_shortcuts)){ ?>
       <?php foreach ($this->tool_shortcuts as $link){ ?>
@@ -254,6 +263,59 @@ foreach ($this->top_level_pages as $page) {
       </li>
   </ul>
  </div>
+<script type="text/javascript">
+    $('document').ready( function(){
+        if(getCookie("shortcuts") == 1){
+            $( ".shortcuts" ).css("display","none");
+            $('input[type=checkbox]').prop('checked', true);
+        } else{
+            $( ".shortcuts" ).css("display","inline");
+        }
+        $( ".slider" ).click(function() {
+            $( ".shortcuts" ).toggle(800);
+            if(getCookie('shortcuts') == 1){
+                //deleteCookie("shortcuts");
+                setCookie('shortcuts', '', -2);
+            }else{
+               setCookie("shortcuts","1","10");
+            }
+        });
+        $( ".slider" ).keypress(function(e) {
+        if(e.which == 13) {
+            $( ".shortcuts" ).toggle(800);
+            if(getCookie('shortcuts') == 1){
+               setCookie('shortcuts', '', -2);
+               $('input[type=checkbox]').prop('checked', false);
+            }else{
+               setCookie("shortcuts","1","10");
+               $('input[type=checkbox]').prop('checked', true);
+            }
+         }
+        });
+    });
+    function setCookie(cname, cvalue, exdays) {
+        var d = new Date();
+        d.setTime(d.getTime() + (exdays*24*60*60*1000));
+        var expires = "expires="+ d.toUTCString();
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+    
+    function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+        }
+        return "";
+    }
+    </script>
     <?php }?>
 
   <div id="contentwrapper">
@@ -285,7 +347,7 @@ foreach ($this->top_level_pages as $page) {
     <?php //if (isset($this->course_id) && $this->course_id > 0): ?>
       <div id="menutoggle">
         <?php //if ($this->course_id > 0): ?>
-        <script type="text/javascript" language="javascript">
+        <script type="text/javascript">
         //<![CDATA[
         var state = trans.utility.getcookie("side-menu");
         if (state && (state == 'none')) {
@@ -301,7 +363,7 @@ foreach ($this->top_level_pages as $page) {
     <?php //endif; ?>
 
       <!-- the page title -->
-      <a name="content" title="<?php echo _AT('content'); ?>"></a>
+      <a name="contenttop" id="contenttop" title="<?php echo _AT('content'); ?>"></a>
       <?php
       global $_current_user;
       if ($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){

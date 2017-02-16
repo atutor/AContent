@@ -18,8 +18,8 @@ if ($this->course_id > 0) { ?>
         <div style="clear:both;text-align:right;" id="gototop">		
           <br />
           <span style="font-size:smaller;padding-right:3px;">
-            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" title="<?php echo _AT('goto_top'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
-              <img src="<?php echo $this->base_path; ?>themes/<?php echo $this->theme; ?>/images/goto_top.gif" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0" class="goto"/> 
+            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" title="<?php echo _AT('goto_top'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
+              <img src="<?php echo $this->base_path; ?>themes/<?php echo $this->theme; ?>/images/goto_top.png" alt="<?php echo _AT('goto_top'); ?> Alt-c" class="goto"/> 
 			</a>
           </span>
         </div>  
@@ -43,7 +43,7 @@ if ($this->course_id > 0) { ?>
 <?php require(TR_INCLUDE_PATH.'html/languages.inc.php'); ?>
 
       <div class="foot_text">
-        <small><?php if (isset($this->course_copyright)) echo htmlentities_utf8($this->course_copyright, ENT_QUOTES, 'UTF-8').'<br />'; echo _AT("copyright"); ?></small><br />
+        <!--<small><?php if (isset($this->course_copyright)) echo htmlentities_utf8($this->course_copyright, ENT_QUOTES, 'UTF-8').'<br />'; echo _AT("copyright"); ?></small><br />-->
   <!-- guide -->
 
     <div>
@@ -52,7 +52,6 @@ if ($this->course_id > 0) { ?>
 
 
       </div>
-		<br style="clear:both;">
     </div>
 
   </div> <!--  end center-content div -->

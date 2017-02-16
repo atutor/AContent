@@ -58,7 +58,8 @@ div.input-form {
 	width: 95%; 
 	margin-left:auto; 
 	margin-right:auto;
-	border: 1px #206BA4 solid;
+	border-top: 3px #206BA4 solid;
+	border-bottom: 3px #206BA4 solid;
 	margin-bottom: 20px;
 	line-height:150%;
 /*	background-color: #F1EFE2;*/
