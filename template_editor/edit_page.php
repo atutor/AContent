@@ -42,7 +42,7 @@ if(isset ($_POST['submit'])) {
     $commons->save_file("page_templates/".$template,$template.".html",$_POST['page_text']);
 }
 if(isset ($_POST['uploadscrn'])) {
-    echo $commons->upload_image("page_templates/".$template,"screenshot.png");
+   $commons->upload_image("page_templates/".$template,"screenshot.png");
 }
 
 require(TR_INCLUDE_PATH.'header.inc.php');

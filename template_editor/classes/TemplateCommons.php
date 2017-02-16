@@ -156,13 +156,18 @@ class TemplateCommons {
      * @author  SupunGS
      */
     public function upload_image($directory,$file_name) {
-        global $msg;
+        global $msg, $_base_path;
+        //debug_to_log($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$directory);
         $allowedExts = array("gif", "jpeg", "jpg", "png");
+         if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$directory)){
+            $msg->addError('DIRECTORY_NOT_WRITABLE');
+            return false;
+        }
         $extension = end(explode(".", $_FILES["file"]["name"]));
         if ((($_FILES["file"]["type"] == "image/gif") || ($_FILES["file"]["type"] == "image/jpeg")
             || ($_FILES["file"]["type"] == "image/jpg")|| ($_FILES["file"]["type"] == "image/pjpeg")
             || ($_FILES["file"]["type"] == "image/x-png")  || ($_FILES["file"]["type"] == "image/png"))
-            && ($_FILES["file"]["size"] < 100000) && in_array($extension, $allowedExts)) {
+            && ($_FILES["file"]["size"] < 200000) && in_array($extension, $allowedExts)) {
         } else {
             $msg->addError('UPLOAD_FAILED');
              return false;
@@ -316,14 +321,18 @@ class TemplateCommons {
      * @author  SupunGS
      */
     public function save_file($directory,$file_name,$message='') {
-        global $msg;
+        global $msg, $_base_path;
+        debug_to_log($_base_path.$directory);
         $file_path=$this->template_dir.$directory."/".$file_name;
         $file = fopen($file_path,"w");
         if(fwrite($file,$message) == true){
             fclose($file);
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
             return TRUE;
-        } 
+        } else{
+            //$msg->addError('DIRECTORY_NOT_WRITABLE');
+            return false;
+        }
 
     }
 
@@ -368,6 +377,12 @@ class TemplateCommons {
      * @author  SupunGS
      */
     function save_DataURL_image($dataURL,$directory,$file_name) {
+        global $msg, $_base_path;
+        if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path."templates/".$directory)){
+            $msg->addError('DIRECTORY_NOT_WRITABLE');
+            header('Location: '.$_SERVER['PHP_SELF']);
+            exit;
+        }
         $parts = explode(',', $dataURL);
         $data = $parts[1];
         // Decode Base64 data
