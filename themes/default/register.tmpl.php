@@ -89,7 +89,7 @@ function encrypt_password()
 		  &middot; <?php echo _AT('20_max_chars'); ?></small></p>	
 
 <?php if ($this->show_user_group) { ?>
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="user_group_id"><?php echo _AT('user_group'); ?>:</label>:</dt>
+	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="user_group_id"><?php echo _AT('user_group'); ?></label>:</dt>
 	  <dd><select name="user_group_id" id="user_group_id">
 		  <option value="-1">- <?php echo _AT('select'); ?> -</option>
 		  <?php foreach ($this->all_user_groups as $user_group) {?>
