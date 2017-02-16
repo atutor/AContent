@@ -14,7 +14,6 @@ define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require('classes/TemplateCommons.php');
 global $_base_path;
-debug_to_log(' in handler');
 if(isset ($_GET['get'])) {
     if($_GET['get']=='struc_elements') {
         get_structure_elements();
@@ -31,7 +30,6 @@ if(isset ($_GET['get'])) {
 }elseif(isset ($_POST['action']) && $_POST['action']=='upload_image') {
     $dataURL = $_POST["image"];
     $template=$_POST['temp'];
-   // debug_to_log($_POST);
     $commons=new TemplateCommons('../templates');
     if(strstr($_SERVER['HTTP_REFERER'], "edit_page")){
         $commons->save_DataURL_image($dataURL,"page_templates/".$template,"screenshot.png");
