@@ -53,18 +53,13 @@ if ($this->course_id > 0) { ?>
 
       </div>
     </div>
-
   </div> <!--  end center-content div -->
 
-  <div class="bottom"></div>
+  <!-- <div class="bottom"></div> -->
   <!--  bottom for liquid-round theme -->
   </div>
-
-    <!-- BEAT -->
-   
 </body>
 </html>
-
 <?php
 // Timer, calculate how much time to load the page
 // starttime is in include/header.inc.php
