@@ -72,7 +72,7 @@ class Page_template {
 		// added css for labels that become buttons
 		echo '<link rel="stylesheet" type="text/css" href="'.TR_BASE_HREF.'/themes/default/forms.css">';
 
-		echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;">';
+		echo '<div style="text-align:left; margin: 10px; margin-top: 20px; margin-bottom: 15px;border: thin dashed black;">';
 
 		if ($with_content == 0) {
 			echo '<span>'._AT("note_at_first_access").'</span><br />';
@@ -209,7 +209,7 @@ class Page_template {
 			echo '<div id="content-text"></div>';
 		}
 		
-		echo '</div>';
+		//echo '</div>';
 		echo '</form>';
 	}
 

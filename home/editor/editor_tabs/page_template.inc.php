@@ -126,10 +126,10 @@ if($sup == 0) {
 	echo '<div id="content-previous">';
 		echo $text;
 	echo '</div>';
-	echo'</div>';
 	
 	$with_content=1;
 	$mod->view_page_templates($with_content);
+	
 }
 
 ?>
