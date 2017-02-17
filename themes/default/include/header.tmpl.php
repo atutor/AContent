@@ -325,10 +325,11 @@ foreach ($this->top_level_pages as $page) {
       //<![CDATA[
       var state = trans.utility.getcookie("side-menu");
       if (state && (state == 'none')) {
-          document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu" role="navigation">');
+          document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu" role="navigation"  aria-label="<?php echo _AT('side_menu');?>">');
       } else {
-          document.writeln('<a name="menu"></a><div id="side-menu" role="navigation">');
+          document.writeln('<a name="menu"></a><div id="side-menu" role="navigation" aria-label="<?php echo _AT('side_menu');?>">');
       }
+      
       //]]>
       </script>
       
@@ -351,10 +352,10 @@ foreach ($this->top_level_pages as $page) {
         //<![CDATA[
         var state = trans.utility.getcookie("side-menu");
         if (state && (state == 'none')) {
-           trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\" class=\"shortcut_icon\"/>","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\" class=\"shortcut_icon\" />", "", "show");
+           trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show').' '._AT('side_menu'); ; ?>\' title=\"<?php echo _AT('show'); ?>\" class=\"shortcut_icon\"/>","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide').' '._AT('side_menu'); ?>\' title=\"<?php echo _AT('hide'); ?>\" class=\"shortcut_icon\" />", "", "show");
         } else {
             document.getElementById('contentcolumn').id="contentcolumn_shiftright";
-            trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show'); ?>\' title=\"<?php echo _AT('show'); ?>\"  class=\"shortcut_icon\"/>","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide'); ?>\' title=\"<?php echo _AT('hide'); ?>\"  class=\"shortcut_icon\" />", "", "hide");
+            trans.utility.showTocToggle("side-menu", "<img src=\"<?php echo $this->base_path; ?>themes/default/images/showmenu.gif.png\" alt=\'<?php echo _AT('show').' '._AT('side_menu'); ; ?>\' title=\"<?php echo _AT('show'); ?>\"  class=\"shortcut_icon\"/>","<img src=\"<?php echo $this->base_path; ?>themes/default/images/hidemenu.gif.png\" alt=\'<?php echo _AT('hide').' '._AT('side_menu'); ?>\' title=\"<?php echo _AT('hide'); ?>\"  class=\"shortcut_icon\" />", "", "hide");
         }
         //]]>
         </script>
