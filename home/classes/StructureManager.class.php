@@ -424,8 +424,8 @@ class StructureManager
 
 				    $count = 0;
 				    foreach($page->tests as $test){
-                        global $msg;
-                        $msg->addFeedback($count);
+                        //global $msg;
+                        //$msg->addFeedback($count);
                         $testsDAO = new TestsDAO();
                         $test_ass_cont = new ContentTestsAssocDAO();
                         $test_id = $testsDAO->Create($course_id, $page['name'].$count, _AT('tests_description'));
