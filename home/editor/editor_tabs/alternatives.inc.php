@@ -72,10 +72,10 @@ function display_alternative_cell($secondary_resources, $alternative_type, $cont
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
 				echo '      <a href="'.$secondary_resource['secondary_resource'].'" title="'._AT('new_window').'" target="_new">'.get_display_filename($secondary_resource['secondary_resource']).'</a><br />'."\n";
 				echo '      <a href="#" onclick="trans.utility.poptastic(\''.TR_BASE_HREF.'file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'_cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
-				echo '        <img src="'.TR_BASE_HREF.'images/alter.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
+				echo '        <img src="'.TR_BASE_HREF.'images/alter.png" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '      <a href="#" onclick="removeAlternative(\''.$content_row['content_path'].'\', '.$content_id.','.$pid.','.$alternative_type.');return false;">'."\n";
-				echo '        <img src="'.TR_BASE_HREF.'images/remove.gif" border="0" title="'._AT('remove').'" alt="'._AT('remove').'" />'."\n";
+				echo '        <img src="'.TR_BASE_HREF.'images/remove.gif" title="'._AT('remove').'" alt="'._AT('remove').'" />'."\n";
 				echo '      </a>'."\n";
 				echo '    </div>'."\n";
 				$found_alternative = true;

@@ -477,9 +477,9 @@ class StructureManager
 	function insertIcons($min, $i){
 
 		if($i < $min)
-			echo '<img title="'._AT('page_mandatory').'" border="0" alt="" src="'.TR_BASE_HREF.'images/must.png" class="mandatory_ex" />';
+			echo '<img title="'._AT('page_mandatory').'" border="0" alt="" src="'.TR_BASE_HREF.'images/must.png" class="mandatory_ex" alt="'._AT('mandatory_content').'"/>';
 		else 
-			echo '<img title="'._AT('page_deletable').'" height="14" width="14" border="0" alt="" src="'.TR_BASE_HREF.'images/bad.gif" class="delete_ex"/>';
+			echo '<img title="'._AT('page_deletable').'" height="14" width="14" border="0" alt="'._AT('delete').'"  src="'.TR_BASE_HREF.'images/bad.gif" class="delete_ex"/>';
 		
 		
 	}

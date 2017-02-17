@@ -118,9 +118,9 @@ $starttime = $mtime;
 <div id="liquid-round">
  <div class="center-content">
     <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" accesskey="c">
-    <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
+    <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
-   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
    <span id="logininfo">
         <?php
         if (isset($this->user_name))
@@ -201,13 +201,13 @@ foreach ($this->top_level_pages as $page) {
 
   <div id="sequence-links">
     <?php if ($this->sequence_links['resume']): ?>
-    <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="shortcut_icon" /></a>
+    <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="shortcut_icon" /></a>
     <?php else:
           if ($this->sequence_links['previous']): ?>
-    <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="shortcut_icon" /></a>
+    <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="shortcut_icon" /></a>
     <?php endif;
           if ($this->sequence_links['next']): ?>
-    <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="shortcut_icon" /></a>
+    <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="shortcut_icon" /></a>
     <?php endif; ?>
     <?php endif; ?>
     &nbsp;
@@ -215,17 +215,18 @@ foreach ($this->top_level_pages as $page) {
   <!-- guide -->
   <?php if (isset($this->guide)) {  ?>
     <div id="guide_box" title="<?php echo _AT('handbook_for').' '.$this->page_title; ?>">
-    <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="_new"><em><?php echo $this->page_title; ?></em></a>&nbsp;
+    <a href="<?php echo $this->guide; ?>" onclick="trans.utility.poptastic('<?php echo $this->guide; ?>'); return false;" id="guide" target="atutor"><em><?php echo $this->page_title; ?></em></a>&nbsp;
   </div>
   <?php }?>
 
   <?php if (is_array($this->tool_shortcuts) ||isset($this->course_id) && $this->course_id > 0){ ?>
   <!-- toolbar toggle switch-->
 <div class="tool_switch">
- <label class="switch">
-  <input type="checkbox" />
+ <div class="switch">
+  <input type="checkbox" title=" "/>
   <div class="slider round toggle_tools_on"  id="toggle_tools" title="Toggle toolbar" tabindex="0"></div>
-</label>
+</div>
+
 </div>
 
   <div class="shortcuts" style="float:right;">
@@ -241,24 +242,24 @@ foreach ($this->top_level_pages as $page) {
   <?php if (isset($this->course_id) && $this->course_id > 0) {?>
       <?php if ($this->isAuthor || $this->isAdmin) { // only for authors or admins ?>
       <li><a href="<?php echo $this->base_path; ?>home/course/course_property.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>"  class="shortcut_icon"/>
         </a>
       </li>
       <li><a href="<?php echo $this->base_path; ?>home/editor/arrange_content.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>"  class="shortcut_icon"/>
         </a>
       </li>
       <li><a href="<?php echo $this->base_path; ?>home/editor/import_export_content.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/import_export.png"; ?>" title="<?php echo _AT('content_packaging'); ?>" alt="<?php echo _AT('content_packaging'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/import_export.png"; ?>" title="<?php echo _AT('content_packaging'); ?>" alt="<?php echo _AT('content_packaging'); ?>"  class="shortcut_icon"/>
         </a>
       </li>
       <li><a href="<?php echo $this->base_path; ?>home/course/del_course.php?_course_id=<?php echo $this->course_id; ?>">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/delete.gif"; ?>" title="<?php echo _AT('del_course'); ?>" alt="<?php echo _AT('del_course'); ?>"  class="shortcut_icon"/>
         </a>
       </li>
       <?php }?>
       <li><a href="<?php echo $this->base_path; ?>home/index.php">
-        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>" border="0"  class="shortcut_icon"/>
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/exit.png"; ?>" title="<?php echo _AT('exit_course'); ?>" alt="<?php echo _AT('exit_course'); ?>"  class="shortcut_icon"/>
         </a>
       </li>
   </ul>
