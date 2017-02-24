@@ -197,9 +197,9 @@ class OAuthServerTokensDAO extends DAO {
 	    global $addslashes;
 		$token = $addslashes($token);
 		
-		$sql = "SELECT unix_timestamp(now()) now_timestamp, 
+		$sql = "SELECT unix_timestamp(now()) AS 'now_timestamp', 
 		               osc.expire_threshold,
-		               unix_timestamp(addtime(ost.assign_date, sec_to_time(osc.expire_threshold))) expire_timestamp
+		               unix_timestamp(addtime(ost.assign_date, sec_to_time(osc.expire_threshold))) AS 'expire_timestamp'
 		          FROM ".TABLE_PREFIX."oauth_server_consumers osc, ".TABLE_PREFIX."oauth_server_tokens ost
 		         WHERE osc.consumer_id=ost.consumer_id
 		           AND ost.token='".$token."'
@@ -207,7 +207,7 @@ class OAuthServerTokensDAO extends DAO {
 		         ORDER BY ost.assign_date DESC";
 		$row = $this->execute($sql);
 
-		if ((!is_array($row) || $row['now_timestamp'] > $row['expire_timestamp']) && $row['expire_threshold'] != 0) {
+		if ((!is_array($row[0]) || $row[0]['now_timestamp'] > $row[0]['expire_timestamp']) && $row[0]['expire_threshold'] != 0) {
 			return true;
 		} else {
 			return false;
