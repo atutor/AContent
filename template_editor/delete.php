@@ -64,10 +64,10 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
         if(!$commons->template_exists($type, $_GET['temp'])){
             if($_GET['type']=='page_templates') $type='pages';
              if($_GET['type']=='structures') $type='structures';
-             //if($_GET['type']=='layout') $type='layouts';
+             if($_GET['type']=='layout') $type='layouts';
              if($_GET['type']=='layouts') $type='layouts';
             $msg->addError('SELECT_ONE_ITEM');
-            Header('Location: index.php?tab='.$type);
+            header('Location: index.php?tab='.$type);
             exit;
         }
         require(TR_INCLUDE_PATH.'header.inc.php');
@@ -77,10 +77,12 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
         $savant->assign('template_type', $_GET['type']);
         $savant->display('template_editor/delete.tmpl.php');
     }else {
-        Header('Location: ../index.php?tab='.$type);
+        header('Location: ../index.php?tab='.$type);
+        exit;
     }
     require(TR_INCLUDE_PATH.'footer.inc.php');
 }else {
-    Header('Location: ../index.php?tab='.$type);
+    header('Location: ../index.php?tab='.$type);
+    exit;
 }
 ?>
