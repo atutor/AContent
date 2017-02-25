@@ -222,11 +222,10 @@ foreach ($this->top_level_pages as $page) {
   <?php if (is_array($this->tool_shortcuts) ||isset($this->course_id) && $this->course_id > 0){ ?>
   <!-- toolbar toggle switch-->
 <div class="tool_switch">
- <div class="switch">
-  <input type="checkbox" title=" "/>
+ <label class="switch">
+  <input type="checkbox" />
   <div class="slider round toggle_tools_on"  id="toggle_tools" title="Toggle toolbar" tabindex="0"></div>
-</div>
-
+</label>
 </div>
 
   <div class="shortcuts" style="float:right;">
