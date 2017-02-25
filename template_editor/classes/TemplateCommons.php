@@ -282,6 +282,7 @@ class TemplateCommons {
         $full_dir=$this->template_dir . $this->template_dir_map[$template_type]."/".$template_dir;
 
         $this->remove_dir_content($full_dir);
+        return true;
     }
 
     /**
