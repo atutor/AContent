@@ -35,3 +35,6 @@ div#logo{
 float:right;
 margin-right:3em;
 }
+div.tool_switch{
+    display:none;
+}
