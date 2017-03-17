@@ -17,7 +17,8 @@
 r0001 | cindy | 2008-09-09 16:27:14 -0500 (Tue, 9 Sep 2008)
 ------------------------------------------------------------------------';
 */
-define('TR_INCLUDE_PATH', 'include/');
-require(TR_INCLUDE_PATH.'vitals.inc.php');
+$base = getcwd();
+require_once($base.'/../'.TR_INCLUDE_PATH.'lib/constants.inc.php');
+
 $svn_data = "AContent ".VERSION.'|';
 ?>
