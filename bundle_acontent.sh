@@ -51,6 +51,9 @@ echo "Exporting from GitHub/ to $acontent_dir"
 mkdir $acontent_dir
 $gitexec clone $gitdir
 mv 'AContent' $acontent_dir/AContent
+cd $acontent_dir/AContent
+set commit = `git log -1 --pretty=format:'%h | %ci'`;
+cd '../../';
 sleep 1
 
 echo "Dumping language_text"
@@ -75,8 +78,9 @@ sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $acon
 sleep 1
 
 set date = `date`
-echo -n "<?php "'$svn_data = '"'" >> $acontent_dir/AContent/svn.php
-echo $date  >> $acontent_dir/AContent/svn.php
+echo -n "<?php "'$svn_data .= '"'" >> $acontent_dir/AContent/svn.php
+#echo $date  >> $acontent_dir/AContent/svn.php
+echo $commit  >> $acontent_dir/AContent/svn.php
 echo -n "';?>" >> $acontent_dir/AContent/svn.php
 echo "Removing GIT related directories"
 rm -Rf $acontent_dir/AContent/.git*

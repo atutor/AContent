@@ -14,27 +14,9 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 require('../svn.php');
 
-$svn_data   = explode("\n", $svn_data);
-
-if (substr($svn_data[1], 0, 1) == 'r') {
-	$svn_data = $svn_data[1];
-} else if (substr($svn_data[2], 0, 1) == 'r') {
-	$svn_data = $svn_data[2];
-}
-
-if (count($svn_data) > 1) {
-	$build = 'unknown';
-	$build_date = date('Y-m-d H:i:s');
-} else {
-	$svn_data   = explode(' ', $svn_data);
-
-	$build      = $svn_data[0];
-	$build_date = $svn_data[4] .' '. $svn_data[5];
-}
-
-if (!$build) {
-	$build = 'unknown';
-}
+$svn_data   = explode("|", $svn_data);
+$build      = $svn_data[0].' - '.$svn_data[1];
+$build_date = $svn_data[2];
 
 $os = php_uname('s') . ' '. php_uname('r'). ' '. php_uname('v'). ' '. php_uname('m');
 
