@@ -15,8 +15,8 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 require('../svn.php');
 
 $svn_data   = explode("|", $svn_data);
-$build      = $svn_data[0].' - '.$svn_data[1];
-$build_date = $svn_data[2];
+$build      = $svn_data[0];
+$build_date = $svn_data[1];
 
 $os = php_uname('s') . ' '. php_uname('r'). ' '. php_uname('v'). ' '. php_uname('m');
 
