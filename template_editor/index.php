@@ -73,8 +73,8 @@ if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITO
             $pgtemp_list=$commons->get_template_list("page_templates");
             $savant->assign('template_list', $pgtemp_list);
         }else {
-            Header('Location: index.php');
-            exit;
+            //Header('Location: index.php');
+            //exit;
         }
         $savant->assign('template_type',$_GET['tab']);
         $savant->display('template_editor/index.tmpl.php');
