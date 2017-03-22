@@ -1,9 +1,9 @@
-<div id="error">
+<!-- <div id="error">
     <h4><?php echo _AT('the_follow_errors_occurred'); ?></h4>
     <ul>
         <li><?php echo _AT('empty_fields_error'); ?></li>
     </ul>
-</div>
+</div> -->
 
 <?php
 $type=$this->metadata['template_type'];
@@ -12,7 +12,14 @@ if($this->metadata['template_type']=='page_templates') $type='page_templates';
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
     <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
-    <a href="template_editor/index.php?tab=<?php echo $type; ?>"><img src="themes/default/images/previous.png" alt="back"></a>
+    <?php
+        if($type = 'page_template'){
+            $temptype = 'pages';
+        } else{
+            //$temptype = $type;
+        }
+    ?>
+    <a href="template_editor/index.php?tab=<?php echo $temptype; ?>"><img src="themes/default/images/previous.png" alt="back"></a>
     </span>
         <ul id="subnavlist">
             <?php 

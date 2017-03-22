@@ -15,7 +15,7 @@
                 echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_'. $app_type.'.php?temp='. $this->template_dir.'"><strong>'. _AT('edit_template') . '</strong></a></li>';
                 echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type='.$this->template_type.SEP.'temp='.$this->template_dir.'"><strong>'. _AT('edit_metadata') . '</strong></a></li>';
                 //echo '<li  class="active"><strong>'. _AT('delete') . '</strong></li>';
-                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?temp='.$this->template_dir.'">'. _AT('delete') . '</a></li>';
+                echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/delete.php?temp='.$this->template.'">'. _AT('delete') . '</a></li>';
             ?>
         </ul>
     </div>
