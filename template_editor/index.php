@@ -19,10 +19,18 @@ $_custom_head .= '<link rel="stylesheet" href="themes/'.$_SESSION['prefs']['PREF
 $_custom_head .= '<script type="text/javascript" src="template_editor/js/jquery.ui.sortable.js"></script>'."\n";
 global $_current_user;
 
+// Check if the template DIR is writable
+if(!is_writable('../templates')){
+    $msg->addWarning('TEMPLATE_DIR_NOT_WRITABLE');
+    $temp_unwritable = TRUE;
+}else{
+    $msg->addFeedback('TEMPLATE_DIR_WRITABLE');
+}
+//
 if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITOR])) {
     // Temporary hack re: mantis 5530
     if(!isset($_POST['template_type'])){
-    require(TR_INCLUDE_PATH.'header.inc.php');
+        require(TR_INCLUDE_PATH.'header.inc.php');
     }
 
     if(isset ($_POST['submit'])) {
@@ -38,14 +46,17 @@ if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITO
             $content=$commons->parse_to_XML('<structure version="0.1"></structure>');
             $commons->save_xml($content, 'structures/'.$template_folder, 'content.xml');
             Header('Location: edit_structure.php?temp='.$template_folder);
+            exit;
             
         }elseif($_POST['template_type']=='layouts') {
             $commons->save_file('layouts/'.$template_folder, $template_folder.'.css');
             Header('Location: edit_layout.php?temp='.$template_folder);
+            exit;
             
         }elseif($_POST['template_type']=='page_templates') {
             $commons->save_file('page_templates/'.$template_folder, $template_folder.'.html');
             Header('Location: edit_page.php?temp='.$template_folder);
+            exit;
         }
     }elseif(isset ($_GET['tab'])) {
         require('classes/TemplateCommons.php');
@@ -63,6 +74,7 @@ if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITO
             $savant->assign('template_list', $pgtemp_list);
         }else {
             Header('Location: index.php');
+            exit;
         }
         $savant->assign('template_type',$_GET['tab']);
         $savant->display('template_editor/index.tmpl.php');
@@ -73,5 +85,6 @@ if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITO
     exit;
 }else{
     Header('Location: ../index.php');
+    exit;
 }
 ?>

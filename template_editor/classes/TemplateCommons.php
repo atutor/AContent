@@ -103,7 +103,11 @@ class TemplateCommons {
      */
     public function create_template_metadata($template_type,$template_folder, $template_name,$template_desc,$maintainer_name,
         $maintainer_email,$template_url,$template_license,$release_version,$release_date,$release_state,$release_notes) {
-        global $template_dir_map, $msg;
+        global $template_dir_map, $msg, $temp_unwritable;
+        if($temp_unwritable === TRUE){
+            $msg->addError('TEMPLATE_UPDATE_FAILED');
+            return false;
+        }
         $metadata = new DOMDocument();
         $metadata->formatOutput = true;
 

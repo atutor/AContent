@@ -110,7 +110,6 @@ $result=$dao->execute($sql);
 
 <?php if (!empty($this->test_ids)): ?>
 <div id="content-test" class="input-form">
-	<ol>
 		<strong><?php echo _AT('tests') . ':' ; ?></strong>
 		<li class="top-tool"><?php echo $this->test_message; ?></li>
 		<ul class="tools">
@@ -122,14 +121,13 @@ $result=$dao->execute($sql);
 			}
 		?>
 		</ul>
-	</li></ol>
 </div>
 <?php endif; ?>
 
 <?php if (is_array($this->forum_ids)): ?>
 <div id="content-test" class="input-form">
     <ol>
-        <strong><?php echo _AT('forums') . ':' ; ?></strong>
+        <li style="list-style-type: none;"><strong><?php echo _AT('forums') . ':' ; ?></strong>
             <ul class="tools">
                 <?php
                 foreach ($this->forum_ids as $id => $forum_obj) {

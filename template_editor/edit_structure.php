@@ -22,7 +22,7 @@ if($_POST['submit'] == _AT('cancel')){
     header('Location: index.php?tab=structures');
     exit;
 }
-
+$type="structures";
 $template=$_GET['temp'];
 require('classes/TemplateCommons.php');
 $commons=new TemplateCommons('../templates');
@@ -32,11 +32,20 @@ if($commons->template_exists('structure', $template)) {
     Header('Location: index.php');
     exit;
 }
+if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$type)){
+    $msg->addWarning('TEMPLATE_DIR_NOT_WRITABLE');
+    $temp_unwritable = TRUE;
+}else{
+    $msg->addFeedback('TEMPLATE_DIR_WRITABLE');
+}
+
 // save the changes
-if(isset ($_POST['submit'])) {      
+if(isset ($_POST['submit'])) {   
+    if(!isset($temp_unwritable)){   
     $dom=$commons->parse_to_XML($_POST['xml_text']);
     $commons->save_xml($dom, "structures/".$template, "content.xml");
     $msg->addFeedback('TEMPLATE_UPDATED');
+    }
 }
 require(TR_INCLUDE_PATH.'header.inc.php');
 

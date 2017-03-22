@@ -74,6 +74,9 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
         $metadata=$commons->load_metadata($type,$_GET['temp']);
         $savant->assign('template_name', $metadata['template_name']);
         $savant->assign('template_dir', $_GET['temp']);
+        if($_GET['type'] =='page_templates'){
+            $_GET['type'] = 'pages';
+        }
         $savant->assign('template_type', $_GET['type']);
         $savant->display('template_editor/delete.tmpl.php');
     }else {

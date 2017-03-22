@@ -9,7 +9,7 @@ INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requi
 
 /*
 ## Language for template editor
-INSERT INTO `language_text` VALUES ('en', '_template', 'template_editor', 'Template Editor', '2013-07-13 08:46:35', ''),
+REPLACE INTO `AC_language_text` VALUES ('en', '_template', 'template_editor', 'Template Editor', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'create_template', 'Create Template', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'pages', 'Pages', '2013-07-13 08:46:35', ''),
 ('en', '_template', 'edit_structure', 'Edit Structure', '2013-07-13 08:46:35', ''),
@@ -45,8 +45,8 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'template_editor', 'Templ
 ('en', '_template', 'release_state', 'Release State', '2013-07-13 09:09:00', ''),
 ('en', '_template', 'release_note', 'Release Note', '2013-07-13 09:09:00', ''),
 ('en', '_template', 'empty_fields_error', 'One or more required fields are empty.', '2013-07-13 09:09:00', ''),
-('en', '_template', 'confirm_template_delete', 'Are you sure you want to delete the template <strong>%s</strong>?', '2013-07-13 09:15:00', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'delete_template', 'Delete Template', '2013-07-13 08:49:45', ''),
+('en', '_template', 'confirm_template_delete', 'Are you sure you want to delete the template <strong>%s</strong>?', '2013-07-13 09:15:00', ''),
+('en', '_template', 'delete_template', 'Delete Template', '2013-07-13 08:49:45', ''),
 ('en', '_template', 'confirm_template_delete', 'Are you sure you want to delete the template <strong>%s</strong>?', '2013-07-13 09:15:00', ''),
 ('en', '_template', 'bold', 'Bold', '2013-08-10 09:40:00', ''),
 ('en', '_template', 'italic', 'Italic', '2013-08-10 09:40:00', ''),
@@ -76,6 +76,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'delete_template', 'Delet
 ('en', '_template', 'ordered_list', 'Ordered List', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'image', 'Image', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'table', 'Table', '2013-09-08 09:40:00', ''),
+('en', '_template', 'box', 'Box', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'format', 'Format', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'rows', 'Rows', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'columns', 'Columns', '2013-09-08 09:40:00', ''),
@@ -84,8 +85,64 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'delete_template', 'Delet
 ('en', '_template', 'number_of_columns', 'Columns', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'link', 'Link', '2013-09-08 09:40:00', ''),
 ('en', '_template', 'paragraph', 'Paragraph', '2013-09-08 09:40:00', ''),
-('en', '_msgs', 'TR_HELP_TEMPLATE_EDITOR', '<h2>Template Editor</h2><p>Template Editor allows administrators to create, edit and manage AContent templates easily. Template Editor has four tabs and the first tab is for creating new templates. The other three shows existing templates of theme, structure and page templates and you can edit any of the existing templates by clicking on them</p><h3>Creating a New Template</h3><p>To create a new template you have to provide the details about template. Template Name, Template Type, Maintainer Name, Release Version and Release State fields are required. Most fields are self-explanatory. You can choose the template type out of the three types: Theme, Page and Structure. By clicking the Create button the new template will be created and opened in the respective template editor according to the type.</p>', '2013-09-18 09:40:00', ''),
-('en', '_msgs', 'TR_HELP_STRUCTURE_EDITOR', '<h2>Structure Template Editor</h2><p>User interface of the structure template editor has a text field, a tree view and a toolbar. The text field display the XML script. that define the template and the treeview shows the template as a tree like structure. You can easily manipulate the tree view using the toolbar and mouse by dragging nodes.</p><h3>Toolbar</h3><p>You can click and select nodes of the treeview and availability of toolbar buttons change according to the selected node.</p><ul><li><img src=\"../images/add_sub_folder.gif\" alt=\"\" /> Inserts a sub folder under the currently selected node. Only available for structure or folder nodes.<li><img src=\"../images/add_sub_page.gif\" alt=\"\" /> Inserts a page under the currently selected node. Only available for structure and folder nodes.<li><img src=\"../images/tree/tree_page_templates.gif\" alt=\"\" /> Inserts a pagetemplates node under the currently selected page. <li><img src=\"../images/tree/tree_page_template.gif\" alt=\"\" /> Inserts a page template node under the currently selected page templates node.<li><img src=\"../images/tree/tree_tests.gif\" alt=\"\" /> Inserts a tests node under the currently selected page.<li><img src=\"../images/tree/tree_test.gif\" alt=\"\" /> Inserts a test node under the currently tests node.<li><img src=\"../images/tree/tree_forum.gif\" alt=\"\" /> Inserts a forum under the currently selected page.<li>Use the Name field set the name of the currently selected node. Only available for structure, folder, page, test, page template and forum nodes.<li>Use the Min and Max fields to set the minimum and maximum numbers for the currently selected node. Only available for structure, folder, page, test, page template and forum nodes.<li><img src=\"../images/x.gif\" alt=\"\" /> Delete the currently selected node. Deleting the top structure element will delete the whole template.<li><img src=\"../images/move_up.png\" alt=\"\" /><img src=\"../images/move_down.png\" alt=\"\" /> Move up/down the currently selected node.</ul><p>You can easily reorder tree nodes by dragging and you can drop them only within a suitable parent node. As an example you can move a Test node only to directly under a Page node. You can also modify the XML code in the text field and the treeview will be auto updated to reflect the changes.</p>', '2013-09-18 09:40:00', ''),
-('en', '_msgs', 'TR_HELP_LAYOUT_EDITOR', "<h2>Theme Template Editor</h2><p>Theme template editor allows you to edit themes/layout templates easily without coding any CSS. This has to modes: basic and advanced. In basic mode you can modify the template entirely using the user interface and in advanced mode you can directly edit the CSS script of the template.</p><p>Theme template editor has preview panel to display a live preview of the template. In basic mode you can select the elements in the preview panel and the CSS properties of the selected element will be displayed on the left side panel. Using this panel you can easily set values for some basic properties such as text alignment, font, background and border. It also provide the option to add any other CSS property and value pair. All the non basic properties currently defined for the selected item are also displayed and their values can be edited easily. In the advanced mode CSS code is displayed and you can directly edit it. All the changes will be reflected in the preview panel instantly.</p><p>There a seperat panel at the bottom to manage images associated with the theme. Using this panel you can upload new images to be used with the template and delete existing images. There's another panel to upload the screenshot image for the template.</p>", '2013-09-18 09:40:00', ''),
-('en', '_msgs', 'TR_HELP_PAGE_TEMPLATE_EDITOR', '<h2>Page Template Editor</h2><p>Page template editor allows you to edit page templates easily without coding any HTML. This also has to modes: basic and advanced. </p><p>In basic mode you have a WYSIWYG editor and you can insert some basic page elements such as paragraph, list and image using the toolbar. It also provide functionality to modify text alignment, change text format, font etc. In advanced mode you get the HTML code and it can be directly edited. A page template should only define the structure of a page. So focus on the elements in the page rather than the content and be careful not to put unnecessary content when creating a page template.</p><p>At the bottom there is a panel to upload a screenshot image for the template. Or you can use the sreenshot auto generate feature to quickly generate a screenshot automatically.</p>', '2013-09-18 09:40:00', '');
+('en', '_msgs', 'TR_HELP_TEMPLATE_EDITOR', '
+<h2>Template Editor</h2>
+<p>The Template Editor allows administrators to create, edit and manage AContent templates. Templates are managed through the four tabs described below:</p>
+<ul>
+<li><strong>Create Template</strong>: All new templates are started here, then advance to one of the template editors described below. </li>
+<li><strong>Themes</strong>: review and customize existing theme templates and styles.</li>
+<li><strong>Structures</strong>: review and modify existing content structures.</li>
+<li><strong>Pages</strong>: review and tailor layouts for presenting page content.</li>
+</ul>
+<h3>Creating a New Template</h3>
+<p>To create a new template, select the Create Template tab, then enter at least the required information to setup the properties for your new template. The required fields are decribed below:</p>
+<ul>
+<li><strong>Template Name</strong>:  A descriptive name for the theme, which appears with its thumbnail. Keep it short. </li>
+<li><strong>Template Type</strong>:   Select  either Theme, Page, or Structure</li>
+<li><strong>Maintainer Name</strong>:  Who is maintaining the theme?</li>
+<li><strong>Release Version</strong>:   Set this value to a number greater than or equal to 1.0 to make the template available to use while authoring content. Set to 0.9 or less to keep the template hidden while it is being developed.</li>
+<li><strong>Release State</strong>: Words like Dev, Beta, Stable, Mature to describe the development state.</li>
+</ul>
+<p>Click the Create button to save the properties for the new template and move on to the respective template editor to create the rest of the template. See the handbook page while using each editor for more about creating and maintaining templates.</p>
+', '2013-09-18 09:40:00', ''),
+('en', '_msgs', 'TR_HELP_STRUCTURE_EDITOR', '
+<h2>Structure Template Editor</h2>
+<p>Use the Structure Template Editor to create and modify standard content units, made up of things like a syllabus, outline, references, content, and a quiz, for instance. </p>
+<p>The Structure Template Editor has a toolbar across the top, a text window to the left where the template XML file is generated, and the interactive treeview to the right. Review the default structures that come with AContent, to understand how content units are assembled. And, see the toolbar buttons described below.</p> 
+
+<h3>Toolbar</h3>
+<p>As you click and select nodes in the treeview,  the toolbar buttons will change according to the selected node.</p>
+<ul>
+<li><img src=\"../images/add_sub_folder.gif\" alt=\"\" /> Inserts a sub folder under the currently selected node. Only available for structure or folder nodes.</li>
+<li><img src=\"../images/add_sub_page.gif\" alt=\"\" /> Inserts a page under the currently selected node. Only available for structure and folder nodes.</li>
+<li><img src=\"../images/tree/tree_page_templates.gif\" alt=\"\" /> Inserts a pagetemplates node under the currently selected page. </li>
+<li><img src=\"../images/tree/tree_page_template.gif\" alt=\"\" /> Inserts a page template node under the currently selected pagetemplates node.</li>
+<li><img src=\"../images/tree/tree_tests.gif\" alt=\"\" /> Inserts a tests node under the currently selected page.</li>
+<li><img src=\"../images/tree/tree_test.gif\" alt=\"\" /> Inserts a test node under the currently tests node.</li>
+<li><img src=\"../images/tree/tree_forum.gif\" alt=\"\" /> Inserts a forum under the currently selected page.</li>
+<li>Use the Name field to set the name of the currently selected node. Names can be set for structure, folder, page, test, page template, and forum nodes.</li>
+<li>Use the Min and Max fields to set the minimum and maximum numbers for the currently selected node. Only available for structure, folder, page, test, page template and forum nodes.</li>
+<li><img src=\"../images/x.gif\" alt=\"\" /> Delete the currently selected node. Deleting the top structure element will delete the whole template.</li>
+<li><img src=\"../images/move_up.png\" alt=\"\" /><img src=\"../images/move_down.png\" alt=\"\" /> Move the currently selected node up or down .</li>
+</ul>
+<p>You can easily reorder treeview nodes by dragging and dropping them within a suitable parent node. For example, you can only move a Test node under a Page node. If you know what you are doing, you can also modify the XML code in the text window and the treeview will auto update to reflect your changes.</p>
+', '2013-09-18 09:40:00', ''),
+('en', '_msgs', 'TR_HELP_LAYOUT_EDITOR', "
+<h2>Theme Template Editor</h2>
+<p>The Theme Template Editor allows you create and customize templates that control the look and feel of a page, a lesson, or a course. On the left is the editor, either Basic, editing through the context sensitive form, or Advanced, editing the CSS directly.</p>
+<p>To the right is the preview panel to display a live update of the template. In basic mode you can select the elements in the preview panel on the right, to have the CSS properties of the selected element displayed in the editor panel on the left. You can set values for most basic CSS properties such as text alignment, font, background and border. More complex CSS may not be supported.</p>
+
+<p>If there is a style you can not create with the editor, you may edit the CSS directly to add your own custom styles.</p>
+<p>The <strong>Associated Images</strong> panels below the editor is where you upload and manage the images associated with the theme. See how associated images are referenced by viewing the CSS of other theme templates.</p>
+<p>The <strong>Screenshot</strong> area allows you to either automatically generate a thumbnail, or upload one to represent the theme.</p>
+", '2013-09-18 09:40:00', ''),
+('en', '_msgs', 'TR_HELP_PAGE_TEMPLATE_EDITOR', '
+<h2>Page Template Editor</h2>
+<p>The Page Template Editor allows you to create and customize units that layout the content of a page. Page templates can be as simple or complex as you like. One page template can be used as a full page of content, or several page templates can be strung together to create a page.</p>
+
+<p>There are two modes: Basic and Advanced. </p>
+<p>In <strong>Basic mode</strong> you have a WYSIWYG editor you can use to insert some basic page elements such as paragraphs, lists, boxes, tables, and images using the buttons in the toolbar. You can also modify text alignment, change text format, and font etc. </p>
+<p>In <strong>Advanced mode</strong> you can edit the HTML code directly. View the HTML of other page templates for examples of the element included in a page template. </p>
+<p>At the bottom is the Screenshot panel where you can quickly generate a screenshot automatically, or upload one you have custom created. </p>
+', '2013-09-18 09:40:00', '');
 */

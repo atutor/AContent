@@ -1,9 +1,9 @@
-<div id="error">
+<!-- <div id="error">
     <h4><?php echo _AT('the_follow_errors_occurred'); ?></h4>
     <ul>
         <li><?php echo _AT('empty_fields_error'); ?></li>
     </ul>
-</div>
+</div> -->
 
 <div id="subnavlistcontainer">
     <div id="sub-navigation">

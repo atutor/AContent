@@ -28,14 +28,22 @@ if($_POST['submit'] == _AT('cancel')){
 require('classes/TemplateCommons.php');
 
 $commons=new TemplateCommons('../templates');
-
+$type = "page_templates";
 $template=$_GET['temp'];
 // non existing template name
+if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$type)){
+    $msg->addWarning('TEMPLATE_DIR_NOT_WRITABLE');
+    $temp_unwritable = TRUE;
+}else{
+    $msg->addFeedback('TEMPLATE_DIR_WRITABLE');
+}
 
 if(!$commons->template_exists('page_templates', $template)) {
+    if(!isset($temp_unwritable)){
     $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
     Header('Location: index.php');
     exit;
+    }
 }
 
 if(isset ($_POST['submit'])) {

@@ -41,12 +41,19 @@ if(!$commons->template_exists('layouts', $template)) {
     header('Location: index.php');
     exit;
 }
-
+if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$type)){
+    $msg->addWarning('TEMPLATE_DIR_NOT_WRITABLE');
+    $temp_unwritable = TRUE;
+}else{
+    $msg->addFeedback('TEMPLATE_DIR_WRITABLE');
+}
 if(isset ($_POST['submit'])) { 
-    $commons->save_file("layouts/".$template,$template.".css",$_POST['css_text']);
-    $msg->addFeedback('TEMPLATE_UPDATED');
-    header('Location:'.$_SERVER['PHP_SELF'].'?mode='.intval($_POST['edit_mode']).SEP.'temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
-    exit;
+    if(!isset($temp_unwritable)){
+        $commons->save_file("layouts/".$template,$template.".css",$_POST['css_text']);
+        $msg->addFeedback('TEMPLATE_UPDATED');
+        header('Location:'.$_SERVER['PHP_SELF'].'?mode='.intval($_POST['edit_mode']).SEP.'temp='.urlencode($template).SEP.'lastelement='.urlencode($_REQUEST['lastelement']));
+        exit;
+    }
 }
 if(isset ($_POST['upload'])) {
     echo $commons->upload_image("layouts/".$template."/".$template,"");
@@ -62,6 +69,16 @@ if(isset ($_POST['generate_scrn'])) {
 
 $css_path=realpath("../templates/layouts")."/". $template."/".$template.".css";
 $screenshot_path=realpath("../templates/layouts")."/". $template."/screenshot-".$template.".png";
+
+// Check if the template DIR is writable
+if(!is_writable('../templates')){
+    $msg->addWarning('TEMPLATE_DIR_NOT_WRITABLE');
+    $temp_unwritable = TRUE;
+}else{
+    $msg->addFeedback('TEMPLATE_DIR_WRITABLE');
+    $temp_unwritable = TRUE;
+}
+
 require(TR_INCLUDE_PATH.'header.inc.php');
 
 if(file_exists($css_path)) {

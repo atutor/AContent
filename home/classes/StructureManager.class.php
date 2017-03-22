@@ -359,13 +359,18 @@ class StructureManager
       
 		$content = array();
 		$children = $page->page_templates->children();
-		if(is_array($children)){
-            foreach ($children as $child) {
-                $content[] = $child['name'];
-                           // die($child['name']);
+		$json = json_encode($children);
+        $array = json_decode($json,TRUE);
+        // this only works when pages are in folders
+		if(is_array($array) && isset($array['page_template'])){
+            foreach($array['page_template'] as $child => $attributes) {
+                if(is_array( $attributes) && isset($attributes['@attributes'])){
+                    foreach($attributes['@attributes'] as $property => $name){
+                        $content[] = $name;
+                    }
+                }
             }
 		}
-
 		return $content;
 	}
 	
