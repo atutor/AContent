@@ -29,7 +29,7 @@ class ContentDAO extends DAO {
 	                       $content_type)
 	{
 		global $addslashes, $msg;
-		
+		$text = preg_replace("/'/","\\'",$text);
 		
 		if ($this->isFieldsValid('create', $course_id, $title))
 		{
@@ -110,7 +110,7 @@ class ContentDAO extends DAO {
 	                     $head, $use_customized_head, $test_message)
 	{
 		global $addslashes, $msg;
-
+        $text = preg_replace("/'/","\\'",$text);
 		if ($this->isFieldsValid('update', $content_id, $title))
 		{
 			/* insert into the db */

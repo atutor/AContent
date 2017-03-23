@@ -207,7 +207,7 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
 	$content_array = ContentUtility::getContentTable($content, $content_row['formatting']);
 	
 	$savant->assign('content_table', $content_array[0]);
-	$savant->assign('body', $content_array[1]);
+	$savant->assign('body', htmlspecialchars_decode($content_array[1]));
 	$savant->assign('has_text_alternative', $has_text_alternative);
 	$savant->assign('has_audio_alternative', $has_audio_alternative);
 	$savant->assign('has_visual_alternative', $has_visual_alternative);
