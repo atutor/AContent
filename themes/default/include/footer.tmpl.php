@@ -78,7 +78,3 @@ if ($this->course_id > 0) { ?>
 
 </body>
 </html>
-
-
-
-?>
