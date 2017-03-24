@@ -56,27 +56,29 @@ if ($this->course_id > 0) { ?>
 
   <!-- <div class="bottom"></div> -->
   <!--  bottom for liquid-round theme -->
+  
+    <div style="width:100%; ">
+  <?php
+        $mtime = microtime(); 
+        $mtime = explode(" ", $mtime);
+        $mtime = $mtime[1] + $mtime[0]; 
+        $endtime = $mtime; 
+        $totaltime = ($endtime - $starttime); 
+        if (defined('TR_DEVEL') && TR_DEVEL) 
+        {
+            debug(TABLE_PREFIX, 'TABLE_PREFIX');
+            debug(DB_NAME, 'DB_NAME');
+            debug($totaltime. ' seconds.', "TIME USED"); 
+            debug($_SESSION);
+        }
+        // Timer Ends
+  ?>
   </div>
+  </div>
+
 </body>
 </html>
-<?php
-// Timer, calculate how much time to load the page
-// starttime is in include/header.inc.php
-$mtime = microtime(); 
-$mtime = explode(" ", $mtime);
-$mtime = $mtime[1] + $mtime[0]; 
-$endtime = $mtime; 
-$totaltime = ($endtime - $starttime); 
-
-if (defined('TR_DEVEL') && TR_DEVEL) 
-{
 
 
-	debug(TABLE_PREFIX, 'TABLE_PREFIX');
-	debug(DB_NAME, 'DB_NAME');
-	debug($totaltime. ' seconds.', "TIME USED"); 
-	debug($_SESSION);
-}
-// Timer Ends
 
 ?>
