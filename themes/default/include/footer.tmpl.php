@@ -59,6 +59,7 @@ if ($this->course_id > 0) { ?>
   
     <div style="width:100%; ">
   <?php
+        global $starttime;
         $mtime = microtime(); 
         $mtime = explode(" ", $mtime);
         $mtime = $mtime[1] + $mtime[0]; 
