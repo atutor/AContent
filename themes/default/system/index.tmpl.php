@@ -33,6 +33,11 @@ global $onload, $_config;
 $onload = 'document.form.site_name.focus();';
 
 require(TR_INCLUDE_PATH.'header.inc.php');
+//Timer
+$mtime = microtime(); 
+$mtime = explode(' ', $mtime); 
+$mtime = $mtime[1] + $mtime[0]; 
+$starttime = $mtime;
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 

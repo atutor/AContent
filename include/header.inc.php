@@ -19,6 +19,7 @@ $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime; 
 //Timer Ends
 
+global $starttime;
 global $myLang;
 global $savant;
 global $onload;

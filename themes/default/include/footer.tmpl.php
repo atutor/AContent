@@ -59,12 +59,12 @@ if ($this->course_id > 0) { ?>
   
     <div style="width:100%; ">
   <?php
-        global $starttime;
+        //global $starttime;
         $mtime = microtime(); 
         $mtime = explode(" ", $mtime);
         $mtime = $mtime[1] + $mtime[0]; 
         $endtime = $mtime; 
-        $totaltime = ($endtime - $starttime); 
+        $totaltime = ($endtime - $this->starttime); 
         if (defined('TR_DEVEL') && TR_DEVEL) 
         {
             debug(TABLE_PREFIX, 'TABLE_PREFIX');

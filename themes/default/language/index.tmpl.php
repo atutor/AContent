@@ -14,6 +14,11 @@ global $_custom_css;
 $_custom_css = TR_BASE_HREF."include/jscripts/infusion/components/inlineEdit/css/InlineEdit.css";
 
 include(TR_INCLUDE_PATH.'header.inc.php');
+//Timer
+$mtime = microtime(); 
+$mtime = explode(' ', $mtime); 
+$mtime = $mtime[1] + $mtime[0]; 
+$starttime = $mtime;
 ?>
 <div class="input-form">
 

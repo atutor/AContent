@@ -13,6 +13,7 @@
 global $savant;
 global $_base_path, $_course_id;
 global $framed, $popup;
+global $starttime;
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
@@ -24,7 +25,7 @@ if ($_course_id > 0)
 	$course_row = $coursesDAO->get($_course_id);
 	if ($course_row['copyright'] <> '') $savant->assign('course_copyright', $course_row['copyright']);
 }
-
+$savant->assign('starttime', $starttime);
 $savant->assign('course_id', $_course_id);
 $savant->assign('base_path', $_base_path);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);

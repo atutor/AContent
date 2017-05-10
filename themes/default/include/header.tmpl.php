@@ -55,10 +55,10 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 $lang_charset = "UTF-8";
 //Timer
-$mtime = microtime(); 
-$mtime = explode(' ', $mtime); 
-$mtime = $mtime[1] + $mtime[0]; 
-$starttime = $mtime; 
+//$mtime = microtime(); 
+//$mtime = explode(' ', $mtime); 
+//$mtime = $mtime[1] + $mtime[0]; 
+//$starttime = $mtime; 
 //Timer Ends
 ?><!DOCTYPE html>
 <html  lang="<?php echo DEFAULT_LANGUAGE_CODE; ?>"> 

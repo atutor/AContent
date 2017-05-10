@@ -15,6 +15,11 @@ global $onload;
 $onload = "if (jQuery('#is_author').attr('checked')) jQuery('#table_is_author').show(); else jQuery('#table_is_author').hide();";
 
 require(TR_INCLUDE_PATH.'header.inc.php'); 
+//Timer
+$mtime = microtime(); 
+$mtime = explode(' ', $mtime); 
+$mtime = $mtime[1] + $mtime[0]; 
+$starttime = $mtime;
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
