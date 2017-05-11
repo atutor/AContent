@@ -13,13 +13,13 @@ if($this->metadata['template_type']=='page_templates') $type='page_templates';
     <div id="sub-navigation">
     <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
     <?php
-        if($type = 'page_template'){
+        if($type == 'page_template' || $type == 'page_templates'){
             $temptype = 'pages';
         } else{
-            //$temptype = $type;
+            $temptype = $type;
         }
     ?>
-    <a href="template_editor/index.php?tab=<?php echo $temptype; ?>"><img src="themes/default/images/previous.png" alt="back"></a>
+    <a href="template_editor/index.php?tab=<?php echo $temptype; ?>"><img src="themes/default/images/previous.png" alt="<?php echo _AT('back'); ?>"></a>
     </span>
         <ul id="subnavlist">
             <?php 
