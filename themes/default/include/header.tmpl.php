@@ -321,24 +321,18 @@ foreach ($this->top_level_pages as $page) {
   <div id="contentwrapper">
     <?php //if ((isset($this->course_id) && $this->course_id > 0)): ?>
     <div id="leftcolumn">
-      <script type="text/javascript">
+     <a name="menu"></a>
+     <div id="side-menu" role="navigation" aria-label="<?php echo _AT('side_menu');?>"> 
+     <?php require(TR_INCLUDE_PATH.'side_menu.inc.php'); ?> 
+    <script type="text/javascript">
       //<![CDATA[
       var state = trans.utility.getcookie("side-menu");
       if (state && (state == 'none')) {
-          document.writeln('<a name="menu"></a><div style="display:none;" id="side-menu" role="navigation"  aria-label="<?php echo _AT('side_menu');?>">');
-      } else {
-          document.writeln('<a name="menu"></a><div id="side-menu" role="navigation" aria-label="<?php echo _AT('side_menu');?>">');
-      }
-      
+        $('#side-menu').css('display','none');
+        }
       //]]>
       </script>
-      
-      <?php require(TR_INCLUDE_PATH.'side_menu.inc.php'); ?>
-      <script type="text/javascript">
-      //<![CDATA[
-      document.writeln('</div>');
-      //]]>
-      </script>
+     </div>
     </div>
     <div id="contentcolumn" role="main"
     <?php if (isset($this->course_id) && $this->course_id <= 0): ?>
