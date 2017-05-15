@@ -197,7 +197,7 @@ class StructureManager
 		
 		echo '<strong>';
 		
-		$this->printStruct(null, -1);
+		$this->printStruct(null, -1, $this->name);
 		
 		
 		
@@ -217,7 +217,7 @@ class StructureManager
 	
 	
 	
-	function printStruct($array, $folder) {
+	function printStruct($array, $folder, $tname) {
 				
 		global $_base_path;
 		
@@ -245,9 +245,9 @@ class StructureManager
 					
 					
 				if($this->isFolder($page)) 
-					$this->insertToogle($name, $i, 'expand');
+					$this->insertToogle($name, $i, 'expand', $tname);
 				else if($this->hasTest($page))
-					$this->insertToogle($name, $i, 'collapse');
+					$this->insertToogle($name, $i, 'collapse', $tname);
 				else 
 					echo '<img class="img-size-tree" style="margin-left: 1px;" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_horizontal.gif">';
 				
@@ -267,7 +267,7 @@ class StructureManager
 				
 				if($this->isFolder($page)) {
 					$name = preg_replace('/\s/', '_', $name);  // To accommodate folder names with spaces
-					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$name.$i.'" >';
+					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$name.$i.$tname.'" >';
 					$this->printStruct($page->children(), $i);
 									
 					echo '</div>';
@@ -283,31 +283,8 @@ class StructureManager
 		}
 		
 		
-	}
-/* OLD	
-	function insertToogle($page,$i,$value ) {
-		
-		$tree_expand_icon = $_base_path.'images/tree/tree_expand.gif';
-		$tree_collapse_icon = $_base_path.'images/tree/tree_collapse.gif';
-		
-		
-		echo '
-		<script>
-		function initContentMenu() {
-  			var tree_collapse_icon = "'.$_base_path.'images/tree/tree_collapse.gif";
-  			var tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
-			
-		};
-		</script>
-		';
-		
-		echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolderStruct(\''.$i.'\', \''.$page.'\', \''._AT('expand').'\', \''._AT('collapse').'\', \''.$tree_expand_icon.'\', \''.$tree_collapse_icon.'\' ); ">';
-		echo '<img id="tree_icon_'.$page.$i.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.$_base_path.'images/tree/tree_'.$value.'.gif">';
-		echo '</a>';
-	}
-*/
-    // NEW    
-        function insertToogle($page,$i,$value ) {
+	}  
+        function insertToogle($page,$i,$value,$tname ) {
 		
 		$tree_expand_icon = TR_BASE_HREF.'images/tree/tree_expand.gif';
 		$tree_collapse_icon = TR_BASE_HREF.'images/tree/tree_collapse.gif';
@@ -323,8 +300,8 @@ class StructureManager
 		</script>
 		';
 		$page = preg_replace('/\s/', '_', $page);  // To accommodate folder names with spaces
-		echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolderStruct(\''.$i.'\', \''.$page.'\', \''._AT('expand').'\', \''._AT('collapse').'\', \''.$tree_expand_icon.'\', \''.$tree_collapse_icon.'\' ); ">';
-		echo '<img id="tree_icon_'.$page.$i.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.TR_BASE_HREF.'images/tree/tree_'.$value.'.gif">';
+		echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolderStruct(\''.$i.$tname.'\', \''.$page.'\', \''._AT('expand').'\', \''._AT('collapse').'\', \''.$tree_expand_icon.'\', \''.$tree_collapse_icon.'\' ); ">';
+		echo '<img id="tree_icon_'.$page.$i.$tname.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.TR_BASE_HREF.'images/tree/tree_'.$value.'.gif">';
 		echo '</a>';
 	}
 	
