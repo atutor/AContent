@@ -317,7 +317,7 @@ function save_changes($redir, $current_tab) {
 		//Delete entries
 		if (!empty($toBeDeleted)){
 			$tids = implode(",", $toBeDeleted);
-			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
+			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[_cid] AND test_id IN ($tids)";
 			$contentTestsAssocDAO->execute($sql);
 		}
 	
