@@ -20,6 +20,13 @@ if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITO
 $_GET['type'] = $addslashes(strip_tags($_GET['type']));
 $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
 
+    if($_GET['type'] ==  'page_templates' || $_GET['type'] ==  'page_template'){
+            $tab = 'pages';
+    } else if($_GET['type'] ==  'layouts'){
+            $tab = 'layouts';
+    } else if($_GET['type'] ==  'structures'){
+            $tab = 'structures';
+    } 
     if(isset ($_GET['type']) && isset ($_GET['temp'])) {
         require('classes/TemplateCommons.php');
         $commons=new TemplateCommons('../templates');
@@ -78,14 +85,15 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
             $_GET['type'] = 'pages';
         }
         $savant->assign('template_type', $_GET['type']);
+        $savant->assign('tab', $tab);
         $savant->display('template_editor/delete.tmpl.php');
     }else {
-        header('Location: ../index.php?tab='.$type);
+        header('Location: ../index.php?tab='.$tab);
         exit;
     }
     require(TR_INCLUDE_PATH.'footer.inc.php');
 }else {
-    header('Location: ../index.php?tab='.$type);
+    header('Location: ../index.php?tab='.$tab);
     exit;
 }
 ?>
