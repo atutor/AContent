@@ -1,7 +1,7 @@
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
     <span style="width:3em; float:left;margin-left:2em;margin-right:-2em;">
-    <a href="template_editor/index.php?tab=<?php echo $this->template_type; ?>"><img src="themes/default/images/previous.png" alt="<?php echo _AT('back'); ?>"></a>
+    <a href="template_editor/index.php?tab=<?php echo $this->tab; ?>"><img src="themes/default/images/previous.png" alt="<?php echo _AT('back'); ?>"></a>
     </span>
         <ul id="subnavlist">
             <?php 
@@ -15,7 +15,7 @@
                 echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_'. $app_type.'.php?temp='. $this->template_dir.'"><strong>'. _AT('edit_template') . '</strong></a></li>';
                 echo '<li><a style="font-weight:bold; text-decoration:none;" href="template_editor/edit_meta.php?type='.$this->template_type.SEP.'temp='.$this->template_dir.'"><strong>'. _AT('edit_metadata') . '</strong></a></li>';
                 //echo '<li  class="active"><strong>'. _AT('delete') . '</strong></li>';
-                echo '<li><span style="font-weight:bold; text-decoration:none;">'. _AT('delete') . '</spab></li>';
+                echo '<li><span style="font-weight:bold; text-decoration:none;">'. _AT('delete') . '</span></li>';
             ?>
         </ul>
     </div>
