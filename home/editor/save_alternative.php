@@ -63,8 +63,8 @@ if (is_array($existing_secondary_rows)) {
 $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources (primary_resource_id, secondary_resource, language_code)
         VALUES (".$pid.", '".$addslashes($secondary_resource)."', '".$_SESSION['lang']."')";
 $dao->execute($sql);
-//$secondary_resource_id = mysql_insert_id();
-$secondary_resource_id = ac_insert_id();
+
+$secondary_resource_id = $dao->ac_insert_id();
 
 $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types (secondary_resource_id, type_id)
         VALUES (".$secondary_resource_id.", ".$type_id.")";
