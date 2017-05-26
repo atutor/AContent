@@ -106,8 +106,7 @@ class DAO {
                     {
                         $rows[] = $result->fetch_assoc();
                     }
-					// $result-.free fails with mysqli
-                    //$result->free;
+                    $result->free;
                     return $rows;
 		         }else{
 		            return false;
@@ -137,5 +136,14 @@ class DAO {
             return mysql_insert_id(self::$db);
         }
     }
+    function my_add_null_slashes( $string ) {
+        if(defined('MYSQLI_ENABLED')){
+            return self::$db->real_escape_string(stripslashes($string));
+        }else{
+            return mysql_real_escape_string(stripslashes($string));
+        }
+
+    }
+
 }
 ?>
