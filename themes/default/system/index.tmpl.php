@@ -44,24 +44,24 @@ $starttime = $mtime;
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo  _AT("system_settings"); ?></legend>
 
-	<table class="form-data" align="center">
+	<table class="form-data">
 		<tr>
-			<td colspan="2" align="left"><br/><?php echo _AT('required_field_text') ;?></td>
+			<td colspan="2"><br/><?php echo _AT('required_field_text') ;?></td>
 		</tr>
 
 		<tr>
-			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="site_name"><?php echo _AT('site_name'); ?></label>:</td>
-			<td align="left"><input id="site_name" name="site_name" type="text" maxlength="20" size="30" value="<?php if (isset($_POST['site_name'])) echo stripslashes(htmlspecialchars($_POST['site_name'])); else echo stripslashes(htmlspecialchars($this->config['site_name'])); ?>" /></td>
+			<td><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="site_name"><?php echo _AT('site_name'); ?></label>:</td>
+			<td><input id="site_name" name="site_name" type="text" maxlength="200" size="30" value="<?php if (isset($_POST['site_name'])) echo stripslashes(htmlspecialchars($_POST['site_name'])); else echo stripslashes(htmlspecialchars($this->config['site_name'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="contact_email"><?php echo _AT('contact_email'); ?></label>:</td>
-			<td align="left"><input id="contact_email" name="contact_email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['contact_email'])) echo stripslashes(htmlspecialchars($_POST['contact_email'])); else echo stripslashes(htmlspecialchars($this->config['contact_email'])); ?>" /></td>
+			<td><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="contact_email"><?php echo _AT('contact_email'); ?></label>:</td>
+			<td><input id="contact_email" name="contact_email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['contact_email'])) echo stripslashes(htmlspecialchars($_POST['contact_email'])); else echo stripslashes(htmlspecialchars($this->config['contact_email'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left"><label for="theme"><?php echo _AT('theme'); ?></label>:</td>
-			<td align="left">
+			<td><label for="theme"><?php echo _AT('theme'); ?></label>:</td>
+			<td>
 				<select name="theme" id="theme"><?php
 					if (isset($_POST['theme']))
 						$selected_theme = $_POST['theme'];
@@ -85,8 +85,8 @@ $starttime = $mtime;
 		</tr>
 
 		<tr>
-			<td align="left"><label for="default_language"><?php echo _AT('default_language'); ?></label>:</td>
-			<td align="left">
+			<td><label for="default_language"><?php echo _AT('default_language'); ?></label>:</td>
+			<td>
 		<?php if (!empty($_POST['default_language'])) { 
 				$select_lang = $_POST['default_language']; 
 			} else { 
@@ -97,41 +97,41 @@ $starttime = $mtime;
 		</tr>
 
 		<tr>
-			<td align="left"><?php echo _AT('use_captcha'); ?>:</td>
-			<td align="left">
+			<td><?php echo _AT('use_captcha'); ?>:</td>
+			<td>
 				<input type="radio" name="use_captcha" id="statusD" value="<?php echo TR_STATUS_DISABLED; ?>" <?php if ((isset($_POST['use_captcha']) && $_POST['use_captcha']==TR_STATUS_DISABLED) || (!isset($_POST['use_captcha']) && $this->config['use_captcha']==TR_STATUS_DISABLED)) echo 'checked="checked"'; ?> /><label for="statusD"><?php echo _AT('disabled'); ?></label> 
 				<input type="radio" name="use_captcha" id="statusE" value="<?php echo TR_STATUS_ENABLED; ?>" <?php if ((isset($_POST['use_captcha']) && $_POST['use_captcha']==TR_STATUS_ENABLED) || (!isset($_POST['use_captcha']) && $this->config['use_captcha']==TR_STATUS_ENABLED)) echo 'checked="checked"'; ?> /><label for="statusE"><?php echo _AT('enabled'); ?></label>
 			</td>
 		</tr>
 		
 		<tr>
-			<td align="left" colspan="2">
+			<td colspan="2">
 				<small>&middot; <?php echo _AT('default_use_captcha'); ?></small>
 			</td>
 		</tr>
 		
 		<tr>
-			<td align="left"><label for="max_file_size"><?php echo _AT('max_file_size'); ?></label>:</td>
-			<td align="left"><input id="max_file_size" name="max_file_size" type="text" value="<?php if (isset($_POST['max_file_size'])) echo stripslashes(htmlspecialchars($_POST['max_file_size'])); else echo stripslashes(htmlspecialchars($this->config['max_file_size'])); ?>" /></td>
+			<td><label for="max_file_size"><?php echo _AT('max_file_size'); ?></label>:</td>
+			<td><input id="max_file_size" name="max_file_size" type="text" value="<?php if (isset($_POST['max_file_size'])) echo stripslashes(htmlspecialchars($_POST['max_file_size'])); else echo stripslashes(htmlspecialchars($this->config['max_file_size'])); ?>" /></td>
 		</tr>
 
 		<tr>
-			<td align="left" colspan="2">
+			<td colspan="2">
 				<small>&middot; <?php echo _AT('default_max_file_size'); ?></small>
 			</td>
 		</tr>
 		
 		<tr>
-			<td align="left"><label for="illegal_extentions"><?php echo _AT('illegal_extentions'); ?></label>:</td>
-			<td align="left"><textarea name="illegal_extentions" cols="50" id="illegal_extentions" rows="2" class="formfield" ><?php if ($this->config['illegal_extentions']) { echo str_replace('|',' ',$this->config['illegal_extentions']); }?></textarea></td>
+			<td><label for="illegal_extentions"><?php echo _AT('illegal_extentions'); ?></label>:</td>
+			<td><textarea name="illegal_extentions" cols="50" id="illegal_extentions" rows="2" class="formfield" ><?php if ($this->config['illegal_extentions']) { echo str_replace('|',' ',$this->config['illegal_extentions']); }?></textarea></td>
 		</tr>
 
 		<tr>
-			<td align="left"><label for="latex_server"><?php echo _AT('latex_server'); ?></label>:</td>
-			<td align="left"><input id="latex_server" name="latex_server" size="50" type="text" value="<?php if (isset($_POST['latex_server'])) echo stripslashes(htmlspecialchars($_POST['latex_server'])); else echo stripslashes(htmlspecialchars($this->config['latex_server'])); ?>" /></td>
+			<td><label for="latex_server"><?php echo _AT('latex_server'); ?></label>:</td>
+			<td><input id="latex_server" name="latex_server" size="50" type="text" value="<?php if (isset($_POST['latex_server'])) echo stripslashes(htmlspecialchars($_POST['latex_server'])); else echo stripslashes(htmlspecialchars($this->config['latex_server'])); ?>" /></td>
 		</tr>
 		<tr>
-			<td align="left" colspan="2">
+			<td colspan="2">
 				<small>&middot; <?php echo _AT('latex_server_info'); ?></small>
 			</td>
 		</tr>
@@ -141,8 +141,8 @@ $starttime = $mtime;
 -->
 <!-- RADIO BUTTON FOR THE SETTING OF ALL THREE TEMPLATE -->
                 <tr>
-                    <td aling="left"><label for="enable_template"><?php echo _AT('enable_template'); ?></label></td>
-                    <td aling="left">
+                    <td><label for="enable_template"><?php echo _AT('enable_template'); ?></label></td>
+                    <td>
                         <input type="radio" onClick="show('all');" name="enable_template" id="statusTD" value="<?php echo TR_STATUS_DISABLED; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_DISABLED) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_DISABLED)) echo 'checked="checked"'; ?> /><label for="statusTD"><?php echo _AT('disabled'); ?></label> 
                         <input type="radio" onClick="show('all');" name="enable_template" id="statusTE" value="<?php echo TR_STATUS_ENABLED; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_ENABLED) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_ENABLED)) echo 'checked="checked"'; ?> /><label for="statusTE"><?php echo _AT('enabled'); ?></label>	        
                         <input type="radio" onClick="show('personal');" name="enable_template" id="e_p" value="<?php echo TR_STATUS_PERSONAL; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_PERSONAL) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_PERSONAL)) echo 'checked="checked"'; ?> /><label for="e_p"><?php echo _AT('personal_setting'); ?></label> 
@@ -150,14 +150,12 @@ $starttime = $mtime;
                 </tr>
 
                 <tr>
-			<td align="left" colspan="2">
+			<td colspan="2">
 				<small>&middot; <?php echo _AT('default_use_template'); ?></small>
+				<input type="hidden" name="nascosto" id="hidden" 
+                value="<?php if($_POST['enable_template']==TR_STATUS_PERSONAL) echo TR_STATUS_PERSONAL; ?>" />
 			</td>
 		</tr>
-
-                <input type="hidden" name="nascosto" id="hidden" 
-                value="<?php if($_POST['enable_template']==TR_STATUS_PERSONAL) echo TR_STATUS_PERSONAL; ?>">
-                </input>
                 
                 <script language="javascript" type="text/javascript">
                     function show(val){
@@ -174,8 +172,8 @@ $starttime = $mtime;
                  </script>
 
                 <tr>
-                    <td aling="left"><label id="label_enable" <?php if((isset($_POST['enable_template']) && $_POST['enable_template']== TR_STATUS_PERSONAL) || (!isset($_POST['enable_template'])&& $this->config['enable_template']==TR_STATUS_PERSONAL)){ echo 'style="display:inline"';}else{ echo 'style="display:none"';}?> > <?php echo _AT('choice_template'); ?></label></td>
-                    <td aling="left">
+                    <td><label id="label_enable" <?php if((isset($_POST['enable_template']) && $_POST['enable_template']== TR_STATUS_PERSONAL) || (!isset($_POST['enable_template'])&& $this->config['enable_template']==TR_STATUS_PERSONAL)){ echo 'style="display:inline"';}else{ echo 'style="display:none"';}?> > <?php echo _AT('choice_template'); ?></label></td>
+                    <td>
                         <div id="check_template" <?php if((isset($_POST['enable_template']) && $_POST['enable_template']== TR_STATUS_PERSONAL) || (!isset($_POST['enable_template'])&& $this->config['enable_template']==TR_STATUS_PERSONAL)){echo 'style="display:inline"';}else{ echo 'style="display:none"';} ?> >
                         <input id="t_l" type="checkbox" name="enable_template_layout"  value="<?php echo TR_STATUS_ENABLED; ?>" <?php if((isset($_POST['enable_template_layout']) && $_POST['enable_template_layout']== TR_STATUS_ENABLED) || (!isset($_POST['enable_template_layout'])&& $this->config['enable_template_layout']==TR_STATUS_ENABLED)) echo 'checked="checked"';?>/><label for="t_l"><?php echo _AT('template_layout'); ?></label>
 		        <input id="t_p" type="checkbox" name="enable_template_page"  value="<?php echo TR_STATUS_ENABLED; ?>" <?php if((isset($_POST['enable_template_page']) && $_POST['enable_template_page']== TR_STATUS_ENABLED) || (!isset($_POST['enable_template_page'])&& $this->config['enable_template_page']==TR_STATUS_ENABLED)) echo 'checked="checked"';?>/><label for="t_p"><?php echo _AT('template_page'); ?></label>

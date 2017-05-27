@@ -115,12 +115,15 @@ $lang_charset = "UTF-8";
     </script>
 </head>
 <body onload="<?php echo $this->onload; ?>">
-<div id="liquid-round">
- <div class="center-content">
+<div id="topbar">
     <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" accesskey="c">
     <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
    <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+   <?php global $_config;
+    echo '<span id="site_title">'.$_config['site_name'].'</span>';
+   
+   ?>
    <span id="logininfo">
         <?php
         if (isset($this->user_name))
@@ -141,7 +144,11 @@ $lang_charset = "UTF-8";
         }
         ?>
   </span>
-  
+ 
+</div>
+<div id="liquid-round">
+ <div class="center-content">
+ 
   
   
   <div id="banner">
