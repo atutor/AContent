@@ -268,7 +268,7 @@ class StructureManager
 				if($this->isFolder($page)) {
 					$name = preg_replace('/\s/', '_', $name);  // To accommodate folder names with spaces
 					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$name.$i.$tname.'" >';
-					$this->printStruct($page->children(), $i);
+					$this->printStruct($page->children(), $i, $name);
 									
 					echo '</div>';
 				} else if($this->hasTest($page)) {
