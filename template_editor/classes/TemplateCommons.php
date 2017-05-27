@@ -327,7 +327,6 @@ class TemplateCommons {
      */
     public function save_file($directory,$file_name,$message='') {
         global $msg, $_base_path;
-        debug_to_log($_base_path.$directory);
         $file_path=$this->template_dir.$directory."/".$file_name;
         $file = fopen($file_path,"w");
         if(fwrite($file,$message) == true){
