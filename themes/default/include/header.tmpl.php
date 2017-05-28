@@ -280,6 +280,8 @@ foreach ($this->top_level_pages as $page) {
         }
         $( ".slider" ).click(function() {
             $( ".shortcuts" ).toggle(800);
+            $( ".menuedit" ).toggle(800);
+            $( ".delete_ex" ).toggle(800);
             if(getCookie('shortcuts') == 1){
                 //deleteCookie("shortcuts");
                 setCookie('shortcuts', '', -2);
@@ -290,6 +292,8 @@ foreach ($this->top_level_pages as $page) {
         $( ".slider" ).keypress(function(e) {
         if(e.which == 13) {
             $( ".shortcuts" ).toggle(800);
+            $( ".menuedit" ).toggle(800);
+            $( ".delete_ex" ).toggle(800);
             if(getCookie('shortcuts') == 1){
                setCookie('shortcuts', '', -2);
                $('input[type=checkbox]').prop('checked', false);
