@@ -231,12 +231,12 @@ foreach ($this->top_level_pages as $page) {
 <div class="tool_switch">
  <label class="switch" for="tool_slider">
   <input type="checkbox" id="tool_slider"/>
-  <div class="slider round toggle_tools_on"  id="toggle_tools" title="Toggle toolbar" tabindex="0"></div>
+  <div class="slider round toggle_tools_on"  id="toggle_tools" title="<?php echo _AC('toggle_toolbar'); ?>" tabindex="0"></div>
   </label>
 </div>
 
   <div class="shortcuts" style="float:right;">
-  <span style="font-size:0px;" aria-live="polite" aria-label="Toolbar on"></span>
+  <span style="font-size:0px;" aria-live="polite" aria-label="<?php echo _AC('toolbar_on'); ?>"></span>
     <ul>
   <?php if (is_array($this->tool_shortcuts)){ ?>
       <?php foreach ($this->tool_shortcuts as $link){ ?>
