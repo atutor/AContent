@@ -830,7 +830,7 @@ initContentMenu();
 				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
 
 				if (!$ignore_state) {
-					$link .= '<a name="menu'.$content['content_id'].'"></a>';
+					$link .= '<a id="menu'.$content['content_id'].'"></a>';
 				}
 
 				$on = false;
@@ -907,7 +907,7 @@ initContentMenu();
 							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
 //						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, $base_title_length-4))).'...';
-						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
+						$link .= '<a id="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">'.
 						         $content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content

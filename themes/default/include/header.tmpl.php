@@ -119,7 +119,7 @@ $lang_charset = "UTF-8";
     <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" accesskey="c">
     <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
-   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['_cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
    <?php global $_config;
     echo '<span id="site_title">'.$_config['site_name'].'</span>';
    
@@ -332,7 +332,7 @@ foreach ($this->top_level_pages as $page) {
   <div id="contentwrapper">
     <?php //if ((isset($this->course_id) && $this->course_id > 0)): ?>
     <div id="leftcolumn">
-     <a name="menu"></a>
+     <a id="menu"></a>
      <div id="side-menu" role="navigation" aria-label="<?php echo _AT('side_menu');?>"> 
      <?php require(TR_INCLUDE_PATH.'side_menu.inc.php'); ?> 
     <script type="text/javascript">
@@ -369,7 +369,7 @@ foreach ($this->top_level_pages as $page) {
     <?php //endif; ?>
 
       <!-- the page title -->
-      <a name="contenttop" id="contenttop" title="<?php echo _AT('content'); ?>"></a>
+      <a id="contenttop" title="<?php echo _AT('content'); ?>"></a>
       <?php
       global $_current_user;
       if ($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
