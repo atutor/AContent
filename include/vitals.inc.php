@@ -12,7 +12,7 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
-define('TR_DEVEL', 1);
+define('TR_DEVEL', 0);
 define('TR_ERROR_REPORTING', E_ALL ^ E_NOTICE ^ E_DEPRECATED); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
 require_once(TR_INCLUDE_PATH.'lib/vital_funcs.inc.php');
