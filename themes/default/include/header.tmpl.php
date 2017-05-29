@@ -251,6 +251,10 @@ foreach ($this->top_level_pages as $page) {
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/course_property.png"; ?>" title="<?php echo _AT('course_property'); ?>" alt="<?php echo _AT('course_property'); ?>"  class="shortcut_icon"/>
         </a>
       </li>
+      <li><a href="<?php echo $this->base_path; ?>file_manager/index.php?_course_id=<?php echo $this->course_id; ?>">
+        <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/file-manager.png"; ?>" title="<?php echo _AT('file_manager'); ?>" alt="<?php echo _AT('file_manager'); ?>"  class="shortcut_icon"/>
+        </a>
+      </li>
       <li><a href="<?php echo $this->base_path; ?>home/editor/arrange_content.php?_course_id=<?php echo $this->course_id; ?>">
         <img src="<?php echo $this->base_path. "themes/".$this->theme."/images/arrange_content.gif"; ?>" title="<?php echo _AT('arrange_content'); ?>" alt="<?php echo _AT('arrange_content'); ?>"  class="shortcut_icon"/>
         </a>
