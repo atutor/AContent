@@ -47,9 +47,9 @@ class QTIImport {
 		global $addslashes;
 		//save guarding
 		$qti_params['required']		= intval($qti_params['required']);
-		$qti_params['question']		= trim(htmlspecialchars($qti_params['question'], ENT_QUOTES));
+		$qti_params['question']		= trim(htmlspecialchars_decode($qti_params['question'], ENT_QUOTES));
 		$qti_params['category_id']	= intval($qti_params['category_id']);
-		$qti_params['feedback']		= trim(htmlspecialchars($qti_params['feedback'], ENT_QUOTES));
+		$qti_params['feedback']		= trim(htmlspecialchars_decode($qti_params['feedback'], ENT_QUOTES));
 
 		//assign answers
 		if (sizeof($qti_params['answers']) > 1){
