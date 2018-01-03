@@ -40,8 +40,8 @@ if (!isset($_SESSION['token']))
 
 if (isset($_POST['submit']))
 {
-	$user_id = $usersDAO->Validate($addslashes($_POST['form_login']), $addslashes($_POST['form_password_hidden']));
-
+	//$user_id = $usersDAO->Validate($addslashes($_POST['form_login']), $addslashes($_POST['form_password_hidden']));
+    $user_id = $usersDAO->Validate($_POST['form_login'], $_POST['form_password_hidden']);
 	if (!$user_id)
 	{
 		$msg->addError('INVALID_LOGIN');
