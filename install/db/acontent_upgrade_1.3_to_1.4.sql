@@ -1,4 +1,4 @@
-DROP TABLE `language_text`;
+#DROP TABLE `language_text`;
 INSERT INTO `config` (`name`, `value`) VALUES ('test_sql_update','1');
 
 # Integrate template editor from supungs GSoC 2013
@@ -6,7 +6,12 @@ INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_da
 
 INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 11, 0);
 
-
+# remove not null for content table fields
+ALTER TABLE `content` MODIFY `keywords` text NULL DEFAULT NULL;
+ALTER TABLE `content` MODIFY `content_path` text NULL DEFAULT NULL;
+ALTER TABLE `content` MODIFY `text` text NULL DEFAULT NULL;
+ALTER TABLE `content` MODIFY `head` text NULL DEFAULT NULL;
+ALTER TABLE `content` MODIFY `test_message` text NULL DEFAULT NULL;
 /*
 ## Language for template editor
 REPLACE INTO `AC_language_text` VALUES ('en', '_template', 'template_editor', 'Template Editor', '2013-07-13 08:46:35', ''),
