@@ -65,16 +65,18 @@ class PrivilegesDAO extends DAO {
 	*/
 	function getUserPrivileges($userID)
 	{
-		$userID = intval($userID);
+
 		$sql = 'SELECT *
 				FROM '.TABLE_PREFIX.'users u, '.TABLE_PREFIX.'user_groups ug, '.TABLE_PREFIX.'user_group_privilege ugp, '.TABLE_PREFIX.'privileges p
-				WHERE u.user_id = '.$userID.'
+				WHERE u.user_id = ?
 				AND u.user_group_id = ug.user_group_id
 				AND ug.user_group_id = ugp.user_group_id
 				AND ugp.privilege_id = p.privilege_id
-				ORDER BY p.menu_sequence';
-
-	    return $this->execute($sql);
+				ORDER BY p.menu_sequence';  
+		$values = $userID;
+		$types = "i";
+	    return $this->execute($sql,$values,$types);
+	    
 	  }
 
 	/**
@@ -86,15 +88,17 @@ class PrivilegesDAO extends DAO {
 	*/
 	function getUserGroupPrivileges($userGroupID)
 	{
-		$userGroupID = intval($userGroupID);
+
 		$sql = 'SELECT *, ug.description user_group_desc, p.description privilege_desc
 				FROM '.TABLE_PREFIX.'user_groups ug, '.TABLE_PREFIX.'user_group_privilege ugp, '.TABLE_PREFIX.'privileges p
-				WHERE ug.user_group_id = '.$userGroupID.'
+				WHERE ug.user_group_id = ?
 				AND ug.user_group_id = ugp.user_group_id
 				AND ugp.privilege_id = p.privilege_id
 				ORDER BY p.menu_sequence';
-	
-		return $this->execute($sql);
+	    $values = $userGroupID;    
+	    $types = "i";
+		return $this->execute($sql, $values,$types);
+
 	}
 
 	/**
@@ -112,9 +116,13 @@ class PrivilegesDAO extends DAO {
 			return $this->getAll();
 		else
 		{
-			$sql = "SELECT * FROM ". TABLE_PREFIX ."privileges 
-			         WHERE privilege_id NOT IN (".$privilegeIDs.")";
-			return $this->execute($sql);
+	
+		    $sql = "SELECT * FROM ". TABLE_PREFIX ."privileges 
+			         WHERE privilege_id NOT IN (?)";
+			         
+			$values = $privilegeIDs;
+			$types = "s";
+			return $this->execute($sql,$values,$types);
 		}
 	}
 	

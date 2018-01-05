@@ -33,28 +33,22 @@ class ForumsDAO extends DAO {
 	 */
 	public function Create($title, $description)
 	{
-		global $addslashes;
 
-		$title = $addslashes(trim($title));
-		$decsription = $addslashes(trim($description));
-		
 		if ($this->isFieldsValid($title))
 		{
 			/* insert into the db */
 			$sql = "INSERT INTO ".TABLE_PREFIX."forums
 			              (title, description, created_date)
-			       VALUES ('".$title."',
-			               '".htmlspecialchars($decsription, ENT_QUOTES)."',
-			               now())";
-
-			if (!$this->execute($sql))
+			       VALUES (?, ?, now())";
+			$values=array($title, htmlspecialchars($decsription, ENT_QUOTES));
+			$types = "ss";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
 			}
 			else
 			{
-				//return mysql_insert_id();
 				return $this->ac_insert_id();
 			}
 		}
@@ -74,17 +68,18 @@ class ForumsDAO extends DAO {
 	 */
 	public function Delete($forumID)
 	{
-		$forumID = intval($forumID);
 		require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 		$contentForumsAssocDAO = new ContentForumsAssocDAO();
 		
 		// delete the forum and related data
 		$contentForumsAssocDAO->DeleteByForumID($forumID);
-		
+
 		$sql = "DELETE FROM ".TABLE_PREFIX."forums
-		         WHERE forum_id = ".$forumID;
-		$this->execute($sql);
+		         WHERE forum_id = ?";
+		$values = $forumID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -96,9 +91,11 @@ class ForumsDAO extends DAO {
 	 */
 	public function get($forumID)
 	{
-		$forumID = intval($forumID);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$forumID;
-		if ($rows = $this->execute($sql))
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'forums WHERE forum_id=?';
+		$values = $forumID;
+		$types = "i";
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}

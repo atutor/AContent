@@ -1,7 +1,12 @@
 <?xml version="1.0"?>
 <structure name="Lesson">
   <folder max="1" name="Introduction">
-    <page max="1" name="Objectives"/>
+    <page max="1" name="Objectives">
+      <page_templates>
+        <page_template name="unordered_list"/>
+        <page_template name="plain_text"/>
+      </page_templates>
+    </page>
     <page max="1" name="Reading"/>
   </folder>
   <folder max="1" name="Content">

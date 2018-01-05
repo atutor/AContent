@@ -58,7 +58,7 @@ function _AT() {
 		if (in_array($sub_arg, array('TR_ERRO','TR_INFO','TR_WARN','TR_FEED','TR_CONF'))) {
 			global $_base_path, $addslashes;
 
-			$args[0] = $addslashes($args[0]);
+			//$args[0] = $addslashes($args[0]);
 					
 			/* get $_msgs_new from the DB */
 			$rows = $languageTextDAO->getMsgByTermAndLang($args[0], $_SESSION['lang']);
@@ -114,14 +114,15 @@ function _AT() {
 	}
 
 	$num_args = func_num_args();
+
 	if (is_array($args[0])) {
 		$args = $args[0];
 		$num_args = count($args);
 	}
+	
 	$format	  = array_shift($args);
-
-	if (isset($_template[$format]) && count($args) > 0) {
-		$outString	= vsprintf($_template[$format], $args);
+	if (isset($_template[$format]) && $num_args > 0) {
+		$outString	= @vsprintf($_template[$format], $args);
 		$str = ob_get_contents();
 	} else {
 		$outString = '';
@@ -330,20 +331,20 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=TR_DATE_MYSQL
 				$name = $parts[0].'.*';
 			} else {
 				/* field not set, and there's no global setting */
-				/* same as TR_FORMTR_NONE */
+				/* same as TR_FORMAT_NONE */
 				return $input;
 			}
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_QUOTES)) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_QUOTES)) {
 			$input = str_replace('"', '&quot;', $input);
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_CONTENT_DIR)) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_CONTENT_DIR)) {
 			$input = str_replace('CONTENT_DIR/', '', $input);
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_HTML) && $runtime_html) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_HTML) && $runtime_html) {
 			/* what special things do we have to do if this is HTML ? remove unwanted HTML? validate? */
 		} else {
 			$input = str_replace('<', '&lt;', $input);
@@ -351,26 +352,28 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=TR_DATE_MYSQL
 		}
 
 		/* this has to be here, only because TR_FORMTR_HTML is the only check that has an else-block */
-		if ($_field_formatting[$name] === TR_FORMTR_NONE) {
+		if ($_field_formatting[$name] === TR_FORMAT_NONE) {
 			return $input;
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_EMOTICONS)) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_EMOTICONS)) {
 			$input = smile_replace($input);
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_ATCODES)) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_ATCODES)) {
 			$input = trim(ContentUtility::myCodes(' ' . $input . ' '));
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_LINKS)) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_LINKS)) {
 			$input = trim(ContentUtility::makeClickable(' ' . $input . ' '));
 		}
 
-		if (query_bit($_field_formatting[$name], TR_FORMTR_IMAGES)) {
+		if (query_bit($_field_formatting[$name], TR_FORMAT_IMAGES)) {
 			$input = trim(ContentUtility::imageReplace(' ' . $input . ' '));
 		}
-
+        if (query_bit($_field_formatting[$name], TR_FORMAT_DECODE)) {
+            $input = htmlspecialchars_decode($input, ENT_QUOTES);
+        }
 	
 		return $input;
 	}

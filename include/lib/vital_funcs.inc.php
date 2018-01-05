@@ -38,6 +38,7 @@ function my_add_null_slashes( $string ) {
     return mysql_real_escape_string(stripslashes($string));
 }
 */
+/*
 function my_add_null_slashes( $string ) {
     global $db;
     if(defined('MYSQLI_ENABLED')){
@@ -51,6 +52,7 @@ function my_add_null_slashes( $string ) {
 function my_null_slashes($string) {
 	return $string;
 }
+*/
 /*
 if ( get_magic_quotes_gpc() == 1 ) {
 	$addslashes   = 'my_add_null_slashes';
@@ -60,6 +62,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$stripslashes = 'my_null_slashes';
 }
 */
+/*
 if ( get_magic_quotes_gpc() == 1 ) {
     $addslashes   = 'my_add_null_slashes';
     $stripslashes = 'stripslashes';
@@ -82,7 +85,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
     }
     $stripslashes = 'my_null_slashes';
 }
-
+*/
 
 
 

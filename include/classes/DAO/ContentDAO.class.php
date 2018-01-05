@@ -28,8 +28,8 @@ class ContentDAO extends DAO {
 	                       $content_path, $title, $text, $head, $use_customized_head, $test_message, 
 	                       $content_type)
 	{
+		//global $addslashes, $msg;
 		global $addslashes, $msg;
-		
 		
 		if ($this->isFieldsValid('create', $course_id, $title))
 		{
@@ -51,22 +51,23 @@ class ContentDAO extends DAO {
 			               test_message,
 			               content_type
 			               )
-			       VALUES (".$course_id.",
-			               ".$content_parent_id.",
-			               ".$ordering.",
-			               now(), 
-			               ".$revision.",
-			               ".$formatting.",
-			               '".$addslashes($keywords)."',
-			               '".$content_path."', 
-			               '".$addslashes($title)."',
-			               '".$addslashes($text)."',
-			               '".$addslashes($head)."',
-			               ".$use_customized_head.",
-			               '".$addslashes($test_message)."',
-			               ".$content_type.")";
-			
-			if (!$this->execute($sql))
+			       VALUES (?, ?, ?, now(), ?, ?, ?, ?, ?, ?, ?, ?, ?,?)";	
+		    $values = array($course_id, 
+                             $content_parent_id, 
+                             $ordering, 
+                             $revision, 
+                             $formatting, 
+                             $keywords, 
+                             $content_path, 
+                             $title, 
+                             $text, 
+                             $head, 
+                             $use_customized_head, 
+                             $test_message, 
+                             $content_type);	
+		    $types = "iiiiisssssisi";	
+
+			if (!$this->execute($sql,$values,$types))
 			{
 				
 				$msg->addError('DB_NOT_UPDATED');
@@ -74,8 +75,7 @@ class ContentDAO extends DAO {
 			}
 			else
 			{
-				
-				//$cid = mysql_insert_id();
+
 				$cid = $this->ac_insert_id();
 				
 				// update the courses.modified_date to the current timestamp
@@ -109,23 +109,31 @@ class ContentDAO extends DAO {
 	public function Update($content_id, $title, $text, $keywords, $formatting, 
 	                     $head, $use_customized_head, $test_message)
 	{
-		global $addslashes, $msg;
+		global $msg;
 
 		if ($this->isFieldsValid('update', $content_id, $title))
 		{
 			/* insert into the db */
+
 			$sql = "UPDATE ".TABLE_PREFIX."content
-			           SET title = '".$addslashes($title)."',
-			               text = '".$addslashes($text)."',
-			               keywords = '".$addslashes($keywords)."',
-			               formatting = '".$formatting."',
-			               head = '".$addslashes($head)."',
-			               use_customized_head = ".$use_customized_head.",
-			               test_message = '".$addslashes($test_message)."'
-			         WHERE content_id = ".$content_id;
-
-
-			if ($this->execute($sql)) {
+			           SET title = ?,
+			               text = ?,
+			               keywords = ?,
+			               formatting = ?,
+			               head = ?,
+			               use_customized_head = ?,
+			               test_message = ?
+			         WHERE content_id =?";
+            $values = array($title, 
+                            $text, 
+                            $keywords, 
+                            $formatting, 
+                            $head, 
+                            $use_customized_head, 
+                            $test_message, 
+                            $content_id );
+            $types = "sssisisi";
+			if ($this->execute($sql, $values,$types)) {
 				// update the courses.modified_date to the current timestamp
 				include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 				$coursesDAO = new CoursesDAO();
@@ -153,13 +161,12 @@ class ContentDAO extends DAO {
 	 */
 	public function UpdateField($contentID, $fieldName, $fieldValue)
 	{
-		global $addslashes;
-		
 		$sql = "UPDATE ".TABLE_PREFIX."content 
-		           SET ".$fieldName."='".addslashes($fieldValue)."'
-		         WHERE content_id = ".$contentID;
-		
-		if ($this->execute($sql)) {
+		           SET ".$fieldName."=".$fieldValue."
+		         WHERE content_id = ?";
+		$values = $contentID;
+		$types = "i";
+		if ($this->execute($sql,$values,$types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 			$coursesDAO = new CoursesDAO();
@@ -198,8 +205,10 @@ class ContentDAO extends DAO {
 		$contentForumsAssocDAO = new ContentForumsAssocDAO();
 		$contentForumsAssocDAO->DeleteByContentID($contentID);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ".$contentID;
-		if ($this->execute($sql)) {
+		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE content_id = ?";
+		$values = $contentID;
+		$types = "i";
+		if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 			$coursesDAO = new CoursesDAO();
@@ -220,9 +229,10 @@ class ContentDAO extends DAO {
 	 */
 	public function get($contentID)
 	{
-		$contentID = intval($contentID);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_id='.$contentID;
-		if ($rows = $this->execute($sql))
+		$sql = "SELECT * FROM ".TABLE_PREFIX."content WHERE content_id=?";
+		$values = $contentID;
+		$types = "i";
+	if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -238,16 +248,14 @@ class ContentDAO extends DAO {
 	 */
 	public function getContentByCourseID($courseID)
 	{
-		$courseID = intval($courseID);
 		$sql = "SELECT *, 
 		               UNIX_TIMESTAMP(last_modified) AS u_ts 
 		          FROM ".TABLE_PREFIX."content 
-		         WHERE course_id=$courseID 
+		         WHERE course_id=? 
 		         ORDER BY content_parent_id, ordering";
-		
-		//ORDER BY content_parent_id, ordering
-		
-		return $this->execute($sql);
+		$values=$courseID;
+		$types="i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -259,13 +267,12 @@ class ContentDAO extends DAO {
 	 */
 	public function getMaxOrdering($course_id, $content_parent_id)
 	{
-		$course_id = intval($course_id);
-		$content_parent_id = intval($content_parent_id);
-		
-		$sql = "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content 
-		         WHERE course_id=".$course_id." 
-		           AND content_parent_id=".$content_parent_id;
-		$rows = $this->execute($sql);
+        $sql = "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content 
+		         WHERE course_id=? 
+		           AND content_parent_id=?";
+		$values = array($course_id, $content_parent_id);
+		$types = "ii";
+		$rows = $this->execute($sql, $values, $types);
 		return intval($rows[0]['ordering']);
 	}
 

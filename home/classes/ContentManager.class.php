@@ -241,12 +241,19 @@ class ContentManager
 		}
 
 		// shift the new neighbouring content down
-		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
+		/*$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
 		         WHERE ordering>=$ordering 
 		           AND content_parent_id=$content_parent_id 
 		           AND course_id=$_course_id";
-		 
-		$this->contentDAO->execute($sql);
+		           */
+		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
+		         WHERE ordering>=? 
+		           AND content_parent_id=? 
+		           AND course_id=?";	
+		$values = array($ordering, $content_parent_id, $_course_id);	
+		$types = "iii"; 
+		
+		$this->contentDAO->execute($sql, $values, $types);
 		
 		/* main topics all have minor_num = 0 */
 		$cid = $this->contentDAO->Create($_course_id, $content_parent_id, $ordering, 0, $formatting,
@@ -281,10 +288,13 @@ class ContentManager
 		}
 		$old_ordering		= $row['ordering'];
 		$old_content_parent_id	= $row['content_parent_id'];
-		
+		/*
 		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=$old_content_parent_id AND course_id=$_course_id";
-
-		$row = $this->contentDAO->execute($sql);
+		*/
+		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=? AND course_id=?";
+		$values = array($old_content_parent_id, $_course_id);
+		$types = "ii";
+		$row = $this->contentDAO->execute($sql, $values, $types);
 		$max_ordering = $row[0]['max_ordering'];
 		
 		if ($content_id == $new_content_parent_id) {
@@ -312,30 +322,52 @@ class ContentManager
 			$new_content_ordering = $max_ordering;
 		if (($old_content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
 			// remove the gap left by the moved content
-			$sql = "UPDATE ".TABLE_PREFIX."content 
+			/* $sql = "UPDATE ".TABLE_PREFIX."content 
 			           SET ordering=ordering-1 
 			         WHERE ordering>$old_ordering 
 			           AND content_parent_id=$old_content_parent_id 
 			           AND content_id<>$content_id 
 			           AND course_id=$_course_id";
-
-			$this->contentDAO->execute($sql);
+			           */
+			$sql = "UPDATE ".TABLE_PREFIX."content 
+			           SET ordering=ordering-1 
+			         WHERE ordering>? 
+			           AND content_parent_id=? 
+			           AND content_id<>? 
+			           AND course_id=?";
+			$values = array($old_ordering, $old_content_parent_id, $content_id, $_course_id);
+			$types = "iiii";
+			$this->contentDAO->execute($sql, $values, $types);
 
 			// shift the new neighbouring content down
-			$sql = "UPDATE ".TABLE_PREFIX."content 
+			/*
+			    $sql = "UPDATE ".TABLE_PREFIX."content 
 			           SET ordering=ordering+1 
 			         WHERE ordering>=$new_content_ordering 
 			           AND content_parent_id=$new_content_parent_id 
 			           AND content_id<>$content_id 
 			           AND course_id=$_course_id";
-
-			$this->contentDAO->execute($sql);
-
+			           */
+			$sql = "UPDATE ".TABLE_PREFIX."content 
+			           SET ordering=ordering+1 
+			         WHERE ordering>=? 
+			           AND content_parent_id=? 
+			           AND content_id<>? 
+			           AND course_id=?";
+			$values = array($new_content_ordering, $new_content_parent_id, $content_id, $_course_id);
+			$types = "iiii";
+			$this->contentDAO->execute($sql, $values, $types);
+/*
 			$sql	= "UPDATE ".TABLE_PREFIX."content 
 			              SET content_parent_id=$new_content_parent_id, ordering=$new_content_ordering 
 			            WHERE content_id=$content_id AND course_id=$_course_id";
-
-			$this->contentDAO->execute($sql);
+			            */
+			$sql	= "UPDATE ".TABLE_PREFIX."content 
+			              SET content_parent_id=?, ordering=? 
+			            WHERE content_id=? AND course_id=?";
+			$values = array($new_content_parent_id, $new_content_ordering,$content_id, $_course_id)   ;
+			$types = "iiii";         
+			$this->contentDAO->execute($sql, $values, $types);
 		}
 	}
 	
@@ -369,8 +401,12 @@ class ContentManager
 		$this->contentDAO->Delete($content_id);
 
 		/* re-order the rest of the content */
-		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_course_id";
-		$this->contentDAO->execute($sql);
+		/* $sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_course_id";	*/	
+		
+		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=? AND content_parent_id=? AND course_id=?";
+		$values = array($ordering, $content_parent_id, $_course_id);
+		$types = "iii";
+		$this->contentDAO->execute($sql, $values, $types);
 		
 		// unset last-visited content id
 		require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
@@ -417,12 +453,16 @@ class ContentManager
 	 * @author	Harris
 	 */
 	function getContentTestsAssoc($content_id){
+		
 		$sql	= "SELECT ct.test_id, t.title 
 		             FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc 
-		                    WHERE content_id=$content_id) AS ct 
+		                    WHERE content_id=?) AS ct 
 		             LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id
 		            ORDER BY t.title";
-		return $this->dao->execute($sql);
+		$values = $content_id;
+		$types="i";
+		return $this->dao->execute($sql, $values, $types);
+
 	}
 
 	function cleanOutput($value) {
@@ -596,12 +636,13 @@ function initContentMenu() {
   tree_expand_icon = "'.$_base_path.'images/tree/tree_expand.gif";
 		
 ';
-		
 		$sql = "SELECT content_id
 		          FROM ".TABLE_PREFIX."content 
-		         WHERE course_id=$this->course_id
+		         WHERE course_id=?
 		           AND content_type = ".CONTENT_TYPE_FOLDER;
-		$rows = $this->dao->execute($sql);
+		$values = $this->course_id;
+		$types = "i";
+		$rows = $this->dao->execute($sql, $values, $types);
 
 		// collapse all root content folders
 		if (is_array($rows)) {
@@ -793,7 +834,7 @@ initContentMenu();
 		static $temp_path;
 
 		if (!isset($temp_path)) {
-			if ($cid) {
+			if (isset($cid)) {
 				$temp_path	= $this->getContentPath($cid);
 			} else {
 				$temp_path	= $this->getContentPath($_SESSION['s_cid']);
@@ -817,10 +858,7 @@ initContentMenu();
 			$top_level = $this->_menu[$parent_id];
 			$counter = 1;
 			$num_items = count($top_level);
-			
-//			if ($parent_id <> 0) echo '<li>';
-			
-//			echo '<ul id="folder'.$parent_id.$from.'">'."\n";
+
 			echo '<div id="folder'.$parent_id.$from.'">'."\n";
 			
 			foreach ($top_level as $garbage => $content) {

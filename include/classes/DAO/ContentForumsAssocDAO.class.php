@@ -32,13 +32,20 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function Create($content_id, $forum_id)
 	{
-	$content_id = intval($content_id);
+	/*$content_id = intval($content_id);
 	$forum_id = intval($forum_id);
 	
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_forums_assoc' . 
 				'(content_id, forum_id) ' .
 				'VALUES (' . $content_id . ", $forum_id)";
-		if ($this->execute($sql)) {
+				*/
+		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_forums_assoc' . 
+				'(content_id, forum_id) ' .
+				'VALUES (?,?)';
+		$values = array($content_id, $forum_id);
+		$types = "ii";
+		
+		if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 			$coursesDAO = new CoursesDAO();
@@ -59,10 +66,16 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function DeleteByContentID($contentID)
 	{
+		/*
 		$contentID = intval($contentID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 	             WHERE content_id = ".$contentID."";
-		if ($this->execute($sql)) {
+	             */
+	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
+	             WHERE content_id = ?";
+	    $values = $contentID;
+	    $types = "i";
+		if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 			$coursesDAO = new CoursesDAO();
@@ -83,11 +96,18 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function DeleteByForumID($forumID)
 	{
+		/*
 		$forumID = intval($forumID);
 		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 	             WHERE forum_id = ".$forumID."";
-		if ($this->execute($sql)) {
+	             */
+	    $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
+	             WHERE forum_id = ?";
+	    $values = $forumID;
+	    $types = "i";
+	             
+		if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/ForumsCoursesDAO.class.php');
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
@@ -118,12 +138,18 @@ class ContentForumsAssocDAO extends DAO {
 	* @author  Cindy Qi Li
 	*/
 	function Delete($forumID, $contentID) {
+		/*
 		$forumID = intval($forumID);
 		$contentID = intval($contentID);
 		
 		 $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
 					 WHERE content_id = '".$contentID."' AND forum_id = '".$forumID."'";
-			if ($this->execute($sql)) {
+					 */
+		 $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc 
+					 WHERE content_id = ? AND forum_id = ?";
+		$values = array($contentID, $forumID);
+		$types = "ii";
+			if ($this->execute($sql, $values, $types)) {
 				// update the courses.modified_date to the current timestamp
 				include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 				$coursesDAO = new CoursesDAO();
@@ -144,12 +170,20 @@ class ContentForumsAssocDAO extends DAO {
 	*/
 	function getByContent($content_id)
 	{
+		/*
 		$content_id = intval($content_id);
 	    $sql = "SELECT f.forum_id, f.title, f.description
 	              FROM ".TABLE_PREFIX."content_forums_assoc cfa, ".TABLE_PREFIX."forums f 
 	             WHERE cfa.content_id = '".$content_id."'
 	               AND cfa.forum_id = f.forum_id";
-	    return $this->execute($sql);
+	               */
+	    $sql = "SELECT f.forum_id, f.title, f.description
+	              FROM ".TABLE_PREFIX."content_forums_assoc cfa, ".TABLE_PREFIX."forums f 
+	             WHERE cfa.content_id = ? 
+	               AND cfa.forum_id = f.forum_id";	   
+	    $values = $content_id;     
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 }
 ?>

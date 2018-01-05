@@ -163,6 +163,7 @@ define('TR_FORMAT_GLOSSARY',     16);
 define('TR_FORMAT_ATCODES',      32);
 define('TR_FORMAT_CONTENT_DIR', 64); /* remove CONTENT_DIR */
 define('TR_FORMAT_QUOTES',      128); /* remove double quotes (does this get used?) */
+define('AT_FORMAT_DECODE', 256);
 define('TR_FORMAT_ALL',       TR_FORMAT_EMOTICONS 
 							   + TR_FORMAT_LINKS 
 						       + TR_FORMAT_IMAGES 
@@ -173,5 +174,5 @@ define('TR_FORMAT_ALL',       TR_FORMAT_EMOTICONS
 
 $_field_formatting = array();
 $_field_formatting['input.*'] = TR_FORMAT_QUOTES; /* All input should have '<' and quotes escaped.*/
-
+//$_field_formatting['tests_questions.question']	=  AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
 ?>

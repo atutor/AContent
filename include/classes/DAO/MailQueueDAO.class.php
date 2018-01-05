@@ -33,21 +33,13 @@ class MailQueueDAO extends DAO {
 	*/
 	function Create($to_email, $to_name, $from_email, $from_name, $subject, $body, $charset)
 	{
-		global $addslashes;
-		$to_email = $addslashes($to_email);
-		$to_name = $addslashes($to_name);
-		$from_email = $addslashes($from_email);
-		$from_name = $addslashes($from_name);
-		$subject = $addslashes($subject);	
-		$body = $addslashes($body);
-		$charset = $addslashes($charset);			
-			
+
 		$sql = "INSERT INTO ".TABLE_PREFIX."mail_queue 
-						VALUES (NULL, '$to_email', '$to_name', '$from_email', '$from_name', '$charset', '$subject', '$body')";
-		
-		if ($this->execute($sql))
+						VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)";
+		$values = array($to_email, $to_name, $from_email, $from_name, $charset, $subject, $body);
+		$types = "sssssss";
+		if ($this->execute($sql, $values, $types))
 		{
-			//return mysql_insert_id($this->db);
 			return ac_insert_id($this->db);
 		}
 		else

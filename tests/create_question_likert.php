@@ -48,10 +48,10 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['feedback']   = '';
-		$_POST['question']   = $addslashes(htmlspecialchars($_POST['question'], ENT_QUOTES));
+		$_POST['question']   = addslashes(htmlspecialchars($_POST['question'], ENT_QUOTES));
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = $addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
+			$_POST['choice'][$i] = addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {

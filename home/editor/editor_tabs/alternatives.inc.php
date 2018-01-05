@@ -99,7 +99,7 @@ if ($_POST['formatting'] <> 1)
 	$msg->printAll();
 } else {
 	global $db, $content_row, $stripslashes;
-	populate_a4a($cid, $stripslashes($_POST['body_text']), $_POST['formatting']);
+	populate_a4a($cid, stripslashes($_POST['body_text']), $_POST['formatting']);
 	
 	include_once(TR_INCLUDE_PATH.'classes/A4a/A4a.class.php');
 	

@@ -45,11 +45,11 @@ class ThemesDAO extends DAO {
 	*/
 	function getByID($dirName)
 	{
-	global $addslashes;
-	$dirName = $addslashes($dirName);
-	
-    $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name='".$dirName."'";
-    if ($rows = $this->execute($sql))
+
+    $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name=?";
+    $values = $dirName;
+    $types = "s";
+    if ($rows = $this->execute($sql,$values,$types))
     	return $rows[0];
   }
 
@@ -62,6 +62,7 @@ class ThemesDAO extends DAO {
 	*/
 	function getDefaultTheme()
 	{
+
     $sql = "SELECT * FROM ".TABLE_PREFIX."themes WHERE status=".TR_STATUS_DEFAULT;
     return $this->execute($sql);
   }

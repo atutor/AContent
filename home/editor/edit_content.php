@@ -249,23 +249,23 @@ $pid = intval($_REQUEST['pid']);
 	
 	echo '<input type="hidden" name="_course_id" value="'.$_course_id.'" />';
 	echo '<input type="hidden" name="_cid" value="'.$cid.'" />';
-	echo '<input type="hidden" name="title" value="'.htmlspecialchars($stripslashes($_POST['title'])).'" />';
+	echo '<input type="hidden" name="title" value="'.htmlspecialchars(stripslashes($_POST['title'])).'" />';
 	if ($_REQUEST['sub'] == 1)
 	{
 		echo '<input type="hidden" name="sub" value="1" />';
-		echo '<input type="hidden" name="folder_title" value="'.htmlspecialchars($stripslashes($_POST['folder_title'])).'" />';
+		echo '<input type="hidden" name="folder_title" value="'.htmlspecialchars(stripslashes($_POST['folder_title'])).'" />';
 	}
 	echo '<input type="submit" name="submit" style="display:none;"/>';
 	if (($current_tab != 0) && (($_current_tab != 2))) {
-        echo '<input type="hidden" name="body_text" value="'.htmlspecialchars($stripslashes($_POST['body_text'])).'" />';
-        echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars($stripslashes($_POST['weblink_text'])).'" />';
-        echo '<input type="hidden" name="head" value="'.htmlspecialchars($stripslashes($_POST['head'])).'" />';
+        echo '<input type="hidden" name="body_text" value="'.htmlspecialchars(stripslashes($_POST['body_text'])).'" />';
+        echo '<input type="hidden" name="weblink_text" value="'.htmlspecialchars(stripslashes($_POST['weblink_text'])).'" />';
+        echo '<input type="hidden" name="head" value="'.htmlspecialchars(stripslashes($_POST['head'])).'" />';
 		echo '<input type="hidden" name="use_customized_head" value="'.(($_POST['use_customized_head']=="") ? 0 : $_POST['use_customized_head']).'" />';
         echo '<input type="hidden" name="displayhead" id="displayhead" value="'.AT_print($_POST['displayhead'], 'input.hidden').'" />';
         echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.AT_print($_POST['complexeditor'], 'input.hidden').'" />';
         echo '<input type="hidden" name="formatting" value="'.AT_print($_POST['formatting'], 'input.hidden').'" />';
 	
- //echo '<input type="hidden" name="box" value="'.htmlspecialchars($stripslashes($_POST['box'])).'" />';
+ //echo '<input type="hidden" name="box" value="'.htmlspecialchars(`($_POST['box'])).'" />';
         
         
         }

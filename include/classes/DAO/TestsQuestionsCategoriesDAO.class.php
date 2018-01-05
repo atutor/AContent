@@ -33,17 +33,13 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function Create($courseID, $title)
 	{
-		global $addslashes;
-
-		$courseID = intval($courseID);
-		$title = $addslashes(trim($title));
-
 		if ($this->isFieldsValid('new', $title, $courseID))
 		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."tests_questions_categories (course_id, title)
-			        VALUES (".$courseID.", '".$title."')";
-
-			if (!$this->execute($sql))
+            $sql = "INSERT INTO ".TABLE_PREFIX."tests_questions_categories (course_id, title)
+			        VALUES (?, ?)";
+			$values = array($courseID, $title);
+			$types = "is";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -70,19 +66,15 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function Update($categoryID, $title)
 	{
-		global $addslashes;
-		
-		$courseID = intval($courseID);
-		$title = $addslashes(trim($title));
-				
 		if ($this->isFieldsValid('update', $title, $categoryID))
 		{
 			/* insert into the db */
 			$sql = "UPDATE ".TABLE_PREFIX."tests_questions_categories
-			           SET title = '".$title."'
-			         WHERE category_id = ".$categoryID;
-
-			return $this->execute($sql);
+			           SET title = ?
+			         WHERE category_id = ?";
+			$values = array($title, $categoryID);
+			$types = "si";
+			return $this->execute($sql, $values, $types);
 		}
 	}
 	
@@ -96,10 +88,11 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function Delete($categoryID)
 	{		
-		$categoryID = intval($categoryID);
-		
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id = ".$categoryID;
-		return $this->execute($sql);
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id = ?";
+		$values = $categoryID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -111,12 +104,11 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function get($categoryID)
 	{
-		$categoryID = intval($categoryID);
-		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories 
-		             WHERE category_id=".$categoryID;
-		
-		$rows = $this->execute($sql);
+		             WHERE category_id=?";
+		$values = $categoryID;
+		$types = "i";
+		$rows = $this->execute($sql, $values, $types);
 		
 		if (is_array($rows)) return $rows[0];
 		else return false;
@@ -131,12 +123,12 @@ class TestsQuestionsCategoriesDAO extends DAO {
 	 */
 	public function getByCourseID($courseID)
 	{
-		$courseID = intval($courseID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories 
-		         WHERE course_id=".$courseID."
-		         ORDER BY title";
-		
-		return $this->execute($sql);
+		         WHERE course_id=?
+		         ORDER BY title";		
+		$values = $courseID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**

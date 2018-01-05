@@ -40,7 +40,7 @@ $sql = "SELECT sr.secondary_resource_id
            AND sr.primary_resource_id = ".$pid."
            AND sr.language_code = '".$_SESSION['lang']."'
            AND srt.type_id=".$type_id;
-//$existing_secondary_result = mysql_query($sql, $db);
+
 $existing_secondary_rows = $dao->execute($sql);
 
 if (is_array($existing_secondary_rows)) {
@@ -58,17 +58,21 @@ if (is_array($existing_secondary_rows)) {
 }
 
 // insert new alternative
-//$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources (primary_resource_id, secondary_resource, language_code)
-//        VALUES (".$pid.", '".mysql_real_escape_string($secondary_resource)."', '".$_SESSION['lang']."')";
 $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources (primary_resource_id, secondary_resource, language_code)
-        VALUES (".$pid.", '".$addslashes($secondary_resource)."', '".$_SESSION['lang']."')";
-$dao->execute($sql);
+        VALUES (?, ?, ?)";
+$values = array($pid, $secondary_resource, $_SESSION['lang']);
+$types = "iss";
+$dao->execute($sql, $values, $types);
 
 $secondary_resource_id = $dao->ac_insert_id();
 
+/* $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types (secondary_resource_id, type_id)
+        VALUES (".$secondary_resource_id.", ".$type_id.")"; */
 $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types (secondary_resource_id, type_id)
-        VALUES (".$secondary_resource_id.", ".$type_id.")";
-$dao->execute($sql);
+        VALUES (?, ?)";
+$values = array($secondary_resource_id, $type_id);
+$types = "ii";
+$dao->execute($sql, $values, $types);
 
 exit;
 

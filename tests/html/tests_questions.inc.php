@@ -111,8 +111,8 @@ foreach ($cats as $cat) {
 			echo '<td>';
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			echo '<td>';
-			echo '<a title="'.htmlentities_utf8($row[question], ENT_QUOTES, 'UTF-8').'">';
-			echo AT_print(htmlentities_utf8(Utility::validateLength($row['question'], 100, 1), ENT_QUOTES, 'UTF-8'), 'tests_questions.question');
+			echo '<a title="'.AT_print($row['question'], 'tests_questions.question').'">';
+			echo AT_print(Utility::validateLength($row['question'], 100, 1), 'tests_questions.question');
 			echo '</a>';
 			echo '</td>';
 			echo '<td>';

@@ -35,23 +35,23 @@ class CoursesDAO extends DAO {
 	                       $max_quota, $max_file_size, $copyright,
 	                       $primary_language, $icon, $side_menu)
 	{
-		global $addslashes;
+		//global $addslashes;
 		$user_id = intval($user_id);
 		$category_id = intval($category_id);
-		$title = $addslashes(trim($title));
-		$decsription = $addslashes(trim(htmlspecialchars($description, ENT_QUOTES)));
-		$course_dir_name = $addslashes(trim($course_dir_name));
-		$max_quota = $addslashes(trim($max_quota));
-		$max_file_size = $addslashes(trim($max_file_size));	
-		$primary_language = $addslashes(trim($primary_language));
-		$icon = $addslashes(trim($icon));
-		$side_menu = $addslashes(trim($side_menu));
-		$copyright = $addslashes(trim($copyright));
+		$title = trim($title);
+		$decsription = trim(htmlspecialchars($description, ENT_QUOTES));
+		$course_dir_name = trim($course_dir_name);
+		$max_quota = trim($max_quota);
+		$max_file_size = trim($max_file_size);	
+		$primary_language = trim($primary_language);
+		$icon = trim($icon);
+		$side_menu = trim($side_menu);
+		$copyright = trim($copyright);
 		
 		if ($this->isFieldsValid($user_id, $title))
 		{
 			/* insert into the db */
-			$sql = "INSERT INTO ".TABLE_PREFIX."courses
+            $sql = "INSERT INTO ".TABLE_PREFIX."courses
 			              (user_id,
 			               category_id,
 			               content_packaging,
@@ -67,34 +67,35 @@ class CoursesDAO extends DAO {
 			               side_menu,
 			               created_date
 			               )
-			       VALUES (".$user_id.",
-			               '".$category_id."',
-			               '".$content_packaging."',
-			               '".$access."',
-			               '".$title."',
-			               '".$decsription."', 
-			               '".$course_dir_name."',
-			               '".$max_quota."',
-			               '".$max_file_size."',
-			               '".$copyright."',
-			               '".$primary_language."',
-			               '".$icon."',
-			               '".$side_menu."',
-			               now())";
-
-			if (!$this->execute($sql))
+			       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?, now())";			               
+            $values = array($user_id, 
+                            $category_id, 
+                            $content_packaging, 
+                            $access, 
+                            $title, 
+                            $decsription, 
+                            $course_dir_name,  
+                            $max_quota, 
+                            $max_file_size, 
+                            $copyright, 
+                            $primary_language, 
+                            $icon, 
+                            $side_menu);
+            $types ="iisssssssssss";
+            if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
 			}
 			else
 			{
-				//$course_id = mysql_insert_id();
 				$course_id = $this->ac_insert_id();
 				// create the user and course relationship
 				$sql = "INSERT INTO ".TABLE_PREFIX."user_courses (user_id, course_id, role, last_cid)
-				        VALUES (".$user_id.", ".$course_id.", ".TR_USERROLE_AUTHOR.", 0)";
-				$this->execute($sql);
+				        VALUES (?, ?, ".TR_USERROLE_AUTHOR.", 0)";
+				$values = array($user_id, $course_id);
+				$types = "ii";
+				$this->execute($sql, $values, $types);
 				
 				// create the course content directory
 				$path = TR_CONTENT_DIR . $course_id . '/';
@@ -121,7 +122,7 @@ class CoursesDAO extends DAO {
 	 */
 	public function UpdateField($courseID, $fieldName, $fieldValue)
 	{
-		global $addslashes, $msg;
+		global  $msg;
 		$courseID = intval($courseID);
 		
 		
@@ -143,13 +144,15 @@ class CoursesDAO extends DAO {
 		// check if the course title is provided
 		if ($fieldName == 'title' && !$this->isFieldsValid($courseID, $fieldValue))
 			return false;
-		
+
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
-		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."',
+		           SET `$fieldName` = ".$fieldValue.",
 		               modified_date = now()
-		         WHERE course_id = ".$courseID;
-		
-		return $this->execute($sql);
+		         WHERE course_id = ?";		
+		// bind_param fails in DAO with $fieldName
+		$values = array($courseID);
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -177,21 +180,31 @@ class CoursesDAO extends DAO {
 		
 		// delete tests and tests related data
 		$sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc
-		         WHERE content_id in (SELECT content_id FROM ".TABLE_PREFIX."content WHERE course_id = ".$courseID.")";
-		$this->execute($sql);
+		         WHERE content_id in (SELECT content_id FROM ".TABLE_PREFIX."content WHERE course_id = ?)";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id = ".$courseID;
-		$this->execute($sql);
-		
+		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id = ?";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
+
 		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
-		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID.")";
-		$this->execute($sql);
+		         WHERE test_id in (SELECT test_id FROM ".TABLE_PREFIX."tests WHERE course_id = ?)";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 		
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE course_id = ".$courseID;
-		$this->execute($sql);
-				
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests WHERE course_id = ".$courseID;
-		$this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions WHERE course_id = ?";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."tests WHERE course_id = ?";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 		
 		// delete forums that are associated with this course
 		$forumsCoursesDAO->DeleteByCourseID($courseID);
@@ -203,16 +216,23 @@ class CoursesDAO extends DAO {
 				$contentDAO->Delete($content['content_id']);
 			}
 		}
-		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id = ".$courseID;
-		$this->execute($sql);
+
+		$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id = ?";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 		
 		// delete user <-> course association
-		$sql = "DELETE FROM ".TABLE_PREFIX."user_courses WHERE course_id = ".$courseID;
-		$this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."user_courses WHERE course_id = ?";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 		
 		// delete the course
-		$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id = ".$courseID;
-		return $this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id = ?";
+		$values  = $courseID;
+		$types = "i";
+		$this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -229,12 +249,14 @@ class CoursesDAO extends DAO {
 		if ($id_type != "course_id" && $id_type != "content_id") return false;
 		
 		if ($id_type == "course_id") {
-			$sql = "UPDATE ".TABLE_PREFIX."courses SET modified_date=now() WHERE course_id=".$id;
+			$sql = "UPDATE ".TABLE_PREFIX."courses SET modified_date=now() WHERE course_id=?";
 		} else if ($id_type == "content_id") {
 			$sql = "UPDATE ".TABLE_PREFIX."courses SET modified_date=now() 
-			         WHERE course_id=(SELECT course_id FROM ".TABLE_PREFIX."content WHERE content_id=".$id.")";
+			         WHERE course_id=(SELECT course_id FROM ".TABLE_PREFIX."content WHERE content_id=?)";
 		}
-		return $this->execute($sql);
+		$values = $id;
+		$types="i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -246,9 +268,10 @@ class CoursesDAO extends DAO {
 	 */
 	public function get($courseID)
 	{
-		$courseID = intval($courseID);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses WHERE course_id='.$courseID;
-		if ($rows = $this->execute($sql))
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses WHERE course_id=?';
+		$values = $courseID;
+		$types="i";
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -279,12 +302,14 @@ class CoursesDAO extends DAO {
 	 */
 	public function getByCategory($categoryID)
 	{
-		$categoryID = intval($categoryID);
 		$sql = "SELECT * FROM ".TABLE_PREFIX."courses 
-		         WHERE category_id=".$categoryID."
+		         WHERE category_id=?
 		         AND access='public'
-		         ORDER BY title";
-		return $rows = $this->execute($sql);
+		         ORDER BY title";	
+		$values = 	 $categoryID;
+		$types = "i";        
+		return $rows = $this->execute($sql, $values,$types);
+
 	}
         
         /**
@@ -294,13 +319,11 @@ class CoursesDAO extends DAO {
 	 * @author  Ceppini Matteo
 	 */
 	public function getByStructure($name_struct)
-	{
-		global $addslashes;
-		$name_struct = $addslashes($name_struct);
-		$sql = "SELECT DISTINCT CONTENT.course_id,COURSES.title  FROM ".TABLE_PREFIX."content AS CONTENT,".TABLE_PREFIX."courses AS COURSES
-		         WHERE structure='".$name_struct."' AND COURSES.course_id = CONTENT.course_id
-		         ORDER BY CONTENT.course_id";
-		return $rows = $this->execute($sql);
+	{		        
+            $sql = "SELECT DISTINCT CONTENT.course_id,COURSES.title  FROM ".TABLE_PREFIX."content AS CONTENT,".TABLE_PREFIX."courses AS COURSES WHERE structure=? AND COURSES.course_id = CONTENT.course_id ORDER BY CONTENT.course_id";
+        $values = $name_struct;
+        $types = "s";
+		return $rows = $this->execute($sql, $values, $types);
 	}
         
         
@@ -338,8 +361,6 @@ class CoursesDAO extends DAO {
 	 */
 	public function getSearchResult($keywords, $catid='', $start=0, $maxResults=0)
 	{
-		global $addslashes;
-		$keywords = $addslashes($keywords);
 		require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 		// full-text search
 //		$sql = "SELECT DISTINCT course_id, title, description, created_date
@@ -362,22 +383,46 @@ class CoursesDAO extends DAO {
 //		if (!is_array($all_keywords) || count($all_keywords) == 0) return false;
 		
 		list($sql_where, $sql_order) = $this->getSearchSqlParams($all_keywords);
+		//debug($sql_where);
 		
-		if ($sql_where <> '') $sql_where = ' AND '. $sql_where;
-		if (trim($catid) <> '') $sql_where .= ' AND category_id='.intval($catid);
+	/*	if ($sql_where <> ''){
+		     $sql_where = ' AND ?';
+		     $values[] = $sql_where;
+		     $type .= "s";
+		}
+		
+		if (trim($catid) <> ''){
+		    
+		     $sql_where .= ' AND category_id=?';
+		     $values[] = $catid;
+		     $type .="i";
+		     
+		}*/
 		
 		// sql search
-		$sql = "SELECT DISTINCT cs.course_id, cs.title, cs.description, cs.created_date
+		$sql .= "SELECT DISTINCT cs.course_id, cs.title, cs.description, cs.created_date
 		          FROM ".TABLE_PREFIX."courses cs, ".TABLE_PREFIX."content ct, ".TABLE_PREFIX."users u
 		         WHERE cs.access='public'
 		           AND cs.course_id = ct.course_id
-		           AND cs.user_id = u.user_id";
-		if ($sql_where <> '') $sql .= $sql_where;
-		if ($sql_order <> '') $sql .= " ORDER BY ".$sql_order." DESC ";
+		           AND cs.user_id = u.user_id ";
+		if ($sql_where <> ''){
+		    $sql .= " AND ".$sql_where;
+		    
+		 }
+		if ($sql_order <> ''){
+		    $sql .= " ORDER BY ? DESC ";
+		    $values[] = $sql_order;
+		    $types .= "s";
+		 }
 		
-		if ($maxResults > 0) $sql .= " LIMIT ".$start.", ".$maxResults;
+		if ($maxResults > 0){
+		    $sql .= " LIMIT ?, ?";
+		    $values[] = $start;
+		    $values[] = $maxResults;
+		    $types .= "ii";
+        }
 
-		return $this->execute($sql);
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**

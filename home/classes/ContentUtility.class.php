@@ -821,7 +821,7 @@ class ContentUtility {
 		}
         
 		// get all relations between primary resources and their alternatives
-        $sql = "SELECT DISTINCT c.content_path, pr.resource,  prt.type_id primary_type,
+     /*   $sql = "SELECT DISTINCT c.content_path, pr.resource,  prt.type_id primary_type,
                        sr.secondary_resource, srt.type_id secondary_type
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."primary_resources_types prt,".
@@ -834,12 +834,30 @@ class ContentUtility {
 			       AND sr.language_code='".$_SESSION['lang']."'
 			       AND sr.secondary_resource_id = srt.secondary_resource_id
 		           AND pr.content_id = c.content_id";
+		           */
+        $sql = "SELECT DISTINCT c.content_path, pr.resource,  prt.type_id primary_type,
+                       sr.secondary_resource, srt.type_id secondary_type
+		          FROM ".TABLE_PREFIX."primary_resources pr, ".
+		                 TABLE_PREFIX."primary_resources_types prt,".
+		                 TABLE_PREFIX."secondary_resources sr,".
+		                 TABLE_PREFIX."secondary_resources_types srt,".
+		                 TABLE_PREFIX."content c
+		         WHERE pr.content_id=?
+			       AND pr.primary_resource_id = prt.primary_resource_id
+			       AND pr.primary_resource_id = sr.primary_resource_id
+			       AND sr.language_code= ?
+			       AND sr.secondary_resource_id = srt.secondary_resource_id
+		           AND pr.content_id = c.content_id";
+		    $values = array($cid, $_SESSION['lang']);
+		    $types = "is";
 		if ($only_on_secondary_type > 0) {
-			$sql .= " AND srt.type_id=".$only_on_secondary_type;
+			$sql .= " AND srt.type_id=?";
+			array_push($values, $only_on_secondary_type);
+			$types .= "i";
 		}
 		$sql .= " ORDER BY pr.primary_resource_id, prt.type_id";
 			
-		$rows = $dao->execute($sql);
+		$rows = $dao->execute($sql, $values, $types);
 	
 		if (!is_array($rows)) {
 			if (!$info_only) {

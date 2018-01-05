@@ -98,10 +98,10 @@ Or choose one of these forum associated with this course
 	<?php 
 		
 		$rows_forums = $forums_courses_dao->getByCourse($crid);
-
+//debug($cid);
 		$rows = $cont_for_ass_dao->getByContent($cid);
-		
-		
+//debug($rows);		
+		//debug($rows_forums);
 		
 		foreach ($rows_forums as $row_forum) { ?>
 			<tr>

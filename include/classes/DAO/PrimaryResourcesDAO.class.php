@@ -32,18 +32,15 @@ class PrimaryResourcesDAO extends DAO {
 	*/
 	public function Create($content_id, $file_name, $lang)
 	{
-		global $addslashes;
-		
-		$content_id = intval($content_id);
-		$file_name = $addslashes(convertAmp($file_name));
-		$lang = $addslashes($lang);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources 
-		           SET content_id=$content_id, 
-		               resource='$file_name', 
-		               language_code='$lang'";
-	    
-		return $this->execute($sql);
+		           SET content_id=?, 
+		               resource=?, 
+		               language_code=?";	   
+		$filename = convertAmp($file_name);
+		$values = array($content_id, $filename, $lang);
+		$types = "iss";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -79,8 +76,10 @@ class PrimaryResourcesDAO extends DAO {
 				$sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a 
 				     LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b 
 				            ON a.primary_resource_id=b.primary_resource_id 
-				         WHERE content_id='.$cid;
-				return $this->execute($sql);
+				         WHERE content_id=?';
+				$values = $cid;
+				$types = "i";
+				return $this->execute($sql, $values, $types);
 			}
 		}
 		return true;
@@ -95,12 +94,12 @@ class PrimaryResourcesDAO extends DAO {
 	*/
 	function DeleteByResourceName($resourceName)
 	{
-		global $addslashes;
-		$resourceName = $addslashes($resourceName);
-		
+
 		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources
-		         WHERE resource = '".$resourceName."'";
-		return $this->execute($sql);
+		         WHERE resource = ?";
+		$values = $resourceName;
+		$types = "s";
+		return $this->execute($sql, $values, $types);
 	}
 	
     /**
@@ -112,16 +111,18 @@ class PrimaryResourcesDAO extends DAO {
      * @date    Oct 6, 2010
      */
     function DeleteByResourceID($resourceID){
-    	$resourceID = intval($resourceID);
-    	
-        // Delete all secondary a4a
-        $sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX."secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id=$resourceID";
-        $result = $this->execute($sql);
+
+        $sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c LEFT JOIN '.TABLE_PREFIX."secondary_resources_types d ON c.secondary_resource_id=d.secondary_resource_id WHERE primary_resource_id=?";
+        $values =$resourceID;
+        $types = "i";
+        $result = $this->execute($sql, $values, $types);
         
         // If successful, remove all primary resources
         if ($result){
-            $sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX."primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE a.primary_resource_id=$resourceID";
-            return $this->execute($sql);
+            $sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a LEFT JOIN '.TABLE_PREFIX."primary_resources_types b ON a.primary_resource_id=b.primary_resource_id WHERE a.primary_resource_id=?";
+        $values =$resourceID;
+        $types = "i";
+        $result = $this->execute($sql, $values, $types);
         }
     }
 
@@ -134,9 +135,11 @@ class PrimaryResourcesDAO extends DAO {
 	*/
 	public function getByContent($cid)
 	{
-		$cid = intval($cid);
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$cid.' ORDER BY primary_resource_id';;
-	    return $this->execute($sql);
+
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id=? ORDER BY primary_resource_id';
+	    $values = $cid;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 
     /**
@@ -151,16 +154,13 @@ class PrimaryResourcesDAO extends DAO {
      */
     public function getByResourceName($cid, $lang, $resource_name){
     
-    	global $addslashes;
-		$cid = intval($cid);
-		$lang = $addslashes($lang);
-		$resource_name = $addslashes($resource_name);   
-		 	
 		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
 		        WHERE content_id=".$cid."
 		          AND language_code = '".$lang."'
 		          AND resource='".$resource_name."'";
-		return $this->execute($sql);
+		$values = array($cid, $lang, $resource_name);
+		$types = "iss";
+		return $this->execute($sql, $values, $types);
     }
 }
 ?>

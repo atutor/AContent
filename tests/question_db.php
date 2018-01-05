@@ -25,7 +25,7 @@ function intval_array ( & $value, $key) { $value = (int) $value; }
 if ( (isset($_GET['edit']) || isset($_GET['delete']) || isset($_GET['export']) || isset($_GET['preview']) || isset($_GET['add'])) && !isset($_GET['questions'])){
 	$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_GET['submit_create'], $_GET['question_type'])) {
-	header('Location: '.TR_BASE_HREF.'tests/create_question_'.$addslashes($_GET['question_type']).'.php?_course_id='.$_course_id);
+	header('Location: '.TR_BASE_HREF.'tests/create_question_'.addslashes($_GET['question_type']).'.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_GET['edit'])) {
 	$id  = current($_GET['questions']);

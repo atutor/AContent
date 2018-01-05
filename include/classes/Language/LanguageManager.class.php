@@ -98,8 +98,9 @@ class LanguageManager {
 		if (!$charset) {
 			if (isset($this->allLanguages[$code])) {
 				if (is_array($this->allLanguages[$code]))
-					foreach ($this->allLanguages[$code] as $language)
+					foreach ($this->allLanguages[$code] as $language){
 						return $language;
+					}
 //				return current($this->allLanguages[$code]);
 			} else {
 				return FALSE;
@@ -314,7 +315,9 @@ class LanguageManager {
 
 	// public
 	// imports LIVE language from the AContent  language database
-	function liveImport($language_code) {
+
+
+/* 	function liveImport($language_code) {
 		global $db;
 
         // UPDATE FOR MYSQLI
@@ -323,7 +326,7 @@ class LanguageManager {
 		mysql_query("SET NAMES 'utf8'", $tmp_lang_db);
 		
 		if (!$tmp_lang_db) {
-			/* TR_ERROR_NO_DB_CONNECT */
+
 			echo 'Unable to connect to db.';
 			exit;
 		}
@@ -356,7 +359,7 @@ class LanguageManager {
 			mysql_query($sql, $db);
 		}
 	}
-	
+	*/
 }
 
 

@@ -46,13 +46,11 @@ class LangCodesDAO extends DAO {
 	*/
 	public function GetLangCodeBy2LetterCode($code)
 	{
-		global $addslashes;
-		$code = $addslashes($code);
-		
 		$sql = "SELECT * FROM ". TABLE_PREFIX ."lang_codes 
-					WHERE code_2letters = '".$code ."'";
-		
-		return $this->execute($sql);
+					WHERE code_2letters = ?";		
+		$values = $code;
+		$types = 's';
+		return $this->execute($sql,$values, $types);
 	}
 
 	/**
@@ -64,13 +62,12 @@ class LangCodesDAO extends DAO {
 	*/
 	public function GetLangCodeBy3LetterCode($code)
 	{
-		global $addslashes;
-		$code = $addslashes($code);
-		
-		$sql = "SELECT * FROM ". TABLE_PREFIX ."lang_codes 
-					WHERE code_3letters = '".$code ."'";
-		
-		if ($rows = $this->execute($sql))
+
+		$sql = "SELECT * FROM ".TABLE_PREFIX."lang_codes 
+					WHERE code_3letters = ?";
+		$values = $code;
+		$types = "s";
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -86,12 +83,11 @@ class LangCodesDAO extends DAO {
     * @author  Alexey Novak
     */
     public function getLanguageByCode($code) {
-        global $addslashes;
-        $code = $addslashes($code);
-        
-        $sql = sprintf('SELECT * FROM %slang_codes WHERE code_3letters="%s" OR code_2letters="%s"', TABLE_PREFIX, $code, $code);
-        
-        if ($rows = $this->execute($sql)) {
+
+        $sql = 'SELECT * FROM '.TABLE_PREFIX.'lang_codes WHERE code_3letters=? OR code_2letters=?'; 
+        $values = array($code, $code);     
+        $types="ss";
+        if ($rows = $this->execute($sql, $values,$types)) {
             return $rows[0]['description'];
         }
         
@@ -107,14 +103,13 @@ class LangCodesDAO extends DAO {
 	*/
 	public function GetLangCodeByDirection($direction)
 	{
-		global $addslashes;
-		$direction = $addslashes($direction);
-		
+
 		$rtn_array = array();
 		$sql = "SELECT * FROM ". TABLE_PREFIX ."lang_codes 
-					WHERE direction = '".$direction ."'";
-		
-		$rows = $this->execute($sql);
+					WHERE direction = ?";
+		$values = $direction;
+		$types = 's';	
+		$rows = $this->execute($sql, $values,$types);
 		
 		if (is_array($rows))
 		{

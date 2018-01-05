@@ -61,7 +61,7 @@ if (!$session_user_id || ($session_user_id && $_current_user->isAdmin($session_u
         if ($course_user_id != $session_user_id || ($course_user_id == $session_user_id && $user_role != TR_USERROLE_AUTHOR)) {
             // Do the check that course should not be empty
             if (!$userCoursesDAO->hasContent($course_id)) {
-                unset($courses[$i]);
+               // unset($courses[$i]);
             }
         }
     }
@@ -80,6 +80,7 @@ $curr_page_num = intval($_GET['p']);
 if (!$curr_page_num) {
     $curr_page_num = 1;
 }
+
 $savant->assign('courses', $courses);
 $savant->assign('categories', $courseCategoriesDAO->getAll());
 $savant->assign('curr_page_num', $curr_page_num);

@@ -32,17 +32,13 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function Create($testID, $questionID, $weight, $order)
 	{
-		global $addslashes;
-		
-		$testID = intval($testID);
-		$questionID = intval($questionID);
-		$weight = $addslashes($weight);
-		$order = intval($order);
-		
+
 		$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
 				"(test_id, question_id, weight, ordering) " .
-				"VALUES ($testID, $questionID, $weight, $order)";
-	    return $this->execute($sql);
+				"VALUES (?, ?, ?, ?)";
+		$values = array($testID, $questionID, $weight, $order);
+		$types = "iiii";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -54,17 +50,14 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function Update($testID, $questionID, $weight, $order)
 	{
-		global $addslashes;
-		
-		$testID = intval($testID);
-		$questionID = intval($questionID);
-		$weight = $addslashes($weight);
-		$order = intval($order);
-		
+
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc 
-		              SET weight=".$weight.", ordering=".$order." 
-		            WHERE question_id=".$questionID." AND test_id=".$testID;
-		return $this->execute($sql);
+		              SET weight=?, ordering=?  
+		            WHERE question_id=? AND test_id=?";
+		$values = array($weight, $order, $questionID, $testID);
+		$types = "siii";
+		
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -76,13 +69,13 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function Delete($testID, $questionID)
 	{		
-		$testID = intval($testID);
-		$questionID = intval($questionID);
 
 	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
-	             WHERE test_id = ".$testID."
-	               AND question_id = ".$questionID;
-	    return $this->execute($sql);
+	             WHERE test_id = ?
+	               AND question_id = ?";
+	    $values = array($testID, $questionID);
+	    $types = "ii";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -94,10 +87,12 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function DeleteByQuestionID($questionID)
 	{
-		$questionID = intval($questionID);
+
 	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
-	             WHERE question_id = ".$questionID;
-	    return $this->execute($sql);
+	             WHERE question_id = ?";
+	    $values = $questionID;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -109,10 +104,12 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function DeleteByTestID($testID)
 	{
-		$testID = intval($testID);
+
 	    $sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc 
-	             WHERE test_id = ".$testID;
-	    return $this->execute($sql);
+	             WHERE test_id = ?";
+	    $values = $testID;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -124,14 +121,16 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function getByTestID($testID)
 	{
-		$testID = intval($testID);
+
 	    $sql = "SELECT TQ.*, TQA.test_id, TQA.weight, TQA.ordering 
 	              FROM ".TABLE_PREFIX."tests_questions TQ 
 	             INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA 
 	             USING (question_id) 
-	             WHERE TQA.test_id=".$testID."
+	             WHERE TQA.test_id=?
 	             ORDER BY TQA.ordering, TQA.question_id";
-	    return $this->execute($sql);
+	    $values = $testID;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -143,13 +142,15 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function getZeroWeightRowsByTestID($testID)
 	{
-		$testID = intval($testID);
+
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions_assoc QA, ".TABLE_PREFIX."tests_questions Q 
-	             WHERE QA.test_id=$testID 
+	             WHERE QA.test_id=? 
 	               AND QA.weight=0 
 	               AND QA.question_id=Q.question_id 
 	               AND Q.type<>4";
-	    return $this->execute($sql);
+	    $values = $testID;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -161,9 +162,10 @@ class TestsQuestionsAssocDAO extends DAO {
 	*/
 	function getMaxOrderByTestID($testID)
 	{
-		$testID = intval($testID);
-		$sql = "SELECT MAX(ordering) AS max_ordering FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=".$testID;
-	    $rows = $this->execute($sql);
+	    $sql = "SELECT MAX(ordering) AS max_ordering FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=?";
+        $values = $testID;
+        $types = "i";
+	    $rows = $this->execute($sql, $values, $types);
 	    return $rows[0]['max_ordering'];
 	}
 }

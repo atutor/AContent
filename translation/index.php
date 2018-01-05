@@ -32,41 +32,67 @@ if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))
 	if (isset($_REQUEST['submit']))
 	{
 		if (isset($_REQUEST['term_type']) && $_REQUEST['term_type'] <> '') $term_type = $_REQUEST['term_type'];
-		
+		 
 		$sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE language_code='".DEFAULT_LANGUAGE_CODE."'";
-		
-		if ($term_type <> '') $sql .= " AND variable = '".$term_type."'";
-		
+		if ($term_type <> '') {
+		        $sql .= " AND variable = '?' ";
+		        $value = $term_type;
+		        $types = "s";
+		    }
+
 		if (isset($_REQUEST['new_or_translated']) && ($_REQUEST['new_or_translated'] == 1 || $_REQUEST['new_or_translated'] == 2))
 		{
-			$subquery = "(SELECT term FROM ".TABLE_PREFIX."language_text
+			/* $subquery = "(SELECT term FROM ".TABLE_PREFIX."language_text
 										WHERE language_code='".$_REQUEST['lang_code']."'
 										  AND text <> '')";
-			
+										  */
+			$subquery = "(SELECT term FROM ".TABLE_PREFIX."language_text
+										WHERE language_code=?
+										  AND text <> '')";
+			$values[] =$_REQUEST['lang_code']; 	
+			$types .= "s";						  			
 			if ($_REQUEST['new_or_translated'] == 1) $sql .= " AND term NOT IN ".$subquery;
 			if ($_REQUEST['new_or_translated'] == 2) $sql .= " AND term IN ".$subquery;
 		}
-		
+
+		// New or recently translated
 		if (isset($_REQUEST['new_or_translated']) && $_REQUEST['new_or_translated'] == 3)
 		{
+		/*
 			$sql = "select * from ".TABLE_PREFIX."language_text a 
 							where language_code='".DEFAULT_LANGUAGE_CODE."' 
 								and exists (select 1 from ".TABLE_PREFIX."language_text b 
 														where language_code = '".$_REQUEST['lang_code']."' 
 															and a.term = b.term 
 															and a.revised_date > b.revised_date)";
+															*/
+            $sql = "select * from ".TABLE_PREFIX."language_text a 
+							where language_code='".DEFAULT_LANGUAGE_CODE."' 
+								and exists (select 1 from ".TABLE_PREFIX."language_text b 
+														where language_code = ? 
+															and a.term = b.term 
+															and a.revised_date > b.revised_date)";
+			$values = $_REQUEST['lang_code'];
+			$types = "s";															
 		}
 	}
 	
 	if (isset($_REQUEST['search']))
 	{
+		/* $sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
+						WHERE language_code='".DEFAULT_LANGUAGE_CODE."'
+						  AND lower(term) like '%".strtolower(trim($_REQUEST['search_phase']))."%'";
+						  */
 		$sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE language_code='".DEFAULT_LANGUAGE_CODE."'
-						  AND lower(term) like '%".$addslashes(strtolower(trim($_REQUEST['search_phase'])))."%'";
+						  AND lower(term) like ?";
+		$search_terms = "%{$_REQUEST['search_phase']}%";
+		$values = $search_terms;
+		$types = "s";
 	}
 	
-	$rows = $dao->execute($sql);
+	$rows = $dao->execute($sql, $values, $types);
 	
 	if (is_array($rows)) $num_results = count($rows);
 	else $num_results = 0;
@@ -74,17 +100,19 @@ if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))
 
 if (isset($_REQUEST["save"]))
 {
-	$sql_save	= "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('".$_POST["lang_code"]."', '".$_POST["variable"]."', '".$_POST["term"]."', '".$addslashes($_POST["translated_text"])."', NOW(), '')";
+	$sql_save	= "REPLACE INTO ".TABLE_PREFIX."language_text VALUES (?, ?, ?, ?, NOW(), '')";
+    $values = array($_POST["lang_code"], $_POST["variable"], $_POST["term"], $_POST["translated_text"]);
+    $types = "ssss";
+    
+	//$trans = get_html_translation_table(HTML_ENTITIES);
+	//$trans = array_flip($trans);
+	//$sql_save = strtr($sql_save, $trans);
 
-	$trans = get_html_translation_table(HTML_ENTITIES);
-	$trans = array_flip($trans);
-	$sql_save = strtr($sql_save, $trans);
-
-	if (!$dao->execute($sql_save)) {
+	if (!$dao->execute($sql_save, $values, $types)) {
 		$success_error = '<div class="error">Error: changes not saved!</div>';
 	}
 	else {
-		$success_error = '<div class="feedback2"">Success: changes saved.</div>';
+		$success_error = '<div class="feedback2">Success: changes saved.</div>';
 	}
 }
 
@@ -164,10 +192,19 @@ foreach ($rows_lang as $row_lang)
 <?php 
 if (isset($_REQUEST['selected_term'])) 
 {
+    /*
 	$sql_english	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='".DEFAULT_LANGUAGE_CODE."' AND term='".$_REQUEST["selected_term"]."'";
-	if ($_REQUEST["term_type"] <> "") $sql_english .= " AND variable='".$_REQUEST["term_type"]."' ";
+	*/
+	$sql_english	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='".DEFAULT_LANGUAGE_CODE."' AND term= ?";
+	$values[] = $_REQUEST["selected_term"];
+	$types .= "s";
+	if ($_REQUEST["term_type"] <> ""){
+	     $sql_english .= " AND variable=? ";
+	     $values[] = $_REQUEST["term_type"];
+	     $types .= "s";
+	}
 
-	$rows_english = $dao->execute($sql_english);
+	$rows_english = $dao->execute($sql_english, $values, $types);
 	$row_english = $rows_english[0];
 
 	$rows_selected = $languageTextDAO->getByTermAndLang($_REQUEST["selected_term"], $_REQUEST["lang_code"]);

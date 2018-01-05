@@ -34,12 +34,9 @@ class UserGroupsDAO extends DAO {
 	 */
 	public function Create($title, $description)
 	{
-		global $addslashes, $msg;
+		global  $msg;
 
 		$missing_fields = array();
-		
-		//$title = $addslashes(trim($title));
-		//$description = $addslashes(trim($description));
 		
 		if ($title == '')
 		{
@@ -60,12 +57,10 @@ class UserGroupsDAO extends DAO {
 			               description,
 			               create_date
 			               )
-			       VALUES ('".$title."',
-			               '".$description."',
-			               now()
-			              )";
-
-			if (!$this->execute($sql))
+			       VALUES (?, ?, now())";
+            $values = array($title, $description);
+            $types = "ss";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -93,14 +88,14 @@ class UserGroupsDAO extends DAO {
 	 */
 	public function Update($user_group_id, $title, $description)
 	{
-		global $addslashes, $msg;
+		global $msg;
 
 		$missing_fields = array();
 
 		/* email check */
 		$user_group_id = intval($user_group_id);
-		$title = $addslashes(trim($title));
-		$description = $addslashes(trim($description));
+		$title = trim($title);
+		$description = trim($description);
 		
 		/* login name check */
 		if ($title == '')
@@ -118,12 +113,13 @@ class UserGroupsDAO extends DAO {
 		{
 			/* insert into the db */
 			$sql = "UPDATE ".TABLE_PREFIX."user_groups
-			           SET title = '".$title."',
-			               description = '".$description."',
+			           SET title = ?,
+			               description = ?,
 			               last_update = now()
-			         WHERE user_group_id = ".$user_group_id;
-
-			return $this->execute($sql);
+			         WHERE user_group_id = ?";
+            $values = array($title, $description, $user_group_id);
+            $types = "ssi";
+			return $this->execute($sql, $values, $types);
 		}
 	}
 
@@ -139,16 +135,16 @@ class UserGroupsDAO extends DAO {
 	 */
 	public function UpdateField($userGroupID, $fieldName, $fieldValue)
 	{
-		global $addslashes;
 
 		// check if the required fields are filled
 		if ($fieldName == 'title' && $fieldValue == '') return array(_AT('TR_ERROR_EMPTY_FIELD'));
 		
 		$sql = "UPDATE ".TABLE_PREFIX."user_groups 
-		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
-		         WHERE user_group_id = ".$userGroupID;
-		
-		return $this->execute($sql);
+		           SET ".$fieldName."='".$fieldValue."'
+		         WHERE user_group_id = ?";
+		$values = array($userGroupID);
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -160,7 +156,6 @@ class UserGroupsDAO extends DAO {
 	 */
 	public function Delete($userGroupID)
 	{
-		$userGroupID = intval($userGroupID);
 		// delete user_group_privilege
 		include_once(TR_INCLUDE_PATH.'classes/DAO/UserGroupPrivilegeDAO.class.php');
 		
@@ -168,8 +163,9 @@ class UserGroupsDAO extends DAO {
 		$userGroupPrivilegeDAO->DeleteByUserGroupID($userGroupID);
 		
 		// delete user_groups
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'user_groups WHERE user_group_id = '.$userGroupID;
-		
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'user_groups WHERE user_group_id = ?';
+		$values = $userGroupID;
+		$types = "i";
 		return $this->execute($sql);
 	}
 	
@@ -196,8 +192,10 @@ class UserGroupsDAO extends DAO {
 	public function getUserGroupByID($user_group_id)
 		{
 		$user_group_id = intval($user_group_id);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'user_groups WHERE user_group_id='.$user_group_id;
-		if ($rows = $this->execute($sql))
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'user_groups WHERE user_group_id=?';
+		$values = $user_group_id;
+		$types = "i";
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}

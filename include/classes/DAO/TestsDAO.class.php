@@ -34,18 +34,19 @@ class TestsDAO extends DAO {
 	 */
 	public function Create($course_id, $title, $description)
 	{
-		global $addslashes;
-		$course_id = intval($course_id);
-		$title = Utility::validateLength($addslashes(trim($title)), 100);
-		$description = $addslashes(trim($description));
 
+        $title = Utility::validateLength(trim($title), 100);
+		$description = trim($description);
+		
 		if ($this->isFieldsValid($title))
 		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."tests " .
+	        $sql = "INSERT INTO ".TABLE_PREFIX."tests " .
 			       "(course_id, title, description)" .
-			       "VALUES ($course_id, '$title', '$description')";
-	
-			if (!$this->execute($sql))
+			       "VALUES (?, ?, ?)";
+			$values = array($course_id, $title, $description);
+			$types="iss";
+			
+			if (!$this->execute($sql,$values,$types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -71,20 +72,19 @@ class TestsDAO extends DAO {
 	 */
 	public function Update($testID, $title, $description)
 	{
-		global $addslashes;
-		
-		$testID = intval($testID);
-		$title = Utility::validateLength($addslashes(trim($title)), 100);
-		$description = $addslashes(trim($description));
 
+		$title = Utility::validateLength(trim($title), 100);
+		$description = trim($description);
 		if ($this->isFieldsValid($title))
 		{
+
 			$sql = "UPDATE ".TABLE_PREFIX."tests " . 
-			       "SET title='$title', 
-			            description='$description' 
-			        WHERE test_id=$testID";
-			
-			return $this->execute($sql);
+			       "SET title=?, 
+			            description=? 
+			        WHERE test_id=?";	
+			$values = array($title, $description, $testID);
+			$types="ssi";		
+			return $this->execute($sql, $values, $types);
 		}
 	}
 	
@@ -98,8 +98,10 @@ class TestsDAO extends DAO {
 	 */
 	public function Delete($testID)
 	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."tests WHERE test_id = ".$testID;
-		return $this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."tests WHERE test_id = ?";
+		$values = $testID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -111,10 +113,12 @@ class TestsDAO extends DAO {
 	 */
 	public function get($testID)
 	{
-		$testID = intval($testID);
-		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE test_id='.$testID;
-		if ($rows = $this->execute($sql))
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'tests WHERE test_id=?';
+		$values = $testID;
+		$types = "i";
+
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -130,11 +134,14 @@ class TestsDAO extends DAO {
 	 */
 	public function getByCourseID($courseID)
 	{
-		$courseID = intval($courseID);
+		
 		$sql = "SELECT * 
 		          FROM ".TABLE_PREFIX."tests 
-		         WHERE course_id=$courseID";
-		return $this->execute($sql);
+		         WHERE course_id=?";
+		$values = $courseID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
+
 	}
 
 	/**

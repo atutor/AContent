@@ -134,12 +134,19 @@ class Language {
 		global $db;
 		if ($id) {
 			if ($is_admin === 0) {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."', creation_date=creation_date, last_login=last_login WHERE member_id=$id";
-			} elseif ($is_admin === 1) {
-				$sql = "UPDATE ".TABLE_PREFIX."admins SET language='".$this->code."', last_login=last_login WHERE login='$id'";
+			
+				$sql = "UPDATE ".TABLE_PREFIX."members SET language=?, creation_date=creation_date, last_login=last_login WHERE member_id=?";
+				$values = array($this->code, $id);
+				$types="ci";				
+				
+			} elseif ($is_admin === 1) {	
+			
+				$sql = "UPDATE ".TABLE_PREFIX."admins SET language=?, last_login=last_login WHERE login=?";				
+				$values = array($this->code, $id);
+				$types="si";
+				
 			}
-			//mysql_query($sql,$db);
-			$dao->execute($sql);
+			$dao->execute($sql, $values,$types);
 		}
 	}
 

@@ -33,24 +33,24 @@ class CourseCategoriesDAO extends DAO {
 	 */
 	public function Create($categoryName)
 	{
-		global $addslashes, $msg;
+		global $msg;
 
-		$categoryName = $addslashes(trim($categoryName));
+		$categoryName = trim($categoryName);
 		
 		if ($this->isFieldsValid($categoryName))
 		{
 			/* insert into the db */
-			$sql = "INSERT INTO ".TABLE_PREFIX."course_categories (category_name)
-			       VALUES ('".$categoryName."')";
-
-			if (!$this->execute($sql))
+            $sql = 'INSERT INTO '.TABLE_PREFIX.'course_categories (category_name)
+			       VALUES (?)';
+			$values = $categoryName;
+			$types = "s";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
 			}
 			else
 			{
-				//return mysql_insert_id();
 				return $this->ac_insert_id();
 			}
 		}
@@ -71,17 +71,19 @@ class CourseCategoriesDAO extends DAO {
 	 */
 	public function Update($categoryID, $categoryName)
 	{
-		global $addslashes, $msg;
+		global $msg;
 		
-		$categoryName = $addslashes(trim($categoryName));
+		$categoryName = trim($categoryName);
 		$categoryID = intval($categoryID);
 		
 		if ($this->isFieldsValid($categoryName, $categoryID, 'update')) {
+
 			$sql = "UPDATE ".TABLE_PREFIX."course_categories 
-	           SET category_name='".$categoryName."'
-	         WHERE category_id = ".$categoryID;
-		
-			return $this->execute($sql);
+	           SET category_name= ?
+	         WHERE category_id = ?";			
+	        $values = array($categoryName, $categoryID);
+	        $types = "si";
+	        return $this->execute($sql, $values, $types);
 		}
 		else {
 			return false;
@@ -98,16 +100,18 @@ class CourseCategoriesDAO extends DAO {
 	 */
 	public function Delete($categoryID)
 	{
-		$categoryID = intval($categoryID);
-		// move the courses that belong to $categoryID to "uncategorized"
+	    // move the courses that belong to $categoryID to "uncategorized"
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
 		           SET category_id=".TR_COURSECATEGORY_UNCATEGORIZED."
-		         WHERE category_id = ".$categoryID;
-		
-		if ($this->execute($sql))
+		         WHERE category_id = ?";		
+		$values = $categoryID;
+		$types = "i";
+		if ($this->execute($sql, $values, $types))
 		{
-			$sql = "DELETE FROM ".TABLE_PREFIX."course_categories WHERE category_id = ".$categoryID;
-			return $this->execute($sql);
+		    $sql = "DELETE FROM ".TABLE_PREFIX."course_categories WHERE category_id = ?";
+		    $values = $categoryID;
+		    $types = "i";
+			return $this->execute($sql, $values, $types);
 		}
 		else
 			return false;
@@ -122,10 +126,10 @@ class CourseCategoriesDAO extends DAO {
 	 */
 	public function get($categoryID)
 	{
-		$categoryID = intval($categoryID);
-		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'course_categories WHERE category_id='.$categoryID;
-		if ($rows = $this->execute($sql))
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'course_categories WHERE category_id=?';
+		$values=$categoryID;
+		$types = "i";
+		if ($rows = $this->execute($sql, $values,$types))
 		{
 			return $rows[0];
 		}

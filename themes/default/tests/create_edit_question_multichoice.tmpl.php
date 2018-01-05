@@ -31,14 +31,14 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<?php TestsUtility::printVisualEditorLink('optional_feedback'); ?>	
 
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo AT_print($_POST['feedback'], 'tests_questions.question'); ?></textarea>
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		<?php TestsUtility::printVisualEditorLink('question'); ?>		
 		<textarea id="question" cols="50" rows="4" name="question"><?php 
-			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+			echo AT_print($_POST['question'], 'tests_questions.question'); ?></textarea>
 	</div>
 
 	<?php 
@@ -50,7 +50,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 			<small><input type="radio" name="answer" id="answer_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
 			
 
-			<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea>
+			<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo AT_print($_POST['choice'][$i], 'tests_questions.question'); ?></textarea>
 		</div>
 	<?php } ?>
 

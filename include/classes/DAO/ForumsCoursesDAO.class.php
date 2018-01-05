@@ -32,13 +32,20 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function Create($forum_id, $course_id)
 	{
+	/*
 		$forum_id = intval($forum_id);
 		$course_id = intval($course_id);
 		
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'forums_courses' . 
 				'(forum_id, course_id) ' .
 				'VALUES (' . $forum_id . ", $course_id)";
-	    return $this->execute($sql);
+				*/
+		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'forums_courses' . 
+				'(forum_id, course_id) ' .
+				'VALUES (?, ?)';
+		$values = array($forum_id, $course_id);
+		$types = "ii";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -50,7 +57,7 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function DeleteByCourseID($courseID)
 	{
-		$courseID = intval($courseID);
+		//$courseID = intval($courseID);
 		
 	    include_once(TR_INCLUDE_PATH.'classes/DAO/ForumsDAO.class.php');
 	    $forumsDAO = new ForumsDAO();
@@ -61,9 +68,15 @@ class ForumsCoursesDAO extends DAO {
 	    		$forumsDAO->Delete($forums['forum_id']);
 	    	}
 	    }
+	    /*
 		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
 	             WHERE course_id = ".$courseID."";
-	    return $this->execute($sql);
+	             */
+		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
+	             WHERE course_id = ?";
+	    $values = $courseID;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -75,10 +88,16 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function DeleteByForumID($forumID)
 	{
+		/*
 		$forumID = intval($forumID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
 	             WHERE forum_id = ".$forumID."";
-	    return $this->execute($sql);
+	             */
+	    $sql = "DELETE FROM ".TABLE_PREFIX."forums_courses 
+	             WHERE forum_id = ?";
+	    $values = $forumID;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -90,9 +109,12 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function getByCourse($course_id)
 	{
-		$course_id = intval($course_id);
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id = '".$course_id."'";
-	    return $this->execute($sql);
+		//$course_id = intval($course_id);
+	    //$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id = '".$course_id."'";
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE course_id = ?";
+	    $values = $course_id;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -104,9 +126,12 @@ class ForumsCoursesDAO extends DAO {
 	*/
 	function getByForum($forum_id)
 	{
-		$forum_id = intval($forum_id);
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = '".$forum_id."'";
-	    return $this->execute($sql);
+		//$forum_id = intval($forum_id);
+	    //$sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = '".$forum_id."'";
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id = ?";
+	    $values = $forum_id;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 }
 ?>

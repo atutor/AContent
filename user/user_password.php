@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 		// insert into the db.
-		$password   = $addslashes($_POST['form_password_hidden']);
+		$password   = $_POST['form_password_hidden'];
 		
 		$usersDAO = new UsersDAO();
 

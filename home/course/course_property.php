@@ -87,7 +87,6 @@ else if($_POST['submit']){
 
 // display
 
-
 if ($_course_id > 0) {
 	$savant->assign('course_id', $_course_id);
 	$savant->assign('course_row', $coursesDAO->get($_course_id));
@@ -96,7 +95,7 @@ if ($_course_id > 0) {
 $dao = new DAO();
 if($_current_user->isAdmin()){
 	$sql = "SELECT user_id, login, first_name, last_name FROM ".TABLE_PREFIX."users WHERE is_author = '1'";
-	$user_rows = $dao->execute($sql);;
+	$user_rows = $dao->execute($sql);
 }
 $savant->assign('isauthor', $user_rows);
 

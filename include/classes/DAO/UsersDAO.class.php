@@ -35,6 +35,7 @@ class UsersDAO extends DAO {
 	 */
 	public function Validate($login, $pwd)
 	{
+	    /*
 		global $addslashes;
 		$login  = $addslashes($login);
 		$pwd = $addslashes($pwd);
@@ -42,8 +43,16 @@ class UsersDAO extends DAO {
 		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users 
 		         WHERE (login='".$login."' OR email='".$login."') 
 		           AND SHA1(CONCAT(password, '".$_SESSION['token']."'))='".$pwd."'";
-
-		$rows = $this->execute($sql);
+		*/
+		
+		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users 
+		         WHERE (login=? OR email=?) 
+		           AND SHA1(CONCAT(password, ?))=?";
+		           
+        $values = array($login,$login,$_SESSION['token'],$pwd);
+        $types = "ssss";
+        //$rows = $this->execute($sql);
+		$rows = $this->execute($sql,$values,$types);
 		if (is_array($rows))
 		{
 			return $rows[0]['user_id'];
@@ -71,21 +80,19 @@ class UsersDAO extends DAO {
 	                       $is_author, $organization, $phone, $address, $city,
 	                       $province, $country, $postal_code, $status)
 	{
-		global $addslashes;
-
 		/* email check */
-		$login = $addslashes(strtolower(trim($login)));
-		$email = $addslashes(trim($email));
-		$first_name = $addslashes(str_replace('<', '', trim($first_name)));
-		$last_name = $addslashes(str_replace('<', '', trim($last_name)));
-		$organization = $addslashes(trim($organization));
-		$phone = $addslashes(trim($phone));
-		$address = $addslashes(trim($address));
-		$city = $addslashes(trim($city));
-		$province = $addslashes(trim($province));
-		$country = $addslashes(trim($country));
-		$postal_code = $addslashes(trim($postal_code));
 
+		$login = strtolower(trim($login));
+		$email = trim($email);
+		$first_name = str_replace('<', '', trim($first_name));
+		$last_name = str_replace('<', '', trim($last_name));
+		$organization = trim($organization);
+		$phone = trim($phone);
+		$address = trim($address);
+		$city = trim($city);
+		$province = trim($province);
+		$country = trim($country);
+		$postal_code = trim($postal_code);
 		if ($this->isFieldsValid('new', $user_group_id, $login, $email,$first_name, $last_name,
 		                         $is_author, $organization, $phone, $address, $city,
 	                             $province, $country, $postal_code))
@@ -102,7 +109,8 @@ class UsersDAO extends DAO {
 			}
 
 			/* insert into the db */
-			$sql = "INSERT INTO ".TABLE_PREFIX."users
+
+            $sql = "INSERT INTO ".TABLE_PREFIX."users
 			              (login,
 			               password,
 			               user_group_id,
@@ -121,25 +129,26 @@ class UsersDAO extends DAO {
 			               status,
 			               create_date
 			               )
-			       VALUES ('".$login."',
-			               '".$pwd."',
-			               ".$user_group_id.",
-			               '".$first_name."',
-			               '".$last_name."', 
-			               '".$email."',
-			               ".$is_author.",
-			               '".$organization."',
-			               '".$phone."',
-			               '".$address."',
-			               '".$city."',
-			               '".$province."',
-			               '".$country."',
-			               '".$postal_code."',
-			               '".Utility::getRandomStr(32)."',
-			               ".$status.", 
-			               now())";
-
-			if (!$this->execute($sql))
+			       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,'".Utility::getRandomStr(32)."',?, now())";
+			               
+			$values = array($login,
+			                $pwd,
+			                $user_group_id,
+			                $first_name,
+			                $last_name,
+			                $email,
+			                $is_author,
+			                $organization,
+			                $phone,
+			                $address,
+			                $city,
+			                $province,
+			                $country,
+			                $postal_code,
+			                $status);
+			$types = "ssisssisssssssi";
+			
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -176,17 +185,18 @@ class UsersDAO extends DAO {
 		global $addslashes;
 
 		/* email check */
-		$login = $addslashes(strtolower(trim($login)));
-		$email = $addslashes(trim($email));
-		$first_name = $addslashes(str_replace('<', '', trim($first_name)));
-		$last_name = $addslashes(str_replace('<', '', trim($last_name)));
-		$organization = $addslashes(trim($organization));
-		$phone = $addslashes(trim($phone));
-		$address = $addslashes(trim($address));
-		$city = $addslashes(trim($city));
-		$province = $addslashes(trim($province));
-		$country = $addslashes(trim($country));
-		$postal_code = $addslashes(trim($postal_code));
+
+		$login = strtolower(trim($login));
+		$email = trim($email);
+		$first_name = str_replace('<', '', trim($first_name));
+		$last_name = str_replace('<', '', trim($last_name));
+		$organization = trim($organization);
+		$phone = trim($phone);
+		$address = trim($address);
+		$city = trim($city);
+		$province = trim($province);
+		$country = trim($country);
+		$postal_code = trim($postal_code);
 		
 		if ($this->isFieldsValid('update', $user_group_id,$login, $email,$first_name, $last_name,
 		                         $is_author, $organization, $phone, $address, $city,
@@ -194,23 +204,38 @@ class UsersDAO extends DAO {
 		{
 			/* insert into the db */
 			$sql = "UPDATE ".TABLE_PREFIX."users
-			           SET login = '".$login."',
-			               user_group_id = '".$user_group_id."',
-			               first_name = '".$first_name."',
-			               last_name = '".$last_name."',
-			               email = '".$email."',
-			               is_author = ".$is_author.",
-			               organization = '".$organization."',
-			               phone = '".$phone."',
-			               address = '".$address."',
-			               city = '".$city."',
-			               province = '".$province."',
-			               country = '".$country."',
-			               postal_code = '".$postal_code."',
-			               status = '".$status."'
-			         WHERE user_id = ".$userID;
-
-			return $this->execute($sql);
+			           SET login = ?,
+			               user_group_id = ?,
+			               first_name = ?,
+			               last_name = ?,
+			               email = ?,
+			               is_author = ?,
+			               organization = ?,
+			               phone = ?,
+			               address = ?,
+			               city = ?,
+			               province = ?,
+			               country = ?,
+			               postal_code = ?,
+			               status = ?
+			         WHERE user_id = ?";
+		    $values = array($login,
+		                            $user_group_id,
+		                            $first_name,
+		                            $last_name,
+		                            $email,
+		                            $is_author,
+		                            $organization,
+		                            $phone,
+		                            $address,
+		                            $city,
+		                            $province,
+		                            $country,
+		                            $postal_code,
+		                            $status,
+		                            $userID);
+		    $types = "sisssisssssssii";
+			return $this->execute($sql, $values, $types);
 		}
 	}
 
@@ -226,7 +251,6 @@ class UsersDAO extends DAO {
 	 */
 	public function UpdateField($userID, $fieldName, $fieldValue)
 	{
-		global $addslashes;
 		
 		// check if the required fields are filled
 		if ($fieldValue == '') return array(_AT('TR_ERROR_EMPTY_FIELD'));
@@ -256,10 +280,11 @@ class UsersDAO extends DAO {
 		}
 						
 		$sql = "UPDATE ".TABLE_PREFIX."users 
-		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
-		         WHERE user_id = ".intval($userID);
-		
-		return $this->execute($sql);
+		           SET ".$fieldName."='".$fieldValue."'
+		         WHERE user_id = ?";
+		$values = $userID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -272,10 +297,12 @@ class UsersDAO extends DAO {
 	 */
 	public function Delete($userID)
 	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."users
-		         WHERE user_id = ".$userID;
 
-		return $this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."users
+		         WHERE user_id = ?";
+		$values = $userID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -300,9 +327,11 @@ class UsersDAO extends DAO {
 	 */
 	public function getUserByID($userID)
 	{
-	    $userID = intval($userID);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'users WHERE user_id='.$userID;
-		if ($rows = $this->execute($sql))
+
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'users WHERE user_id=?';
+		$values = $userID;
+		$types = "i";
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -318,10 +347,11 @@ class UsersDAO extends DAO {
 	 */
 	public function getUserByWebServiceID($webServiceID)
 	{
-		global $addslashes;
-	    $webServiceID = $addslashes($webServiceID);
-		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE web_service_id='".$webServiceID."'";
-		if ($rows = $this->execute($sql))
+
+		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE web_service_id=?";
+		$values = $webServiceID;
+		$types = "s";
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -338,9 +368,10 @@ class UsersDAO extends DAO {
 	 */
 	public function getUserByEmail($email)
 	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE email='".$email."'";
-
-		$rows = $this->execute($sql);
+		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE email=?";
+		$values = $email;
+		$types = "s";
+		$rows = $this->execute($sql, $values, $types);
 		if (is_array($rows))
 		{
 			return $rows[0];
@@ -361,10 +392,11 @@ class UsersDAO extends DAO {
 	public function getUserByName($firstName, $lastName)
 	{
 		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users
-			        WHERE first_name='".$firstName."' 
-			        AND last_name='".$lastName."'";
-
-		$rows = $this->execute($sql);
+			        WHERE first_name=? 
+			        AND last_name=?";
+        $values = array($firstName, $lastName);
+        $types = "ss";
+		$rows = $this->execute($sql, $values, $types);
 		if (is_array($rows))
 		{
 			return $rows[0];
@@ -413,8 +445,10 @@ class UsersDAO extends DAO {
 	 */
 	public function getStatus($userID)
 	{
-		$sql = "SELECT status FROM ".TABLE_PREFIX."users WHERE user_id='".$userID."'";
-		$rows = $this->execute($sql);
+		$sql = "SELECT status FROM ".TABLE_PREFIX."users WHERE user_id=?";
+		$values = $userID;
+		$types = "i";
+		$rows = $this->execute($sql, $values, $types);
 
 		if ($rows)
 		return $rows[0]['status'];
@@ -433,8 +467,10 @@ class UsersDAO extends DAO {
 	 */
 	public function setStatus($userID, $status)
 	{
-		$sql = "Update ".TABLE_PREFIX."users SET status='".$status."' WHERE user_id='".$userID."'";
-		return $this->execute($sql);
+		$sql = "UPDATE ".TABLE_PREFIX."users SET status=? WHERE user_id=?";
+		$values = array($status, $userID);
+		$types = "ii";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -447,8 +483,10 @@ class UsersDAO extends DAO {
 	 */
 	public function setLastLogin($userID)
 	{
-		$sql = "Update ".TABLE_PREFIX."users SET last_login=now() WHERE user_id='".$userID."'";
-		return $this->execute($sql);
+		$sql = "UPDATE ".TABLE_PREFIX."users SET last_login=now() WHERE user_id=?";
+		$values = $userID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -463,8 +501,10 @@ class UsersDAO extends DAO {
 	 */
 	public function setName($userID, $firstName, $lastName)
 	{
-		$sql = "Update ".TABLE_PREFIX."users SET first_name='".$firstName."', last_name='".$lastName."' WHERE user_id='".$userID."'";
-		return $this->execute($sql);
+		$sql = "UPDATE ".TABLE_PREFIX."users SET first_name=?, last_name=? WHERE user_id=?";
+		$values = array($firstName, $lastName, $userID);
+		$types = "ssi";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -478,14 +518,12 @@ class UsersDAO extends DAO {
 	 */
 	public function setPassword($userID, $password)
 	{
-		global $addslashes;
 
-		$userID = intval($userID);
-		$password = $addslashes($password);
+		$sql = "UPDATE ".TABLE_PREFIX."users SET password=? WHERE user_id=?";
+		$values = array($password, $userID);
+		$types = "si";
 
-		$sql = "Update ".TABLE_PREFIX."users SET password='".$password."' WHERE user_id=".$userID;
-
-		return $this->execute($sql);
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -499,8 +537,10 @@ class UsersDAO extends DAO {
 	 */
 	public function setEmail($userID, $email)
 	{
-		$sql = "Update ".TABLE_PREFIX."users SET email='".$email."' WHERE user_id='".$userID."'";
-		return $this->execute($sql);
+		$sql = "UPDATE ".TABLE_PREFIX."users SET email=? WHERE user_id=?";
+		$values = array($email, $userID);
+		$types = "si";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -619,9 +659,10 @@ class UsersDAO extends DAO {
 	 */
 	private function isLoginExists($login)
 	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE login='".$login."'";
-
-		return is_array($this->execute($sql));
+		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE login=?";
+        $values = $login;
+        $types = "s";
+		return is_array($this->execute($sql, $values, $types));
 	}
 
 	/**
@@ -647,9 +688,10 @@ class UsersDAO extends DAO {
 	 */
 	private function isEmailExists($email)
 	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE email='".$email."'";
-
-		return is_array($this->execute($sql));
+		$sql = "SELECT * FROM ".TABLE_PREFIX."users WHERE email=?";
+        $values = $email;
+        $types = "s";
+		return is_array($this->execute($sql, $values, $types));
 	}
 
 }

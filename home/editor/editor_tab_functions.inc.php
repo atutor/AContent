@@ -192,7 +192,7 @@ function populate_a4a($cid, $content, $formatting){
 
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
-	global $contentManager, $addslashes, $msg, $_course_id, $_content_id, $stripslashes;
+	global $contentManager, $msg, $_course_id, $_content_id;
 	
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['_cid']	= intval($_POST['_cid']);
@@ -203,10 +203,10 @@ function save_changes($redir, $current_tab) {
 	$_POST['title'] = trim($_POST['title']);
 	$_POST['head']	= trim($_POST['head']);
 	$_POST['use_customized_head']	= isset($_POST['use_customized_head'])?$_POST['use_customized_head']:0;
-	$_POST['body_text']	= $stripslashes(trim($_POST['body_text']));
+	$_POST['body_text']	= stripslashes(trim($_POST['body_text']));
 	$_POST['weblink_text'] = trim($_POST['weblink_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
-	$_POST['keywords']	= $stripslashes(trim($_POST['keywords']));
+	$_POST['keywords']	= stripslashes(trim($_POST['keywords']));
 	$_POST['test_message'] = trim($_POST['test_message']);
 
 	//if weblink is selected, use it
@@ -275,21 +275,39 @@ function save_changes($redir, $current_tab) {
 		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
 		
 		// 1. delete old primary content type
+		/*
 		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
 		         WHERE primary_resource_id in 
 		               (SELECT DISTINCT primary_resource_id 
 		                  FROM ".TABLE_PREFIX."primary_resources
 		                 WHERE content_id=".$cid."
 		                   AND language_code='".$_SESSION['lang']."')";
-		$primaryResourcesTypesDAO->execute($sql);
+		                   */
+		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
+		         WHERE primary_resource_id in 
+		               (SELECT DISTINCT primary_resource_id 
+		                  FROM ".TABLE_PREFIX."primary_resources
+		                 WHERE content_id=?
+		                   AND language_code=?)";
+		$values=array($cid, $_SESSION['lang']);
+		$types = "ii";
+		$primaryResourcesTypesDAO->execute($sql, $values, $types);
 		
 		// 2. insert the new primary content type
-		$sql = "SELECT pr.primary_resource_id, rt.type_id
+		/*$sql = "SELECT pr.primary_resource_id, rt.type_id
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."resource_types rt
 		         WHERE pr.content_id = ".$cid."
 		           AND pr.language_code = '".$_SESSION['lang']."'";
-		$all_types_rows = $primaryResourcesTypesDAO->execute($sql);
+		           */
+		$sql = "SELECT pr.primary_resource_id, rt.type_id
+		          FROM ".TABLE_PREFIX."primary_resources pr, ".
+		                 TABLE_PREFIX."resource_types rt
+		         WHERE pr.content_id = ?
+		           AND pr.language_code = ?";
+		$values = array($cid, $_SESSION['lang']);
+		$types = "ii";
+		$all_types_rows = $primaryResourcesTypesDAO->execute($sql, $values, $types);
 		
 		if (is_array($all_types_rows)) {
 			foreach ($all_types_rows as $type) {
@@ -317,8 +335,11 @@ function save_changes($redir, $current_tab) {
 		//Delete entries
 		if (!empty($toBeDeleted)){
 			$tids = implode(",", $toBeDeleted);
-			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
-			$contentTestsAssocDAO->execute($sql);
+			//$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
+			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=? AND test_id IN (?)";
+			$values = array($_POST['cid'], $tids);
+			$types = "is";
+			$contentTestsAssocDAO->execute($sql, $values, $types);
 		}
 	
 		//Add entries
@@ -341,7 +362,7 @@ function save_changes($redir, $current_tab) {
 		$_SESSION['save_n_close'] = $_POST['save_n_close'];
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: '.basename($_SERVER['PHP_SELF']).'?_cid='.$cid.SEP.'close='.$addslashes($_POST['save_n_close']).SEP.'tab='.$addslashes($_POST['current_tab']).SEP.'displayhead='.$addslashes($_POST['displayhead']).SEP.'alternatives='.$addslashes($_POST['alternatives']));
+		header('Location: '.basename($_SERVER['PHP_SELF']).'?_cid='.$cid.SEP.'close='.addslashes($_POST['save_n_close']).SEP.'tab='.addslashes($_POST['current_tab']).SEP.'displayhead='.addslashes($_POST['displayhead']).SEP.'alternatives='.addslashes($_POST['alternatives']));
 		exit;
 	} else {
 		return;
@@ -349,29 +370,29 @@ function save_changes($redir, $current_tab) {
 }
 
 function check_for_changes($row, $row_alternatives) {
-	global $contentManager, $cid, $glossary, $glossary_ids_related, $addslashes;
+	global $contentManager, $cid, $glossary, $glossary_ids_related;
 
 	$changes = array();
 
-	if ($row && strcmp(trim($addslashes($_POST['title'])), addslashes($row['title']))) {
+	if ($row && strcmp(trim(addslashes($_POST['title'])), addslashes($row['title']))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['title']) {
 		$changes[0] = true;
 	}
 
-	if ($row && strcmp($addslashes(trim($_POST['head'])), trim(addslashes($row['head'])))) {
+	if ($row && strcmp(addslashes(trim($_POST['head'])), trim(addslashes($row['head'])))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['head']) {
 		$changes[0] = true;
 	}
 
-	if ($row && strcmp($addslashes(trim($_POST['body_text'])), trim(addslashes($row['text'])))) {
+	if ($row && strcmp(addslashes(trim($_POST['body_text'])), trim(addslashes($row['text'])))) {
 		$changes[0] = true;
 	} else if (!$row && $_POST['body_text']) {
 		$changes[0] = true;
 	}
 	
-    if ($row && strcmp($addslashes(trim($_POST['weblink_text'])), trim(addslashes($row['text'])))) {
+    if ($row && strcmp(addslashes(trim($_POST['weblink_text'])), trim(addslashes($row['text'])))) {
         $changes[0] = true;
     } else if (!$row && $_POST['weblink_text']) {
         $changes[0] = true;

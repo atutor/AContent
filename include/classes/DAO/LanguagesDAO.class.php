@@ -33,11 +33,11 @@ class LanguagesDAO extends DAO {
 	function Create($langCode, $charset, $regExp, $nativeName, $englishName, $status)
 	{
 		global $languageManager, $msg, $addslashes;
-		$langCode = $addslashes($langCode);
-		$charset = $addslashes($charset);
-		$regExp = $addslashes($regExp);
-		$englishName = $addslashes($englishName);
-		$status = intval($status);
+		//$langCode = $addslashes($langCode);
+		//$charset = $addslashes($charset);
+		//$regExp = $addslashes($regExp);
+		//$englishName = $addslashes($englishName);
+		//$status = intval($status);
 	
 		
 		// check if the required fields are filled
@@ -48,9 +48,10 @@ class LanguagesDAO extends DAO {
 		
 		if (!$msg->containsErrors())
 		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."languages (language_code, charset, reg_exp, native_name, english_name, status) 
-			        VALUES ('".$langCode."', '".$charset."', '".$regExp."', '".$nativeName."', '".$englishName."', ".$status.")";
-			return $this->execute($sql);
+			$sql = "INSERT INTO ".TABLE_PREFIX."languages (language_code, charset, reg_exp, native_name, english_name, status)  VALUES (?,?, ?,?,?,?)";
+		    $values=array($langCode, $charset, $regExp, $nativeName, $englishName, $status);	
+		    $types= "sssssi";
+			return $this->execute($sql,$values,$types);
 		}
 	}
 
@@ -64,25 +65,19 @@ class LanguagesDAO extends DAO {
 	*/
 	function Update($langCode, $charset, $regExp, $nativeName, $englishName, $status)
 	{
-		global $addslashes;
-		
-		$langCode = $addslashes($langCode);
-		$charset = $addslashes($charset);
-		$regExp = $addslashes($regExp);
-		$englishName = $addslashes($englishName);
-		$status = intval($status);
-		
 		// check if the required fields are filled
 		if (!$this->ValidateFields($langCode, $charset, $nativeName, $englishName)) return false;
 		
 		$sql = "UPDATE ".TABLE_PREFIX."languages 
-		           SET reg_exp='".$regExp."',
-		               native_name = '".$nativeName."',
-		               english_name = '".$englishName."',
-		               status = ".$status."
-		         WHERE language_code = '".$langCode."'
-		           AND charset = '".$charset."'";
-		return $this->execute($sql);
+		           SET reg_exp=?,
+		               native_name =?,
+		               english_name =?,
+		               status = ?
+		         WHERE language_code = ?
+		           AND charset = ?";
+		$values = array($regExp,$nativeName,$englishName,$status,$langCode,$charset);
+		$types="sssiss";         
+		return $this->execute($sql,$values,$types);
 	}
 
 	/**
@@ -96,15 +91,17 @@ class LanguagesDAO extends DAO {
 	*/
 	function UpdateField($langCode, $fieldName, $fieldValue)
 	{
-		global $addslashes;
 		
 		// check if the required fields are filled
 		if ($fieldValue == '') return false;
-		
+
 		$sql = "UPDATE ".TABLE_PREFIX."languages 
-		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
-		         WHERE language_code = '".$addslashes($langCode)."'";
-		return $this->execute($sql);
+		           SET ".$fieldName."=?
+		         WHERE language_code = ?";
+		         
+		$values = array($fieldValue,$langCode);
+		$types = "ss";
+		return $this->execute($sql,$values,$types);
 	}
 
 	/**
@@ -117,17 +114,18 @@ class LanguagesDAO extends DAO {
 	*/
 	function Delete($langCode)
 	{
-		global $addslashes;
-		$langCode = $addslashes($langCode);
-		
 		$sql = "DELETE FROM ".TABLE_PREFIX."languages 
-		         WHERE language_code = '".$langCode."'";
-		if (!$this->execute($sql)) return false;
+		         WHERE language_code = ?";
+	    $values = $langCode;
+	    $types = "s";
+	    
+		if (!$this->execute($sql,$values,$types)) return false;
 
 		$sql = "DELETE FROM ".TABLE_PREFIX."language_text 
-	             WHERE language_code = '".$langCode."'";
-		
-		return $this->execute($sql);
+	             WHERE language_code = ?";	
+	    $values = $langCode;
+	    $types = "s";	
+		return $this->execute($sql,$values,$types);
 	}
 
 	/**
@@ -139,8 +137,9 @@ class LanguagesDAO extends DAO {
 	*/
 	function getAll()
 	{
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages l
-	             ORDER BY l.native_name";
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages 
+	             ORDER BY native_name";
+	
 	    return $this->execute($sql);
 	}
 
@@ -153,9 +152,9 @@ class LanguagesDAO extends DAO {
 	*/
 	function getAllEnabled()
 	{
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages l
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages 
 	             WHERE status = ".TR_STATUS_ENABLED."
-	             ORDER BY l.native_name";
+	             ORDER BY native_name";
 	    return $this->execute($sql);
 	}
 
@@ -169,17 +168,13 @@ class LanguagesDAO extends DAO {
 	*/
 	function getByLangCodeAndCharset($langCode, $charset)
 	{
-		global $addslashes;
-		
-		$langCode = $addslashes($langCode);
-		$charset = $addslashes($charset);
-		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."languages l
-	             WHERE l.language_code = '".$langCode."'
-	               AND l.charset='".$charset."'
-	             ORDER BY l.native_name";
-
-		if ($rows = $this->execute($sql))
+        $sql="SELECT * FROM ".TABLE_PREFIX."languages 
+	             WHERE language_code = ?
+	               AND charset=?
+	             ORDER BY native_name";
+	    $values=array($langCode, $charset);
+	    $types="ss";    
+		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
 		}
@@ -194,18 +189,18 @@ class LanguagesDAO extends DAO {
 	*/
 	function getAllExceptLangCode($langCode)
 	{
-		global $addslashes;
-		
-		$langCode = $addslashes($langCode);
 
 		if (trim($langCode) == '')
 			return $this->getAll();
 		else
 		{
+
 	    	$sql = "SELECT * FROM ".TABLE_PREFIX."languages
-					 WHERE language_code <> '".$langCode."'
+					 WHERE language_code <> ?
 			         ORDER BY native_name";
-		    return $this->execute($sql);
+			$values = $langCode;    
+			$types = "s";     			         
+		    return $this->execute($sql,$values,$types);
 		}
 	}
 	

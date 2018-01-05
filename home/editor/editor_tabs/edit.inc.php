@@ -50,7 +50,7 @@ global $_course_id, $contentManager;
 	      $_POST['head'] = '';
         }
         if ($do_check) {
-	       $_POST['head'] = $stripslashes($_POST['head']);
+	       $_POST['head'] = stripslashes($_POST['head']);
         }
 ?>
     <script type="text/javascript" language="javascript">
@@ -136,7 +136,7 @@ global $_course_id, $contentManager;
 	       $_POST['body_text'] = '';
         }
         if ($do_check) {
-	       $_POST['body_text'] = $stripslashes($_POST['body_text']);
+	       $_POST['body_text'] = stripslashes($_POST['body_text']);
         }
     ?>
 

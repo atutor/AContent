@@ -41,12 +41,10 @@ class UserCoursesDAO extends DAO {
             /* insert into the db */
             $sql = "INSERT INTO ".TABLE_PREFIX."user_courses
                           (user_id, course_id, role, last_cid)
-                   VALUES (".$user_id.",
-                           ".$course_id.",
-                           ".$role.",
-                           ".$last_cid.")";
-
-            return $this->execute($sql);
+                   VALUES (?, ?, ?, ?)";
+            $values=array($user_id, $course_id, $role, $last_cid);
+            $types = "iiii";
+            return $this->execute($sql, $values, $types);
         }
         else
         {
@@ -70,11 +68,12 @@ class UserCoursesDAO extends DAO {
         if ($this->isExist($user_id, $course_id))
         {
             $sql = "UPDATE ".TABLE_PREFIX."user_courses
-                       SET last_cid = ".$last_cid."
-                     WHERE user_id = ".$user_id."
-                       AND course_id = ".$course_id;
-    
-            return $this->execute($sql);
+                       SET last_cid = ?
+                     WHERE user_id = ?
+                       AND course_id = ?";   
+            $values = array($last_cid, $user_id, $course_id); 
+            $types = "iii";
+            return $this->execute($sql, $values, $types);
         }
         else return true;
     }
@@ -88,9 +87,12 @@ class UserCoursesDAO extends DAO {
      */
     public function Delete($user_id, $course_id)
     {
+
         $sql = "DELETE FROM ".TABLE_PREFIX."user_courses 
-                 WHERE user_id = ".$user_id." AND course_id = ".$course_id;
-        return $this->execute($sql);
+                 WHERE user_id = ? AND course_id = ?";    
+        $values = array($user_id, $course_id);    
+        $types = "ii";
+        return $this->execute($sql, $values, $types);
     }
 
     /**
@@ -104,9 +106,11 @@ class UserCoursesDAO extends DAO {
     public function get($user_id, $course_id)
     {
         $sql = "SELECT * FROM ".TABLE_PREFIX."user_courses
-                 WHERE user_id=".$user_id."
-                   AND course_id = ".$course_id;
-        if ($rows = $this->execute($sql))
+                 WHERE user_id=? 
+                   AND course_id=?";
+        $values = array($user_id, $course_id);
+        $types = "ii";
+        if ($rows = $this->execute($sql, $values, $types))
         {
             return $rows[0];
         }
@@ -121,12 +125,14 @@ class UserCoursesDAO extends DAO {
      * @author  Cindy Qi Li
      */
     public function getByUserID($user_id)
-    {
+    {         
         $sql = "SELECT * FROM ".TABLE_PREFIX."user_courses uc, ".TABLE_PREFIX."courses c
-                 WHERE uc.user_id=".$user_id."
+                 WHERE uc.user_id=?
                    AND uc.course_id = c.course_id
-                 ORDER BY c.title";
-        return $this->execute($sql);
+                 ORDER BY c.title";     
+        $values = $user_id;
+        $types="i";
+        return $this->execute($sql, $values, $types);
     }
 
     /**
@@ -138,10 +144,13 @@ class UserCoursesDAO extends DAO {
      */
     public function isExist($user_id, $course_id)
     {
+
         $sql = "SELECT * FROM ".TABLE_PREFIX."user_courses
-                 WHERE user_id=".$user_id."
-                   AND course_id=".$course_id;
-        $rows = $this->execute($sql);
+                 WHERE user_id=?
+                   AND course_id=?";
+        $values = array($user_id, $course_id);
+        $types = "ii";
+        $rows = $this->execute($sql, $values, $types);
         
         return is_array($rows);
     }
@@ -154,8 +163,10 @@ class UserCoursesDAO extends DAO {
      * @author  Alexey Novak
      */
     public function hasContent($course_id) {
-        $sql = sprintf('SELECT * FROM %scontent WHERE course_id = %d', TABLE_PREFIX, $course_id);
-        $rows = $this->execute($sql);
+        $sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id = ?';
+        $values=$course_id;
+        $types="i";
+        $rows = $this->execute($sql,$values,$types);
         return is_array($rows);
     }
 }
