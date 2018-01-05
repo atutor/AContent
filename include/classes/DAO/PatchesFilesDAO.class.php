@@ -33,29 +33,22 @@ class PatchesFilesDAO extends DAO {
 	 */
 	public function Create($patch_id, $action, $name, $location)
 	{
-		global $addslashes;
-		$patch_id = intval($patch_id);
-		$actions = $addslashes($actions);
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX. "patches_files " .
-					 "(patches_id, 
-					   action,
-					   name,
-					   location)
-					  VALUES
-					  (".$patch_id.",
-					   '".$action."',
-					   '".$addslashes($name)."',
-					   '".$addslashes($location)."')";
-		
-		if (!$this->execute($sql))
+
+        $sql = "INSERT INTO " . TABLE_PREFIX. "patches_files " .
+                 "(patches_id, 
+                   action,
+                   name,
+                   location)
+                  VALUES (?,?,?,?)";	
+        $values = array($patch_id, $action, $name, $location);
+        $types = "isss";
+		if (!$this->execute($sql, $values, $types))
 		{
 			$msg->addError('DB_NOT_UPDATED');
 			return false;
 		}
 		else
 		{
-			//return mysql_insert_id();
 			return $this->ac_insert_id();
 		}
 	}
@@ -69,16 +62,15 @@ class PatchesFilesDAO extends DAO {
 	 */
 	public function getNumOfUpdatesOnFile($file)
 	{
-		global $addslashes;
-		$file = $addslashes($file);	
-		
+
 		$sql = "SELECT count(*) num_of_updates FROM " . TABLE_PREFIX. "patches patches, " . TABLE_PREFIX."patches_files patches_files " .
 			       "WHERE patches.applied_version = '" . VERSION . "' ".
 			       "  AND patches.status = 'Installed' " .
 			       "  AND patches.patches_id = patches_files.patches_id " .
-			       "  AND patches_files.name = '" . $file . "'";
-		
-		return $this->execute($sql);
+			       "  AND patches_files.name = ?";	
+		$values = 	$file;
+		$types = "s";
+		return $this->execute($sql, $values, $types);
 	}		
 }
 ?>

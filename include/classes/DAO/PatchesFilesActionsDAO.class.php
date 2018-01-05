@@ -33,29 +33,22 @@ class PatchesFilesActionsDAO extends DAO {
 	 */
 	public function Create($patches_files_id, $action, $code_from, $code_to)
 	{
-		global $addslashes;
-		$patches_files_id = intval($patches_files_id);
-		$actions = $addslashes($actions);
-		
 		$sql = "INSERT INTO " . TABLE_PREFIX. "patches_files_actions " .
 					 "(patches_files_id, 
 					   action,
 					   code_from,
 					   code_to)
 					  VALUES
-					  (".$patches_files_id.",
-					   '".$action."',
-					   '".$addslashes($code_from)."',
-					   '".$addslashes($code_to)."')";
-		
-		if (!$this->execute($sql))
+					  (?, ?, ?, ?)";		
+		$values = array($patches_files_id, $action, $code_from, $code_to);
+		$types = "isss";
+		if (!$this->execute($sql, $values, $types))
 		{
 			$msg->addError('DB_NOT_UPDATED');
 			return false;
 		}
 		else
 		{
-			//return mysql_insert_id();
 			return $this->ac_insert_id();
 		}
 	}

@@ -28,8 +28,7 @@ class ContentDAO extends DAO {
 	                       $content_path, $title, $text, $head, $use_customized_head, $test_message, 
 	                       $content_type)
 	{
-		//global $addslashes, $msg;
-		global $addslashes, $msg;
+		global $msg;
 		
 		if ($this->isFieldsValid('create', $course_id, $title))
 		{

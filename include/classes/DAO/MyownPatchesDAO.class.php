@@ -34,12 +34,7 @@ class MyownPatchesDAO extends DAO {
 	public function Create($system_patch_id, $applied_version, 
 	                       $description, $sql_statement)
 	{
-		global $addslashes;
-		$system_patch_id = $addslashes($system_patch_id);
-		$applied_version = $addslashes($applied_version);		
-		$description = $addslashes($description);
-		$sql_statement = $addslashes($sql_statement);
-		
+			
 		$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches 
 	               (system_patch_id, 
 	                applied_version,
@@ -47,21 +42,16 @@ class MyownPatchesDAO extends DAO {
 	                sql_statement,
 	                status,
 	                last_modified)
-		        VALUES ('".$system_patch_id."', 
-		                '".$applied_version."', 
-		                '".$description."', 
-		                '".$sql_statement."', 
-		                'Created',
-		                now())";
-		
-		if (!$this->execute($sql))
+		        VALUES (?, ?, ?,  ?, 'Created', now())";	
+		$values = array($system_patch_id, $applied_version, $description, $sql_statement);	
+		$types = "ssss";
+		if (!$this->execute($sql, $values, $types))
 		{
 			$msg->addError('DB_NOT_UPDATED');
 			return false;
 		}
 		else
 		{
-			//return mysql_insert_id();
 			return $this->ac_insert_id();
 		}
 	}
@@ -76,22 +66,18 @@ class MyownPatchesDAO extends DAO {
 	public function Update($myown_patch_id, $system_patch_id, $applied_version, 
 	                       $description, $sql_statement)
 	{
-		global $addslashes;
-		$myown_patch_id = intval($myown_patch_id);
-		$system_patch_id = $addslashes($system_patch_id);
-		$applied_version = $addslashes($applied_version);		
-		$description = $addslashes($description);
-		
+
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
-		           SET system_patch_id = '". $system_patch_id ."',
-		               applied_version = '". $applied_version ."',
-		               description = '". $description ."',
-		               sql_statement = '". $sql_statement ."',
+		           SET system_patch_id = ?,
+		               applied_version = ?,
+		               description = ?,
+		               sql_statement = ?,
 		               status = 'Created',
 		               last_modified = now()
-		         WHERE myown_patch_id = ". $myown_patch_id;
-	
-		return $this->execute($sql);
+		         WHERE myown_patch_id = ?";	
+		$values = array($system_patch_id, $applied_version, $description, $sql_statement,  $myown_patch_id);
+		$types = "ssssi";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -106,17 +92,18 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function UpdateField($myownPatchID, $fieldName, $fieldValue)
 	{
-		global $addslashes;	
+
 		
 		// check if the required fields are filled
 		if (($fieldName == 'system_patch_id' || $fieldName == 'applied_version') && $fieldValue == '')
 			return array(_AT('TR_ERROR_EMPTY_FIELD'));
 
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
-		           SET ".$addslashes($fieldName)."='".$addslashes($fieldValue)."'
-		         WHERE myown_patch_id = ".intval($myownPatchID);
-		
-		return $this->execute($sql);
+		           SET ".addslashes($fieldName)."='".addslashes($fieldValue)."'
+		         WHERE myown_patch_id = ?";
+	    $values = ($myownPatchID);
+	    $types = "i";	
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -129,11 +116,13 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function Delete($patchID)
 	{
-		$patchID = intval($patchID);
-		$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches
-		         WHERE myown_patch_id = ".$patchID;
 
-		return $this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches
+		         WHERE myown_patch_id = ?";
+		         
+		$values = $patchID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -159,10 +148,11 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function getByID($patchID)
 	{
-		$patchID = intval($patchID);
-		$sql = "SELECT * from ".TABLE_PREFIX."myown_patches where myown_patch_id=". $patchID;
 		
-		$rows = $this->execute($sql);
+		$sql = "SELECT * from ".TABLE_PREFIX."myown_patches where myown_patch_id=?";
+		$values = $patchID;
+		$types = "i";
+		$rows = $this->execute($sql, $values, $types);
 		
 		if (is_array($rows)) return $rows[0];
 		else return false;

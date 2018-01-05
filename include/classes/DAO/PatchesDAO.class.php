@@ -47,8 +47,7 @@ class PatchesDAO extends DAO {
 	                       $status, $remove_permission_files,
 	                       $backup_files, $patch_files, $author)
 	{
-		global $addslashes;
-
+	    
 		$sql = "INSERT INTO " . TABLE_PREFIX. "patches " .
 					 "(system_patch_id, 
 					   applied_version,
@@ -62,29 +61,27 @@ class PatchesDAO extends DAO {
 					   patch_files,
 					   author,
 					   installed_date)
-					  VALUES
-					  ('".$addslashes($system_patch_id)."',
-					   '".$addslashes($applied_version)."',
-					   '".$addslashes($patch_folder)."',
-					   '".$addslashes($description)."',
-					   '".$addslashes($available_to)."',
-					   '".$addslashes($sql_statement)."',
-					   '".$addslashes($status)."',
-					   '".$addslashes($remove_permission_files)."',
-					   '".$addslashes($backup_files)."',
-					   '".$addslashes($patch_files)."',
-					   '".$addslashes($author)."',
-					   now()
-					   )";
-
-		if (!$this->execute($sql))
+					  VALUES (?,?,?,?,?,?,?,?,?,?,?, now() )";
+			$values = array($system_patch_id, 
+			            $applied_version, 
+			            $patch_folder, 
+			            $description,
+			            $available_to,
+			            $sql_statement,
+			            $status,
+			            $remove_permission_files,
+			            $backup_files,
+			            $patch_files,
+			            $author);
+			//debug($values);
+			$types = "sssssssssss";
+		if (!$this->execute($sql, $values, $types))
 		{
 			$msg->addError('DB_NOT_UPDATED');
 			return false;
 		}
 		else
 		{
-			//return mysql_insert_id();
 			return $this->ac_insert_id();
 		}
 	}
@@ -97,20 +94,20 @@ class PatchesDAO extends DAO {
 	*/
 	public function UpdateByArray($patchID, $fieldArray)
 	{
-                global $addslashes;
-		$patchID = $addslashes($patchID);
-		
-		$sql_prefix = "Update ". TABLE_PREFIX. "patches set ";
+
+		$sql_prefix = "UPDATE ". TABLE_PREFIX. "patches set ";
 		
 		foreach ($fieldArray as $key => $value)
 		{
-			$sql_middle .= $key . "='" . $value . "', ";
+			$sql_middle .= " ".$key . "='" . $value . "', ";
+
 		}
 		
 		$sql = substr($sql_prefix . $sql_middle, 0, -2) . 
-		       " WHERE patches_id = " . $patchID;
-		
-		return $this->execute($sql);
+		       " WHERE patches_id = ?";
+		$values = $patchID;
+		$types .= "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -122,11 +119,11 @@ class PatchesDAO extends DAO {
 	 */
 	public function getByID($patchID)
 	{
-                global $addslashes;
-		$patchID = $addslashes($patchID);
-		$sql = "SELECT * from ".TABLE_PREFIX."patches where patches_id=". $patchID;
-		
-		$rows = $this->execute($sql);
+
+		$sql = "SELECT * from ".TABLE_PREFIX."patches where patches_id=?";
+		$values = $patchID;
+		$types = "i";
+		$rows = $this->execute($sql, $values, $types);
 		
 		if (is_array($rows)) return $rows[0];
 		else return false;
@@ -141,14 +138,13 @@ class PatchesDAO extends DAO {
 	 */
 	public function getPatchByVersion($version)
 	{
-		global $addslashes;
-		$version = $addslashes($version);
 		
 		$sql = "SELECT * FROM ".TABLE_PREFIX."patches 
-		         WHERE applied_version = '" . $version . "' 
+		         WHERE applied_version = ? 
 		         ORDER BY system_patch_id";
-		
-		return $this->execute($sql);
+		$values = $version;
+		$types = "s";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -160,16 +156,13 @@ class PatchesDAO extends DAO {
 	 */
 	public function getInstalledPatchByIDAndVersion($patchID, $version)
 	{
-		global $addslashes;
-		$patchID = $addslashes($patchID);
-		$version = $addslashes($version);
-		
-		$sql = "select * from ".TABLE_PREFIX."patches " .
-		       "where system_patch_id = '" . $patchID ."'".
-		       " and applied_version = '".$version."'".
-		       " and status like '%Installed'";
-
-		return $this->execute($sql);
+		$sql = "SELECT * from ".TABLE_PREFIX."patches 
+		       WHERE system_patch_id = ?
+		       AND applied_version = ?
+		       AND status like '%Installed'";
+        $values = array($patchID, $version);
+        $types = "is";
+		return $this->execute($sql, $values, $types);
 	}
 
 }

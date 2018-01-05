@@ -55,7 +55,7 @@ if ($_GET['query']) {
 		$final_match_rows = array();
 		foreach ($search_terms as $term)
 		{
-			$match_rows = $languageTextDAO->getHelpByMatchingText($addslashes($term), $_SESSION['lang']);
+			$match_rows = $languageTextDAO->getHelpByMatchingText($term, $_SESSION['lang']);
 
 			if (is_array($match_rows)) $final_match_rows = array_merge($final_match_rows, $match_rows);
 		}

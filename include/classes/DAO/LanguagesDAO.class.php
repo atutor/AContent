@@ -32,13 +32,7 @@ class LanguagesDAO extends DAO {
 	*/
 	function Create($langCode, $charset, $regExp, $nativeName, $englishName, $status)
 	{
-		global $languageManager, $msg, $addslashes;
-		//$langCode = $addslashes($langCode);
-		//$charset = $addslashes($charset);
-		//$regExp = $addslashes($regExp);
-		//$englishName = $addslashes($englishName);
-		//$status = intval($status);
-	
+		global $languageManager, $msg;
 		
 		// check if the required fields are filled
 		if (!$this->ValidateFields($langCode, $charset, $nativeName, $englishName)) return false;

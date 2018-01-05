@@ -275,14 +275,7 @@ function save_changes($redir, $current_tab) {
 		$primaryResourcesTypesDAO = new PrimaryResourcesTypesDAO();
 		
 		// 1. delete old primary content type
-		/*
-		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
-		         WHERE primary_resource_id in 
-		               (SELECT DISTINCT primary_resource_id 
-		                  FROM ".TABLE_PREFIX."primary_resources
-		                 WHERE content_id=".$cid."
-		                   AND language_code='".$_SESSION['lang']."')";
-		                   */
+
 		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
 		         WHERE primary_resource_id in 
 		               (SELECT DISTINCT primary_resource_id 
@@ -294,12 +287,7 @@ function save_changes($redir, $current_tab) {
 		$primaryResourcesTypesDAO->execute($sql, $values, $types);
 		
 		// 2. insert the new primary content type
-		/*$sql = "SELECT pr.primary_resource_id, rt.type_id
-		          FROM ".TABLE_PREFIX."primary_resources pr, ".
-		                 TABLE_PREFIX."resource_types rt
-		         WHERE pr.content_id = ".$cid."
-		           AND pr.language_code = '".$_SESSION['lang']."'";
-		           */
+
 		$sql = "SELECT pr.primary_resource_id, rt.type_id
 		          FROM ".TABLE_PREFIX."primary_resources pr, ".
 		                 TABLE_PREFIX."resource_types rt
@@ -335,10 +323,9 @@ function save_changes($redir, $current_tab) {
 		//Delete entries
 		if (!empty($toBeDeleted)){
 			$tids = implode(",", $toBeDeleted);
-			//$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
-			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=? AND test_id IN (?)";
-			$values = array($_POST['cid'], $tids);
-			$types = "is";
+			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=? AND test_id IN ($tids)";
+			$values = array($_POST['cid']);
+			$types = "i";
 			$contentTestsAssocDAO->execute($sql, $values, $types);
 		}
 	

@@ -104,6 +104,7 @@ if (isset($_REQUEST["save"]))
     $values = array($_POST["lang_code"], $_POST["variable"], $_POST["term"], $_POST["translated_text"]);
     $types = "ssss";
     
+    // NOT SURE WHAT THESE LINES ARE DOING
 	//$trans = get_html_translation_table(HTML_ENTITIES);
 	//$trans = array_flip($trans);
 	//$sql_save = strtr($sql_save, $trans);
@@ -192,9 +193,7 @@ foreach ($rows_lang as $row_lang)
 <?php 
 if (isset($_REQUEST['selected_term'])) 
 {
-    /*
-	$sql_english	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='".DEFAULT_LANGUAGE_CODE."' AND term='".$_REQUEST["selected_term"]."'";
-	*/
+
 	$sql_english	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='".DEFAULT_LANGUAGE_CODE."' AND term= ?";
 	$values[] = $_REQUEST["selected_term"];
 	$types .= "s";
@@ -214,7 +213,6 @@ function trans_form() {
 	global $langs;
 	global $success_error;
 	global $db;
-	global $addslashes;
 
 	if (!is_array($rows_selected)) // add new term
 		$add_new = true;

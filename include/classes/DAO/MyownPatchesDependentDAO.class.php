@@ -33,24 +33,18 @@ class MyownPatchesDependentDAO extends DAO {
 	 */
 	public function Create($myown_patch_id, $dependent_patch_id)
 	{
-		global $addslashes;
-		$myown_patch_id = intval($myown_patch_id);
-		$dependent_patch_id = $addslashes($dependent_patch_id);
-		
 		$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_dependent 
-               (myown_patch_id, 
-                dependent_patch_id)
-	        VALUES ('".$myown_patch_id."', 
-	                '".$dependent_patch_id."')";
-		
-		if (!$this->execute($sql))
+               (myown_patch_id,  dependent_patch_id) VALUES (?, ?)";
+		$values = array($myown_patch_id, $dependent_patch_id);
+		$types ="is";
+		if (!$this->execute($sql, $values, $types))
 		{
 			$msg->addError('DB_NOT_UPDATED');
 			return false;
 		}
 		else
 		{
-			//return mysql_insert_id();
+
 			return $this->ac_insert_id();
 		}
 	}
@@ -65,11 +59,12 @@ class MyownPatchesDependentDAO extends DAO {
 	 */
 	public function DeleteByPatchID($patchID)
 	{
-		$patchID = intval($patchID);
-		$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_dependent
-		         WHERE myown_patch_id = ".$patchID;
 
-		return $this->execute($sql);
+		$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_dependent
+		         WHERE myown_patch_id = ?";
+        $values = $patchID;
+        $types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -81,12 +76,13 @@ class MyownPatchesDependentDAO extends DAO {
 	 */
 	public function getByPatchID($patchID)
 	{
-		$patchID = intval($patchID);
+
 		$sql = "SELECT * from ".TABLE_PREFIX."myown_patches_dependent
-		         WHERE myown_patch_id=". $patchID." 
+		         WHERE myown_patch_id=? 
 		         ORDER BY dependent_patch_id";
-		
-		return $this->execute($sql);
+		$values = $patchID;
+		$types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 }

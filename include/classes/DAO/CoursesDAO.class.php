@@ -35,7 +35,7 @@ class CoursesDAO extends DAO {
 	                       $max_quota, $max_file_size, $copyright,
 	                       $primary_language, $icon, $side_menu)
 	{
-		//global $addslashes;
+
 		$user_id = intval($user_id);
 		$category_id = intval($category_id);
 		$title = trim($title);
