@@ -12,6 +12,10 @@ ALTER TABLE `content` MODIFY `content_path` text NULL DEFAULT NULL;
 ALTER TABLE `content` MODIFY `text` text NULL DEFAULT NULL;
 ALTER TABLE `content` MODIFY `head` text NULL DEFAULT NULL;
 ALTER TABLE `content` MODIFY `test_message` text NULL DEFAULT NULL;
+ALTER TABLE `patches` MODIFY `status` text NULL DEFAULT NULL;
+ALTER TABLE `content` MODIFY `author` text NULL DEFAULT NULL;
+
+
 /*
 ## Language for template editor
 REPLACE INTO `AC_language_text` VALUES ('en', '_template', 'template_editor', 'Template Editor', '2013-07-13 08:46:35', ''),
