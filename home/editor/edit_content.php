@@ -297,13 +297,22 @@ $pid = intval($_REQUEST['pid']);
 	/* get glossary terms */
 
 	// adapted content
-	$sql = "SELECT pr.primary_resource_id, prt.type_id
+	/*$sql = "SELECT pr.primary_resource_id, prt.type_id
 	          FROM ".TABLE_PREFIX."primary_resources pr, ".
 	                 TABLE_PREFIX."primary_resources_types prt
 	         WHERE pr.content_id = ".$cid."
 	           AND pr.language_code = '".$_SESSION['lang']."'
 	           AND pr.primary_resource_id = prt.primary_resource_id";
-	$types = $dao->execute($sql);
+	           */
+	$sql = "SELECT pr.primary_resource_id, prt.type_id
+	          FROM ".TABLE_PREFIX."primary_resources pr, ".
+	                 TABLE_PREFIX."primary_resources_types prt
+	         WHERE pr.content_id = ?
+	           AND pr.language_code = ?
+	           AND pr.primary_resource_id = prt.primary_resource_id";
+	$values = array($cid, $_SESSION['lang']);
+	$types = "ii";
+	$types = $dao->execute($sql, $values, $types);
 	
 	$i = 0;
 	if (is_array($types)) {

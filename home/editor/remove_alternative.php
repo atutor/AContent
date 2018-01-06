@@ -32,25 +32,42 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 $dao = new DAO();
 
 // delete the existing alternative for this (pid, a_type)
-$sql = "SELECT sr.secondary_resource_id 
+/*$sql = "SELECT sr.secondary_resource_id 
           FROM ".TABLE_PREFIX."secondary_resources sr, ".TABLE_PREFIX."secondary_resources_types srt
          WHERE sr.secondary_resource_id = srt.secondary_resource_id
            AND sr.primary_resource_id = ".$pid."
            AND sr.language_code = '".$_SESSION['lang']."'
-           AND srt.type_id=".$type_id;
-$existing_secondary_rows = $dao->execute($sql);
+           AND srt.type_id=".$type_id;*/
+$sql = "SELECT sr.secondary_resource_id 
+          FROM ".TABLE_PREFIX."secondary_resources sr, ".TABLE_PREFIX."secondary_resources_types srt
+         WHERE sr.secondary_resource_id = srt.secondary_resource_id
+           AND sr.primary_resource_id = ?
+           AND sr.language_code = ?
+           AND srt.type_id=?";
+$values = array($pid, $_SESSION['lang'], $type_id);
+$types = "isi";
+$existing_secondary_rows = $dao->execute($sql, $values, $types);
 
 if (is_array($existing_secondary_rows)) {
 	foreach ($existing_secondary_rows as $existing_secondary)
 	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources 
+		/* $sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources 
 		         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id'];
-		$dao->execute($sql);
+		         */
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources 
+		         WHERE secondary_resource_id = ?";
+		$values = $existing_secondary['secondary_resource_id'];
+		$dao->execute($sql, $values, $types);
 	
-		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types 
+		/*$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types 
 		         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id']."
-		           AND type_id=".$type_id;
-		$dao->execute($sql);
+		           AND type_id=".$type_id;*/
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types 
+		         WHERE secondary_resource_id = ?
+		           AND type_id=?";
+		$values = array($existing_secondary['secondary_resource_id'], $type_id);
+		$types = "ii";
+		$dao->execute($sql, $values, $types);
 	}
 }
 

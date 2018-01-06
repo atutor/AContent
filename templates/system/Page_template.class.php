@@ -114,8 +114,10 @@ class Page_template {
 		Utility::authenticate(TR_PRIV_ISAUTHOR);
 		$dao = new DAO();
 
-		$sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=".$this->content_id."";
-		$result=$dao->execute($sql);
+		$sql="SELECT structure FROM ".TABLE_PREFIX."content WHERE content_id=?";
+		$values = $this->content_id;
+		$types = "i";
+		$result=$dao->execute($sql, $values, $types);
 
 		if(is_array($result))
 		{
@@ -124,8 +126,10 @@ class Page_template {
 				break;
 			}
 		}
-		$sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=".$this->content_id."";
-		$result=$dao->execute($sql);
+		$sql="SELECT title FROM ".TABLE_PREFIX."content WHERE content_id=?";
+		$values = $this->content_id;
+		$types = "i";
+		$result=$dao->execute($sql, $values, $types);
 		if(is_array($result)) {
 			foreach ($result as $support) {
 				$title=$support['title'];

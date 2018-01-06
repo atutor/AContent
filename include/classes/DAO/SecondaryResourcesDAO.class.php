@@ -32,6 +32,7 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function Create($primary_resource_id, $file_name, $lang)
 	{
+		/*
 		global $addslashes;
 		
 		$primary_resource_id = intval($primary_resource_id);
@@ -41,8 +42,15 @@ class SecondaryResourcesDAO extends DAO {
 		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources 
 		                SET primary_resource_id=$primary_resource_id, 
 		                    secondary_resource='$file_name', 
-		                    language_code='$lang'";
-		return $this->execute($sql);
+		                    language_code='$lang'"; */
+		$file_name = convertAmp($file_name);
+		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources 
+		                SET primary_resource_id=?, 
+		                    secondary_resource=?, 
+		                    language_code=?";
+		$values = array($primary_resource_id, $file_name, $lang);
+		$types = "iss";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -54,7 +62,7 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	function DeleteByResourceName($resourceName)
 	{
-		global $addslashes;
+		/*global $addslashes;
 		$resourceName = $addslashes($resourceName);
 		
 		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
@@ -62,7 +70,15 @@ class SecondaryResourcesDAO extends DAO {
 		            OR primary_resource_id in (SELECT primary_resource_id
 		                     FROM ".TABLE_PREFIX."primary_resources
 		                    WHERE resource='".$resourceName."')";
-		return $this->execute($sql);
+		                    */
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
+		         WHERE secondary_resource = ?
+		            OR primary_resource_id in (SELECT primary_resource_id
+		                     FROM ".TABLE_PREFIX."primary_resources
+		                    WHERE resource=?)";
+		$values = array($resourceName, $resourceName);
+		$types = "ss";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -74,13 +90,15 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function getByContent($content_id)
 	{
-		$content_id = intval($content_id);
+		//$content_id = intval($content_id);
 		
 		$sql = "SELECT DISTINCT secondary_resource_id, secondary_resource FROM ".TABLE_PREFIX."primary_resources a 
 		          LEFT JOIN ".TABLE_PREFIX."secondary_resources s
 					ON a.primary_resource_id = s.primary_resource_id 
-				 WHERE content_id=".$content_id;
-		return $this->execute($sql);
+				 WHERE content_id=?";
+	    $values = $content_id;
+	    $types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 	/**
 	* Return rows by primary resource id
@@ -92,8 +110,10 @@ class SecondaryResourcesDAO extends DAO {
 	public function getByPrimaryResourceID($primary_resource_id)
 	{
 		$primary_resource_id = intval($primary_resource_id);
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources WHERE primary_resource_id='.$primary_resource_id;
-	    return $this->execute($sql);
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources WHERE primary_resource_id=?';
+	    $values = $primary_resource_id;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 }
 ?>

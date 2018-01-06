@@ -69,8 +69,11 @@ $dao = new DAO();
         
 	foreach ($structsList as $val) {
      
-          $sql = "SELECT count(distinct course_id) AS number FROM ".TABLE_PREFIX."content WHERE structure='".$val['short_name']."'";
-            $result=$dao->execute($sql);
+          $sql = "SELECT count(distinct course_id) AS number FROM ".TABLE_PREFIX."content WHERE structure=?";
+          $values = $val['short_name'];
+          $types = "s";
+            $result=$dao->execute($sql, $values, $types);
+            
             if(is_array($result))
             {
                 foreach ($result as $support) {

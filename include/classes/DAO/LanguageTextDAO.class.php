@@ -177,14 +177,14 @@ class LanguageTextDAO extends DAO {
 	{
 
         $sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
-						WHERE language_code= 'en' 
-						AND variable= '_template'  
+						WHERE language_code= ? 
+						AND variable= ?  
 						ORDER BY variable ASC";
 		$template_var = "_template";
 		$values = array($lang,$template_var);
 		$types="ss";
 
-    	return $this->execute($sql);
+    	return $this->execute($sql, $values, $types);
 	}
 
 	/**

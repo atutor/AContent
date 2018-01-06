@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 		$answer_new = array(); // stores the associated "answer" for the choices
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = addslashes(trim($_POST['choice'][$i]));
 			/**
 			 * Db defined it to be 255 length, chop strings off it it's less than that
 			 * @harris
@@ -71,7 +71,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['choice'] = $choice_new;
 		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
-
+/*
 		$_POST['feedback']   = $addslashes($_POST['feedback']);
 		$_POST['question']   = $addslashes($_POST['question']);
 
@@ -100,8 +100,60 @@ if (isset($_POST['cancel'])) {
 			answer_8={$_POST[answer][8]},
 			answer_9={$_POST[answer][9]}
 			WHERE question_id=$_POST[qid]";
+*/
+		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
+                                    category_id=?,
+                                    feedback=?,
+                                    question=?,
+                                    choice_0=?,
+                                    choice_1=?,
+                                    choice_2=?,
+                                    choice_3=?,
+                                    choice_4=?,
+                                    choice_5=?,
+                                    choice_6=?,
+                                    choice_7=?,
+                                    choice_8=?,
+                                    choice_9=?,
+                                    answer_0=?,
+                                    answer_1=?,
+                                    answer_2=?,
+                                    answer_3=?,
+                                    answer_4=?,
+                                    answer_5=?,
+                                    answer_6=?,
+                                    answer_7=?,
+                                    answer_8=?,
+                                    answer_9=?
+                                    WHERE question_id=?";
 
-		if ($testsQuestionsDAO->execute($sql)) {
+        $values = array(	$_POST['category_id'], 
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9], 
+									$_POST['answer'][0], 
+									$_POST['answer'][1], 
+									$_POST['answer'][2], 
+									$_POST['answer'][3], 
+									$_POST['answer'][4], 
+									$_POST['answer'][5], 
+									$_POST['answer'][6], 
+									$_POST['answer'][7], 
+									$_POST['answer'][8], 
+									$_POST['answer'][9],
+									$_POST['qid']);
+	    $types = "issssssssssssiiiiiiiiiii";
+
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('QUESTION_UPDATED');
 			if ($_POST['tid']) {
 				header('Location: questions.php?tid='.$_POST['tid'].'&_course_id='.$_course_id);			

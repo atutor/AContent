@@ -51,7 +51,6 @@ class UsersDAO extends DAO {
 		           
         $values = array($login,$login,$_SESSION['token'],$pwd);
         $types = "ssss";
-        //$rows = $this->execute($sql);
 		$rows = $this->execute($sql,$values,$types);
 		if (is_array($rows))
 		{

@@ -61,7 +61,7 @@ class OAuthServerConsumersDAO extends DAO {
 			$consumer_key = Utility::getRandomStr(16);
 			$consumer_secret = Utility::getRandomStr(16);
 			
-			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_consumers
+/*			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_consumers
 			              (consumer,
 			               consumer_key,
 			               consumer_secret,
@@ -74,8 +74,18 @@ class OAuthServerConsumersDAO extends DAO {
 			               ".$expire_threshold.",
 			               now()
 			              )";
-
-			if (!$this->execute($sql))
+			              */
+			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_consumers
+			              (consumer,
+			               consumer_key,
+			               consumer_secret,
+			               expire_threshold,
+			               create_date
+			               )
+			       VALUES (?,?,?,?,now())";
+			$value = array($consumer, $consumer_key, $consumer_secret, $expire_threshold);
+			$types = "sssi";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -102,14 +112,14 @@ class OAuthServerConsumersDAO extends DAO {
 	 */
 	public function updateExpireThreshold($consumer, $expire_threshold)
 	{
-		global $addslashes, $msg;
-		$consumer = $addslashes($consumer);
-		$expire_threshold = intval($expire_threshold);
+		//global $addslashes, $msg;
+		//$consumer = $addslashes($consumer);
+		//$expire_threshold = intval($expire_threshold);
 		
 		$missing_fields = array();
 
 		/* email check */
-		$consumer = $addslashes(trim($consumer));
+		$consumer = trim($consumer);
 
 		/* login name check */
 		if ($consumer == '')
@@ -127,10 +137,11 @@ class OAuthServerConsumersDAO extends DAO {
 		{
 			/* update db */
 			$sql = "UPDATE ".TABLE_PREFIX."oauth_server_consumers
-			           SET expire_threshold = ".$expire_threshold."
-			         WHERE consumer = '".$consumer."'";
-
-			if (!$this->execute($sql))
+			           SET expire_threshold = ?
+			         WHERE consumer = ?";
+            $values = array($expire_threshold, $consumer);
+            $types = "is";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -157,8 +168,10 @@ class OAuthServerConsumersDAO extends DAO {
 	{
 		$consumer_id = intval($consumer_id);
 		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer_id='".$consumer_id."'";
-	    $rows = $this->execute($sql);
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer_id=?";
+	    $values = $consumer_id;
+	    $types = "i";
+	    $rows = $this->execute($sql, $values, $types);
 	    return $rows[0];
   	}
 
@@ -171,11 +184,13 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumer($consumer)
 	{
-	    global $addslashes;
-		$consumer = $addslashes($consumer);
+	    //global $addslashes;
+		//$consumer = $addslashes($consumer);
 		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer='".$addslashes($consumer)."'";
-	    return $this->execute($sql);
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer=?";
+	    $values = $consumer;
+	    $types = "s";
+	    return $this->execute($sql, $values, $types);
   	}
 
   	/**
@@ -187,12 +202,14 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumerKey($consumer_key)
 	{
-		global $addslashes;
-		$consumer_key = $addslashes($consumer_key);
+		//global $addslashes;
+		//$consumer_key = $addslashes($consumer_key);
 	
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
-	             WHERE consumer_key = '".$consumer_key."'";
-	    return $this->execute($sql);
+	             WHERE consumer_key = ?";
+	    $values = $consumer_key;
+	    $types = "s";
+	    return $this->execute($sql, $values, $types);
   	}
 
   	/**
@@ -204,14 +221,19 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumerKeyAndSecret($consumer_key, $consumer_secret)
 	{
-		global $addslashes;
-		$consumer_key = $addslashes($consumer_key);
-		$consumer_secret = $addslashes($consumer_secret); 	
-		
+		//global $addslashes;
+		//$consumer_key = $addslashes($consumer_key);
+		//$consumer_secret = $addslashes($consumer_secret); 	
+		/*
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
 	             WHERE consumer_key = '".$consumer_key."'
-	               AND consumer_secret = '".$consumer_secret."'";
-	    return $this->execute($sql);
+	               AND consumer_secret = '".$consumer_secret."'"; */
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
+	             WHERE consumer_key = ?
+	               AND consumer_secret = ?";
+	    $values = array($consumer_key, $consumer_secret);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
 }

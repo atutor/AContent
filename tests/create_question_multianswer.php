@@ -44,7 +44,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = $addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
+			$_POST['choice'][$i] = addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
@@ -81,7 +81,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			$_POST['choice'] = $choice_new;
 			$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 			$_POST['choice'] = array_pad($_POST['choice'], 10, '');
-		
+/*		
 			$_POST['feedback'] = $addslashes($_POST['feedback']);
 			$_POST['question'] = $addslashes($_POST['question']);
 
@@ -110,8 +110,34 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 									$_POST['answer'][8], 
 									$_POST['answer'][9]);
 			$sql = vsprintf(TR_SQL_QUESTION_MULTIANSWER, $sql_params);
-
-			if ($testsQuestionsDAO->execute($sql)) {
+*/
+        $values = array(	$_POST['category_id'], 
+									$_course_id,
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9], 
+									$_POST['answer'][0], 
+									$_POST['answer'][1], 
+									$_POST['answer'][2], 
+									$_POST['answer'][3], 
+									$_POST['answer'][4], 
+									$_POST['answer'][5], 
+									$_POST['answer'][6], 
+									$_POST['answer'][7], 
+									$_POST['answer'][8], 
+									$_POST['answer'][9]);
+	    $types = "iissssssssssssiiiiiiiiii";
+        $sql = TR_SQL_QUESTION_MULTIANSWER;
+			if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 				$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 				header('Location: question_db.php?_course_id='.$_course_id);
 				exit;

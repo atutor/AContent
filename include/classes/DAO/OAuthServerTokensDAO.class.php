@@ -55,7 +55,7 @@ class OAuthServerTokensDAO extends DAO {
 		if (!$msg->containsErrors())
 		{
 			/* insert into the db */
-			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_tokens
+		/*	$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_tokens
 			              (consumer_id,
 			               token,
 			               token_type,
@@ -70,8 +70,19 @@ class OAuthServerTokensDAO extends DAO {
 			               ".$user_id.",
 			               now()
 			              )";
-
-			if (!$this->execute($sql))
+			              */
+			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_tokens
+			              (consumer_id,
+			               token,
+			               token_type,
+			               token_secret,
+			               user_id,
+			               assign_date
+			               )
+			       VALUES (?,?,?,?,?, now())";
+			$values = array($consumer_id, $token, $token_type, $token_secret, $user_id);
+			$types = "isssi";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -96,14 +107,20 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function updateUserIDByToken($token, $user_id)
 	{
+	    /*
 	    global $addslashes;
 		$token = $addslashes($token);	 
 		$user_id = intval($user_id);   
 		
 	    $sql = "UPDATE ".TABLE_PREFIX."oauth_server_tokens 
 	               SET user_id = ".$user_id."
-	             WHERE token = '".$addslashes($token)."'";
-	    return $this->execute($sql);
+	             WHERE token = '".$addslashes($token)."'"; */
+	    $sql = "UPDATE ".TABLE_PREFIX."oauth_server_tokens 
+	               SET user_id = ?
+	             WHERE token = ?";
+	    $value = array($user_id, $token);
+	    $types = "is";
+	    return $this->execute($sql, $values, $types);
   	}
 
 	/**
@@ -115,14 +132,19 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function deleteByTokenAndType($token, $token_type)
 	{
-	    global $addslashes;
+	    /*global $addslashes;
 		$token = $addslashes($token);	
 		$token_type = $addslashes($token_type);	
 		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_server_tokens 
 	             WHERE token = '".$token."'
-	               AND token_type = '".$token_type."'";
-	    return $this->execute($sql);
+	               AND token_type = '".$token_type."'"; */
+	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_server_tokens 
+	             WHERE token = ?
+	               AND token_type = ?";
+	    $values = array($token,$token_type);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
 	/**
@@ -134,6 +156,7 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function get($consumer_id, $token_type)
 	{
+	    /*
 	    global $addslashes;
 		$consumer_id = intval($consumer_id);	
 		$token_type = $addslashes($token_type);	
@@ -141,7 +164,13 @@ class OAuthServerTokensDAO extends DAO {
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
 	             WHERE consumer_id='".$consumer_id."'
 	               AND token_type='".$token_type."'";
-	    return $this->execute($sql);
+	               */
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
+	             WHERE consumer_id=?
+	               AND token_type=?";
+	    $values = array($consumer_id, $token_type);
+	    $types = "is";
+	    return $this->execute($sql, $values, $types);
   	}
 
 	/**
@@ -154,6 +183,7 @@ class OAuthServerTokensDAO extends DAO {
 	function getByToken($consumer_key, $token)
 	{
 	
+	    /*
 	    global $addslashes;
 		$consumer_key = $addslashes($consumer_key);
 		$token = $addslashes($token);	
@@ -161,8 +191,14 @@ class OAuthServerTokensDAO extends DAO {
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers c, ".TABLE_PREFIX."oauth_server_tokens t 
 	             WHERE c.consumer_id = t.consumer_id
 	               AND c.consumer_key='".$consumer_key."'
-	               AND t.token = '".$token."'";
-	    return $this->execute($sql);
+	               AND t.token = '".$token."'"; */
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers c, ".TABLE_PREFIX."oauth_server_tokens t 
+	             WHERE c.consumer_id = t.consumer_id
+	               AND c.consumer_key=?
+	               AND t.token = ?";
+	    $values = array($consumer_key, $token);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
   	/**
@@ -174,14 +210,20 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
-	    global $addslashes;
+	    /* global $addslashes;
 		$token = $addslashes($token);		
 		$token_type = $addslashes($token_type);	
 		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
 	             WHERE token = '".addslashes($token)."'
 	               AND token_type = '".addslashes($token_type)."'";
-	    return $this->execute($sql);
+	               */
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_tokens 
+	             WHERE token = ?
+	               AND token_type = ?";
+	    $values = array($token, $token_type);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
 
@@ -194,18 +236,21 @@ class OAuthServerTokensDAO extends DAO {
 	*/
 	function isTokenExpired($token)
 	{
-	    global $addslashes;
-		$token = $addslashes($token);
+	    //global $addslashes;
+		//$token = $addslashes($token);
 		
 		$sql = "SELECT unix_timestamp(now()) AS 'now_timestamp', 
 		               osc.expire_threshold,
 		               unix_timestamp(addtime(ost.assign_date, sec_to_time(osc.expire_threshold))) AS 'expire_timestamp'
 		          FROM ".TABLE_PREFIX."oauth_server_consumers osc, ".TABLE_PREFIX."oauth_server_tokens ost
 		         WHERE osc.consumer_id=ost.consumer_id
-		           AND ost.token='".$token."'
+		           AND ost.token=?
 		           AND ost.token_type='access'
 		         ORDER BY ost.assign_date DESC";
-		$row = $this->execute($sql);
+		         
+		$values = $token;
+		$types = "s";
+		$row = $this->execute($sql, $values, $types);
 
 		if ((!is_array($row[0]) || $row[0]['now_timestamp'] > $row[0]['expire_timestamp']) && $row[0]['expire_threshold'] != 0) {
 			return true;

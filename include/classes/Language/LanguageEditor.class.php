@@ -186,16 +186,18 @@ class LanguageEditor extends Language {
 
 	// public
 	function updateTerms($terms) {
-		global $addslashes;
+		//global $addslashes;
 
 		foreach($terms as $term => $text) {
-			$text = $addslashes($text);
-			$term = $addslashes($term);
+			//$text = $addslashes($text);
+			//$term = $addslashes($term);
 		
 			if (($text != '') && ($text != $_POST['old'][$term])) {
-				$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('".$this->getCode()."', '_template', '$term', '$text', NOW(), '')";
-				//mysql_query($sql, $this->db);
-				$dao->execute($sql);
+				//$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('".$this->getCode()."', '_template', '$term', '$text', NOW(), '')";
+                $sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES (?, '_template', ?, ?, NOW(), '')";
+                $values = array($this->getCode(), $term, $text);
+                $types = "sss";
+				$dao->execute($sql, $values, $types);
 			}
 		}
 	}

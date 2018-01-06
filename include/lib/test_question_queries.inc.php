@@ -17,9 +17,14 @@ define('TR_SQL_QUESTION_MULTI', "INSERT INTO ".TABLE_PREFIX."tests_questions VAL
 							'', '', '', '', '', '', '', '', '', '', 5, 0)");
 
 //Question for True/False
-define('TR_SQL_QUESTION_TRUEFALSE', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 2, '%s', '%s', 
+/*define('TR_SQL_QUESTION_TRUEFALSE', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 2, '%s', '%s', 
 							'', '', '', '', '', '', '', '', '', '', 
 							%s, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+							'', '', '', '', '', '', '', '', '', '', 5, 0)");
+							*/
+define('TR_SQL_QUESTION_TRUEFALSE', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, ?, ?, 2, ?, ?, 
+							'', '', '', '', '', '', '', '', '', '', 
+							?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 							'', '', '', '', '', '', '', '', '', '', 5, 0)");
 
 
@@ -42,23 +47,33 @@ define('TR_SQL_QUESTION_ORDERING', "INSERT INTO ".TABLE_PREFIX."tests_questions 
 							'', '', '', '', '', '', '', '', '', '', 0, 0)");
 
 //Question for MultiAnswer
-define('TR_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 7, '%s', '%s', 
+/*define('TR_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 7, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
+							'', '', '', '', '', '', '', '', '', '', 0, 0)");*/
+define('TR_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, ?, ?, 7, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
 							'', '', '', '', '', '', '', '', '', '', 0, 0)");
-
 //Question for Matching Simple
-define('TR_SQL_QUESTION_MATCHING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 5, '%s', '%s', 
+/* define('TR_SQL_QUESTION_MATCHING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 5, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0)");
-
+							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0)");*/
+define('TR_SQL_QUESTION_MATCHING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (NULL, ?, ?, 5, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0)");
 //Question for Matching Graphical
-define('TR_SQL_QUESTION_MATCHINGDD', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 8, '%s', '%s', 
+/*define('TR_SQL_QUESTION_MATCHINGDD', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 8, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0)");
-
+							*/
+define('TR_SQL_QUESTION_MATCHINGDD', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (NULL, ?, ?, 8, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 
+							?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0)");
 define('TR_SQL_TEST', "INSERT INTO ".TABLE_PREFIX."tests " .
 					   "(test_id,
 					 course_id,

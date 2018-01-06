@@ -35,13 +35,13 @@ class OAuthClientTokensDAO extends DAO {
 	 */
 	public function Create($oauth_server_id, $token, $token_type, $token_secret, $user_id)
 	{
-		global $addslashes, $msg;
+		/*global $addslashes, $msg;
 		
 		$oauth_server_id = intval($oauth_server_id);
 		$token = $addslashes($token);
 		$token_type = $addslashes($token_type);		
 		$token_secret = $addslashes($token_secret);
-
+*/
 		$missing_fields = array();
 
 		/* token type check */
@@ -53,7 +53,7 @@ class OAuthClientTokensDAO extends DAO {
 		if (!$msg->containsErrors())
 		{
 			/* insert into the db */
-			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
+			/*$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
 			              (oauth_server_id,
 			               token,
 			               token_type,
@@ -68,8 +68,19 @@ class OAuthClientTokensDAO extends DAO {
 			               ".$user_id.",
 			               now()
 			              )";
-
-			if (!$this->execute($sql))
+			              */
+			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
+			              (oauth_server_id,
+			               token,
+			               token_type,
+			               token_secret,
+			               user_id,
+			               assign_date
+			               )
+			       VALUES (?,?,?,?,?, now())";
+			$values = array($oauth_server_id, $token, $token_type, $token_secret, $user_id);
+			$types = "isssi";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -94,15 +105,21 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function deleteByTokenAndType($token, $token_type)
 	{		
-		global $addslashes;
+		/* global $addslashes;
 		
 		$token = $addslashes($token);
 		$token_type = $addslashes($token_type);
 		
 	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE token = '".$token."'
-	               AND token_type = '".$token_type."'";
-	    return $this->execute($sql);
+	               AND token_type = '".$token_type."'"; 
+	               */
+	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens 
+	             WHERE token = ?
+	               AND token_type = ?";
+	    $values = array($token, $token_type);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
 	/**
@@ -114,7 +131,7 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function get($oauth_server_id, $token_type)
 	{
-		global $addslashes;
+		/*global $addslashes;
 		
 		$oauth_server_id = intval($oauth_server_id);
 		$token_type = $addslashes($token_type);
@@ -122,7 +139,13 @@ class OAuthClientTokensDAO extends DAO {
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE oauth_server_id='".$oauth_server_id."'
 	               AND token_type='".$token_type."'";
-	    return $this->execute($sql);
+	               */
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
+	             WHERE oauth_server_id=?
+	               AND token_type=?";
+	    $values = array($oauth_server_id, $token_type);
+	    $types = "is";
+	    return $this->execute($sql, $values, $types);
   	}
 
 	/**
@@ -134,7 +157,7 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function getByToken($consumer_key, $token)
 	{
-		global $addslashes;
+		/*global $addslashes;
 		$consumer_key = $addslashes($consumer_key);
 		$token = $addslashes($token);
 				
@@ -142,7 +165,14 @@ class OAuthClientTokensDAO extends DAO {
 	             WHERE c.oauth_server_id = t.oauth_server_id
 	               AND c.consumer_key='".$consumer_key."'
 	               AND t.token = '".$token."'";
-	    return $this->execute($sql);
+	               */
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers c, ".TABLE_PREFIX."oauth_client_tokens t 
+	             WHERE c.oauth_server_id = t.oauth_server_id
+	               AND c.consumer_key=?
+	               AND t.token = ?";
+	    $values = array($consumer_key, $token);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
   	/**
@@ -154,6 +184,7 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
+		/*
 		global $addslashes;
 		
 		$token = $addslashes($token);
@@ -161,8 +192,13 @@ class OAuthClientTokensDAO extends DAO {
 		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE token = '".$token."'
-	               AND token_type = '".$token_type."'";
-	    return $this->execute($sql);
+	               AND token_type = '".$token_type."'";*/
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
+	             WHERE token = ?
+	               AND token_type = ?";
+	    $values = array($token, $token_type);
+	    $types = "ss";
+	    return $this->execute($sql, $values, $types);
   	}
 
 }

@@ -64,7 +64,7 @@ class OAuthClientServersDAO extends DAO {
 		if (!$msg->containsErrors())
 		{
 			/* insert into the db */
-			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
+		/*	$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
 			              (oauth_server,
 			               consumer_key,
 			               consumer_secret,
@@ -76,9 +76,18 @@ class OAuthClientServersDAO extends DAO {
 			               '".$consumer_secret."',
 			               ".$expire_threshold.",
 			               now()
-			              )";
-
-			if (!$this->execute($sql))
+			              )"; */
+			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
+			              (oauth_server,
+			               consumer_key,
+			               consumer_secret,
+			               expire_threshold,
+			               create_date
+			               )
+			       VALUES (?,?,?,?, now())";
+		    $values = array($oauth_server, $consumer_key, $consumer_secret, $expire_threshold);
+		    $types = "sssi";
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -108,17 +117,17 @@ class OAuthClientServersDAO extends DAO {
 	 */
 	public function Update($oauth_server, $consumer_key, $consumer_secret, $expire_threshold)
 	{
-		global $addslashes, $msg;
-		$oauth_server = $addslashes($oauth_server);
-		$consumer_key = $addslashes($consumer_key);
-		$consumer_secret = $addslashes($consumer_secret);		
-		$expire_threshold = intval($expire_threshold);			
+		//global $addslashes, $msg;
+		//$oauth_server = $addslashes($oauth_server);
+		//$consumer_key = $addslashes($consumer_key);
+		//$consumer_secret = $addslashes($consumer_secret);		
+		//$expire_threshold = intval($expire_threshold);			
 			
 		$missing_fields = array();
 
 		/* email check */
-		$oauth_server = $addslashes(trim($oauth_server));
-		$expire_threshold = intval($expire_threshold);
+		$oauth_server = trim($oauth_server);
+		//$expire_threshold = intval($expire_threshold);
 
 		/* login name check */
 		if ($oauth_server == '')
@@ -134,13 +143,21 @@ class OAuthClientServersDAO extends DAO {
 
 		if (!$msg->containsErrors())
 		{
+			/*
 			$sql = "UPDATE ".TABLE_PREFIX."oauth_client_servers
 			           SET consumer_key = '".$consumer_key."',
 			               consumer_secret = '".$consumer_secret."',
 			               expire_threshold = ".$expire_threshold."
 			         WHERE oauth_server = '".$oauth_server."'";
-
-			if (!$this->execute($sql))
+			         */
+			$sql = "UPDATE ".TABLE_PREFIX."oauth_client_servers
+			           SET consumer_key = ?',
+			               consumer_secret = ?,
+			               expire_threshold = ?
+			         WHERE oauth_server = ?";
+			$values = array($consumer_key, $consumer_secret, $expire_threshold, $oauth_server);     
+			$types = "ssis";    
+			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
 				return false;
@@ -165,10 +182,12 @@ class OAuthClientServersDAO extends DAO {
 	*/
 	function get($oauth_server_id)
 	{
-		$oauth_server_id = intval($oauth_server_id);	
+		//$oauth_server_id = intval($oauth_server_id);	
 		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server_id='".$oauth_server_id."'";
-	    $rows = $this->execute($sql);
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server_id=?";
+	    $values = "$oauth_server_id";
+	    $types = "i";
+	    $rows = $this->execute($sql, $values, $types);
 	    return $rows[0];
   	}
 
@@ -181,11 +200,13 @@ class OAuthClientServersDAO extends DAO {
 	*/
 	function getByOauthServer($oauth_server)
 	{
-		global $addslashes;
-		$oauth_server = $addslashes($oauth_server);
+		//global $addslashes;
+		//$oauth_server = $addslashes($oauth_server);
 		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server='".$oauth_server."'";
-	    return $this->execute($sql);
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server=?";
+	    $values = $oauth_server;
+	    $types = "s";
+	    return $this->execute($sql, $values, $types);
   	}
 
 }

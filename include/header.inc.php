@@ -69,8 +69,10 @@ if (isset($_pages[$current_page]['title'])) {
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
 if($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
 	$owner_dao = new DAO();
-	$sql = "SELECT U.first_name, U.last_name, U.login, U.user_id FROM ".TABLE_PREFIX."users U, ".TABLE_PREFIX."courses C WHERE C.course_id = $_SESSION[course_id] AND C.user_id = U.user_id";
-	$course_owner = $owner_dao->execute($sql);
+	$sql = "SELECT U.first_name, U.last_name, U.login, U.user_id FROM ".TABLE_PREFIX."users U, ".TABLE_PREFIX."courses C WHERE C.course_id = ? AND C.user_id = U.user_id";
+	$values = $_SESSION['course_id'];
+	$types = "i";
+	$course_owner = $owner_dao->execute($sql, $values, $types);
 	$savant->assign('course_owner', $course_owner['0']);
 }
 if ($_course_id > 0) {

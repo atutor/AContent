@@ -38,11 +38,10 @@ class UserGroupPrivilegeDAO extends DAO {
 		              (user_group_id,
 		               privilege_id
 		               )
-		       VALUES (".$userGroupID.",
-		               ".$privilegeID."
-		              )";
-	
-		return $this->execute($sql);
+		       VALUES (?,?)";
+	    $values = array($userGroupID, $privilegeID);
+	    $types = "ii";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -58,13 +57,14 @@ class UserGroupPrivilegeDAO extends DAO {
 	 */
 	public function UpdateField($userGroupID, $privilegeID, $fieldName, $fieldValue)
 	{
-		global $addslashes;
+		//global $addslashes;
 
 		$sql = "UPDATE ".TABLE_PREFIX."user_group_privilege
-		           SET ".$fieldName."='".$addslashes($fieldValue)."'
-		         WHERE user_group_id = ".$userGroupID."
-		           AND privilege_id = ".$privilegeID;
-		
+		           SET ".$fieldName."='".addslashes($fieldValue)."'
+		         WHERE user_group_id = ?
+		           AND privilege_id = ?";
+		$values = array($userGroupID, $privilegeID);
+		$types = "ii";
 		return $this->execute($sql);
 	}
 	
@@ -80,10 +80,11 @@ class UserGroupPrivilegeDAO extends DAO {
 	public function Delete($userGroupID, $privilegeID)
 	{
 		$sql = "DELETE FROM ".TABLE_PREFIX."user_group_privilege
-		         WHERE user_group_id = ".$userGroupID."
-		           AND privilege_id = ".$privilegeID;
-	
-		return $this->execute($sql);
+		         WHERE user_group_id = ?
+		           AND privilege_id = ?";
+	    $values = array($userGroupID, $privilegeID);
+	    $types = "ii";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -97,9 +98,10 @@ class UserGroupPrivilegeDAO extends DAO {
 	public function DeleteByUserGroupID($userGroupID)
 	{
 		$sql = "DELETE FROM ".TABLE_PREFIX."user_group_privilege
-		         WHERE user_group_id = ".$userGroupID;
-
-		return $this->execute($sql);
+		         WHERE user_group_id = ?";
+        $values = $userGroupID;
+        $types = "i";
+		return $this->execute($sql, $values, $types);
 	}
 
 	/**
@@ -114,10 +116,11 @@ class UserGroupPrivilegeDAO extends DAO {
 	public function Get($userGroupID, $privilegeID)
 	{
 		$sql = "SELECT * FROM ".TABLE_PREFIX."user_group_privilege
-		         WHERE user_group_id = ".$userGroupID."
-		           AND privilege_id = ".$privilegeID;
-	
-		$rows = $this->execute($sql);
+		         WHERE user_group_id = ?
+		           AND privilege_id = ?";
+	    $values = array($userGroupID, $privilegeID);
+	    $types = "ii";
+		$rows = $this->execute($sql, $values, $types);
 		
 		if (is_array($rows)) return $rows[0];
 		else return false;

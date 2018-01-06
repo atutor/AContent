@@ -43,14 +43,18 @@ if (isset($_POST['cancel'])) {
 	$order = $testsQuestionsAssocDAO->getMaxOrderByTestID($tid);
 
 	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
+	$values = array();
 	foreach ($_POST['questions'] as $question) {
 		$order++;
 		$question = intval($question);
-		$sql .= '('.$tid.', '.$question.', 0, '.$order.'),';
+		//$sql .= '('.$tid.', '.$question.', 0, '.$order.'),';
+		$sql .= '(?, ?, 0, ?),';
+		$values = array_merge($values, array($tid, $question, $order));
+		$types .= "iii";
 	}
 	$sql = substr($sql, 0, -1);
 	
-	if ($testsQuestionsAssocDAO->execute($sql)) {
+	if ($testsQuestionsAssocDAO->execute($sql, $values, $types)) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: questions.php?tid='.$tid.'&_course_id='.$_course_id);
 		exit;

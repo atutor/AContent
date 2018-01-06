@@ -58,14 +58,18 @@ class AContent_LiveContentLinkDAO {
 		$root = $this->_dom->createElement("AContent_LiveContentLink");
 		$this->_dom->appendChild($root);
 
-		if($course)
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id='.$v_id.' AND content_parent_id=0 ORDER BY ordering ASC';
-		else
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_id='.$v_id;
-
+		if($course){
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE course_id=? AND content_parent_id=0 ORDER BY ordering ASC';  
+			$values = $v_id;
+			$types = "i";
+		}else{
+			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_id=?';
+			$values = $v_id;
+			$types = "i";
+        }
 		$DAO = self::_getInstance();
 
-		if ($rows = $DAO->execute($sql))
+		if ($rows = $DAO->execute($sql, $values, $types))
 		{
 			for($i = 0; $i < count($rows); $i++){
 
@@ -105,10 +109,12 @@ class AContent_LiveContentLinkDAO {
 		global $addslashes;
 		$parentID = intval($parentID);
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_parent_id='.$parentID.' ORDER BY ordering ASC';
+		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_parent_id=? ORDER BY ordering ASC';
+		$values = $parentID;
+	    $types = "i";
 		$DAO = self::_getInstance();
 
-		if ($rows = $DAO->execute($sql))
+		if ($rows = $DAO->execute($sql, $values, $types))
 		{
 			// for each child
 			for($i = 0; $i < count($rows); $i++){

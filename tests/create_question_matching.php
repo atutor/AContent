@@ -31,9 +31,9 @@ if (isset($_POST['cancel'])) {
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	for ($i = 0 ; $i < 10; $i++) {
-		$_POST['question'][$i]        = $addslashes(trim($_POST['question'][$i]));
+		$_POST['question'][$i]        = addslashes(trim($_POST['question'][$i]));
 		$_POST['question_answer'][$i] = (int) $_POST['question_answer'][$i];
-		$_POST['answer'][$i]          = $addslashes(trim($_POST['answer'][$i]));
+		$_POST['answer'][$i]          = addslashes(trim($_POST['answer'][$i]));
 	}
 
 	if (!$_POST['question'][0] 
@@ -46,9 +46,9 @@ if (isset($_POST['cancel'])) {
 	
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback']     = $addslashes($_POST['feedback']);
-		$_POST['instructions'] = $addslashes($_POST['instructions']);
-		
+		$_POST['feedback']     = addslashes($_POST['feedback']);
+		$_POST['instructions'] = addslashes($_POST['instructions']);
+		/*
 		$sql_params = array(	$_POST['category_id'], 
 								$_course_id,
 								$_POST['feedback'], 
@@ -83,9 +83,46 @@ if (isset($_POST['cancel'])) {
 								$_POST['answer'][7], 
 								$_POST['answer'][8], 
 								$_POST['answer'][9]);
-
-		$sql = vsprintf(TR_SQL_QUESTION_MATCHING, $sql_params);	
-		if ($testsQuestionsDAO->execute($sql)) {
+								*/
+        $values = array($_POST['category_id'],
+                            $_course_id,
+	                        $_POST['feedback'],
+	                        $_POST['instructions'],
+	                        $_POST['question'][0],
+	                        $_POST['question'][1],
+	                        $_POST['question'][2],
+	                        $_POST['question'][3],
+	                        $_POST['question'][4],
+	                        $_POST['question'][5],
+	                        $_POST['question'][6],
+	                        $_POST['question'][7],
+	                        $_POST['question'][8],
+	                        $_POST['question'][9],
+	                        $_POST['question_answer'][0],
+	                        $_POST['question_answer'][1],
+	                        $_POST['question_answer'][2],
+	                        $_POST['question_answer'][3],
+	                        $_POST['question_answer'][4],
+	                        $_POST['question_answer'][5],
+	                        $_POST['question_answer'][6],
+	                        $_POST['question_answer'][7],
+	                        $_POST['question_answer'][8],
+	                        $_POST['question_answer'][9],
+	                        $_POST['answer'][0],
+	                        $_POST['answer'][1],
+	                        $_POST['answer'][2],
+	                        $_POST['answer'][3],
+	                        $_POST['answer'][4],
+	                        $_POST['answer'][5],
+	                        $_POST['answer'][6],
+	                        $_POST['answer'][7],
+	                        $_POST['answer'][8],
+	                        $_POST['answer'][9]
+	                        );
+	     $types = "iissssssssssssiiiiiiiiiissssssssss";
+	    $sql = TR_SQL_QUESTION_MATCHING;                   
+		//$sql = vsprintf(TR_SQL_QUESTION_MATCHING, $sql_params);	
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			header('Location: question_db.php?_course_id='.$_course_id);
 			exit;

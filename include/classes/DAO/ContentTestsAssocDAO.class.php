@@ -32,13 +32,18 @@ class ContentTestsAssocDAO extends DAO {
 	*/
 	function Create($content_id, $test_id)
 	{
-		$content_id = intval($content_id);
+		/* $content_id = intval($content_id);
 		$test_id = intval($test_id);
 		
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
 				'(content_id, test_id) ' .
-				'VALUES (' . $content_id . ", $test_id)";
-		if ($this->execute($sql)) {
+				'VALUES (' . $content_id . ", $test_id)"; */
+		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
+				'(content_id, test_id) ' .
+				'VALUES (?,?)';				
+		$values = array($content_id, $test_id);	
+		$types = "ii";	
+		if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 			$coursesDAO = new CoursesDAO();
@@ -61,9 +66,10 @@ class ContentTestsAssocDAO extends DAO {
 	{
 		$contentID = intval($contentID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
-	             WHERE content_id = ".$contentID."";
-		
-	    if ($this->execute($sql)) {
+	             WHERE content_id = ?";
+		$values = $contentID;
+		$types = "i";
+	    if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 			$coursesDAO = new CoursesDAO();
@@ -86,8 +92,10 @@ class ContentTestsAssocDAO extends DAO {
 	{
 		$testID = intval($testID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
-	             WHERE test_id = ".$testID."";
-		if ($this->execute($sql)) {
+	             WHERE test_id = ?";
+	    $values = $testID;
+	    $types = "i";
+		if ($this->execute($sql, $values, $types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
@@ -115,8 +123,10 @@ class ContentTestsAssocDAO extends DAO {
 	function getByContent($content_id)
 	{
 		$content_id = intval($content_id);
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id = '".$content_id."'";
-	    return $this->execute($sql);
+	    $sql = "SELECT * FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id = ?";
+	    $values = $content_id;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 }
 ?>

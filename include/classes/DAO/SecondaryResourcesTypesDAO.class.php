@@ -32,13 +32,18 @@ class SecondaryResourcesTypesDAO extends DAO {
 	*/
 	public function Create($secondary_resource, $type_id)
 	{
-		$secondary_resource = intval($secondary_resource);
+		/*$secondary_resource = intval($secondary_resource);
 		$type_id = intval($type_id);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types 
 		                SET secondary_resource_id=$secondary_resource, 
+		                    type_id=$type_id";*/
+		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types 
+		                SET secondary_resource_id=$secondary_resource, 
 		                    type_id=$type_id";
-		return $this->execute($sql);
+		$values = array($secondary_resource, $type_id);
+		$types = "ii";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -50,7 +55,7 @@ class SecondaryResourcesTypesDAO extends DAO {
 	*/
 	public function DeleteByResourceName($resourceName)
 	{
-		global $addslashes;
+		/*global $addslashes;
 		$resourceName = $addslashes($resourceName);
 		
 		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types
@@ -60,7 +65,17 @@ class SecondaryResourcesTypesDAO extends DAO {
 		                        OR primary_resource_id in (SELECT primary_resource_id
 		                                      FROM ".TABLE_PREFIX."primary_resources
 		                                     WHERE resource='".$resourceName."'))";
-		return $this->execute($sql);
+		                                     */
+		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types
+		         WHERE secondary_resource_id in (SELECT secondary_resource_id 
+		                      FROM ".TABLE_PREFIX."secondary_resources
+		                     WHERE secondary_resource = ?
+		                        OR primary_resource_id in (SELECT primary_resource_id
+		                                      FROM ".TABLE_PREFIX."primary_resources
+		                                     WHERE resource=?))";
+		$values = array($resourceName, $resourceName);
+		$types = "ss";
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**
@@ -74,8 +89,10 @@ class SecondaryResourcesTypesDAO extends DAO {
 	{
 		$resource_id = intval($resource_id);
 		
-	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources_types WHERE secondary_resource_id='.$resource_id;
-	    return $this->execute($sql);
+	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources_types WHERE secondary_resource_id=?';
+	    $values = $resource_id;
+	    $types = "i";
+	    return $this->execute($sql, $values, $types);
 	}
 }
 ?>

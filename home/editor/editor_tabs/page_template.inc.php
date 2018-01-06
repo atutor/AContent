@@ -76,8 +76,10 @@ $excep = array('.', '..', '.DS_Store', 'desktop.ini', 'Thumbs.db');
 
 $content_layout = $content['layout']; // Retrieving the value of the layout
 
-$sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-$result=$dao->execute($sql);
+$sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=?";
+$values = $cid;
+$types = "i";
+$result=$dao->execute($sql, $values, $types);
 
 if(is_array($result))
 {
@@ -87,8 +89,10 @@ if(is_array($result))
 	}
 }
 
-$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-$result=$dao->execute($sql);
+$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=?";
+$values = $cid;
+$types = "i";
+$result=$dao->execute($sql, $values, $types);
 
 if(is_array($result))
 {

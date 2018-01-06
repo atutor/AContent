@@ -386,8 +386,10 @@ class Layout{
 
 		$contentDAO = new ContentDAO();
 
-		$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-		$result=$contentDAO->execute($sql);
+		$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=?";
+		$values = $cid;
+		$types = "i";
+		$result=$contentDAO->execute($sql, $valuest, $types);
 		if(is_array($result))
 		{
 			foreach ($result as $support) {
