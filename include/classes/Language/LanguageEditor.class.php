@@ -23,8 +23,6 @@ include_once(TR_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
 
 class LanguageEditor extends Language {
 
-	var $addslashes;
-
 	// array of missing terms
 	var $missingTerms;
 
@@ -37,12 +35,10 @@ class LanguageEditor extends Language {
 	* Initializes db and parent properties.
 	*/
 	function LanguageEditor($myLang) {
-		global $db, $addslashes, $msg;
+		global $db, $msg;
 		
 		global $savant;
 		$this->msg =& $msg;
-
-		$this->addslashes = $addslashes;
 
 		if (isset($myLang)) {
 			$this->Language($myLang);
@@ -52,33 +48,21 @@ class LanguageEditor extends Language {
 
 	// public
 	function updateTerm($variable, $term, $text) {
-		$addslashes = $this->addslashes;
-
-		$variable = $addslashes($variable);
-		$term     = $addslashes($term);
-		$text     = $addslashes($text);
-		$code     = $addslashes($this->getCode());
-
-		$sql	= "UPDATE ".TABLE_PREFIX."language_text SET text='$text', revised_date=NOW() WHERE language_code='$code' AND variable='$variable' AND term='$term'";
-
+        $sql	= "UPDATE ".TABLE_PREFIX."language_text SET text=?, revised_date=NOW() WHERE language_code=? AND variable=? AND term=?";
+        $values = array($text, $code, $variable, $term);
+        $types = "ssss";
 	}
 
 	// public
 	function insertTerm($variable, $key, $text, $context) {
-		$addslashes = $this->addslashes;
-
-		$variable = $addslashes($variable);
-		$key      = $addslashes($key);
-		$text     = $addslashes($text);
-		$code     = $addslashes($this->getCode());
-		$context  = $addslashes($context);
-
 		$sql = "INSERT INTO ".TABLE_PREFIX."language_text VALUES('$code', '$variable', '$key', '$text', NOW(), '$context')";
+		$values = array($code, $variable, $key, $text, $context);
+		$types = "ssss";
 	}
 
 	// public
 	function showMissingTermsFrame(){
-		global $_base_path, $addslashes;
+		global $_base_path;
 		//$terms = array_slice($this->missingTerms, 0, 20);
 		$terms = $this->missingTerms;
 		$terms = serialize($terms);
@@ -110,11 +94,11 @@ class LanguageEditor extends Language {
 
 	// public
 	function printTerms($terms){
-		global $addslashes, $languageManager; // why won't $addslashes = $this->addslashes; work?
+		global  $languageManager; 
 
 		$counter = 0;
 
-		$terms = unserialize(stripslashes($addslashes($terms)));
+		$terms = unserialize(stripslashes($terms));
 
 		natcasesort($terms);
 
@@ -186,14 +170,11 @@ class LanguageEditor extends Language {
 
 	// public
 	function updateTerms($terms) {
-		//global $addslashes;
 
 		foreach($terms as $term => $text) {
-			//$text = $addslashes($text);
-			//$term = $addslashes($term);
 		
 			if (($text != '') && ($text != $_POST['old'][$term])) {
-				//$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('".$this->getCode()."', '_template', '$term', '$text', NOW(), '')";
+
                 $sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES (?, '_template', ?, ?, NOW(), '')";
                 $values = array($this->getCode(), $term, $text);
                 $types = "sss";
@@ -236,8 +217,7 @@ class LanguageEditor extends Language {
 		// use a function to generate the ini file
 		// use a diff fn to generate the sql dump
 		// use the zipfile class to package the ini file and the sql dump
-		global $addslashes;
-		
+
 		$sql_dump = "INSERT INTO `languages` VALUES ('$this->code', '$this->characterSet', '$this->regularExpression', '$this->nativeName', '$this->englishName', $this->status);\r\n\r\n";
 
 		$sql_dump .= "INSERT INTO `language_text` VALUES ";
@@ -248,11 +228,6 @@ class LanguageEditor extends Language {
 		if (is_array($rows)) {
 			foreach ($rows as $row)
 			{
-//				$row['text']    = str_replace($search, $replace, $row['text']);
-//				$row['context'] = str_replace($search, $replace, $row['context']);
-				$row['text']    = $addslashes($row['text']);
-				$row['context'] = $addslashes($row['context']);
-				
 				$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\r\n";
 			}
 		} else {
@@ -261,7 +236,7 @@ class LanguageEditor extends Language {
 		}
 		$sql_dump = substr($sql_dump, 0, -3) . ";";
 
-		$readme = 'This is an AContent language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct AContent  table prefix as defined in ./include/config.inc.php .';
+		$readme = 'This is an AContent language pack. Use the administrator Language area to import this language pack directly from Github, or install a language pack downloaded from elsewhere. ';
 
 		require(TR_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile = new zipfile();

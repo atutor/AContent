@@ -56,9 +56,6 @@ if (isset($_POST['cancel'])) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 	if (!$msg->containsErrors()) {
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the non-blank answers
 		$order = 0; // order count
@@ -68,7 +65,7 @@ if (isset($_POST['cancel'])) {
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 
 			if ($_POST['choice'][$i] != '') {
 				/* filter out empty choices/ remove gaps */
@@ -79,35 +76,58 @@ if (isset($_POST['cancel'])) {
 		
 		$_POST['choice']   = array_pad($choice_new, 10, '');
 		$answer_new        = array_pad($answer_new, 10, 0);
-
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
-			category_id=$_POST[category_id],
-			feedback='$_POST[feedback]',
-			question='$_POST[question]',
-			choice_0='{$_POST[choice][0]}',
-			choice_1='{$_POST[choice][1]}',
-			choice_2='{$_POST[choice][2]}',
-			choice_3='{$_POST[choice][3]}',
-			choice_4='{$_POST[choice][4]}',
-			choice_5='{$_POST[choice][5]}',
-			choice_6='{$_POST[choice][6]}',
-			choice_7='{$_POST[choice][7]}',
-			choice_8='{$_POST[choice][8]}',
-			choice_9='{$_POST[choice][9]}',
-			answer_0=$answer_new[0],
-			answer_0=$answer_new[1],
-			answer_0=$answer_new[2],
-			answer_0=$answer_new[3],
-			answer_0=$answer_new[4],
-			answer_0=$answer_new[5],
-			answer_0=$answer_new[6],
-			answer_0=$answer_new[7],
-			answer_0=$answer_new[8],
-			answer_0=$answer_new[9]
-
-			WHERE question_id=$_POST[qid]";
-		
-		if ($testsQuestionsDAO->execute($sql)) {
+                                category_id=?,
+                                feedback=?,
+                                question=?,
+                                choice_0=?,
+                                choice_1=?,
+                                choice_2=?,
+                                choice_3=?,
+                                choice_4=?,
+                                choice_5=?,
+                                choice_6=?,
+                                choice_7=?,
+                                choice_8=?,
+                                choice_9=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?,
+                                answer_0=?
+                                WHERE question_id=?";	
+			
+		$values = array($_POST['category_id'],
+		                        $_POST['feedback'],
+		                        $_POST['question'],
+		                        $_POST['choice'][0],
+		                        $_POST['choice'][1],
+		                        $_POST['choice'][2],
+		                        $_POST['choice'][3],
+		                        $_POST['choice'][4],
+		                        $_POST['choice'][5],
+		                        $_POST['choice'][6],
+		                        $_POST['choice'][7],
+		                        $_POST['choice'][8],
+		                        $_POST['choice'][9], 
+		                        $answer_new[0],
+		                        $answer_new[1],
+		                        $answer_new[2],
+		                        $answer_new[3],
+		                        $answer_new[4],
+		                        $answer_new[5],
+		                        $answer_new[6],
+		                        $answer_new[7],
+		                        $answer_new[8],
+		                        $answer_new[9],
+		                        $_POST['qid']);	
+		$types = "issssssssssssiiiiiiiiiii";
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			if ($_POST['tid']) {
 				header('Location: questions.php?tid='.$_POST['tid'].'&_course_id='.$_course_id);			

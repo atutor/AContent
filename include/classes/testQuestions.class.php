@@ -756,38 +756,34 @@ class OrderingQuestion extends AbstractTestQuestion {
 
 			$question['choice']   = array_pad($choice_new, 10, '');
 			$answer_new        = array_pad($answer_new, 10, 0);
-//			$question['feedback'] = $addslashes($question['feedback']);
-//			$question['question'] = $addslashes($question['question']);
-		
-			$sql_params = array(	$question['category_id'], 
-									$_course_id,
-									$question['feedback'], 
-									$question['question'], 
-									$question['choice'][0], 
-									$question['choice'][1], 
-									$question['choice'][2], 
-									$question['choice'][3], 
-									$question['choice'][4], 
-									$question['choice'][5], 
-									$question['choice'][6], 
-									$question['choice'][7], 
-									$question['choice'][8], 
-									$question['choice'][9], 
-									$answer_new[0], 
-									$answer_new[1], 
-									$answer_new[2], 
-									$answer_new[3], 
-									$answer_new[4], 
-									$answer_new[5], 
-									$answer_new[6], 
-									$answer_new[7], 
-									$answer_new[8], 
-									$answer_new[9]);
-
-			$sql = vsprintf(TR_SQL_QUESTION_ORDERING, $sql_params);
-
+            $values = array($question['category_id'],
+	                            $_course_id,
+		                        $question['feedback'], 
+                                $question['question'], 
+                                $question['choice'][0], 
+                                $question['choice'][1], 
+                                $question['choice'][2], 
+                                $question['choice'][3], 
+                                $question['choice'][4], 
+                                $question['choice'][5], 
+                                $question['choice'][6], 
+                                $question['choice'][7], 
+                                $question['choice'][8], 
+                                $question['choice'][9], 
+                                $answer_new[0], 
+                                $answer_new[1], 
+                                $answer_new[2], 
+                                $answer_new[3], 
+                                $answer_new[4], 
+                                $answer_new[5], 
+                                $answer_new[6], 
+                                $answer_new[7], 
+                                $answer_new[8], 
+                                $answer_new[9]);	
+		    $types = "iissssssssssssiiiiiiiiii";
+		    $sql = TR_SQL_QUESTION_ORDERING;
 			$dao = new DAO();
-			if ($dao->execute($sql)) {
+			if ($dao->execute($sql, $values, $types)) {
 				return $dao->ac_insert_id();
 				
 			}			
@@ -858,20 +854,15 @@ class TruefalseQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-//			$question['feedback'] = $addslashes($question['feedback']);
-//			$question['question'] = $addslashes($question['question']);
-
-
-			$sql_params = array(	$question['category_id'], 
-									$_course_id,
-									$question['feedback'], 
-									$question['question'], 
-									$question['answer']);
-
-			$sql = vsprintf(TR_SQL_QUESTION_TRUEFALSE, $sql_params);
-
+            $sql = TR_SQL_QUESTION_TRUEFALSE;
+            $values = array($question['category_id'], 
+                                    $_course_id, 
+                                    $question['feedback'], 
+                                    $question['question'], 
+                                    $question['answer']);
+            $types = "iisss";
 			$dao = new DAO();
-			if ($dao->execute($sql)) {	
+			if ($dao->execute($sql, $values, $types)) {	
 				return $dao->ac_insert_id();
 			}
 		}
@@ -963,7 +954,6 @@ class LikertQuestion extends AbstracttestQuestion {
 
 		if (!$msg->containsErrors()) {
 			$question['feedback']   = '';
-//			$question['question']   = $addslashes($question['question']);
 
 			for ($i=0; $i<10; $i++) {
 				$question['choice'][$i] = trim($question['choice'][$i]);
@@ -975,7 +965,7 @@ class LikertQuestion extends AbstracttestQuestion {
 				}
 			}
 
-			$sql_params = array(	$question['category_id'], 
+        $values= array(	$question['category_id'], 
 									$_course_id,
 									$question['feedback'], 
 									$question['question'], 
@@ -999,11 +989,10 @@ class LikertQuestion extends AbstracttestQuestion {
 									$question['answer'][7], 
 									$question['answer'][8], 
 									$question['answer'][9]);
-
-			$sql = vsprintf(TR_SQL_QUESTION_LIKERT, $sql_params);
-
+		$types = "iissssssssssssiiiiiiiiii";
+		$sql = TR_SQL_QUESTION_LIKERT;
 			$dao = new DAO();
-			if ($dao->execute($sql)) {
+			if ($dao->execute($sql, $values, $types)) {
 				return $dao->ac_insert_id();
 			}
 		}
@@ -1045,8 +1034,6 @@ class LongQuestion extends AbstracttestQuestion {
 	}
 
 	/*public */function mark($row) { 
-		global $addslashes;
-		$_POST['answers'][$row['question_id']] = $addslashes($_POST['answers'][$row['question_id']]);
 		return NULL;
 	}
 
@@ -1060,23 +1047,18 @@ class LongQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-//			$question['feedback'] = $addslashes($question['feedback']);
-//			$question['question'] = $addslashes($question['question']);
-
 			if ($question['property']==''){
 				$question['property'] = 4;	//essay
 			}
-
-			$sql_params = array(	$question['category_id'], 
+		$values = array($question['category_id'], 
 									$_course_id,
 									$question['feedback'], 
 									$question['question'], 
 									$question['property']);
-
-			$sql = vsprintf(TR_SQL_QUESTION_LONG, $sql_params);
-
+		$types = "iissi";
+		$sql = TR_SQL_QUESTION_LONG;
 			$dao = new DAO();
-			if ($dao->execute($sql)) {
+			if ($dao->execute($sql, $values, $types)) {
 				return $dao->ac_insert_id();
 			}
 		}
@@ -1234,48 +1216,45 @@ class MatchingQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-//			$question['feedback']     = $addslashes($question['feedback']);
-//			$question['instructions'] = $addslashes($question['instructions']);
-		
-			$sql_params = array(	$question['category_id'], 
-									$_course_id,
-									$question['feedback'], 
-									$question['question'], 
-									$question['groups'][0], 
-									$question['groups'][1], 
-									$question['groups'][2], 
-									$question['groups'][3], 
-									$question['groups'][4], 
-									$question['groups'][5], 
-									$question['groups'][6], 
-									$question['groups'][7], 
-									$question['groups'][8], 
-									$question['groups'][9], 
-									$question['answer'][0], 
-									$question['answer'][1], 
-									$question['answer'][2], 
-									$question['answer'][3], 
-									$question['answer'][4], 
-									$question['answer'][5], 
-									$question['answer'][6], 
-									$question['answer'][7], 
-									$question['answer'][8], 
-									$question['answer'][9],
-									$question['choice'][0], 
-									$question['choice'][1], 
-									$question['choice'][2], 
-									$question['choice'][3], 
-									$question['choice'][4], 
-									$question['choice'][5], 
-									$question['choice'][6], 
-									$question['choice'][7], 
-									$question['choice'][8], 
-									$question['choice'][9]);
-
-			$sql = vsprintf(TR_SQL_QUESTION_MATCHINGDD, $sql_params);
-
+            $values = array($question['category_id'],
+                            $_course_id,
+	                        $question['feedback'], 
+                            $question['question'], 
+                            $question['groups'][0], 
+                            $question['groups'][1], 
+                            $question['groups'][2], 
+                            $question['groups'][3], 
+                            $question['groups'][4], 
+                            $question['groups'][5], 
+                            $question['groups'][6], 
+                            $question['groups'][7], 
+                            $question['groups'][8], 
+                            $question['groups'][9], 
+                            $question['answer'][0], 
+                            $question['answer'][1], 
+                            $question['answer'][2], 
+                            $question['answer'][3], 
+                            $question['answer'][4], 
+                            $question['answer'][5], 
+                            $question['answer'][6], 
+                            $question['answer'][7], 
+                            $question['answer'][8], 
+                            $question['answer'][9],
+                            $question['choice'][0], 
+                            $question['choice'][1], 
+                            $question['choice'][2], 
+                            $question['choice'][3], 
+                            $question['choice'][4], 
+                            $question['choice'][5], 
+                            $question['choice'][6], 
+                            $question['choice'][7], 
+                            $question['choice'][8], 
+                            $question['choice'][9]
+	                        );
+	        $types = "iissssssssssssiiiiiiiiiissssssssss";
+	        $sql = TR_SQL_QUESTION_MATCHINGDD;     
 			$dao = new DAO();
-			if ($dao->execute($sql)) {
+			if ($dao->execute($sql, $values, $types)) {
 				return $dao->ac_insert_id();
 			}
 		}
@@ -1386,7 +1365,6 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 		}
 		
 		if (!$msg->containsErrors()) {
-//			$question['question']   = $addslashes($question['question']);
 
 			for ($i=0; $i<10; $i++) {
 				$question['choice'][$i] = trim(htmlspecialchars($question['choice'][$i], ENT_QUOTES));
@@ -1399,7 +1377,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 				$answers[$question['answer']] = 1;
 			}
 		
-			$sql_params = array(	$question['category_id'], 
+            $values = array($question['category_id'], 
 									$_course_id,
 									$question['feedback'], 
 									$question['question'], 
@@ -1423,10 +1401,10 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 									$answers[7], 
 									$answers[8], 
 									$answers[9]);
-
-			$sql = vsprintf(TR_SQL_QUESTION_MULTI, $sql_params);
+	        $types = "iissssssssssssiiiiiiiiii";
+		    $sql = TR_SQL_QUESTION_MULTI;
 			$dao = new DAO();
-			if ($dao->execute($sql)) {
+			if ($dao->execute($sql, $values, $types)) {
 				return $dao->ac_insert_id();
 			}
 		}
@@ -1526,44 +1504,40 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
 				$msg->addConfirm('NO_ANSWER', $hidden_vars);
 			} else {			
-				//add slahes throughout - does that fix it?
+
 				$question['answer'] = $answer_new;
 				$question['choice'] = $choice_new;
 				$question['answer'] = array_pad($question['answer'], 10, 0);
 				$question['choice'] = array_pad($question['choice'], 10, '');
 			
-//				$question['feedback'] = $addslashes($question['feedback']);
-//				$question['question'] = $addslashes($question['question']);
-
-				$sql_params = array(	$question['category_id'], 
-										$_course_id,
-										$question['feedback'], 
-										$question['question'], 
-										$question['choice'][0], 
-										$question['choice'][1], 
-										$question['choice'][2], 
-										$question['choice'][3], 
-										$question['choice'][4], 
-										$question['choice'][5], 
-										$question['choice'][6], 
-										$question['choice'][7], 
-										$question['choice'][8], 
-										$question['choice'][9], 
-										$question['answer'][0], 
-										$question['answer'][1], 
-										$question['answer'][2], 
-										$question['answer'][3], 
-										$question['answer'][4], 
-										$question['answer'][5], 
-										$question['answer'][6], 
-										$question['answer'][7], 
-										$question['answer'][8], 
-										$question['answer'][9]);
-
-				$sql = vsprintf(TR_SQL_QUESTION_MULTIANSWER, $sql_params);
-
+                $values = array($question['category_id'], 
+									$_course_id,
+									$question['feedback'], 
+                                    $question['question'], 
+                                    $question['choice'][0], 
+                                    $question['choice'][1], 
+                                    $question['choice'][2], 
+                                    $question['choice'][3], 
+                                    $question['choice'][4], 
+                                    $question['choice'][5], 
+                                    $question['choice'][6], 
+                                    $question['choice'][7], 
+                                    $question['choice'][8], 
+                                    $question['choice'][9], 
+                                    $question['answer'][0], 
+                                    $question['answer'][1], 
+                                    $question['answer'][2], 
+                                    $question['answer'][3], 
+                                    $question['answer'][4], 
+                                    $question['answer'][5], 
+                                    $question['answer'][6], 
+                                    $question['answer'][7], 
+                                    $question['answer'][8], 
+                                    $question['answer'][9]);
+	            $types = "iissssssssssssiiiiiiiiii";
+                $sql = TR_SQL_QUESTION_MULTIANSWER;
 				$dao = new DAO();
-				if ($dao->execute($sql)) {
+				if ($dao->execute($sql, $values, $types)) {
 					return $dao->ac_insert_id();
 				}
 			}

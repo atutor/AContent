@@ -75,8 +75,8 @@ if (isset($_GET['include']) && $_GET['include'] == 'one') {
 }
 
 if ($_GET['search']) {
-	$page_string .= htmlspecialchars(SEP).'search='.urlencode($stripslashes($_GET['search']));
-	$search = $addslashes($_GET['search']);
+	$page_string .= htmlspecialchars(SEP).'search='.urlencode(stripslashes($_GET['search']));
+	$search = $_GET['search'];
 	$search = explode(' ', $search);
 
 	if ($_GET['include'] == 'all') {
@@ -133,25 +133,7 @@ $sql = "SELECT U.user_id, U.login, U.first_name, U.last_name, UG.title user_grou
           AND U.status $status AND $search AND $user_group_sql ORDER BY $col $order LIMIT $offset, $results_per_page";
 
 $user_rows = $dao->execute($sql);
-/*
-if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
-	$ids = '';
-	// WHAT IS THIS DOING HERE
-	while ($row = mysql_fetch_assoc($result)) {
-		$ids .= $row['user_id'].','; 
-	}
-	$ids = substr($ids,0,-1);
-	$status = intval($_GET['change_status']);
 
-	if ($status==-1) {
-		header('Location: user_delete.php?id='.$ids);
-		exit;
-	} else {
-		header('Location: user_status.php?ids='.$ids.'&status='.$status);
-		exit;
-	}
-}
-*/
 $userGroupsDAO = new UserGroupsDAO();
 
 $savant->assign('user_rows', $user_rows);

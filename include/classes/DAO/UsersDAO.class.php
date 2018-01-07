@@ -35,22 +35,12 @@ class UsersDAO extends DAO {
 	 */
 	public function Validate($login, $pwd)
 	{
-	    /*
-		global $addslashes;
-		$login  = $addslashes($login);
-		$pwd = $addslashes($pwd);
-		
-		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users 
-		         WHERE (login='".$login."' OR email='".$login."') 
-		           AND SHA1(CONCAT(password, '".$_SESSION['token']."'))='".$pwd."'";
-		*/
-		
 		$sql = "SELECT user_id FROM ".TABLE_PREFIX."users 
 		         WHERE (login=? OR email=?) 
-		           AND SHA1(CONCAT(password, ?))=?";
-		           
+		           AND SHA1(CONCAT(password, ?))=?";		           
         $values = array($login,$login,$_SESSION['token'],$pwd);
         $types = "ssss";
+        
 		$rows = $this->execute($sql,$values,$types);
 		if (is_array($rows))
 		{
@@ -181,8 +171,6 @@ class UsersDAO extends DAO {
 	                       $is_author, $organization, $phone, $address, $city,
 	                       $province, $country, $postal_code, $status)
 	{
-		global $addslashes;
-
 		/* email check */
 
 		$login = strtolower(trim($login));

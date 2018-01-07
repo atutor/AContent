@@ -130,6 +130,7 @@ class Page_template {
 		$values = $this->content_id;
 		$types = "i";
 		$result=$dao->execute($sql, $values, $types);
+		
 		if(is_array($result)) {
 			foreach ($result as $support) {
 				$title=$support['title'];
@@ -159,23 +160,7 @@ class Page_template {
 			foreach ($pageTemplateList as $key => $value) {
 				//Check if there is a structure and search if the page template belongs
 				// scanned array of predefined structure
-				
-//				if($content!=''){
-//					if(in_array($key,$array)){
-//						echo '<li>';
-//						echo '<table id="'.$key.'" >';
-//						echo '<tr>';
-//						echo '<td>';
-//						echo '<a href="javascript: void(0);">';
-//						echo '<img title="'._AT('img_title_pagetemplate_icon',$value['name']).'" style="padding:10px;" src="'.TR_BASE_HREF.'/templates/page_template/'.$key.'/screenshot.png" alt="'._AT('img_pagetemplate_icon',$key).'" /><br />';
-//						echo '<span class="desc">'.$value['name'].'</span>';
-//						echo '</a>';
-//						echo '</td>';
-//						echo '</tr>';
-//						echo '</table>';
-//						echo '</li>';  
-//					}
-//				} else {
+
 					echo '<li>';
 					echo '<table id="'.$key.'" >';
 					echo '<tr>';
@@ -188,7 +173,6 @@ class Page_template {
 					echo '</tr>';
 					echo '</table>';
 					echo '</li>';  
-//				}
 			}
 			echo '</ul>';
 			echo '</div>'; // div boxPageTemplate  
@@ -377,25 +361,19 @@ class Page_template {
 		// write on db
 		$contentDAO->UpdateField($cid, "text", $text);
 
-		// page redirect
-		/*echo '<script type="text/javascript">';
-			echo 'window.location = "'.$_SERVER['REQUEST_URI'].'";';
-		echo '</script>';*/
-
 		return;
 	}
 
 	public function control(){}
 
 	public function applyPageTemplate($cid,$text){
-		global $stripslashes;
 		
 		require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 
 		$contentDAO = new ContentDAO();
 
 		// write on db
-		$contentDAO->UpdateField($cid, "text", $stripslashes($text));
+		$contentDAO->UpdateField($cid, "text", stripslashes($text));
 		
 		return;
 	}

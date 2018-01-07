@@ -73,7 +73,6 @@ class PatchesDAO extends DAO {
 			            $backup_files,
 			            $patch_files,
 			            $author);
-			//debug($values);
 			$types = "sssssssssss";
 		if (!$this->execute($sql, $values, $types))
 		{

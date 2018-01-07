@@ -50,40 +50,59 @@ if (isset($_POST['cancel'])) {
 		$answers[$_POST['answer']] = 1;
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 		}
-
-		$_POST['feedback']   = $addslashes($_POST['feedback']);
-		$_POST['question']   = $addslashes($_POST['question']);
-
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
-            category_id=$_POST[category_id],
-		    feedback='$_POST[feedback]',
-			question='$_POST[question]',
-			choice_0='{$_POST[choice][0]}',
-			choice_1='{$_POST[choice][1]}',
-			choice_2='{$_POST[choice][2]}',
-			choice_3='{$_POST[choice][3]}',
-			choice_4='{$_POST[choice][4]}',
-			choice_5='{$_POST[choice][5]}',
-			choice_6='{$_POST[choice][6]}',
-			choice_7='{$_POST[choice][7]}',
-			choice_8='{$_POST[choice][8]}',
-			choice_9='{$_POST[choice][9]}',
-			answer_0={$answers[0]},
-			answer_1={$answers[1]},
-			answer_2={$answers[2]},
-			answer_3={$answers[3]},
-			answer_4={$answers[4]},
-			answer_5={$answers[5]},
-			answer_6={$answers[6]},
-			answer_7={$answers[7]},
-			answer_8={$answers[8]},
-			answer_9={$answers[9]}
-
-			WHERE question_id=$_POST[qid]";
-
-		if ($testsQuestionsDAO->execute($sql)) {
+				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
+                            category_id=?,
+                            feedback=?,
+                            question=?,
+                            choice_0=?,
+                            choice_1=?,
+                            choice_2=?,
+                            choice_3=?,
+                            choice_4=?,
+                            choice_5=?,
+                            choice_6=?,
+                            choice_7=?,
+                            choice_8=?,
+                            choice_9=?,
+                            answer_0=?,
+                            answer_1=?,
+                            answer_2=?,
+                            answer_3=?,
+                            answer_4=?,
+                            answer_5=?,
+                            answer_6=?,
+                            answer_7=?,
+                            answer_8=?,
+                            answer_9=?
+                            WHERE question_id=?";	
+		$values= array($_POST['category_id'],
+		                    $_POST['feedback'],
+		                    $_POST['question'],
+		                    $_POST['choice'][0],
+		                    $_POST['choice'][1],
+		                    $_POST['choice'][2],
+		                    $_POST['choice'][3],
+		                    $_POST['choice'][4],
+		                    $_POST['choice'][5],
+		                    $_POST['choice'][6],
+		                    $_POST['choice'][7],
+		                    $_POST['choice'][8],
+		                    $_POST['choice'][9],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $answers[0],
+		                    $_POST['qid']);
+		$types = "issssssssssssiiiiiiiiiii";
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('QUESTION_UPDATED');
 			if ($_POST['tid']) {
 				header('Location: questions.php?tid='.$_POST['tid'].'&_course_id='.$_course_id);			

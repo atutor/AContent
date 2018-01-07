@@ -41,7 +41,8 @@ require('../include/lib/mysql_funcs.inc.php');
 if(function_exists('mysqli_connect')){
 	define('MYSQLI_ENABLED', 1);
 } 
-
+/*
+// NO LONGER NEEDED WITH prepare/bind_parm BEING USED
 function my_add_null_slashes( $string ) {
     global $db;
     if(defined('MYSQLI_ENABLED')){
@@ -71,7 +72,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
     }
     $stripslashes = 'my_null_slashes';
 }
-
+*/
 function queryFromFile($sql_file_path)
 {
 	global $db, $progress, $errors;
@@ -178,8 +179,6 @@ function print_feedback( $feedback ) {
 
 function store_steps($step) {
 
-	global $stripslashes;
-
 	foreach($_POST as $key => $value) {
 		if (substr($key, 0, strlen('step')) == 'step') {
 			continue;
@@ -191,7 +190,7 @@ function store_steps($step) {
 			continue;
 		}
 
-		$_POST['step'.$step][$key] = urlencode($stripslashes($value));
+		$_POST['step'.$step][$key] = urlencode(stripslashes($value));
 	}
 }
 

@@ -43,19 +43,15 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback']    = $addslashes(trim($_POST['feedback']));
-		$_POST['question']    = $addslashes($_POST['question']);
-		$_POST['qid']	      = intval($_POST['qid']);
-		$_POST['category_id'] = intval($_POST['category_id']);
-		$_POST['answer']      = intval($_POST['answer']);
-
+		$_POST['feedback']    = trim($_POST['feedback']);
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
 			answer_0={$_POST[answer]}
 			WHERE question_id=$_POST[qid]";
-
-		if ($testsQuestionsDAO->execute($sql)) {
+		$values = array($_POST['category_id'], $_POST['feedback'], $_POST['question'], $_POST['answer'], $_POST['qid']);
+		$types = "isssi";
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('QUESTION_UPDATED');
 			if ($_POST['tid']) {
 				header('Location: questions.php?tid='.$_POST['tid'].'&_course_id='.$_course_id);			

@@ -23,8 +23,6 @@ if (isset($_POST['cancel'])) {
 
 } else if (isset($_POST['form_password_reminder'])) {
 	//get database info to create & email change-password-link
-	$_POST['form_email'] = $addslashes($_POST['form_email']);
-
 	if ($row = $usersDAO->getUserByEmail($_POST[form_email])) {
 		
 		//date link was generated (# days since epoch)
@@ -119,7 +117,7 @@ if (isset($_POST['cancel'])) {
 
 		if (!$msg->containsErrors()) {
 			//save data
-			$password   = $addslashes($_POST['form_password_hidden']);
+			$password   = $_POST['form_password_hidden'];
 			$usersDAO->UpdateField(intval($_REQUEST['id']), 'password', $password);
 
 			//send confirmation email

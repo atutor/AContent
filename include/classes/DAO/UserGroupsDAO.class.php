@@ -166,7 +166,7 @@ class UserGroupsDAO extends DAO {
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'user_groups WHERE user_group_id = ?';
 		$values = $userGroupID;
 		$types = "i";
-		return $this->execute($sql);
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**

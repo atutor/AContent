@@ -58,46 +58,6 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-/*		$_POST['feedback']     = $addslashes($_POST['feedback']);
-		$_POST['instructions'] = $addslashes($_POST['instructions']);
-		
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
-			category_id=$_POST[category_id],
-			feedback='$_POST[feedback]',
-			question='$_POST[instructions]',
-			choice_0='{$_POST[question][0]}',
-			choice_1='{$_POST[question][1]}',
-			choice_2='{$_POST[question][2]}',
-			choice_3='{$_POST[question][3]}',
-			choice_4='{$_POST[question][4]}',
-			choice_5='{$_POST[question][5]}',
-			choice_6='{$_POST[question][6]}',
-			choice_7='{$_POST[question][7]}',
-			choice_8='{$_POST[question][8]}',
-			choice_9='{$_POST[question][9]}',
-			answer_0={$_POST[question_answer][0]},
-			answer_1={$_POST[question_answer][1]},
-			answer_2={$_POST[question_answer][2]},
-			answer_3={$_POST[question_answer][3]},
-			answer_4={$_POST[question_answer][4]},
-			answer_5={$_POST[question_answer][5]},
-			answer_6={$_POST[question_answer][6]},
-			answer_7={$_POST[question_answer][7]},
-			answer_8={$_POST[question_answer][8]},
-			answer_9={$_POST[question_answer][9]},
-			option_0='{$_POST[answer][0]}',
-			option_1='{$_POST[answer][1]}',
-			option_2='{$_POST[answer][2]}',
-			option_3='{$_POST[answer][3]}',
-			option_4='{$_POST[answer][4]}',
-			option_5='{$_POST[answer][5]}',
-			option_6='{$_POST[answer][6]}',
-			option_7='{$_POST[answer][7]}',
-			option_8='{$_POST[answer][8]}',
-			option_9='{$_POST[answer][9]}'
-
-			WHERE question_id=$_POST[qid]";
-			*/
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                             category_id=?,
                             feedback=?,

@@ -119,7 +119,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		@mysql_select_db($_POST['step2']['db_name'], $db);
         }
 		// for admin account
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
+		/*$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
 		        (login, password, user_group_id, email, web_service_id, create_date, is_author)
 		        VALUES ('".$addslashes($_POST[admin_username])."', 
 		                '".$_POST[form_admin_password_hidden]."', 
@@ -127,15 +127,22 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		                '".$addslashes($_POST[admin_email])."', 
 		                '".substr(md5(uniqid(rand(), true)),0,32)."', 
 		                NOW(),
-		                '1')";
-		                
-		if(defined('MYSQLI_ENABLED')){
-		    $result = $db->query($sql);
-		}else{
-		    $result= mysql_query($sql, $db);
-        }
+		                '1')"; */
+			$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
+		        (login, password, user_group_id, email, web_service_id, create_date, is_author)
+		        VALUES (?, 
+		                ?, 
+		                1, 
+		                ?, 
+		                '".substr(md5(uniqid(rand(), true)),0,32)."', 
+		                NOW(),
+		                '1')";	      
+		    $values = array($_POST['admin_username'], $_POST['form_admin_password_hidden'],$_POST['admin_email'] );       
+		    $types = "sss";   
+		    $result = $db->query($sql, $values, $types);
+
 		// for author account
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users
+		/*$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users
                (login, password, user_group_id, first_name, last_name, email, is_author, organization, phone,
                address, city, province, country, postal_code, web_service_id, status, create_date)
                VALUES ('".$addslashes($_POST['account_username'])."',
@@ -154,48 +161,50 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
                '".$addslashes($_POST['account_postal_code'])."',
 		       '".substr(md5(uniqid(rand(), true)),0,32)."', 
                1, 
-               now())";
-		if(defined('MYSQLI_ENABLED')){
-		    $result = $db->query($sql);
-		}else{
-		    $result= mysql_query($sql, $db);
-        }
-		//$user_id = mysql_insert_id();
+               now())"; */
+        $sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users
+               (login, password, user_group_id, first_name, last_name, email, is_author, organization, phone,
+               address, city, province, country, postal_code, web_service_id, status, create_date)
+               VALUES (?, ?, 2, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '".substr(md5(uniqid(rand(), true)),0,32)."', 1, now())";
+        $values = array($_POST['account_username'], 
+                                $_POST['form_account_password_hidden'],
+                                $_POST['account_fname'],
+                                 $_POST['account_lname'],
+                                 $_POST['account_email'],
+                                 $_POST['account_organization'],
+                                 $_POST['account_phone'],
+                                 $_POST['account_address'], 
+                                 $_POST['account_city'],  
+                                 $_POST['account_province'],
+                                 $_POST['account_country'],
+                                 $_POST['account_postal_code']                
+                                );
+        $types="ssssssssssss";
+		$result = $db->query($sql);
 		$user_id = ac_insert_id();
 		
 		// associate the default HowTo lesson with this author account 
-		$sql = "UPDATE ".$_POST['step2']['tb_prefix']."courses SET user_id=".$user_id." WHERE course_id=1";
-		//$result = mysql_query($sql ,$db);
-		if(defined('MYSQLI_ENABLED')){
-		    $result = $db->query($sql);
-		}else{
-		    $result= mysql_query($sql, $db);
-        }
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."user_courses (user_id, course_id, role) VALUES (".$user_id.", 1, 1)";
-		if(defined('MYSQLI_ENABLED')){
-		    $result = $db->query($sql);
-		}else{
-		    $result= mysql_query($sql, $db);
-        }
-		//$result = mysql_query($sql ,$db);
-		
+		$sql = "UPDATE ".$_POST['step2']['tb_prefix']."courses SET user_id=? WHERE course_id=1";
+		$values = $user_id;
+		$types = "i";
+		$result = $db->query($sql, $$values, $types);
+
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."user_courses (user_id, course_id, role) VALUES (?, 1, 1)";
+		$values = $user_id;
+		$types = "i";
+		$result = $db->query($sql, $values, $types);
+
 		// configurations
-		$_POST['site_name'] = $addslashes($_POST['site_name']);
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('site_name', '$_POST[site_name]')";
-		//$result = mysql_query($sql ,$db);
-		if(defined('MYSQLI_ENABLED')){
-		    $result = $db->query($sql);
-		}else{
-		    $result= mysql_query($sql, $db);
-        }
-		$_POST['email'] = $addslashes($_POST['email']);
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('contact_email', '$_POST[email]')";
-		//$result = mysql_query($sql ,$db);
-		if(defined('MYSQLI_ENABLED')){
-		    $result = $db->query($sql);
-		}else{
-		    $result= mysql_query($sql, $db);
-        }
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('site_name', ?)";
+        $values = $_POST['site_name'];
+        $types = "s";
+		$result = $db->query($sql, $values, $types);
+
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('contact_email', ?)";
+		$values = $_POST[email];
+		$types = "s";
+	    $result = $db->query($sql, $values, $types);
+
 		unset($_POST['admin_username']);
 		unset($_POST['form_admin_password_hidden']);
 		unset($_POST['admin_email']);

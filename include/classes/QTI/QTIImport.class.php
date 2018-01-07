@@ -44,7 +44,7 @@ class QTIImport {
 
 	//Creates the parameters array for TestQuestion::importQTI
 	function constructParams($qti_params){
-		global $addslashes;
+
 		//save guarding
 		$qti_params['required']		= intval($qti_params['required']);
 		$qti_params['question']		= trim(htmlspecialchars_decode($qti_params['question'], ENT_QUOTES));

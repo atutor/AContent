@@ -39,7 +39,6 @@ global $_user_location;
 global $_base_path;
 global $contentManager;
 global $_section;
-global $addslashes;
 
 if (defined('TR_FORCE_GET_FILE') && TR_FORCE_GET_FILE) {
 	$_tmp_base_href = TR_BASE_HREF . 'get.php/';

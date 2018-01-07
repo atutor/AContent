@@ -34,13 +34,6 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/DAO.class.php');
 $dao = new DAO();
 
 // delete the existing alternative for this (pid, a_type)
-/* $sql = "SELECT sr.secondary_resource_id 
-          FROM ".TABLE_PREFIX."secondary_resources sr, ".TABLE_PREFIX."secondary_resources_types srt
-         WHERE sr.secondary_resource_id = srt.secondary_resource_id
-           AND sr.primary_resource_id = ".$pid."
-           AND sr.language_code = '".$_SESSION['lang']."'
-           AND srt.type_id=".$type_id; */
-           
 $sql = "SELECT sr.secondary_resource_id 
           FROM ".TABLE_PREFIX."secondary_resources sr, ".TABLE_PREFIX."secondary_resources_types srt
          WHERE sr.secondary_resource_id = srt.secondary_resource_id
@@ -81,8 +74,6 @@ $dao->execute($sql, $values, $types);
 
 $secondary_resource_id = $dao->ac_insert_id();
 
-/* $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types (secondary_resource_id, type_id)
-        VALUES (".$secondary_resource_id.", ".$type_id.")"; */
 $sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types (secondary_resource_id, type_id)
         VALUES (?, ?)";
 $values = array($secondary_resource_id, $type_id);

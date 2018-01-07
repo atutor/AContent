@@ -46,44 +46,8 @@ if (isset($_POST['cancel'])) {
 	
 
 	if (!$msg->containsErrors()) {
-		/* $_POST['feedback']     = $addslashes($_POST['feedback']);
-		$_POST['instructions'] = $addslashes($_POST['instructions']);
-	
-		$sql_params = array(	$_POST['category_id'], 
-								$_course_id,
-								$_POST['feedback'], 
-								$_POST['instructions'], 
-								$_POST['question'][0], 
-								$_POST['question'][1], 
-								$_POST['question'][2], 
-								$_POST['question'][3], 
-								$_POST['question'][4], 
-								$_POST['question'][5], 
-								$_POST['question'][6], 
-								$_POST['question'][7], 
-								$_POST['question'][8], 
-								$_POST['question'][9], 
-								$_POST['question_answer'][0], 
-								$_POST['question_answer'][1], 
-								$_POST['question_answer'][2], 
-								$_POST['question_answer'][3], 
-								$_POST['question_answer'][4], 
-								$_POST['question_answer'][5], 
-								$_POST['question_answer'][6], 
-								$_POST['question_answer'][7], 
-								$_POST['question_answer'][8], 
-								$_POST['question_answer'][9],
-								$_POST['answer'][0], 
-								$_POST['answer'][1], 
-								$_POST['answer'][2], 
-								$_POST['answer'][3], 
-								$_POST['answer'][4], 
-								$_POST['answer'][5], 
-								$_POST['answer'][6], 
-								$_POST['answer'][7], 
-								$_POST['answer'][8], 
-								$_POST['answer'][9]); */
-$values = array($_POST['category_id'],
+		
+            $values = array($_POST['category_id'],
                             $_course_id,
 	                        $_POST['feedback'],
 	                        $_POST['instructions'],
@@ -120,8 +84,6 @@ $values = array($_POST['category_id'],
 	                        );
 	    $types = "iissssssssssssiiiiiiiiiissssssssss";
 	    $sql = TR_SQL_QUESTION_MATCHINGDD;
-	    //debug($sql);
-		//$sql = vsprintf(TR_SQL_QUESTION_MATCHINGDD, $sql_params);
 
 		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

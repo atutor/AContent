@@ -163,35 +163,6 @@ if ($current_tab == 0 || $current_tab == 2)
     load_editor($simple, false, "none");    
 }
 
-
-//TODO*************BOLOGNA****************REMOVE ME**************/
-//loading toolbar for insert discussion topic or web link into the content
-//if ($current_tab == 0){
-//    if(authenticate(TR_PRIV_CONTENT,TR_PRIV_RETURN)){
-//        $home_links = get_home_navigation();                        //vengono lette le caratteristiche di ogni modulo attivato nella home page.
-//        $main_links = get_main_navigation($current_page);           //vengono lette le caratteristiche di ogni modulo attivo nel main navigation
-//
-//        $num = count($main_links);                                  //necessario elminare il primo e l'utlimo elemento poichè sono rispettivamente "Home" e "Manage"
-//        unset($main_links[0]);                                      //"Home" label
-//        unset($main_links[$num-1]);                                 //"Manage" label
-//
-//        $all_tools = $home_links;                                   //$all_tools represent a merge between $home_links and main_links without repetitions.
-//        $check=false;
-//        foreach($main_links as $main) {
-//            foreach($home_links as $home) {
-//                if($home['title'] == $main['title']) {
-//                    $check=true;
-//                    break;
-//                }
-//            }
-//            if(!$check)
-//                $all_tools[]=$main;
-//            else
-//                $check=false;
-//        }
-//    }
-//}
-
 $pid = intval($_REQUEST['pid']);
 ?>
 
@@ -213,19 +184,9 @@ $pid = intval($_REQUEST['pid']);
 			$_POST['weblink_text'] = $content_row['text'];
 			$_POST['keywords']   = $content_row['keywords'];
 			$_POST['test_message'] = $content_row['test_message'];                     
-                        
-//			$_POST['day']   = substr($content_row['release_date'], 8, 2);
-//			$_POST['month'] = substr($content_row['release_date'], 5, 2);
-//			$_POST['year']  = substr($content_row['release_date'], 0, 4);
-//			$_POST['hour']  = substr($content_row['release_date'], 11, 2);
-//			$_POST['min']= substr($content_row['release_date'], 14, 2);
-
 			$_POST['ordering'] = $content_row['ordering'];
-//			$_POST['related'] = $contentManager->getRelatedContent($cid);
-			
 			$_POST['pid'] = $pid = $content_row['content_parent_id'];
 
-//			$_POST['related_term'] = $glossary_ids_related;
 		}
 
 	} else {
@@ -265,30 +226,17 @@ $pid = intval($_REQUEST['pid']);
         echo '<input type="hidden" name="complexeditor" id="complexeditor" value="'.AT_print($_POST['complexeditor'], 'input.hidden').'" />';
         echo '<input type="hidden" name="formatting" value="'.AT_print($_POST['formatting'], 'input.hidden').'" />';
 	
- //echo '<input type="hidden" name="box" value="'.htmlspecialchars(`($_POST['box'])).'" />';
-        
+  
         
         }
 
 	echo '<input type="hidden" name="ordering" value="'.AT_print($_POST['ordering'], 'input.hidden').'" />';
 	echo '<input type="hidden" name="pid" value="'.$pid.'" />';
-
-//	echo '<input type="hidden" name="day" value="'.$_POST['day'].'" />';
-//	echo '<input type="hidden" name="month" value="'.$_POST['month'].'" />';
-//	echo '<input type="hidden" name="year" value="'.$_POST['year'].'" />';
-//	echo '<input type="hidden" name="hour" value="'.$_POST['hour'].'" />';
-//	echo '<input type="hidden" name="minute" value="'.$_POST['minute'].'" />';
-//	echo '<input type="hidden" name="min" value="'.$_POST['min'].'" />';
 	
 	echo '<input type="hidden" name="alternatives" value="'.AT_print($_POST['alternatives'], 'input.hidden').'" />';
 	
 	echo '<input type="hidden" name="current_tab" value="'.$current_tab.'" />';
 
-//	if (is_array($_POST['related']) && ($current_tab != 1)) {
-//		foreach($_POST['related'] as $r_id) {
-//			echo '<input type="hidden" name="related[]" value="'.$r_id.'" />';
-//		}
-//	}
 	echo '<input type="hidden" name="keywords" value="'.htmlspecialchars(stripslashes($_POST['keywords'])).'" />';
 
 	//content test association
@@ -297,13 +245,6 @@ $pid = intval($_REQUEST['pid']);
 	/* get glossary terms */
 
 	// adapted content
-	/*$sql = "SELECT pr.primary_resource_id, prt.type_id
-	          FROM ".TABLE_PREFIX."primary_resources pr, ".
-	                 TABLE_PREFIX."primary_resources_types prt
-	         WHERE pr.content_id = ".$cid."
-	           AND pr.language_code = '".$_SESSION['lang']."'
-	           AND pr.primary_resource_id = prt.primary_resource_id";
-	           */
 	$sql = "SELECT pr.primary_resource_id, prt.type_id
 	          FROM ".TABLE_PREFIX."primary_resources pr, ".
 	                 TABLE_PREFIX."primary_resources_types prt

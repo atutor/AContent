@@ -33,59 +33,7 @@ function unregister_GLOBALS() {
        if (!in_array($k, $noUnset) && isset($GLOBALS[$k])) { unset($GLOBALS[$k]); }
    }
 }
-/*
-function my_add_null_slashes( $string ) {
-    return mysql_real_escape_string(stripslashes($string));
-}
-*/
-/*
-function my_add_null_slashes( $string ) {
-    global $db;
-    if(defined('MYSQLI_ENABLED')){
-        return $db->real_escape_string(stripslashes($string));
-    }else{
-        return mysql_real_escape_string(stripslashes($string));
-    }
 
-}
-
-function my_null_slashes($string) {
-	return $string;
-}
-*/
-/*
-if ( get_magic_quotes_gpc() == 1 ) {
-	$addslashes   = 'my_add_null_slashes';
-	$stripslashes = 'stripslashes';
-} else {
-	$addslashes   = 'mysql_real_escape_string';
-	$stripslashes = 'my_null_slashes';
-}
-*/
-/*
-if ( get_magic_quotes_gpc() == 1 ) {
-    $addslashes   = 'my_add_null_slashes';
-    $stripslashes = 'stripslashes';
-} else {
-    if(defined('MYSQLI_ENABLED')){
-        // mysqli_real_escape_string requires 2 params, breaking wherever
-        // current $addslashes with 1 param exists. So hack with trim and 
-        // manually run mysqli_real_escape_string requires during sanitization below
-        //$addslashes   = 'trim';
-        
-        //////////////
-        // This is a temp fix, until there is a replacement for $addslashes 
-        // This needs to be adapted with a mysqli friendly escape_string
-        // Incompatible with PHP 7
-        $addslashes   = 'mysql_real_escape_string';
-        //////////////
-        
-    }else{
-        $addslashes   = 'mysql_real_escape_string';
-    }
-    $stripslashes = 'my_null_slashes';
-}
-*/
 
 
 

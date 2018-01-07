@@ -81,8 +81,10 @@ require_once(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 
 $dao = new DAO();
 $cid = $_content_id;
-$sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=".$cid."";
-$result=$dao->execute($sql);
+$sql="SELECT layout FROM ".TABLE_PREFIX."content WHERE content_id=?";
+$values = $cid;
+$types = "i";
+$result=$dao->execute($sql, $values, $types);
     if(is_array($result))
     {
         foreach ($result as $support) {

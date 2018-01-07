@@ -17,8 +17,8 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
 //if (isset($_current_user) && $_current_user->isAdmin()) {
 if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITOR])) {
 
-$_GET['type'] = $addslashes(strip_tags($_GET['type']));
-$_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
+$_GET['type'] = strip_tags($_GET['type']);
+$_GET['temp'] = strip_tags($_GET['temp']);
 
     if($_GET['type'] ==  'page_templates' || $_GET['type'] ==  'page_template'){
             $tab = 'pages';
@@ -30,7 +30,7 @@ $_GET['temp'] = $addslashes(strip_tags($_GET['temp']));
     if(isset ($_GET['type']) && isset ($_GET['temp'])) {
         require('classes/TemplateCommons.php');
         $commons=new TemplateCommons('../templates');
-        $type=strip_tags($addslashes($_GET['type']));
+        $type=strip_tags($_GET['type']);
         
         
         if($_GET['type']=='pages') $type='page_templates';

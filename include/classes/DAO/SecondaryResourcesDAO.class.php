@@ -32,18 +32,6 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function Create($primary_resource_id, $file_name, $lang)
 	{
-		/*
-		global $addslashes;
-		
-		$primary_resource_id = intval($primary_resource_id);
-		$file_name = $addslashes(convertAmp($file_name));
-		$lang = $addslashes($lang);
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources 
-		                SET primary_resource_id=$primary_resource_id, 
-		                    secondary_resource='$file_name', 
-		                    language_code='$lang'"; */
-		$file_name = convertAmp($file_name);
 		$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources 
 		                SET primary_resource_id=?, 
 		                    secondary_resource=?, 
@@ -62,15 +50,6 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	function DeleteByResourceName($resourceName)
 	{
-		/*global $addslashes;
-		$resourceName = $addslashes($resourceName);
-		
-		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
-		         WHERE secondary_resource = '".$resourceName."'
-		            OR primary_resource_id in (SELECT primary_resource_id
-		                     FROM ".TABLE_PREFIX."primary_resources
-		                    WHERE resource='".$resourceName."')";
-		                    */
 		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
 		         WHERE secondary_resource = ?
 		            OR primary_resource_id in (SELECT primary_resource_id
@@ -90,8 +69,6 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function getByContent($content_id)
 	{
-		//$content_id = intval($content_id);
-		
 		$sql = "SELECT DISTINCT secondary_resource_id, secondary_resource FROM ".TABLE_PREFIX."primary_resources a 
 		          LEFT JOIN ".TABLE_PREFIX."secondary_resources s
 					ON a.primary_resource_id = s.primary_resource_id 
@@ -109,7 +86,6 @@ class SecondaryResourcesDAO extends DAO {
 	*/
 	public function getByPrimaryResourceID($primary_resource_id)
 	{
-		$primary_resource_id = intval($primary_resource_id);
 	    $sql = 'SELECT * FROM '.TABLE_PREFIX.'secondary_resources WHERE primary_resource_id=?';
 	    $values = $primary_resource_id;
 	    $types = "i";

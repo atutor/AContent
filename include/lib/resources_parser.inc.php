@@ -17,7 +17,7 @@ global $db;
 define('TR_INCLUDE_PATH', '../include/');
 include_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 
-$body_text 	= htmlspecialchars($stripslashes($_POST['body_text']));
+$body_text 	= htmlspecialchars(stripslashes($_POST['body_text']));
 $body		= html_entity_decode($body_text);
 
 require(TR_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */

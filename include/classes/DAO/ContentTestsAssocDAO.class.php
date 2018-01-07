@@ -32,12 +32,6 @@ class ContentTestsAssocDAO extends DAO {
 	*/
 	function Create($content_id, $test_id)
 	{
-		/* $content_id = intval($content_id);
-		$test_id = intval($test_id);
-		
-		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
-				'(content_id, test_id) ' .
-				'VALUES (' . $content_id . ", $test_id)"; */
 		$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
 				'(content_id, test_id) ' .
 				'VALUES (?,?)';				
@@ -64,7 +58,6 @@ class ContentTestsAssocDAO extends DAO {
 	*/
 	function DeleteByContentID($contentID)
 	{
-		$contentID = intval($contentID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
 	             WHERE content_id = ?";
 		$values = $contentID;
@@ -90,7 +83,6 @@ class ContentTestsAssocDAO extends DAO {
 	*/
 	function DeleteByTestID($testID)
 	{
-		$testID = intval($testID);
 	    $sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc 
 	             WHERE test_id = ?";
 	    $values = $testID;

@@ -34,17 +34,16 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-		$_POST['question'] = $addslashes($_POST['question']);
 
-		$sql_params = array(	$_POST['category_id'], 
+		$values = array($_POST['category_id'], 
 								$_course_id,
 								$_POST['feedback'], 
 								$_POST['question'], 
 								$_POST['properties']);
+		$types = "iissi";
+		$sql = TR_SQL_QUESTION_LONG;
 
-		$sql = vsprintf(TR_SQL_QUESTION_LONG, $sql_params);	
-		if ($testsQuestionsDAO->execute($sql))
+		if ($testsQuestionsDAO->execute($sql, $values, $types))
 		{
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			header('Location: question_db.php?_course_id='.$_course_id);

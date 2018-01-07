@@ -38,42 +38,38 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 		
 	if (!$msg->containsErrors()) {
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = $addslashes(trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES)));
+			$_POST['choice'][$i] = trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES));
 		}
 
 		$answers = array_fill(0, 10, 0);
 		$answers[$_POST['answer']] = 1;
-
-		$_POST['feedback']   = $addslashes($_POST['feedback']);
-		$_POST['question']   = $addslashes($_POST['question']);
-
-		$sql_params = array(	$_POST['category_id'], 
-								$_course_id,
-								$_POST['feedback'], 
-								$_POST['question'], 
-								$_POST['choice'][0], 
-								$_POST['choice'][1], 
-								$_POST['choice'][2], 
-								$_POST['choice'][3], 
-								$_POST['choice'][4], 
-								$_POST['choice'][5], 
-								$_POST['choice'][6], 
-								$_POST['choice'][7], 
-								$_POST['choice'][8], 
-								$_POST['choice'][9], 
-								$answers[0], 
-								$answers[1], 
-								$answers[2], 
-								$answers[3], 
-								$answers[4], 
-								$answers[5], 
-								$answers[6], 
-								$answers[7], 
-								$answers[8], 
-								$answers[9]);
-		$sql = vsprintf(TR_SQL_QUESTION_MULTI, $sql_params);
-		
-		if ($testsQuestionsDAO->execute($sql)) {
+        $values = array($_POST['category_id'], 
+									$_course_id,
+									$_POST['feedback'], 
+									$_POST['question'], 
+									$_POST['choice'][0], 
+									$_POST['choice'][1], 
+									$_POST['choice'][2], 
+									$_POST['choice'][3], 
+									$_POST['choice'][4], 
+									$_POST['choice'][5], 
+									$_POST['choice'][6], 
+									$_POST['choice'][7], 
+									$_POST['choice'][8], 
+									$_POST['choice'][9], 
+									$answers[0], 
+                                    $answers[1], 
+                                    $answers[2], 
+                                    $answers[3], 
+                                    $answers[4], 
+                                    $answers[5], 
+                                    $answers[6], 
+                                    $answers[7], 
+                                    $answers[8], 
+                                    $answers[9]);
+	    $types = "iissssssssssssiiiiiiiiii";
+		$sql = TR_SQL_QUESTION_MULTI;
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			header('Location: question_db.php?_course_id='.$_course_id);
 			exit;

@@ -34,7 +34,6 @@ class MyownPatchesDAO extends DAO {
 	public function Create($system_patch_id, $applied_version, 
 	                       $description, $sql_statement)
 	{
-			
 		$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches 
 	               (system_patch_id, 
 	                applied_version,
@@ -75,7 +74,11 @@ class MyownPatchesDAO extends DAO {
 		               status = 'Created',
 		               last_modified = now()
 		         WHERE myown_patch_id = ?";	
-		$values = array($system_patch_id, $applied_version, $description, $sql_statement,  $myown_patch_id);
+		$values = array($system_patch_id, 
+		                        $applied_version, 
+		                        $description, 
+		                        $sql_statement,  
+		                        $myown_patch_id);
 		$types = "ssssi";
 		return $this->execute($sql, $values, $types);
 	}
@@ -92,14 +95,12 @@ class MyownPatchesDAO extends DAO {
 	 */
 	public function UpdateField($myownPatchID, $fieldName, $fieldValue)
 	{
-
-		
 		// check if the required fields are filled
 		if (($fieldName == 'system_patch_id' || $fieldName == 'applied_version') && $fieldValue == '')
 			return array(_AT('TR_ERROR_EMPTY_FIELD'));
 
 		$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
-		           SET ".addslashes($fieldName)."='".addslashes($fieldValue)."'
+		           SET "$fieldName."='".$fieldValue."'
 		         WHERE myown_patch_id = ?";
 	    $values = ($myownPatchID);
 	    $types = "i";	

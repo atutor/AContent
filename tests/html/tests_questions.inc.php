@@ -24,7 +24,6 @@ if (!isset($_GET['category_id'])) {
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsCategoriesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-//require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 
 $testsQuestionsDAO = new TestsQuestionsDAO();
 $testsQuestionsCategoriesDAO = new TestsQuestionsCategoriesDAO();

@@ -35,13 +35,8 @@ class OAuthClientTokensDAO extends DAO {
 	 */
 	public function Create($oauth_server_id, $token, $token_type, $token_secret, $user_id)
 	{
-		/*global $addslashes, $msg;
-		
-		$oauth_server_id = intval($oauth_server_id);
-		$token = $addslashes($token);
-		$token_type = $addslashes($token_type);		
-		$token_secret = $addslashes($token_secret);
-*/
+		global  $msg;
+
 		$missing_fields = array();
 
 		/* token type check */
@@ -53,22 +48,6 @@ class OAuthClientTokensDAO extends DAO {
 		if (!$msg->containsErrors())
 		{
 			/* insert into the db */
-			/*$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
-			              (oauth_server_id,
-			               token,
-			               token_type,
-			               token_secret,
-			               user_id,
-			               assign_date
-			               )
-			       VALUES (".$oauth_server_id.",
-			               '".$token."',
-			               '".$token_type."',
-			               '".$token_secret."',
-			               ".$user_id.",
-			               now()
-			              )";
-			              */
 			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
 			              (oauth_server_id,
 			               token,
@@ -78,7 +57,11 @@ class OAuthClientTokensDAO extends DAO {
 			               assign_date
 			               )
 			       VALUES (?,?,?,?,?, now())";
-			$values = array($oauth_server_id, $token, $token_type, $token_secret, $user_id);
+			$values = array($oauth_server_id, 
+			                        $token, 
+			                        $token_type, 
+			                        $token_secret, 
+			                        $user_id);
 			$types = "isssi";
 			if (!$this->execute($sql, $values, $types))
 			{
@@ -105,15 +88,7 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function deleteByTokenAndType($token, $token_type)
 	{		
-		/* global $addslashes;
-		
-		$token = $addslashes($token);
-		$token_type = $addslashes($token_type);
-		
-	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens 
-	             WHERE token = '".$token."'
-	               AND token_type = '".$token_type."'"; 
-	               */
+
 	    $sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE token = ?
 	               AND token_type = ?";
@@ -131,15 +106,7 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function get($oauth_server_id, $token_type)
 	{
-		/*global $addslashes;
-		
-		$oauth_server_id = intval($oauth_server_id);
-		$token_type = $addslashes($token_type);
-		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
-	             WHERE oauth_server_id='".$oauth_server_id."'
-	               AND token_type='".$token_type."'";
-	               */
+
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE oauth_server_id=?
 	               AND token_type=?";
@@ -157,15 +124,6 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function getByToken($consumer_key, $token)
 	{
-		/*global $addslashes;
-		$consumer_key = $addslashes($consumer_key);
-		$token = $addslashes($token);
-				
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers c, ".TABLE_PREFIX."oauth_client_tokens t 
-	             WHERE c.oauth_server_id = t.oauth_server_id
-	               AND c.consumer_key='".$consumer_key."'
-	               AND t.token = '".$token."'";
-	               */
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers c, ".TABLE_PREFIX."oauth_client_tokens t 
 	             WHERE c.oauth_server_id = t.oauth_server_id
 	               AND c.consumer_key=?
@@ -184,15 +142,6 @@ class OAuthClientTokensDAO extends DAO {
 	*/
 	function getByTokenAndType($token, $token_type)
 	{
-		/*
-		global $addslashes;
-		
-		$token = $addslashes($token);
-		$token_type = $addslashes($token_type);
-		
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
-	             WHERE token = '".$token."'
-	               AND token_type = '".$token_type."'";*/
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_tokens 
 	             WHERE token = ?
 	               AND token_type = ?";

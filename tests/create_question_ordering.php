@@ -58,7 +58,7 @@ if (isset($_POST['cancel'])) {
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
 
 			if ($_POST['choice'][$i] != '') {
 				/* filter out empty choices/ remove gaps */
@@ -69,36 +69,34 @@ if (isset($_POST['cancel'])) {
 
 		$_POST['choice']   = array_pad($choice_new, 10, '');
 		$answer_new        = array_pad($answer_new, 10, 0);
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-		$_POST['question'] = $addslashes($_POST['question']);
 	
-		$sql_params = array(	$_POST['category_id'], 
-								$_course_id,
-								$_POST['feedback'], 
-								$_POST['question'], 
-								$_POST['choice'][0], 
-								$_POST['choice'][1], 
-								$_POST['choice'][2], 
-								$_POST['choice'][3], 
-								$_POST['choice'][4], 
-								$_POST['choice'][5], 
-								$_POST['choice'][6], 
-								$_POST['choice'][7], 
-								$_POST['choice'][8], 
-								$_POST['choice'][9], 
-								$answer_new[0], 
-								$answer_new[1], 
-								$answer_new[2], 
-								$answer_new[3], 
-								$answer_new[4], 
-								$answer_new[5], 
-								$answer_new[6], 
-								$answer_new[7], 
-								$answer_new[8], 
-								$answer_new[9]);
-		$sql = vsprintf(TR_SQL_QUESTION_ORDERING, $sql_params);
-
-		if ($testsQuestionsDAO->execute($sql)) {
+	    $values = array($_POST['category_id'],
+	                            $_course_id,
+		                        $_POST['feedback'],
+		                        $_POST['question'],
+		                        $_POST['choice'][0],
+		                        $_POST['choice'][1],
+		                        $_POST['choice'][2],
+		                        $_POST['choice'][3],
+		                        $_POST['choice'][4],
+		                        $_POST['choice'][5],
+		                        $_POST['choice'][6],
+		                        $_POST['choice'][7],
+		                        $_POST['choice'][8],
+		                        $_POST['choice'][9], 
+		                        $answer_new[0],
+		                        $answer_new[1],
+		                        $answer_new[2],
+		                        $answer_new[3],
+		                        $answer_new[4],
+		                        $answer_new[5],
+		                        $answer_new[6],
+		                        $answer_new[7],
+		                        $answer_new[8],
+		                        $answer_new[9]);	
+		$types = "iissssssssssssiiiiiiiiii";
+		$sql = TR_SQL_QUESTION_ORDERING;
+		if ($testsQuestionsDAO->execute($sql, $values, $types)) {
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			header('Location: question_db.php?_course_id='.$_course_id);
 			exit;

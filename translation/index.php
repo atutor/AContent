@@ -19,7 +19,7 @@ include_once(TR_INCLUDE_PATH.'classes/DAO/LanguageTextDAO.class.php');
 
 unset($_SESSION['course_id']);
 
-global $msg, $addslashes;
+global $msg;
 
 $dao = new DAO();
 $languagesDAO = new LanguagesDAO();
@@ -59,14 +59,7 @@ if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))
 		// New or recently translated
 		if (isset($_REQUEST['new_or_translated']) && $_REQUEST['new_or_translated'] == 3)
 		{
-		/*
-			$sql = "select * from ".TABLE_PREFIX."language_text a 
-							where language_code='".DEFAULT_LANGUAGE_CODE."' 
-								and exists (select 1 from ".TABLE_PREFIX."language_text b 
-														where language_code = '".$_REQUEST['lang_code']."' 
-															and a.term = b.term 
-															and a.revised_date > b.revised_date)";
-															*/
+
             $sql = "select * from ".TABLE_PREFIX."language_text a 
 							where language_code='".DEFAULT_LANGUAGE_CODE."' 
 								and exists (select 1 from ".TABLE_PREFIX."language_text b 
@@ -80,10 +73,6 @@ if (isset($_REQUEST['submit']) || isset($_REQUEST['search']))
 	
 	if (isset($_REQUEST['search']))
 	{
-		/* $sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
-						WHERE language_code='".DEFAULT_LANGUAGE_CODE."'
-						  AND lower(term) like '%".strtolower(trim($_REQUEST['search_phase']))."%'";
-						  */
 		$sql = "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE language_code='".DEFAULT_LANGUAGE_CODE."'
 						  AND lower(term) like ?";
@@ -104,7 +93,7 @@ if (isset($_REQUEST["save"]))
     $values = array($_POST["lang_code"], $_POST["variable"], $_POST["term"], $_POST["translated_text"]);
     $types = "ssss";
     
-    // NOT SURE WHAT THESE LINES ARE DOING
+    // NOT SURE WHAT THESE LINES ARE DOING,  Prior to 1.4
 	//$trans = get_html_translation_table(HTML_ENTITIES);
 	//$trans = array_flip($trans);
 	//$sql_save = strtr($sql_save, $trans);
@@ -116,8 +105,7 @@ if (isset($_REQUEST["save"]))
 		$success_error = '<div class="feedback2">Success: changes saved.</div>';
 	}
 }
-
-//$rows_lang = $languagesDAO->getAllExceptLangCode(DEFAULT_LANGUAGE_CODE);				
+				
 $rows_lang = $languagesDAO->getAll();				
 
 include(TR_INCLUDE_PATH.'header.inc.php');

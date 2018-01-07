@@ -37,16 +37,10 @@ class OAuthClientServersDAO extends DAO {
 	 */
 	public function Create($oauth_server, $consumer_key, $consumer_secret, $expire_threshold)
 	{
-		global $addslashes, $msg;
-		$oauth_server = $addslashes($oauth_server);
-		$consumer_key = $addslashes($consumer_key);
-		$consumer_secret = $addslashes($consumer_secret);		
-		$expire_threshold = intval($expire_threshold);			
-			
 		$missing_fields = array();
 
 		/* email check */
-		$oauth_server = $addslashes(trim($oauth_server));
+		$oauth_server = (trim($oauth_server);
 		$expire_threshold = intval($expire_threshold);
 
 		/* login name check */
@@ -64,19 +58,6 @@ class OAuthClientServersDAO extends DAO {
 		if (!$msg->containsErrors())
 		{
 			/* insert into the db */
-		/*	$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
-			              (oauth_server,
-			               consumer_key,
-			               consumer_secret,
-			               expire_threshold,
-			               create_date
-			               )
-			       VALUES ('".$oauth_server."',
-			               '".$consumer_key."',
-			               '".$consumer_secret."',
-			               ".$expire_threshold.",
-			               now()
-			              )"; */
 			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
 			              (oauth_server,
 			               consumer_key,
@@ -85,7 +66,10 @@ class OAuthClientServersDAO extends DAO {
 			               create_date
 			               )
 			       VALUES (?,?,?,?, now())";
-		    $values = array($oauth_server, $consumer_key, $consumer_secret, $expire_threshold);
+		    $values = array($oauth_server, 
+		                            $consumer_key, 
+		                            $consumer_secret, 
+		                            $expire_threshold);
 		    $types = "sssi";
 			if (!$this->execute($sql, $values, $types))
 			{
@@ -94,7 +78,6 @@ class OAuthClientServersDAO extends DAO {
 			}
 			else
 			{
-				//return mysql_insert_id();
 				return ac_insert_id();
 			}
 		}
@@ -116,18 +99,11 @@ class OAuthClientServersDAO extends DAO {
 	 * @author  Cindy Qi Li
 	 */
 	public function Update($oauth_server, $consumer_key, $consumer_secret, $expire_threshold)
-	{
-		//global $addslashes, $msg;
-		//$oauth_server = $addslashes($oauth_server);
-		//$consumer_key = $addslashes($consumer_key);
-		//$consumer_secret = $addslashes($consumer_secret);		
-		//$expire_threshold = intval($expire_threshold);			
-			
+	{						
 		$missing_fields = array();
 
 		/* email check */
 		$oauth_server = trim($oauth_server);
-		//$expire_threshold = intval($expire_threshold);
 
 		/* login name check */
 		if ($oauth_server == '')
@@ -143,13 +119,6 @@ class OAuthClientServersDAO extends DAO {
 
 		if (!$msg->containsErrors())
 		{
-			/*
-			$sql = "UPDATE ".TABLE_PREFIX."oauth_client_servers
-			           SET consumer_key = '".$consumer_key."',
-			               consumer_secret = '".$consumer_secret."',
-			               expire_threshold = ".$expire_threshold."
-			         WHERE oauth_server = '".$oauth_server."'";
-			         */
 			$sql = "UPDATE ".TABLE_PREFIX."oauth_client_servers
 			           SET consumer_key = ?',
 			               consumer_secret = ?,
@@ -181,9 +150,7 @@ class OAuthClientServersDAO extends DAO {
 	* @author  Cindy Qi Li
 	*/
 	function get($oauth_server_id)
-	{
-		//$oauth_server_id = intval($oauth_server_id);	
-		
+	{		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server_id=?";
 	    $values = "$oauth_server_id";
 	    $types = "i";
@@ -200,9 +167,6 @@ class OAuthClientServersDAO extends DAO {
 	*/
 	function getByOauthServer($oauth_server)
 	{
-		//global $addslashes;
-		//$oauth_server = $addslashes($oauth_server);
-		
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers WHERE oauth_server=?";
 	    $values = $oauth_server;
 	    $types = "s";

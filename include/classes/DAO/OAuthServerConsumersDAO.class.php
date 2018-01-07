@@ -34,14 +34,12 @@ class OAuthServerConsumersDAO extends DAO {
 	 */
 	public function Create($consumer, $expire_threshold)
 	{
-		global $addslashes, $msg;
-		$consumer = $addslashes($consumer);
-		$expire_threshold = intval($expire_threshold);
-		
+		global $msg;
+
 		$missing_fields = array();
 
 		/* email check */
-		$consumer = $addslashes(trim($consumer));
+		$consumer = trim($consumer);
 
 		/* login name check */
 		if ($consumer == '')
@@ -61,20 +59,6 @@ class OAuthServerConsumersDAO extends DAO {
 			$consumer_key = Utility::getRandomStr(16);
 			$consumer_secret = Utility::getRandomStr(16);
 			
-/*			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_consumers
-			              (consumer,
-			               consumer_key,
-			               consumer_secret,
-			               expire_threshold,
-			               create_date
-			               )
-			       VALUES ('".$consumer."',
-			               '".$consumer_key."',
-			               '".$consumer_secret."',
-			               ".$expire_threshold.",
-			               now()
-			              )";
-			              */
 			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_server_consumers
 			              (consumer,
 			               consumer_key,
@@ -83,8 +67,10 @@ class OAuthServerConsumersDAO extends DAO {
 			               create_date
 			               )
 			       VALUES (?,?,?,?,now())";
+			       
 			$value = array($consumer, $consumer_key, $consumer_secret, $expire_threshold);
 			$types = "sssi";
+			
 			if (!$this->execute($sql, $values, $types))
 			{
 				$msg->addError('DB_NOT_UPDATED');
@@ -92,7 +78,6 @@ class OAuthServerConsumersDAO extends DAO {
 			}
 			else
 			{
-				//return mysql_insert_id();
 				return $this->ac_insert_id();
 			}
 		}
@@ -112,10 +97,8 @@ class OAuthServerConsumersDAO extends DAO {
 	 */
 	public function updateExpireThreshold($consumer, $expire_threshold)
 	{
-		//global $addslashes, $msg;
-		//$consumer = $addslashes($consumer);
-		//$expire_threshold = intval($expire_threshold);
-		
+		global $msg;
+
 		$missing_fields = array();
 
 		/* email check */
@@ -166,8 +149,7 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function get($consumer_id)
 	{
-		$consumer_id = intval($consumer_id);
-		
+
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer_id=?";
 	    $values = $consumer_id;
 	    $types = "i";
@@ -184,9 +166,7 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumer($consumer)
 	{
-	    //global $addslashes;
-		//$consumer = $addslashes($consumer);
-		
+
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers WHERE consumer=?";
 	    $values = $consumer;
 	    $types = "s";
@@ -202,9 +182,7 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumerKey($consumer_key)
 	{
-		//global $addslashes;
-		//$consumer_key = $addslashes($consumer_key);
-	
+
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
 	             WHERE consumer_key = ?";
 	    $values = $consumer_key;
@@ -221,13 +199,6 @@ class OAuthServerConsumersDAO extends DAO {
 	*/
 	function getByConsumerKeyAndSecret($consumer_key, $consumer_secret)
 	{
-		//global $addslashes;
-		//$consumer_key = $addslashes($consumer_key);
-		//$consumer_secret = $addslashes($consumer_secret); 	
-		/*
-	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
-	             WHERE consumer_key = '".$consumer_key."'
-	               AND consumer_secret = '".$consumer_secret."'"; */
 	    $sql = "SELECT * FROM ".TABLE_PREFIX."oauth_server_consumers 
 	             WHERE consumer_key = ?
 	               AND consumer_secret = ?";

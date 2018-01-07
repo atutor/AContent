@@ -63,10 +63,10 @@ if (is_array($errors))
 }
 
 $coursesDAO = new CoursesDAO();
-$results = $coursesDAO->getSearchResult($addslashes($keywords), '', $start, $maxResults);
+$results = $coursesDAO->getSearchResult($keywords, '', $start, $maxResults);
 
 // get total number of search results regardless of $maxResults
-$all_results = $coursesDAO->getSearchResult($addslashes($keywords));
+$all_results = $coursesDAO->getSearchResult($keywords);
 if (is_array($all_results)) $total_num = count($all_results);
 else $total_num = 0;
 

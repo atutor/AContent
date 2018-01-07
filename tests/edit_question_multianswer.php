@@ -71,36 +71,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['choice'] = $choice_new;
 		$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
 		$_POST['choice'] = array_pad($_POST['choice'], 10, '');
-/*
-		$_POST['feedback']   = $addslashes($_POST['feedback']);
-		$_POST['question']   = $addslashes($_POST['question']);
 
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
-            category_id=$_POST[category_id],
-		    feedback='$_POST[feedback]',
-			question='$_POST[question]',
-			choice_0='{$_POST[choice][0]}',
-			choice_1='{$_POST[choice][1]}',
-			choice_2='{$_POST[choice][2]}',
-			choice_3='{$_POST[choice][3]}',
-			choice_4='{$_POST[choice][4]}',
-			choice_5='{$_POST[choice][5]}',
-			choice_6='{$_POST[choice][6]}',
-			choice_7='{$_POST[choice][7]}',
-			choice_8='{$_POST[choice][8]}',
-			choice_9='{$_POST[choice][9]}',
-			answer_0={$_POST[answer][0]},
-			answer_1={$_POST[answer][1]},
-			answer_2={$_POST[answer][2]},
-			answer_3={$_POST[answer][3]},
-			answer_4={$_POST[answer][4]},
-			answer_5={$_POST[answer][5]},
-			answer_6={$_POST[answer][6]},
-			answer_7={$_POST[answer][7]},
-			answer_8={$_POST[answer][8]},
-			answer_9={$_POST[answer][9]}
-			WHERE question_id=$_POST[qid]";
-*/
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                                     category_id=?,
                                     feedback=?,
@@ -127,7 +98,7 @@ if (isset($_POST['cancel'])) {
                                     answer_9=?
                                     WHERE question_id=?";
 
-        $values = array(	$_POST['category_id'], 
+        $values = array($_POST['category_id'], 
 									$_POST['feedback'], 
 									$_POST['question'], 
 									$_POST['choice'][0], 

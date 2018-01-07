@@ -106,7 +106,6 @@ class AContent_LiveContentLinkDAO {
 	 * @author  Mauro Donadio
 	 */
 	private function _recursiveFolderScan($parentID, $root){
-		global $addslashes;
 		$parentID = intval($parentID);
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content WHERE content_parent_id=? ORDER BY ordering ASC';

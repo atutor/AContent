@@ -43,16 +43,26 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-
+		$_POST['question'] = addslashes($_POST['question']);
+		$_POST['feedback'] = addslashes($_POST['feedback']);
+/*
 		$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
 			properties=$_POST[properties]
-		WHERE question_id=$_POST[qid]";
-
-		$testsQuestionsDAO->execute($sql);
+		WHERE question_id=$_POST[qid]"; */
+		$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=?,
+			feedback=?,
+			question=?,
+			properties=?
+		WHERE question_id=?";
+		$values = array($_POST['category_id'], 
+		                        $_POST['feedback'], 
+		                        $_POST['question'], 
+		                        $_POST['properties'], 
+		                        $_POST['qid'] );
+		$types = "issii";
+		$testsQuestionsDAO->execute($sql, $values, $types);
 
 		$msg->addFeedback('QUESTION_UPDATED');
 		if ($_POST['tid']) {

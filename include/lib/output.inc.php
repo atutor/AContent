@@ -56,9 +56,7 @@ function _AT() {
 		// replaced the preg_match with a test of the substring.
 		$sub_arg = substr($args[0], 0, 7); // 7 is the shortest type of msg (TR_INFO)
 		if (in_array($sub_arg, array('TR_ERRO','TR_INFO','TR_WARN','TR_FEED','TR_CONF'))) {
-			global $_base_path, $addslashes;
-
-			//$args[0] = $addslashes($args[0]);
+			global $_base_path;
 					
 			/* get $_msgs_new from the DB */
 			$rows = $languageTextDAO->getMsgByTermAndLang($args[0], $_SESSION['lang']);

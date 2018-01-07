@@ -20,7 +20,7 @@ $_custom_head .= '<script type="text/javascript" src="'.$_base_href.'include/jsc
 $_custom_head .='<script type="text/javascript" src="'.$_base_href.'include/jscripts/html2canvas/html2canvas.js"></script>'."\n";
 $_custom_head .='<script type="text/javascript">jQuery.noConflict();</script>'."\n";
 
-$template=strip_tags($addslashes($_GET['temp']));
+$template=strip_tags($_GET['temp']);
 $_custom_css = "templates/layouts"."/". $template."/".$template.".css";
 $_custom_head .= "\n".'<link rel="stylesheet" href="'.$_custom_css.'" type="text/css" />';
 

@@ -57,15 +57,13 @@ class UserGroupPrivilegeDAO extends DAO {
 	 */
 	public function UpdateField($userGroupID, $privilegeID, $fieldName, $fieldValue)
 	{
-		//global $addslashes;
-
 		$sql = "UPDATE ".TABLE_PREFIX."user_group_privilege
-		           SET ".$fieldName."='".addslashes($fieldValue)."'
+		           SET ".$fieldName."='".$fieldValue."'
 		         WHERE user_group_id = ?
 		           AND privilege_id = ?";
 		$values = array($userGroupID, $privilegeID);
 		$types = "ii";
-		return $this->execute($sql);
+		return $this->execute($sql, $values, $types);
 	}
 	
 	/**

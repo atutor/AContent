@@ -13,7 +13,7 @@
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 if (isset($_POST['submit'])) {
-	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
+	$_POST['content_dir'] = stripslashes($_POST['content_dir']);
 
 	unset($errors);
 
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 		if (substr($_POST['content_dir'], -1) !='\\'){
 			$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 		}
-
+/*
 		// kludge to fix the missing slashes when magic_quotes_gpc is On
 		if(defined('MYSQLI_ENABLED')){
 			if ($addslashes != 'trim') {
@@ -78,11 +78,11 @@ if (isset($_POST['submit'])) {
 		}
 
 		}
-
+*/
 		store_steps($step);
 		$step++;
 		return;
-	} else {
+	}/* else {
 		// kludge to fix the missing slashes when magic_quotes_gpc is On
 		if(defined('MYSQLI_ENABLED')){
 			if ($addslashes != 'trim') {
@@ -93,7 +93,7 @@ if (isset($_POST['submit'])) {
                 $_POST['content_dir'] = addslashes($_POST['content_dir']);
             }
 		}
-	}
+	}*/
 }	
 
 print_progress($step);
