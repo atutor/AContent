@@ -22,7 +22,7 @@ if (!defined('TR_INCLUDE_PATH')) exit;
 require_once(TR_INCLUDE_PATH. 'classes/DAO/DAO.class.php');
 
 class TestsQuestionsDAO extends DAO {
-	
+
 	/**
 	 * Update an the given field to a given value of an existing record
 	 * @access  public
@@ -35,14 +35,14 @@ class TestsQuestionsDAO extends DAO {
 	 */
 	public function UpdateField($questionID, $fieldName, $fieldValue)
 	{
-		$sql = "UPDATE ".TABLE_PREFIX."tests_questions 
+		$sql = "UPDATE ".TABLE_PREFIX."tests_questions
 		           SET ".$fieldName."='".$fieldValue."'
 		         WHERE question_id = ?";
 		$values = $questionID;
 		$types = "i";
 		return $this->execute($sql, $values, $types);
 	}
-	
+
 	/**
 	 * Delete a row
 	 * @access  public
@@ -69,16 +69,16 @@ class TestsQuestionsDAO extends DAO {
 	public function get($questionID)
 	{
 
-		$sql = "SELECT * FROM AC_tests_questions 
+		$sql = "SELECT * FROM AC_tests_questions
 		             WHERE question_id=?";
 		$values = $questionID;
 		$types = "i";
 		$rows = $this->execute($sql, $values, $types);
-		
+
 		if (is_array($rows)) return $rows[0];
 		else return false;
 	}
-	
+
 	/**
 	 * Return information by an array of question ids
 	 * @access  public
@@ -89,22 +89,15 @@ class TestsQuestionsDAO extends DAO {
 	public function getByQuestionIDs($questionIDsArray)
 	{
 		if (!is_array($questionIDsArray) || count($questionIDsArray) == 0) return false;
-		
-		$sql1 = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
-		             WHERE question_id in (".implode(',', $questionIDsArray). ")";
-		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
-		             WHERE question_id in (?)";
-		//debug($questionIDsArray);
-		
-		$valuestmp = implode(',', $questionIDsArray);
-		$values  = &$valuestmp;
 
-		$types = "s";
-		// $values fails in IN(?) statuments 
-		//return $this->execute($sql, $values, $types);
-		return $this->execute($sql1);
+		$num_of_ids = count($questionIDsArray);
+
+		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions
+		             WHERE question_id in (".substr(str_repeat("? , ", $num_of_ids), 0, -2).")";
+		$types = str_pad("", $num_of_ids, "i");
+		return $this->execute($sql, $questionIDsArray, $types);
 	}
-	
+
 	/**
 	 * Return content information by given course id and category id
 	 * @access  public
@@ -115,13 +108,13 @@ class TestsQuestionsDAO extends DAO {
 	 */
 	public function getByCourseIDAndCategoryID($courseID, $categoryID)
 	{
-         
-		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
+
+		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions
 		         WHERE course_id = ?
 		           AND category_id = ?
-		         ORDER BY question";	
+		         ORDER BY question";
 	    $values = array($courseID, $categoryID);
-	    $types="ii";	
+	    $types="ii";
 		return $this->execute($sql, $values, $types);
 
 	}
@@ -137,9 +130,9 @@ class TestsQuestionsDAO extends DAO {
 	public function getByCourseIDAndType($courseID, $type)
 	{
 
-		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions 
+		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions
 		         WHERE course_id= ?
-		           AND type = ?";		
+		           AND type = ?";
 	    $values = array($courseID, $type);
 	    $types = "ii";
 		return $this->execute($sql, $values, $types);
@@ -158,7 +151,7 @@ class TestsQuestionsDAO extends DAO {
 	private function isFieldsValid($validate_type, $title, $ID)
 	{
 		global $msg;
-		
+
 		$missing_fields = array();
 		/* login name check */
 		if ($title == '')
@@ -177,7 +170,7 @@ class TestsQuestionsDAO extends DAO {
 			$missing_fields = implode(', ', $missing_fields);
 			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 		}
-		
+
 		if (!$msg->containsErrors())
 			return true;
 		else

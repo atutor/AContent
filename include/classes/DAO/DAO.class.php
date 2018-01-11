@@ -22,42 +22,40 @@ class DAO {
 
 	// private
 	static private $db;     // global database connection
-	
+
 	function __construct()
 	{
 
 		if (!isset(self::$db))
 		{
-		    
+
 		        if(!defined('DB_NAME') && !isset($_POST['db_name'])){
                     self::$db = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, null, DB_PORT);
-                    self::$db->set_charset("utf8");
                 }else{
                     if(isset($_POST['db_name'])){
                         self::$db = new mysqli($_POST['db_host'],  $_POST['db_login'], $_POST['db_password'], $_POST['db_name'], $_POST['db_port']);
                         define('DB_NAME', $_POST['db_name']);
-                    
-                        self::$db->set_charset("utf8");
                     }else{
                         self::$db = new mysqli(DB_HOST,  DB_USER, DB_PASSWORD, DB_NAME, DB_PORT);
-                        self::$db->set_charset("utf8");                 
                     }
                 }
-                if (!self::$db) {
-                    die('Unable to connect to db.');
-                }
-                
+                if (self::$db) {
+					self::$db->set_charset("utf8");
+                }else{
+					die('Unable to connect to db.');
+				}
+
                 if (!self::$db->select_db(DB_NAME)) {
                     die('DB connection established, but database "'.DB_NAME.'" cannot be selected.');
-                }		    
+                }
 		}
 	}
-	
+
 	/**
 	* Execute SQL
 	* @access  protected
 	* @param   $sql : SQL statment to be executed
-	* @return  $rows: for 'select' sql, return retrived rows, 
+	* @return  $rows: for 'select' sql, return retrived rows,
 	*          true:  for non-select sql
 	*          false: if fail
 	* @author  Cindy Qi Li
@@ -74,7 +72,7 @@ class DAO {
                     for($i=0;$i<$j;$i++){
                         $inputArray[] = &$values[$i];
                     }
-                    
+
 				    // This is a more elegant solution using ... than call_user_func_array()
 				    // but only works with php 5.6+
 		            //$stmt->bind_param($types, ...$values) or die($sql . "<br />". self::$db->error);
@@ -83,16 +81,16 @@ class DAO {
 		            $stmt->execute() or die("Array Execute Failed for: ".$sql . "<br />". self::$db->error);
                     $result = $stmt->get_result();
                     $stmt->close();
-                    
+
 		        }else{
-		        
+
 		            $this_type = &$types;
 		            $this_value = &$values;
 		            $stmt->bind_param($this_type, $this_value) or die("Bind Failed for: ".$sql . "<br />". self::$db->error);
 		            $stmt->execute() or die("Single Execute Failed for: ".$sql . "<br />". self::$db->error);
 		            $result = $stmt->get_result();
 		            $stmt->close();
-		        }  
+		        }
 
 		} else{
 		        $result = self::$db->query($sql) or die("Failed MySQLi Query:".$sql . "<br />". self::$db->error);
@@ -102,7 +100,7 @@ class DAO {
 		if (strtolower(substr($sql, 0, 6)) == 'select'){
 
 		         if ($result->num_rows > 0) {
-		            for($i = 0; $i < $result->num_rows; $i++) 
+		            for($i = 0; $i < $result->num_rows; $i++)
                     {
                         $rows[] = $result->fetch_assoc();
                     }
@@ -111,12 +109,12 @@ class DAO {
 		         }else{
 		            return false;
 		         }
-		    
+
 		} else {
 			return true;
 		}
 	}
-    
+
     function ac_insert_id(){
         global $db;
             return self::$db->insert_id;

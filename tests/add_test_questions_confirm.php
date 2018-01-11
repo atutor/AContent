@@ -53,7 +53,7 @@ if (isset($_POST['cancel'])) {
 		$types .= "iii";
 	}
 	$sql = substr($sql, 0, -1);
-	
+
 	if ($testsQuestionsAssocDAO->execute($sql, $values, $types)) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: questions.php?tid='.$tid.'&_course_id='.$_course_id);
