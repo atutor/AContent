@@ -65,35 +65,11 @@ if (isset($_POST['submit'])) {
 		if (substr($_POST['content_dir'], -1) !='\\'){
 			$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 		}
-/*
-		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if(defined('MYSQLI_ENABLED')){
-			if ($addslashes != 'trim') {
-			    $_POST['content_dir'] = addslashes($_POST['content_dir']);
-		    }
 
-		}else{
-				if ($addslashes != 'mysql_real_escape_string') {
-			$_POST['content_dir'] = addslashes($_POST['content_dir']);
-		}
-
-		}
-*/
 		store_steps($step);
 		$step++;
 		return;
-	}/* else {
-		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if(defined('MYSQLI_ENABLED')){
-			if ($addslashes != 'trim') {
-			    $_POST['content_dir'] = addslashes($_POST['content_dir']);
-			}
-		}else{
-            if ($addslashes != 'mysql_real_escape_string') {
-                $_POST['content_dir'] = addslashes($_POST['content_dir']);
-            }
-		}
-	}*/
+	}
 }	
 
 print_progress($step);

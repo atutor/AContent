@@ -86,7 +86,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	if ($_POST['account_lname'] == '') {
 		$errors[] = 'Personal Account Last Name cannot be empty.';
 	}
-	if ($_POST['account_organization'] == '') {
+	/* if ($_POST['account_organization'] == '') {
 		$errors[] = 'Personal Account Organization cannot be empty.';
 	}
 	if ($_POST['account_phone'] == '') {
@@ -107,27 +107,11 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	if ($_POST['account_postal_code'] == '') {
 		$errors[] = 'Personal Account Postal Code cannot be empty.';
 	}
-	
+	*/
 	if (!isset($errors)) {
-	
-	     if(defined('MYSQLI_ENABLED')){
-        $db = new mysqli($_POST['step2']['db_host'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']), $_POST['step2']['db_name'], $_POST['step2']['db_port']);
-        $db->set_charset("utf8");
 
-	     }else{
-		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
-		@mysql_select_db($_POST['step2']['db_name'], $db);
-        }
+        $db = new DAO();
 		// for admin account
-		/*$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
-		        (login, password, user_group_id, email, web_service_id, create_date, is_author)
-		        VALUES ('".$addslashes($_POST[admin_username])."', 
-		                '".$_POST[form_admin_password_hidden]."', 
-		                1, 
-		                '".$addslashes($_POST[admin_email])."', 
-		                '".substr(md5(uniqid(rand(), true)),0,32)."', 
-		                NOW(),
-		                '1')"; */
 			$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users 
 		        (login, password, user_group_id, email, web_service_id, create_date, is_author)
 		        VALUES (?, 
@@ -139,33 +123,28 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		                '1')";	      
 		    $values = array($_POST['admin_username'], $_POST['form_admin_password_hidden'],$_POST['admin_email'] );       
 		    $types = "sss";   
-		    $result = $db->query($sql, $values, $types);
+		    $result = $db->execute($sql, $values, $types);
 
 		// for author account
-		/*$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users
-               (login, password, user_group_id, first_name, last_name, email, is_author, organization, phone,
-               address, city, province, country, postal_code, web_service_id, status, create_date)
-               VALUES ('".$addslashes($_POST['account_username'])."',
-               '".$_POST['form_account_password_hidden']."',
-               2,
-               '".$addslashes($_POST['account_fname'])."',
-               '".$addslashes($_POST['account_lname'])."', 
-               '".$addslashes($_POST['account_email'])."',
-               1,
-               '".$addslashes($_POST['account_organization'])."',
-               '".$addslashes($_POST['account_phone'])."',
-               '".$addslashes($_POST['account_address'])."',
-               '".$addslashes($_POST['account_city'])."',
-               '".$addslashes($_POST['account_province'])."',
-               '".$addslashes($_POST['account_country'])."',
-               '".$addslashes($_POST['account_postal_code'])."',
-		       '".substr(md5(uniqid(rand(), true)),0,32)."', 
-               1, 
-               now())"; */
         $sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."users
-               (login, password, user_group_id, first_name, last_name, email, is_author, organization, phone,
-               address, city, province, country, postal_code, web_service_id, status, create_date)
-               VALUES (?, ?, 2, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '".substr(md5(uniqid(rand(), true)),0,32)."', 1, now())";
+                                (login, 
+                                password, 
+                                user_group_id, 
+                                first_name, 
+                                last_name, 
+                                email, 
+                                is_author, 
+                                organization, 
+                                phone,
+                                address, 
+                                city, 
+                                province, 
+                                country, 
+                                postal_code, 
+                                web_service_id, 
+                                status, 
+                                create_date)
+               VALUES (?, ?, 2, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, '".substr(md5(uniqid(rand(), true)),0,32)."', 1, now())";
         $values = array($_POST['account_username'], 
                                 $_POST['form_account_password_hidden'],
                                 $_POST['account_fname'],
@@ -180,30 +159,31 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
                                  $_POST['account_postal_code']                
                                 );
         $types="ssssssssssss";
-		$result = $db->query($sql);
-		$user_id = ac_insert_id();
-		
+
+		$result = $db->execute($sql, $values, $types) or die("INSERT Failed for: ".$sql . "<br />". self::$db->error);;
+		$user_id = $db->ac_insert_id();
+
 		// associate the default HowTo lesson with this author account 
 		$sql = "UPDATE ".$_POST['step2']['tb_prefix']."courses SET user_id=? WHERE course_id=1";
 		$values = $user_id;
 		$types = "i";
-		$result = $db->query($sql, $$values, $types);
+		$result = $db->execute($sql, $values, $types);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."user_courses (user_id, course_id, role) VALUES (?, 1, 1)";
 		$values = $user_id;
 		$types = "i";
-		$result = $db->query($sql, $values, $types);
+		$result = $db->execute($sql, $values, $types);
 
 		// configurations
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('site_name', ?)";
         $values = $_POST['site_name'];
         $types = "s";
-		$result = $db->query($sql, $values, $types);
+		$result = $db->execute($sql, $values, $types);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config (name, value) VALUES ('contact_email', ?)";
 		$values = $_POST[email];
 		$types = "s";
-	    $result = $db->query($sql, $values, $types);
+	    $result = $db->execute($sql, $values, $types);
 
 		unset($_POST['admin_username']);
 		unset($_POST['form_admin_password_hidden']);
@@ -355,31 +335,31 @@ function encrypt_password()
 			<td class="row1"><input type="text" name="account_lname" id="account_lname" size="40" maxlength="60" value="<?php if (!empty($_POST['account_lname'])) { echo stripslashes(htmlspecialchars($_POST['account_lname'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">Organization:</label></b></td>
+			<td class="row1"><b><label for="">Organization:</label></b></td>
 			<td class="row1"><input type="text" name="account_organization" id="account_organization" size="40" maxlength="60" value="<?php if (!empty($_POST['account_organization'])) { echo stripslashes(htmlspecialchars($_POST['account_organization'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">Phone:</label></b></td>
+			<td class="row1"><b><label for="">Phone:</label></b></td>
 			<td class="row1"><input type="text" name="account_phone" id="account_phone" size="40" maxlength="60" value="<?php if (!empty($_POST['account_phone'])) { echo stripslashes(htmlspecialchars($_POST['account_phone'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">Address:</label></b></td>
+			<td class="row1"><b><label for="">Address:</label></b></td>
 			<td class="row1"><input type="text" name="account_address" id="account_address" size="40" maxlength="60" value="<?php if (!empty($_POST['account_address'])) { echo stripslashes(htmlspecialchars($_POST['account_address'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">City:</label></b></td>
+			<td class="row1"><b><label for="">City:</label></b></td>
 			<td class="row1"><input type="text" name="account_city" id="account_city" size="40" maxlength="60" value="<?php if (!empty($_POST['account_city'])) { echo stripslashes(htmlspecialchars($_POST['account_city'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">Province:</label></b></td>
+			<td class="row1"><b><label for="">Province:</label></b></td>
 			<td class="row1"><input type="text" name="account_province" id="account_province" size="40" maxlength="60" value="<?php if (!empty($_POST['account_province'])) { echo stripslashes(htmlspecialchars($_POST['account_province'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">Country:</label></b></td>
+			<td class="row1"><b><label for="">Country:</label></b></td>
 			<td class="row1"><input type="text" name="account_country" id="account_country" size="40" maxlength="60" value="<?php if (!empty($_POST['account_country'])) { echo stripslashes(htmlspecialchars($_POST['account_country'])); } ?>" class="formfield" /></td>
 		</tr>
 		<tr>
-			<td class="row1"><div class="required" title="Required Field">*</div><b><label for="">Postal Code:</label></b></td>
+			<td class="row1"><b><label for="">Postal Code:</label></b></td>
 			<td class="row1"><input type="text" name="account_postal_code" id="account_postal_code" size="40" maxlength="60" value="<?php if (!empty($_POST['account_postal_code'])) { echo stripslashes(htmlspecialchars($_POST['account_postal_code'])); } ?>" class="formfield" /></td>
 		</tr>
 		</table>

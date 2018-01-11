@@ -83,8 +83,9 @@ $not_as_good = FALSE;
 						} ?></td>
 		</tr>
 		<tr>
-			<td><kbd>mysql</kbd></td>
-			<td><?php if (extension_loaded('mysql')) {
+			<td><kbd>mysqli</kbd></td>
+			<td><?php if (extension_loaded('mysqli') || extension_loaded('mysql') ) {
+			            $mysql_enabled = TRUE;
 						echo 'Enabled</td><td align="center">';
 						echo $good;
 					} else {
@@ -206,16 +207,26 @@ $not_as_good = FALSE;
 		</tr>
 		<tr>
 			<td>MySQL 4.1.10+</td>
-			<td><?php if (defined('MYSQL_NUM')) {
-						//$mysql_version = mysql_get_client_info();
-						$mysql_version = at_get_db_info();
+			<td>
+			<?php 
+			//if (defined('MYSQL_NUM')) { 
+			if($mysql_enabled === TRUE){
+                        if(function_exists('mysqli_connect')){
+                            define('MYSQLI_ENABLED',	1);
+                        } 
+                        if(defined('MYSQLI_ENABLED')){
+                            $mysql_version = mysqli_get_client_info();
+                        }else{
+                            $mysql_version = mysql_get_client_info();
+                        }
 						echo 'Found  Version '.$mysql_version.'</td><td align="center">';
 						echo $good;
 					} else {
 						echo 'Not Found</td><td align="center">';
 						echo $bad;
 						$no_good = TRUE;
-					} ?></td>
+					} ?>
+            </td>
 		</tr>
 		</tbody>
 		</table>
@@ -231,9 +242,9 @@ $not_as_good = FALSE;
 <?php elseif ($not_as_good): ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
-		<td class="row1"><strong>AContent has indicated that the 'mbstring' library is missing from the PHP.  <br />
+		<td class="row1"><strong>AContent has indicated that the 'mbstring' library is missing from PHP.  <br />
 						We strongly encourage you to install the 'mbstring' library before continuing, however, if you choose not to install the library from PHP, a third party library within AContent will be used.  <br/><br/>
-						For production systems, we strongly encourage you to install the PHP with <a href="http://ca.php.net/manual/en/ref.mbstring.php" target="php_site">mbstring</a> support.  <br/><br/>
+						For production systems, we strongly encourage you to install PHP with <a href="http://ca.php.net/manual/en/ref.mbstring.php" target="php_site">mbstring</a> support.  <br/><br/>
 						You may choose to by pass the mbstring check for the installation at your own risk by clicking <a href="javascript:void(0);" onclick="javascript:document.form.next.disabled=false;">continue</a>.</strong></td>
 		<td class="row1"></td>
 	</tr>
@@ -249,25 +260,6 @@ $not_as_good = FALSE;
 		</td>
 	</tr>
 	</table>
-<!-- 
-	<table cellspacing="0" cellpadding="10" align="center" width="45%">
-	<tr>
-		<td align="center"><b>Or</b></td>
-	</tr>
-	</table>
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td class="row1"><strong>Upgrading from previous AContent must have mbstring library installed.</strong></td>
-		<td class="row1"></td>
-	</tr>
-	<tr>
-		<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
-		<td class="row1" width="150" align="center">
-			<input type="button" class="button" value="Upgrade" name="next" disabled="disabled"/>
-		</td>
-	</tr>
-	</table>
--->
 <?php else: ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>

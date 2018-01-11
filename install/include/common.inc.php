@@ -12,7 +12,12 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
-
+//if(isset ($_POST['db_login']) && isset($_POST['db_password'])){
+//define('DB_HOST', $_POST['db_host']);
+//define('DB_USER', $_POST['db_login']);
+//define('DB_PASSWORD', $_POST['db_password']);
+//define('DB_PORT', $_POST['db_port']);
+//}
 /* AContent default configuration options */
 /* used on: step3.php, step4.php, step5.php */
 $_defaults['admin_username'] = 'admin';
@@ -34,7 +39,7 @@ $_defaults['theme_categories'] = 'FALSE';
 $_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
 
 require('include/classes/sqlutility.php');
-require('../include/classes/DAO/DAO.class.php');
+require('DAO.class.php');
 require('../include/lib/mysql_funcs.inc.php');
 
 /* test for mysqli presence */
