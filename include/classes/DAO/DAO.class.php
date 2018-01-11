@@ -23,16 +23,13 @@ class DAO {
 	// private
 	static private $db;     // global database connection
 	
-	function DAO()
+	function __construct()
 	{
 
 		if (!isset(self::$db))
 		{
-
-		   // if(defined('MYSQLI_ENABLED')){
 		    
 		        if(!defined('DB_NAME') && !isset($_POST['db_name'])){
-                    //self::$db = @mysqli_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
                     self::$db = new mysqli(DB_HOST, DB_USER, DB_PASSWORD, null, DB_PORT);
                     self::$db->set_charset("utf8");
                 }else{
@@ -53,8 +50,6 @@ class DAO {
                 if (!self::$db->select_db(DB_NAME)) {
                     die('DB connection established, but database "'.DB_NAME.'" cannot be selected.');
                 }		    
-		    
-		    //} 
 		}
 	}
 	
