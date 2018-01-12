@@ -294,7 +294,7 @@ function save_changes($redir, $current_tab) {
 		         WHERE pr.content_id = ?
 		           AND pr.language_code = ?";
 		$values = array($cid, $_SESSION['lang']);
-		$types = "ii";
+		$types = "is";
 		$all_types_rows = $primaryResourcesTypesDAO->execute($sql, $values, $types);
 		
 		if (is_array($all_types_rows)) {
@@ -322,13 +322,14 @@ function save_changes($redir, $current_tab) {
 		$toBeAdded = array_diff($_POST['tid'], $db_test_array);
 		//Delete entries
 		if (!empty($toBeDeleted)){
-			$tids = implode(",", $toBeDeleted);
-			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=? AND test_id IN ($tids)";
-			$values = array($_POST['cid']);
+			$num_of_ids = count($toBeDeleted);
+			$sql = 'DELETE FROM '. TABLE_PREFIX .'content_tests_assoc WHERE content_id=? AND test_id IN ('.substr(str_repeat("? , ", $num_of_ids), 0, -2).')';
+			$values = $toBeDeleted;
 			$types = "i";
+			$types .= str_pad("", $num_of_ids, "i");
 			$contentTestsAssocDAO->execute($sql, $values, $types);
 		}
-	
+
 		//Add entries
 		if (!empty($toBeAdded)){
 			foreach ($toBeAdded as $i => $tid){
