@@ -63,16 +63,17 @@ class PrimaryResourcesDAO extends DAO {
 		}
 		
 		if (!empty($pri_resource_ids)){
-			$glued_pri_ids = implode(",", $pri_resource_ids);
-
+            $num_of_ids = count($pri_resource_ids);
 			// Delete all secondary a4a
 			$sql = 'DELETE c, d FROM '.TABLE_PREFIX.'secondary_resources c 
 			     LEFT JOIN '.TABLE_PREFIX.'secondary_resources_types d 
 			            ON c.secondary_resource_id=d.secondary_resource_id 
-			         WHERE primary_resource_id IN ('.$glued_pri_ids.')';
-
+			         WHERE primary_resource_id IN ('.substr(str_repeat("? , ", $num_of_ids), 0, -2).')';
+            $values = $pri_resource_ids;
+            $types = str_pad("", $num_of_ids, "i");
+            
 			// If successful, remove all primary resources
-			if ($this->execute($sql)){
+			if ($this->execute($sql, $values, $types)){
 				$sql = 'DELETE a, b FROM '.TABLE_PREFIX.'primary_resources a 
 				     LEFT JOIN '.TABLE_PREFIX.'primary_resources_types b 
 				            ON a.primary_resource_id=b.primary_resource_id 
