@@ -150,13 +150,13 @@ if ($_POST['formatting'] <> 1)
 			          FROM ".TABLE_PREFIX."primary_resources pr, ".
 			                 TABLE_PREFIX."primary_resources_types prt, ".
 			                 TABLE_PREFIX."resource_types rt
-			         WHERE pr.content_id = ".$cid."
-			           AND pr.language_code = '".$_SESSION['lang']."'
-			           AND pr.primary_resource_id='".$primary_resource_id."'
+			         WHERE pr.content_id = ?
+			           AND pr.language_code = ?
+			           AND pr.primary_resource_id=?
 			           AND pr.primary_resource_id = prt.primary_resource_id
 			           AND prt.type_id = rt.type_id";
 			$values = array($cid, $_SESSION['lang'], $primary_resource_id);
-			$types = "iii";
+			$types = "isi";
 			$primary_types = $dao->execute($sql, $values, $types);
 			
 			if (!$is_post_indicator_set)
@@ -185,7 +185,7 @@ if ($_POST['formatting'] <> 1)
 			           AND pr.primary_resource_id = sr.primary_resource_id
 			           AND sr.secondary_resource_id = srt.secondary_resource_id";
 			$values = array($cid, $_SESSION['lang'], $primary_resource_id);
-			$types = "iii";
+			$types = "isi";
 			$secondary_resources = $dao->execute($sql, $values, $types);
 			
 			echo '  <tr>'."\n";
