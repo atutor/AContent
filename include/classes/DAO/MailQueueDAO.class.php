@@ -72,9 +72,11 @@ class MailQueueDAO extends DAO {
 	*/
 	function DeleteByIDs($mids)
 	{
-		$sql = "DELETE FROM ".TABLE_PREFIX."mail_queue WHERE mail_id IN (".$mids.")";
-		
-		return $this->execute($sql);
+	    $num_of_ids = count($mids);
+		$sql = 'DELETE FROM '.TABLE_PREFIX.'mail_queue WHERE mail_id IN ('.substr(str_repeat("? , ", $num_of_ids), 0, -2).')';
+        $types = str_pad("", $num_of_ids, "i");
+		return $this->execute($sql, $mids, $types);
+
 	}
 
 }
