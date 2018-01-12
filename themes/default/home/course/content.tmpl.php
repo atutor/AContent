@@ -111,7 +111,7 @@ $result=$dao->execute($sql, $values, $types);
 <?php if (!empty($this->test_ids)): ?>
 <div id="content-test" class="input-form">
 		<strong><?php echo _AT('tests') . ':' ; ?></strong>
-		<li class="top-tool"><?php echo $this->test_message; ?></li>
+		<p class="top-tool"><?php echo $this->test_message; ?></p>
 		<ul class="tools">
 		<?php 
 			foreach ($this->test_ids as $id => $test_obj){
