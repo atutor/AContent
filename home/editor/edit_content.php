@@ -252,7 +252,7 @@ $pid = intval($_REQUEST['pid']);
 	           AND pr.language_code = ?
 	           AND pr.primary_resource_id = prt.primary_resource_id";
 	$values = array($cid, $_SESSION['lang']);
-	$types = "ii";
+	$types = "is";
 	$types = $dao->execute($sql, $values, $types);
 	
 	$i = 0;
