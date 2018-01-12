@@ -136,16 +136,7 @@ if ($_POST['formatting'] <> 1)
 		foreach($primary_resources as $primary_resource_id => $primary_resource_row)
 		{
 			$primary_resource = $primary_resource_row['resource'];
-			/*
-			$sql = "SELECT prt.type_id, rt.type
-			          FROM ".TABLE_PREFIX."primary_resources pr, ".
-			                 TABLE_PREFIX."primary_resources_types prt, ".
-			                 TABLE_PREFIX."resource_types rt
-			         WHERE pr.content_id = ".$cid."
-			           AND pr.language_code = '".$_SESSION['lang']."'
-			           AND pr.primary_resource_id='".$primary_resource_id."'
-			           AND pr.primary_resource_id = prt.primary_resource_id
-			           AND prt.type_id = rt.type_id";*/
+			
 			$sql = "SELECT prt.type_id, rt.type
 			          FROM ".TABLE_PREFIX."primary_resources pr, ".
 			                 TABLE_PREFIX."primary_resources_types prt, ".
@@ -166,15 +157,6 @@ if ($_POST['formatting'] <> 1)
 			}
 			
 			// get secondary resources for the current primary resource
-			/*$sql = "SELECT pr.primary_resource_id, sr.secondary_resource, srt.type_id
-			          FROM ".TABLE_PREFIX."primary_resources pr, ".
-			                 TABLE_PREFIX."secondary_resources sr, ".
-			                 TABLE_PREFIX."secondary_resources_types srt
-			         WHERE pr.content_id = ".$cid."
-			           AND pr.language_code = '".$_SESSION['lang']."'
-			           AND pr.primary_resource_id='".$primary_resource_id."'
-			           AND pr.primary_resource_id = sr.primary_resource_id
-			           AND sr.secondary_resource_id = srt.secondary_resource_id";*/
 			$sql = "SELECT pr.primary_resource_id, sr.secondary_resource, srt.type_id
 			          FROM ".TABLE_PREFIX."primary_resources pr, ".
 			                 TABLE_PREFIX."secondary_resources sr, ".
