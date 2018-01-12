@@ -156,9 +156,9 @@ class PrimaryResourcesDAO extends DAO {
     public function getByResourceName($cid, $lang, $resource_name){
     
 		$sql = "SELECT * FROM ".TABLE_PREFIX."primary_resources 
-		        WHERE content_id=".$cid."
-		          AND language_code = '".$lang."'
-		          AND resource='".$resource_name."'";
+		        WHERE content_id= ?
+		          AND language_code = ?
+		          AND resource=?";
 		$values = array($cid, $lang, $resource_name);
 		$types = "iss";
 		return $this->execute($sql, $values, $types);
