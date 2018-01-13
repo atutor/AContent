@@ -38,6 +38,10 @@ class DAO {
                     self::$db = new mysqli($_POST['step1']['db_host'], $_POST['step1']['db_login'], $_POST['step1']['db_password'], $_POST['step1']['db_name'], $_POST['step1']['db_port'])
                     or die("Upgrade Step1 Failed for: ".$sql . "<br />". self::$db->error);
                     self::$db->set_charset("utf8");	
+            }else if(isset($_POST['step1'])) {
+                    self::$db = new mysqli($_POST['step1']['db_host'], $_POST['step1']['db_login'], $_POST['step1']['db_password'], $_POST['step1']['db_name'], $_POST['step1']['db_port'])
+                    or die("Upgrade Final Step Failed for: ".$sql . "<br />". self::$db->error);
+                    self::$db->set_charset("utf8");	
             }else if (isset($_POST['step2']['db_name'])) {
                     self::$db = new mysqli($_POST['step2']['db_host'],  $_POST['step2']['db_login'], $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['db_port']) 
                     or die("Connect step 2 Failed for: ".$sql . "<br />". self::$db->error);
