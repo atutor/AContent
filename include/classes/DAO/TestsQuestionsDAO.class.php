@@ -36,10 +36,10 @@ class TestsQuestionsDAO extends DAO {
 	public function UpdateField($questionID, $fieldName, $fieldValue)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."tests_questions
-		           SET ".$fieldName."='".$fieldValue."'
+		           SET ".$fieldName."=?
 		         WHERE question_id = ?";
-		$values = $questionID;
-		$types = "i";
+		$values = array( $fieldValue, $questionID);
+		$types = "si";
 		return $this->execute($sql, $values, $types);
 	}
 
