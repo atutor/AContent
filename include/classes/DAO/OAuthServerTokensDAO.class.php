@@ -93,7 +93,7 @@ class OAuthServerTokensDAO extends DAO {
 	    $sql = "UPDATE ".TABLE_PREFIX."oauth_server_tokens 
 	               SET user_id = ?
 	             WHERE token = ?";
-	    $value = array($user_id, $token);
+	    $values = array($user_id, $token);
 	    $types = "is";
 	    return $this->execute($sql, $values, $types);
   	}
