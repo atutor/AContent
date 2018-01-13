@@ -140,10 +140,10 @@ class LanguageTextDAO extends DAO {
 
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."language_text 
 						WHERE term like 'TR_HELP_%'
-						AND lower(cast(text as char)) like '%?%' 
+						AND lower(cast(text as char)) like ? 
 						AND language_code=? 
 						ORDER BY variable";
-		$values = array(strtolower($text), $lang);
+		$values = array(strtolower($text), '%'.$lang.'%');
 		$types="ss";
 	    return $this->execute($sql,$values,$lang);
   	}
