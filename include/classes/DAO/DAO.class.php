@@ -104,7 +104,7 @@ class DAO {
                     {
                         $rows[] = $result->fetch_assoc();
                     }
-                    $result->free;
+                    $result->free_result;
                     return $rows;
 		         }else{
 		            return false;
