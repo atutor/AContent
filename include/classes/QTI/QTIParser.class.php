@@ -50,7 +50,7 @@ class QTIParser {
 	var $weights		= array();	//the weight of each question
 
 	//constructor
-	function __contruct($qti_type='') {
+	function __construct($qti_type='') {
 		$this->qti_type = $qti_type;
 		$this->parser = xml_parser_create(); 
 
