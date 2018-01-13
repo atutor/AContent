@@ -1,5 +1,6 @@
 <?php 
 // Load up the Basic LTI Support code
+exit;
 require_once 'ims-blti/blti.php';
 
 error_reporting(E_ALL & ~E_NOTICE);
