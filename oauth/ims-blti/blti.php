@@ -287,19 +287,19 @@ class BLTI {
 
         return $ret;
     }
-    
+/*
     function AContent_LiveContentLink() {
 
-		$table	= 'AC_content';
+		//$table	= 'AC_content';
 		include '..'.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'DAO'.DIRECTORY_SEPARATOR.'ContentDAO.class.php';
 		$ret = $_SERVER['ORIG_PATH_INFO'];
 return $ret;
-/*
+
         $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
             ($parm['key_column'] ? $parm['key_column'] : 'oauth_consumer_key').
             '='.
             "'".mysql_real_escape_string($oauth_consumer_key)."'";
-*/
+
 
 // WHAT IS THIS DOING HERE
         $sql = 'SELECT * FROM '.$parm['table'].' WHERE '.
@@ -316,8 +316,9 @@ return $ret;
     	$ret = 'content_id||course_id||content_parent_id||ordering||last_modified||';
     	$ret = array('content_id' => '', '||course_id||content_parent_id||ordering||last_modified||' => 'aa');
     	return $ret;
-    }
-
+    	
+    }*/
+    
 }
 
 ?>
