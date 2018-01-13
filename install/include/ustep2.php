@@ -29,78 +29,35 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 	unset($errors);
 
 	//check DB & table connection
-
-    if(defined('MYSQLI_ENABLED')){
-        $db = new mysqli($_POST['db_host'], $_POST['db_login'], $_POST['db_password'], null, $_POST['db_port']);
-        $db->set_charset("utf8");
-    }else{
-	    $db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
-	
-	}
-
-	//$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
+    $db = new DAO();
 
 	if (!$db) {
 	    $error_no = at_db_errno();
-		//$error_no = mysql_errno();
 		if ($error_no == 2005) {
 			$errors[] = 'Unable to connect to database server. Database with hostname '.$_POST['db_host'].' not found.';
 		} else {
 			$errors[] = 'Unable to connect to database server. Wrong username/password combination.';
 		}
 	} else {
-	    if(defined('MYSQLI_ENABLED')){
-	         if (!$db->select_db($_POST['db_name'])) {
+	    if (!$db->select($_POST['db_name'])) {
                     $errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
-             }
-	    }else{
-	
-            if (!mysql_select_db($_POST['db_name'], $db)) {
-                $errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
-            }
         }
-        /*
-		$sql = "SELECT VERSION() AS version";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.0.2 or later.';
-		}
-		*/
-		if(defined('MYSQLI_ENABLED')){
-		    $sql = "SELECT VERSION() AS version";
-            $result = $db->query($sql);
-            $row = $result->fetch_assoc();
-            if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-                $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
-            }
-		}else{
-            $sql = "SELECT VERSION() AS version";
-            $result = mysql_query($sql, $db);
-            $row = mysql_fetch_assoc($result);
-            if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-                $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
-            }
+        
+        $dbv = new DAO();
+        $row['version'] = $dbv->version();
+        
+        if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
+            $errors[] = 'MySQL version '.$row['version'].' was detected. AContent requires version 4.1.10 or later.';
         }
+        
 		if (!$errors) {
 			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
 			unset($errors);
 
-			//Save all the course primary language into session variables iff it has not been set. 
-//			if (!isset($_SESSION['course_info'])){
-//				$sql = "SELECT a.course_id, a.title, l.language_code, l.char_set FROM ".$_POST['tb_prefix']."courses a left join ".$_POST['tb_prefix']."languages l ON l.language_code = a.primary_language";
-//				$result = mysql_query($sql, $db);
-//				while ($row = mysql_fetch_assoc($result)){
-//					$_SESSION['course_info'][$row['course_id']] = array('char_set'=>$row['char_set'], 'language_code'=>$row['language_code']);
-//				}
-//			}
 
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";
-		    if(defined('MYSQLI_ENABLED')){
-		        $db->query($sql);
-		    }else{
-			    @mysql_query($sql, $db);
-			}
+		    $db->execute($sql);
+
 
 			//get list of all update scripts minus sql extension
 			$files = scandir('db'); 
@@ -123,9 +80,6 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			}
 			
 			/* reset all the accounts to English */
-//			$sql = "UPDATE ".$_POST['tb_prefix']."users SET language='en', creation_date=creation_date, last_login=last_login";
-//			@mysql_query($sql, $db);
-
 			queryFromFile('db/language_text.sql');
 
 			if (!$errors) {

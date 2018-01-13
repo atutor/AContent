@@ -19,7 +19,7 @@ $build      = $svn_data[0];
 $build_date = $svn_data[1];
 
 $os = php_uname('s') . ' '. php_uname('r'). ' '. php_uname('v'). ' '. php_uname('m');
-
+//debug($_POST);
 
 if (isset($_POST['submit'])) {
 	unset($_POST['submit']);
@@ -47,15 +47,16 @@ if (isset($_POST['submit'])) {
 			    @mysql_select_db($_POST['step1']['db_name'], $db);
             }*/
             
-			$db_size = 0; // db size in bytes
-			$sql = 'SHOW TABLE STATUS';
+			//$db_size = 0; // db size in bytes
+			//$sql = 'SHOW TABLE STATUS';
 		
-			$result = $db->query($sql);
-			while ($row =  $result->fetch_assoc()) {
-			    $db_size += $row['Data_length']+$row['Index_length'];
-			}
+			//$result = $db->execute($sql);
+			
+			//while ($row =  $result->fetch_assoc()) {
+			//    $db_size += $row['Data_length']+$row['Index_length'];
+			//}
 	
-			$request .= '&db='      . $db_size;     // db size in bytes
+			//$request .= '&db='      . $db_size;     // db size in bytes
 		}
 
 		if ($_POST['log_url_yes']) {
