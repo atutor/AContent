@@ -29,7 +29,7 @@ class QTIParser {
 	var $element_path; // array of element paths (basically a stack)
 	var $title;	//title for this question test
 	var $q_identifiers	= array();		//The identifier of the choice. This identifier must not be used by any other choice or item variable.
-	var $question = '';					//question of this QTI
+	var $question = array();						//question of this QTI
 	var $response_type	= array();		//detects what type of question this would be.
 	var $relative_path	= '';			//the relative path to all resources in this xml.
 
@@ -50,7 +50,7 @@ class QTIParser {
 	var $weights		= array();	//the weight of each question
 
 	//constructor
-	function QTIParser($qti_type='') {
+	function __contruct($qti_type='') {
 		$this->qti_type = $qti_type;
 		$this->parser = xml_parser_create(); 
 
