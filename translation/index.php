@@ -181,13 +181,15 @@ foreach ($rows_lang as $row_lang)
 <?php 
 if (isset($_REQUEST['selected_term'])) 
 {
-
+    $values = array();
+    $types = '';
 	$sql_english	= "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='".DEFAULT_LANGUAGE_CODE."' AND term= ?";
-	$values[] = $_REQUEST["selected_term"];
+	$values = $_REQUEST["selected_term"];
 	$types .= "s";
+
 	if ($_REQUEST["term_type"] <> ""){
 	     $sql_english .= " AND variable=? ";
-	     $values[] = $_REQUEST["term_type"];
+	     $values = array_merge($values, $_REQUEST["term_type"]);
 	     $types .= "s";
 	}
 
@@ -226,7 +228,7 @@ function trans_form() {
 	<input type="hidden" name="search" value="1" />
 <?php } ?>
 
-	<table border="0" cellspacing="0" cellpadding="2" width="100%" align="left" class="box">
+	<table border="0" cellspacing="0" cellpadding="2" width="100%"  class="box">
 	<tr>
 		<th class="box" colspan="2">Edit</th>
 	</tr>
