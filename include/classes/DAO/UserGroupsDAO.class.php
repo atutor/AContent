@@ -140,10 +140,10 @@ class UserGroupsDAO extends DAO {
 		if ($fieldName == 'title' && $fieldValue == '') return array(_AT('TR_ERROR_EMPTY_FIELD'));
 		
 		$sql = "UPDATE ".TABLE_PREFIX."user_groups 
-		           SET ".$fieldName."='".$fieldValue."'
+		           SET ".$fieldName."= ?
 		         WHERE user_group_id = ?";
-		$values = array($userGroupID);
-		$types = "i";
+		$values = array($fieldValue, $userGroupID);
+		$types = "si";
 		return $this->execute($sql, $values, $types);
 	}
 	
