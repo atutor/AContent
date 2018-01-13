@@ -146,12 +146,12 @@ class CoursesDAO extends DAO {
 			return false;
 
 		$sql = "UPDATE ".TABLE_PREFIX."courses 
-		           SET `$fieldName` = ".$fieldValue.",
+		           SET `$fieldName` = ?,
 		               modified_date = now()
 		         WHERE course_id = ?";		
 		// bind_param fails in DAO with $fieldName
-		$values = array($courseID);
-		$types = "i";
+		$values = array($fieldValue,$courseID);
+		$types = "si";
 		return $this->execute($sql, $values, $types);
 	}
 	
