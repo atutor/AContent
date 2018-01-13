@@ -1,10 +1,10 @@
-#DROP TABLE `language_text`;
-INSERT INTO `config` (`name`, `value`) VALUES ('test_sql_update','1');
+# DROP TABLE IF EXISTS  `language_text`;
+REPLACE INTO `config` (`name`, `value`) VALUES ('test_sql_update','1');
 
 # Integrate template editor from supungs GSoC 2013
-INSERT INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (11, 'template_editor', 'Template Editor', NOW(), 'template_editor/index.php', 110, 0);
+REPLACE INTO `privileges` (`privilege_id`, `title_var`, `description`, `create_date`, `link`, `menu_sequence`, `open_to_public`) VALUES (11, 'template_editor', 'Template Editor', NOW(), 'template_editor/index.php', 110, 0);
 
-INSERT INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 11, 0);
+REPLACE INTO `user_group_privilege` (`user_group_id`, `privilege_id`, `user_requirement`) VALUES (1, 11, 0);
 
 # remove not null for content table fields
 ALTER TABLE `content` MODIFY `keywords` text NULL DEFAULT NULL;
@@ -13,7 +13,7 @@ ALTER TABLE `content` MODIFY `text` text NULL DEFAULT NULL;
 ALTER TABLE `content` MODIFY `head` text NULL DEFAULT NULL;
 ALTER TABLE `content` MODIFY `test_message` text NULL DEFAULT NULL;
 ALTER TABLE `patches` MODIFY `status` text NULL DEFAULT NULL;
-ALTER TABLE `content` MODIFY `author` text NULL DEFAULT NULL;
+ALTER TABLE `patches` MODIFY `author` text NULL DEFAULT NULL;
 
 
 /*
