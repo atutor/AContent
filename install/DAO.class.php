@@ -54,8 +54,7 @@ class DAO {
                     global $sql;
                     self::$db = new mysqli($_POST['db_host'],  $_POST['db_login'], $_POST['db_password'], null, $_POST['db_port'])
                     or die("Create Failed for: ".$sql . "<br />". self::$db->error);
-                    self::$db->set_charset("utf8");
-                    //self::$db->query($sql);                    
+                    self::$db->set_charset("utf8");                   
             }
             if (!self::$db) {
                 die('Unable to connect to db.');
@@ -91,7 +90,12 @@ class DAO {
 
 		            call_user_func_array(array(&$stmt, 'bind_param'), $inputArray);
 		            $stmt->execute() or die("Array Execute Failed for: ".$sql . "<br />". self::$db->error);
-                    $result = $stmt->get_result();
+		            if(function_exists('mysqli_fetch_all')){
+                        $result = $stmt->get_result();
+                    }else{
+                        // Alternate if mysqlnd is not installed
+                        $result = self::get_result($stmt);
+                    }
                     $stmt->close();
                     
 		        }else{
@@ -100,7 +104,12 @@ class DAO {
 		            $this_value = &$values;
 		            $stmt->bind_param($this_type, $this_value) or die("Bind Failed for: ".$sql . "<br />". self::$db->error);
 		            $stmt->execute() or die("Single Execute Failed for: ".$sql . "<br />". self::$db->error);
-		            $result = $stmt->get_result();
+		            if(function_exists('mysqli_fetch_all')){
+                        $result = $stmt->get_result();
+                    }else{
+                        // Alternate if mysqlnd is not installed
+                        $result = self::get_result($stmt);
+                    }
 		            $stmt->close();
 		        }  
         } else{
@@ -144,6 +153,20 @@ class DAO {
     function my_add_null_slashes( $string ) {
             return self::$db->real_escape_string(stripslashes($string));
     }
-
+    // Used if mysqlnd is not installed
+    function get_result( $Statement ) {
+        $RESULT = array();
+        $Statement->store_result();
+        for ( $i = 0; $i < $Statement->num_rows; $i++ ) {
+            $Metadata = $Statement->result_metadata();
+            $PARAMS = array();
+            while ( $Field = $Metadata->fetch_field() ) {
+                $PARAMS[] = &$RESULT[ $i ][ $Field->name ];
+            }
+            call_user_func_array( array( $Statement, 'bind_result' ), $PARAMS );
+            $Statement->fetch();
+        }
+        return $RESULT;
+    }
 }
 ?>

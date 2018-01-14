@@ -79,7 +79,12 @@ class DAO {
 
 		            call_user_func_array(array(&$stmt, 'bind_param'), $inputArray);
 		            $stmt->execute() or die("Array Execute Failed for: ".$sql . "<br />". self::$db->error);
-                    $result = $stmt->get_result();
+		            if(function_exists('mysqli_fetch_all')){
+                        $result = $stmt->get_result();
+                    }else{
+                        // alternative if mysqlnd is not installed
+                        $result = self::get_result($stmt);  
+                    }
                     $stmt->close();
 
 		        }else{
@@ -88,7 +93,13 @@ class DAO {
 		            $this_value = &$values;
 		            $stmt->bind_param($this_type, $this_value) or die("Bind Failed for: ".$sql . "<br />". self::$db->error);
 		            $stmt->execute() or die("Single Execute Failed for: ".$sql . "<br />". self::$db->error);
-		            $result = $stmt->get_result();
+
+		            if(function_exists('mysqli_fetch_all')){
+                        $result = $stmt->get_result();
+                    }else{
+                        // alternative if mysqlnd is not installed
+                        $result = self::get_result($stmt);  
+                    }
 		            $stmt->close();
 		        }
 
@@ -122,6 +133,20 @@ class DAO {
     function my_add_null_slashes( $string ) {
             return self::$db->real_escape_string(stripslashes($string));
     }
-
+    // Used if mysqlnd is not installed
+    function get_result( $statement ) {
+        $RESULT = array();
+        $statement->store_result();
+        for ( $i = 0; $i < $statement->num_rows; $i++ ) {
+            $Metadata = $statement->result_metadata();
+            $PARAMS = array();
+            while ( $Field = $Metadata->fetch_field() ) {
+                $PARAMS[] = &$RESULT[ $i ][ $Field->name ];
+            }
+            call_user_func_array( array( $statement, 'bind_result' ), $PARAMS );
+            $statement->fetch();
+        }
+        return $RESULT;
+    }
 }
 ?>
