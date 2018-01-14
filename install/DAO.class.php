@@ -55,7 +55,7 @@ class DAO {
                     self::$db = new mysqli($_POST['db_host'],  $_POST['db_login'], $_POST['db_password'], null, $_POST['db_port'])
                     or die("Create Failed for: ".$sql . "<br />". self::$db->error);
                     self::$db->set_charset("utf8");
-                    self::$db->query($sql);                    
+                    //self::$db->query($sql);                    
             }
             if (!self::$db) {
                 die('Unable to connect to db.');
