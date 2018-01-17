@@ -213,8 +213,8 @@ trans.utility.selected;
   // toggle elements in side menu
   trans.utility.elementToggle = function (elem, title, compact_title, base_path, show_text, hide_text)
   {
-    element_collapse_icon = base_path+"images/mswitch_minus.gif";
-    element_expand_icon = base_path+"images/mswitch_plus.gif";
+    element_collapse_icon = base_path+"images/mswitch_minus.png";
+    element_expand_icon = base_path+"images/mswitch_plus.png";
     
     if (jQuery(elem).attr("src") == element_collapse_icon) {
       jQuery(elem).attr("src", element_expand_icon);
@@ -238,12 +238,12 @@ trans.utility.selected;
 	
 	if (cookie_value == "0" || (cookie_value == "" && default_value == "hide"))
     {
-      image = base_path + "images/mswitch_plus.gif";
+      image = base_path + "images/mswitch_plus.png";
       alt_text = show_text + " " + title;
     }
     else
     {
-      image = base_path+"images/mswitch_minus.gif";
+      image = base_path+"images/mswitch_minus.png";
       alt_text = hide_text + " " + title;
     }
     
