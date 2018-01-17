@@ -33,8 +33,13 @@ global $validate_content;
 global $contentManager;
 global $course_base_href, $content_base_href;
 
+if($_course_id > 0){
+    require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
+    $coursesDAO = new CoursesDAO();
+    $course_row = $coursesDAO->get($_course_id);
+    $savant->assign('title', $course_row['title']);
+}
 include_once(TR_INCLUDE_PATH.'classes/Menu.class.php');
-
 $menu =new Menu();
 $_top_level_pages = $menu->getTopPages();
 

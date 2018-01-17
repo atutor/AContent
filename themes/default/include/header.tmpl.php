@@ -148,11 +148,8 @@ $lang_charset = "UTF-8";
 </div>
 <div id="liquid-round">
  <div class="center-content">
- 
-  
-  
   <div id="banner">
-
+<h1><?php echo $this->title; ?></h1>
   </div>
 
   <div class="topnavlistcontainer"  role="navigation">
