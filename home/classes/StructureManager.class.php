@@ -235,7 +235,7 @@ class StructureManager
 			
 			for($i=0; $i<$max; $i++) {
 			
-				echo '<div>';
+				echo '<div style="width:90%;">';
 				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
 				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
 				if($i == ($max-1))
