@@ -57,13 +57,13 @@ class StructureManager
 	}
 	
 	function dislayTest($name, $i) {
-		echo '<div id="folder_'.$name.$i.'" style="margin-left: 15px;">';
-		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
-		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
+		echo '<div id="folder_'.$name.$i.'" class="display_test">';
+		echo '<img class="img-size-tree" border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
+		echo '<img class="img-size-tree"  border="0" src="'.TR_BASE_HREF.'/images/tree/tree_space.gif" alt="">';
 		echo '<img class="img-size-tree" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_end.gif">';
-		echo '<img class="img-size-tree" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_horizontal.gif">';
+		echo '<img class="img-size-tree" border="0" alt="" src="'.TR_BASE_HREF.'/images/tree/tree_horizontal.gif">';
 		echo '<img alt="test" title="test" src="'.TR_BASE_HREF.'/images/check.gif">';
-		echo '<img class="img-size-tree" width="16" height="16" border="0" src="'.TR_BASE_HREF.'/images/clr.gif" alt="">';
+		echo '<img class="img-size-tree"  border="0" src="'.TR_BASE_HREF.'/images/clr.gif" alt="">';
 		echo '<span>'.$name.'</span>';
 		echo '</div>';
 	}
@@ -190,9 +190,9 @@ class StructureManager
 		
 		echo '<div>'."\n";
 		//echo '<img class="img-size-tree" width="16" height="16" border="0" src="http://localhost/AContentEdu/images/tree/tree_space.gif" alt="">
-		echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
+		echo '<img class="img-size-tree"  border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
 		
-		echo '<p style="display:inline;">'.$this->name.'</p>';
+		echo '<p class="templ_name">'.$this->name.'</p>';
 		//echo '<script type="text/javascript" src="../templates/system/Struct.js"></script>';
 		
 		echo '<strong>';
@@ -235,13 +235,13 @@ class StructureManager
 			
 			for($i=0; $i<$max; $i++) {
 			
-				echo '<div style="width:90%;">';
-				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
-				echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
+				echo '<div class="struct_preview">';
+				echo '<img class="img-size-tree"  border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
+				echo '<img class="img-size-tree"  border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_space.gif"/>';
 				if($i == ($max-1))
-					echo '<img class="img-size-tree" height="16" width="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_end.gif"/>';
+					echo '<img class="img-size-tree"  border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_end.gif"/>';
 				else 
-					echo '<img class="img-size-tree" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_split.gif">';
+					echo '<img class="img-size-tree"  border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_split.gif">';
 					
 					
 				if($this->isFolder($page)) 
@@ -249,9 +249,9 @@ class StructureManager
 				else if($this->hasTest($page))
 					$this->insertToogle($name, $i, 'collapse', $tname);
 				else 
-					echo '<img class="img-size-tree" style="margin-left: 1px;" width="16" height="16" border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_horizontal.gif">';
+					echo '<img class="img-size-tree"  border="0" alt="" src="'.TR_BASE_HREF.'images/tree/tree_horizontal.gif">';
 				
-				echo '<span style="margin-left:0.3cm; margin-right:0.2cm">';
+				echo '<span class="preview_item">';
 				echo $name.' ';
 			
 				
@@ -267,7 +267,7 @@ class StructureManager
 				
 				if($this->isFolder($page)) {
 					$name = preg_replace('/\s/', '_', $name);  // To accommodate folder names with spaces
-					echo '<div style="margin-left: 15px; display: none;" id="folder_'.$name.$i.$tname.'" >';
+					echo '<div class="folder_space"  id="folder_'.$name.$i.$tname.'" >';
 					$this->printStruct($page->children(), $i, $name);
 									
 					echo '</div>';
@@ -301,7 +301,7 @@ class StructureManager
 		';
 		$page = preg_replace('/\s/', '_', $page);  // To accommodate folder names with spaces
 		echo '<a href="javascript:void(0)" onclick="javascript: trans.utility.toggleFolderStruct(\''.$i.$tname.'\', \''.$page.'\', \''._AT('expand').'\', \''._AT('collapse').'\', \''.$tree_expand_icon.'\', \''.$tree_collapse_icon.'\' ); ">';
-		echo '<img id="tree_icon_'.$page.$i.$tname.'" style="margin-left: 1px;" class="img-size-tree" width="16" height="16" border="0" title="'.$value.'" alt="'.$value.'" src="'.TR_BASE_HREF.'images/tree/tree_'.$value.'.gif">';
+		echo '<img id="tree_icon_'.$page.$i.$tname.'"  class="img-size-tree" border="0" title="'.$value.'" alt="'.$value.'" src="'.TR_BASE_HREF.'images/tree/tree_'.$value.'.gif">';
 		echo '</a>';
 	}
 	
@@ -461,7 +461,7 @@ class StructureManager
 		if($i < $min)
 			echo '<img title="'._AT('page_mandatory').'" border="0" alt="" src="'.TR_BASE_HREF.'images/must.png" class="mandatory_ex" alt="'._AT('mandatory_content').'"/>';
 		else 
-			echo '<img title="'._AT('page_deletable').'" height="14" width="14" border="0" alt="'._AT('delete').'"  src="'.TR_BASE_HREF.'images/bad.gif" class="delete_ex"/>';
+			echo '<img title="'._AT('page_deletable').'" border="0" alt="'._AT('delete').'"  src="'.TR_BASE_HREF.'images/bad.gif" class="delete_ex"/>';
 		
 		
 	}
