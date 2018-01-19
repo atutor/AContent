@@ -17,7 +17,7 @@ if($languageManager->getNumLanguages() < 2){
 	return;
 }
 ?>
-<div align="center" id="langdiv" class="foot_text"><br /><?php
+<div id="langdiv" class="foot_text"><br /><?php
 
 	if ($languageManager->getNumLanguages() > 5) {
 		echo '<form method="get" action="'.AT_print($_my_uri,'url.base').'">';
