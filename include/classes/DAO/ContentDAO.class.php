@@ -161,10 +161,10 @@ class ContentDAO extends DAO {
 	public function UpdateField($contentID, $fieldName, $fieldValue)
 	{
 		$sql = "UPDATE ".TABLE_PREFIX."content 
-		           SET ".$fieldName."=".$fieldValue."
+		           SET ".$fieldName."= ?
 		         WHERE content_id = ?";
-		$values = $contentID;
-		$types = "i";
+		$values = array($fieldValue, $contentID);
+		$types = "si";
 		if ($this->execute($sql,$values,$types)) {
 			// update the courses.modified_date to the current timestamp
 			include_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
