@@ -71,7 +71,10 @@ div.input-form {
 	/* -moz-box-shadow:.05em .05em .0em #999999;
 	 box-shadow: .1em .0em  .1em #999999; */
 }
-
+div.input-form a:hover, div.input-form a:active, div.input-form a:focus{
+background-color: #4CA7AA;
+color: #FFFFFF;
+}
 div.input-form div.row {
 /*	background-color:  #E7E4D3; */
 	padding:8px;
@@ -109,7 +112,7 @@ div.input-form input[type=text], div.input-form input[type=password] {
 
 div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.input-form  input[type=text]:focus{
 	border:1px solid #A50707;
-	background-color: #FFDAB9;
+	background-color: #ECDDA1;
 	padding: 2px;
 }
 
@@ -146,7 +149,7 @@ div.input-form input[type=submit]{
 	 box-shadow: .1em .1em .2em #999999;
 }
 div.input-form input[type=submit]:hover, div.input-form input[type=submit]:focus {
-	background-color:#FFDAB9;
+	background-color:#ECDDA1;
 }
 input[type=reset]{
 	border-radius:.3em;

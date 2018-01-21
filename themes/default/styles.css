@@ -511,11 +511,9 @@ ul#subnavlist li:active{
 
 }
 ul#subnavlist li.active{
-  padding-bottom: .5em;
+
   background-color: #0D557A;
-  padding-bottom: 0.3em;
-  padding-left:1em;
-  padding-right:1em;
+padding: .5em 2em .3em 2em;
   border-bottom:0;
   color:white;
 
