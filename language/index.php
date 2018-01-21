@@ -50,7 +50,7 @@ else if ($_POST['edit'])
 }
 else if (isset($_POST['export'])) 
 {
-	$language =& $languageManager->getLanguage($lang_code);
+	$language = $languageManager->getLanguage($lang_code);
 	if ($language === FALSE) {
 		$msg->addError('ITEM_NOT_FOUND');
 	} else {
