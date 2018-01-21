@@ -29,29 +29,7 @@ if ($this->course_id > 0) { ?>
       </div> <!-- end of contentcolumn -->
     </div> <!-- end of contentwrapper -->
 	
-	<div id="footer" role="contentinfo">
-	    <div id="logo">
-      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
-    </div>
 
-      <div class="foot_text">
-        <a href="<?php echo TR_BASE_HREF; ?>documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="atutor"><?php echo _AT('web_service_api'); ?></a>
-          &nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="<?php echo TR_BASE_HREF; ?>documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="atutor"><?php echo _AT('oauth_server_api'); ?></a>
-      </div>
-
-<?php require(TR_INCLUDE_PATH.'html/languages.inc.php'); ?>
-
-      <div class="foot_text">
-  <!-- guide -->
-
-            <div>
-    <a href="#" onclick="trans.utility.poptastic('<?php echo TR_GUIDES_PATH."index.php?p=home/index.php"; ?>'); return false;" target="atutor"><em><?php echo _AT('general_help'); ?></em></a>&nbsp;
-        </div>
-
-
-      </div>
-    </div>
   </div> <!--  end center-content div -->
 
   <!-- <div class="bottom"></div> -->
@@ -76,6 +54,27 @@ if ($this->course_id > 0) { ?>
   ?>
   </div>
   </div>
+	<div id="footer" role="contentinfo">
+	    <div id="logo">
+      <a href="http://www.atutor.ca/acontent"><img  src="<?php echo $this->base_path; ?>images/AC_Logo1_sm.png"  alt="AContent  Logo" style="border:none;" /></a>
+        </div>
 
+        <div class="foot_text">
+        <a href="<?php echo TR_BASE_HREF; ?>documentation/web_service_api.php" title="<?php echo _AT("web_service_api"); ?>" target="atutor"><?php echo _AT('web_service_api'); ?></a>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="<?php echo TR_BASE_HREF; ?>documentation/oauth_server_api.php" title="<?php echo _AT("oauth_server_api"); ?>" target="atutor"><?php echo _AT('oauth_server_api'); ?></a>
+        </div>
+
+        <?php require(TR_INCLUDE_PATH.'html/languages.inc.php'); ?>
+
+        <div class="foot_text">
+        <!-- guide -->
+            <div>
+    <a href="#" onclick="trans.utility.poptastic('<?php echo TR_GUIDES_PATH."index.php?p=home/index.php"; ?>'); return false;" target="atutor"><em><?php echo _AT('general_help'); ?></em></a>&nbsp;
+            </div>
+
+
+        </div>
+    </div>
 </body>
 </html>
