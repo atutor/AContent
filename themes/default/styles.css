@@ -485,6 +485,7 @@ ul#subnavlist li {
   -moz-border-radius: .3em .3em 0em 0em;
   padding: .4em 0em .4em 0em ;
 }
+
 ul#subnavlist li:hover{
     color: white !important;
 }
@@ -506,10 +507,15 @@ ul#subnavlist li:hover, ul#subnavlist li:focus{
   padding-top: .4em;
   border-bottom:0;
 }
+ul#subnavlist li:active{
+
+}
 ul#subnavlist li.active{
   padding-bottom: .5em;
   background-color: #0D557A;
   padding-bottom: 0.3em;
+  padding-left:1em;
+  padding-right:1em;
   border-bottom:0;
   color:white;
 
