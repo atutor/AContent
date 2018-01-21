@@ -1,7 +1,7 @@
 <div id="subnavlistcontainer">
     <div id="sub-navigation">
         <ul id="subnavlist">
-            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>"><?php echo _AT('create_template'); ?></a></li>
+            <li><a href="<?php echo $_SERVER['PHP_SELF'] ?>?tab=create"><?php echo _AT('create_template'); ?></a></li>
             <?php 
                 if($this->template_type=="layouts") echo '<li class="active"><b>'. _AT('layout') . '</b></li>';
                 else echo '<li><a href="'. $_SERVER['PHP_SELF'] . '?tab=layouts">'. _AT('layout') . '</a></li>';

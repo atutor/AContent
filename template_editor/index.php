@@ -76,10 +76,20 @@ if (isset($_current_user) && Utility::authenticate($privs[TR_PRIV_TEMPLATE_EDITO
             //Header('Location: index.php');
             //exit;
         }
+        if($_GET['tab']=="create"){
+            $savant->display('template_editor/create.tmpl.php');
+        }else{
+            $savant->assign('template_type',$_GET['tab']);
+            $savant->display('template_editor/index.tmpl.php');
+        }
+    }else{
+        require('classes/TemplateCommons.php');
+        $_GET['tab']="layouts";
+        $commons=new TemplateCommons('../templates');
+        $layout_list=$commons->get_template_list("layouts");
+        $savant->assign('template_list', $layout_list);
         $savant->assign('template_type',$_GET['tab']);
         $savant->display('template_editor/index.tmpl.php');
-    }else{
-        $savant->display('template_editor/create.tmpl.php');
     }
     require(TR_INCLUDE_PATH.'footer.inc.php');
     exit;
