@@ -87,7 +87,7 @@ if ($this->shortcuts):
                                 $struc_manag->printPreview(false, $val['short_name']); ?>
                         </div> -->
                         <div style=" margin-bottom: 10px; <?php if($check) echo 'border: 2px #cccccc dotted;';?> ">
-                            <div style="font-size:95%; margin-left: 10px;">
+                            <div class="struct_preview">
                                     <div style="display: inline;" id="div_outline_<?php echo $struct['short_name'];?>">
                                         <?php   
                                                 $struc_manag = new StructureManager($struct['short_name']);
