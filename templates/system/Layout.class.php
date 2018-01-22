@@ -389,7 +389,7 @@ class Layout{
 		$sql="SELECT text FROM ".TABLE_PREFIX."content WHERE content_id=?";
 		$values = $cid;
 		$types = "i";
-		$result=$contentDAO->execute($sql, $valuest, $types);
+		$result=$contentDAO->execute($sql, $values, $types);
 		if(is_array($result))
 		{
 			foreach ($result as $support) {
