@@ -17,8 +17,7 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
 require(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
 require(TR_INCLUDE_PATH.'header.inc.php'); 
-//debug($_course_id);
-//exit;
+
 require(TR_INCLUDE_PATH.'../home/course/course_start_tabs.php');
 
 
