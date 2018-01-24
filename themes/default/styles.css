@@ -1437,6 +1437,7 @@ div.menuedit{
 table.etabbed-table  {
   padding-left:.5em;  
   font-size:10pt;
+  margin-bottom: -.15em;
   width: 95%;
 }
 table.etabbed-table input[type=submit] {
@@ -1484,7 +1485,7 @@ table.etabbed-table td.tab-spacer {
   border-left: 1px solid #206BA4;
   border-right: 1px solid #206BA4;
   border-bottom: 1px solid #0D557A;
-  padding: 0em .6em 0em .6em;
+  padding: 0em 1.1em 0em 1.1em;
   background-color: #0D557A;
   font-weight:bold;
   white-space: nowrap;
