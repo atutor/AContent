@@ -290,7 +290,42 @@ div#sequence-links {
 div#sequence-links a {
   text-decoration: none;
 }
+div#sequence-links {
+   white-space:nowrap;
+   overflow:hidden;
+}
+div#sequence-links2{
+    min-width: 22em;
+    border-top: 1px solid #0D557A;
+    padding-top:.1em;
+}
+div#sequence-links2 a:nth-child(1){
+    float:left;
+    width:40%;
+    padding:1em 1em 1em 1em;
+    overflow:hidden;
 
+}
+div#sequence-links2 a:nth-child(2){
+    float:right;
+    overflow:hidden;
+    width:40%;
+    text-align:right;
+    padding:1em 1em 1em 1em;
+    
+}
+div#sequence-links2  a:nth-child(1):active, div#sequence-links2 a:nth-child(1):focus, div#sequence-links2 a:nth-child(1):hover{
+    box-shadow: -3px 3px #4CA7AA;
+}
+div#sequence-links2 a:nth-child(2):active, div#sequence-links2 a:nth-child(2):focus, div#sequence-links2 a:nth-child(2):hover{
+    box-shadow: 3px 3px #4CA7AA;
+}
+div#sequence-links2 a{
+  padding-top:.3em;
+}
+div#sequence-links2 a {
+  text-decoration: none;
+}
 /***************************************************************/
 /* NEW STUFF */
 table.tabbed-table {
@@ -1181,6 +1216,9 @@ font-size:smaller;
 padding-right:3px;
 text-align:right;
 }
+#gototop a:active, a:hover, a:focus {
+    color: #FFFFFF;
+}
 
 ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
   background-color:#0D557A; 
@@ -1473,7 +1511,7 @@ table.etabbed-table td.tab-spacer {
   border:2px solid transparent;
 }
 .shortcut_icon:hover, .shortcut_icon:focus, .shortcut_icon:active{
-border:2px solid #EF7061;
+border:2px solid #4CA7AA;
 }
 div.shortcuts{
   border-left:1px solid #cccccc;
@@ -1521,7 +1559,7 @@ border:2px solid transparent;
 .toggle_switch:hover, .toggle_switch:focus, .toggle_switch:active{
 height:.9em;
 width:.9em;
-border:2px solid #EF7061;
+border:2px solid #4CA7AA;
 }
 dl.form_layout dt{
   text-align:center; 

@@ -139,7 +139,20 @@ $result=$dao->execute($sql, $values, $types);
     </ol>
 </div>
 <?php endif; ?>
-
+<!-- <div id="sequence-links2">
+    <?php 
+    if ($this->sequence_links['resume']): ?>
+    <a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="shortcut_icon" /></a>
+    <?php else:
+          if ($this->sequence_links['previous']): ?>
+    <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","> <img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="shortcut_icon" /> <?php echo _AT('previous_topic'); ?></a>
+    <?php endif;
+          if ($this->sequence_links['next']): ?>
+    <a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><?php echo _AT('next_topic'); ?> <img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/next.png" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="shortcut_icon" /></a>
+    <?php endif; ?>
+    <?php endif; ?>
+    &nbsp;
+  </div> -->
 <div id="content-info">
 	<?php echo $this->content_info; ?>
 
