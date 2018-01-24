@@ -20,6 +20,11 @@ $_SESSION['prefs']['PREF_CONTENT_EDITOR'] = 1;
 
 $coursesDAO = new CoursesDAO();
 
+//// Hack to accomodate missing $_course_id when creating a folder
+if(!isset($_course_id)){
+    $_course_id = $_POST['_course_id'];
+}
+////
 function get_file_extension($file_name) {
 	$ext = pathinfo($file_name);
 	return $ext['extension'];
@@ -152,6 +157,9 @@ if (TRUE || $framed != TRUE) {
 			echo '		&nbsp;<small class="spacer">'._AT('keep_it_short').'</small><br />'."\n";
 			echo '		<input type="text" name="dirname" id="dirname" size="20" /> '."\n";
 			echo '		<input type="hidden" name="mkdir_value" value="true" /> '."\n";
+			//// Hack to accommodate missing $_course_id
+			echo '		<input type="hidden" name="_course_id" value="'.$_course_id.'" /> '."\n";
+			////
 			echo '		<input type="submit" name="mkdir" value="'._AT('create_folder').'" class="button" />'."\n";
 		} else {
 			echo _AT('depth_reached')."\n";
@@ -372,7 +380,9 @@ if (TRUE || $framed != TRUE) {
 		echo '<label for="uploadedfile">'._AT('upload_files').'</label><br />'."\n";
 		echo '<input type="file" name="uploadedfile" id="uploadedfile" class="formfield" size="20" /> ';
 		echo '<input type="submit" name="submit" value="'._AT('upload').'" class="button" />';
+		//// Hack to accommodate missing $_course_id
 		echo '<input type="hidden" name="_course_id" value ="'.$_course_id.'" />';
+		////
 		echo '<input type="hidden" name="pathext" value="'.$pathext.'" />  ';
 
 		if ($popup == TRUE) {
