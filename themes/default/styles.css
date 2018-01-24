@@ -1454,7 +1454,7 @@ table.etabbed-table td.tab-spacer {
   background-color: #ebf4fa;
   margin: 0px;
   font-weight:500;
-  padding:0em 0em .1em 0em;
+ /*  padding:0em 0em .1em 0em; */
 }
 .editor_tab{
   border-top: 1px solid #206BA4;
@@ -1465,13 +1465,18 @@ table.etabbed-table td.tab-spacer {
   background-color: #ebf4fa;
   border-radius: .2em .2em 0em 0em;
   -moz-border-radius: .2em .2em 0em 0em;
-  padding: 0em .5em 0em .5em ;
+  /* padding: 0em .5em 0em .5em ; */
   height:1.4em;
   width:5%;
 }
-.editor_tab:hover, .editor_tab input[type=submit]:hover, .editor_tab input[type=submit]:focus{
+/* .editor_tab:hover, .editor_tab input[type=submit]:hover, .editor_tab input[type=submit]:focus{ */
+.editor_tab input[type=submit]:hover, .editor_tab input[type=submit]:focus{
   background-color:#0D557A;
   color:white;
+    padding: .2em 1em 1.5em 1em;
+}
+.editor_tab input[type=submit]{
+    padding: .2em 1em 1.5em 1em;
 }
 
 .editor_tab_selected{
