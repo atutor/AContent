@@ -19,7 +19,7 @@ if ($this->course_id > 0) { ?>
     <?php 
 
     if ($this->sequence_links['resume']): ?>
-    <a style="float:right;text-align:right;margin-left:3em;" href="<?php echo $this->sequence_links['resume']['url']; ?>" title="<?php echo _AT('continue').': '. $this->sequence_links['resume']['title']; ?> Alt+." accesskey="."><?php echo _AT('continue'); ?> <img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="shortcut_icon" /></a>
+    <a style="float:right;text-align:right;margin-left:3em;" href="<?php echo $this->sequence_links['resume']['url']; ?>" title="<?php echo _AT('continue').': '. $this->sequence_links['resume']['title']; ?> Alt+." accesskey="."><?php echo _AT('continue'); ?> <img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/resume.png" title="<?php echo _AT('continue').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="shortcut_icon" /></a>
     <?php else:
           if ($this->sequence_links['previous']): ?>
     <a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","> <img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/previous.png" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="shortcut_icon" /> <?php echo _AT('previous_topic'); ?></a>
