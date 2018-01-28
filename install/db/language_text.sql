@@ -1,4 +1,4 @@
-DROP TABLE language_text;
+DROP TABLE IF EXISTS language_text;
 # Table structure for table 'language_text'
 #
 
@@ -26,6 +26,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_DELETE_TEST','Are 
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_DELETE_TEST_CATEGORY','Are you sure you want to delete test category <strong>%s</strong>?','2010-03-23 09:55:01','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_DELETE_USER','Are you sure you want to delete the following users? <strong>%s</strong>','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_DELETE_USER_GROUP','Are you sure you want to delete the following user groups? <strong>%s</strong>','2010-01-27 15:48:35','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_DIR_DELETE','Are you sure you want to delete the folder %s','2018-01-22 19:12:28','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_DIR_MOVE','Are you sure you want to move <strong>%1s</strong> to the folder <strong>%2s</strong>?','2010-04-07 13:47:52','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_FILE_DELETE','Are you sure you want to delete the following file(s)? <ul>%s</ul>','2010-04-06 14:42:19','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_CONFIRM_FILE_EXISTS','The file <strong>%s</strong> already exists. Do you want to overwrite the file?','2010-04-05 14:58:41','');
@@ -206,6 +207,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','TR_HELP_USER_GROUP ','<h2>Use
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_HELP_USER_PASSWORD ','<h2>Change Password</h2>\r\n\r\n<p>All fields are required and self-explanatory. Once the new password is set successfully, an email notification is sent to the user.</p>\r\n','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_CANNOT_CONNECT_PATCH_SERVER','Failed to connect to update server: %s so updates provided by the update server can not be listed. Please proceed with installing private update.','2010-08-09 13:50:26','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_CANNOT_CONNECT_SVN_SERVER','Failed to connect to SVN server to determine if the files that will be modified by the update script have previously been modified. So, to protect any customizations you\'ve made, all local scripts manipulated by update are considered locally customized.','2010-08-09 13:51:33','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_CANNOT_CONNEC_GITHUB_SERVER','Unable to connect to GitHub to confirm whether affected files have changes that may be overridden.','2018-01-05 11:31:17','patcher');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_INVALID_USER','You must <a href=\"login.php\">login</a> to use this section.','2010-01-27 15:48:35','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_NO_CONTENT_IN_COURSE','There is no content in this course.','2010-07-29 11:27:53','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','TR_INFOS_NO_PAGE_CONTENT','There is no content on this page.','2010-05-20 12:08:10','');
@@ -942,6 +944,8 @@ INSERT INTO `language_text` VALUES ('en', '_template','title_subtitle','Title an
 INSERT INTO `language_text` VALUES ('en', '_template','title_text','Title and text','2013-01-03 16:01:15','');
 INSERT INTO `language_text` VALUES ('en', '_template','title_text_2_columns','Title, text, and two columns','2013-01-03 16:02:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','title_text_FloatingImage','Title, text, and image floating right','2013-01-03 16:02:52','');
+INSERT INTO `language_text` VALUES ('en', '_template','toggle_toolbar','Toggle Toolbar','2017-05-28 10:21:01','');
+INSERT INTO `language_text` VALUES ('en', '_template','toolbar_on','Toolbar on','2017-05-28 10:22:18','');
 INSERT INTO `language_text` VALUES ('en', '_template','total','Total','2010-04-01 15:02:37','');
 INSERT INTO `language_text` VALUES ('en', '_template','to_2','to','2010-03-17 13:40:46','');
 INSERT INTO `language_text` VALUES ('en', '_template','transformable','AContent','2010-06-10 10:25:57','');
