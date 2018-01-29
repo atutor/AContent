@@ -196,8 +196,6 @@ foreach ($this->top_level_pages as $page) {
       </div>
   </div>
 
-  <div id="ajax-msg">
-  </div>
 
   <div id="sequence-links">
     <?php if ($this->sequence_links['resume']): ?>
@@ -372,7 +370,8 @@ foreach ($this->top_level_pages as $page) {
       if ($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
          echo '<br /><small><strong>'._AT('course_owner').':'.$this->course_owner['first_name'].' '.$this->course_owner['last_name'].' ('.$this->course_owner['login'].')</strong></small>';
          }
-      ?>
+      ?>      <div id="ajax-msg">
+  </div>
       <h2 class="page-title"><?php echo $this->page_title; ?></h2>
       <div id="server-msg">
       <?php global $msg; $msg->printAll(); ?>
