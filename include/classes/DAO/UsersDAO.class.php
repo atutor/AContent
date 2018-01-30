@@ -602,13 +602,13 @@ class UsersDAO extends DAO {
 		
 		if ($is_author == 1)
 		{
-			if (!$organization) $missing_fields[] = _AT('organization');
-			if (!$phone) $missing_fields[] = _AT('phone');
-			if (!$address) $missing_fields[] = _AT('address');
-			if (!$city) $missing_fields[] = _AT('city');
-			if (!$province) $missing_fields[] = _AT('province');
-			if (!$country) $missing_fields[] = _AT('country');
-			if (!$postal_code) $missing_fields[] = _AT('postal_code');
+			//if (!$organization) $missing_fields[] = _AT('organization');
+			//if (!$phone) $missing_fields[] = _AT('phone');
+			//if (!$address) $missing_fields[] = _AT('address');
+			//if (!$city) $missing_fields[] = _AT('city');
+			//if (!$province) $missing_fields[] = _AT('province');
+			//if (!$country) $missing_fields[] = _AT('country');
+			//if (!$postal_code) $missing_fields[] = _AT('postal_code');
 		}
 		
 		if ($missing_fields)
