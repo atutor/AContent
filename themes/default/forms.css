@@ -129,7 +129,7 @@ input[type=radio]{
 	width:1.5em;
 }
 div.input-form div.buttons {
-	text-align: right;
+	/* text-align: right; */
 	padding:8px;
 }
 div.input-form div.buttons input {
