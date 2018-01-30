@@ -99,7 +99,7 @@ class PatchCreator {
 		
 		$this->patch_xml_file = TR_CONTENT_DIR . "updater/patch.xml";
 
-		$this->version_folder = TR_CONTENT_DIR . "updater/" . str_replace('.', '_', $this->patch_info_array["transformable_version_to_apply"]) . "/";
+		$this->version_folder = TR_CONTENT_DIR . "updater/" . str_replace('.', '_', $this->patch_info_array["applied_version"]) . "/";
 		$this->patch_folder = $this->version_folder . $this->patch_info_array["system_patch_id"] . "/";
 		
 		$this->myownPatchesDAO = new MyownPatchesDAO();
@@ -147,7 +147,7 @@ class PatchCreator {
 		{
 			$this->current_patch_id = $this->myownPatchesDAO->Create(
 			        $this->patch_info_array["system_patch_id"], 
-			        $this->patch_info_array["transformable_version_to_apply"], 
+			        $this->patch_info_array["applied_version"], 
 			        $this->patch_info_array["description"], 
 			        $this->patch_info_array["sql_statement"]);
 		}
@@ -155,7 +155,7 @@ class PatchCreator {
 		{
 			$this->myownPatchesDAO->Update($this->current_patch_id, 
 			            $this->patch_info_array["system_patch_id"],
-			            $this->patch_info_array["transformable_version_to_apply"],
+			            $this->patch_info_array["applied_version"],
 			            $this->patch_info_array["description"],
 			            $this->patch_info_array["sql_statement"]);
 		}
@@ -269,7 +269,7 @@ class PatchCreator {
 		                         '{DEPENDENT_PATCHES}',
 		                         '{FILES}'), 
 							         array($this->patch_info_array["system_patch_id"], 
-							               $this->patch_info_array["transformable_version_to_apply"], 
+							               $this->patch_info_array["applied_version"], 
 							               htmlspecialchars(stripslashes($this->htmlNewLine($this->patch_info_array["description"])), ENT_QUOTES), 
 							               htmlspecialchars(stripslashes($this->patch_info_array["sql_statement"]), ENT_QUOTES), 
 							               $dependent_patches,

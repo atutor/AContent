@@ -22,7 +22,7 @@ if ($_POST['create'] || $_POST['save'])
 	if (!isset($_POST["system_patch_id"]) || trim($_POST["system_patch_id"]) == "")
 		$missing_fields[] = _AT("system_update_id");
 
-	if (!isset($_POST["transformable_version_to_apply"]) || trim($_POST["transformable_version_to_apply"]) == "")
+	if (!isset($_POST["applied_version"]) || trim($_POST["applied_version"]) == "")
 		$missing_fields[] = _AT("transformable_version_to_apply");
 
 	// only check missing upload file when creating a update. don't check when save
@@ -50,7 +50,7 @@ if ($_POST['create'] || $_POST['save'])
 	if (!$msg->containsErrors()) 
 	{
 		$patch_info = array("system_patch_id"=>$_POST["system_patch_id"],
-	                      "transformable_version_to_apply"=>$_POST["transformable_version_to_apply"],
+	                      "applied_version"=>$_POST["applied_version"],
 	                      "description"=>$_POST["description"],
 	                      "sql_statement"=>$_POST["sql_statement"]);
 
@@ -113,16 +113,19 @@ if ($_POST['create'] || $_POST['save'])
 		
 		$patch_creator = new PatchCreator($patch_info, $patch_id);
 		
-		if ($_POST['create'])
+		if ($_POST['create']){
 			$patch_creator->create_patch();
-		else if ($_POST['save'])
-		{
+		} else if ($_POST['save']){
+		
 			$patch_creator->saveInfo();
 			header('Location: myown_patches.php');
+			exit;
 		}
-
+	} else{
+	        $_SESSION['POST'] = $_POST;
+		    header('Location: patch_create.php');
+			exit;
 	}
 }
 
-$msg->printErrors();
 ?>

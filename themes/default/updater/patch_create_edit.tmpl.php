@@ -37,8 +37,8 @@ require (TR_INCLUDE_PATH.'header.inc.php');
 		<tr><th align="left" colspan="2"><small>&middot; <?php echo _AT('contain_only'); ?></small></th></tr>
 
 		<tr>
-			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="transformable_version_to_apply"><?php echo _AT('transformable_version_to_apply'); ?>:</label></th>
-			<td align="left"><input id="transformable_version_to_apply" name="transformable_version_to_apply" type="text" maxlength="100" size="30" value="<?php echo $this->patch_row['applied_version']; ?>" /></td>
+			<th align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="applied_version"><?php echo _AT('transformable_version_to_apply'); ?>:</label></th>
+			<td align="left"><input id="applied_version" name="applied_version" type="text" maxlength="100" size="30" value="<?php echo $this->patch_row['applied_version']; ?>" /></td>
 		</tr>
 
 		<tr>
@@ -75,12 +75,18 @@ if (is_array($this->dependent_rows))
 	$num_of_dependents = count($this->dependent_rows);
 	foreach ($this->dependent_rows as $row_patch_dependent)
 	{
-	?>
-			<tr>
-				<td><input id="dependent_patch" name="dependent_patch[]" value="<?php echo $row_patch_dependent['dependent_patch_id']; ?>" type="text" maxlength="100" size="100" style="max-width:100%; display:block" /></td>
-			</tr>
-	<?php
-	}
+	?><tr>
+	        <td><input id="dependent_patch" name="dependent_patch[]" value="<?php 
+				if(!is_array($row_patch_dependent)){
+				    echo $row_patch_dependent; 
+				} else{
+				    echo $row_patch_dependent['dependent_patch_id']; 
+				}
+				?>" type="text" maxlength="100" size="100" style="max-width:100%; display:block" />
+			</td>
+		</tr>
+<?php 
+    }
 }
 
 // when creating new patch
