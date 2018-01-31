@@ -1224,7 +1224,7 @@ ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
   color: white;
   text-decoration:none;
 }
-#layout_list a:active, a:hover, a:focus {
+#layout_list a:active, #layout_list a:hover, #layout_list a:focus {
     color: #4CA7AA !important;
 }
 ul.navigation li a.active{
