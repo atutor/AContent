@@ -180,9 +180,9 @@ if($this->lastelement != ''){
                     <div id='css_preview' style='height:100%; width:400px; min-height:300px; margin:15px;' tabindex='0' accesskey="p">
                         <style id="preview_styles"></style>
                         <div id="content">
-                            <h2  title="H2"><?php echo _AT('template_heading'); ?> 2</h2>
-                            <h3  title="H3"><?php echo _AT('template_heading'); ?> 3</h3>
-                            <h4  title="H4"><?php echo _AT('template_heading'); ?> 4</h4>
+                            <h2  title="H2"><?php echo _AT('template_heading', 2); ?></h2>
+                            <h3  title="H3"><?php echo _AT('template_heading', 3); ?></h3>
+                            <h4  title="H4"><?php echo _AT('template_heading', 4); ?></h4>
                             <p title="Paragraph format"><?php echo _AT('template_sample_text'); ?></p>
                             <ul title="UL">
                                 <li title="LI"><?php echo _AT('template_list_item'); ?></li>
