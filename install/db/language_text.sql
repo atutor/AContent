@@ -251,7 +251,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','add_sibling_page','Add Si
 INSERT INTO `language_text` VALUES ('en', '_template','add_sub_folder','Add Sub Folder','2010-05-19 14:26:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_sub_page','Add Sub Page','2010-05-19 14:26:14','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_templates','Add Templates','2012-12-07 15:59:55','templating system');
-INSERT INTO `language_text` VALUES ('en', '_template','add_test','Add Test$AB(','2013-07-13 08:55:00','');
+INSERT INTO `language_text` VALUES ('en', '_template','add_test','Add Test','2013-07-13 08:55:00','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_tests','Add Tests','2013-07-13 08:55:00','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_top_folder','Add Top Folder','2003-05-20 12:26:32','');
 INSERT INTO `language_text` VALUES ('en', '_template','add_top_page','Add Top Page','2003-05-20 12:26:32','');
