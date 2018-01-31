@@ -1138,10 +1138,10 @@ div.topnavlistcontainer {
   
 }
 ul.navigation{
-    height:2.7em;
+    height:3em;
     width:99%;
     background-color:rgba(76,167,170,.2);
-    margin: -.1em 0.9em -0.1em 1em;
+    margin: -.1em 0.4em -0.35em 1em;
     padding:0;
     white-space: nowrap;
     overflow-x:scroll;
@@ -1157,7 +1157,6 @@ ul.navigation{
   padding-bottom: .1em;
   font-weight:700;
   text-decoration:none;
-  margin-left:.1em;
   border-left:1px solid #cccccc;
   border-right:1px solid #cccccc;
   border-top:1px solid #cccccc;
@@ -1227,7 +1226,6 @@ ul.navigation li a:hover, ul.navigation li a:focus, ul.navigation li a.active {
 }
 ul.navigation li a.active{
   background-color: #0D557A; 
-  padding-right: 10px;
   color:white;
 }
 
