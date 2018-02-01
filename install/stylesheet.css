@@ -167,7 +167,7 @@ form {
 /* user menu at top */
 .topbar {
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic1.gif');
+	/* background-image: url('images/cellpic1.gif'); */
 	background-repeat: repeat-x;
 	background-color: #D1D7DC;
 	text-align: center;
@@ -177,7 +177,7 @@ form {
 /* breadcrumbs */
 td.breadcrumbs	{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-image: url('images/cellpic3.gif');
+	/* background-image: url('images/cellpic3.gif'); */
 	color: #FFFFFF;
 	background-color: #006699;
 	height: 26px;
