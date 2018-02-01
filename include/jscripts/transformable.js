@@ -73,7 +73,7 @@ trans.utility.selected;
       trans.utility.toggleToc(objId);
     }
   };
-  
+/*  
   trans.utility.setstates = function () {
     return;
     var objId = "side-menu";
@@ -88,7 +88,7 @@ trans.utility.selected;
       trans.utility.toggleToc(objId);
     }
   };
-  
+*/  
   trans.utility.showTocToggle = function (objId, show, hide, key, selected) {
     if(document.getElementById) {
       if (key) {
