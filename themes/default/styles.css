@@ -518,7 +518,7 @@ ul#subnavlist li {
   border-bottom:1px solid #206BA4;
   border-radius: .3em .3em 0em 0em;
   -moz-border-radius: .3em .3em 0em 0em;
-  padding: .4em 0em .4em 0em ;
+  padding: .4em 0em .2em 0em ;
 }
 
 ul#subnavlist li:hover{
