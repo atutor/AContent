@@ -20,7 +20,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("myown_updates"); ?></legend>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" rules="rows" id="editable_table">
+<table class="data"  id="editable_table">
 
 <thead>
 <tr>

@@ -18,7 +18,7 @@ include(TR_INCLUDE_PATH.'header.inc.php');
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table summary="<?php echo _AT("user_group"); ?>" class="data" rules="rows" id="editable_table">
+<table summary="<?php echo _AT("user_group"); ?>" class="data" id="editable_table">
 	<thead>
 	<tr>
 		<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>

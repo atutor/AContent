@@ -24,9 +24,9 @@ $starttime = $mtime;
 <div class="input-form">
   <form name="add_form" method="post" action="<?php echo AT_print($_SERVER['PHP_SELF'], 'input.form'); ?>" >
   <fieldset class="group_form"><legend class="group_form"><?php echo _AT("add_course_category"); ?></legend>
-    <table class="form-data" align="left">
-    <tr align="left">
-      <td align="left">
+    <table class="form-data">
+    <tr>
+      <td>
       <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_name"><?php echo _AT('category_name'); ?></label>:
       <input id="category_name" name="category_name" type="text" maxlength="255" size="30" />
       <input type="submit" name="add" value="<?php echo _AT('add'); ?>" />
@@ -42,7 +42,7 @@ $starttime = $mtime;
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table summary="<?php echo _AT('course_category_table_summary'); ?>" class="data" rules="rows" id="editable_table">
+<table summary="<?php echo _AT('course_category_table_summary'); ?>" class="data"  id="editable_table">
 <thead>
 <tr>
   <th scope="col" align="left" width="5%"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>

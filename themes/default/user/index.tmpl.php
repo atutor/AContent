@@ -84,7 +84,7 @@ $starttime = $mtime;
 <input type="hidden" name="search" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 <input type="hidden" name="include" value="<?php echo htmlspecialchars($_GET['include']); ?>" />
 
-<table summary="<?php echo _AT('user_table_summary'); ?>" class="data" rules="rows" id="editable_table">
+<table summary="<?php echo _AT('user_table_summary'); ?>" class="data"  id="editable_table">
 <colgroup>
 	<?php if ($this->col == 'login'): ?>
 		<col />

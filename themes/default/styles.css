@@ -708,6 +708,7 @@ table.data tbody th {
 }
 table.data td {
   padding: 3px;
+  /* border-bottom: 1px solid #4CA7AA; */
 }
 table.data tbody tr:hover {
   background-color:#F5FAFA;
@@ -754,6 +755,16 @@ table.data.static tbody tr:hover {
 .data-table-tip {
   margin-left: 2em;
 }
+table.data{
+    border-collapse:collapse;
+    border-spacing:0;
+    border-style:hidden;
+}
+table.data td{
+        padding:0.25em;
+        border:1px solid #4CA7AA;
+    }
+
 div#error {
   width: 50%;
   margin-left: auto;
