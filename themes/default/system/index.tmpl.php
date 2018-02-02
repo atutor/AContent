@@ -141,7 +141,7 @@ $starttime = $mtime;
 -->
 <!-- RADIO BUTTON FOR THE SETTING OF ALL THREE TEMPLATE -->
                 <tr>
-                    <td><label for="enable_template"><?php echo _AT('enable_template'); ?></label></td>
+                    <td><?php echo _AT('enable_template'); ?></td>
                     <td>
                         <input type="radio" onClick="show('all');" name="enable_template" id="statusTD" value="<?php echo TR_STATUS_DISABLED; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_DISABLED) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_DISABLED)) echo 'checked="checked"'; ?> /><label for="statusTD"><?php echo _AT('disabled'); ?></label> 
                         <input type="radio" onClick="show('all');" name="enable_template" id="statusTE" value="<?php echo TR_STATUS_ENABLED; ?>" <?php if ((isset($_POST['enable_template']) && $_POST['enable_template']==TR_STATUS_ENABLED) || (!isset($_POST['enable_template']) && $this->config['enable_template']==TR_STATUS_ENABLED)) echo 'checked="checked"'; ?> /><label for="statusTE"><?php echo _AT('enabled'); ?></label>	        
