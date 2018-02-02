@@ -1393,6 +1393,13 @@ div#content-test ol ul li{
   /* -moz-border-radius: 4px;  */
   border: 1px solid #eeeeff;
 }
+.questionbg{
+    background-color: #f3f3f3; 
+    padding: 5px 10px; 
+    margin: 0px; 
+    border-top: 1px solid;
+}
+
 div#content-info {
   margin: 5pt;
   font-size: small;
