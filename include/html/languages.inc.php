@@ -18,7 +18,6 @@ if($languageManager->getNumLanguages() < 2){
 }
 ?>
 <div id="langdiv" class="foot_text"><br /><?php
-
 	if ($languageManager->getNumLanguages() > 5) {
 		echo '<form method="get" action="'.AT_print($_my_uri,'url.base').'">';
 		echo '<label for="lang" style="display:none;">'._AT('translate_to').' </label>';
@@ -26,7 +25,7 @@ if($languageManager->getNumLanguages() < 2){
 		echo ' <input type="submit" name="submit_language" class="button" value="'._AT('translate').'" />';
 		echo '</form>';
 	} else {
-		echo '<small><label for="lang">'._AT('translate_to').' </label></small>';
+		echo '<small>'._AT('translate_to').' </small>';
 		$languageManager->printList($_SESSION['lang'], 'lang', 'lang',AT_print($_my_uri,'url.base'));
 	}
 ?><br /><br /></div>
