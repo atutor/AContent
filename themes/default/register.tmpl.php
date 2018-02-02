@@ -149,35 +149,35 @@ function encrypt_password()
     </dl>
 
     <dl id="table_is_author" class="form_layout">
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="organization"><?php echo _AT('organization'); ?></label>:</dt>
+	  <dt><label for="organization"><?php echo _AT('organization'); ?></label>:</dt>
 	  <dd><input id="organization" name="organization" type="text" size="50" maxlength="100" value="<?php if (isset($_POST['organization'])) echo stripslashes(htmlspecialchars($_POST['organization'])); else echo stripslashes(htmlspecialchars($this->user_row['organization'])); ?>" /></dd>
 
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="phone"><?php echo _AT('phone'); ?></label>:</dt>
+	  <dt><label for="phone"><?php echo _AT('phone'); ?></label>:</dt>
 	  <dd><input id="phone" name="phone" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['phone'])) echo stripslashes(htmlspecialchars($_POST['phone'])); else echo stripslashes(htmlspecialchars($this->user_row['phone'])); ?>" /></dd>
   
 
   
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="address"><?php echo _AT('address'); ?></label>:</dt>
+	  <dt><label for="address"><?php echo _AT('address'); ?></label>:</dt>
 	  <dd><input id="address" name="address" type="text" size="50" maxlength="100" value="<?php if (isset($_POST['address'])) echo stripslashes(htmlspecialchars($_POST['address'])); else echo stripslashes(htmlspecialchars($this->user_row['address'])); ?>" /></dd>
   
 
   
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="city"><?php echo _AT('city'); ?></label>:</dt>
+	  <dt><label for="city"><?php echo _AT('city'); ?></label>:</dt>
 	  <dd><input id="city" name="city" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['city'])) echo stripslashes(htmlspecialchars($_POST['city'])); else echo stripslashes(htmlspecialchars($this->user_row['city'])); ?>" /></dd>
   
 
   
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="province"><?php echo _AT('province'); ?></label>:</dt>
+	  <dt><label for="province"><?php echo _AT('province'); ?></label>:</dt>
 	  <dd><input id="province" name="province" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['province'])) echo stripslashes(htmlspecialchars($_POST['province'])); else echo stripslashes(htmlspecialchars($this->user_row['province'])); ?>" /></dd>
   
 
   
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="country"><?php echo _AT('country'); ?></label>:</dt>
+	  <dt><label for="country"><?php echo _AT('country'); ?></label>:</dt>
 	  <dd><input id="country" name="country" type="text" size="30" maxlength="30" value="<?php if (isset($_POST['country'])) echo stripslashes(htmlspecialchars($_POST['country'])); else echo stripslashes(htmlspecialchars($this->user_row['country'])); ?>" /></dd>
   
 
   
-	  <dt><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="postal_code"><?php echo _AT('postal_code'); ?></label>:</dt>
+	  <dt><label for="postal_code"><?php echo _AT('postal_code'); ?></label>:</dt>
 	  <dd><input id="postal_code" name="postal_code" type="text" size="10" maxlength="10" value="<?php if (isset($_POST['postal_code'])) echo stripslashes(htmlspecialchars($_POST['postal_code'])); else echo stripslashes(htmlspecialchars($this->user_row['postal_code'])); ?>" /></dd>
     </dl>
 	<p class="submit_buttons">
