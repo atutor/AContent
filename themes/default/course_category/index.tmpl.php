@@ -45,7 +45,7 @@ $starttime = $mtime;
 <table summary="<?php echo _AT('course_category_table_summary'); ?>" class="data"  id="editable_table">
 <thead>
 <tr>
-  <th scope="col" align="left" width="5%"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
+  <th scope="col"  width="5%"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
   <th scope="col"><?php echo _AT('category_name'); ?></th>
 </tr>
 </thead>

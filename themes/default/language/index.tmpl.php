@@ -25,7 +25,7 @@ $starttime = $mtime;
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form1">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT("language"); ?></legend>
 
-<table class="data" rules="rows" id="editable_table">
+<table class="data"  id="editable_table">
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
