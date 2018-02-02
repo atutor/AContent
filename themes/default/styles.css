@@ -228,8 +228,11 @@ div.paging li a {
   padding-left: 4px;
   padding-right: 4px;
 }
-div.paging li a:hover, div.paging li a.current {
+div.paging li a.current {
    color: #FFA20C;
+}
+div.paging li a:hover {
+   color: #FFFFFF;
 }
 /* floating layout */
 #contentwrapper{
