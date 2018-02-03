@@ -405,9 +405,14 @@ class CoursesDAO extends DAO {
 		         WHERE cs.access='public'
 		           AND cs.course_id = ct.course_id
 		           AND cs.user_id = u.user_id ";
+		
+		if (trim($catid) <> ''){
+		     $sql_where .= ' category_id=?';
+		     $values[] = $catid;
+		     $types .="i";
+		}
 		if ($sql_where <> ''){
-		    $sql .= " AND ".$sql_where;
-		    
+		    $sql .= " AND ".$sql_where; 
 		 }
 		if ($sql_order <> ''){
 		    $sql .= " ORDER BY ? DESC ";
