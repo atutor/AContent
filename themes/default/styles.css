@@ -1354,9 +1354,9 @@ div.box ol{
 li.mine{
   background-image: url('images/my_own_course.gif');
   background-repeat: no-repeat;
-  background-position: 0px 0px;
+  background-position: 0px 2px;
   background-size:1.1em 1.1em;
-  padding-left: 1.2em;
+  padding-left: 1.4em;
   line-height:1.5em;
 }
 div.box ol li.theirs{
