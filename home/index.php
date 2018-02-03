@@ -49,7 +49,7 @@ unset($courses);
 $courses = isset($catid) && $catid != 0  ? $coursesDAO->getByCategory($catid) : $coursesDAO->getByMostRecent();
 
 // If the user is not an admin then we better filter out courses with empty content
-if (!$session_user_id || ($session_user_id && $_current_user->isAdmin($session_user_id) != 1)) {
+if (!$session_user_id || ($session_user_id && $_current_user->isAdmin($session_user_id) != 1) && !empty($courses)) {
     foreach ($courses as $i => $course) {
         $course_user_id = $course['user_id'];
         $course_id = $course['course_id'];
