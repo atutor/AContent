@@ -228,32 +228,32 @@ function trans_form() {
 	<input type="hidden" name="search" value="1" />
 <?php } ?>
 
-	<table border="0" cellspacing="0" cellpadding="2" width="100%"  class="box">
+	<table class="box">
 	<tr>
 		<th class="box" colspan="2">Edit</th>
 	</tr>
 
 	<?php if ($row_english['context'] <> "") { ?>
 	<tr>
-		<td align="right" style="font:bold"><?php echo _AT('english_context'); ?>:</td>
+		<td style="font:bold"><?php echo _AT('english_context'); ?>:</td>
 		<td><?php echo htmlspecialchars(stripslashes($row_english['context'])); ?></td>
 	</tr>
 	<tr>
-		<td align="right" style="font:bold"><?php echo _AT('translated_context'); ?>:</td>
+		<td  style="font:bold"><?php echo _AT('translated_context'); ?>:</td>
 		<td><input type="text" name="translated_context" class="input" value="<?php echo htmlspecialchars(stripslashes($row_selected['context'])); ?>" size="45" /></td>
 	</tr>
 	<?php } ?>
 
 	<tr>
-		<td valign="top" align="right" nowrap="nowrap" style="font:bold"><?php echo _AT('english_text'); ?>:</td>
+		<td  style="font:bold"><?php echo _AT('english_text'); ?>:</td>
 		<td><?php echo nl2br(htmlspecialchars(stripslashes($row_english['text']))); ?></td>
 	</tr>
 	<tr>
-		<td valign="top" align="right" nowrap="nowrap" style="font: bold"><label for="translated_text"><?php echo _AT('translated_text'); ?></label>:</td>
+		<td  style="font: bold"><label for="translated_text"><?php echo _AT('translated_text'); ?></label>:</td>
 		<td><textarea rows="4" cols="75" name="translated_text" id="translated_text" class="input2"><?php echo htmlspecialchars(stripslashes($row_selected['text']));?></textarea></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><input type="submit" name="save" value="Save ALT-S" class="submit" accesskey="s" />
+		<td colspan="2"><input type="submit" name="save" value="Save ALT-S" class="submit" accesskey="s" />
 		</td>
 	</tr>
 	</table>

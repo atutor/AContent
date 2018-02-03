@@ -1041,6 +1041,7 @@ table.form-data{
 }
 th.box {
   border-bottom: #006699 solid 1px;
+  padding-left:.5em;
   color: white;
   background-color: #006699;
 }
@@ -1049,11 +1050,13 @@ table.box {
   border-right: #006699 solid 1px;
   border-left: #006699 solid 1px;
   border-top: #006699 solid 1px;
+  border-bottom: #006699 solid 1px;
   margin-right: 500px;
   margin-bottom: 10px;
+  padding:0;
+  width:98%;
 }
 table.box th, table.box td {
-  border-bottom: #006699 solid 1px;
   font-size: smaller;
 }
 #source ol {
