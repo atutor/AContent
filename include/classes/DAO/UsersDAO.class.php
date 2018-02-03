@@ -316,13 +316,14 @@ class UsersDAO extends DAO {
 	{
 
 		$sql = 'SELECT * FROM '.TABLE_PREFIX.'users WHERE user_id=?';
-		$values = $userID;
+		$values = array($userID);
 		$types = "i";
 		if ($rows = $this->execute($sql, $values, $types))
 		{
 			return $rows[0];
-		}
-		else return false;
+		} else {
+		 return false;
+		 }
 	}
 
 	/**
