@@ -115,7 +115,7 @@ $lang_charset = "UTF-8";
     </script>
 </head>
 <body onload="<?php echo $this->onload; ?>">
-<div id="topbar">
+<div id="topbar" role="banner">
     <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" accesskey="c">
     <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
