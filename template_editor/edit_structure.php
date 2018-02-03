@@ -32,7 +32,7 @@ if($commons->template_exists('structure', $template)) {
     Header('Location: index.php');
     exit;
 }
-if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$type)){
+if(!is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/'.$type) || !is_writable($_SERVER['DOCUMENT_ROOT'].$_base_path.'templates/')){
     $msg->addWarning('TEMPLATE_DIR_NOT_WRITABLE');
     $temp_unwritable = TRUE;
 }else{
