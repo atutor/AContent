@@ -274,6 +274,8 @@ div.paging li a:hover {
   padding: 4px 0px;
   border-bottom: 3px solid #206ba4;
   color:#65a9d8;
+  float:left;
+  clear:both;
 }
 #footer a{
  color: #ffffff;
@@ -482,6 +484,7 @@ div#breadcrumbs {
 h2.page-title {
   clear:right;
   margin-left:1em;
+  margin-bottom:.2em;
 }
 h1 {
    margin-bottom: 5px;
@@ -678,7 +681,7 @@ table.filter td {
 /* for data tables */
 table.data {
   clear:right;
-  width: 95%; 
+  width: 98%; 
   margin-right: auto;
   margin-left: auto;
   text-align: left;
@@ -703,7 +706,6 @@ table.data tbody {
 }
 table.data tbody th {
   text-align: left;
-  background-color: #F7F3ED;
   cursor: auto;
 }
 table.data td {
@@ -1125,7 +1127,6 @@ border-radius:.8em .8em .8em .8em;
   height:20px;
 }
 .center-content {
-  position:relative;
   padding:1px 0px 1px 0px;
   margin:-1px 0 -50px 0;
   min-height:100%;
