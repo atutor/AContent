@@ -11,9 +11,10 @@
   <!--[if IE 6]>
     <link rel="stylesheet" href="styles/ie6.css" type="text/css" media="all" />
   <![endif]-->
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js" ></script>
+<script type="text/javascript" src="<?php echo $_base_href; ?>include/jscripts/jquery.js"></script>
+<script type="text/javascript" src="<?php echo $_base_href; ?>include/jscripts/jquery-ui.min.js"></script>'."\n";
+<!--<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js" ></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.5.3/jquery-ui.min.js" ></script> -->
 <script type="text/javascript">
       $(document).ready(function(){
     $("#featured").tabs({fx:{opacity: "toggle"}}).tabs("rotate", 9000, true);
