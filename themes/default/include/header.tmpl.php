@@ -368,7 +368,7 @@ foreach ($this->top_level_pages as $page) {
       <?php
       global $_current_user;
       if ($_SESSION['course_id'] && $_current_user && $_current_user->isAdmin()){
-         echo '<br /><small><strong>'._AT('course_owner').':'.$this->course_owner['first_name'].' '.$this->course_owner['last_name'].' ('.$this->course_owner['login'].')</strong></small>';
+         echo '<br /><span class="hide"><small><strong>'._AT('course_owner').':'.$this->course_owner['first_name'].' '.$this->course_owner['last_name'].' ('.$this->course_owner['login'].')</strong></small></span>';
          }
       ?>      <div id="ajax-msg">
   </div>
