@@ -32,7 +32,11 @@ class DiscussionToolsImport {
 		$text = $forum_obj->getText();
 
 		$this->fid = $this->createForum($title, $text, $course_id);
-		$this->associateForum($cid, $this->fid);
+		if ($this->fid) {
+			$this->associateForum($cid, $this->fid);
+			return true;
+		} else
+			return false;
 	}
 
 	
@@ -45,9 +49,10 @@ class DiscussionToolsImport {
 	function createForum($title, $text, $course_id){
 		$forumsDAO = new ForumsDAO();
 		$forums_id = $forumsDAO->Create($title, $text);
-		
-		$forumsCoursesDAO = new ForumsCoursesDAO();
-		$forumsCoursesDAO->Create($forums_id, $course_id);
+		if ($forums_id) {
+			$forumsCoursesDAO = new ForumsCoursesDAO();
+			$forumsCoursesDAO->Create($forums_id, $course_id);
+		}
 		
 		return $forums_id;
 	}	
