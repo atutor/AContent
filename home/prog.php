@@ -15,7 +15,7 @@ sleep(1);
 define('TR_INCLUDE_PATH', '../include/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 session_write_close();
-if ($_GET['tile']) {
+if (isset($_GET['tile']) && $_GET['tile']) {
 	$lang_variable = 'tile_progress';
 } else {
 	$lang_variable = 'upload_progress';
@@ -26,19 +26,19 @@ if ($_GET['tile']) {
 <html lang="<?php echo $myLang->getCode(); ?>">
 <head>
 	<title><?php echo _AT($lang_variable); ?></title>
-	<?php if ($_GET['frame']) { ?>
+	<?php if (array_key_exists('frame', $_GET)) { ?>
 		<META HTTP-EQUIV="refresh" content="3;URL=prog.php?frame=1"> 
 	<?php } ?>
 	<link rel="stylesheet" href="<?php echo $_base_path; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/styles.css" type="text/css" />
 	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
 </head>
 <body <?php
-	if ($_SESSION['done']) {
+	if (array_key_exists('done', $_SESSION)) {
 		echo 'onload="parent.window.close();"';
 	}
 ?>>
 <?php 
-if (!$_GET['frame']) {  ?>
+if (!array_key_exists('frame', $_GET)) {  ?>
 &nbsp;<a href="javascript:window.close();"><?php echo _AT('close'); ?></a>
 <h3><?php echo _AT($lang_variable); ?></h3>
 <p><small><?php echo _AT('window_auto_close'); ?></small></p>
@@ -51,30 +51,32 @@ if (!$_GET['frame']) {  ?>
 </iframe>
 <?php } else { 
 	$tmp_dir = ini_get('upload_tmp_dir') . DIRECTORY_SEPARATOR;
-	if (!$_GET['t']) {
-		$newest_file_name = '';
-		$newest_file_time = 0;
-		// get the name of the temp file.
-		if ($dir = @opendir($tmp_dir)) {
-			while (($file = readdir($dir)) !== false) {
-				if ((strlen($file) == 9) && (substr($file, 0, 3) == 'php')) {
-					$filedata = stat($tmp_dir . $file);
-					if ($filedata['mtime'] > $newest_file_time) {
-						$newest_file_time = $filedata['mtime'];
-						$newest_file_name = $file;
-						$size = $filedata['size'] / 1024;
+	if (isset($_GET['t'])) {
+		if (!$_GET['t']) {
+			$newest_file_name = '';
+			$newest_file_time = 0;
+			// get the name of the temp file.
+			if ($dir = @opendir($tmp_dir)) {
+				while (($file = readdir($dir)) !== false) {
+					if ((strlen($file) == 9) && (substr($file, 0, 3) == 'php')) {
+						$filedata = stat($tmp_dir . $file);
+						if ($filedata['mtime'] > $newest_file_time) {
+							$newest_file_time = $filedata['mtime'];
+							$newest_file_name = $file;
+							$size = $filedata['size'] / 1024;
+						}
 					}
 				}
+				closedir($dir);
 			}
-			closedir($dir);
+		} else {
+			$filedata = stat($tmp_dir . $_GET['t']);
+			$size = $filedata['size'] / TR_KBYTE_SIZE;
 		}
-	} else {
-		$filedata = stat($tmp_dir . $_GET['t']);
-		$size = $filedata['size'] / TR_KBYTE_SIZE;
 	}
-	// not sure where these are displayed in the progress popup
+	// displayed in the small iframe alongside the progress animated image
 	echo '<small>';
-	if ($size == '') {
+	if (!isset($size) || isset($size) && $size == '') {
 		echo '<em>'._AT('unknown').' </em>  '._AT('kb');
 	} else {
 		echo number_format($size, 2).' '._AT('kb');

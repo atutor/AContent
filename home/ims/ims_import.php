@@ -234,7 +234,7 @@ function checkResources($import_path){
 		}
 
 		//validate the xml by its schema
-		if (preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
+		if (isset($fileinfo['type']) && preg_match('/imsqti\_(.*)/', $fileinfo['type'])){
 			$qti = new QTIParser($fileinfo['type']);
 			$xml_content = @file_get_contents($import_path . $fileinfo['href']);
 			$qti->parse($xml_content); //will add error to $msg if failed			
@@ -452,7 +452,7 @@ function removeCommonPath($items){
 		global $course_primary_lang;
 		
 		// get language from CONTENT PACKAGE
-		if (substr($element_path[count($element_path)-1], -6) == ':title' && substr($name, -11) == ':langstring') {
+		if (count($element_path) > 0 && substr($element_path[count($element_path)-1], -6) == ':title' && substr($name, -11) == ':langstring') {
 			$course_primary_lang = trim($attrs['xml:lang']);
 		}
 		
@@ -495,7 +495,7 @@ function removeCommonPath($items){
 			// special case for webCT content packages that don't specify the `href` attribute 
 			// with the `<resource>` element.
 			// we take the `href` from the first `<file>` element.
-			if (isset($items[$current_identifier]) && ($items[$current_identifier]['href'] == '')) {
+			if (isset($items[$current_identifier]) && isset($items[$current_identifier]['href']) && ($items[$current_identifier]['href'] == '')) {
 				$attrs['href'] = urldecode($attrs['href']);
 				$items[$current_identifier]['href'] = $attrs['href'];
 			}
@@ -562,7 +562,7 @@ function removeCommonPath($items){
 			if (isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
 				$items[$current_identifier]['a4a_import_enabled'] = true;
 			}
-		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
+		} else if (($name == 'item') && array_key_exists('identifierref', $attrs) && ($attrs['identifierref'] != '')) {
 			$path[] = $attrs['identifierref'];
 		} else if (($name == 'item') && ($attrs['identifier'])) {
 			$path[] = $attrs['identifier'];
@@ -570,7 +570,7 @@ function removeCommonPath($items){
 		} else if (($name == 'resource')) {
 			$current_identifier = $attrs['identifier'];
 			$items[$current_identifier]['type'] = $attrs['type'];
-			if ($attrs['href']) {
+			if (isset($attrs['href'])) {
 				$attrs['href'] = urldecode($attrs['href']);
 
 				$items[$attrs['identifier']]['href'] = $attrs['href'];
@@ -593,7 +593,7 @@ function removeCommonPath($items){
 			//if there is a dependency, attach it to the item array['file']
 			$items[$current_identifier]['dependency'][] = $attrs['identifierref'];
 		}
-		if (($name == 'item') && ($attrs['parameters'] != '')) {
+		if (($name == 'item') && array_key_exists('parameters', $attrs) && ($attrs['parameters'] != '')) {
 			$items[$attrs['identifierref']]['test_message'] = $attrs['parameters'];
 		}
 		if ($name=='file'){
@@ -630,17 +630,19 @@ function removeCommonPath($items){
 
 		// added by Cindy Li on Jan 10, 2010
 		// Extract course title, description and primary language for a newly-created course
-		if (substr($element_path[count($element_path)-2], -6) == ':title') {
-			if (substr($element_path[count($element_path)-1], -7) == ':string' ||
-			    substr($element_path[count($element_path)-1], -11) == ':langstring') {
-				$course_title = trim($my_data);
+		if (count($element_path) >= 2) {
+			if (substr($element_path[count($element_path)-2], -6) == ':title') {
+				if (substr($element_path[count($element_path)-1], -7) == ':string' ||
+					substr($element_path[count($element_path)-1], -11) == ':langstring') {
+					$course_title = trim($my_data);
+				}
 			}
-		}
 		
-		if (substr($element_path[count($element_path)-2], -12) == ':description') {
-			if (substr($element_path[count($element_path)-1], -7) == ':string' ||
-			    substr($element_path[count($element_path)-1], -11) == ':langstring') {
-				$course_description = trim($my_data);
+			if (substr($element_path[count($element_path)-2], -12) == ':description') {
+				if (substr($element_path[count($element_path)-1], -7) == ':string' ||
+					substr($element_path[count($element_path)-1], -11) == ':langstring') {
+					$course_description = trim($my_data);
+				}
 			}
 		}
 		
