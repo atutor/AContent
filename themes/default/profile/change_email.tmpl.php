@@ -10,9 +10,17 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+session_start();
+
 global $onload;
 $onload = 'document.form.form_password.focus();';
-require(TR_INCLUDE_PATH.'header.inc.php'); 
+require(TR_INCLUDE_PATH.'header.inc.php');
+
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 ?>
 
@@ -29,7 +37,7 @@ function encrypt_password()
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('change_email'); ?></legend>
 
-	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form" autocomplete="off">
 		<input type="hidden" name="form_password_hidden" value="" />
 	
 		<table class="form-data" align="center">
@@ -49,13 +57,14 @@ function encrypt_password()
 					<label for="email"><?php echo _AT('email_address'); ?></label>
 				</td>
 				<td align="left">
-					<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
+					<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['email']) AND Token::isValid() AND Token::isRecent()) echo $purifier->purify(stripslashes(htmlspecialchars($_POST['email']))); else echo $purifier->purify(stripslashes(htmlspecialchars($this->row['email']))) ?>" />
 				</td>
 			</tr>
 		
 			<tr>
 				<td colspan="2">
 					<p class="submit_button">
+						<?php echo Token::display(); ?><br>
 						<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onclick="encrypt_password()" />
 						<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 					</p>
