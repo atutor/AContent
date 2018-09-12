@@ -11,8 +11,11 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 
 global $_current_user;
 
@@ -31,10 +34,12 @@ if (isset($_POST['cancel']))
 	exit;
 }
 
-if (isset($_POST['submit'])) 
+if (isset($_POST['submit']))
 {
-	$this_password = $_POST['form_password_hidden'];
-
+	if (Token::isValid() AND Token::isRecent())
+	{
+		$this_password = $_POST['form_password_hidden'];
+	
 	// password check
 	if (!empty($this_password)) 
 	{
@@ -55,7 +60,7 @@ if (isset($_POST['submit']))
 		header('Location: change_email.php');
 		exit;
 	}
-		
+	
 	// email check
 	if ($_POST['email'] == '') 
 	{
@@ -78,6 +83,7 @@ if (isset($_POST['submit']))
 
 	if (!$msg->containsErrors()) 
 	{
+
 		if (defined('TR_EMAIL_CONFIRMATION') && TR_EMAIL_CONFIRMATION) 
 		{
 			//send confirmation email
@@ -110,6 +116,10 @@ if (isset($_POST['submit']))
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 	}
+	} else
+	{
+		$msg->addError('INVALID_TOKEN');
+	}	
 }
 
 $row = $_current_user->getInfo();
