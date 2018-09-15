@@ -11,10 +11,17 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -26,9 +33,11 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit'])) {
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+	{
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim(htmlspecialchars($_POST['feedback'], ENT_QUOTES));
-	$_POST['question'] = trim(htmlspecialchars($_POST['question'], ENT_QUOTES));
+	$_POST['feedback'] = $purifier->purify(trim($_POST['feedback']));
+	$_POST['question'] = $purifier->purify(trim($_POST['question']));
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['answer']      = intval($_POST['answer']);
 
@@ -38,7 +47,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 		
 	if (!$msg->containsErrors()) {
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES));
+			$_POST['choice'][$i] = $purifier->purify(trim($_POST['choice'][$i]));
 		}
 
 		$answers = array_fill(0, 10, 0);
@@ -74,6 +83,10 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			header('Location: question_db.php?_course_id='.$_course_id);
 			exit;
 		}
+	}
+	} else
+	{
+		$msg->addError('INVALID_TOKEN');
 	}
 } else {
 	$_POST['answer'] = 0;

@@ -11,10 +11,17 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -26,10 +33,12 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if ($_POST['submit']) {
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+	{
 	$missing_fields = array();
 
-	$_POST['feedback']    = trim($_POST['feedback']);
-	$_POST['question']    = trim($_POST['question']);
+	$_POST['feedback']    = $purifier->purify(trim($_POST['feedback']));
+	$_POST['question']    = $purifier->purify(trim($_POST['question']));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
@@ -55,14 +64,15 @@ if (isset($_POST['cancel'])) {
 		for ($i=0; $i<10; $i++) {
 			/**
 			 * Db defined it to be 255 length, chop strings off it it's less than that
+
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+			$_POST['choice'][$i] = $purifier->purify(trim($_POST['choice'][$i]));
 
 			if ($_POST['choice'][$i] != '') {
 				/* filter out empty choices/ remove gaps */
-				$choice_new[] = $_POST['choice'][$i];
+				$choice_new[] = $purifier->purify($_POST['choice'][$i]);
 				$answer_new[] = $order++;
 			}
 		}
@@ -103,6 +113,10 @@ if (isset($_POST['cancel'])) {
 		}
 		else
 			$msg->addError('DB_NOT_UPDATED');
+	}
+	} else
+	{
+		$msg->addError('INVALID_TOKEN');
 	}
 }
 
