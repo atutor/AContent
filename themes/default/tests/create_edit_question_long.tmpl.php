@@ -10,7 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+session_start();
+
 require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -31,15 +34,15 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
 		<?php TestsUtility::printVisualEditorLink('optional_feedback'); ?>
 
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php if (isset($_POST['feedback']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent()) echo htmlspecialchars(stripslashes($_POST['feedback'])); else echo htmlspecialchars(stripslashes($this->row['feedback'])) ?></textarea>
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		<?php TestsUtility::printVisualEditorLink('question'); ?>
 
-		<textarea id="question" cols="50" rows="6" name="question"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="6" name="question"><?php if (isset($_POST['question']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent())
+		echo htmlspecialchars(stripslashes($_POST['question'])); else echo htmlspecialchars(stripslashes($this->row['question']))?></textarea>
 	</div>
 	
 	<div class="row">
@@ -51,6 +54,7 @@ require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
 	</div>
 
 	<div class="row buttons">
+		<?php echo CSRF_Token::display(); ?><br>
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
