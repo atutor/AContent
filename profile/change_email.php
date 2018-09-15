@@ -36,7 +36,7 @@ if (isset($_POST['cancel']))
 
 if (isset($_POST['submit']))
 {
-	if (Token::isValid() AND Token::isRecent())
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
 	{
 		$this_password = $_POST['form_password_hidden'];
 	

@@ -35,7 +35,7 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
-	if (Token::isValid() AND Token::isRecent())
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
 	{
 		if (isset($_POST['is_author'])) $is_author = 1;
 		else $is_author = 0;
