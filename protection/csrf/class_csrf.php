@@ -6,7 +6,7 @@
 *
 * session_start(); must be called before this is utilised.
 */
-class Token
+class CSRF_Token
 {
 	// Empty constructor to avoid "Constructor cannot be static" error.
 	public function __construct() {}
