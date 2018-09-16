@@ -11,8 +11,13 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 // can only be used by login user
 if (!isset($_SESSION['user_id']) || $_SESSION['user_id'] == 0) return;
@@ -44,11 +49,11 @@ if (!is_array($my_courses)) {
 		// only display the first 200 character of course description
 
 		if ($row['role'] == TR_USERROLE_AUTHOR) {
-			$output .= ' <li class="mine" title="'. _AT('my_authoring_course').': '. $row['title'].'"> '."\n";
+			$output .= ' <li class="mine" title="'. _AT('my_authoring_course').': '. $purifier->purify(htmlspecialchars(stripslashes($row['title']))).'"> '."\n";
 		} else {
-			$output .= ' <li class="theirs" title="'. _AT('others_course').': '. $row['title'].'">'."\n";
+			$output .= ' <li class="theirs" title="'. _AT('others_course').': '. $purifier->purify(htmlspecialchars(stripslashes($row['title']))).'">'."\n";
 		}
-		$output .= '    <a href="'. TR_BASE_HREF.'home/course/index.php?_course_id='. $row['course_id'].'"'.(($_course_id == $row['course_id']) ? ' class="selected-sidemenu"' : '').'>'.$row['title'].'</a>'."\n";
+		$output .= '    <a href="'. TR_BASE_HREF.'home/course/index.php?_course_id='. $row['course_id'].'"'.(($_course_id == $row['course_id']) ? ' class="selected-sidemenu"' : '').'>'.$purifier->purify(htmlspecialchars(stripslashes($row['title']))).'</a>'."\n";
 		if ($row['role'] == TR_USERROLE_VIEWER) {
 			$output .= '    <a href="'. TR_BASE_HREF.'home/'. $caller_url.'action=remove'.SEP.'cid='. $row['course_id'].'">'."\n";
             $output .= '      <img src="'. TR_BASE_HREF.'themes/'. $_SESSION['prefs']['PREF_THEME'].'/images/bookmark_remove.png" alt="'. htmlspecialchars(_AT('remove_from_list')).'" title="'. htmlspecialchars(_AT('remove_from_list')).'" border="0" class="shortcut_icon"/>'."\n";
