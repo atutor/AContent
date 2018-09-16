@@ -11,7 +11,7 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UserCoursesDAO.class.php');
 require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
