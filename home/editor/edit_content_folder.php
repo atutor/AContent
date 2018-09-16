@@ -11,9 +11,16 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
+define('TR_ClassCSRF_PATH', '../../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_content_id, $_content_id, $contentManager, $_course_id;
 $cid = $_content_id;
@@ -37,7 +44,9 @@ if ($cid > 0 && isset($contentManager)) {
 // save changes
 if ($_POST['submit'])
 {
-	if ($_POST['title'] == '') {
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+	{
+		if ($_POST['title'] == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
 	}
 		
@@ -87,6 +96,10 @@ if ($_POST['submit'])
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_base_path.'home/editor/edit_content_folder.php?_cid='.$cid);
 		exit;
+	}
+	} else
+	{
+		$msg->addError('INVALID_TOKEN');
 	}
 }
 

@@ -10,6 +10,8 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
 function in_array_cin($strItem, $arItems)

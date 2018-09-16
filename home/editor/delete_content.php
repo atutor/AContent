@@ -11,7 +11,12 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_content_id, $_content_id, $contentManager;
 
@@ -61,7 +66,7 @@ if (is_array($children) && (count($children)>0) ) {
 }
 	
 $row = $contentManager->getContentPage($_GET['cid']);
-$title = $row['title'];
+$title = $purifier->purify($row['title']);
 
 $msg->addConfirm(array('DELETE', $title),  $hidden_vars);
 $msg->printConfirm();

@@ -11,9 +11,14 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
 
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 // commented out this require which was causing the a redeclare error #4846
 // delete the following line when its confirmed the require is not needed
@@ -56,7 +61,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 	<div class="row">
 	<?php 
-		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+		echo '<h2>'.AT_print($purifier->purify(stripslashes($_POST['title'])), 'content.title').'</h2>';
 		if ($_POST['formatting'] == CONTENT_TYPE_WEBLINK) {
 		    $url = $_POST['weblink_text'];
             $validated_url = isValidURL($url);
@@ -67,7 +72,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
                   echo ContentUtility::formatContent($url, $_POST['formatting']);
             }
         } else {
-            echo ContentUtility::formatContent(stripslashes($_POST['body_text']), $_POST['formatting']);
+            echo ContentUtility::formatContent($purifier->purify(stripslashes($_POST['body_text'])), $_POST['formatting']);
         }
     ?>		
 	</div>

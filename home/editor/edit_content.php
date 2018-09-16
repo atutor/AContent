@@ -11,6 +11,8 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 
 global $associated_forum, $_course_id, $_content_id;
 
