@@ -61,6 +61,7 @@ require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 	</div>
 
 	<div class="row buttons">
+		<?php echo CSRF_Token::display(); ?><br>
 		<input type="submit" name="preset" value="<?php echo _AT('set_preset'); ?>" class="button" />
 	</div>
 	</fieldset>
