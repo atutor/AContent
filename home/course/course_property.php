@@ -11,6 +11,8 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
+define('TR_ClassCSRF_PATH', '../../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
@@ -22,6 +24,11 @@ require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentTestsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'lib/mysql_funcs.inc.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -40,17 +47,19 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 else if($_POST['submit']){
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+	{
 		if (isset($_POST['hide_course']))
 			$access = 'private';
 		else
 			$access = 'public';
-
-		if ($_course_id > 0) { // update an existing course
-			$coursesDAO->UpdateField($_course_id, 'title', $_POST['title']);
-			$coursesDAO->UpdateField($_course_id, 'category_id', $_POST['category_id']);
-			$coursesDAO->UpdateField($_course_id, 'primary_language', $_POST['pri_lang']);
-			$coursesDAO->UpdateField($_course_id, 'description', $_POST['description']);
-			$coursesDAO->UpdateField($_course_id, 'copyright', $_POST['copyright']);
+	{
+			if ($_course_id > 0) { // update an existing course
+			$coursesDAO->UpdateField($_course_id, 'title', $purifier->purify(htmlspecialchars(stripslashes($_POST['title)']))));
+			$coursesDAO->UpdateField($_course_id, 'category_id', $purifier->purify(htmlspecialchars(stripslashes($_POST['category_id']))));
+			$coursesDAO->UpdateField($_course_id, 'primary_language', $purifier->purify(htmlspecialchars(stripslashes($_POST['pri_lang']))));
+			$coursesDAO->UpdateField($_course_id, 'description', $purifier->purify(htmlspecialchars(stripslashes($_POST['description']))));
+			$coursesDAO->UpdateField($_course_id, 'copyright', $purifier->purify(htmlspecialchars(stripslashes($_POST['copyright']))));
 
 			$coursesDAO->UpdateField($_course_id, 'access', $access);
 			
@@ -61,8 +70,15 @@ else if($_POST['submit']){
 		}
 		else 
 		{ // create a new course
-			if ($course_id = $coursesDAO->Create($_POST['this_author'], $_POST['category_id'], 'top', $access, $_POST['title'], $_POST['description'], 
-			                    null, null, null, $_POST['copyright'], $_POST['pri_lang'], null, null))
+			
+				if ($course_id = $coursesDAO->Create(
+						$purifier->purify($_POST['this_author']),
+						$purifier->purify($_POST['category_id']), 'top', $access,
+						$purifier->purify($_POST['title']),
+						$purifier->purify($_POST['description']), 
+			            null, null, null,
+			            $purifier->purify($_POST['copyright']),
+			            $_POST['pri_lang'], null, null))
 			{
 				if(isset($_POST['_struct_name'])) {
 					
@@ -82,7 +98,13 @@ else if($_POST['submit']){
 				header('Location: '.TR_BASE_HREF.'home/course/index.php?_course_id='.$course_id);
 				exit;
 			}
+		}
 	}
+	} else
+	{
+		$msg->addError('INVALID_TOKEN');
+	}
+		
 }
 
 // display
@@ -106,9 +128,5 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 $savant->display('home/course/course_property.tmpl.php');
 
 require(TR_INCLUDE_PATH.'footer.inc.php');
-
-
-
-
 
 ?>
