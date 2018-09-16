@@ -10,14 +10,18 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+session_start();
+
 if (!defined('TR_INCLUDE_PATH')) { exit; } 
 
 global $contentManager;
 
 require(TR_INCLUDE_PATH.'header.inc.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 ?>
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF'].'?_course_id='.$this->course_id; if ($this->cid > 0) echo SEP.'_cid='.$this->cid; else if ($this->pid > 0) echo SEP.'pid='.$this->pid;?>" method="post" name="form"> 
+	<?php echo CSRF_Token::display(); ?><br>
 	<input type="hidden" name="button_1" value="-1" />
 <?php
 	if ($contentManager->getNumSections() > (1 - (bool)(!$cid))) {
