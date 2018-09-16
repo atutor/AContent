@@ -11,10 +11,17 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../tests/lib/likert_presets.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -35,7 +42,7 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['question']    = trim($_POST['question']);
+	$_POST['question']    = $purifier->purify(trim($_POST['question']));
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['alignment']   = intval($_POST['alignment']);
 
@@ -56,9 +63,10 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-
-		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+		if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+		{
+			for ($i=0; $i<10; $i++) {
+			$_POST['choice'][$i] = $purifier->purify(trim($_POST['choice'][$i]));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
@@ -84,6 +92,7 @@ if (isset($_POST['cancel'])) {
                             answer_1=?,
                             answer_2=?,
                             answer_3=?,
+
                             answer_4=?,
                             answer_5=?,
                             answer_6=?,
@@ -125,6 +134,10 @@ if (isset($_POST['cancel'])) {
 			header('Location: question_db.php?_course_id='.$_course_id);
 		}
 		exit;
+		} else
+		{
+			$msg->addError('INVALID_TOKEN');
+		}
 	}
 } else if (isset($_POST['preset'])) {
 	// load preset

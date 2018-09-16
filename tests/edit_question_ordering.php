@@ -11,9 +11,16 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -36,8 +43,8 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
 
-	$_POST['feedback']    = trim($_POST['feedback']);
-	$_POST['question']    = trim($_POST['question']);
+	$_POST['feedback']    = $purifier->purify(trim($_POST['feedback']));
+	$_POST['question']    = $purifier->purify(trim($_POST['question']));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
@@ -56,6 +63,8 @@ if (isset($_POST['cancel'])) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 	if (!$msg->containsErrors()) {
+		if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+		{
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the non-blank answers
 		$order = 0; // order count
@@ -79,26 +88,34 @@ if (isset($_POST['cancel'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                                 category_id=?,
                                 feedback=?,
+
                                 question=?,
                                 choice_0=?,
+
                                 choice_1=?,
                                 choice_2=?,
                                 choice_3=?,
+
                                 choice_4=?,
                                 choice_5=?,
                                 choice_6=?,
+
                                 choice_7=?,
                                 choice_8=?,
                                 choice_9=?,
+
                                 answer_0=?,
                                 answer_0=?,
                                 answer_0=?,
+
                                 answer_0=?,
                                 answer_0=?,
                                 answer_0=?,
+
                                 answer_0=?,
                                 answer_0=?,
                                 answer_0=?,
+
                                 answer_0=?
                                 WHERE question_id=?";	
 			
@@ -136,8 +153,13 @@ if (isset($_POST['cancel'])) {
 			}
 			exit;
 		}
-		else
+		else {
 			$msg->addError('DB_NOT_UPDATED');
+		}	
+		} else
+		{
+			$msg->addError('INVALID_TOKEN');
+		}
 	}
 } else {
 	if (!($row = $testsQuestionsDAO->get($qid))){

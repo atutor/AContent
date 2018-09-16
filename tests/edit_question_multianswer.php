@@ -11,9 +11,16 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -34,8 +41,8 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['feedback'] = $purifier->purify(trim($_POST['feedback']));
+	$_POST['question'] = $purifier->purify(trim($_POST['question']));
 	$_POST['tid']	   = intval($_POST['tid']);
 	$_POST['qid']	   = intval($_POST['qid']);
 	$_POST['weight']   = intval($_POST['weight']);
@@ -45,6 +52,8 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+		if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+		{
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the associated "answer" for the choices
 
@@ -83,18 +92,23 @@ if (isset($_POST['cancel'])) {
                                     choice_4=?,
                                     choice_5=?,
                                     choice_6=?,
+
                                     choice_7=?,
                                     choice_8=?,
                                     choice_9=?,
+
                                     answer_0=?,
                                     answer_1=?,
+
                                     answer_2=?,
                                     answer_3=?,
                                     answer_4=?,
+
                                     answer_5=?,
                                     answer_6=?,
                                     answer_7=?,
                                     answer_8=?,
+
                                     answer_9=?
                                     WHERE question_id=?";
 
@@ -137,6 +151,10 @@ if (isset($_POST['cancel'])) {
 		{
 			$msg->addError('DB_NOT_UPDATED');
 		}
+		} else
+		{
+			$msg->addError('INVALID_TOKEN');
+		}		
 	}
 }
 
