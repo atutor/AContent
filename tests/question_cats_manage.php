@@ -34,7 +34,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_cats.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	if (Token::isValid() AND Token::isRecent())
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
 	{
 		$_POST['title'] = $purifier->purify(trim($_POST['title']));
 
