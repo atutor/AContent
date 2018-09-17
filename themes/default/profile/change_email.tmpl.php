@@ -57,14 +57,14 @@ function encrypt_password()
 					<label for="email"><?php echo _AT('email_address'); ?></label>
 				</td>
 				<td align="left">
-					<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['email']) AND Token::isValid() AND Token::isRecent()) echo $purifier->purify(stripslashes(htmlspecialchars($_POST['email']))); else echo $purifier->purify(stripslashes(htmlspecialchars($this->row['email']))) ?>" />
+					<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['email']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent()) echo $purifier->purify(stripslashes(htmlspecialchars($_POST['email']))); else echo $purifier->purify(stripslashes(htmlspecialchars($this->row['email']))) ?>" />
 				</td>
 			</tr>
 		
 			<tr>
 				<td colspan="2">
 					<p class="submit_button">
-						<?php echo Token::display(); ?><br>
+						<?php echo CSRF_Token::display(); ?><br>
 						<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onclick="encrypt_password()" />
 						<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 					</p>
