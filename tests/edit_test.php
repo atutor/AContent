@@ -13,6 +13,7 @@
 $page = 'tests';
 define('TR_INCLUDE_PATH', '../include/');
 define('TR_ClassCSRF_PATH', '../protection/csrf/');
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
