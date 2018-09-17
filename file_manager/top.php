@@ -67,12 +67,12 @@ $row = $coursesDAO->get($_course_id);
 $my_MaxCourseSize	= $row['max_quota'];
 $my_MaxFileSize		= $row['max_file_size'];
 
-if ($my_MaxCourseSize == TR_COURSESIZE_DEFAULT) {
+if ($my_MaxCourseSize == 'TR_COURSESIZE_DEFAULT') {
 	$my_MaxCourseSize = $MaxCourseSize;
 }
-if ($my_MaxFileSize == TR_FILESIZE_DEFAULT) {
+if ($my_MaxFileSize == 'TR_FILESIZE_DEFAULT') {
 	$my_MaxFileSize = $MaxFileSize;
-} else if ($my_MaxFileSize == TR_FILESIZE_SYSTEM_MAX) {
+} else if ($my_MaxFileSize == 'TR_FILESIZE_SYSTEM_MAX') {
 	$my_MaxFileSize = megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1));
 }
 
