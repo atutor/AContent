@@ -11,6 +11,8 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
+define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 /* available header.tmpl.php variables:
  * $this->lang_code         the ISO language code
  * SITE_NAME            the site name from the config file
@@ -53,6 +55,11 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
  * back_to_page              array('url', 'title')            the link back to the part of the current page, if needed.
  */
 include_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
+require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+
+$config = HTMLPurifier_Config::createDefault();
+$purifier = new HTMLPurifier($config);
+
 $lang_charset = "UTF-8";
 //Timer
 //$mtime = microtime(); 
@@ -119,7 +126,7 @@ $lang_charset = "UTF-8";
     <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#contenttop" accesskey="c">
     <img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>      
 
-   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $_REQUEST['_cid']  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+   <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo $purifier->purify($_REQUEST['_cid'])  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
    <?php global $_config;
     echo '<span id="site_title">'.$_config['site_name'].'</span>';
    
