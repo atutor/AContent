@@ -61,7 +61,7 @@ require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 		<tr>
 			<td align="left"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 			<label for="title"><?php echo _AT('title'); ?></label>:</td>
-			<td align="left"><input id="title" name="title" type="text" maxlength="255" size="45" value="<?php if (isset($_POST['login']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent()) echo stripslashes(htmlspecialchars($_POST['title'])); else echo stripslashes(htmlspecialchars($this->course_row['title'])); ?>" /></td>
+			<td align="left"><input id="title" name="title" type="text" maxlength="255" size="45" value="<?php if (isset($_POST['title']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent()) echo stripslashes(htmlspecialchars($_POST['title'])); else echo stripslashes(htmlspecialchars($this->course_row['title'])); ?>" /></td>
 		</tr>
 
 		<tr>
