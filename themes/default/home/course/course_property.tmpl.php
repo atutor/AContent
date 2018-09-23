@@ -16,7 +16,7 @@ global $_current_user;
 global $languageManager;
 
 require_once(TR_INCLUDE_PATH.'classes/CoursesUtility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once('../../class_csrf.php');
 
 ?>
 
