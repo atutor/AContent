@@ -17,7 +17,6 @@ require_once(TR_INCLUDE_PATH.'../tests/lib/likert_presets.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once('../class_csrf.php');
 
 global $_course_id;
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
@@ -29,8 +28,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit'])) {
-	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
-	{
+
 	$_POST['question']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
@@ -98,10 +96,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('DB_NOT_UPDATED');
 		}
 	}
-	} else
-	{
-		$msg->addError('INVALID_TOKEN');
-	}
+
 } else if (isset($_POST['preset'])) {
 	// load preset
 	$_POST['preset_num'] = intval($_POST['preset_num']);
