@@ -10,10 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-session_start();
-
 require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -35,18 +32,14 @@ require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 		<?php TestsUtility::printVisualEditorLink('optional_feedback'); ?>
 
 		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php 
-		if (isset($_POST['feedback']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent())
-		echo htmlspecialchars(stripslashes($_POST['feedback']));
-		else echo htmlspecialchars(stripslashes($this->row['feedback'])); ?></textarea>
+		echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 
 	<div class="row">
 		<label for="instructions"><?php echo _AT('instructions'); ?></label> 
 		<?php TestsUtility::printVisualEditorLink('instructions'); ?>
 		<textarea id="instructions" cols="50" rows="3" name="instructions"><?php 
-		if (isset($_POST['instructions']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent())
-		echo htmlspecialchars(stripslashes($_POST['instructions']));
-		else echo htmlspecialchars(stripslashes($this->row['instructions'])); ?></textarea>
+		echo htmlspecialchars(stripslashes($_POST['instructions'])); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -71,9 +64,7 @@ require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 		</select>
 		
 		<textarea id="question_<?php echo $i; ?>" cols="50" rows="2" name="question[<?php echo $i; ?>]"><?php 
-		if (isset($_POST['question'][$i]) AND CSRF_Token::isValid() AND CSRF_Token::isRecent())
-		echo htmlspecialchars(stripslashes($_POST['question'][$i]));
-		else echo htmlspecialchars(stripslashes($this->row['question'][$i])); ?></textarea> 
+		echo htmlspecialchars(stripslashes($_POST['question'][$i])); ?></textarea> 
 	</div>
 <?php endfor; ?>
 	
@@ -89,14 +80,11 @@ require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 			<?php TestsUtility::printVisualEditorLink('answer_' . $i); ?>
 			<br />
 			<textarea id="answer_<?php echo $i; ?>" cols="50" rows="2" name="answer[<?php echo $i; ?>]"><?php 
-			if (isset($_POST['answer'][$i]) AND CSRF_Token::isValid() AND CSRF_Token::isRecent())
-			echo htmlspecialchars(stripslashes($_POST['answer'][$i]));
-			else echo htmlspecialchars(stripslashes($this->row['answer'][$i])); ?></textarea>
+			echo htmlspecialchars(stripslashes($_POST['answer'][$i])); ?></textarea>
 		</div>
 	<?php endfor; ?>
 
 	<div class="row buttons">
-		<?php echo CSRF_Token::display(); ?><br>
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>

@@ -10,10 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-session_start();
-
 require_once(TR_INCLUDE_PATH.'../tests/classes/TestsUtility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
@@ -58,7 +55,6 @@ require_once(TR_ClassCSRF_PATH.'class_csrf.php');
 	<?php } ?>
 
 	<div class="row buttons">
-		<?php echo CSRF_Token::display(); ?><br>
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
 	</div>
