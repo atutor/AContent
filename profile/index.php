@@ -11,11 +11,10 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/UsersDAO.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once('../class_csrf.php');
 unset($_SESSION['course_id']);
 
 global $_current_user;

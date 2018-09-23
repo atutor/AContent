@@ -11,11 +11,9 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
+require_once('../class_csrf.php');
 
 global $_current_user;
 
@@ -40,7 +38,7 @@ if (isset($_POST['submit'])) {
 		//check if old password entered is correct
 		if ($row = $_current_user->getInfo()) 
 		{
-			if ($row['password'] != $purifier->purify($_POST['form_old_password_hidden'])) 
+			if ($row['password'] != htmlspecialchars(trim(stripslashes(strip_tags($_POST['form_old_password_hidden'])))))
 			{
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: change_password.php');
@@ -72,7 +70,7 @@ if (isset($_POST['submit'])) {
 	if (!$msg->containsErrors()) {
 
 		// insert into the db.
-		$password   = $purifier->purify($_POST['form_password_hidden']);
+		$password   = htmlspecialchars(trim(stripslashes(strip_tags($_POST['form_password_hidden']))));
 
 		if (!$_current_user->setPassword($password)) 
 		{
