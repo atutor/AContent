@@ -11,14 +11,10 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -44,12 +40,12 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 if (!isset($_POST['step'])) {
 	$hidden_vars['step'] = 1;
 	$hidden_vars['_course_id'] = $_course_id;
-	$msg->addConfirm(array('DELETE_COURSE_1', $purifier->purify($course_info['title'])), $hidden_vars);
+	$msg->addConfirm(array('DELETE_COURSE_1', htmlspecialchars(trim(stripslashes(strip_tags($course_info['title']))))), $hidden_vars);
 	$msg->printConfirm();
 } else if ($_POST['step'] == 1) {
 	$hidden_vars['step'] = 2;
 	$hidden_vars['_course_id'] = $_course_id;
-	$msg->addConfirm(array('DELETE_COURSE_2', $purifier->purify($course_info['title'])), $hidden_vars);
+	$msg->addConfirm(array('DELETE_COURSE_2', htmlspecialchars(trim(stripslashes(strip_tags($course_info['title']))))), $hidden_vars);
 	$msg->printConfirm();
 }
 

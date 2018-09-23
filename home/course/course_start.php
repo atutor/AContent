@@ -11,7 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/CoursesDAO.class.php');
@@ -20,11 +20,6 @@ require(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
 require(TR_INCLUDE_PATH.'header.inc.php'); 
 
 require(TR_INCLUDE_PATH.'../home/course/course_start_tabs.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
-
 
 global $msg, $_course_id, $contentManager;
 
@@ -47,7 +42,7 @@ if (isset($_current_user) && ($_current_user->isAuthor($_course_id) || $_current
 if(isset($_POST['struct']) && isset($_POST['create_struct'])) {
 	
 	
-	$_POST['struct']	= $content_row['title'] = $purifier->purify($_POST['struct']);
+	$_POST['struct']	= $content_row['title'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['struct']))));
 	
 	$ordering = count($contentManager->getContent(0)) + 1;
 	$pid = 0;

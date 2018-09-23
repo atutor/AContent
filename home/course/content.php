@@ -11,15 +11,11 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentForumsAssocDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/ContentDAO.class.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_current_user, $_course_id, $_content_id, $contentManager;
 
@@ -211,8 +207,8 @@ if ($content_row['text'] == '' && empty($content_test_ids)){
     $content = ContentUtility::formatContent($content, $content_row['formatting']);
 	$content_array = ContentUtility::getContentTable($content, $content_row['formatting']);
 	
-	$savant->assign('content_table', $purifier->purify($content_array[0]));
-	$savant->assign('body', $purifier->purify(htmlspecialchars_decode($content_array[1])));
+	$savant->assign('content_table', $content_array[0]);
+	$savant->assign('body', htmlspecialchars(trim(stripslashes(strip_tags($content_array[1])))));
 	$savant->assign('has_text_alternative', $has_text_alternative);
 	$savant->assign('has_audio_alternative', $has_audio_alternative);
 	$savant->assign('has_visual_alternative', $has_visual_alternative);

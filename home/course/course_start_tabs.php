@@ -11,7 +11,7 @@
 /************************************************************************/
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 
 function get_tabs() {
 //these are the _AT(x) variable names and their include file
