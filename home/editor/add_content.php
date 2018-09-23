@@ -11,7 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 
 global $_course_id;

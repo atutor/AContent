@@ -11,9 +11,8 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_ClassCSRF_PATH', '../../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+
+require_once('../../class_csrf.php');
 require (TR_INCLUDE_PATH.'vitals.inc.php');
 
 global $_course_id, $contentManager;

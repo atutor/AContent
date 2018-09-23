@@ -12,17 +12,12 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_ClassCSRF_PATH', '../../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/ContentUtility.class.php');
 require_once(TR_INCLUDE_PATH.'../home/classes/StructureManager.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
+require_once('../../class_csrf.php');
 
 $_custom_head .= '<link rel="stylesheet" href="'.$_base_href.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/template_editor/style.css" type="text/css" />'."\n";
 
@@ -58,7 +53,7 @@ if ($_POST['submit'])
 	{
 		if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
 	{
-		$_POST['title']	= $content_row['title'] = $purifier->purify(htmlspecialchars($_POST['title'], ENT_QUOTES, 'UTF-8'));
+		$_POST['title']	= $content_row['title'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['title'], ENT_QUOTES, 'UTF-8'))));
 	
 		if ($cid > 0)
 		{ // edit existing content

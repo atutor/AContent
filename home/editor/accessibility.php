@@ -11,7 +11,6 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
-define('TR_HTMLPurifier_PATH', '../../protection/xss/htmlpurifier/library/');
 
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'../home/editor/editor_tab_functions.inc.php');
