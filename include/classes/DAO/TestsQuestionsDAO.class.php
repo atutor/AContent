@@ -69,7 +69,9 @@ class TestsQuestionsDAO extends DAO {
 	public function get($questionID)
 	{
 
-		$sql = "SELECT * FROM AC_tests_questions
+		// We use TABLE_PREFIX to prevent error: Table ac_tests_questions doesn't exist
+		// when editing or deleting created tests
+		$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions
 		             WHERE question_id=?";
 		$values = $questionID;
 		$types = "i";
