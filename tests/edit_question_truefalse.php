@@ -12,16 +12,10 @@
 
 $page = 'tests';
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -43,16 +37,15 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 
-	$_POST['question'] = $purifier->purify(trim($_POST['question']));
+	$_POST['question'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('statement')));
 	}
 
 	if (!$msg->containsErrors()) {
-		if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
-		{
-			$_POST['feedback']    = trim($_POST['feedback']);
+
+			$_POST['feedback']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
@@ -72,10 +65,7 @@ if (isset($_POST['cancel'])) {
 		else {
 			$msg->addError('DB_NOT_UPDATED');
 		}
-		} else
-		{
-			$msg->addError('INVALID_TOKEN');
-		}
+
 	}
 }
 

@@ -12,16 +12,10 @@
 
 //$page = 'tests';
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -34,20 +28,16 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit'])) {
-	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
-	{
+	
 		$testsDAO = new TestsDAO();
 	
-		if ($testsDAO->Create($_course_id, $purifier->purify($_POST['title']), $purifier->purify($_POST['description'])))
+		if ($testsDAO->Create($_course_id, htmlspecialchars(trim(stripslashes(strip_tags($_POST['title'])))), htmlspecialchars(trim(stripslashes(strip_tags($_POST['description']))))));
 		{
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php?_course_id='.$_course_id);
 		exit;
 		}
-	} else
-	{
-		$msg->addError('INVALID_TOKEN');
-	}
+
 }
 
 $onload = 'document.form.title.focus();';

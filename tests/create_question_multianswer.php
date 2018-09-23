@@ -11,17 +11,11 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -33,11 +27,10 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if ($_POST['submit'] || $_POST['submit_yes']) {
-	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
-	{
+
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = $purifier->purify(trim($_POST['feedback']));
-	$_POST['question'] = $purifier->purify(trim($_POST['question']));
+	$_POST['feedback'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['question'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
@@ -53,7 +46,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = $purifier->purify(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
@@ -61,8 +54,8 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 				$_POST['answer'][$i] = 0;
 			} else {
 				/* filter out empty choices/ remove gaps */
-				$choice_new[] = $purifier->purify($_POST['choice'][$i]);
-				$answer_new[] = $purifier->purify($_POST['answer'][$i]);
+				$choice_new[] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
+				$answer_new[] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['answer'][$i]))));
 
 				if ($_POST['answer'][$i] != 0)
 					$has_answer = TRUE;
@@ -71,15 +64,15 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			
 		if ($has_answer != TRUE && !$_POST['submit_yes']) {
 	
-			$hidden_vars['required']    = $purifier->purify(trim($_POST['required']));
-			$hidden_vars['feedback']    = $purifier->purify(trim($_POST['feedback']));
-			$hidden_vars['question']    = $purifier->purify(trim($_POST['question']));
+			$hidden_vars['required']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['required']))));
+			$hidden_vars['feedback']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+			$hidden_vars['question']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 			$hidden_vars['category_id'] = intval($_POST['category_id']);
 			$hidden_vars['_course_id']  = $_course_id;
 
 			for ($i = 0; $i < count($choice_new); $i++) {
-				$hidden_vars['answer['.$i.']'] = $purifier->purify($answer_new[$i]);
-				$hidden_vars['choice['.$i.']'] = $purifier->purify($choice_new[$i]);
+				$hidden_vars['answer['.$i.']'] = htmlspecialchars(trim(stripslashes(strip_tags($answer_new[$i]))));
+				$hidden_vars['choice['.$i.']'] = htmlspecialchars(trim(stripslashes(strip_tags($choice_new[$i]))));
 			}
 
 			$msg->addConfirm('NO_ANSWER', $hidden_vars);
@@ -123,10 +116,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			}
 		}
 	}
-	} else
-	{
-		$msg->addError('INVALID_TOKEN');
-	}
+
 }
 
 $onload = 'document.form.category_id.focus();';

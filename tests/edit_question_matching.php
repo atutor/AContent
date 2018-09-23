@@ -11,17 +11,11 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../tests/lib/likert_presets.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 Utility::authenticate(TR_PRIV_ISAUTHOR_OF_CURRENT_COURSE);
@@ -46,8 +40,8 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['tid']          = intval($_POST['tid']);
 	$_POST['qid']          = intval($_POST['qid']);
-	$_POST['feedback']     = $purifier->purify(trim($_POST['feedback']));
-	$_POST['instructions'] = $purifier->purify(trim($_POST['instructions']));
+	$_POST['feedback']     = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['instructions'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['instructions']))));
 	$_POST['category_id']  = intval($_POST['category_id']);
 
 	for ($i = 0 ; $i < 10; $i++) {
@@ -65,8 +59,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
-		{
+
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                             category_id=?,
                             feedback=?,
@@ -150,10 +143,7 @@ if (isset($_POST['cancel'])) {
 			}
 			exit;
 		}
-		} else
-		{
-			$msg->addError('INVALID_TOKEN');
-		}
+
 	}
 } else {
 	if (!($row = $testsQuestionsDAO->get($qid))){

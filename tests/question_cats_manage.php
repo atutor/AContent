@@ -12,16 +12,9 @@
 
 $page = 'tests';
 define('TR_INCLUDE_PATH', '../include/');
-define('TR_ClassCSRF_PATH', '../protection/csrf/');
-define('TR_HTMLPurifier_PATH', '../protection/xss/htmlpurifier/library/');
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsCategoriesDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
 
 global $_course_id;
 
@@ -34,11 +27,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_cats.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
-	{
-		$_POST['title'] = $purifier->purify(trim($_POST['title']));
 
-		if (!empty($_POST['title']) && !isset($_POST['catid'])) {
+	$_POST['title'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['title']))));
+
+	if (!empty($_POST['title']) && !isset($_POST['catid'])) {
 		if ($testsQuestionsCategoriesDAO->Create($_course_id, $_POST['title']))
 		{
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -54,10 +46,6 @@ if (isset($_POST['cancel'])) {
 		}
 	} else {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
-	}
-	} else
-	{
-		$msg->addError('INVALID_TOKEN');
 	}
 }
 
