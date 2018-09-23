@@ -16,11 +16,7 @@ global $onload;
 $onload = 'document.form.form_password.focus();';
 require(TR_INCLUDE_PATH.'header.inc.php');
 
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-require_once(TR_HTMLPurifier_PATH.'HTMLPurifier.auto.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
+require_once('../class_csrf.php');
 
 ?>
 
@@ -56,8 +52,8 @@ function encrypt_password()
 					<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 					<label for="email"><?php echo _AT('email_address'); ?></label>
 				</td>
-				<td align="left">
-					<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['email']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent()) echo $purifier->purify(stripslashes(htmlspecialchars($_POST['email']))); else echo $purifier->purify(stripslashes(htmlspecialchars($this->row['email']))) ?>" />
+				<td align="left"> <!--If CSRF_Token is not valid and not recent, then make values from user unchangeable by CRSF Payload-->
+					<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php if (isset($_POST['email']) AND CSRF_Token::isValid() AND CSRF_Token::isRecent()) echo htmlspecialchars(trim(stripslashes(strip_tags($_POST['email'])))); else echo htmlspecialchars(trim(stripslashes(strip_tags($this->row['email'])))) ?>" />
 				</td>
 			</tr>
 		

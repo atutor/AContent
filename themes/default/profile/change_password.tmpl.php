@@ -16,10 +16,7 @@ global $onload;
 $onload = 'document.form.old_password.focus();';
 
 require(TR_INCLUDE_PATH.'header.inc.php');
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
-
-$config = HTMLPurifier_Config::createDefault();
-$purifier = new HTMLPurifier($config);
+require_once('../class_csrf.php');
 
 ?>
 
