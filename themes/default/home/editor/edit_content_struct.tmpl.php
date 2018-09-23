@@ -18,7 +18,7 @@ if (!defined('TR_INCLUDE_PATH')) { exit; }
 global $onload;
 $onload = 'document.form.title.focus();';
 
-require_once(TR_ClassCSRF_PATH.'class_csrf.php');
+require_once('../../class_csrf.php');
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'].'?'; if ($this->cid > 0) echo '_cid='.$this->cid; else if ($this->pid > 0) echo 'pid='.$this->pid.SEP.'_course_id='.$this->course_id; else echo '_course_id='.$this->course_id;?>" method="post" name="form"> 
 <div class="input-form" style="width:95%;margin-left:1.5em;">
