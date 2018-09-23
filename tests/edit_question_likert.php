@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['question']    = $purifier->purify(trim($_POST['question']));
+	$_POST['question']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['alignment']   = intval($_POST['alignment']);
 
@@ -59,7 +59,7 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 
 			for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = $purifier->purify(trim($_POST['choice'][$i]));
+			$_POST['choice'][$i] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
