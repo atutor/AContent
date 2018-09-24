@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 //require_once(TR_INCLUDE_PATH.'../tests/lib/likert_presets.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
@@ -40,14 +41,14 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['tid']          = intval($_POST['tid']);
 	$_POST['qid']          = intval($_POST['qid']);
-	$_POST['feedback']     = trim($_POST['feedback']);
-	$_POST['instructions'] = trim($_POST['instructions']);
+	$_POST['feedback']     = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['instructions'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['instructions']))));
 	$_POST['category_id']  = intval($_POST['category_id']);
 
 	for ($i = 0 ; $i < 10; $i++) {
-		$_POST['question'][$i]        = trim($_POST['question'][$i]);
+		$_POST['question'][$i]        = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question'][$i]))));
 		$_POST['question_answer'][$i] = (int) $_POST['question_answer'][$i];
-		$_POST['answer'][$i]          = trim($_POST['answer'][$i]);
+		$_POST['answer'][$i]          = htmlspecialchars(trim(stripslashes(strip_tags(trim($_POST['answer'][$i])))));
 	}
 
 	if (!$_POST['question'][0] 
@@ -59,6 +60,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                             category_id=?,
                             feedback=?,
@@ -138,7 +140,8 @@ if (isset($_POST['cancel'])) {
 				header('Location: question_db.php?_course_id='.$_course_id);
 			}
 			exit;
-		}
+			}
+
 	}
 } else {
 	if (!($row = $testsQuestionsDAO->get($qid))){

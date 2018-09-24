@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require(TR_INCLUDE_PATH.'classes/FileUtility.class.php');
 

@@ -56,7 +56,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
 ?>
 	<div class="row">
 	<?php 
-		echo '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
+		echo '<h2>'.AT_print(htmlspecialchars(trim(stripslashes(strip_tags($_POST['title'])))), 'content.title').'</h2>';
 		if ($_POST['formatting'] == CONTENT_TYPE_WEBLINK) {
 		    $url = $_POST['weblink_text'];
             $validated_url = isValidURL($url);
@@ -67,7 +67,7 @@ require(TR_INCLUDE_PATH.'header.inc.php');
                   echo ContentUtility::formatContent($url, $_POST['formatting']);
             }
         } else {
-            echo ContentUtility::formatContent(stripslashes($_POST['body_text']), $_POST['formatting']);
+            echo ContentUtility::formatContent(htmlspecialchars(trim(stripslashes(strip_tags($_POST['body_text'])))), $_POST['formatting']);
         }
     ?>		
 	</div>

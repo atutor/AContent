@@ -219,7 +219,7 @@ class Layout{
 			if($tname!='seti' && $tname!='windows'&& $tname!='unibo') {    
 				$ui .= '<td><div><img class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layouts/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'"  title="'._AT('img_layout_icon',$tname).'"  /></td></div>';       
 				$ui .= '</tr>'; 
-			} elseif($tname != unibo) {
+			} elseif($tname != 'unibo') {
 				$ui .= '<td><div><img  class="layout_img_small" src="'.TR_BASE_HREF.'/templates/layouts/'.$tname.'/screenshot-'.$tname.'.png" alt="'._AT('img_layout_icon',$tname).'"  title="'._AT('img_layout_icon',$tname).'" /></td></div>';       
 				$ui .= '</tr>'; 
 			} else {

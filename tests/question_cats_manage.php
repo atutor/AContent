@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 
-	$_POST['title'] = trim($_POST['title']);
+	$_POST['title'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['title']))));
 
 	if (!empty($_POST['title']) && !isset($_POST['catid'])) {
 		if ($testsQuestionsCategoriesDAO->Create($_course_id, $_POST['title']))

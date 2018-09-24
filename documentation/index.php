@@ -11,13 +11,16 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 include(TR_INCLUDE_PATH.'vitals.inc.php');
 include(TR_INCLUDE_PATH.'handbook_pages.inc.php');
 
 global $handbook_pages;
 
 if (isset($_GET['p'])) {
-	$p = htmlentities($_GET['p']);
+	// We depend on htmlspecialchars, trim, stripslashes, and strip_tags to prevent Reflected XSS
+	// for p parameter
+	$p = htmlspecialchars(trim(stripslashes(strip_tags($_GET['p']))));
 } else {
 	// go to first handbook page defined in $handbook_pages
 	foreach ($handbook_pages as $page_key => $page_value)

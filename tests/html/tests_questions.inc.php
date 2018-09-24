@@ -30,7 +30,7 @@ $testsQuestionsCategoriesDAO = new TestsQuestionsCategoriesDAO();
 
 $cats = array();
 if ($_GET['category_id'] >= 0) {
-	$category_row = $testsQuestionsCategoriesDAO->get($_GET[category_id]);
+	$category_row = $testsQuestionsCategoriesDAO->get($_GET['category_id']);
 } else {
 	$category_rows = $testsQuestionsCategoriesDAO->getByCourseID($_course_id);
 }

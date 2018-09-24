@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
 include(TR_INCLUDE_PATH.'classes/DAO/UserGroupsDAO.class.php');

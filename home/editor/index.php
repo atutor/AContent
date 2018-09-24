@@ -15,6 +15,7 @@
  */
 
 define('TR_INCLUDE_PATH', '../../include/');
+
 require (TR_INCLUDE_PATH.'vitals.inc.php');
 
 $_section[0][0] = 'Blank Page';

@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../tests/lib/likert_presets.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
@@ -39,8 +40,8 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['tid']          = intval($_POST['tid']);
 	$_POST['qid']          = intval($_POST['qid']);
-	$_POST['feedback']     = trim($_POST['feedback']);
-	$_POST['instructions'] = trim($_POST['instructions']);
+	$_POST['feedback']     = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['instructions'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['instructions']))));
 	$_POST['category_id']  = intval($_POST['category_id']);
 
 	for ($i = 0 ; $i < 10; $i++) {
@@ -58,6 +59,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+
 			$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                             category_id=?,
                             feedback=?,
@@ -84,14 +86,17 @@ if (isset($_POST['cancel'])) {
                             answer_9=?,
                             option_0=?,
                             option_1=?,
+
                             option_2=?,
                             option_3=?,
                             option_4=?,
                             option_5=?,
+
                             option_6=?,
                             option_7=?,
                             option_8=?,
                             option_9=?
+
                             WHERE question_id=?";
 	    $values = array($_POST['category_id'],
 	                        $_POST['feedback'],
@@ -138,6 +143,7 @@ if (isset($_POST['cancel'])) {
 			}
 			exit;
 		}
+
 	}
 } else {
 	if (!($row = $testsQuestionsDAO->get($qid))){

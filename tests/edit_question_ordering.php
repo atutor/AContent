@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
@@ -36,8 +37,8 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
 
-	$_POST['feedback']    = trim($_POST['feedback']);
-	$_POST['question']    = trim($_POST['question']);
+	$_POST['feedback']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['question']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	if ($_POST['question'] == ''){
@@ -56,6 +57,7 @@ if (isset($_POST['cancel'])) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 	if (!$msg->containsErrors()) {
+
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the non-blank answers
 		$order = 0; // order count
@@ -65,7 +67,7 @@ if (isset($_POST['cancel'])) {
 			 * @harris
 			 */
 			$_POST['choice'][$i] = Utility::validateLength($_POST['choice'][$i], 255);
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+			$_POST['choice'][$i] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
 
 			if ($_POST['choice'][$i] != '') {
 				/* filter out empty choices/ remove gaps */
@@ -79,26 +81,34 @@ if (isset($_POST['cancel'])) {
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                                 category_id=?,
                                 feedback=?,
+
                                 question=?,
                                 choice_0=?,
+
                                 choice_1=?,
                                 choice_2=?,
                                 choice_3=?,
+
                                 choice_4=?,
                                 choice_5=?,
                                 choice_6=?,
+
                                 choice_7=?,
                                 choice_8=?,
                                 choice_9=?,
+
                                 answer_0=?,
                                 answer_0=?,
                                 answer_0=?,
+
                                 answer_0=?,
                                 answer_0=?,
                                 answer_0=?,
+
                                 answer_0=?,
                                 answer_0=?,
                                 answer_0=?,
+
                                 answer_0=?
                                 WHERE question_id=?";	
 			
@@ -136,8 +146,10 @@ if (isset($_POST['cancel'])) {
 			}
 			exit;
 		}
-		else
+		else {
 			$msg->addError('DB_NOT_UPDATED');
+		}	
+
 	}
 } else {
 	if (!($row = $testsQuestionsDAO->get($qid))){

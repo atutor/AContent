@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'../tests/lib/likert_presets.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
@@ -27,7 +28,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['question']    = trim($_POST['question']);
+
+	$_POST['question']    = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id'] = intval($_POST['category_id']);
 
 	$empty_fields = array();
@@ -48,10 +50,10 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['feedback']   = '';
-		$_POST['question']   = htmlspecialchars($_POST['question'], ENT_QUOTES);
+		$_POST['question']   = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES));
+			$_POST['choice'][$i] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
 			$_POST['answer'][$i] = intval($_POST['answer'][$i]);
 
 			if ($_POST['choice'][$i] == '') {
@@ -94,6 +96,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('DB_NOT_UPDATED');
 		}
 	}
+
 } else if (isset($_POST['preset'])) {
 	// load preset
 	$_POST['preset_num'] = intval($_POST['preset_num']);

@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
@@ -34,8 +35,8 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
+	$_POST['feedback'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['question'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['tid']	   = intval($_POST['tid']);
 	$_POST['qid']	   = intval($_POST['qid']);
 	$_POST['weight']   = intval($_POST['weight']);
@@ -46,11 +47,12 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+
 		$answers    = array_fill(0, 10, 0);
 		$answers[$_POST['answer']] = 1;
 
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+			$_POST['choice'][$i] =htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
 		}
 				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
                             category_id=?,
@@ -58,24 +60,29 @@ if (isset($_POST['cancel'])) {
                             question=?,
                             choice_0=?,
                             choice_1=?,
+
                             choice_2=?,
                             choice_3=?,
                             choice_4=?,
                             choice_5=?,
                             choice_6=?,
+
                             choice_7=?,
                             choice_8=?,
                             choice_9=?,
                             answer_0=?,
                             answer_1=?,
+
                             answer_2=?,
                             answer_3=?,
                             answer_4=?,
                             answer_5=?,
                             answer_6=?,
+
                             answer_7=?,
                             answer_8=?,
                             answer_9=?
+
                             WHERE question_id=?";	
 		$values= array($_POST['category_id'],
 		                    $_POST['feedback'],
@@ -110,9 +117,10 @@ if (isset($_POST['cancel'])) {
 				header('Location: question_db.php?_course_id='.$_course_id);
 			}
 			exit;
-		}
-		else
+		} else {
 			$msg->addError('DB_NOT_UPDATED');
+		}		
+
 	}
 }
 

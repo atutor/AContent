@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
@@ -26,9 +27,10 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit'])) {
+
 	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim(htmlspecialchars($_POST['feedback'], ENT_QUOTES));
-	$_POST['question'] = trim(htmlspecialchars($_POST['question'], ENT_QUOTES));
+	$_POST['feedback'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['question'] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id'] = intval($_POST['category_id']);
 	$_POST['answer']      = intval($_POST['answer']);
 
@@ -38,7 +40,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 		
 	if (!$msg->containsErrors()) {
 		for ($i=0; $i<10; $i++) {
-			$_POST['choice'][$i] = trim(htmlspecialchars($_POST['choice'][$i], ENT_QUOTES));
+			$_POST['choice'][$i] = htmlspecialchars(trim(stripslashes(strip_tags($_POST['choice'][$i]))));
 		}
 
 		$answers = array_fill(0, 10, 0);
@@ -75,6 +77,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 			exit;
 		}
 	}
+
 } else {
 	$_POST['answer'] = 0;
 }

@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../../include/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
 
 global $_content_id, $_content_id, $contentManager;
@@ -61,7 +62,7 @@ if (is_array($children) && (count($children)>0) ) {
 }
 	
 $row = $contentManager->getContentPage($_GET['cid']);
-$title = $row['title'];
+$title = htmlspecialchars(trim(stripslashes(strip_tags($row['title']))));
 
 $msg->addConfirm(array('DELETE', $title),  $hidden_vars);
 $msg->printConfirm();

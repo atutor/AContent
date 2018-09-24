@@ -11,7 +11,9 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require(TR_INCLUDE_PATH.'vitals.inc.php');
+require_once('../class_csrf.php');
 
 global $_current_user;
 
@@ -29,12 +31,14 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
-	if (!empty($_POST['form_old_password_hidden']))
+	if (CSRF_Token::isValid() AND CSRF_Token::isRecent())
+	{
+		if (!empty($_POST['form_old_password_hidden']))
 	{
 		//check if old password entered is correct
 		if ($row = $_current_user->getInfo()) 
 		{
-			if ($row['password'] != $_POST['form_old_password_hidden']) 
+			if ($row['password'] != htmlspecialchars(trim(stripslashes(strip_tags($_POST['form_old_password_hidden'])))))
 			{
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: change_password.php');
@@ -64,8 +68,9 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
+
 		// insert into the db.
-		$password   = $_POST['form_password_hidden'];
+		$password   = htmlspecialchars(trim(stripslashes(strip_tags($_POST['form_password_hidden']))));
 
 		if (!$_current_user->setPassword($password)) 
 		{
@@ -76,6 +81,10 @@ if (isset($_POST['submit'])) {
 		}
 
 		$msg->addFeedback('PASSWORD_CHANGED');
+	}
+	} else
+	{
+		$msg->addError('INVALID_TOKEN');
 	}
 }
 

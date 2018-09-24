@@ -12,6 +12,7 @@
 
 $page = 'tests';
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsDAO.class.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
@@ -28,12 +29,14 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php?_course_id='.$_course_id);
 	exit;
 } else if (isset($_POST['submit'])) {
-	if ($testsDAO->Update($_POST['tid'], $_POST['title'], $_POST['description']))
+
+		if ($testsDAO->Update($_POST['tid'], htmlspecialchars(trim(stripslashes(strip_tags($_POST['title'])))), htmlspecialchars(trim(stripslashes(strip_tags($_POST['description']))))));
 	{
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');		
 		header('Location: index.php?_course_id='.$_course_id);
 		exit;
 	}
+
 }
 
 $onload = 'document.form.title.focus();';

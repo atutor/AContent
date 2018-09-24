@@ -12,6 +12,7 @@
 
 if (!defined('TR_INCLUDE_PATH')) { exit; }
 
+
 function get_tabs() {
 //these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */

@@ -10,10 +10,14 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+session_start();
+
 global $onload;
 $onload = 'document.form.old_password.focus();';
 
 require(TR_INCLUDE_PATH.'header.inc.php');
+require_once('../class_csrf.php');
+
 ?>
 
 <script
@@ -93,6 +97,7 @@ function encrypt_password()
 			<tr>
 				<td colspan="2">
 					<p class="submit_button">
+						<?php echo CSRF_Token::display(); ?><br>
 						<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onclick="encrypt_password()" />
 						<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 					</p>

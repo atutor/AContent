@@ -11,6 +11,7 @@
 /************************************************************************/
 
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/test_question_queries.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/DAO/TestsQuestionsDAO.class.php');
@@ -26,9 +27,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php?_course_id='.$_course_id);
 	exit;
 } else if ($_POST['submit']) {
+
 	$_POST['required']     = 1; //intval($_POST['required']);
-	$_POST['feedback']     = trim($_POST['feedback']);
-	$_POST['question']     = trim($_POST['question']);
+	$_POST['feedback']     = htmlspecialchars(trim(stripslashes(strip_tags($_POST['feedback']))));
+	$_POST['question']     = htmlspecialchars(trim(stripslashes(strip_tags($_POST['question']))));
 	$_POST['category_id']  = intval($_POST['category_id']);
 	$_POST['answer']       = intval($_POST['answer']);
 
@@ -51,6 +53,7 @@ if (isset($_POST['cancel'])) {
 		else
 			$msg->addError('DB_NOT_UPDATED');
 	}
+
 }
 
 $onload = 'document.form.category_id.focus();';

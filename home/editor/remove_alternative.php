@@ -20,6 +20,7 @@
  */
 
 define('TR_INCLUDE_PATH', '../../include/');
+
 require (TR_INCLUDE_PATH.'vitals.inc.php');
 
 $pid = intval($_POST['pid']);

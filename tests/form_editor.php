@@ -12,6 +12,7 @@
 
 $page = 'form_editor';
 define('TR_INCLUDE_PATH', '../include/');
+
 require_once(TR_INCLUDE_PATH.'vitals.inc.php');
 require_once(TR_INCLUDE_PATH.'lib/tinymce.inc.php');
 require_once(TR_INCLUDE_PATH.'classes/Utility.class.php');
